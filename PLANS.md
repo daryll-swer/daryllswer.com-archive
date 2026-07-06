@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: in progress; local validation/browser QA passed, commit/push pending
+- Status: complete; README/media/workbook update pushed and live Pages verified
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-06 12:51 UTC
+- Last updated: 2026-07-06 12:54 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -32,13 +32,13 @@
   - Complete locally: WordPress media downloads preserve URL basenames and direct response bytes wherever possible, with filename-preservation fields in asset manifests.
   - Complete locally: AS141253 sheet is rendered as a CSV-backed tabbed `workbook.html` and generated Pages workbook.
 - Last material update:
-  - 2026-07-06 12:51 UTC Regenerated, validated, public-safety scanned, and browser-checked the README/media/workbook update locally.
+  - 2026-07-06 12:54 UTC Pushed commit `982244a` and verified GitHub Pages rebuilt the README/media/workbook update.
 - Next pickup action:
-  - Commit, push, and verify Pages rebuild.
+  - Optional repository metadata polish and future sync automation.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - Live Pages verification still pending for the current local update.
+  - None for the current README/media/workbook update.
 
 ## Purpose / Big Picture
 
@@ -104,7 +104,7 @@
 - [x] 2026-07-06 12:45 UTC Added WordPress media filename preservation and manifest validation.
 - [x] 2026-07-06 12:45 UTC Added CSV-backed tabbed AS141253 workbook generation.
 - [x] 2026-07-06 12:51 UTC Regenerated and browser-checked the updated Pages output.
-- [ ] Validate, commit, push, and verify GitHub Pages rebuild.
+- [x] 2026-07-06 12:54 UTC Validated, committed `982244a`, pushed to `main`, and verified GitHub Pages rebuild.
 
 ## Decision Log
 
@@ -197,11 +197,14 @@
   - `git diff --check`: passed at 2026-07-06 12:04 UTC.
   - Local browser QA against `http://127.0.0.1:4173/`: passed at 2026-07-06 11:54 UTC for desktop and 390x844 mobile.
   - `make sync render-site validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 12:51 UTC; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 12:55 UTC after recording live Pages verification; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
   - Media filename preservation check: passed at 2026-07-06 12:52 UTC; 68 WordPress media assets, 19 featured images, 0 preservation failures.
   - Workbook structure check: passed at 2026-07-06 12:52 UTC; 9 manifest tabs, 9 radio inputs, 9 visible tab labels, and 9 panels in both `data/.../workbook.html` and `docs/.../index.html`.
   - Local browser QA against `http://127.0.0.1:4173/`: passed at 2026-07-06 12:51 UTC for desktop and mobile-sized viewport; index had 19 cards, no broken images, no page overflow, IPv6 article linked local sheet page, workbook tabs switched correctly.
   - `python3 -m py_compile scripts/*.py`: passed at 2026-07-06 12:51 UTC.
   - `git diff --check`: passed at 2026-07-06 12:51 UTC.
+  - GitHub Pages API: passed at 2026-07-06 12:54 UTC; status `built`, source `main` `/docs`.
+  - Live route check: passed at 2026-07-06 12:54 UTC; homepage, IPv6 article, AS141253 workbook, ODS artefact, and `Scaffold_FT.png` returned HTTP 200. Live workbook had 9 tabs/9 panels; live homepage had 19 post cards; live article had 2 embed wrappers and the local sheet link.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`
@@ -231,6 +234,6 @@
 - Achieved:
   - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, preview generation, and generated GitHub Pages site completed.
 - Remaining:
-  - Commit, push, and live Pages verification for the current update.
+  - Optional public repo metadata polish and future sync automation.
 - Retrospective timestamp:
   - 2026-07-06 09:20 UTC

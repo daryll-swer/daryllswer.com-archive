@@ -6,8 +6,8 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: README, media fidelity, and sheet workbook update
-- Status: in progress; local validation/browser QA passed, commit/push pending
-- Last updated: 2026-07-06 12:51 UTC
+- Status: complete; README/media/workbook update pushed and live Pages verified
+- Last updated: 2026-07-06 12:54 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -68,13 +68,13 @@
   - Status: complete
   - Notes: New public repo `daryll-swer/daryllswer.com-archive` created and pushed; old repo `daryll-swer/daryllswer.com-neteng-blog` deleted.
 - README maintainer command move:
-  - Status: complete locally
+  - Status: complete and pushed
   - Notes: README is reader-facing; maintainer commands live in `AGENTS.md` and `docs/MIRRORING.md`.
 - WordPress media filename/byte preservation:
-  - Status: complete locally
+  - Status: complete and pushed
   - Notes: Sync now stores WordPress media under source basenames where possible, preserves direct response bytes, and records filename-preservation fields in asset manifests.
 - AS141253 tabbed workbook:
-  - Status: complete locally
+  - Status: complete and pushed
   - Notes: `scripts/export-google-sheet.py` generates `data/sheets/as141253-ipv6-architecture-example/workbook.html`; `scripts/render-site.py` publishes it as the Pages sheet route.
 
 ## Execution Log
@@ -167,6 +167,10 @@
   - Action: Regenerated archive/site output, validated, public-safety scanned, and browser-checked the update locally.
   - Evidence: `make sync render-site validate scan-secrets PYTHON=<bundled-python>` passed with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings; browser QA confirmed 19 index cards, local IPv6 sheet link, 2 media embed wrappers, 9 workbook tabs, tab switching, no broken images, and no page-level horizontal overflow on desktop/mobile-sized viewports.
   - Result: pass locally
+- 2026-07-06 12:54 UTC:
+  - Action: Pushed commit `982244a` and verified GitHub Pages rebuilt from `main` `/docs`.
+  - Evidence: GitHub Pages API reported `built`; live homepage, IPv6 article, AS141253 workbook, ODS artefact, and `Scaffold_FT.png` returned HTTP 200. Live workbook had 9 tabs/9 panels, live homepage had 19 post cards, and live article had 2 embed wrappers plus the local sheet link.
+  - Result: pass
 
 ## Tests and Verification
 
@@ -188,24 +192,26 @@
   - `git diff --check`: pass at 2026-07-06 12:04 UTC.
   - Local browser QA against `http://127.0.0.1:4173/`: pass at 2026-07-06 11:54 UTC for desktop and 390x844 mobile.
   - `make sync render-site validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-06 12:51 UTC with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-06 12:55 UTC after recording live Pages verification, with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
   - Media filename preservation check: pass at 2026-07-06 12:52 UTC; 68 WordPress media assets, 19 featured assets, 0 filename-preservation failures.
   - Workbook structure check: pass at 2026-07-06 12:52 UTC; 9 tabs/labels/panels in source and Pages workbook HTML.
   - Local browser QA against `http://127.0.0.1:4173/`: pass at 2026-07-06 12:51 UTC for desktop and mobile-sized viewport.
   - `python3 -m py_compile scripts/*.py`: pass at 2026-07-06 12:51 UTC.
   - `git diff --check`: pass at 2026-07-06 12:51 UTC.
+  - GitHub Pages API and live route checks: pass at 2026-07-06 12:54 UTC.
 - Not run:
-  - Live Pages verification for the current README/media/workbook update.
+  - None for the current README/media/workbook update.
 
 ## Next Pickup
 
 - Next action:
-  - Commit, push, and verify GitHub Pages rebuild.
+  - Optional repository metadata polish and future sync automation.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Current local update still needs live Pages verification after push.
+  - None for the current README/media/workbook update.
 
 ## Completion Criteria
 
