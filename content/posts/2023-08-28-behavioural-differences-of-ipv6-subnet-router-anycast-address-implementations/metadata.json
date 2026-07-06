@@ -44,12 +44,15 @@
     "bytes": 3137582,
     "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 3840,
-    "local_path": "content/posts/2023-08-28-behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/assets/featured.jpg",
+    "local_path": "content/posts/2023-08-28-behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/assets/Subnet-Router-Anycast.jpg",
     "mime_type": "image/jpeg",
     "role": "featured",
     "sha256": "6fcaba3322b826e977c415690eb88716533295b8ac9610e39953f92c8c0534ba",
+    "source_filename": "Subnet-Router-Anycast.jpg",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg",
+    "stored_filename": "Subnet-Router-Anycast.jpg",
     "width": 5760
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -111,8 +114,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "5398cd62fb9974bc3aac1827311f6fe4db2c0f29bd91825be60a561dd1cce5b4",
-    "index_md_sha256": "7ee7f78a48ad0ae433a1d4fa28c6277e504b9a51ab840cea23b466d8825fa42b",
+    "canonical_page_html_sha256": "e0dbfc988f0657e0d89d61c1afdb3c479feef25d0684fca559a199a970c27780",
+    "index_md_sha256": "93430a498f318ee915a6af79fb3c55f4e4ed7ba60bc4c9125d4b1fb9e3adf6fd",
     "rendered_article_html_sha256": "7b76e972bf01959cdb0df329f172f84443a5239a2f946f36da35e59514f56939",
     "wordpress_post_json_sha256": "a6ee7881ff4d684ba6db9e54440916cd69c0f622933af05699c5bcbae55a0fe4"
   },
@@ -123,7 +126,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2739",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

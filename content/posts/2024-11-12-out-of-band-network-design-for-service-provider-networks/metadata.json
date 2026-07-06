@@ -49,12 +49,15 @@
     "bytes": 2670667,
     "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 1260,
-    "local_path": "content/posts/2024-11-12-out-of-band-network-design-for-service-provider-networks/assets/featured.png",
+    "local_path": "content/posts/2024-11-12-out-of-band-network-design-for-service-provider-networks/assets/OOB_FT.png",
     "mime_type": "image/png",
     "role": "featured",
     "sha256": "dc887b155e1262e989442eaf57052bf8b17748221dd635c6dbbe481c36847e3e",
+    "source_filename": "OOB_FT.png",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png",
+    "stored_filename": "OOB_FT.png",
     "width": 2400
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -108,8 +111,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "7ca6e99a3f585f2439c1205532625f7157c6879c91900162d9bc35ae4d141073",
-    "index_md_sha256": "7a76aa7d247a12f6fea1ff56d4e72d42e98d7712c86a67f6f1dff270e752cee9",
+    "canonical_page_html_sha256": "c04bef78173c45d661baebf09c8583d90c14a52ceb097653c4286ab2f5bdd334",
+    "index_md_sha256": "2593c2be2411f3f71c4c3b0ab1c53f1d2e3b88c8b87afc7ce26a301949ed9fda",
     "rendered_article_html_sha256": "16ef9d9b459784cc9368bf0a371ea80f58bab87fadb3babd9353823e2fa02583",
     "wordpress_post_json_sha256": "f25c8fcc55b93685360e4c1a77794029bc037d2b2c37685e0c439cdfc0493d06"
   },
@@ -120,7 +123,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2931",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

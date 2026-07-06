@@ -14,6 +14,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from sheet_workbook import render_workbook_page
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data" / "sheets" / "as141253-ipv6-architecture-example"
@@ -170,6 +172,15 @@ def main() -> int:
         "published_workbook_html": html_root,
         "tabs": manifest_tabs,
     }
+    workbook_html = render_workbook_page(
+        root=ROOT,
+        manifest=manifest,
+        sheet_slug=OUT.name,
+        repo_href="https://github.com/daryll-swer/daryllswer.com-archive",
+    ).encode("utf-8")
+    workbook_info = write_blob(OUT / "workbook.html", workbook_html)
+    workbook_info["content_type"] = "text/html; charset=utf-8"
+    manifest["workbook_html"] = workbook_info
     write_json(OUT / "manifest.json", manifest)
 
     readme_lines = [
@@ -180,6 +191,7 @@ def main() -> int:
         "This directory stores the public Google Sheet linked from the IPv6 architecture post.",
         "",
         f"- [AS141253-ipv6-architecture-example.ods]({sheet_readme_link(ods_info['path'])}) is the styled open spreadsheet export.",
+        f"- [workbook.html]({sheet_readme_link(workbook_info['path'])}) is the standalone CSV-backed HTML workbook with clickable sheet tabs.",
         f"- [published-workbook.html]({sheet_readme_link(html_root['path'])}) is the full published workbook HTML snapshot.",
         "- [csv/](csv/) contains one diffable CSV export per published tab.",
         "- [csvw/](csvw/) contains lightweight CSVW-style metadata.",

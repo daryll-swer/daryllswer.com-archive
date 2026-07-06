@@ -50,12 +50,15 @@
     "bytes": 1510489,
     "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 630,
-    "local_path": "content/posts/2023-09-21-bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/assets/featured.png",
+    "local_path": "content/posts/2023-09-21-bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/assets/BGP_False_Alarm_Featured_Image.png",
     "mime_type": "image/png",
     "role": "featured",
     "sha256": "6bdce0ab39d52efc3dd3b066e661d3c3b8a50360c14204f2dd63e389ee814b81",
+    "source_filename": "BGP_False_Alarm_Featured_Image.png",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png",
+    "stored_filename": "BGP_False_Alarm_Featured_Image.png",
     "width": 1200
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -77,8 +80,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "c8eeaa749ac0f809626c574cb7a48272998102a0817b03cbc0f3cd05ae2d2559",
-    "index_md_sha256": "618037d579d0f1a98bc1b4485d451bde59ee04d41233b6d78329e2b8781f8e3c",
+    "canonical_page_html_sha256": "b159caffab9cab7368cae91a3060cc65edd77dc3099619d3aa4548cfbc1a4a5a",
+    "index_md_sha256": "842fdf24a4bc51590a640b403426162a815e2a4ebc1bfecdf126936cea2a3142",
     "rendered_article_html_sha256": "7ae129e7e2ffb8d320280773e468f69a32f676beb32a060757fba63ec98cd148",
     "wordpress_post_json_sha256": "504c93b85e14735f40963d79b33c572c1e4c6b2f5d259c976776b2db1523a8f6"
   },
@@ -89,7 +92,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2803",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

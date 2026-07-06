@@ -44,12 +44,15 @@
     "bytes": 189397,
     "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 1050,
-    "local_path": "content/posts/2025-04-22-lets-talk-about-cgnat-and-ipv6-yet-again/assets/featured.png",
+    "local_path": "content/posts/2025-04-22-lets-talk-about-cgnat-and-ipv6-yet-again/assets/NAT_Mess.png",
     "mime_type": "image/png",
     "role": "featured",
     "sha256": "e810ea40caccf16fe2eb236db34d6461b117299e3b1a48b07f7e4f0db03f2e54",
+    "source_filename": "NAT_Mess.png",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png",
+    "stored_filename": "NAT_Mess.png",
     "width": 2000
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -95,8 +98,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "516faa225a08b69e8093e1b38ca73262a27053db7d3e0965d1461071eeb93df9",
-    "index_md_sha256": "22e7f31ab1726f041a3db07876e924fd97e23c8bd794d15d07341029a0dda9c8",
+    "canonical_page_html_sha256": "0f355fa9b7018278ebdb815c998e9873428efa279c2db91f4e1ae3c59cf7add1",
+    "index_md_sha256": "081c175834f633a1b0b284fccd47785bf3a0147ecec15e2790358773ccde1d1c",
     "rendered_article_html_sha256": "66267fb7ce112b2009b9d71c7b8840199d7188cb6e43021aebea1b5023c0ed98",
     "wordpress_post_json_sha256": "6a7690ca1e57a29395798714b7581fccf60e52475eec8767aaf4955453602dc0"
   },
@@ -107,7 +110,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/5018",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

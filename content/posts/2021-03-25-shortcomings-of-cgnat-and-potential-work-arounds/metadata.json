@@ -44,18 +44,21 @@
     "bytes": 33421,
     "caption": null,
     "detection_method": "open_graph_og_image",
+    "filename_preserved": true,
     "height": 1344,
-    "local_path": "content/posts/2021-03-25-shortcomings-of-cgnat-and-potential-work-arounds/assets/featured.png",
+    "local_path": "content/posts/2021-03-25-shortcomings-of-cgnat-and-potential-work-arounds/assets/13_DS_Logo_Dark_Mode_SEO-scaled.png",
     "mime_type": "image/png",
     "role": "featured",
     "sha256": "9f3bcf4e2b290ed7b1149ffe837a5ea8f3eae335d32c59dc994543c9e7073e21",
+    "source_filename": "13_DS_Logo_Dark_Mode_SEO-scaled.png",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/01/13_DS_Logo_Dark_Mode_SEO-scaled.png",
+    "stored_filename": "13_DS_Logo_Dark_Mode_SEO-scaled.png",
     "width": 2560
   },
   "featured_image_detection_method": "open_graph_og_image",
   "hashes": {
-    "canonical_page_html_sha256": "3e81a15743762a61eb6ea8f39ad5d4f8e08eb9265577814dc87abc62a2bbf9f6",
-    "index_md_sha256": "88b80ddd0c158e9f31d9a2732a986677e6f0a3e78837d866ca0ac2db626e9edc",
+    "canonical_page_html_sha256": "12a15175ea398e7410e55c551241ad37fc998c545e5f3f69c4aa4ecaf5154206",
+    "index_md_sha256": "7ea8079d0dfcf830dd0d33c57b5b1b14b0309370a2e45828a00626ab8016672a",
     "rendered_article_html_sha256": "b18b2937dce9778587cc37bc0a7a883709c441d8d4d7e533e6cc2e7485f32b4c",
     "wordpress_post_json_sha256": "11f326ea9c12291a11e3677716c48b05faf228adb7ff54c33b2a92461b79a031"
   },
@@ -66,7 +69,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

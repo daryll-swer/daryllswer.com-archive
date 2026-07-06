@@ -5,7 +5,7 @@ date: "2025-05-19T08:30:00"
 last_modified: "2025-05-19T12:04:34"
 canonical_url: "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/"
 wordpress_id: 5136
-featured_image: "assets/featured.png"
+featured_image: "assets/Docker-IPv6.png"
 categories:
   - "Linux"
   - "Networking"
@@ -14,7 +14,7 @@ tags:
   - "IPv6"
   - "Networking"
 ---
-![How to configure routed IPv6 in Docker](assets/featured.png)
+![How to configure routed IPv6 in Docker](assets/Docker-IPv6.png)
 
 **This article has been published on the [APNIC blog](https://blog.apnic.net/2025/05/19/how-to-configure-routed-ipv6-in-docker/) as well.**
 

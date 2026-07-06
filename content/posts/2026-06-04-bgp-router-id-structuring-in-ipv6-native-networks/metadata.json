@@ -37,12 +37,15 @@
     "bytes": 1445521,
     "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 2194,
-    "local_path": "content/posts/2026-06-04-bgp-router-id-structuring-in-ipv6-native-networks/assets/featured.jpg",
+    "local_path": "content/posts/2026-06-04-bgp-router-id-structuring-in-ipv6-native-networks/assets/BGP_RouterID_FT-scaled.jpg",
     "mime_type": "image/jpeg",
     "role": "featured",
     "sha256": "fe0b0c5a96f83c58bdcdd11bfe76ff56fe7b9db7c2505a9ce10ff071c84a5dee",
+    "source_filename": "BGP_RouterID_FT-scaled.jpg",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg",
+    "stored_filename": "BGP_RouterID_FT-scaled.jpg",
     "width": 2560
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -104,8 +107,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "7a58f2a0d44a74d72a1f86d26666a8d203a22c473990645f8161f5f0e3f6cf75",
-    "index_md_sha256": "89b7cece4f64db8c39cf711c412b4beda27631ed7d5a6530f9fc840563aa99b8",
+    "canonical_page_html_sha256": "313f49a3c7b958819e1f7758f735654891f3ddbb8ce4c9c6f8dcebe5bb412fab",
+    "index_md_sha256": "0bf565325824f2671f71336251cacc3e8f07c275feecf37ebdaf1e8cbded743b",
     "rendered_article_html_sha256": "c56861b9921a374c3dfdcf12f83f1e5f022a8bdcba95e736adc072940972ea0b",
     "wordpress_post_json_sha256": "fdfd89faf6120f78aed6df0155800ea61cccd12b92376e1f8441bd39bfbe8a80"
   },
@@ -116,7 +119,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/5324",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

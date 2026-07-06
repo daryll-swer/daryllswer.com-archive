@@ -5,7 +5,7 @@ date: "2023-04-04T04:30:00"
 last_modified: "2026-06-06T17:44:32"
 canonical_url: "https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/"
 wordpress_id: 1512
-featured_image: "assets/featured.png"
+featured_image: "assets/Scaffold_FT.png"
 categories:
   - "Architecture"
   - "Networking"
@@ -18,7 +18,7 @@ tags:
   - "Planning"
   - "Subnetting"
 ---
-![IPv6 Architecture and Subnetting Guide for Network Engineers and Operators](assets/featured.png)
+![IPv6 Architecture and Subnetting Guide for Network Engineers and Operators](assets/Scaffold_FT.png)
 
 > **For professional IPv6 consulting, [click here](https://www.swernetworks.com/).**
 
@@ -330,7 +330,7 @@ A /48 per function in a given site is broken down in the following manner:
 
 Ultimately this is for the backbone and not the customer pool. Hence, a single /32 can cover the whole network for India.
 
-> You can find an example of the above principles in this [Excel sheet](../../../data/sheets/as141253-ipv6-architecture-example/README.md) I made for AS141253.
+> You can find an example of the above principles in this [Excel sheet](../../../data/sheets/as141253-ipv6-architecture-example/workbook.html) I made for AS141253.
 
 **For the customer:**
 

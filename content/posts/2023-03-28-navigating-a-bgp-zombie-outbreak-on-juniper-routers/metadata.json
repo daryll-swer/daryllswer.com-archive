@@ -50,12 +50,15 @@
     "bytes": 267140,
     "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 404,
-    "local_path": "content/posts/2023-03-28-navigating-a-bgp-zombie-outbreak-on-juniper-routers/assets/featured.webp",
+    "local_path": "content/posts/2023-03-28-navigating-a-bgp-zombie-outbreak-on-juniper-routers/assets/Zombie-routes_FT.webp",
     "mime_type": "image/webp",
     "role": "featured",
     "sha256": "57ba97a3b485cedf2be5e42a771b2a421472cd6703e4aeb69dbba9372292a148",
+    "source_filename": "Zombie-routes_FT.webp",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp",
+    "stored_filename": "Zombie-routes_FT.webp",
     "width": 1110
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -77,8 +80,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "19c2f17c5f8efcc77dd4fe3168d56cd0d2773b8d843a8a2d99ed92acc7e2bed9",
-    "index_md_sha256": "e010c7616ffe8c95304aa7be66debcd5ee776fc2942dc6776bb723d285bbd0cf",
+    "canonical_page_html_sha256": "890f811f8210681bc9a501f1a8aa0a328632e207f9b5e55033b7c0ab53826def",
+    "index_md_sha256": "1ae4cd43f367419864693b8a1d57ea1415367db896c5d93aa3cbde549ed9334f",
     "rendered_article_html_sha256": "fe1bb6efe72b01f313a699206141ed12b1c9a74e3ab7b28d3995b7599d3c4023",
     "wordpress_post_json_sha256": "e4626ce2b3752a4639262bd414444ad8adb673c39ea6001cc5c523ec6b7d2974"
   },
@@ -89,7 +92,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2053",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

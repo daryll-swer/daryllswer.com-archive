@@ -44,12 +44,15 @@
     "bytes": 24722,
     "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 630,
-    "local_path": "content/posts/2023-09-27-ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/assets/featured.png",
+    "local_path": "content/posts/2023-09-27-ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/assets/IPv6_RA_featured_Image.png",
     "mime_type": "image/png",
     "role": "featured",
     "sha256": "d3c9d598f84e3aa1bd39f4527e1117dbdd4031d17c84873b11a0b29418d5ffb4",
+    "source_filename": "IPv6_RA_featured_Image.png",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png",
+    "stored_filename": "IPv6_RA_featured_Image.png",
     "width": 1200
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -71,8 +74,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "193c86e92f6827e8da8e5901515e935e053c9daee7d0a17adb9f126b34449ab5",
-    "index_md_sha256": "86a7a1511146fbba65c305d7872f89a7bcef9a691287e15acf653ca353c7b04f",
+    "canonical_page_html_sha256": "20a98b822f0967611db84588ef9ba26ed3ff014a190420ad5357263b5844fd88",
+    "index_md_sha256": "ce4136fd96f1525974a0236efa96692da61971bdbd990922494661efd1b22512",
     "rendered_article_html_sha256": "3b2e013cd774d410135506ba3613a1b8788bedd8c9e079114ac32acd069509d7",
     "wordpress_post_json_sha256": "f80d4fcca852065b92e56440dcb9d607f35e5b76d2d916885f37e45b4d95bdc5"
   },
@@ -83,7 +86,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2836",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

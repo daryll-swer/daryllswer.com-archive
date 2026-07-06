@@ -5,6 +5,7 @@ Source: https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcL
 This directory stores the public Google Sheet linked from the IPv6 architecture post.
 
 - [AS141253-ipv6-architecture-example.ods](AS141253-ipv6-architecture-example.ods) is the styled open spreadsheet export.
+- [workbook.html](workbook.html) is the standalone CSV-backed HTML workbook with clickable sheet tabs.
 - [published-workbook.html](html/published-workbook.html) is the full published workbook HTML snapshot.
 - [csv/](csv/) contains one diffable CSV export per published tab.
 - [csvw/](csvw/) contains lightweight CSVW-style metadata.

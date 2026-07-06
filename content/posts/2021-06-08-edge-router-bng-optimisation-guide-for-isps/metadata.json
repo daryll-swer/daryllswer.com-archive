@@ -43,12 +43,15 @@
     "bytes": 1177170,
     "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 3024,
-    "local_path": "content/posts/2021-06-08-edge-router-bng-optimisation-guide-for-isps/assets/featured.jpg",
+    "local_path": "content/posts/2021-06-08-edge-router-bng-optimisation-guide-for-isps/assets/834B1158-30C5-42F5-A513-FDA123138559.jpg",
     "mime_type": "image/jpeg",
     "role": "featured",
     "sha256": "c39d8d721ccb142a3907ecfa20a3bebcd286aa75e15b041338742ab23aa83f13",
+    "source_filename": "834B1158-30C5-42F5-A513-FDA123138559.jpg",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg",
+    "stored_filename": "834B1158-30C5-42F5-A513-FDA123138559.jpg",
     "width": 4032
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -110,8 +113,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "4e8e48bff24da89ca5c3e519cfddca4680edc6921f4fdb4c317158137c52e754",
-    "index_md_sha256": "0d77d80af95405b3eed07b064a677afbf6fe1fedbd551d609c01ef800c358805",
+    "canonical_page_html_sha256": "52759abf2da9d08d74910104462bc996e55bf5189609f3074854a3da13361eef",
+    "index_md_sha256": "84492c22b1de91f0642f4b2aeb3571456a11fe02b4bcb85069be4d1293d30f5a",
     "rendered_article_html_sha256": "052be600754e2e38cee6f838fe4b2711f25d0e42469288f4d091fb7fd68215c9",
     "wordpress_post_json_sha256": "3ab85705c55b316bc6056199f62c38af1321c0af06a8013be511b1c4ba78c014"
   },
@@ -122,7 +125,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/269",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

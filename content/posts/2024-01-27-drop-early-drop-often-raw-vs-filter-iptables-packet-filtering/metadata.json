@@ -37,12 +37,15 @@
     "bytes": 424832,
     "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 404,
-    "local_path": "content/posts/2024-01-27-drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/assets/featured.webp",
+    "local_path": "content/posts/2024-01-27-drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/assets/drop_packets_parachutes.webp",
     "mime_type": "image/webp",
     "role": "featured",
     "sha256": "81aee632d92513102aa7e577b92d6d0839d9c40edf06c05bdeab530b9be87d30",
+    "source_filename": "drop_packets_parachutes.webp",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/drop_packets_parachutes.webp",
+    "stored_filename": "drop_packets_parachutes.webp",
     "width": 1110
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -64,8 +67,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "9689b98f022442faf3cb56c63fd34f06225c8456ec7df5a221e3e98cb6a7eecb",
-    "index_md_sha256": "dd9f495c88cfb734864a691cfdc5dad657b882feaf7a5a9745b534f129df8841",
+    "canonical_page_html_sha256": "23653a984bf53e8b98ac9593d03d3033eeabdcf1e01fc9e3d0405a77b2fbf152",
+    "index_md_sha256": "cbd011d96b01b52aaff8a649d0bb94cd6183656c40a191d6006d892345a3bc1b",
     "rendered_article_html_sha256": "26e857d78003d144553336f351ed9c2f21f1c000db101cc20641cb7f49dff854",
     "wordpress_post_json_sha256": "33567520941cfd219b14b12e1f753966f4d030975df30f202db8fb87bf7488db"
   },
@@ -76,7 +79,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/3138",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

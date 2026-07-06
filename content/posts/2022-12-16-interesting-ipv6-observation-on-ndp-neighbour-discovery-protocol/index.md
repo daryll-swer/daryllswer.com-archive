@@ -5,7 +5,7 @@ date: "2022-12-16T15:04:54"
 last_modified: "2025-05-21T01:52:10"
 canonical_url: "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/"
 wordpress_id: 1674
-featured_image: "assets/featured.png"
+featured_image: "assets/image.png"
 categories:
   - "ISP"
   - "IXP"
@@ -15,7 +15,7 @@ tags:
   - "IXPs"
   - "Networking"
 ---
-![Interesting IPv6 observation on NDP (Neighbour Discovery Protocol)](assets/featured.png)
+![Interesting IPv6 observation on NDP (Neighbour Discovery Protocol)](assets/image.png)
 
 *The following observations and tests were made by me in collaboration with [ExtremeIX](https://extreme-ix.org/) via [AS149794](https://www.daryllswer.com/as149794/).*
 
@@ -46,7 +46,7 @@ With the firewall rule in place, I started observing that my IPv6 BGP sessions w
 
 When I realised that disabling the rule, solved the issue with BGP sessions flapping, I decided to dig deeper with WireShark and discovered NDP NS/NA packets where the source address is GUA and the destination address is link-local.
 
-[![](assets/inline/image-3840x1873.png)](assets/featured.png)
+[![](assets/inline/image-3840x1873.png)](assets/image.png)
 
 _Figure-1 (ICMPv6 packets for NDP showing source/destination addresses matching GUA<>LLA pattern)_
 

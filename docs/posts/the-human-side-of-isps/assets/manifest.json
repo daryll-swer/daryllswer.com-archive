@@ -5,12 +5,15 @@
       "bytes": 75798,
       "caption": "Credits to APNIC folks for the image",
       "detection_method": "rest_embedded_wp_featuredmedia",
+      "filename_preserved": true,
       "height": 1398,
-      "local_path": "content/posts/2021-08-28-the-human-side-of-isps/assets/featured.png",
+      "local_path": "content/posts/2021-08-28-the-human-side-of-isps/assets/Computer-with-people.png",
       "mime_type": "image/png",
       "role": "featured",
       "sha256": "51a2d31f9b39a36100f7e0f48ccb2f24b18aa4a6febf0701ac6c5f22d6a1692c",
+      "source_filename": "Computer-with-people.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png",
+      "stored_filename": "Computer-with-people.png",
       "width": 3840
     },
     {
@@ -18,16 +21,19 @@
       "bytes": 493391,
       "caption": "Figure 1 – An advertisement offering 250Mbps at just INR 167 + GST on tachyonbroadband.com",
       "detection_method": null,
+      "filename_preserved": true,
       "height": 1656,
       "local_path": "content/posts/2021-08-28-the-human-side-of-isps/assets/inline/image.png",
       "mime_type": "image/png",
       "role": "inline",
       "sha256": "8d1cc8b6a6dca1f67b5ee0a81f2e6aa4e31608a0f722dbc6281d44171340a640",
+      "source_filename": "image.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/08/image.png",
+      "stored_filename": "image.png",
       "width": 1920
     }
   ],
-  "generated_at": "2026-07-06T12:02:51+00:00",
+  "generated_at": "2026-07-06T12:46:54+00:00",
   "post_id": 558,
   "post_slug": "the-human-side-of-isps"
 }

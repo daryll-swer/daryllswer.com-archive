@@ -43,9 +43,10 @@ flowchart LR
 - `docs/posts/<slug>/index.html` is the human-readable article page generated
   from the preserved WordPress-rendered article HTML, with localised images,
   internal archive links, responsive figure styling, and embed fallback links.
-- `docs/sheets/as141253-ipv6-architecture-example/` is the generated
-  human-readable landing page for the mirrored ODS, CSV, CSVW, and HTML sheet
-  artefacts.
+- `docs/sheets/as141253-ipv6-architecture-example/index.html` is the generated
+  tabbed HTML workbook for the AS141253 sheet. It is rendered from repository
+  CSV files and keeps adjacent ODS, CSV, CSVW, and Google HTML snapshots for
+  editing/provenance.
 
 ## Invariants
 
@@ -54,8 +55,14 @@ flowchart LR
 - Generated article bodies exclude donation/support CTAs and `/donation/`
   links as site-operational content.
 - Every local image reference in Markdown points to an existing local file.
-- Every downloaded asset has a source URL and SHA-256 checksum.
-- Spreadsheet CSV files remain diffable; ODS remains the styled editable open
+- Every downloaded WordPress media asset preserves the WordPress URL basename
+  and direct response bytes wherever possible. This preserves embedded image
+  metadata/EXIF because the archive does not re-encode media files. Any
+  filename collision exception must be recorded in the asset manifest.
+- Every downloaded asset has a source URL, source filename, stored filename,
+  filename-preserved flag, and SHA-256 checksum.
+- Spreadsheet CSV files remain diffable; `workbook.html`/Pages sheet output is
+  generated from those CSV files; ODS remains the styled editable open
   artefact.
 - Spreadsheet CSV exports are normalised to LF line endings for stable Git
   diffs; generated HTML artefacts strip trailing line whitespace; ODS remains a

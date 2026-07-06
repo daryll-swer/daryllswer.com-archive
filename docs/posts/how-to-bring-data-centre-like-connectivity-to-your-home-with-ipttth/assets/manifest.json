@@ -5,12 +5,15 @@
       "bytes": 304976,
       "caption": "",
       "detection_method": "rest_embedded_wp_featuredmedia",
+      "filename_preserved": true,
       "height": 1706,
-      "local_path": "content/posts/2025-05-26-how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/assets/featured.jpg",
+      "local_path": "content/posts/2025-05-26-how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/assets/Data-centre_cables_FT-scaled.jpg",
       "mime_type": "image/jpeg",
       "role": "featured",
       "sha256": "374e4e046b7c574cda68309a3f0ecd0c2a7523b4f59bde79fe3e64ab45bd8023",
+      "source_filename": "Data-centre_cables_FT-scaled.jpg",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg",
+      "stored_filename": "Data-centre_cables_FT-scaled.jpg",
       "width": 2560
     },
     {
@@ -18,12 +21,15 @@
       "bytes": 79725,
       "caption": "Figure-1 BLR Layer 1 topology",
       "detection_method": null,
+      "filename_preserved": true,
       "height": 809,
       "local_path": "content/posts/2025-05-26-how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/assets/inline/Figure-1_BLR_Layer_1_Topology-scaled.png",
       "mime_type": "image/png",
       "role": "inline",
       "sha256": "833bea14fa7788a4f1837779732a920bd4fc8d1f17961a9098c9c77ada5f1d46",
+      "source_filename": "Figure-1_BLR_Layer_1_Topology-scaled.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-1_BLR_Layer_1_Topology-scaled.png",
+      "stored_filename": "Figure-1_BLR_Layer_1_Topology-scaled.png",
       "width": 2560
     },
     {
@@ -31,12 +37,15 @@
       "bytes": 736629,
       "caption": "Figure-2 Fibre Termination in my SHL home",
       "detection_method": null,
+      "filename_preserved": true,
       "height": 1484,
       "local_path": "content/posts/2025-05-26-how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/assets/inline/IMG_1961.jpg",
       "mime_type": "image/jpeg",
       "role": "inline",
       "sha256": "023e142dc733e7ccd304a999a45e450552916c997bdebb1a69abd44df375863c",
+      "source_filename": "IMG_1961.jpg",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/03/IMG_1961.jpg",
+      "stored_filename": "IMG_1961.jpg",
       "width": 2229
     },
     {
@@ -44,12 +53,15 @@
       "bytes": 63704,
       "caption": "Figure 3 — The SHL Layer 1 topology",
       "detection_method": null,
+      "filename_preserved": true,
       "height": 503,
       "local_path": "content/posts/2025-05-26-how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/assets/inline/Figure-3_SHL_Layer_1_Topology-scaled.png",
       "mime_type": "image/png",
       "role": "inline",
       "sha256": "84c46f079969d2625509b35620a64ce5a10871d9760d0681a3872c8e42b0aec1",
+      "source_filename": "Figure-3_SHL_Layer_1_Topology-scaled.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-3_SHL_Layer_1_Topology-scaled.png",
+      "stored_filename": "Figure-3_SHL_Layer_1_Topology-scaled.png",
       "width": 2560
     },
     {
@@ -57,16 +69,19 @@
       "bytes": 280411,
       "caption": "Figure-4 Screenshot of past BLR BGP peers that were live on Layer 1",
       "detection_method": null,
+      "filename_preserved": true,
       "height": 1473,
       "local_path": "content/posts/2025-05-26-how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/assets/inline/AS149794_BLR_BGP_Peers-scaled.png",
       "mime_type": "image/png",
       "role": "inline",
       "sha256": "b40d0b1a65d4254e683abe1dbcafb82c8f4256249ab254d700a335fd3668a681",
+      "source_filename": "AS149794_BLR_BGP_Peers-scaled.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/AS149794_BLR_BGP_Peers-scaled.png",
+      "stored_filename": "AS149794_BLR_BGP_Peers-scaled.png",
       "width": 2560
     }
   ],
-  "generated_at": "2026-07-06T12:02:51+00:00",
+  "generated_at": "2026-07-06T12:46:54+00:00",
   "post_id": 4285,
   "post_slug": "how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth"
 }

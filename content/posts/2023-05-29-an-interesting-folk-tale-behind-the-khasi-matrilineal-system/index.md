@@ -5,7 +5,7 @@ date: "2023-05-29T16:51:12"
 last_modified: "2025-05-21T02:00:28"
 canonical_url: "https://www.daryllswer.com/an-interesting-folk-tale-behind-the-khasi-matrilineal-system/"
 wordpress_id: 2492
-featured_image: "assets/featured.jpg"
+featured_image: "assets/ShotInSohra-DaryllSwer.jpg"
 categories:
   - "Khasi Ethnicity"
   - "Non-Tech"
@@ -13,7 +13,7 @@ tags:
   - "Khasi"
   - "Non-Tech"
 ---
-![Landscape photo in Sohra by Daryll Swer](assets/featured.jpg)
+![Landscape photo in Sohra by Daryll Swer](assets/ShotInSohra-DaryllSwer.jpg)
 
 This article will be a unique departure from my usual technology and network engineering posts. As an author predominantly focused on those subjects, this marks a special occasion as I delve into a topic that resonates deeply with my own ethnicity and cultural heritage. Growing up immersed in the world of technology, I have always been fascinated by its advancements. However, I believe it is equally important to explore and celebrate the rich tapestry of my roots. My ethnicity is called Khasi and my native language is the Khasi language.
 

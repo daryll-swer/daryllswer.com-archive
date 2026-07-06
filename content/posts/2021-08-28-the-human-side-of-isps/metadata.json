@@ -50,12 +50,15 @@
     "bytes": 75798,
     "caption": "Credits to APNIC folks for the image",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 1398,
-    "local_path": "content/posts/2021-08-28-the-human-side-of-isps/assets/featured.png",
+    "local_path": "content/posts/2021-08-28-the-human-side-of-isps/assets/Computer-with-people.png",
     "mime_type": "image/png",
     "role": "featured",
     "sha256": "51a2d31f9b39a36100f7e0f48ccb2f24b18aa4a6febf0701ac6c5f22d6a1692c",
+    "source_filename": "Computer-with-people.png",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png",
+    "stored_filename": "Computer-with-people.png",
     "width": 3840
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -109,8 +112,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "4574b76a50d7770843b465f2db7cb296314ac985970ed20b8299c05888f9acd5",
-    "index_md_sha256": "252a330d48fccad1bd69c9350a26bb939fad2f23435d0508bedaf97b8cfe2cb0",
+    "canonical_page_html_sha256": "bc943ccc59a4f73d0b7e743ede484f763eb90b6bdfbf5ad6c2e57c9831348fc6",
+    "index_md_sha256": "6e2dd98747e61487b025389baffde2051390cfb4145744371e5b6c93fdcc2e4f",
     "rendered_article_html_sha256": "b2177f8f7a72d6ab346ae6e5153f1543e1b18465f381c8debf2ca05fb7e357a3",
     "wordpress_post_json_sha256": "04db77cd468bc5287fbcdd046765f93ca5fc6ee6c3e180d5015c198ac16a6544"
   },
@@ -121,7 +124,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/558",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

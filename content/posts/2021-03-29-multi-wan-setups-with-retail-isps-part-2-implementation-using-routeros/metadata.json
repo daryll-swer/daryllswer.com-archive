@@ -44,18 +44,21 @@
     "bytes": 9954,
     "caption": null,
     "detection_method": "open_graph_og_image",
+    "filename_preserved": true,
     "height": 232,
-    "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/featured.png",
+    "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
     "mime_type": "image/png",
     "role": "featured",
     "sha256": "cdd891df066ab38344c777c3ef0f30daa34123f34299c0a5f448a057a026f43a",
+    "source_filename": "Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
+    "stored_filename": "Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
     "width": 1166
   },
   "featured_image_detection_method": "open_graph_og_image",
   "hashes": {
-    "canonical_page_html_sha256": "5d6c9368f7c91852679e75603b7082018df6526ee3df0de2acef4db3448d4cfd",
-    "index_md_sha256": "6b2ab29c8a4fb262cd43938d1efa39689ac93f34bd13c6eefd4901243fb566fa",
+    "canonical_page_html_sha256": "96fd4c47662771fcc7037279a03fdfc8a4428dfc0a9ef9eea7f0da0ab03f2f7b",
+    "index_md_sha256": "ca46f94d2d17cf49b8ac6dd9de7117545aa7b9da60624239096eefbdf25a50e2",
     "rendered_article_html_sha256": "aec67eb6a951c73dc3397ad7abdb5aed8e51753a4ee56480b0270478ea549540",
     "wordpress_post_json_sha256": "77ff5666c111440262ed113eea9306f1a313dcbe4402d2748cb1d71bcf00083a"
   },
@@ -66,7 +69,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

@@ -5,14 +5,14 @@ date: "2023-08-28T06:53:42"
 last_modified: "2025-05-21T01:47:33"
 canonical_url: "https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/"
 wordpress_id: 2739
-featured_image: "assets/featured.jpg"
+featured_image: "assets/Subnet-Router-Anycast.jpg"
 categories:
   - "Networking"
 tags:
   - "IPv6"
   - "Networking"
 ---
-![Behavioural differences of IPv6 subnet-router anycast address implementations](assets/featured.jpg)
+![Behavioural differences of IPv6 subnet-router anycast address implementations](assets/Subnet-Router-Anycast.jpg)
 
 ****This article has been published on the [APNIC blog](https://blog.apnic.net/2023/08/28/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/) as well.****
 

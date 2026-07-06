@@ -5,16 +5,19 @@
       "bytes": 33421,
       "caption": null,
       "detection_method": "open_graph_og_image",
+      "filename_preserved": true,
       "height": 1344,
-      "local_path": "content/posts/2021-03-25-shortcomings-of-cgnat-and-potential-work-arounds/assets/featured.png",
+      "local_path": "content/posts/2021-03-25-shortcomings-of-cgnat-and-potential-work-arounds/assets/13_DS_Logo_Dark_Mode_SEO-scaled.png",
       "mime_type": "image/png",
       "role": "featured",
       "sha256": "9f3bcf4e2b290ed7b1149ffe837a5ea8f3eae335d32c59dc994543c9e7073e21",
+      "source_filename": "13_DS_Logo_Dark_Mode_SEO-scaled.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/01/13_DS_Logo_Dark_Mode_SEO-scaled.png",
+      "stored_filename": "13_DS_Logo_Dark_Mode_SEO-scaled.png",
       "width": 2560
     }
   ],
-  "generated_at": "2026-07-06T12:02:51+00:00",
+  "generated_at": "2026-07-06T12:46:54+00:00",
   "post_id": 29,
   "post_slug": "shortcomings-of-cgnat-and-potential-work-arounds"
 }

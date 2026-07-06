@@ -98,3 +98,35 @@
 - Impact: `scripts/export-google-sheet.py` writes LF-normalised CSV files and
   whitespace-normalised Google Sheet HTML snapshots. `scripts/render-site.py`
   strips trailing line whitespace from generated Pages text output.
+
+## 2026-07-06: Keep README Reader-Facing
+
+- Decision: Keep operational maintainer commands out of `README.md` and place
+  them in `AGENTS.md` and `docs/MIRRORING.md`.
+- Rationale: The README should be clear and simple for readers landing on the
+  public archive, while AI agents and future maintainers need more procedural
+  instructions.
+- Impact: `README.md` describes purpose, layout, licence, and the Pages URL.
+  Maintainer commands and approval boundaries live in directive/process docs.
+
+## 2026-07-06: Preserve WordPress Media Filenames and Bytes
+
+- Decision: Store featured, inline, and linked WordPress media using the
+  WordPress URL basename and direct response bytes wherever possible.
+- Rationale: Filename fidelity and byte preservation keep media provenance
+  obvious and preserve embedded metadata/EXIF without re-encoding.
+- Impact: `make sync` records source filename, stored filename,
+  filename-preserved status, and SHA-256 in asset manifests. `make validate`
+  fails if WordPress media filenames are not preserved except for declared
+  collision exceptions.
+
+## 2026-07-06: Render AS141253 as a CSV-Backed Tabbed HTML Workbook
+
+- Decision: Mirror the IPv6 Google Sheet as a standalone `workbook.html` with
+  clickable tabs, generated from per-tab CSV files.
+- Rationale: The repo needs a human-readable Google-Sheets-like workbook while
+  keeping CSV as the easy-to-edit source format for future updates.
+- Impact: `scripts/export-google-sheet.py` generates
+  `data/sheets/as141253-ipv6-architecture-example/workbook.html`.
+  `scripts/render-site.py` publishes the same workbook at
+  `docs/sheets/as141253-ipv6-architecture-example/index.html`.

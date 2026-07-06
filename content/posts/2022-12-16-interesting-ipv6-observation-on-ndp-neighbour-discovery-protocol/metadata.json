@@ -56,12 +56,15 @@
     "bytes": 7220368,
     "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 1990,
-    "local_path": "content/posts/2022-12-16-interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/assets/featured.png",
+    "local_path": "content/posts/2022-12-16-interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/assets/image.png",
     "mime_type": "image/png",
     "role": "featured",
     "sha256": "471709913897ff1d5239663289085efa645a46514a1b8655a536e263757af4a8",
+    "source_filename": "image.png",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image.png",
+    "stored_filename": "image.png",
     "width": 4080
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -123,8 +126,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "12dec64c4d73b9f9d62f0a802764bd508e6ec2a2b433b4828d1f7927fe6199e5",
-    "index_md_sha256": "1846c53c0b3017bb121a616a5bba0c18864cb566fc05400be3572ca26853647a",
+    "canonical_page_html_sha256": "fbcc968b882fee3f800977c3d35b4ac6ef92414c58ab6309cf5d8da355610d3b",
+    "index_md_sha256": "d8c1e9b8f3af8e26020cf8fee32b94f7f7cbe8c32b5aecc7fff776e8781201f3",
     "rendered_article_html_sha256": "2b67d8a27df4824b8ffa69952f2f03685a4c105c6caa327b228adbffd5fc8415",
     "wordpress_post_json_sha256": "a9eb8318a3d7e5a80b06a7eb277e1d1b432915ddf08d826524dea904320f1e36"
   },
@@ -135,7 +138,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/1674",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

@@ -5,7 +5,7 @@ date: "2022-07-01T11:27:21"
 last_modified: "2025-06-23T20:41:31"
 canonical_url: "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/"
 wordpress_id: 970
-featured_image: "assets/featured.png"
+featured_image: "assets/AS-Cropped.png"
 categories:
   - "Networking"
 tags:
@@ -18,7 +18,7 @@ tags:
   - "Networking"
   - "RFC8805"
 ---
-![How did I set up my own Autonomous System?](assets/featured.png)
+![How did I set up my own Autonomous System?](assets/AS-Cropped.png)
 
 *Note: During the course of  writing this article, I [migrated](https://twitter.com/DaryllSwer/status/1519575084687818752) from AS210777 to [AS149794](https://bgp.tools/as/149794). The rest pretty much stays the same.*
 

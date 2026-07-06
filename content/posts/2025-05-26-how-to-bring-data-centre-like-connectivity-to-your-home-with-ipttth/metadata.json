@@ -43,12 +43,15 @@
     "bytes": 304976,
     "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 1706,
-    "local_path": "content/posts/2025-05-26-how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/assets/featured.jpg",
+    "local_path": "content/posts/2025-05-26-how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/assets/Data-centre_cables_FT-scaled.jpg",
     "mime_type": "image/jpeg",
     "role": "featured",
     "sha256": "374e4e046b7c574cda68309a3f0ecd0c2a7523b4f59bde79fe3e64ab45bd8023",
+    "source_filename": "Data-centre_cables_FT-scaled.jpg",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg",
+    "stored_filename": "Data-centre_cables_FT-scaled.jpg",
     "width": 2560
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -110,8 +113,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "2964082c926a46fe2ffbdda971bedde484be1c371234b44146e8e179f610154d",
-    "index_md_sha256": "e302417c96301d2259432884f6433d2e3be023d70bf4b36a67d3acc1d456c324",
+    "canonical_page_html_sha256": "6dc89bce1fc6ad2e0d6f948e5dcc2a6df23e2c28632815b7f9832922a1343c0d",
+    "index_md_sha256": "39d1ec7b3b80631e69e358ea262df7c918e1dbcdb3130bef254fe8447fc0ef18",
     "rendered_article_html_sha256": "22b7a4ee24bca27a17c930aa1b95d6328f1e734b5652233b4cad67cddcc88b3c",
     "wordpress_post_json_sha256": "0bca81260aa9f41c06edfceb98b844d5644d31fafccfb1c98f411e915af4529f"
   },
@@ -122,7 +125,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/4285",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

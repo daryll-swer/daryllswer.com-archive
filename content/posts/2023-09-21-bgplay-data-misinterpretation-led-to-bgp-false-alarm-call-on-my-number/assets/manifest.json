@@ -5,12 +5,15 @@
       "bytes": 1510489,
       "caption": "",
       "detection_method": "rest_embedded_wp_featuredmedia",
+      "filename_preserved": true,
       "height": 630,
-      "local_path": "content/posts/2023-09-21-bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/assets/featured.png",
+      "local_path": "content/posts/2023-09-21-bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/assets/BGP_False_Alarm_Featured_Image.png",
       "mime_type": "image/png",
       "role": "featured",
       "sha256": "6bdce0ab39d52efc3dd3b066e661d3c3b8a50360c14204f2dd63e389ee814b81",
+      "source_filename": "BGP_False_Alarm_Featured_Image.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png",
+      "stored_filename": "BGP_False_Alarm_Featured_Image.png",
       "width": 1200
     },
     {
@@ -18,16 +21,19 @@
       "bytes": 1726200,
       "caption": "Figure-1 Screenshot from RIPE BGPlay of the very specific BGP data output",
       "detection_method": null,
+      "filename_preserved": true,
       "height": 2516,
       "local_path": "content/posts/2023-09-21-bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/assets/inline/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg",
       "mime_type": "image/jpeg",
       "role": "inline",
       "sha256": "7ee021181e10a3d6b34e876ae61ea9023fc989c9615fd508447f82a1e90b54a7",
+      "source_filename": "Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg",
+      "stored_filename": "Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg",
       "width": 2880
     }
   ],
-  "generated_at": "2026-07-06T12:02:51+00:00",
+  "generated_at": "2026-07-06T12:46:54+00:00",
   "post_id": 2803,
   "post_slug": "bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number"
 }

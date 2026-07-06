@@ -5,9 +5,9 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: GitHub Pages archive rendering
-- Status: complete; GitHub Pages deployed and verified
-- Last updated: 2026-07-06 12:06 UTC
+- Current sprint / workstream: README, media fidelity, and sheet workbook update
+- Status: in progress; local validation/browser QA passed, commit/push pending
+- Last updated: 2026-07-06 12:51 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -67,6 +67,15 @@
 - GitHub publication:
   - Status: complete
   - Notes: New public repo `daryll-swer/daryllswer.com-archive` created and pushed; old repo `daryll-swer/daryllswer.com-neteng-blog` deleted.
+- README maintainer command move:
+  - Status: complete locally
+  - Notes: README is reader-facing; maintainer commands live in `AGENTS.md` and `docs/MIRRORING.md`.
+- WordPress media filename/byte preservation:
+  - Status: complete locally
+  - Notes: Sync now stores WordPress media under source basenames where possible, preserves direct response bytes, and records filename-preservation fields in asset manifests.
+- AS141253 tabbed workbook:
+  - Status: complete locally
+  - Notes: `scripts/export-google-sheet.py` generates `data/sheets/as141253-ipv6-architecture-example/workbook.html`; `scripts/render-site.py` publishes it as the Pages sheet route.
 
 ## Execution Log
 
@@ -150,6 +159,14 @@
   - Action: Pushed generated Pages site and enabled GitHub Pages from `main` `/docs`.
   - Evidence: GitHub Pages API reported `status: built`, source `main` `/docs`, and `curl -I https://daryll-swer.github.io/daryllswer.com-archive/` returned HTTP 200.
   - Result: pass
+- 2026-07-06 12:45 UTC:
+  - Action: Implemented README command move, WordPress media filename/byte preservation, and CSV-backed AS141253 workbook generation.
+  - Evidence: `README.md`, `AGENTS.md`, `docs/MIRRORING.md`, `scripts/sync-wordpress-posts.py`, `scripts/sheet_workbook.py`, `scripts/export-google-sheet.py`, `scripts/render-site.py`, `scripts/validate-mirror.py`, schemas, regenerated content/docs output.
+  - Result: pending final validation and browser QA
+- 2026-07-06 12:51 UTC:
+  - Action: Regenerated archive/site output, validated, public-safety scanned, and browser-checked the update locally.
+  - Evidence: `make sync render-site validate scan-secrets PYTHON=<bundled-python>` passed with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings; browser QA confirmed 19 index cards, local IPv6 sheet link, 2 media embed wrappers, 9 workbook tabs, tab switching, no broken images, and no page-level horizontal overflow on desktop/mobile-sized viewports.
+  - Result: pass locally
 
 ## Tests and Verification
 
@@ -170,19 +187,25 @@
   - `make validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-06 12:00 UTC with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
   - `git diff --check`: pass at 2026-07-06 12:04 UTC.
   - Local browser QA against `http://127.0.0.1:4173/`: pass at 2026-07-06 11:54 UTC for desktop and 390x844 mobile.
+  - `make sync render-site validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-06 12:51 UTC with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
+  - Media filename preservation check: pass at 2026-07-06 12:52 UTC; 68 WordPress media assets, 19 featured assets, 0 filename-preservation failures.
+  - Workbook structure check: pass at 2026-07-06 12:52 UTC; 9 tabs/labels/panels in source and Pages workbook HTML.
+  - Local browser QA against `http://127.0.0.1:4173/`: pass at 2026-07-06 12:51 UTC for desktop and mobile-sized viewport.
+  - `python3 -m py_compile scripts/*.py`: pass at 2026-07-06 12:51 UTC.
+  - `git diff --check`: pass at 2026-07-06 12:51 UTC.
 - Not run:
-  - None for the requested Pages/archive update.
+  - Live Pages verification for the current README/media/workbook update.
 
 ## Next Pickup
 
 - Next action:
-  - Optional repository metadata polish and future sync automation.
+  - Commit, push, and verify GitHub Pages rebuild.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for the requested Pages/archive update.
+  - Current local update still needs live Pages verification after push.
 
 ## Completion Criteria
 

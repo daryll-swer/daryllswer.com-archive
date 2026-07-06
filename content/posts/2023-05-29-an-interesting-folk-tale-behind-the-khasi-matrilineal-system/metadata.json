@@ -37,12 +37,15 @@
     "bytes": 7075626,
     "caption": "Shot in Sohra by Daryll Swer\nContinue readingShot in Sohra by Daryll Swer",
     "detection_method": "rest_embedded_wp_featuredmedia",
+    "filename_preserved": true,
     "height": 3024,
-    "local_path": "content/posts/2023-05-29-an-interesting-folk-tale-behind-the-khasi-matrilineal-system/assets/featured.jpg",
+    "local_path": "content/posts/2023-05-29-an-interesting-folk-tale-behind-the-khasi-matrilineal-system/assets/ShotInSohra-DaryllSwer.jpg",
     "mime_type": "image/jpeg",
     "role": "featured",
     "sha256": "d9b03d942ebf3edf04ff5721ba64e41bfc996fc4a3ef3156d5d7f22d9181a8c7",
+    "source_filename": "ShotInSohra-DaryllSwer.jpg",
     "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer.jpg",
+    "stored_filename": "ShotInSohra-DaryllSwer.jpg",
     "width": 4032
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
@@ -104,8 +107,8 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "4114dd6ba588956b2413533ab111bd97e0b2a8cbe98cf4977d8f8f21e42cdcd3",
-    "index_md_sha256": "91ceb909a15cd687f0b7d1634f9010f682e38c8fc306c533b26003d655b9cb89",
+    "canonical_page_html_sha256": "fcca26a612537f4747458060e4147af14d2850ad996e8f285decbceb5783758f",
+    "index_md_sha256": "40b3f2d9c6f791d1679e6bceabccdb0d6256e07fed779d9c0fca84a9abdfca7a",
     "rendered_article_html_sha256": "64465484c89d645b14b1792a8e8b52910f6cccf004552540a079e129b5f95a4f",
     "wordpress_post_json_sha256": "d845cd8f50763ab506fd4b1523e82ccacc1c3d840ce762490b5fd06301f94e5e"
   },
@@ -116,7 +119,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2492",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:02:51+00:00",
+    "fetched_at": "2026-07-06T12:46:54+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

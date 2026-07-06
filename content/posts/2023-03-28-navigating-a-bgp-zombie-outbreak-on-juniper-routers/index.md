@@ -5,7 +5,7 @@ date: "2023-03-28T13:18:58"
 last_modified: "2025-05-21T01:47:21"
 canonical_url: "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/"
 wordpress_id: 2053
-featured_image: "assets/featured.webp"
+featured_image: "assets/Zombie-routes_FT.webp"
 categories:
   - "DC/Enterprise"
   - "Networking"
@@ -14,7 +14,7 @@ tags:
   - "Juniper"
   - "JunOS"
 ---
-![Navigating a BGP Zombie Outbreak on Juniper Routers](assets/featured.webp)
+![Navigating a BGP Zombie Outbreak on Juniper Routers](assets/Zombie-routes_FT.webp)
 
 **This article has been published on the [APNIC blog](https://blog.apnic.net/2023/04/13/navigating-a-bgp-zombie-outbreak-on-juniper-routers/) as well.**
 

@@ -5,12 +5,15 @@
       "bytes": 724214,
       "caption": "",
       "detection_method": "rest_embedded_wp_featuredmedia",
+      "filename_preserved": true,
       "height": 404,
-      "local_path": "content/posts/2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/assets/featured.png",
+      "local_path": "content/posts/2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/assets/Scaffold_FT.png",
       "mime_type": "image/png",
       "role": "featured",
       "sha256": "0a90b27ccd2db41f499183fe35697bce359890caa2e1a89a61761f1fbae0f328",
+      "source_filename": "Scaffold_FT.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png",
+      "stored_filename": "Scaffold_FT.png",
       "width": 1110
     },
     {
@@ -18,12 +21,15 @@
       "bytes": 261088,
       "caption": "Figure-1 IPv6 cheat sheet from RIPE (source)",
       "detection_method": null,
+      "filename_preserved": true,
       "height": 982,
       "local_path": "content/posts/2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/assets/inline/IPv6Chart_2015.png",
       "mime_type": "image/png",
       "role": "inline",
       "sha256": "cbabd26af76c80684bbf66f0eb63604f2e01bdba3fa0b52e21c0660337400d11",
+      "source_filename": "IPv6Chart_2015.png",
       "source_url": "https://www.ripe.net/about-us/press-centre/IPv6Chart_2015.png",
+      "stored_filename": "IPv6Chart_2015.png",
       "width": 711
     },
     {
@@ -31,12 +37,15 @@
       "bytes": 1056370,
       "caption": "Figure-2 DC Topology Example",
       "detection_method": null,
+      "filename_preserved": true,
       "height": 3808,
       "local_path": "content/posts/2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/assets/inline/Figure-2-DC-Topology-Example.png",
       "mime_type": "image/png",
       "role": "inline",
       "sha256": "b51bff9cd31a517d536ba7ee9147e27175f01e5c63f9a5e61f49495864ff38e2",
+      "source_filename": "Figure-2-DC-Topology-Example.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-2-DC-Topology-Example.png",
+      "stored_filename": "Figure-2-DC-Topology-Example.png",
       "width": 5808
     },
     {
@@ -44,12 +53,15 @@
       "bytes": 256615,
       "caption": "Figure-3 ISP Topology Example",
       "detection_method": null,
+      "filename_preserved": true,
       "height": 4320,
       "local_path": "content/posts/2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/assets/inline/Figure-3-ISP-Topology-Example-1-2710x4320.png",
       "mime_type": "image/png",
       "role": "inline",
       "sha256": "d46a7c7156fd2510962efd37f81162878d9df7c3cb032298bf6cb0581004ba44",
+      "source_filename": "Figure-3-ISP-Topology-Example-1-2710x4320.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1-2710x4320.png",
+      "stored_filename": "Figure-3-ISP-Topology-Example-1-2710x4320.png",
       "width": 2710
     },
     {
@@ -57,16 +69,19 @@
       "bytes": 685068,
       "caption": null,
       "detection_method": null,
+      "filename_preserved": true,
       "height": 5044,
       "local_path": "content/posts/2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/assets/inline/Figure-3-ISP-Topology-Example-1.png",
       "mime_type": "image/png",
       "role": "linked-media",
       "sha256": "8abb9748e59376079c26d2d37aa7a5bbc0560b0f139df1108013842bf2784e64",
+      "source_filename": "Figure-3-ISP-Topology-Example-1.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1.png",
+      "stored_filename": "Figure-3-ISP-Topology-Example-1.png",
       "width": 3164
     }
   ],
-  "generated_at": "2026-07-06T12:02:51+00:00",
+  "generated_at": "2026-07-06T12:46:54+00:00",
   "post_id": 1512,
   "post_slug": "ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators"
 }

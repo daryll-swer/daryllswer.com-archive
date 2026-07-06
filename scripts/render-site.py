@@ -14,6 +14,8 @@ import shutil
 import urllib.parse
 from pathlib import Path
 
+from sheet_workbook import render_workbook_page
+
 try:
     import lxml.html
 except Exception as exc:  # pragma: no cover - environment guard
@@ -394,50 +396,17 @@ def render_sheet_page() -> None:
     source_dir = ROOT / "data" / "sheets" / SHEET_SLUG
     manifest = load_json(source_dir / "manifest.json")
     out_dir = OUT / "sheets" / SHEET_SLUG
-    artifact_dir = out_dir / "artifact"
-    shutil.copytree(source_dir, artifact_dir, dirs_exist_ok=True)
-
-    rows = []
-    for tab in manifest.get("tabs", []):
-        rows.append(
-            "<tr>"
-            f"<td>{html_escape(tab.get('name', ''))}</td>"
-            f"<td><a href=\"artifact/{html_escape(tab['csv']['path'].split(SHEET_SLUG + '/', 1)[1])}\">CSV</a></td>"
-            f"<td><a href=\"artifact/{html_escape(tab['html']['path'].split(SHEET_SLUG + '/', 1)[1])}\">HTML snapshot</a></td>"
-            f"<td><a href=\"artifact/{html_escape(tab['csvw']['path'].split(SHEET_SLUG + '/', 1)[1])}\">CSVW metadata</a></td>"
-            "</tr>"
-        )
-    ods_rel = manifest["ods"]["path"].split(SHEET_SLUG + "/", 1)[1]
-    workbook_rel = manifest["published_workbook_html"]["path"].split(SHEET_SLUG + "/", 1)[1]
-    body = f"""{site_header("../../")}
-<main class="sheet-page">
-  <section class="sheet-hero">
-    <p class="eyebrow">Spreadsheet archive</p>
-    <h1>{html_escape(manifest.get("title", "AS141253 IPv6 Architecture Example"))}</h1>
-    <p>This is the repository-hosted copy of the public Google Sheet linked from the IPv6 architecture article.</p>
-    <p class="button-row">
-      <a class="button" href="artifact/{html_escape(ods_rel)}">Download ODS</a>
-      <a class="button secondary" href="artifact/{html_escape(workbook_rel)}">Open HTML workbook snapshot</a>
-      <a class="button secondary" href="{html_escape(manifest["source_url"])}">Original Google Sheet</a>
-    </p>
-  </section>
-  <section class="table-wrap" aria-label="Spreadsheet tabs">
-    <table>
-      <thead><tr><th>Tab</th><th>CSV</th><th>HTML</th><th>Metadata</th></tr></thead>
-      <tbody>{"".join(rows)}</tbody>
-    </table>
-  </section>
-</main>"""
     write_text(
         out_dir / "index.html",
-        page_shell(
-            "AS141253 IPv6 Architecture Example",
-            "Repository-hosted ODS, CSV, CSVW, and HTML snapshots for the AS141253 IPv6 architecture example.",
-            body,
-            "../../assets/theme.css",
-            f"sheets/{SHEET_SLUG}/",
+        render_workbook_page(
+            root=ROOT,
+            manifest=manifest,
+            sheet_slug=SHEET_SLUG,
+            home_href="../../index.html",
+            repo_href="https://github.com/daryll-swer/daryllswer.com-archive",
         ),
     )
+    shutil.copytree(source_dir, out_dir, dirs_exist_ok=True, ignore=shutil.ignore_patterns("workbook.html"))
 
 
 def render_css() -> None:

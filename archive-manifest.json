@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-06T12:02:51+00:00",
+  "generated_at": "2026-07-06T12:46:54+00:00",
   "post_count": 19,
   "posts": [
     {
       "bundle_path": "content/posts/2026-06-04-bgp-router-id-structuring-in-ipv6-native-networks",
       "canonical_url": "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/",
-      "featured_image": "assets/featured.jpg",
+      "featured_image": "assets/BGP_RouterID_FT-scaled.jpg",
       "id": 5324,
       "modified": "2026-06-14T05:55:24",
       "published": "2026-06-04T14:36:35",
@@ -16,7 +16,7 @@
     {
       "bundle_path": "content/posts/2025-05-26-how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth",
       "canonical_url": "https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/",
-      "featured_image": "assets/featured.jpg",
+      "featured_image": "assets/Data-centre_cables_FT-scaled.jpg",
       "id": 4285,
       "modified": "2025-08-29T16:02:17",
       "published": "2025-05-26T08:30:00",
@@ -27,7 +27,7 @@
     {
       "bundle_path": "content/posts/2025-05-19-how-to-configure-routed-ipv6-in-docker",
       "canonical_url": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/Docker-IPv6.png",
       "id": 5136,
       "modified": "2025-05-19T12:04:34",
       "published": "2025-05-19T08:30:00",
@@ -38,7 +38,7 @@
     {
       "bundle_path": "content/posts/2025-04-22-lets-talk-about-cgnat-and-ipv6-yet-again",
       "canonical_url": "https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/NAT_Mess.png",
       "id": 5018,
       "modified": "2026-06-06T17:45:08",
       "published": "2025-04-22T15:54:09",
@@ -49,7 +49,7 @@
     {
       "bundle_path": "content/posts/2024-11-12-out-of-band-network-design-for-service-provider-networks",
       "canonical_url": "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/OOB_FT.png",
       "id": 2931,
       "modified": "2026-06-06T17:45:13",
       "published": "2024-11-12T08:00:00",
@@ -60,7 +60,7 @@
     {
       "bundle_path": "content/posts/2024-01-27-drop-early-drop-often-raw-vs-filter-iptables-packet-filtering",
       "canonical_url": "https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/",
-      "featured_image": "assets/featured.webp",
+      "featured_image": "assets/drop_packets_parachutes.webp",
       "id": 3138,
       "modified": "2025-05-21T01:52:14",
       "published": "2024-01-27T01:09:13",
@@ -71,7 +71,7 @@
     {
       "bundle_path": "content/posts/2023-09-27-ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors",
       "canonical_url": "https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/IPv6_RA_featured_Image.png",
       "id": 2836,
       "modified": "2025-05-21T01:52:12",
       "published": "2023-09-27T20:54:49",
@@ -82,7 +82,7 @@
     {
       "bundle_path": "content/posts/2023-09-21-bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number",
       "canonical_url": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/BGP_False_Alarm_Featured_Image.png",
       "id": 2803,
       "modified": "2025-05-21T01:52:11",
       "published": "2023-09-21T19:17:52",
@@ -93,7 +93,7 @@
     {
       "bundle_path": "content/posts/2023-08-28-behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations",
       "canonical_url": "https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/",
-      "featured_image": "assets/featured.jpg",
+      "featured_image": "assets/Subnet-Router-Anycast.jpg",
       "id": 2739,
       "modified": "2025-05-21T01:47:33",
       "published": "2023-08-28T06:53:42",
@@ -104,7 +104,7 @@
     {
       "bundle_path": "content/posts/2023-05-29-an-interesting-folk-tale-behind-the-khasi-matrilineal-system",
       "canonical_url": "https://www.daryllswer.com/an-interesting-folk-tale-behind-the-khasi-matrilineal-system/",
-      "featured_image": "assets/featured.jpg",
+      "featured_image": "assets/ShotInSohra-DaryllSwer.jpg",
       "id": 2492,
       "modified": "2025-05-21T02:00:28",
       "published": "2023-05-29T16:51:12",
@@ -115,7 +115,7 @@
     {
       "bundle_path": "content/posts/2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators",
       "canonical_url": "https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/Scaffold_FT.png",
       "id": 1512,
       "modified": "2026-06-06T17:44:32",
       "published": "2023-04-04T04:30:00",
@@ -126,7 +126,7 @@
     {
       "bundle_path": "content/posts/2023-03-28-navigating-a-bgp-zombie-outbreak-on-juniper-routers",
       "canonical_url": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/",
-      "featured_image": "assets/featured.webp",
+      "featured_image": "assets/Zombie-routes_FT.webp",
       "id": 2053,
       "modified": "2025-05-21T01:47:21",
       "published": "2023-03-28T13:18:58",
@@ -137,7 +137,7 @@
     {
       "bundle_path": "content/posts/2022-12-16-interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol",
       "canonical_url": "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/image.png",
       "id": 1674,
       "modified": "2025-05-21T01:52:10",
       "published": "2022-12-16T15:04:54",
@@ -148,7 +148,7 @@
     {
       "bundle_path": "content/posts/2022-07-01-how-did-i-set-up-my-own-autonomous-system",
       "canonical_url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/AS-Cropped.png",
       "id": 970,
       "modified": "2025-06-23T20:41:31",
       "published": "2022-07-01T11:27:21",
@@ -159,7 +159,7 @@
     {
       "bundle_path": "content/posts/2021-08-28-the-human-side-of-isps",
       "canonical_url": "https://www.daryllswer.com/the-human-side-of-isps/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/Computer-with-people.png",
       "id": 558,
       "modified": "2025-05-21T01:47:31",
       "published": "2021-08-28T01:50:13",
@@ -170,7 +170,7 @@
     {
       "bundle_path": "content/posts/2021-06-08-edge-router-bng-optimisation-guide-for-isps",
       "canonical_url": "https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/",
-      "featured_image": "assets/featured.jpg",
+      "featured_image": "assets/834B1158-30C5-42F5-A513-FDA123138559.jpg",
       "id": 269,
       "modified": "2026-05-30T00:09:08",
       "published": "2021-06-08T20:32:48",
@@ -181,7 +181,7 @@
     {
       "bundle_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros",
       "canonical_url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
       "id": 115,
       "modified": "2025-05-21T01:47:29",
       "published": "2021-03-29T20:34:19",
@@ -192,7 +192,7 @@
     {
       "bundle_path": "content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory",
       "canonical_url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
       "id": 66,
       "modified": "2025-06-23T20:40:50",
       "published": "2021-03-28T13:44:36",
@@ -203,7 +203,7 @@
     {
       "bundle_path": "content/posts/2021-03-25-shortcomings-of-cgnat-and-potential-work-arounds",
       "canonical_url": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
-      "featured_image": "assets/featured.png",
+      "featured_image": "assets/13_DS_Logo_Dark_Mode_SEO-scaled.png",
       "id": 29,
       "modified": "2025-09-28T03:24:17",
       "published": "2021-03-25T11:15:43",
