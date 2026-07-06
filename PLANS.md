@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete locally; GitHub Pages site generated, validated, whitespace-checked, and browser-checked
+- Status: complete; GitHub Pages site deployed and verified
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-06 12:04 UTC
+- Last updated: 2026-07-06 12:06 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -27,14 +27,15 @@
   - Complete locally: static GitHub Pages site generated under `docs/` with a home index, article pages, responsive figures, podcast embed fallbacks, and AS141253 sheet landing page.
   - Complete locally: desktop and 390x844 mobile browser QA passed for homepage, IPv6 article, responsive figures, media embeds, and sheet landing page.
   - Complete locally: the AS141253 sheet README has clickable artefact links and generated text artefacts are normalised for stable diffs.
+  - Complete: GitHub Pages publishes `main` `/docs` at `https://daryll-swer.github.io/daryllswer.com-archive/`.
 - Last material update:
-  - 2026-07-06 12:03 UTC Added clickable sheet README artefact links, generated text artefact normalisation, and regenerated the archive/site with validation and public-safety checks passing.
+  - 2026-07-06 12:06 UTC Pushed the generated site, enabled GitHub Pages from `main` `/docs`, and verified the live homepage returns HTTP 200.
 - Next pickup action:
-  - Commit/push the generated site, configure GitHub Pages to publish from `main` `/docs`, and verify the remote Pages URL.
+  - Optional repository metadata polish and future sync automation.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - Remote GitHub Pages deployment is not verified until after this generated site is pushed and Pages finishes building.
+  - None for the requested Pages/archive update.
 
 ## Purpose / Big Picture
 
@@ -95,6 +96,7 @@
 - [x] 2026-07-06 11:40 UTC Added generated GitHub Pages site under `docs/`, local linked-media archiving, Markdown embed fallback links, and AS141253 sheet link rewrites.
 - [x] 2026-07-06 11:54 UTC Browser-checked generated Pages output on desktop and 390x844 mobile.
 - [x] 2026-07-06 12:03 UTC Added clickable AS141253 sheet README artefact links and generated text artefact normalisation.
+- [x] 2026-07-06 12:06 UTC Pushed generated Pages site, enabled Pages from `main` `/docs`, and verified live homepage HTTP 200.
 
 ## Decision Log
 
@@ -141,12 +143,12 @@
 - Decision: Generate GitHub Pages from `docs/`.
   - Rationale: GitHub Pages can publish a static HTML/CSS site from the repository while keeping source bundles in `content/` and `data/`.
   - Date/Author: 2026-07-06, user/Codex
-  - Status: final locally
+  - Status: final
   - Impact: `scripts/render-site.py` generates homepage, article pages, sheet landing page, copied assets, and theme CSS under `docs/`.
 - Decision: Treat GitHub Pages as generated static output, not runtime dynamic content.
   - Rationale: GitHub Pages is static hosting; deterministic regeneration is simpler and more durable than client-side fetching.
   - Date/Author: 2026-07-06, Codex
-  - Status: final locally
+  - Status: final
   - Impact: `make render-site` must be rerun after sync/rendering changes.
 - Decision: Normalise generated text artefacts for stable Git diffs.
   - Rationale: The repository declares `*.csv text eol=lf`; writing Google CSV responses with source CRLF and generated HTML with trailing line whitespace creates avoidable Git churn.
@@ -200,6 +202,6 @@
 - Achieved:
   - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, preview generation, and generated GitHub Pages site completed.
 - Remaining:
-  - Remote GitHub Pages build verification after push, then optional public repo metadata polish and future sync automation.
+  - Optional public repo metadata polish and future sync automation.
 - Retrospective timestamp:
   - 2026-07-06 09:20 UTC

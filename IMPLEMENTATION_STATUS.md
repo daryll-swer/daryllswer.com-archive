@@ -6,8 +6,8 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: GitHub Pages archive rendering
-- Status: complete locally; validation, public-safety scan, whitespace check, and browser QA passed
-- Last updated: 2026-07-06 12:04 UTC
+- Status: complete; GitHub Pages deployed and verified
+- Last updated: 2026-07-06 12:06 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -44,8 +44,8 @@
   - Status: complete
   - Notes: Public-safety scan passed with 0 findings after replacing local path references with public-safe placeholders.
 - `docs/` GitHub Pages site:
-  - Status: complete locally
-  - Notes: `scripts/render-site.py` generates homepage, article pages, responsive theme CSS, copied post assets, sheet artefact landing page, and `.nojekyll`.
+  - Status: complete and deployed
+  - Notes: `scripts/render-site.py` generates homepage, article pages, responsive theme CSS, copied post assets, sheet artefact landing page, and `.nojekyll`; GitHub Pages publishes `main` `/docs`.
 - Donation/support CTA archive filter:
   - Status: complete
   - Notes: `scripts/sync-wordpress-posts.py` removes article blocks containing the donation CTA or `/donation/` links and stores only redacted/hash audit metadata.
@@ -146,6 +146,10 @@
   - Action: Added clickable sheet README artefact links and normalised generated text artefacts for stable Git diffs.
   - Evidence: `data/sheets/as141253-ipv6-architecture-example/README.md`, `scripts/export-google-sheet.py`, `scripts/render-site.py`, and `.gitattributes`.
   - Result: pass
+- 2026-07-06 12:06 UTC:
+  - Action: Pushed generated Pages site and enabled GitHub Pages from `main` `/docs`.
+  - Evidence: GitHub Pages API reported `status: built`, source `main` `/docs`, and `curl -I https://daryll-swer.github.io/daryllswer.com-archive/` returned HTTP 200.
+  - Result: pass
 
 ## Tests and Verification
 
@@ -167,18 +171,18 @@
   - `git diff --check`: pass at 2026-07-06 12:04 UTC.
   - Local browser QA against `http://127.0.0.1:4173/`: pass at 2026-07-06 11:54 UTC for desktop and 390x844 mobile.
 - Not run:
-  - Remote GitHub Pages deployment check after pushing this generated site.
+  - None for the requested Pages/archive update.
 
 ## Next Pickup
 
 - Next action:
-  - Commit/push the generated site, configure GitHub Pages to publish from `main` `/docs`, then check the remote Pages URL.
+  - Optional repository metadata polish and future sync automation.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Remote GitHub Pages deployment is not verified until after the generated site is pushed and Pages finishes building.
+  - None for the requested Pages/archive update.
 
 ## Completion Criteria
 
