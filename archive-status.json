@@ -2,11 +2,11 @@
   "canonical_site": "https://www.daryllswer.com",
   "created_at": "2026-07-06T17:52:37Z",
   "failure": {
-    "consecutive_failures": 0,
-    "first_failure_at": null,
-    "last_failure_at": null,
-    "last_failure_detail": null,
-    "last_failure_kind": null
+    "consecutive_failures": 1,
+    "first_failure_at": "2026-07-06T18:11:41Z",
+    "last_failure_at": "2026-07-06T18:11:41Z",
+    "last_failure_detail": "HTTP Error 403: Forbidden",
+    "last_failure_kind": "HTTPError"
   },
   "frozen": false,
   "http_cache": {
@@ -31,7 +31,7 @@
     "frozen_archive_minimum_failure_window_days": 30,
     "frozen_archive_noops_without_network": true
   },
-  "state": "healthy",
-  "updated_at": "2026-07-06T17:53:07Z",
+  "state": "degraded",
+  "updated_at": "2026-07-06T18:11:41Z",
   "version": 1
 }
