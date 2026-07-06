@@ -27,6 +27,20 @@ Each post lives under `content/posts/YYYY-MM-DD-slug/`:
 Markdown conversion is best-effort. HTML snapshots are preserved for fidelity
 where Markdown cannot represent the original formatting safely.
 
+## GitHub Pages Site
+
+`scripts/render-site.py` generates a static HTML site under `docs/`.
+
+- `docs/index.html` is the public archive index.
+- `docs/posts/<slug>/index.html` is the rendered article page.
+- `docs/assets/theme.css` is the shared minimal visual theme.
+- `docs/sheets/as141253-ipv6-architecture-example/` exposes the mirrored
+  spreadsheet artefacts for human readers.
+
+GitHub Pages is static hosting, so the site is regenerated from repository
+content by `make render-site`; it does not fetch article bodies from WordPress
+or GitHub at runtime.
+
 ## Archive Filters
 
 The archive intentionally removes site-operational calls to action from
@@ -55,3 +69,23 @@ anchor `#references`.
 
 `make validate` fails if generated Markdown still links citation markers to a
 WordPress `#h-references` URL.
+
+## Media and Embeds
+
+Inline images and WordPress-uploaded media links are downloaded where possible
+and rewritten to local archive paths. This applies to image figures and to text
+links that point directly at files under `www.daryllswer.com/wp-content/uploads/`.
+
+Unsupported embeds such as podcast iframes are converted to durable Markdown
+links in `content/posts/.../index.md`. The generated GitHub Pages site keeps a
+styled embed wrapper with a fallback outbound link, so readers do not see raw
+HTML in the repository view.
+
+The AS141253 Google Sheet link in the IPv6 architecture article is rewritten to
+the repository-hosted spreadsheet archive in Markdown and to the generated
+Pages sheet landing page in HTML.
+
+Google's CSV exports are normalised to LF line endings when written to the
+repository so tabular diffs remain stable under `.gitattributes`. Generated HTML
+artefacts also strip trailing line whitespace; binary ODS/media artefacts are
+left as binary files.

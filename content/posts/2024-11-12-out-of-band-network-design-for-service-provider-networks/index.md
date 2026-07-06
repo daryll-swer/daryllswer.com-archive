@@ -51,21 +51,21 @@ Additionally, if the Authoritative DNS for the Second-Level Domain ([SLD](https:
 There was also **speculation** regarding the [2023 Optus outage](https://en.wikipedia.org/wiki/2023_Optus_outage) that one of the key blockers to restoring their services was due to a lack of proper OOB network implementation by interpreting this [information](https://www.theguardian.com/australia-news/live/2023/nov/13/australia-politics-live-monique-ryan-lobbyists-question-time-anthony-albanese-peter-dutton-cost-of-living-gaza?page=with:block-6551b7a78f08a95ef07ed924#block-6551b7a78f08a95ef07ed924) quoted below:
 
 > These routing information changes propagated through multiple layers in our network and exceeded preset safety levels on key routers which could not handle these. This resulted in those routers disconnecting from the Optus IP core network to protect themselves.
-> 
-> 
-> 
-> 
-> 
-> 
-> 
+>
+>
+>
+>
+>
+>
+>
 > The restoration required a large-scale effort of the team and in some cases **required** Optus to reconnect or **reboot routers physically**, requiring the **dispatch of people** across **a number of sites** in Australia. This is why restoration was progressive over the afternoon.
-> 
-> 
-> 
-> 
-> 
-> 
-> 
+>
+>
+>
+>
+>
+>
+>
 > — Optus Spokesperson. Source: [The Guardian](https://www.theguardian.com/australia-news/live/2023/nov/13/australia-politics-live-monique-ryan-lobbyists-question-time-anthony-albanese-peter-dutton-cost-of-living-gaza?page=with:block-6551b7a78f08a95ef07ed924#block-6551b7a78f08a95ef07ed924)
 
 ### Financial benefits
@@ -101,7 +101,7 @@ This setup involves a simple Internal Border Gateway Protocol (iBGP) route excha
 
 For IPv4, the route redistribution is fully adaptable to your local environment. If all OOB clients are IPv6-enabled, then you do not need to re-distribute the RFC 1918/RFC 6598 subnets. However, you may choose to re-distribute the public loopback IPv4 addresses assigned to the OOB edges, these /32s of course, originate from your production network’s ASN.
 
-[![](assets/inline/Figure-1_OOB_Edge_in_the_DC.png)](https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-1_OOB_Edge_in_the_DC.png)
+[![](assets/inline/Figure-1_OOB_Edge_in_the_DC.png)](assets/inline/Figure-1_OOB_Edge_in_the_DC.png)
 
 _Figure-1 OOB Edge in the DC_
 
@@ -117,7 +117,7 @@ This article is not suitable for a routing protocol deep-dive, but as a quick re
 
 Another quick tip, for a use-case like this, when using is-is, use a single level (area) and configure both the OOB edge and L3 Dist. as Level 2-only routers — You can read more [here](https://blog.ipspace.net/2011/11/multi-level-is-is-in-single-area-think/).
 
-[![](assets/inline/Figure-2_OOB_L3_Dist_in_the_DC.png)](https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-2_OOB_L3_Dist_in_the_DC.png)
+[![](assets/inline/Figure-2_OOB_L3_Dist_in_the_DC.png)](assets/inline/Figure-2_OOB_L3_Dist_in_the_DC.png)
 
 _Figure-2 OOB L3 Dist. in the DC_
 
@@ -133,7 +133,7 @@ The switch then receives a DHCPv4 client IP (optional, for legacy support) and y
 
 All downstream ports then become access ports for each specific rack with their respective VLANs tagged on ingress from those ports, and then ‘switched’ back to the trunk port. In most cases, one access port per rack is sufficient, but you could always do some variations if required.
 
-[![](assets/inline/Figure-3_OOB_Dist_Switch_in_the_DC.png)](https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-3_OOB_Dist_Switch_in_the_DC.png)
+[![](assets/inline/Figure-3_OOB_Dist_Switch_in_the_DC.png)](assets/inline/Figure-3_OOB_Dist_Switch_in_the_DC.png)
 
 _Figure-3 OOB Dist. Switch in the DC_
 
@@ -147,19 +147,17 @@ The diagram below illustrates this (DC) implementation from a physical standpoin
 
 Figure 4 illustrates this data centre implementation from a physical standpoint.
 
-[![](assets/inline/Figure-4_OOB_in_the_DC_Layer_1.png)](https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-4_OOB_in_the_DC_Layer_1.png)
+[![](assets/inline/Figure-4_OOB_in_the_DC_Layer_1.png)](assets/inline/Figure-4_OOB_in_the_DC_Layer_1.png)
 
 _Figure-4 OOB in the DC (Layer 1)_
 
 Figure 5 illustrates this data centre implementation from a logical standpoint.
 
-[![](assets/inline/Figure-5_OOB_in_the_DC_Layer_2-3.png)](https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-5_OOB_in_the_DC_Layer_2-3.png)
+[![](assets/inline/Figure-5_OOB_in_the_DC_Layer_2-3.png)](assets/inline/Figure-5_OOB_in_the_DC_Layer_2-3.png)
 
 _Figure-5 OOB in the DC (Layer 2-3)_
 
-```
-In the data centre example, I did not show the Mission Critical Infrastructure (MCI) for readability reasons, it is however elaborated in the ISP example, please read the ISP section even if you are a data centre network operator.
-```
+> In the data centre example, I did not show the **Mission Critical Infrastructure (MCI)** for readability reasons, it is however **elaborated in the ISP example**, please read the ISP section even if you are a data centre network operator.
 
 ## VRF
 
@@ -230,7 +228,7 @@ The edge and L3 distribution of the OOB network sits in the first-kilometre, alw
 
 Figure 6 illustrates illustrates this service provider implementation from a physical standpoint.
 
-[![](assets/inline/Figure-6_OOB_for_ISP_Layer_1-3074x4320.png)](https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-6_OOB_for_ISP_Layer_1.png)
+[![](assets/inline/Figure-6_OOB_for_ISP_Layer_1-3074x4320.png)](assets/inline/Figure-6_OOB_for_ISP_Layer_1.png)
 
 _Figure-6 OOB for ISP (Layer 1)_
 
@@ -250,7 +248,7 @@ Layer 3 is identical to the data centre variant. It is all centralised on the L3
 
 Figure 7 illustrates illustrates this service provider implementation from a logical standpoint.
 
-[![](assets/inline/Figure-7_OOB_for_ISP_Layer_2-3-3071x4320.png)](https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-7_OOB_for_ISP_Layer_2-3.png)
+[![](assets/inline/Figure-7_OOB_for_ISP_Layer_2-3-3071x4320.png)](assets/inline/Figure-7_OOB_for_ISP_Layer_2-3.png)
 
 _Figure-7 OOB for ISP (Layer 2-3)_
 
@@ -293,7 +291,7 @@ This guide cannot cover every possible inter-site transport architecture and imp
 
 Figure 8 shows an example of inter-site OOB transport using a traditional SR/MPLS topology as the preferred diagramming method.
 
-[![](assets/inline/Figure-8_Inter-Site_OOB_Transport-7680x2042.png)](https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-8_Inter-Site_OOB_Transport.png)
+[![](assets/inline/Figure-8_Inter-Site_OOB_Transport-7680x2042.png)](assets/inline/Figure-8_Inter-Site_OOB_Transport.png)
 
 _Figure-8 Inter-Site OOB Transport_
 
@@ -305,7 +303,7 @@ For example, if there are two data centres — site01 and site03 — with a P ro
 
 As the network architect, it is entirely up to you to make this decision on a case-by-case basis, taking into account various factors and local environmental variables. For instance, if the physical route from site03 to site02 is easier than from site01, you might choose to use site01’s OOB backbone to facilitate the router’s in-band access, especially if most of the support staff are usually located at site02. Figure 9 illustrates what this setup could look like.
 
-[![](assets/inline/Figure-9_OOB_Access_for_Transport_Gear-7680x2449.png)](https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear.png)
+[![](assets/inline/Figure-9_OOB_Access_for_Transport_Gear-7680x2449.png)](assets/inline/Figure-9_OOB_Access_for_Transport_Gear.png)
 
 _Figure-9 OOB Access for Transport Gear_
 

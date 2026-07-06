@@ -62,7 +62,7 @@ My****definition of Multi-WAN is fairly straightforward, i.e. A router/network/s
   - And likely that they will not provide a public IP as their IPv4 pools are again likely to be exhausted.
   - Also, likely that they will only give a single /64 IPv6 prefix, which makes subnetting impossible without breaking SLAAC (Read [Android](https://www.techrepublic.com/article/androids-lack-of-dhcpv6-support-frustrates-enterprise-network-admins/)).
 
-[![](assets/inline/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png)](https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png)
+[![](assets/inline/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png)](assets/inline/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png)
 
 _Figure-1 (A simple non-technical diagram to illustrate Multi-WAN setup with two ISPs)_
 
@@ -80,6 +80,6 @@ I have deployed a Multi-WAN environment in my own home using RB450Gx4 as the rou
 
 The end result of my setup is demonstrated below:
 
-[![](assets/featured.png)](https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png)
+[![](assets/featured.png)](assets/featured.png)
 
 _Figure-2 [IP Address is intentionally left visible as it poses no security risk (Dynamic IP Address)]_

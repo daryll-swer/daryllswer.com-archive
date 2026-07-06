@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Multi-WAN setups with retail ISPs (Part 1 – Theory)</title>
+  <meta name="description" content="An article on Multi-WAN setups using consumer-grade ISPs.">
+  <link rel="canonical" href="https://daryll-swer.github.io/daryllswer.com-archive/posts/multi-wan-setups-with-retail-isps-part-1-theory/">
+  <meta property="og:title" content="Multi-WAN setups with retail ISPs (Part 1 – Theory)">
+  <meta property="og:description" content="An article on Multi-WAN setups using consumer-grade ISPs.">
+  <meta property="og:image" content="https://daryll-swer.github.io/daryllswer.com-archive/posts/multi-wan-setups-with-retail-isps-part-1-theory/assets/featured.png">
+  <link rel="stylesheet" href="../../assets/theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html" aria-label="daryllswer.com Archive home">
+    <span class="brand-mark">DS</span>
+    <span><strong>daryllswer.com</strong><small>Archive</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="../../index.html">Index</a>
+    <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
+    <a href="https://www.daryllswer.com/">Canonical site</a>
+  </nav>
+</header>
+<main class="article-shell">
+  <article class="article">
+    <header class="article-header">
+      <p class="meta">28 March 2021 / Networking</p>
+      <h1>Multi-WAN setups with retail ISPs (Part 1 – Theory)</h1>
+      <p class="article-summary">An article on Multi-WAN setups using consumer-grade ISPs.</p>
+      <img class="featured-image" src="assets/featured.png" alt="">
+    </header>
+    <div class="article-body">
+      <p class="wp-block-paragraph">This will be a series with a <a href="../multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/">Part Two</a>.</p>
+
+
+
+<p class="wp-block-paragraph">In <strong>part one</strong>, I would like to talk about a particular networking environment where a site (home, office etc) has more than one uplink either to the same or a different ISP, where the ISP(s) are <strong>retail </strong>meaning “home grade” ISPs or “consumer” ISPs instead of dedicated leased circuits/business-grade ISPs.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-definition">Definition</h2>
+
+
+
+<p class="wp-block-paragraph">I could not find a textbook definition for Multi-WAN as it is an umbrella term for many things such as Multi-WAN based load balancing, Multi-WAN based failover etc. </p>
+
+
+
+<p class="wp-block-paragraph">My<strong> </strong>definition of Multi-WAN is fairly straightforward, i.e. A router/network/site that has more than one uplink to an ISP or a different ISP is a Multi-WAN setup.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-pros">Pros</h2>
+
+
+
+<ul class="wp-block-list">
+<li>Significantly cheaper than dedicated leased circuits.
+<ul class="wp-block-list">
+<li>Can be deployed for SOHO, Small Businesses and perhaps even enterprise (private firms that do not require their own ASN).</li>
+</ul>
+</li>
+
+
+
+<li>Redundancy/Failover/High Reliability.
+<ul class="wp-block-list">
+<li>If one uplink goes down, traffic is routed over the next available uplink.</li>
+</ul>
+</li>
+
+
+
+<li><span style="font-size: 1em;">Load Balancing</span>.
+<ul class="wp-block-list">
+<li>Where traffic is split/balanced between the available uplinks.</li>
+
+
+
+<li><strong>Bandwidth aggregation</strong> is also possible without any bonding or routing protocols like ECMP i.e. in other words, you can achieve increased bandwidth throughput in downloads/uploads by using the available bandwidth from the uplinks simultaneously.</li>
+</ul>
+</li>
+
+
+
+<li>You can route specific destination IPv4/IPv6 addresses/prefixes via a specific WAN interface that happens to have better routing to the said subnets (example: ISP2 has lower latency to Cloudflare’s DNS resolvers when compared to ISP1).
+<ul class="wp-block-list">
+<li>I have done exactly just this <a href="https://twitter.com/DaryllSwer/status/1350443020949155840" target="_blank" rel="noopener noreferrer">here</a>.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading" id="h-cons">Cons</h2>
+
+
+
+<ul class="wp-block-list">
+<li>Total cost may be higher for the initial installation of CPE/ONT/Router/Switches etc, but this is usually negligible.</li>
+
+
+
+<li>You will not have SLAs like dedicated lines, but this is somewhat mitigated by having multiple uplinks.</li>
+
+
+
+<li>If a proper configuration is not done, HTTPS traffic will break (for example banking sites) since the source IPs would change frequently.</li>
+
+
+
+<li>The monthly cost of the ISPs combined may or may not be higher, depending on the available tariffs in that particular area.
+<ul class="wp-block-list">
+<li>For example, if ISP1 had a ₹500 tariff and the other had ₹300, then the total monthly cost is pretty cheap in my opinion.</li>
+</ul>
+</li>
+
+
+
+<li>Likely behind an <a href="../shortcomings-of-cgnat-and-potential-work-arounds/">ugly</a> CGNAT deployment.
+<ul class="wp-block-list">
+<li>And likely that they will not provide a public IP as their IPv4 pools are again likely to be exhausted.</li>
+
+
+
+<li>Also, likely that they will only give a single /64 IPv6 prefix, which makes subnetting impossible without breaking SLAAC (Read <a href="https://www.techrepublic.com/article/androids-lack-of-dhcpv6-support-frustrates-enterprise-network-admins/" target="_blank" rel="noopener noreferrer">Android</a>).</li>
+</ul>
+</li>
+</ul>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full is-resized"><a href="assets/inline/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png"><img loading="lazy" decoding="async" width="599" height="1115" src="assets/inline/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png" alt="" class="wp-image-833"></a><figcaption class="wp-element-caption">Figure-1 (A simple non-technical diagram to illustrate Multi-WAN setup with two ISPs)</figcaption></figure>
+</div>
+
+
+<h2 class="wp-block-heading" id="h-real-life-example">Real-Life Example</h2>
+
+
+
+<p class="wp-block-paragraph">I have deployed a Multi-WAN environment in my own home using RB450Gx4 as the router where:</p>
+
+
+
+<ul class="wp-block-list">
+<li>ISP1 (<a href="https://bgp.tools/as/9829" target="_blank" rel="noopener noreferrer">AS9829</a>) has a 200Mbps symmetrical bandwidth (at the time of deployment/testing).</li>
+
+
+
+<li>ISP2 (<a href="https://bgp.tools/as/135756" target="_blank" rel="noopener noreferrer">AS135756</a>) has a 100Mbps symmetrical bandwidth (at the time of deployment/testing).</li>
+
+
+
+<li>Monthly Tariffs (at the time of deployment/testing).
+<ul class="wp-block-list">
+<li>ISP1 – ₹1277</li>
+
+
+
+<li>ISP2 – ₹1375</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="has-text-align-left wp-block-paragraph">The end result of my setup is demonstrated below:</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="assets/featured.png"><img loading="lazy" decoding="async" width="1920" height="947" src="assets/featured.png" alt="" class="wp-image-836"></a><figcaption class="wp-element-caption">Figure-2 [IP Address is intentionally left visible as it poses no security risk (Dynamic IP Address)]</figcaption></figure>
+</div>
+    </div>
+    <footer class="article-footer">
+      <p>Canonical source: <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/">https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/</a></p>
+      <p>Archive source bundle: <a href="https://github.com/daryll-swer/daryllswer.com-archive/tree/main/content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory">content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory</a></p>
+    </footer>
+  </article>
+</main>
+</body>
+</html>

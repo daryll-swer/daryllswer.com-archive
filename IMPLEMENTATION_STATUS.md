@@ -4,10 +4,10 @@
 
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
-- Architecture reference: pending `ARCHITECTURE.md`
-- Current sprint / workstream: archive fidelity cleanup
-- Status: complete; validated
-- Last updated: 2026-07-06 09:50 UTC
+- Architecture reference: `ARCHITECTURE.md`
+- Current sprint / workstream: GitHub Pages archive rendering
+- Status: complete locally; validation, public-safety scan, whitespace check, and browser QA passed
+- Last updated: 2026-07-06 12:04 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -15,7 +15,7 @@
 ## Scope
 
 - In scope:
-  - Public WordPress post mirroring, public featured/inline media, Google Sheet public exports, manifests, schemas, validation, and safety scan.
+  - Public WordPress post mirroring, public featured/inline/linked media, Google Sheet public exports, GitHub Pages static site generation, manifests, schemas, validation, and safety scan.
 - Out of scope:
   - Remote force-push/visibility changes without explicit confirmation.
   - Private WordPress admin exports, database access, SSH backend access, private comments, credentials, cookies, browser profiles, and local-only operational state.
@@ -36,13 +36,16 @@
   - Notes: 19 generated post bundles with Markdown, metadata, source snapshots, featured images, and assets.
 - `data/sheets/as141253-ipv6-architecture-example/`:
   - Status: complete
-  - Notes: ODS, 9 CSV exports, 9 CSVW metadata files, and HTML snapshots generated.
+  - Notes: ODS, 9 LF-normalised CSV exports, 9 CSVW metadata files, whitespace-normalised HTML snapshots, and clickable artefact links generated.
 - `docs/VALIDATION.md`:
   - Status: complete
   - Notes: Validation passed with 0 errors and 1 sitemap warning.
 - `docs/PUBLIC_SAFETY.md`:
   - Status: complete
-  - Notes: Pattern scan passed with 0 findings.
+  - Notes: Public-safety scan passed with 0 findings after replacing local path references with public-safe placeholders.
+- `docs/` GitHub Pages site:
+  - Status: complete locally
+  - Notes: `scripts/render-site.py` generates homepage, article pages, responsive theme CSS, copied post assets, sheet artefact landing page, and `.nojekyll`.
 - Donation/support CTA archive filter:
   - Status: complete
   - Notes: `scripts/sync-wordpress-posts.py` removes article blocks containing the donation CTA or `/donation/` links and stores only redacted/hash audit metadata.
@@ -52,6 +55,12 @@
 - Numbered reference link rewriting:
   - Status: complete
   - Notes: Same-post `#h-references`/`#references` citation links are rewritten to the matching source URL in the article's References list, with local `#references` as fallback.
+- Local media and sheet link rewriting:
+  - Status: complete locally
+  - Notes: WordPress-uploaded media file links are downloaded where possible and rewritten to local archive assets; the AS141253 Google Sheet link is rewritten to repository/Pages sheet artefacts.
+- Embedded media handling:
+  - Status: complete locally
+  - Notes: Markdown uses durable embed links; Pages article output uses iframe wrappers with fallback links.
 - Licensing:
   - Status: complete
   - Notes: Scripts/tooling are MIT licensed; mirrored blog content is `CC-BY-NC-SA-4.0`; third-party media/external artefacts are not assumed covered by either licence.
@@ -113,6 +122,30 @@
   - Action: Regenerated archive content and reran validation/public-safety checks.
   - Evidence: `docs/VALIDATION.md` reports 0 errors and 1 sitemap warning; `docs/PUBLIC_SAFETY.md` reports 0 findings.
   - Result: pass
+- 2026-07-06 11:40 UTC:
+  - Action: Added GitHub Pages static site generation under `docs/`.
+  - Evidence: `scripts/render-site.py`, `docs/index.html`, `docs/posts/`, `docs/assets/theme.css`, `docs/sheets/`.
+  - Result: pass
+- 2026-07-06 11:40 UTC:
+  - Action: Fixed IPv6 architecture article archive rendering issues.
+  - Evidence: `content/posts/2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md` has a local AS141253 sheet link and Markdown embed links; generated Pages article has `.media-embed` wrappers, local responsive figures, and a local sheet page link.
+  - Result: pass
+- 2026-07-06 11:40 UTC:
+  - Action: Extended sync to download WordPress-uploaded media links even when they appear as text links rather than inline images.
+  - Evidence: linked-media entries in post asset manifests; Pages validation no longer reports WordPress upload media links.
+  - Result: pass
+- 2026-07-06 11:52 UTC:
+  - Action: Regenerated archive content, Pages output, validation report, and public-safety report.
+  - Evidence: `docs/VALIDATION.md` reports 0 errors and 1 known sitemap warning; `docs/PUBLIC_SAFETY.md` reports 0 findings.
+  - Result: pass
+- 2026-07-06 11:54 UTC:
+  - Action: Performed local browser QA against the generated GitHub Pages site.
+  - Evidence: Desktop and 390x844 mobile checks confirmed 19 index cards, local AS141253 sheet link, 2 media embed wrappers, no raw iframe text, no horizontal overflow, responsive IPv6 figures, and 9 sheet CSV links plus the ODS artefact.
+  - Result: pass
+- 2026-07-06 12:03 UTC:
+  - Action: Added clickable sheet README artefact links and normalised generated text artefacts for stable Git diffs.
+  - Evidence: `data/sheets/as141253-ipv6-architecture-example/README.md`, `scripts/export-google-sheet.py`, `scripts/render-site.py`, and `.gitattributes`.
+  - Result: pass
 
 ## Tests and Verification
 
@@ -121,28 +154,35 @@
   - `make validate`: passed with one non-blocking warning.
   - `make scan-secrets`: passed.
   - `make render-preview`: passed.
+  - `make render-site`: passed.
 - Last run:
   - `make sync validate scan-secrets render-preview`: pass at 2026-07-06 09:29 UTC.
   - Direct `rg` check for excluded donation CTA/donation URL in generated article files: no matches at 2026-07-06 09:29 UTC.
-  - `make validate scan-secrets PYTHON=/Users/daryllswer/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3`: pass at 2026-07-06 09:49 UTC.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-06 09:49 UTC.
   - `rg -n "https://www\\.daryllswer\\.com/[^)\\s]+/#(?:h-)?references|#h-references|This article was sponsored|FastNetMon|free 30-day" content/posts -g 'index.md'`: no matches at 2026-07-06 09:50 UTC.
+  - `make sync render-site validate PYTHON=<bundled-python>`: pass at 2026-07-06 11:35 UTC with 0 errors and 1 known sitemap warning.
+  - `python3 -m py_compile scripts/*.py`: pass at 2026-07-06 12:00 UTC.
+  - `make sync render-site validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-06 12:03 UTC with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-06 12:00 UTC with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
+  - `git diff --check`: pass at 2026-07-06 12:04 UTC.
+  - Local browser QA against `http://127.0.0.1:4173/`: pass at 2026-07-06 11:54 UTC for desktop and 390x844 mobile.
 - Not run:
-  - Browser visual QA against `.preview/index.html`.
+  - Remote GitHub Pages deployment check after pushing this generated site.
 
 ## Next Pickup
 
 - Next action:
-  - Optional public repo metadata polish and future sync automation.
+  - Commit/push the generated site, configure GitHub Pages to publish from `main` `/docs`, then check the remote Pages URL.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Browser visual QA not performed.
+  - Remote GitHub Pages deployment is not verified until after the generated site is pushed and Pages finishes building.
 
 ## Completion Criteria
 
 - Done means:
-  - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, schemas, manifests, docs, validation results, and a public-safety scan result.
+  - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
   - Optional repository topics/description tweaks and future sync automation.

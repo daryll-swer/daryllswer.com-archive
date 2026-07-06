@@ -60,7 +60,7 @@ The setup was fairly straightforward. At the ISPs Point of Presence (PoP), they 
 
 AS132559 also carried my VLAN to ExtremeIX BLR for IXP peering. Since ExtremeIX and AS132559 already had a cross-connect at a mutual data centre, setting up my peering was straightforward — they simply configured an additional VLAN for me. The topology is shown in Figure 1.
 
-[![](assets/inline/Figure-1_BLR_Layer_1_Topology-scaled.png)](https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-1_BLR_Layer_1_Topology-scaled.png)
+[![](assets/inline/Figure-1_BLR_Layer_1_Topology-scaled.png)](assets/inline/Figure-1_BLR_Layer_1_Topology-scaled.png)
 
 _Figure-1 BLR Layer 1 topology_
 
@@ -70,13 +70,13 @@ This implementation involved a long-distance circuit between [Shillong](https://
 
 The carrier backbone and middle-mile were fully outsourced to AS9498, with the carrier delivering the MUX port hand-off at one of their [BTS sites](https://en.wikipedia.org/wiki/Base_transceiver_station) in Shillong (SHL), the location closest to mine. From there, I contracted a fibre cable operator to run an overhead fibre from the MUX port directly to my home, spanning about 2 km. The fibre terminates in my residence and connects straight to a Small Form-factor Pluggable (SFP) module on my router (Figure 2).
 
-[![](assets/inline/IMG_1961.jpg)](https://www.daryllswer.com/wp-content/uploads/2025/03/IMG_1961.jpg)
+[![](assets/inline/IMG_1961.jpg)](assets/inline/IMG_1961.jpg)
 
 _Figure-2 Fibre Termination in my SHL home_
 
 On the other end of this MPLS circuit, there’s a similar setup that terminates at my transit provider sponsor at the time of writing this article, AS141253, in AJL. The circuit was initially set up with a capacity of 200 Mbps in 2023, but this was later revised to 150 Mbps starting from 2024. The topology is shown in Figure 3.
 
-[![](assets/inline/Figure-3_SHL_Layer_1_Topology-scaled.png)](https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-3_SHL_Layer_1_Topology-scaled.png)
+[![](assets/inline/Figure-3_SHL_Layer_1_Topology-scaled.png)](assets/inline/Figure-3_SHL_Layer_1_Topology-scaled.png)
 
 _Figure 3 — The SHL Layer 1 topology_
 
@@ -98,7 +98,7 @@ A simple BGP session was established with AS132559 for both IPv4 and IPv6, with 
 
 Separate BGP sessions were also set up with ExtremeIX Route Servers and other members with a 1,500 MTU.
 
-[![](assets/inline/AS149794_BLR_BGP_Peers-scaled.png)](https://www.daryllswer.com/wp-content/uploads/2025/05/AS149794_BLR_BGP_Peers-scaled.png)
+[![](assets/inline/AS149794_BLR_BGP_Peers-scaled.png)](assets/inline/AS149794_BLR_BGP_Peers-scaled.png)
 
 _Figure-4 Screenshot of past BLR BGP peers that were live on Layer 1_
 

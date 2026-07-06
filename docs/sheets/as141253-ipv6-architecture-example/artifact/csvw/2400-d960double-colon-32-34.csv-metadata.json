@@ -1,0 +1,28 @@
+{
+  "@context": "http://www.w3.org/ns/csvw",
+  "dc:source": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pub?gid=268073512&single=true&output=csv",
+  "dc:title": "2400:d960::/32-34",
+  "dialect": {
+    "delimiter": ",",
+    "encoding": "utf-8",
+    "header": true,
+    "quoteChar": "\""
+  },
+  "tableSchema": {
+    "columns": [
+      {
+        "name": "Prefix",
+        "titles": "Prefix"
+      },
+      {
+        "name": "Location",
+        "titles": "Location"
+      },
+      {
+        "name": "Notes",
+        "titles": "Notes"
+      }
+    ]
+  },
+  "url": "../csv/2400-d960double-colon-32-34.csv"
+}

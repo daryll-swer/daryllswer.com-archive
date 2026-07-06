@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Let’s talk about CGNAT and IPv6, yet again.</title>
+  <meta name="description" content="Yet another blog article on IPv4, NAT, CGNAT, Hairpinning and native IPv6.">
+  <link rel="canonical" href="https://daryll-swer.github.io/daryllswer.com-archive/posts/lets-talk-about-cgnat-and-ipv6-yet-again/">
+  <meta property="og:title" content="Let’s talk about CGNAT and IPv6, yet again.">
+  <meta property="og:description" content="Yet another blog article on IPv4, NAT, CGNAT, Hairpinning and native IPv6.">
+  <meta property="og:image" content="https://daryll-swer.github.io/daryllswer.com-archive/posts/lets-talk-about-cgnat-and-ipv6-yet-again/assets/featured.png">
+  <link rel="stylesheet" href="../../assets/theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html" aria-label="daryllswer.com Archive home">
+    <span class="brand-mark">DS</span>
+    <span><strong>daryllswer.com</strong><small>Archive</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="../../index.html">Index</a>
+    <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
+    <a href="https://www.daryllswer.com/">Canonical site</a>
+  </nav>
+</header>
+<main class="article-shell">
+  <article class="article">
+    <header class="article-header">
+      <p class="meta">22 April 2025 / Networking</p>
+      <h1>Let’s talk about CGNAT and IPv6, yet again.</h1>
+      <p class="article-summary">Yet another blog article on IPv4, NAT, CGNAT, Hairpinning and native IPv6.</p>
+      <img class="featured-image" src="assets/featured.png" alt="">
+    </header>
+    <div class="article-body">
+      <blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph"><strong>For professional CGNAT and IPv6 deployment services aligned with industry best practices, <a href="https://www.swernetworks.com/" target="_blank" rel="noopener noreferrer">click here</a>.</strong></p>
+</blockquote>
+
+
+
+<p class="wp-block-paragraph"><strong>This article has been published on the <a href="https://blog.apnic.net/2025/05/13/lets-talk-about-cgnat-and-ipv6-again/" target="_blank" rel="noopener noreferrer">APNIC blog</a> as well.</strong></p>
+
+
+
+<p class="wp-block-paragraph">I have had a few back-and-forth with a fellow blogger, on a series of blog posts on the subject of IPv4, NAT, CGNAT and IPv6<sup>[<a href="#h-references">1</a>][<a href="#h-references">2</a>][<a href="#h-references">3</a>]</sup>, along with consistently seeing people who do not understand the right way to do NAT-ting in general, motivated me to write this blog post.</p>
+
+
+
+<p class="wp-block-paragraph">For years, I’ve tried advocating for best-practices when it comes to the ugly invention in network engineering called Network Address Translation (NAT), with its uglier sub-form called Port Address Translation (PAT), where the latter is what we commonly call ‘NAT’ in the modern day, this technology forced the creation of equally ugly hacks to work-around it.</p>
+
+
+
+<p class="wp-block-paragraph">The reality is, NAT broke the Internet by its very design in addition to default NAT configuration across most vendors and software implementations are often broken.</p>
+
+
+
+<p class="wp-block-paragraph">Software developers spent decades coming up with complex workarounds, simply because network engineers and network business stakeholders alike insisted decades ago that the way to future-proof the Internet ecosystem was to use (CG)NAT, handicap layer-4 across the planet to just TCP/UDP, destroy any hope of future replacements for either of these layer 4 protocols (DCCP, UDP-Lite, SCTP etc all died on arrival); instead of early adoption of native <strong>routed</strong> IPv6 (NAT-ted IPv4 <strong>isn’t</strong> <strong>routing</strong>), remember, IPv6 was first introduced into the public domain back in December 1995<sup>[<a href="#h-references">4</a>]</sup>.</p>
+
+
+
+<p class="wp-block-paragraph">Sure, we could argue that stateful firewalls also played a role in handicapping layer 4, but that does not negate the point that NAT played a massive role in the state we are in today.</p>
+
+
+
+<p class="wp-block-paragraph">For some reason, <strong>routing</strong> still feels like an alien concept to many organisations and IT folks. In far too many environments, there’s more NAT-ing than actual routing—whether it’s IGP, BGP, or anything in between. And this isn’t just an IPv6/IPv4 issue. The misunderstanding of routing bleeds into Layer 2 as well: people often default to messy bridged networks, riddled with loops and an over-reliance on Spanning Tree Protocol, instead of embracing clean Layer 3 routing.</p>
+
+
+
+<p class="wp-block-paragraph">There’s a saying: <em>“Route when you can, bridge when you must.”</em> It’s solid advice—yet often ignored.</p>
+
+
+
+<p class="wp-block-paragraph">In fact, maybe we need a new one: <em>“Route when you can. Bridge when you must. But if you’re thinking NAT… just route IPv6 and walk away with dignity.</em>”</p>
+
+
+
+<p class="wp-block-paragraph">Because here’s the thing—with IPv6, you don’t need NAT. If you just <strong>routed</strong> everything end-to-end, things would be simpler, cleaner, and far more scalable. Now I am well aware of issues with IPv6 multi-homing and PA space, that’s already covered in my <a href="../ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/">IPv6 Architecture guide</a>, which is why <em>‘routed’</em> is <strong>bolded</strong> 😉 – PA multi-homing issue is no excuse to avoid IPv6, because it’s the same problem in IPv4<sup>[<a href="#h-references">5</a>]</sup>.</p>
+
+
+
+<h2 id="h-what-ugly-hacks" class="wp-block-heading">What ugly hacks?</h2>
+
+
+
+<p class="wp-block-paragraph">In a nutshell, of acronyms — STUN, TURN, ICE, WebRTC, ALGs — things that didn’t need to exist in routed networks (excluding STUN, because we need it, even in routed networks due to stateful firewall deployments), but ended up coming into existence because of NAT.</p>
+
+
+
+<p class="wp-block-paragraph">People think NAT has little to no overhead, but that isn’t true — The reason it <em>appears</em> as such is because of decades of hard work from software developers who implemented the above acronyms in actual code to mask the side effects of NAT. With some common sense, it is safe to say tens of thousands of coding hours and resources, were spent on hacking around NAT with relays (TURN) discovery (STUN) and punching hit-and-miss holes in the NAT state machine (WebRTC/ICE and regular TCP/UDP) along with hacky packet header re-writes using ALGs (sometimes called NAT Helpers in Linux Netfilter terminology).</p>
+
+
+
+<p class="wp-block-paragraph">You don’t have to take my word for it, read a book or two about these acronyms<sup>[<a href="#h-references">6</a>]</sup>, to see the insane complexity brought upon us by those who insisted NAT-ting &gt; routing (hello IPv6!).</p>
+
+
+
+<p class="wp-block-paragraph">Despite these hacks being ubiquitous in most end-user applications today, it never truly unbroken the Internet ecosystem.</p>
+
+
+
+<p class="wp-block-paragraph">Let’s start with some P2P examples like VoIP/SIP and online gaming (a multi-billion dollar industry for starters, so there’s real business incentives here):</p>
+
+
+
+<ol class="wp-block-list">
+<li>When we try to establish a P2P software telephony call between two endpoints over NAT, often times it’ll fail and the endpoint software will be forced to re-route traffic over a TURN server relay for the clients — this can result in insane latency, as the TURN server may be geographically and routing-wise really far away from the actual calling endpoints.</li>
+
+
+
+<li>Here’s where it gets even worse in NAT-ted networks: If both calling endpoints are in the same LAN/broadcast domain, and their calling application software called upon STUN discovery to try to initiate the call, the call will fail, because most NAT configurations are missing NAT hairpinning (aka NAT Loopback)<sup>[<a href="#h-references">7</a>]</sup>, what happens is both endpoints for example will be NAT-ted to a public IP 1.1.1.1, each endpoint has a unique source port, for example 1025, 1026, so now STUN discovers 1.1.1.1:1025, 1.1.1.1:1026, and now the endpoints try to talk to each other destined towards each of these public IP port mappings — and fails spectacularly because no hairpinning by default on most NAT configurations. Such a problem doesn’t exist in <strong>routed</strong>, <strong>NAT-less</strong> environments. What happens now is, the call will be routed through the public internet via TURN relay server, and the latency jumped from 1ms on the LAN to who knows what latency on the public internet.</li>
+
+
+
+<li>Similarly, the same issue exists in online gaming, P2P gaming lobbies will often fail behind NAT and your game software will now use a TURN-relay instead, leading to unpredictable latencies. Even if all gamers in a lobby are within the same geographical location, all customers of the same BGP Autonomous System (AS), where latency would’ve been 1-2ms if it was pure routing, now thanks to (CG)NAT, and forced use of TURN-relay, their latency jumped to 50ms or whatever randomly or even more depending on the physical and routing-wise location of the TURN-relay.</li>
+
+
+
+<li>Has the side effect of content centralisation amongst a few hyperscaler cloud network providers, due to broken P2P leading to normalised Server/Client model of data transfer between A and B endpoints in application software — Are we really doing humanity a favour with so much centralisation of internet content and traffic? I’ll leave that to your imagination.</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">“But this is hypothetical, isn’t it?” — Nope, you need to think about this in large scale SP networks and campus networks, a lot of endpoint-to-endpoint traffic does exist on everyday end-user applications like WhatsApp P2P calling for example, at large scale, so much traffic is TURN-relayed back into the public Internet, when it could’ve just stayed intra-AS or intra-LAN, with hairpinning<sup>[<a href="#h-references">8</a>]</sup> or in the case of native <strong>routed</strong> IPv6.</p>
+
+
+
+<p class="wp-block-paragraph">“Oh, but I’m a DC operator, I’m not an ISP or Enterprise, NAT is harmless for us, right?” — No. Give this podcast a listen<sup>[<a href="#h-references">9</a>]</sup>, NAT has insane overhead even at hyperscaler companies like Meta or Google.</p>
+
+
+
+<p class="wp-block-paragraph">All of these problems and hacks, have overhead that’s not visible in a GUI/UI to the end-users of NATting, up and until latency goes bonkers because of TURN or something broke, and they start whining about it to the L1 customer support of an ISP or even MSP/Consultant of the enterprise.</p>
+
+
+
+<p class="wp-block-paragraph">Let’s not forget about CGNAT, aside from the issues described above, it has the obvious issue of port exhaustion — there’s only so much port availability for shared IP space across billions of humans and devices in the world. Yet another issue that does not exist in <strong>routed</strong> networking (hello IPv6 again).</p>
+
+
+
+<h2 id="h-broken-nat-is-there-a-not-so-broken-nat" class="wp-block-heading">Broken NAT — is there a not-so-broken NAT?</h2>
+
+
+
+<p class="wp-block-paragraph">Long story short, yes, mostly.</p>
+
+
+
+<p class="wp-block-paragraph">Longer story:</p>
+
+
+
+<ol class="wp-block-list">
+<li>We start by enabling hairpinning<sup>[<a href="#h-references">7</a>]</sup> to ensure that intra-(CG)NAT traffic on the LAN or AS works correctly, this gets rid of TURN for intra-NAT traffic.</li>
+
+
+
+<li>Then we enable EIM &amp; EIF on the NAT device<sup>[<a href="#h-references">10</a>] </sup>for port range 1024-65535 for both TCP and UDP, this will help ensure P2P traffic continues to work for TCP/UDP, it will get rid of TURN for general global NAT-ted traffic that egresses from the (CG)NAT device.</li>
+
+
+
+<li>You could go further and enable Port Control Protocol — But there’s no adoption of this in end-user OSes and applications, and the efforts to get adoption for this, is better spent on IPv6.</li>
+</ol>
+
+
+
+<h3 id="h-caveat" class="wp-block-heading">Caveat</h3>
+
+
+
+<p class="wp-block-paragraph"><strong>Not-so-broken != Not-Broken.</strong></p>
+
+
+
+<ol class="wp-block-list">
+<li>NAT Hairpinning/Loopback doesn’t work the same way and/or doesn’t work correctly on all operating systems. For example, it works out-of-the-box without user configuration on proprietary CGNAT solutions like A10 Networks (page 31)<sup>[<a href="#h-references">11</a>]</sup>, but it won’t be that simple on a Linux-based device, if you try to create a Hairpin NAT rule on a Linux box, it may or may not work depending on the implementation, for all Src-NAT-ted traffic — Remember, hairpinning is supposed to permit intra-NAT traffic to work, without them necessarily being DNAT-ted, such as Xbox gaming sessions P2P between two hosts behind the NAT, or two SIP Clients trying to talk to each other over their Src-NAT-ted IP using STUN discovery without TURN. I have not yet seen RFC-like hairpinning <strong>simplicity</strong> on any vendor other than A10 CGNAT, if we go by their official documentation.</li>
+
+
+
+<li>EIM+EIF NAT is often missing from operating systems or software that have a NAT functionality (such as vanilla Linux Kernel at the time of writing this article), or it is not implemented per the RFC. For example, on MikroTik, EIM is implemented only for UDP, but not TCP and EIF is missing completely.</li>
+
+
+
+<li>None of the above workarounds, even if implemented per the relevant RFCs, will fix IP space/port exhaustion; the only solution is to opt for <strong>routing</strong> with <strong>IPv6</strong>.</li>
+</ol>
+
+
+
+<h2 id="h-ipv6-adoption-is-just-as-broken" class="wp-block-heading">IPv6 adoption is just as broken</h2>
+
+
+
+<p class="wp-block-paragraph">There’s no denying this, IPv6 adoption has been lack-lustre at best, and even when an ISP does deploy it, they do it, using IPv4-archaic mindset and fail to adhere to best practices such as <a href="https://www.ripe.net/publications/docs/ripe-690/" target="_blank" rel="noopener noreferrer">BCOP-690</a>.</p>
+
+
+
+<p class="wp-block-paragraph">Happy Eyeballs is a useful mechanism, but perhaps from a human psychological perspective it ended up being a double-edged sword that indirectly incentivise lazy network operators from fixing broken IPv6 deployments.</p>
+
+
+
+<p class="wp-block-paragraph">There’s no cure to broken IPv6 other than:</p>
+
+
+
+<ol class="wp-block-list">
+<li>Obsolete IPv4 dinosaurs should head into retirement and allow the next-generation of engineers to replace them. The same way, IP/MPLS engineers replaced the circuit-switched dinosaurs who were against IP/MPLS during the <a href="https://en.wikipedia.org/wiki/Protocol_Wars#Packet_switching_vs_circuit_switching" target="_blank" rel="noopener noreferrer">Protocol Wars</a>. Ludditism should be against corporate policies and against job contracts while we’re at it.</li>
+
+
+
+<li>Fix the education system along with vendor certification programmes — IPv6 should be the default Address Family when introducing IP addressing and routing concepts to beginners and aspiring network engineers. Teaching networking fundamentals through IPv6 offers a simpler, more scalable, and future-ready foundation compared to IPv4. IPv4, along with NAT and its complex workarounds such as TURN, ICE, WebRTC, EIM/EIF NAT, Hairpinning etc, should be introduced later as legacy technologies, not as the standard starting point. By prioritising IPv6 from the beginning of a course or certification programme, students should gain a clear understanding of networking principles without outdated constraints, setting them up for success in a world that’s rapidly transitioning beyond IPv4.</li>
+</ol>
+
+
+
+<h2 id="h-but-nat-is-a-firewall" class="wp-block-heading">But NAT is a firewall!</h2>
+
+
+
+<p class="wp-block-paragraph">No, it isn’t<sup>[<a href="#h-references">12</a>][<a href="#h-references">13</a>] </sup>— If you need a firewall, then you enable a firewall for both IPv4 and IPv6, NAT isn’t a firewall technology.</p>
+
+
+
+<h2 id="h-conclusion" class="wp-block-heading">Conclusion</h2>
+
+
+
+<p class="wp-block-paragraph">The conclusion is factually simple: Routing &gt; NAT-ting, and in order to route sufficient address space in today’s ever-growing world, IPv6 comes into play. But if broken IPv6 continues, then NAT-ting would persist in IPv6 (NAT66) and nothing actually gets solved.</p>
+
+
+
+<p class="wp-block-paragraph">NAT was and always will be what we call in India, <a href="https://en.wikipedia.org/wiki/Jugaad" target="_blank" rel="noopener noreferrer">jugaad engineering</a>, the English translation would closely resemble <a href="https://en.wikipedia.org/wiki/Frugal_innovation" target="_blank" rel="noopener noreferrer">frugal engineering</a>.</p>
+
+
+
+<h2 id="h-references" class="wp-block-heading">References</h2>
+
+
+
+<ol class="wp-block-list">
+<li><a href="https://blog.ipspace.net/2025/03/response-end-to-end-connectivity/#2585" target="_blank" rel="noopener noreferrer">https://blog.ipspace.net/2025/03/response-end-to-end-connectivity/#2585</a></li>
+
+
+
+<li><a href="https://blog.ipspace.net/2025/04/response-nat-traversal/" target="_blank" rel="noopener noreferrer">https://blog.ipspace.net/2025/04/response-nat-traversal/</a></li>
+
+
+
+<li><a href="https://blog.ipspace.net/2025/04/response-peer-to-peer-apps-ipv6/" target="_blank" rel="noopener noreferrer">https://blog.ipspace.net/2025/04/response-peer-to-peer-apps-ipv6/</a></li>
+
+
+
+<li><a href="https://www.rfc-editor.org/rfc/rfc1883.html" target="_blank" rel="noopener noreferrer">https://www.rfc-editor.org/rfc/rfc1883.html</a></li>
+
+
+
+<li><a href="https://blog.ipspace.net/kb/Internet/MH_Redundancy/" target="_blank" rel="noopener noreferrer">https://blog.ipspace.net/kb/Internet/MH_Redundancy/</a></li>
+
+
+
+<li><a href="https://webrtcforthecurious.com/" target="_blank" rel="noopener noreferrer">https://webrtcforthecurious.com/</a></li>
+
+
+
+<li><a href="https://www.rfc-editor.org/rfc/rfc4787#section-6" target="_blank" rel="noopener noreferrer">https://www.rfc-editor.org/rfc/rfc4787#section-6</a></li>
+
+
+
+<li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7315988308252086273?commentUrn=urn%3Ali%3Acomment%3A%28activity%3A7315988308252086273%2C7316010203462696961%29&amp;dashCommentUrn=urn%3Ali%3Afsd_comment%3A%287316010203462696961%2Curn%3Ali%3Aactivity%3A7315988308252086273%29" target="_blank" rel="noopener noreferrer">https://www.linkedin.com/feed/update/urn:li:activity:7315988308252086273?commentUrn=urn%3Ali%3Acomment%3A%28activity%3A7315988308252086273%2C7316010203462696961%29&amp;dashCommentUrn=urn%3Ali%3Afsd_comment%3A%287316010203462696961%2Curn%3Ali%3Aactivity%3A7315988308252086273%29</a></li>
+
+
+
+<li><a href="https://www.buzzsprout.com/2127872/episodes/16106562" target="_blank" rel="noopener noreferrer">https://www.buzzsprout.com/2127872/episodes/16106562</a></li>
+
+
+
+<li><a href="https://datatracker.ietf.org/doc/html/rfc7857#section-5" target="_blank" rel="noopener noreferrer">https://datatracker.ietf.org/doc/html/rfc7857#section-5</a></li>
+
+
+
+<li><a href="https://www.a10networks.com/wp-content/uploads/A10-DG-Carrier_Grade_NAT_CGN_Large_Scale_NAT_LSN.pdf" target="_blank" rel="noopener noreferrer">https://www.a10networks.com/wp-content/uploads/A10-DG-Carrier_Grade_NAT_CGN_Large_Scale_NAT_LSN.pdfhttps://www.a10networks.com/wp-content/uploads/A10-DG-Carrier_Grade_NAT_CGN_Large_Scale_NAT_LSN.pdf</a></li>
+
+
+
+<li><a href="https://www.f5.com/resources/white-papers/the-myth-of-network-address-translation-as-security" target="_blank" rel="noopener noreferrer">https://www.f5.com/resources/white-papers/the-myth-of-network-address-translation-as-security</a></li>
+
+
+
+<li><a href="https://samy.pl/slipstream/" target="_blank" rel="noopener noreferrer">https://samy.pl/slipstream/</a></li>
+</ol>
+
+    </div>
+    <footer class="article-footer">
+      <p>Canonical source: <a href="https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/">https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/</a></p>
+      <p>Archive source bundle: <a href="https://github.com/daryll-swer/daryllswer.com-archive/tree/main/content/posts/2025-04-22-lets-talk-about-cgnat-and-ipv6-yet-again">content/posts/2025-04-22-lets-talk-about-cgnat-and-ipv6-yet-again</a></p>
+    </footer>
+  </article>
+</main>
+</body>
+</html>

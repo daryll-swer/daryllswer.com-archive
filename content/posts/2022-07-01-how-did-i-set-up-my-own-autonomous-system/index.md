@@ -48,7 +48,7 @@ Below are some of the object entries that I feel are essential to ensuring other
 - Description = This AS is used for non-profit research and experiments — explains the purpose of the AS.
 - Displaying the AS-SET directly under the AS WHOIS to ensure other networks can quickly find it — no need to hunt for it on peeringdb or similar.
 
-[![](assets/inline/Figure-1-AS-SET.png)](https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET.png)
+[![](assets/inline/Figure-1-AS-SET.png)](assets/inline/Figure-1-AS-SET.png)
 
 _Figure-1 (AS-SET of AS 210777 in IRR.)_
 
@@ -77,7 +77,7 @@ Any network operator who has just received a fresh allocation or transfer would 
   - Submit your URL to the GeoIP providers that accept it (even Google will accept it via the [ISP Portal](https://isp.google.com/geo_feed/)). You can attach your Geofeed link in the email template below (Form 1) to save yourself round-trip time!
   - Add the URL to your Geofeed directly under your prefix’s IRR info, as shown in Figure 2 per [RFC9092](https://datatracker.ietf.org/doc/html/rfc9092) via a remarks object. At the time of writing, the “geofeed” object for IRR is not supported on APNIC, but it should be used once it is available.
 
-[![](assets/inline/image-1.png)](https://www.daryllswer.com/wp-content/uploads/2022/12/image-1.png)
+[![](assets/inline/image-1.png)](assets/inline/image-1.png)
 
 _Figure-2 (The geoloc object and geofeed URL on IRR.)_
 
@@ -93,19 +93,19 @@ _Figure-2 (The geoloc object and geofeed URL on IRR.)_
 > Hi  
 >   
 > We have an IPv4 Prefix allocated to us, whose location has just been recently updated/finalised on the APNIC Database. We would like to have the same changes reflected on your database.
-> 
-> 
-> 
-> 
-> 
-> 
-> 
+>
+>
+>
+>
+>
+>
+>
 > Prefix: 103.176.189.0/24  
 > You can also add our Geofeed (RFC8805) to your system: http://daryllswer.com/geofeed/  
 >   
 > You can verify the location of the prefix by checking the geoloc object for the prefix [here](https://wq.apnic.net/static/search.html) *[hyperlink the WHOIS link for your prefix(es)]*
-> 
-> 
+>
+>
 > Daryll Swer
 
 - Attach a screenshot like Figure 2 to make it easier for the providers to parse quickly and BCC the following:
@@ -141,7 +141,7 @@ The most important step of all, after handling all the trivial tasks, is to secu
 
 I lack the funds to build a high-end network lab in my home with all the fancy bells and whistles, so Figure 3 shows my simple and budget-friendly setup.
 
-[![](assets/inline/Figure-3-Network-Topology.png)](https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology.png)
+[![](assets/inline/Figure-3-Network-Topology.png)](assets/inline/Figure-3-Network-Topology.png)
 
 _Figure-3 (Network Topology)_
 
@@ -223,7 +223,7 @@ A smaller but still noticeable amount of STUN traffic —why is STUN even coded 
 I tweeted about this observation with some more interesting context below:
 
 > So as of today, I packet sniffed on my WAN interface to see what's up and oddly enough, I saw zero STUN traffic! Maybe the remote end-points store data of the source IPs that have been determined to not be behind a NAT or something?
-> 
+>
 > — Daryll Swer (@DaryllSwer) [February 1, 2022](https://twitter.com/DaryllSwer/status/1488608520748425223?ref_src=twsrc%5Etfw)
 
 **A Quick Note on Apple products**
@@ -248,7 +248,7 @@ There are a few factors that I believe are responsible for the lack of usage in 
 
 For a [brief period](https://twitter.com/DaryllSwer/status/1472823455754055683), I observed SCTP traffic originating from Chinese ASNs (AS45102 and AS4538) hitting my network. This was likely the result of research and development work, and they were probably just as curious as me to see if any node or end point on the Internet would reply to SCTP packets. However, none of the OSes (Windows, macOS, Linux, iOS) I use replied to these packets, which I think is not RFC compliant at all.
 
-[![](assets/inline/Figure-4-SCTP-Traffic-Snippet.png)](https://www.daryllswer.com/wp-content/uploads/2022/04/Figure-4-SCTP-Traffic-Snippet.png)
+[![](assets/inline/Figure-4-SCTP-Traffic-Snippet.png)](assets/inline/Figure-4-SCTP-Traffic-Snippet.png)
 
 _Figure-4 (SCTP Traffic Snippet)_
 
@@ -259,7 +259,7 @@ There are other less significant but still interesting observations I made while
 - IPv6 packets where source IP = ::/128 somehow [traverses inter-AS](https://twitter.com/DaryllSwer/status/1516777131883528193). RIPE Labs have [published their analysis](https://labs.ripe.net/author/kistel/the-curious-case-of-packets-from/) of this behaviour; the mystery was [solved](https://twitter.com/DaryllSwer/status/1531265452831174656) much later though
 - Strange behaviour where the Linux kernel [injects](https://twitter.com/DaryllSwer/status/1516388176923074565) an ‘anycast route’ (which according to the [manual page](https://man7.org/linux/man-pages/man8/ip-route.8.html) does not exist) whenever we use ::/64 instead of ::1/64 on a link prefix at the router, to which a Linux host is connected. This results in a loop if the router (::) tries to ping a host that injected this route. It’s my understanding that using ::/64 instead of ::1/64 as a link prefix is perfectly [RFC compliant](https://twitter.com/DaryllSwer/status/1516769128862056451)
 
-[![](assets/inline/image.png)](https://www.daryllswer.com/wp-content/uploads/2022/04/image.png)
+[![](assets/inline/image.png)](assets/inline/image.png)
 
 _Figure-5 (Route type anycast is not implemented in Linux.)_
 
@@ -267,7 +267,7 @@ _Figure-5 (Route type anycast is not implemented in Linux.)_
 - Certain DDoS/Captcha protection platforms are [overly aggressive](https://twitter.com/DaryllSwer/status/1509894472427257863)
 - An odd observation was made where old routes of AS210777 were still being advertised by AS29075 to its peers long after I withdrew them. This prevented AS210777 from being returned to RIPE as their policies require that an AS and its prefixes must be completely invisible on the public table before being decommissioned. This is possibly caused by a bug in their router(s)
 
-[![](assets/inline/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png)](https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png)
+[![](assets/inline/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png)](assets/inline/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png)
 
 _Figure-6 (BGPlay showing AS29075 still advertising old routes of AS210777.)_
 

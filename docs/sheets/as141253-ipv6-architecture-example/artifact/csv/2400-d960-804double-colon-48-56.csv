@@ -1,0 +1,11 @@
+Prefix,Content Player,Notes
+2400:d960:804::/56,Akamai,Slice into /64 and use as required for both PtP/Interconnect and for routed pool
+2400:d960:804:100::/56,Amazon,Slice into /64 and use as required for both PtP/Interconnect and for routed pool
+2400:d960:804:200::/56,Cloudflare,Slice into /64 and use as required for both PtP/Interconnect and for routed pool
+2400:d960:804:300::/56,Edgio,Slice into /64 and use as required for both PtP/Interconnect and for routed pool
+2400:d960:804:400::/56,Google,Slice into /64 and use as required for both PtP/Interconnect and for routed pool
+2400:d960:804:500::/56,Meta,Slice into /64 and use as required for both PtP/Interconnect and for routed pool
+2400:d960:804:600::/56,Netflix,Slice into /64 and use as required for both PtP/Interconnect and for routed pool
+2400:d960:804:700::/56,Reserved,Reserved
+2400:d960:804:800::/56,Reserved,Reserved
+Etc,Etc,Etc

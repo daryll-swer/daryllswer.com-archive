@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BGPlay data misinterpretation led to BGP false alarm call on my number</title>
+  <meta name="description" content="BGP false-alarm: What happened, and what can we learn from it?">
+  <link rel="canonical" href="https://daryll-swer.github.io/daryllswer.com-archive/posts/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/">
+  <meta property="og:title" content="BGPlay data misinterpretation led to BGP false alarm call on my number">
+  <meta property="og:description" content="BGP false-alarm: What happened, and what can we learn from it?">
+  <meta property="og:image" content="https://daryll-swer.github.io/daryllswer.com-archive/posts/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/assets/featured.png">
+  <link rel="stylesheet" href="../../assets/theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html" aria-label="daryllswer.com Archive home">
+    <span class="brand-mark">DS</span>
+    <span><strong>daryllswer.com</strong><small>Archive</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="../../index.html">Index</a>
+    <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
+    <a href="https://www.daryllswer.com/">Canonical site</a>
+  </nav>
+</header>
+<main class="article-shell">
+  <article class="article">
+    <header class="article-header">
+      <p class="meta">21 September 2023 / ISP, Networking</p>
+      <h1>BGPlay data misinterpretation led to BGP false alarm call on my number</h1>
+      <p class="article-summary">BGP false-alarm: What happened, and what can we learn from it?</p>
+      <img class="featured-image" src="assets/featured.png" alt="">
+    </header>
+    <div class="article-body">
+      <p class="wp-block-paragraph"><strong>This article has been published on the <a href="https://blog.apnic.net/2023/11/20/bgplay-data-misinterpretation-led-to-a-bgp-false-alarm-call/" target="_blank" rel="noopener noreferrer">APNIC blog</a> as well.</strong></p>
+
+
+
+<p class="wp-block-paragraph">On September 14, 2023, I received a call from a transit provider (<a href="https://bgp.tools/as/17439" target="_blank" rel="noopener noreferrer">AS17439</a>) in a far-away location from where I actually operate. They were concerned that I was potentially leaking and/or hijacking a route (<a href="https://web.archive.org/web/20230921032726/https://bgp.tools/prefix/103.11.84.0/24#connectivity" target="_blank" rel="noopener noreferrer">103.11.84.0/24</a>) that originates from one of their downstream BGP customers (<a href="https://web.archive.org/web/20230921032837/https://bgp.tools/as/132052" target="_blank" rel="noopener noreferrer">AS132052</a>), through my <a href="https://www.daryllswer.com/as149794/" target="_blank" rel="noopener noreferrer">AS149794</a>, based on RIPE’s <a href="https://stat.ripe.net/ui2013/widget/bgplay#w.ignoreReannouncements=false&amp;w.resource=103.11.84.0/24&amp;w.starttime=1694680320&amp;w.endtime=1694680335&amp;w.rrcs=0,1,3,4,5,6,7,10,11,12,13,14,15,16,18,19,20,21,22,23,24,25,26&amp;w.instant=null&amp;w.type=bgp" target="_blank" rel="noopener noreferrer">BGPlay data</a>.</p>
+
+
+
+<p class="wp-block-paragraph">However, after investigating the issue myself using various tools, I determined that they had misinterpreted the data from BGPlay. In this article, I will explain what actually happened and why it is important for network managers, administrators, and engineers to have a good understanding of how to read BGP data correctly.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-context">Context</h2>
+
+
+
+<p class="wp-block-paragraph">I have peered my AS with RIPE’s <a href="https://www.ripe.net/analyse/internet-measurements/routing-information-service-ris" target="_blank" rel="noopener noreferrer">RIS</a>, whereby I export the full routing table from my POV to RIPE for both IPv4 and IPv6. This gives BGPlay full access to routing information from my AS.</p>
+
+
+
+<p class="wp-block-paragraph">BGPlay is a tool that allows network operators to view the routing tables of other networks. This can be useful for troubleshooting routing problems and for understanding how traffic is flowing across the Internet.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-how-to-avoid-bgp-false-alarms">How to avoid BGP false alarms</h2>
+
+
+
+<p class="wp-block-paragraph">In this harmless incident, the staff of the transit provider saw the BGP data for 103.11.84.0/24 from my AS’s POV on BGPlay for a very specific time-frame (Date and time: 2023-09-14 08:32:06) on BGPlay, though I am unsure of the timezone utilised by BGPlay.</p>
+
+
+
+<p class="wp-block-paragraph">The AS-PATH of the route showed my ASN on the left and the origin (AS132052) on the right. This shows that I learnt the route directly from AS132559, my upstream transit provider, moving from left to right in the AS-PATH.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="assets/inline/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg"><img loading="lazy" decoding="async" width="2880" height="2516" src="assets/inline/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg" alt="" class="wp-image-2808"></a><figcaption class="wp-element-caption">Figure-1 Screenshot from RIPE BGPlay of the very specific BGP data output</figcaption></figure>
+</div>
+
+
+<p class="wp-block-paragraph">The transit provider in question misinterpreted this data to mean that I was either hijacking their prefix and/or leaking it. However, this is not the case. What we are seeing here is a simple route output from my AS towards RIPE RIS, that shows the path on my end towards this specific prefix changed from ‘149794 132559 <strong>4755</strong> 17439 132052′ to ‘149794 132559 <strong>9498</strong> 4755 17439 132052′.</p>
+
+
+
+<p class="wp-block-paragraph">During my conversation with the transit provider in question who called me, I pointed them to other tools for confirming the situation, following are the tools I used myself:</p>
+
+
+
+<ol class="wp-block-list">
+<li><a href="https://radar.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare Radar</a></li>
+
+
+
+<li>bgp.tools’s <a href="https://bgp.tools/super-lg" target="_blank" rel="noopener noreferrer">super looking glass</a></li>
+
+
+
+<li>Some data output from <a href="https://www.kentik.com/blog/bgp-monitoring-from-kentik/" target="_blank" rel="noopener noreferrer">Kentik</a> – Shout out to <a href="https://www.linkedin.com/in/dougmadory/" target="_blank" rel="noopener noreferrer">Doug Madory</a> and <a href="https://www.linkedin.com/in/wilhelmsch/" target="_blank" rel="noopener noreferrer">Wilhelm</a> who were kind enough to support me with some data output from Kentik’s platform.</li>
+</ol>
+
+
+
+<h2 class="wp-block-heading" id="h-conclusion">Conclusion</h2>
+
+
+
+<p class="wp-block-paragraph">This is a common mistake that network operators make, especially those who are not familiar with how to read BGP data correctly. It is important to remember that the AS-PATH simply shows the path that a route has taken from the origin AS to the current AS and vice versa. </p>
+
+
+
+<p class="wp-block-paragraph">In the case of a route <strong>hijack</strong>, it is easy to spot the event by looking at the right-most AS in the AS-PATH, the right-most AS will be the origin AS for said route and one can determine if said AS is a valid AS or invalid AS by checking the route object and/or RPKI ROA. However, there can also be a case of a route hijack via <a href="https://datatracker.ietf.org/meeting/108/materials/slides-108-sidrops-draft-sriram-sidrops-as-hijack-detection-00-00" target="_blank" rel="noopener noreferrer">ASN hijacking</a>.</p>
+
+
+
+<p class="wp-block-paragraph">In the case of a route <strong>leak</strong>, the leak can occur anywhere between any AS in the AS-PATH, especially in provider-to-provider AS relationships. Detecting a route leak is not as straightforward, but it can be done so by using a myriad of publicly available tools such as looking glasses and the tools I linked above.</p>
+
+
+
+<p class="wp-block-paragraph">In this particular incident, the false-alarm was harmless. However, it is essential to be aware of the potential for misinterpreting BGP data, as this can lead to unnecessary and costly troubleshooting exercises.</p>
+
+
+
+<p class="wp-block-paragraph">Network operators should educate themselves on how to read BGP data correctly. There are many resources available online and in books, and there are also many experienced network operators who are willing to share their knowledge.</p>
+
+    </div>
+    <footer class="article-footer">
+      <p>Canonical source: <a href="https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/">https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/</a></p>
+      <p>Archive source bundle: <a href="https://github.com/daryll-swer/daryllswer.com-archive/tree/main/content/posts/2023-09-21-bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number">content/posts/2023-09-21-bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number</a></p>
+    </footer>
+  </article>
+</main>
+</body>
+</html>
