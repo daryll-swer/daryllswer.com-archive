@@ -19,6 +19,11 @@
 - Exclude donation/support CTAs and `/donation/` article links from archive
   article bodies. They are site-operational content, not durable article
   content.
+- Exclude sponsor/ad/trial lead CTAs from archive article bodies when they are
+  operational promotion rather than durable article substance.
+- Convert same-article numbered reference links away from WordPress
+  `#h-references` anchors. Prefer linking each number directly to the matching
+  source URL in that post's References list.
 - Treat comments as out of scope unless the owner explicitly asks for them.
 
 ## Public Repository Safety

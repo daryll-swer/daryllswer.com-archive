@@ -13,8 +13,6 @@ tags:
 ---
 ![IPv6 Router Advertisement: Why is it enabled by default on some network vendors?](assets/featured.png)
 
-#### This article was sponsored by the cybersecurity company FastNetMon. They offer DDoS detection products for network operators ranging from telcos to small ISPs, which can be deployed on-premise or in the cloud. It features easy deployment and lightning-fast attack detection. You can claim your free 30-day trial using this link.
-
 **This article has been published on the [APNIC blog](https://blog.apnic.net/2023/11/30/why-is-ipv6-router-advertisement-default-enabled-by-some-network-vendors/) as well.**
 
 IPv6 Router Advertisement (RA) is a [Neighbour Discovery Protocol](https://en.wikipedia.org/wiki/Neighbor_Discovery_Protocol) (NDP) ICMPv6 message that is used to communicate specific information (via flags) to IPv6 **hosts** (or a device that does both routing and ‘hosting’). RA messages are sent by routers periodically without solicitation and in response to Router Solicitation (RS) messages from the hosts, depending on your specific configuration and timers. IANA has an [up-to-date list](https://www.iana.org/assignments/icmpv6-parameters/icmpv6-parameters.xhtml#icmpv6-parameters-11) for all the flags that RA can be used for.

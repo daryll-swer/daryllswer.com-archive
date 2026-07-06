@@ -36,10 +36,12 @@ SITE = "https://www.daryllswer.com"
 POSTS_ENDPOINT = f"{SITE}/wp-json/wp/v2/posts?per_page=100&_embed=1"
 MEDIA_ENDPOINT = f"{SITE}/wp-json/wp/v2/media"
 UA = "daryllswer-com-archive-sync/1.0 (+https://www.daryllswer.com/)"
-OPERATIONAL_CTA_LABEL = "donation_or_support_cta"
-DONATION_TEXT_MARKERS = (
+OPERATIONAL_CTA_LABEL = "site_operational_cta"
+OPERATIONAL_TEXT_MARKERS = (
     "it would be appreciated if you could help me continue to provide valuable network engineering content",
     "your donation will help me conduct valuable experiments",
+    "this article was sponsored by the cybersecurity company",
+    "you can claim your free 30-day trial using this",
 )
 DONATION_URL_MARKERS = (
     "/donation/",
@@ -141,7 +143,7 @@ def element_has_operational_cta(el) -> bool:
     if not isinstance(tag, str):
         return False
     text = normalise_text(el.text_content() if tag.lower() != "script" else el.text or "")
-    if any(marker in text for marker in DONATION_TEXT_MARKERS):
+    if any(marker in text for marker in OPERATIONAL_TEXT_MARKERS):
         return True
     href = el.get("href") or ""
     if any(marker in href for marker in DONATION_URL_MARKERS):
@@ -499,6 +501,51 @@ def collect_inline_images(content_html: str, base_url: str) -> list[dict]:
     return images
 
 
+def extract_reference_links(content_html: str, base_url: str) -> dict[str, str]:
+    """Map numbered in-text reference markers to the actual reference URLs."""
+    try:
+        root = lxml.html.fragment_fromstring(content_html, create_parent="div")
+    except Exception:
+        return {}
+
+    headings = []
+    for el in root.xpath(".//*[self::h2 or self::h3 or self::h4 or self::h5 or self::h6]"):
+        el_id = (el.get("id") or "").strip().lower()
+        heading_text = normalise_text(el.text_content())
+        if el_id in {"h-references", "references"} or heading_text == "references":
+            headings.append(el)
+
+    for heading in headings:
+        sibling = heading.getnext()
+        while sibling is not None:
+            tag = getattr(sibling, "tag", "").lower()
+            if tag in {"h2", "h3", "h4", "h5", "h6"}:
+                break
+            if tag in {"ol", "ul"}:
+                links: dict[str, str] = {}
+                for index, li in enumerate(sibling.xpath("./li"), start=1):
+                    hrefs = li.xpath(".//a/@href")
+                    if hrefs:
+                        links[str(index)] = urllib.parse.urljoin(base_url, hrefs[0])
+                return links
+            sibling = sibling.getnext()
+    return {}
+
+
+def is_same_post_reference_anchor(href: str | None, base_url: str) -> bool:
+    if not href:
+        return False
+    joined = urllib.parse.urljoin(base_url, href)
+    parsed_joined = urllib.parse.urlsplit(joined)
+    parsed_base = urllib.parse.urlsplit(base_url)
+    return (
+        parsed_joined.fragment in {"h-references", "references"}
+        and parsed_joined.scheme == parsed_base.scheme
+        and parsed_joined.netloc == parsed_base.netloc
+        and parsed_joined.path.rstrip("/") == parsed_base.path.rstrip("/")
+    )
+
+
 def text_of(el) -> str:
     return " ".join(el.text_content().split())
 
@@ -521,9 +568,15 @@ def table_to_markdown(table) -> str:
 
 
 class MarkdownConverter:
-    def __init__(self, asset_map: dict[str, str], skip_first_image_url: str | None):
+    def __init__(
+        self,
+        asset_map: dict[str, str],
+        skip_first_image_url: str | None,
+        reference_links: dict[str, str] | None = None,
+    ):
         self.asset_map = asset_map
         self.skip_first_image_url = skip_first_image_url
+        self.reference_links = reference_links or {}
         self.first_image_seen = False
 
     def convert_fragment(self, content_html: str, base_url: str) -> str:
@@ -564,6 +617,8 @@ class MarkdownConverter:
             href = el.get("href")
             label = self.children(el, base_url).strip() or href or ""
             if href:
+                if is_same_post_reference_anchor(href, base_url):
+                    return f"[{label}]({self.reference_links.get(label, '#references')})"
                 return f"[{label}]({urllib.parse.urljoin(base_url, href)})"
             return label
         if tag == "img":
@@ -677,7 +732,8 @@ def sync_post(post: dict, generated_at: str) -> dict:
             asset_map[src] = os.path.relpath(ROOT / asset["local_path"], bundle).replace(os.sep, "/")
 
     skip_featured = featured_url if featured_url in asset_map else None
-    converter = MarkdownConverter(asset_map, skip_featured)
+    reference_links = extract_reference_links(rendered_article, post["link"])
+    converter = MarkdownConverter(asset_map, skip_featured, reference_links)
     body_md = converter.convert_fragment(rendered_article, post["link"])
     featured_local = None
     if featured_asset and featured_asset.get("local_path"):
