@@ -1,0 +1,101 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/",
+  "categories": [
+    {
+      "id": 55,
+      "name": "Linux",
+      "slug": "linux",
+      "taxonomy": "category"
+    },
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "This article examines iptables’ performance in filtering traffic at different processing stages within a Linux-based router. Tests were conducted comparing raw and filter tables’ efficiency in handling dropped traffic.\nContinue readingDrop Early, Drop Often: Raw vs Filter iptables packet filtering",
+  "featured_image": {
+    "alt": "",
+    "bytes": 424832,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 404,
+    "local_path": "content/posts/2024-01-27-drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/assets/featured.webp",
+    "mime_type": "image/webp",
+    "role": "featured",
+    "sha256": "81aee632d92513102aa7e577b92d6d0839d9c40edf06c05bdeab530b9be87d30",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/drop_packets_parachutes.webp",
+    "width": 1110
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "full": {
+      "file": "drop_packets_parachutes.webp",
+      "height": 404,
+      "mime_type": "image/webp",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/drop_packets_parachutes.webp",
+      "width": 1110
+    },
+    "medium_large": {
+      "file": "drop_packets_parachutes-768x280.webp",
+      "filesize": 12864,
+      "height": 280,
+      "mime_type": "image/webp",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/drop_packets_parachutes-768x280.webp",
+      "width": 768
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "29be1b5874c68f963d94eae75a0c4206dd567bca9bef29f0407380a4167e6c0e",
+    "index_md_sha256": "2b854c564e27def9074cedb13cf1fef3342f96d1645f557974705ac2d832e5b5",
+    "rendered_article_html_sha256": "26e857d78003d144553336f351ed9c2f21f1c000db101cc20641cb7f49dff854",
+    "wordpress_post_json_sha256": "33567520941cfd219b14b12e1f753966f4d030975df30f202db8fb87bf7488db"
+  },
+  "id": 3138,
+  "modified": "2025-05-21T01:52:14",
+  "published": "2024-01-27T01:09:13",
+  "slug": "drop-early-drop-often-raw-vs-filter-iptables-packet-filtering",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/3138",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 57,
+      "name": "iptables",
+      "slug": "iptables",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 56,
+      "name": "Linux",
+      "slug": "linux",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "Drop Early, Drop Often: Raw vs Filter iptables packet filtering",
+  "validation": {
+    "status": "pending"
+  }
+}

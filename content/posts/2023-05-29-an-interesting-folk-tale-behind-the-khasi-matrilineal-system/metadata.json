@@ -1,0 +1,141 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/an-interesting-folk-tale-behind-the-khasi-matrilineal-system/",
+  "categories": [
+    {
+      "id": 46,
+      "name": "Khasi Ethnicity",
+      "slug": "khasi-ethnicity",
+      "taxonomy": "category"
+    },
+    {
+      "id": 45,
+      "name": "Non-Tech",
+      "slug": "non-tech",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "A rarely known tale about the origins of the Khasi Matrilineal System.\nContinue readingAn Interesting Folk Tale Behind the Khasi Matrilineal System",
+  "featured_image": {
+    "alt": "Landscape photo in Sohra by Daryll Swer",
+    "bytes": 7075626,
+    "caption": "Shot in Sohra by Daryll Swer\nContinue readingShot in Sohra by Daryll Swer",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 3024,
+    "local_path": "content/posts/2023-05-29-an-interesting-folk-tale-behind-the-khasi-matrilineal-system/assets/featured.jpg",
+    "mime_type": "image/jpeg",
+    "role": "featured",
+    "sha256": "d9b03d942ebf3edf04ff5721ba64e41bfc996fc4a3ef3156d5d7f22d9181a8c7",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer.jpg",
+    "width": 4032
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "1536x1536": {
+      "file": "ShotInSohra-DaryllSwer-1536x1152.jpg",
+      "filesize": 222761,
+      "height": 1152,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-1536x1152.jpg",
+      "width": 1536
+    },
+    "2048x2048": {
+      "file": "ShotInSohra-DaryllSwer-2048x1536.jpg",
+      "filesize": 394051,
+      "height": 1536,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-2048x1536.jpg",
+      "width": 2048
+    },
+    "full": {
+      "file": "ShotInSohra-DaryllSwer.jpg",
+      "height": 3024,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer.jpg",
+      "width": 4032
+    },
+    "large": {
+      "file": "ShotInSohra-DaryllSwer-2880x2160.jpg",
+      "filesize": 787377,
+      "height": 2160,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-2880x2160.jpg",
+      "width": 2880
+    },
+    "medium": {
+      "file": "ShotInSohra-DaryllSwer-1440x1080.jpg",
+      "filesize": 196515,
+      "height": 1080,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-1440x1080.jpg",
+      "width": 1440
+    },
+    "medium_large": {
+      "file": "ShotInSohra-DaryllSwer-768x576.jpg",
+      "filesize": 59180,
+      "height": 576,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-768x576.jpg",
+      "width": 768
+    },
+    "thumbnail": {
+      "file": "ShotInSohra-DaryllSwer-1280x720.jpg",
+      "filesize": 121513,
+      "height": 720,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-1280x720.jpg",
+      "width": 1280
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "f4ef5dcbea268b53b1ae46c60be9243fbbec328022018cc1b91def6d1f3be42d",
+    "index_md_sha256": "91ceb909a15cd687f0b7d1634f9010f682e38c8fc306c533b26003d655b9cb89",
+    "rendered_article_html_sha256": "64465484c89d645b14b1792a8e8b52910f6cccf004552540a079e129b5f95a4f",
+    "wordpress_post_json_sha256": "d845cd8f50763ab506fd4b1523e82ccacc1c3d840ce762490b5fd06301f94e5e"
+  },
+  "id": 2492,
+  "modified": "2025-05-21T02:00:28",
+  "published": "2023-05-29T16:51:12",
+  "slug": "an-interesting-folk-tale-behind-the-khasi-matrilineal-system",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2492",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 47,
+      "name": "Khasi",
+      "slug": "khasi",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 51,
+      "name": "Non-Tech",
+      "slug": "non-tech",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "An Interesting Folk Tale Behind the Khasi Matrilineal System",
+  "validation": {
+    "status": "pending"
+  }
+}

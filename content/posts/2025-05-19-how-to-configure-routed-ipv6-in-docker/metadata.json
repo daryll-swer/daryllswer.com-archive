@@ -1,0 +1,115 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/",
+  "categories": [
+    {
+      "id": 55,
+      "name": "Linux",
+      "slug": "linux",
+      "taxonomy": "category"
+    },
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "How to set up native routed IPv6 in Docker with routed mode.\nContinue readingHow to configure routed IPv6 in Docker",
+  "featured_image": {
+    "alt": "",
+    "bytes": 20771,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 630,
+    "local_path": "content/posts/2025-05-19-how-to-configure-routed-ipv6-in-docker/assets/featured.png",
+    "mime_type": "image/png",
+    "role": "featured",
+    "sha256": "ff0095a2b5957504f8a7fc71880151180549b32fc8e5696547cbc2e2cd87563f",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png",
+    "width": 1200
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "full": {
+      "file": "Docker-IPv6.png",
+      "height": 630,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png",
+      "width": 1200
+    },
+    "medium_large": {
+      "file": "Docker-IPv6-768x403.png",
+      "filesize": 5313,
+      "height": 403,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6-768x403.png",
+      "width": 768
+    },
+    "widget-thumbnail": {
+      "file": "Docker-IPv6-75x75.png",
+      "filesize": 1030,
+      "height": 75,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6-75x75.png",
+      "width": 75
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "287c643acc13a2c510c6626af0cf7a61e0abbe05a65842cfe45ae2f360e56106",
+    "index_md_sha256": "ff0e69c6556ab8df7d8ddba4474472c314e8128f6b2da6650660e6dc3de6d4c2",
+    "rendered_article_html_sha256": "4b6f717df78e498f779529a2e373016a1d9cca758e6d46f116925a2c5b32b459",
+    "wordpress_post_json_sha256": "c5e8b8c9b995b9aa50649c0cedceb2f535f9eccc449d26571f4009d92f626cf2"
+  },
+  "id": 5136,
+  "modified": "2025-05-19T12:04:34",
+  "published": "2025-05-19T08:30:00",
+  "slug": "how-to-configure-routed-ipv6-in-docker",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/5136",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 61,
+      "name": "Docker",
+      "slug": "docker",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 25,
+      "name": "IPv6",
+      "slug": "ipv6",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 34,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "How to configure routed IPv6 in Docker",
+  "validation": {
+    "status": "pending"
+  }
+}

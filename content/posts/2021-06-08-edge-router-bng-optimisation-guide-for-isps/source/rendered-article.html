@@ -1,0 +1,2162 @@
+<pre class="wp-block-preformatted"><strong>Announcement<br></strong><br><strong>This documentation will no longer be maintained</strong>.<br><br><strong>For any professional services, <a href="https://www.swernetworks.com/">click here</a></strong>.</pre>
+
+
+
+<pre class="wp-block-preformatted">I've updated the CGNAT section with RouterOS v7 EIM-NAT config; this is the best possible CGNAT configuration that can exist on RouterOS at the time of writing this.</pre>
+
+
+
+<p class="wp-block-paragraph">This guide provides configuration instructions for MikroTik RouterOS, but the principles can be applied to other Network Operating Systems (NOSes) as well. The guide will be updated regularly as new technologies, use cases, and more efficient configurations are discovered.</p>
+
+
+
+<p class="wp-block-paragraph">Many ISPs around the globe use MikroTik RouterOS to provide access to their customers via BNGs over PPPoE and for various other roles such as edge routers. In this guide, I will explore common issues and solutions along with best practices.</p>
+
+
+
+<p class="wp-block-paragraph">This guide is also available on the <a href="https://blog.apnic.net/2021/06/24/how-to-edge-router-and-bng-optimization/" target="_blank" rel="noreferrer noopener">APNIC Blog</a>, however the version there is obsolete. I recommend you follow the source here for the most up-to-date information.</p>
+
+
+
+<h3 class="wp-block-heading">A brief history of this project</h3>
+
+
+
+<ul class="wp-block-list">
+<li>The configuration was first tested and deployed on <a href="https://bgp.tools/as/135756" target="_blank" rel="noreferrer noopener">AS135756</a> (small-sized ISP) with its proprietor <a href="https://twitter.com/varunzzz/status/1402686735532761088" target="_blank" rel="noreferrer noopener">Varun Singhania</a>.</li>
+
+
+
+<li>In 2021-22, I tested the configuration further as a downstream customer on <a href="https://bgp.tools/as/132559" target="_blank" rel="noreferrer noopener">AS132559</a> (IP Transit provider &amp; medium-sized ISP), where I was able to assess the impact and config changes both as an end-user and a consultant.</li>
+
+
+
+<li>From 2022 onwards, I test the configurations on my own network (<a href="https://bgp.tools/as/149794" target="_blank" rel="noreferrer noopener">AS149794</a>), including the firewall rules, to ensure it would work in any environment as long as the instructions are followed. The tests confirmed that the configuration does not disrupt layer 4 protocols or cause problems for end-users in the last mile.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">A few things to keep in mind</h3>
+
+
+
+<ul class="wp-block-list">
+<li>RouterOS is based on the Linux Kernel. As of RouterOS v7.14.2 it still uses legacy iptables for packet filtering instead of nftables, which has a <a href="https://wiki.nftables.org/wiki-nftables/index.php/Main_differences_with_iptables#:~:text=There%20have%20been%20reports%20of%20even%20unused%20base%20chains%20harming%20performance" target="_blank" rel="noreferrer noopener">negative impact</a> on performance.</li>
+
+
+
+<li>The guide will be focused on RouterOS v7 as it is the current version of RouterOS.</li>
+
+
+
+<li>This guide assumes the reader has a basic understanding of typical use cases and technologies/protocols used in an ISP/Telco production environment.</li>
+
+
+
+<li>This guide focuses on layer 2-4 configuration (and occasionally up to layer 7) by following various <a href="https://en.wikipedia.org/wiki/Request_for_Comments" target="_blank" rel="noreferrer noopener">RFCs</a> and BCOPs. It is not a network architecture guide, for which Kevin Myers’s <a href="https://iparchitechs.com/presentations/2022-Separation-Of-Network-Functions/IP-ArchiTechs-2022-Separation-Of-Network-Functions-Webinar.pdf" target="_blank" rel="noreferrer noopener">guide</a> is recommended.</li>
+
+
+
+<li>Most (virtually everything) on this article has been tested on RouterOS v7.14.2 (stable + 7.14.2 RouterBOARD firmware).</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Basic Router Terminology and overview</h2>
+
+
+
+<ul class="wp-block-list">
+<li>An <strong>edge </strong>or <strong>border </strong>router is an inter-AS router that is used for connecting different networks, such as transit, IXP, or PNIs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul class="wp-block-list">
+<li>It is important to keep an edge router stateless i.e. without connection tracking (stateful firewall filter rules or NAT), to avoid performance issues and vulnerability to DDoS attacks.</li>
+
+
+
+<li>Do not use an edge router for customer delegation, as it will become stateful.</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li>Do not confuse an edge router with a <em>Provider Edge</em> router, which is an <a href="https://www.rfc-editor.org/rfc/rfc4364#section-1.2" target="_blank" rel="noreferrer noopener">MPLS-specific</a> terminology.</li>
+</ul>
+</li>
+
+
+
+<li>A <strong>core </strong>router is <strong>not </strong>typically present in modern networks that follow a <a href="https://study-ccna.com/collapsed-core-and-three-tier-architectures/" target="_blank" rel="noreferrer noopener">collapsed core topology</a>.
+<ul class="wp-block-list">
+<li>However, some people may incorrectly refer to an edge router as a core router due to <a href="https://www.daryllswer.com/the-human-side-of-isps/" target="_blank" rel="noreferrer noopener">linguistic, cultural reasons, or misinformation</a>.</li>
+</ul>
+</li>
+
+
+
+<li>BNGs, also known as access layer routers, are used for customer delegation tasks such as PPPoE, DHCP, and CGNAT. They are stateful in nature. Some people may also refer to them as BRAS or NAS (Network Access Servers), all of which are synonyms in my opinion.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading has-text-align-left" id="h-general-configuration-changes">General Configuration Changes</h2>
+
+
+
+<p class="wp-block-paragraph">Below are the general guidelines that should be applied on all MikroTik devices for optimal performance and security.</p>
+
+
+
+<ul class="wp-block-list">
+<li>Upgrade RouterOS <strong>and</strong> the <a href="https://help.mikrotik.com/docs/display/ROS/Upgrading+and+installation#Upgradingandinstallation-Suggestions" target="_blank" rel="noreferrer noopener">RouterBOARD firmware</a> to the latest stable (or long-term if available) v7 releases, Use this command to enable firmware auto upgrade: “<strong><em>/system routerboard settings set auto-upgrade=yes</em></strong>”. Remember to reboot the router twice after the RouterOS upgrade to ensure firmware gets automatically upgraded.</li>
+
+
+
+<li>Implement <a href="https://help.mikrotik.com/docs/display/ROS/Securing+your+router" target="_blank" rel="noreferrer noopener">basic security measures</a>, including <a href="https://www.theurbanpenguin.com/rp_filter-and-lpic-3-linux-security/" target="_blank" rel="noreferrer noopener">reverse path filtering</a> and enabling TCP SYN cookies, for which the latter two are found in <a href="https://help.mikrotik.com/docs/display/ROS/IP+Settings#IPSettings-IPv4Settings" target="_blank" rel="noreferrer noopener">IP&gt;Settings</a>.
+<ul class="wp-block-list">
+<li>For rp-filter use loose mode when a device is behind asymmetric routing or when in doubt, use strict mode when a device is behind symmetric routing.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">IPv6</h3>
+
+
+
+<p class="wp-block-paragraph"><a href="https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/" target="_blank" rel="noreferrer noopener">IPv6 Router Advertisements (RA)</a> are used for SLAAC and/or DHCPv6 and in MikroTik it is called Neighbor Discovery (ND) which is a bit confusing as ND is an umbrella encompassing various protocols and behaviours and not only RAs. </p>
+
+
+
+<p class="wp-block-paragraph">IPv6 RA (ND) is enabled by default for <em>all</em> interfaces on RouterOS. This should be disabled to prevent sending RAs randomly out of interfaces that you do not use SLAAC on and for security reasons such as preventing someone from receiving an IPv6 address by connecting a host to a specific port or VLAN along with reducing unnecessary <a href="https://en.wikipedia.org/wiki/Broadcast,_unknown-unicast_and_multicast_traffic" target="_blank" rel="noreferrer noopener">BUM traffic</a> in your network. We disable it using this command:<br>“<strong><em>/ipv6 nd set [ find default=yes ] disabled=yes</em></strong>”</p>
+
+
+
+<p class="wp-block-paragraph">You can enable IPv6 RA on a per-interface basis as and when required, i.e. if you set “advertise=yes” for an interface via IPv6&gt;Address, then you need to configure RA/ND for that interface like the example below:<br>“<strong><em>/ipv6 nd add interface=Management_VLAN</em></strong>”</p>
+
+
+
+<h3 class="wp-block-heading">Interface Lists</h3>
+
+
+
+<p class="wp-block-paragraph"><a href="https://help.mikrotik.com/docs/display/ROS/Interface+Lists" target="_blank" rel="noreferrer noopener">Interface lists</a> help us simplify firewall rule management by enabling us to refer to an entire list in a single rule instead of multiple rules for every interface.</p>
+
+
+
+<p class="wp-block-paragraph">An interface list should only contain <strong>layer 3</strong> (L3) interfaces which is an interface with IP addressing attached to it, such as a physical port, L3 sub-interface VLAN, L3 bonding interface or GRE interface.</p>
+
+
+
+<p class="wp-block-paragraph">The following are basic guidelines for which lists to create and what should be included on those lists:</p>
+
+
+
+<ul class="wp-block-list">
+<li>“<strong>WAN</strong>” interface list should contain those interfaces used for connecting to transit, PNI, IXP, upstream peering.</li>
+
+
+
+<li>“<strong>LAN</strong>” interface list should contain those interfaces used for downstream connectivity to your retail customers or IP Transit customers etc. You should include “dynamic” interfaces to account for PPPoE clients on BNGs.</li>
+
+
+
+<li>“<strong>Intra-AS</strong>” interface list should contain those interfaces used for connecting one device to another device within the same network such as redundant connectivity between two routers horizontally.</li>
+
+
+
+<li>“<strong>Management</strong>” interface list should contain those interfaces used exclusively for management.</li>
+
+
+
+<li>Do <strong>not</strong> add bridge members individually into any list as they are purely Layer 2 (L2) interfaces.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">It is however, important to note: When you are using bridges (which is discussed later in this article), the interface placements depend on how you set up the bridge – If you’re using a single bridge with physical/bonding interfaces as bridge members without any VLAN configuration, then the bridge will be a member of “<strong>LAN</strong>”. But if you are using VLANs on top of the bridge, then place the VLANs into their appropriate LAN/Intra-AS/Management list based on your local network topology. For example:<br>“Management VLAN” will be in the management list, or VLAN123 will be in the “intra-AS” or “LAN” list.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-LAN-Include-Dynamic.png"><img loading="lazy" decoding="async" width="582" height="417" src="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-LAN-Include-Dynamic.png" alt="" class="wp-image-851"></a><figcaption class="wp-element-caption">Figure-1 (LAN Include Dynamic)</figcaption></figure>
+</div>
+
+
+<h3 class="wp-block-heading">Connection Tracking</h3>
+
+
+
+<ul class="wp-block-list">
+<li>Disable connection tracking on the <strong>edge </strong>router and enable loose TCP tracking on <strong>all</strong> routers using the following commands:<br><strong><em>“/ip firewall connection tracking set enabled=no”<br>“/ip firewall connection tracking set loose-tcp-tracking=yes”</em></strong></li>
+
+
+
+<li>Use the recommended connection tracking timeout values to improve stability and performance, especially for UDP traffic like VoIP and gaming. If necessary, upgrade the router’s RAM to accommodate these values.</li>
+</ul>
+
+
+
+<pre class="wp-block-code"><code>/ip firewall connection tracking
+set icmp-timeout=30s tcp-close-wait-timeout=1m tcp-fin-wait-timeout=2m tcp-last-ack-timeout=30s tcp-syn-received-timeout=1m tcp-syn-sent-timeout=2m tcp-time-wait-timeout=2m udp-stream-timeout=2m udp-timeout=30s</code></pre>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-Recommended-Connection-Tracking-Timeout-Values.png"><img loading="lazy" decoding="async" width="498" height="536" src="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-Recommended-Connection-Tracking-Timeout-Values.png" alt="" class="wp-image-852"></a><figcaption class="wp-element-caption">Figure-2 (Recommended Connection Tracking Timeout Values)</figcaption></figure>
+</div>
+
+
+<h3 class="wp-block-heading">Miscellaneous</h3>
+
+
+
+<ul class="wp-block-list">
+<li>Give the router an accurate system clock by enabling the Network Time Protocol (NTP) client and specifying a reliable NTP server such as this example:<br><strong><em>“/system ntp client set enabled=yes server-dns-names=time.cloudflare.com”</em></strong></li>
+</ul>
+
+
+
+<h2 class="wp-block-heading has-text-align-left" id="h-mtu">MTU</h2>
+
+
+
+<p class="wp-block-paragraph">To ensure reliable network performance, it is essential to configure the MTU consistently across all devices in the path in both L2 and L3. Inconsistent MTU configurations can result in dropped frames or strange behaviours. Additionally, it is essential to minimize IP fragmentation, properly deploy RFC4638, and ensure PMTUD is working for both IPv4 and IPv6. This will help to ensure reasonable auto-detected TCP MSS negotiation values.</p>
+
+
+
+<p class="wp-block-paragraph">Jumbo frames are ideally the way to go about MTU configuration as it’s future-proofing your network for whatever protocols you may throw at it. You should encourage your provider, peers, and customers to also configure jumbo frames on their network.</p>
+
+
+
+<p class="wp-block-paragraph">Bigger frames = more data per frame, meaning less frames required to transmit data, less CPU/resource utilisation required as packets per second flow will decrease.</p>
+
+
+
+<h3 class="wp-block-heading">Guidelines</h3>
+
+
+
+<p class="wp-block-paragraph"><strong>Layer 2 MTU</strong></p>
+
+
+
+<p class="wp-block-paragraph">L2 MTU, also known as the “media MTU” should be configured to the <strong><em>maximum</em></strong> supported value on physical interfaces such as Ethernet ports, SFP and wireless interfaces. This applies to any networking hardware, including routers, switches, and hypervisors. The maximum supported value <strong>may vary</strong> by vendor or model, but that <strong>is okay</strong> as the L3 MTU will handle the actual packet size negotiation.</p>
+
+
+
+<p class="wp-block-paragraph">However, it is important to note that, you must ensure the interfaces <strong><em>all have</em></strong> consistently maximum values to minimise the number of MTU profiles on the device – The switch chip or ASIC has limited support for <em>n</em> number of MTU profiles which if exceeded could hurt performance or lead to undefined behaviours.</p>
+
+
+
+<p class="wp-block-paragraph">By properly configuring the L2 MTU, you can run any protocol you want (such as VXLAN, MPLS, VPLS, or WireGuard) and still have an MTU far greater than 1500 for layer 3 packets, thereby avoiding fragmentation <strong>completely</strong> on the overlay, intra-as.<br>Example:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Edge router (L2 MTU 9216) &gt; BNG (L2 MTU 9216) &gt; PE router (L2 MTU 9216) &gt; Wireless AP (Bridged mode, often carries 9216 or similar L2 MTU) &gt; Customer edge router (L2 MTU for WAN 9216)</li>
+
+
+
+<li>Edge router (L2 MTU 9216) &gt; BNG (L2 MTU 9216) &gt; PE router (L2 MTU 9216) &gt; OLT (Bridged mode, often carries 9216 or similar L2 MTU) &gt; Customer edge router (L2 MTU for WAN 9216)</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Layer 3 MTU</strong></p>
+
+
+
+<p class="wp-block-paragraph">Configure it to <strong>9k MTU</strong>, <strong>strictly</strong> for all <strong>physical</strong> ports (ethernet, SFP etc). If there is any L2 overhead, such as on a layer 3 sub-interface VLAN, the system will automatically subtract from the L2 MTU and will show us the subtracted L2 MTU, so you can adjust layer 3 MTU accordingly.</p>
+
+
+
+<p class="wp-block-paragraph">The basic gist of this is, we use the 9k L3 MTU on intra-AS and even inter-AS physical interfaces, unless explicitly your peer doesn’t support 9k.</p>
+
+
+
+<p class="wp-block-paragraph">This allows your <strong><em>downstream</em></strong> transit customers to talk to your network and your customers in jumbo frames – For which, you should inform your customer if you’ve enabled jumbo frames for them, their L3 MTU must match your L3 MTU. </p>
+
+
+
+<p class="wp-block-paragraph">But if for example, you are configuring an interface towards your transit or IXP, then you should ask your provider if they support &gt;1500 MTU and configure accordingly. Some transit providers and IXPs supports 9000 MTU, so we take advantage of that when possible.</p>
+
+
+
+<p class="wp-block-paragraph">Some things to be careful of:</p>
+
+
+
+<ul class="wp-block-list">
+<li>If using Stacked VLANs (QinQ), both S and C VLANs should have equal L3 MTU.</li>
+
+
+
+<li>If your customer equipment does not support high jumbo frame, then simply configure your L3 MTU to match theirs, which is usually 1500.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Example:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Edge router (L3 MTU 9k) &gt; BNG (L3 MTU 9k) &gt; PE router (L3 MTU 9k) &gt; Wireless AP (bridged mode and permits jumbo frames above 9k) &gt; Customer edge router (L3 MTU for WAN will be <strong>9k</strong>, assuming you configure 9k MTU on the S-C VLAN on the BNG)</li>
+
+
+
+<li>Edge router (L3 MTU 9216k) &gt; BNG (L3 MTU 9216k) &gt; PE router (L3 MTU 9k) &gt; OLT (L3 MTU 9k) &gt; (L3 MTU for WAN will be <strong>9k</strong>, assuming you configure 9k MTU on the S-C VLAN on the BNG)</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">MTU can be mixed and match network-wide, but should never mismatch. PMTUD exists for a reason, I have built networks where I had 9k in some paths, 8k in some paths, 1500 in some paths, differences may be on physical interfaces where a sub-interface is configured on top of the physical interface (such as a bridge, or L3 subinterface VLANs on top of the bridge). With proper planning and thought, you shouldn’t have problems with 9k MTU mixed in with lower sized MTU.</p>
+
+
+
+<p class="wp-block-paragraph">The screenshots below are for references to give you an idea of what MTU mix/match (but never mismatch) looks like, this is based on a network I built from scratch. Ether1 is 1500 L3 MTU because it’s my MGMT/OOB port, the other physical ports are all 9k L3 MTU and maxed L2 MTU. The LACP bonding interfaces are my intra-as interfaces connected to my backbone routers, and 9K is configured on their side as well. The VPLS is jumbo frames MPLS network-wide to ensure I can carry as much VLANs as I want, as much L2VPN customers as I want without any problems for jumbo frames.</p>
+
+
+
+<p class="wp-block-paragraph">The VLANs on top of the bridge (excluding the pe01) are tagged to the VPLS circuit (also member of bridge) which are configured to 1500 MTU as these are layer 3 terminating interfaces, as my residential customers behind these VLANs, don’t have routers with jumbo frames, so 1500 makes sense. But if for example, on VLAN1501, one day, I moved all customers to jumbo frames 9k enabled routers? Then I simply change the MTU config on my VLAN interface right here, as the underlying transport network is already enabled with jumbo frames from day one.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.36.45%E2%80%AFAM.png"><img loading="lazy" decoding="async" width="2606" height="1434" src="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.36.45%E2%80%AFAM.png" alt="" class="wp-image-3124" srcset="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.36.45 AM.png 2606w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.36.45 AM-1920x1057.png 1920w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.36.45 AM-768x423.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.36.45 AM-1536x845.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.36.45 AM-2048x1127.png 2048w" sizes="auto, (max-width: 2606px) 100vw, 2606px"></a><figcaption class="wp-element-caption">Figure-3 MTU Overview</figcaption></figure>
+</div>
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full is-resized"><a href="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.37.02%E2%80%AFAM.png"><img loading="lazy" decoding="async" width="962" height="954" src="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.37.02%E2%80%AFAM.png" alt="" class="wp-image-3125" style="width:498px;height:auto" srcset="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.37.02 AM.png 962w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.37.02 AM-768x762.png 768w" sizes="auto, (max-width: 962px) 100vw, 962px"></a><figcaption class="wp-element-caption">Figure-4 VPLS MTU</figcaption></figure>
+</div>
+
+
+<h3 class="wp-block-heading">MTU Scripts</h3>
+
+
+
+<p class="wp-block-paragraph">You can automate the MTU configuration using the scripts below. Please run <strong>each one separately</strong> as I didn’t put delays in between preventing synchronisation, but <strong>be mindful</strong> to <strong>manually</strong> configure L2, L3 MTU and advertised L2 MTU for VPLS/Other PPP interfaces.</p>
+
+
+
+<pre class="wp-block-code"><code><strong>#Run the ethernet MTU script first before the others#
+</strong>#Script to autoconfigure max L2/L3 MTU on ethernet ports#
+/interface ethernet
+:foreach i in=[find] do={
+  set $i l2mtu=[/interface get $i max-l2mtu]
+  set $i mtu=[/interface get $i max-l2mtu]
+}
+
+<strong>#Script to autoconfigure max L3 MTU on Layer 3 sub-interface VLAN#</strong>
+/interface vlan
+:foreach i in=[find] do={
+  set $i mtu=[/interface get $i l2mtu]
+}
+
+<strong>#Script to autoconfigure max L3 MTU on Bonding interfaces#
+</strong>/interface bonding
+:foreach i in=[find] do={
+  set $i mtu=[/interface get $i l2mtu]
+}
+
+<strong>#Script to autoconfigure max L3 MTU on VXLAN#
+</strong>/interface vxlan
+:foreach i in=[find] do={
+  set $i mtu=[/interface get $i l2mtu]
+}
+
+<strong>#Script to autoconfigure max L2/L3 MTU on Wireless interfaces#
+</strong>/interface wireless
+:foreach i in=[find] do={
+  set $i l2mtu=2290
+  set $i mtu=2290
+}
+#</code></pre>
+
+
+
+<h2 id="h-linux-bridge-approach" class="wp-block-heading">Linux Bridge Approach</h2>
+
+
+
+<p class="wp-block-paragraph">A Linux bridge is a kernel module that acts as a virtual network switch and is used to forward packets between connected interfaces (also known as bridge ports or members). Many network operators do not follow <a href="https://help.mikrotik.com/docs/display/ROS/Layer2+misconfiguration" target="_blank" rel="noreferrer noopener">MikroTik’s official guidelines</a> to properly implement L2/3 using a bridge, which results in degraded performance as hardware offloading and/or bridge <em><a href="https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-FastForward" target="_blank" rel="noreferrer noopener">Fast Path/Fast Forward</a></em> becomes unusable along with the inability to perform <a href="https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-BridgePacketFilter" target="_blank" rel="noreferrer noopener">L2 filtering</a>.</p>
+
+
+
+<pre class="wp-block-verse">Linux driven hardware such as MikroTik or even Cumulus Linux devices rely heavily on <a href="https://www.kernel.org/doc/Documentation/networking/dsa/dsa.txt" target="_blank" rel="noreferrer noopener">Linux DSA</a>. Linux DSA, Bridge, vlan-aware bridge is a very complex vast topic that currently doesn't have a comprehensive network engineer oriented documentation, I will try to work with a buddy of mine to write a new blog post to deep diving the Linux DSA/Bridge architecture and what it means for network engineers. Until then, just keep in mind that, for layer 3 offloading to work correctly, you need <strong>single</strong> bridge for all downstream interfaces and use the vlan-filtering to segregate them as "access ports" on a router, and ocassionally trunk port as well depending on your topology and use-case.
+
+This means if you have a box, and the box has only one ASIC, then only one bridge can exist for physical ports/interfaces/LACP etc. However, you can create a loopback bridge, no problem.</pre>
+
+
+
+<p class="wp-block-paragraph">To maximize performance benefits and give you L2 filtering capabilities, it is recommended by MikroTik to create a <a href="https://help.mikrotik.com/docs/display/ROS/L3+Hardware+Offloading#L3HardwareOffloading-Creatingmultiplebridges" target="_blank" rel="noreferrer noopener">single bridge</a> per device with all <strong>downstream</strong> (and intra-AS) interfaces (physical, LACP bonding etc) as bridge members. Tagged/untagged VLANs and hybrid VLANs can be configured using <a href="https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-BridgeVLANFiltering" target="_blank" rel="noreferrer noopener">bridge VLAN filtering</a>. Refer to <a href="https://help.mikrotik.com/docs/display/ROS/Basic+VLAN+switching" target="_blank" rel="noreferrer noopener">vendor guidelines</a> for model-specific configuration instructions.</p>
+
+
+
+<p class="wp-block-paragraph">If you created an LACP bonding interface between two routers (or switches) for redundancy, you can add the bond interface into the same bridge as a bridge member, where in turn <em>either</em> the bridge itself <strong><em>or</em></strong> the L3 sub-interface VLANs will be an interface list member depending on your topology as discussed in the previous interface lists section.</p>
+
+
+
+<p class="wp-block-paragraph">The management port on newer MikroTik device is a dedicated port connected to the CPU instead of the ASIC, similar to traditional networking devices from Cisco or Juniper. In such cases, the management port will be fully indepdent from any bridge, with its own indepedent VRF. However, if for example you’re transporting managment VLAN for a downstream device from a dowsntream port, example SFP+12, then in this case, SFP+12 will be member of the bridge with VLAN config on the bridge as usual.</p>
+
+
+
+<p class="wp-block-paragraph">A separate bridge can also be created as a loopback interface without impacting physical interface performance. You can assign the “.0” IPv4 address to this interface along with the “::” IPv6 address of an IPv6 subnet for management, testing purposes or for using as the loopback IPs with OSPF.</p>
+
+
+
+<p class="wp-block-paragraph">Below is a sample configuration from a CCR1036 router using MikroTik guidelines along with sample interface lists:</p>
+
+
+
+<pre class="wp-block-code"><code><strong>#Layer 3 configuration such as IP addressing is attached to these interfaces#
+</strong>/interface vlan
+add interface=bridge1 mtu=10218 name="Main VLAN" vlan-id=20
+add interface=bridge1 mtu=10218 name="Management VLAN" vlan-id=10
+
+/interface bridge
+add frame-types=admit-only-vlan-tagged name=bridge1 vlan-filtering=yes
+<strong>#Loopback interface#
+</strong>add arp=disabled name=loopback protocol-mode=none
+
+/interface bridge port
+add bridge=bridge1 frame-types=admit-only-untagged-and-priority-tagged interface=ether1 pvid=20
+add bridge=bridge1 frame-types=admit-only-untagged-and-priority-tagged interface=ether2 pvid=20
+add bridge=bridge1 frame-types=admit-only-untagged-and-priority-tagged interface=ether3 pvid=20
+add bridge=bridge1 frame-types=admit-only-untagged-and-priority-tagged interface=ether4 pvid=20
+add bridge=bridge1 frame-types=admit-only-untagged-and-priority-tagged interface=ether5 pvid=20
+add bridge=bridge1 frame-types=admit-only-untagged-and-priority-tagged interface=ether6 pvid=20
+add bridge=bridge1 frame-types=admit-only-untagged-and-priority-tagged interface=ether7 pvid=20
+add bridge=bridge1 frame-types=admit-only-untagged-and-priority-tagged interface=ether8 pvid=10
+/interface bridge vlan
+add bridge=bridge1 comment="Main VLAN" tagged=bridge1 vlan-ids=20
+add bridge=bridge1 comment="Management VLAN" tagged=bridge1 vlan-ids=10
+
+<strong>#Attaching IP addressing to the interfaces#
+</strong>/ip address
+add address=100.64.2.1/24 interface="Main VLAN" network=100.64.2.0
+add address=103.176.189.0 comment="Public Loopback" interface=loopback network=103.176.189.0
+add address=100.64.3.1/25 interface="Management VLAN" network=100.64.3.0
+
+<strong>#Example for interface lists#
+</strong>/interface list member
+add interface="Main VLAN" list=LAN
+add interface="Management VLAN" list="Management Interfaces"</code></pre>
+
+
+
+<h3 id="h-r-m-stp" class="wp-block-heading">R/M(STP)</h3>
+
+
+
+<p class="wp-block-paragraph">I will not deep dive into how <a href="https://help.mikrotik.com/docs/display/ROS/Spanning+Tree+Protocol" target="_blank" rel="noreferrer noopener">STP</a> works, as that is outside the scope of a guide post like this one. However, a few quick things to keep in mind:</p>
+
+
+
+<ul class="wp-block-list">
+<li>MikroTik allows us to <a href="https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-Per-portSTP" target="_blank" rel="noreferrer noopener">selectively</a> enable/disable STP/BPDU per-port if required. This may be needed in your network with complex layer 2 designs.</li>
+</ul>
+
+
+
+<h3 id="h-multicast-traffic-on-the-bridge" class="wp-block-heading">Multicast traffic on the bridge</h3>
+
+
+
+<p class="wp-block-paragraph">I personally had a few challenges with multicast traffic/IGMP Snooping best practices, for which I had to reach out to MikroTik support for some clarity. Below are a few basic guidelines to follow based on what I gathered from MikroTik docs and their support team. This is of utmost importance for networks that makes use of multicast routing and traffic for their IPTV services and similar.</p>
+
+
+
+<ul class="wp-block-list">
+<li>Be mindful of <a href="https://help.mikrotik.com/docs/pages/viewpage.action?pageId=59277403" target="_blank" rel="noreferrer noopener">IGMP Snooping</a> (and IGMP Proxy/PIM) limitations such as tagged VLAN, and features depending on your local network topology.</li>
+
+
+
+<li>Keep in mind that IPv6 SLAAC will break if you enable multicast querier, for which, you need RouterOS v7.7 onwards to <a href="https://help.mikrotik.com/docs/pages/viewpage.action?pageId=59277403#BridgeIGMP/MLDsnooping-StaticMDBentries" target="_blank" rel="noreferrer noopener">work around</a> this.</li>
+
+
+
+<li>In a layer 2 network if you are using IGMP Snooping, it should be enabled on all the bridges (devices) involved.</li>
+
+
+
+<li>You can also enable IGMP multicast querier on all the bridges, only one will get elected with the rest acting as failover in case a device fails. </li>
+
+
+
+<li>If you are using PPPoE then there’s no such thing as true multicast, because whilst it may multicast on layer 3, it will not be true multicast on layer 2 due to the nature of PPPoE which is a tunnel over layer 2. If you are using DHCP (preferably) or IPoE, then this issue does not apply.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading has-text-align-left" id="h-prefix-size-for-ptp-links">Prefix size for PTP links</h2>
+
+
+
+<h3 class="wp-block-heading has-text-align-left" id="h-ipv4">IPv4</h3>
+
+
+
+<p class="wp-block-paragraph">I have noticed a lot of operators talking about how short they are on IPv4 addresses – Yet for unknown reasons they like to waste 2 extra addresses for every PTP or inter-router link by using a <strong>/30</strong>. Please, stop doing that and start using <strong>/31s</strong> for PTP links as per <a href="https://datatracker.ietf.org/doc/html/rfc3021" target="_blank" rel="noreferrer noopener">RFC3021</a>.</p>
+
+
+
+<p class="wp-block-paragraph">However, RouterOS v6+v7 does not support /31 natively, the following is how we do it.</p>
+
+
+
+<p class="wp-block-paragraph">Example below:<br>Prefix: 103.176.189.0/31</p>
+
+
+
+<pre class="wp-block-code"><code><strong>#MikroTik to MikroTik PTP#
+</strong>
+#Router A#
+/ip address
+add address=103.176.189.0 interface=ether1 network=103.176.189.1 comment="/31 Example"
+
+#Router B#
+/ip address
+add address=103.176.189.1 interface=ether1 network=103.176.189.0 comment="/31 Example"</code></pre>
+
+
+
+<pre class="wp-block-code"><code><strong>#Cross vendor PTP#
+</strong>
+#Router A Cisco/Juniper/Huawei etc#
+interface eth2 address 103.176.189.0/31
+
+#Router B MikroTik side#
+/ip address
+add address=103.176.189.1 interface=ether1 network=103.176.189.0 comment="/31 Example"</code></pre>
+
+
+
+<h3 id="h-ipv6" class="wp-block-heading">IPv6</h3>
+
+
+
+<p class="wp-block-paragraph">As per <a href="https://datatracker.ietf.org/doc/html/rfc6164#section-5" target="_blank" rel="noreferrer noopener">RFC6164</a>, it is advised to use <strong>/127s</strong> on PTP links to avoid various forms of network attacks described in the RFC. </p>
+
+
+
+<p class="wp-block-paragraph">However, for ease of management and subnetting, I would advise not to subnet longer (smaller) than a /64. Please <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" target="_blank" rel="noreferrer noopener">click here</a> to learn more about IPv6 architecture and subnetting plan.</p>
+
+
+
+<p class="wp-block-paragraph">Note that on MikroTik, /127s do not work with BGP for unknown reasons and hence the longest prefix size we can use would be a /126.</p>
+
+
+
+<p class="wp-block-paragraph">Example below:<br>Prefix: 2400:7060::/126</p>
+
+
+
+<pre class="wp-block-code"><code>#Advertise=no because we aren't using SLAAC#
+/ipv6 address
+add address=2400:7060::1/126 advertise=no comment="Peering with Transit" interface=ether1
+</code></pre>
+
+
+
+<p class="wp-block-paragraph">However, if you look closely, you might’ve noticed that I avoided using the initial zeroes leading interface ID “2400:7060<strong>::</strong>/126″ and instead used “2400:7060<strong>::1</strong>/126″. The reason for this is, that in some routers, using the “::” (all leading zeroes) interface ID (address) on a link could cause <a href="https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/" target="_blank" rel="noreferrer noopener">strange behaviours</a>.</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-left">Routing loops with RFC6890 space</h2>
+
+
+
+<p class="wp-block-paragraph">I have observed that in most of the networks, including my own personal home lab (AS149794), I find a lot of traffic where source IP = my end hosts or CPE WAN IP (either it is CGNAT IP or public IP), but destination IP = unused RFC6890 blocks. This is why I (and MikroTik themselves) created a forward rule to drop RFC6890 from escaping to WAN.</p>
+
+
+
+<p class="wp-block-paragraph">Now let us step back and think about this: The majority of the ISPs do not implement these filter rules, which means that traffic from customers whereby dst-IP=RFC6890 is forwarded from their CPE to the BNGs, and from there the underlying L3/L2 paths will carry it all the way to the edge router, where further, goes towards your transit or peers if there is a default route. If there is no default route or more specific route for any given dst-IP matching RFC6890 blocks, it would simply loop back and forth until the TTL expires, which means wasted resources, CPU and bandwidth when your network is at scale and you have thousands of customers. So in order to solve this with a quick fix, I derived a simple yet effective solution – Route RFC6890 blocks to blackhole.</p>
+
+
+
+<p class="wp-block-paragraph">We route all RFC6890 space to black hole directly on the edge routers for well edge cases, but we will also do the same on the BNGs directly.</p>
+
+
+
+<p class="wp-block-paragraph">It will not impact your use of the private space for any given interface/servers etc – Because remember, more specific prefixes always win and hence your private /24s etc will always be preferred over the less specific /10 for example and hence will be accessible. Someone on the MikroTik forum has <a href="https://forum.mikrotik.com/viewtopic.php?t=112857#p560358" target="_blank" rel="noreferrer noopener">discussed this</a> a bit, in the past.</p>
+
+
+
+<h3 class="wp-block-heading">IPv4</h3>
+
+
+
+<pre class="wp-block-code"><code><strong>#RouterOS v7#</strong>
+
+<strong>#Copy and paste these on both Edge and BNG routers#
+</strong>/ip route
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=0.0.0.0/8
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=172.16.0.0/12
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=192.168.0.0/16
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=10.0.0.0/8
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=169.254.0.0/16
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=127.0.0.0/8
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=224.0.0.0/4
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=198.18.0.0/15
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=192.0.0.0/24
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=192.0.2.0/24
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=198.51.100.0/24
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=203.0.113.0/24
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=100.64.0.0/10
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=240.0.0.0/4
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=192.88.99.0/24
+add blackhole comment="Blackhole route for RFC6890 (limited broadcast)" disabled=no dst-address=255.255.255.255/32</code></pre>
+
+
+
+<pre class="wp-block-code"><code><strong><strong>#RouterOS v6#</strong>
+
+<strong>#Copy and paste these on both Edge and BNG routers#</strong></strong>
+/ip route
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=0.0.0.0/8
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=172.16.0.0/12
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=192.168.0.0/16
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=10.0.0.0/8
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=169.254.0.0/16
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=127.0.0.0/8
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=224.0.0.0/4
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=198.18.0.0/15
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=192.0.0.0/24
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=192.0.2.0/24
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=198.51.100.0/24
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=203.0.113.0/24
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=100.64.0.0/10
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=240.0.0.0/4
+add type=blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=192.88.99.0/24
+add type=blackhole comment="Blackhole route for RFC6890 (limited broadcast)" disabled=no dst-address=255.255.255.255/32</code></pre>
+
+
+
+<h3 class="wp-block-heading">IPv6</h3>
+
+
+
+<pre class="wp-block-code"><code><strong>#RouterOS v7#</strong>
+
+<strong>#Copy and paste these on both Edge and BNG routers#</strong>
+/ipv6 route
+add blackhole comment="Blackhole route for RFC6890" disabled=no dst-address=::1/128
+add blackhole comment="Blackhole route for RFC6890" disabled=no dst-address=::/128
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=64:ff9b::/96
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=::ffff:0:0/96
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=100::/64
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=2001::/23
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=2001::/32
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=2001:2::/48
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=2001:db8::/32
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=2001:10::/28
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=2002::/16
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=fc00::/7
+add blackhole comment="Blackhole route for RFC6890 (aggregated)" disabled=no dst-address=fe80::/10</code></pre>
+
+
+
+<pre class="wp-block-code"><code><strong>#In RouterOS v6, IPv6 blackhole is not supported#</strong></code></pre>
+
+
+
+<h2 id="h-qos-and-bufferbloat-control" class="wp-block-heading">QoS and Bufferbloat control</h2>
+
+
+
+<p class="wp-block-paragraph">Going forward from 2023 onwards with RouterOS v7 (or any modern OS), based on the immense amount of work, data, and results published by <a href="https://en.wikipedia.org/wiki/Dave_Taht" target="_blank" rel="noreferrer noopener">Dave Täht</a> on the subject of QoS/QoE and more specifically the main problem with this domain i.e. <a href="https://www.bufferbloat.net/projects/" target="_blank" rel="noreferrer noopener">bufferbloat</a>, I would recommend using <a href="https://www.bufferbloat.net/projects/codel/wiki/" target="_blank" rel="noreferrer noopener">FQ_Codel</a> <strong>network-wide</strong> as the default queueing algorithm. The main reason to opt for FQ_Codel is primarily because it was designed for backbone network usage, such as ISPs, Telcos and carriers, compared to the end-user-oriented <a href="https://www.bufferbloat.net/projects/codel/wiki/CakeTechnical/" target="_blank" rel="noreferrer noopener">CAKE</a>.</p>
+
+
+
+<p class="wp-block-paragraph">This means configuration wise, you apply the FQ_Codel queueing to all your <strong>physical</strong> ports and wireless interfaces across all your network devices. And ensure for customer queueing the same queue type is used.</p>
+
+
+
+<p class="wp-block-paragraph">An <strong>important point</strong> to note is the default values of FQ_Codel out-of-the-box are good up to 40Gbps physical interfaces. This means that if a <strong>single</strong> physical port is carrying <strong>more</strong> than 40Gbps traffic, you will need to tweak a custom FQ_Codel profile for that specific port.</p>
+
+
+
+<p class="wp-block-paragraph">Example configuration on a CCR1036:</p>
+
+
+
+<pre class="wp-block-code"><code>/queue type
+add kind=fq-codel name=FQ_Codel
+
+/queue interface
+set ether1 queue=FQ_Codel
+set ether2 queue=FQ_Codel
+set ether3 queue=FQ_Codel
+set ether4 queue=FQ_Codel
+set ether5 queue=FQ_Codel
+set ether6 queue=FQ_Codel
+set ether7 queue=FQ_Codel
+set ether8 queue=FQ_Codel
+set sfp-sfpplus1 queue=FQ_Codel
+set sfp-sfpplus2 queue=FQ_Codel</code></pre>
+
+
+
+<p class="wp-block-paragraph"><em>In addition to network backbone FQ_Codel implementation, you can also consider deploying an open-source bufferbloat killer traffic shaping device using <a href="https://libreqos.io/" target="_blank" rel="noreferrer noopener">LibreQoS</a>.</em></p>
+
+
+
+<p class="wp-block-paragraph">Below is a screenshot of the test results from this <a href="https://www.waveform.com/tools/bufferbloat" target="_blank" rel="noreferrer noopener">tool</a> on a <strong>wireless</strong> ISP network that I architected and implemented myself from the ground up. I should note that, I implemented everything from this guide + other design considerations which includes network-wide FQ_Codel config, in my case there is no LibreQoS-like device as I wanted a simpler network topology, and the end result below is a result that’s better than even some fibre networks on PON out there in the market.</p>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2023/12/image.png"><img loading="lazy" decoding="async" width="2486" height="1344" src="https://www.daryllswer.com/wp-content/uploads/2023/12/image.png" alt="" class="wp-image-3067" srcset="https://www.daryllswer.com/wp-content/uploads/2023/12/image.png 2486w, https://www.daryllswer.com/wp-content/uploads/2023/12/image-1920x1038.png 1920w, https://www.daryllswer.com/wp-content/uploads/2023/12/image-768x415.png 768w, https://www.daryllswer.com/wp-content/uploads/2023/12/image-1536x830.png 1536w, https://www.daryllswer.com/wp-content/uploads/2023/12/image-2048x1107.png 2048w" sizes="auto, (max-width: 2486px) 100vw, 2486px"></a><figcaption class="wp-element-caption">Figure-5 (Bufferbloat test on a wireless network designed and implemented by daryllswer.com)</figcaption></figure>
+
+
+
+<h2 class="wp-block-heading has-text-align-left" id="h-for-bng">For BNG</h2>
+
+
+
+<h3 id="h-pppoe" class="wp-block-heading">PPPoE</h3>
+
+
+
+<p class="wp-block-paragraph"><strong>Issues</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>Packet fragmentation due to non-standard 1500 MTU/MRU<ul><li>Typically, ISPs use 1492 or 1480 or some other strange MTU size</li><li>Both BNG device and customer router need to make use of hacks like TCP MSS Clamping to work around this</li></ul>
+<ul class="wp-block-list">
+<li>PMTUD is simply unreliable as per <a href="https://datatracker.ietf.org/doc/html/rfc8900" target="_blank" rel="noreferrer noopener">RFC 8900</a>
+<ul class="wp-block-list">
+<li>Gets worse with CGNAT because remote end-points cannot determine the MTU of your PPPoE customer behind it</li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li>Lack of proper routing for PPPoE Clients (Interfaces or Inter-VLANs)
+<ul class="wp-block-list">
+<li>Most assume that using a single profile for different PPPoE Servers running on different interfaces will work fine</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Solutions</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>The real long term solution is to migrate to DHCP to completely avoid all performance and MTU issues that are exclusively only an issue on PPPoE and similar encapsulation protocols.</li>
+
+
+
+<li>Deploy <a href="https://datatracker.ietf.org/doc/html/rfc4638" target="_blank" rel="noreferrer noopener">RFC 4638</a><ul><li>Keep in mind that in a network, MTU<strong> affects</strong> the <strong>whole path </strong>of L2/L3 devices whether <strong>physical</strong> or <strong>virtual</strong>, as long as you follow the MTU section above, you should be good</li></ul>
+<ul class="wp-block-list">
+<li>Simply set MTU and MRU to 1500 <strong>inside PPPoE Server</strong> on the BNG
+<ul class="wp-block-list">
+<li>However, if you are interested in the whole jumbo frames to your peers/PNI/IXP etc – You can configure MTU/MRU to fixed <strong>9000 bytes</strong>, the reason for 9000 nytes for inter-AS traffic is explained <a href="https://www.ietf.org/proceedings/82/slides/grow-2.pdf" target="_blank" rel="noreferrer noopener">here</a>
+<ul class="wp-block-list">
+<li>In order for this to work correctly you need to strictly follow the MTU section</li>
+
+
+
+<li>If using <strong>Wireless </strong>APs, then it would 2290-8=<strong>2282 </strong>bytes</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-9-PPPoE-Server-MTU-MRU-TCP-MSS-Clamping-config.png"><img loading="lazy" decoding="async" width="896" height="705" src="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-9-PPPoE-Server-MTU-MRU-TCP-MSS-Clamping-config.png" alt="" class="wp-image-859" srcset="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-9-PPPoE-Server-MTU-MRU-TCP-MSS-Clamping-config.png 896w, https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-9-PPPoE-Server-MTU-MRU-TCP-MSS-Clamping-config-768x604.png 768w" sizes="auto, (max-width: 896px) 100vw, 896px"></a><figcaption class="wp-element-caption">Figure-6 (PPPoE Server MTU/MRU &amp; TCP MSS Clamping config)</figcaption></figure>
+</div>
+
+
+<ul class="wp-block-list">
+<li>Disable (and <strong>delete</strong>!) TCP MSS Clamping rules inside <strong>IP&gt;Firewall&gt;Mangle</strong><ul><li>Why set some arbitrary value when you can let the engine determine automatically to ensure optimal performance?<ul><li>MikroTik has long since <a href="https://forum.mikrotik.com/viewtopic.php?t=124717#p615828" target="_blank" rel="noreferrer noopener">allowed</a> automatic TCP MSS ClampingMake use of <strong>PPP</strong>&gt;<strong>Profile</strong>&gt;Default* to enable TCP MSS Clamping directly on the <strong>PPPoE engine</strong>. This will do the work for any customer whose MTU/MRU is less than 1500.</li></ul></li></ul>
+<ul class="wp-block-list">
+<li>On the customer side, not all routers can take advantage of RFC4638, such as TP-Link, Tenda etc. For them, <strong>MTU </strong>will remain capped at <strong>1492</strong>.<ul><li>The 1492 limitation on their end won’t cause issues with packet fragmentation as packets would fragment at the source (their routers) before it exits the interface and hits the BNG and TCP Clamping on PPPoE engine takes care of anything coming in from the outside world toward the customer</li></ul>
+<ul class="wp-block-list">
+<li>I have observed 1500 <strong>MRU </strong>when pinging from the outside world. Suggesting some of these consumer routers support 1500 <strong>MRU</strong></li>
+
+
+
+<li>If they are using MikroTik, pfSense, VyOS etc, they can take advantage of RFC4638 aka 1500 MTU/MRU for their PPPoE Client</li>
+
+
+
+<li>Some ONT/ONU devices have strange behaviour for MTU negotiation where they simply do not allow RFC4638 to work (even in bridge mode), only a few brands like GX, TP-Link, and Huawei have been found to be flawless in my personal testing.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Verify MTU config</strong></p>
+
+
+
+<p class="wp-block-paragraph">If you have properly configured MTU and MSS Clamping as per the steps above, then you should see the following results when testing from <strong><em>customer-side</em> </strong>using this <a href="https://www.speedguide.net/analyzer.php" target="_blank" rel="noreferrer noopener">tool</a>:<br></p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet.png"><img loading="lazy" decoding="async" width="2880" height="982" src="https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet.png" alt="" class="wp-image-1604" srcset="https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet.png 2880w, https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet-1920x655.png 1920w, https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet-768x262.png 768w, https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet-1536x524.png 1536w, https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet-2048x698.png 2048w" sizes="auto, (max-width: 2880px) 100vw, 2880px"></a><figcaption class="wp-element-caption">Figure-7 (MTU and TCP MSS correctly working on the internet)</figcaption></figure>
+</div>
+
+
+<p class="wp-block-paragraph"><strong>Extra Note on PPPoE</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>Create a single CGNAT pool on a per BNG basis and you can use it for n Number of PPPoE Servers on n number of interfaces<br><code>/ip pool<br>add name=CGNAT_Pool comment="100.64.0.0-9 is reserved for each PPPoE Server Gateway/Profile" ranges=100.64.0.10-100.127.255.255</code>
+<ul class="wp-block-list">
+<li>Here we are reserving 100.64.0.0-9 for gateway IPs on a per-interface/PPPoE server basis, assuming we only have 10 VLANs/Interfaces
+<ul class="wp-block-list">
+<li>Reserve as per your local requirements</li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li>Local Address in PPP Profile = Gateway IP address
+<ul class="wp-block-list">
+<li>One common mistake is using the router’s public IP from the WAN interface as the local address, which I’ve seen could lead to issues like traceroute failures or some strange packet loss, you should be using an address that does <strong>not</strong> exist in <strong>IP&gt;Address</strong></li>
+
+
+
+<li>Each PPPoE Server needs unique profile/gateway in order to allow inter-VLAN communication between CPEs (which is needed to allow two customers behind a NATted IP to play a P2P Xbox game with each other on different VLANs) and will also ensure a clean network approach
+<ul class="wp-block-list">
+<li>If you have <strong>100 PPPoE Servers</strong>, there should be <strong>100 unique PPP Profiles</strong> with <strong>unique local addresses</strong> for each</li>
+</ul>
+</li>
+
+
+
+<li>Something like this for two servers:</li>
+</ul>
+</li>
+</ul>
+
+
+
+<pre class="wp-block-code"><code>/ppp profile
+add change-tcp-mss=yes local-address=100.64.0.1 name=profile1 remote-address=CGNAT_Pool use-upnp=no
+add change-tcp-mss=yes local-address=100.64.0.2 name=profile2 remote-address=CGNAT_Pool use-upnp=no
+
+/interface pppoe-server server
+add authentication=pap default-profile=profile1 interface=vlan20 keepalive-timeout=disabled max-mru=1500 max-mtu=1500 one-session-per-host=yes service-name=server1
+
+add authentication=pap default-profile=profile2 disabled=no interface=vlan21 keepalive-timeout=disabled max-mru=1500 max-mtu=1500 one-session-per-host=yes service-name=server2</code></pre>
+
+
+
+<h3 class="wp-block-heading">CGNAT</h3>
+
+
+
+<p class="wp-block-paragraph"><strong>Issues</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>The majority of ISPs are using RFC1918 subnets for CGNAT and will clash with subnets on the customer site</li>
+
+
+
+<li>Breaks NAT Traversal for protocols like IPSec, FTP etc</li>
+
+
+
+<li>Poor config, that breaks P2P traffic, kills the end-to-end principle</li>
+
+
+
+<li>Lack of <a href="https://help.mikrotik.com/docs/display/ROS/NAT#NAT-HairpinNAT" target="_blank" rel="noreferrer noopener">hairpinning</a> breaks inter-client P2P traffic</li>
+
+
+
+<li>Lacks <a href="https://help.mikrotik.com/docs/display/ROS/NAT#NAT-Endpoint-IndependentNAT" target="_blank" rel="noreferrer noopener">EIM-NAT</a> (newly added by MikroTik)</li>
+
+
+
+<li>Routing Loops will occur for any traffic coming from the outside destined towards the public IP pools that aren’t related to NATted traffic</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Solutions</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>Make use of the <strong>100.64.0.0/10</strong> subnet as it’s <a href="https://datatracker.ietf.org/doc/html/rfc6598" target="_blank" rel="noreferrer noopener">meant</a> for CGNAT usage to prevent clashing on the customer site</li>
+
+
+
+<li>Enable <strong>all</strong> the NAT traversal Helpers on the NAT box, as shown below.</li>
+</ul>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.31.27%E2%80%AFAM.png"><img loading="lazy" decoding="async" width="2608" height="500" src="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.31.27%E2%80%AFAM.png" alt="" class="wp-image-3120" srcset="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.31.27 AM.png 2608w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.31.27 AM-1920x368.png 1920w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.31.27 AM-768x147.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.31.27 AM-1536x294.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.31.27 AM-2048x393.png 2048w" sizes="auto, (max-width: 2608px) 100vw, 2608px"></a><figcaption class="wp-element-caption">Figure-8 (NAT Traversal Helpers on RouterOS)</figcaption></figure>
+</div>
+
+
+<ul class="wp-block-list">
+<li>Use the follow config template going forward (2024 onwards), which includes <a href="https://forum.mikrotik.com/viewtopic.php?t=161903#p797539" target="_blank" rel="noreferrer noopener">IPsec passthrough</a>, EIM-NAT, Netmap functionality for 1:Many with consistent 1:1 port mapping. Please note <strong>rule order</strong> is important, the following template has accounted for rule order to capture packets correctly. We will assume “103.176.189.0/30” to be our public CGNAT pool.</li>
+</ul>
+
+
+
+<pre class="wp-block-code"><code>/ip firewall nat
+#EIM-NAT#
+add action=endpoint-independent-nat chain=srcnat comment=EIM-NAT out-interface-list=WAN protocol=udp randomise-ports=no src-address=100.64.0.0/10 src-port=1024-65535 to-addresses=103.176.189.0/30
+add action=endpoint-independent-nat chain=dstnat comment=EIM-NAT dst-address=103.176.189.0/30 dst-port=1024-65535 in-interface-list=WAN protocol=udp randomise-ports=no to-addresses=100.64.0.0/10
+
+#Required as EIM-NAT in MikroTik doesn't support all layer 4 Protocols#
+add action=netmap chain=srcnat comment="CGNAT Rule" dst-address-list=!not_in_internet ipsec-policy=out,none out-interface-list=WAN src-address-list=cgnat_subnet to-addresses=103.176.189.0/30
+
+#Hairpinning rule to ensure P2P traffic works for all clients behind the CGNAT#
+add action=masquerade chain=srcnat comment="Hairpin for CGNAT clients" dst-address-list=cgnat_subnet src-address-list=cgnat_subnet</code></pre>
+
+
+
+<ul class="wp-block-list">
+<li>Here cgnat_subnet=address list containing CGNAT subnets <strong><em>i.e. </em></strong>100.64.0.0/10</li>
+
+
+
+<li>dst-address-list=!not_in_internet is self-explanatory, anything destined towards private subnets shouldn’t be NATted towards WAN</li>
+
+
+
+<li>The hairpinning  will allow customers to talk to<strong> </strong>each other using<strong> </strong>their <strong>CGNAT IP</strong>, Xbox makes use of this and is mentioned in <a href="https://datatracker.ietf.org/doc/html/rfc7021#section-3.1" target="_blank" rel="noreferrer noopener">RFC 7021</a>.</li>
+
+
+
+<li><strong>Avoid </strong>Deterministic<strong> </strong>NAT, the above configuration allows P2P traffic initiated from the inside to be reachable from the outside with various applications that make use of ephemeral ports/UDP NAT punching/STUN etc</li>
+
+
+
+<li>We were able to successfully seed the official Ubuntu Torrent behind the CGNAT with the above configuration, which can mean only one thing: P2P networking from in-bound established works!</li>
+</ul>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-12-BitTorrent-Seeding-Behind-CGNAT.png"><img loading="lazy" decoding="async" width="1628" height="1024" src="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-12-BitTorrent-Seeding-Behind-CGNAT.png" alt="" class="wp-image-862" srcset="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-12-BitTorrent-Seeding-Behind-CGNAT.png 1628w, https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-12-BitTorrent-Seeding-Behind-CGNAT-768x483.png 768w, https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-12-BitTorrent-Seeding-Behind-CGNAT-1536x966.png 1536w" sizes="auto, (max-width: 1628px) 100vw, 1628px"></a><figcaption class="wp-element-caption">Figure-9 (BitTorrent Seeding Behind CGNAT)</figcaption></figure>
+</div>
+
+
+<ul class="wp-block-list">
+<li>We tried with src nat as action for src NAT chain but it resulted in the NATted public IP constantly changing on the customer side and breaking things</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><em>Below is what MikroTik support had to say about<strong> netmap vs src nat</strong> as action for src nat chain</em></p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-13-Src-nat-vs-Netmap.png"><img loading="lazy" decoding="async" width="750" height="291" src="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-13-Src-nat-vs-Netmap.png" alt="" class="wp-image-863"></a><figcaption class="wp-element-caption">Figure-10 (Src nat = breaks P2P traffic | Netmap = static mapping per client IP)</figcaption></figure>
+</div>
+
+
+<ul class="wp-block-list">
+<li>Now we fix routing loops for the CGNAT public pool</li>
+</ul>
+
+
+
+<pre class="wp-block-code"><code>/ip route
+add blackhole comment="Blackhole-CGNAT pool" dst-address=103.176.189.0/30</code></pre>
+
+
+
+<p class="wp-block-paragraph"><strong>Subscription Ratio Recommendation</strong></p>
+
+
+
+<p class="wp-block-paragraph">In my extensive testing and observations, when using the above parameters and steps, I was able to have 200 users behind a /30 without any known complaints from them. BitTorrent worked as expected too, this is likely due to the obvious fact that not all users out of 200 will max out 65k connections and hence use up all the IP:Port combination. Where will you find a CPE that can handle 65k NAT entries anyways?</p>
+
+
+
+<p class="wp-block-paragraph">So tl;dr you can use a /30 per 200 users as long as you follow the steps properly and also to be future-proof and safe, ensure you provide <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" target="_blank" rel="noreferrer noopener">IPv6</a> as well.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>End Result</strong></p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.27.19%E2%80%AFAM.png"><img loading="lazy" decoding="async" width="2610" height="1434" src="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.27.19%E2%80%AFAM.png" alt="" class="wp-image-3118" srcset="https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.27.19 AM.png 2610w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.27.19 AM-1920x1055.png 1920w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.27.19 AM-768x422.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.27.19 AM-1536x844.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.27.19 AM-2048x1125.png 2048w" sizes="auto, (max-width: 2610px) 100vw, 2610px"></a><figcaption class="wp-element-caption">Figure-11 (Your NAT Table should look as dead simple as this one)</figcaption></figure>
+</div>
+
+
+<p class="wp-block-paragraph"><strong>Logging compliances for government and regulatory requirements</strong></p>
+
+
+
+<p class="wp-block-paragraph">For CGNAT logging for compliances purpose, you can use <a href="https://help.mikrotik.com/docs/display/ROS/Traffic+Flow" target="_blank" rel="noreferrer noopener">Traffic Flow</a> which also adds additional option for NAT events logging in the configuration.</p>
+
+
+
+<h3 id="h-ipv6-0" class="wp-block-heading">IPv6</h3>
+
+
+
+<p class="wp-block-paragraph"><strong>Issues</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>Addressing may not be optimally subnetted/broken down</li>
+
+
+
+<li>ISP may only have something like a single /48 with 5000 customers downstream which exceeds possible /56s out of the /48</li>
+
+
+
+<li>Not following the proper <a href="https://www.ripe.net/publications/docs/ripe-690" target="_blank" rel="noreferrer noopener">guidelines</a> for IPv6 deployment</li>
+
+
+
+<li>Lack of <a href="https://www.ripe.net/publications/docs/ripe-690#5-2--why-non-persistent-assignments-are-considered-harmful" target="_blank" rel="noreferrer noopener">persistent assignment</a> feature on MikroTik
+<ul class="wp-block-list">
+<li>This applies to the majority of ISPs even though they may use Cisco, Juniper etc which supports persistent assignment configuration</li>
+</ul>
+</li>
+
+
+
+<li>Not properly ensuring that the customer’s WAN side gets a proper single /64</li>
+
+
+
+<li>Forcing the customer to have only a single /64 on the LAN side instead of /56</li>
+
+
+
+<li>MikroTik IPv6 RADIUS does <a href="https://forum.mikrotik.com/viewtopic.php?t=163276" target="_blank" rel="noreferrer noopener">not work</a> correctly</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Solutions</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>A proper <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" target="_blank" rel="noreferrer noopener">IPv6 architecture and subnetting</a> plan should be implemented
+<ul class="wp-block-list">
+<li>However, the logic is simple<br>Ensure customers get <strong>/64 WAN side</strong> and <strong>/56 LAN side</strong> for <strong>home users</strong><br>Ensure customers  get <strong>/64 WAN side</strong> and <strong>/48 LAN side</strong> for <strong>enterprise/SMEs/DC etc</strong></li>
+</ul>
+</li>
+
+
+
+<li>Ensure you request for appropriate prefix allocation based on your customer base from your Regional Internet registry/Local Internet registry</li>
+
+
+
+<li>Follow the proper guidelines and BCOPs</li>
+
+
+
+<li>I came across <a href="https://forum.mikrotik.com/viewtopic.php?t=163276#p926992" target="_blank" rel="noreferrer noopener">a solution</a> for the lack of <strong>persistent assignment</strong> on MikroTik, simply use the following script and schedule it to run every five minutes:<br><strong><code>#Please don't be stupid enough to set owner=Daryll#<br></code></strong><code>/system script<br>add dont-require-permissions=no name=PPPoE-IPv6-Persistent owner=Daryll policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=\<br>"/ipv6 dhcp-server binding;\r\<br>\n:foreach i in=[find server~\"pppoe\"] do={\r\<br>\n make-static \$i;\r\<br>\n set \$i comment=[get \$i server];\r\<br>\n set \$i server=all;\r\<br>\n}"</code><br>Use the scheduler for automating it:<br><code>/system scheduler</code><br><code>add interval=5m name=PPPoE-IPv6-Persistent-AutoUpdate on-event=PPPoE-IPv6-Persistent policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon start-time=startup</code></li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Now I will cover a simple configuration use-case where a BNG has exactly 1000 customers. The goal here is to ensure that the <strong>WAN side</strong> of each customer gets a <strong>/64 </strong>and the<strong> LAN side</strong> gets a <strong>/56</strong>.</p>
+
+
+
+<ul id="block-8664858f-e8cc-48f6-a8b5-9e9db1454a49" class="wp-block-list">
+<li>Disable redirects<br><code>/ipv6 settings set accept-redirects=no</code></li>
+
+
+
+<li>Next need to create two separate pools, one for WAN and one for the LAN side of the customer
+<ul class="wp-block-list">
+<li><code>/ipv6 pool<br>add name=Customer-CPE-LAN prefix=2405:a140:8::/46 prefix-length=56<br>add name=Customer-CPE-WAN prefix=2405:a140:f:d400::/54 prefix-length=64</code>
+<ul class="wp-block-list">
+<li>Here, prefix-length specifies what prefix length the customer gets, which in this case as per standards, we are giving the WAN side a /64 and the LAN side a /56</li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li>And finally, configure the pools to each PPPoE Profile as below<br><code>/ppp profile<br>set *0 dhcpv6-pd-pool=Customer-CPE-LAN remote-ipv6-prefix-pool=Customer-CPE-WAN<br>add name=profile2 dhcpv6-pd-pool=Customer-CPE-LAN remote-ipv6-prefix-pool=Customer-CPE-WAN</code>
+<ul class="wp-block-list">
+<li><strong>Remote</strong> IPv6 prefix is for the <strong>WAN </strong>side of the customer</li>
+
+
+
+<li><strong>DHCPv6 </strong>PD Pool is for the <strong>LAN </strong>side of the customer</li>
+</ul>
+</li>
+</ul>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-15-PPPoE-IPv6-configuration.png"><img loading="lazy" decoding="async" width="1111" height="787" src="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-15-PPPoE-IPv6-configuration.png" alt="" class="wp-image-850" srcset="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-15-PPPoE-IPv6-configuration.png 1111w, https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-15-PPPoE-IPv6-configuration-768x544.png 768w" sizes="auto, (max-width: 1111px) 100vw, 1111px"></a><figcaption class="wp-element-caption">Figure-12 (PPPoE IPv6 configuration)</figcaption></figure>
+</div>
+
+
+<p class="wp-block-paragraph">That’s it, now the customers will dynamically get a routed /64 and routed /56 for WAN and LAN sides respectively.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Verify IPv6 config</strong></p>
+
+
+
+<p class="wp-block-paragraph">If you have properly configured IPv6 as per the steps above, then you should see the following results when testing from <strong><em>customer-side</em></strong> using this <a href="https://test-ipv6.com/" target="_blank" rel="noreferrer noopener">tool</a>:</p>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-16-IPv6-working-correctly.jpg"><img loading="lazy" decoding="async" width="2880" height="1446" src="https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-16-IPv6-working-correctly.jpg" alt="" class="wp-image-1607" srcset="https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-16-IPv6-working-correctly.jpg 2880w, https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-16-IPv6-working-correctly-1920x964.jpg 1920w, https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-16-IPv6-working-correctly-768x386.jpg 768w, https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-16-IPv6-working-correctly-1536x771.jpg 1536w, https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-16-IPv6-working-correctly-2048x1028.jpg 2048w" sizes="auto, (max-width: 2880px) 100vw, 2880px"></a><figcaption class="wp-element-caption">Figure-13 (IPv6 working correctly)</figcaption></figure>
+
+
+
+<h3 id="h-routing-loop-prevention" class="wp-block-heading">Routing Loop prevention</h3>
+
+
+
+<p class="wp-block-paragraph">If a customer happens to go offline (due to power loss etc), traffic destined for those customers will continue to persist until they time out leading to increased CPU usage. To solve this, we simply route aggregated customer prefixes to blackhole – Because remember in routing, more specific prefixes always win, so should those more specific prefixes go offline, the less specific (aggregated) routes take precedence in which case we are routing to blackhole and hence all pending traffic times out with immediate effect to give us optimal CPU usage.</p>
+
+
+
+<pre class="wp-block-code"><code><strong>#RouterOS v7 example#</strong>
+
+<strong>/ipv4 route</strong>
+add blackhole comment="Blackhole route for Customer CGNAT pool" disabled=no dst-address=103.176.189.0/25
+add blackhole comment="Blackhole route for Customer public pool" disabled=no dst-address=103.176.189.128/25
+
+<strong>/ipv6 route
+</strong>add blackhole comment="Blackhole route for Customer LAN pool" disabled=no dst-address=<span style="font-family: monospace; font-size: inherit;">2405:a140:8::/46</span>
+add blackhole comment="Blackhole route for Customer WAN pool" disabled=no dst-address=2405:a140:f:d400::/54</code></pre>
+
+
+
+<pre class="wp-block-code"><code><strong>#RouterOS v6 example#</strong>
+<strong>/ip route
+</strong>add type=blackhole comment="Blackhole route for Customer CGNAT pool" disabled=no dst-address=103.176.189.0/25
+add type=blackhole comment="Blackhole route for Customer public pool" disabled=no dst-address=103.176.189.128/25
+
+<strong>#In RouterOS v6, IPv6 blackhole is not supported#</strong></code></pre>
+
+
+
+<h3 id="h-firewall-security" class="wp-block-heading">Firewall/Security</h3>
+
+
+
+<p class="wp-block-paragraph"><strong>Issues</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>Blocks inbound ports based on the false logic of “protecting” the customer
+<ul class="wp-block-list">
+<li>Port blocking does nothing to improve security, it only breaks legitimate traffic such as apps or games that use various methods for VoIP</li>
+
+
+
+<li>Malware can make use of port 443 and that is the reality of modern-day malware anyway</li>
+</ul>
+</li>
+
+
+
+<li><strong>Net Neutrality Violations</strong>
+<ul class="wp-block-list">
+<li>Such as blocking TCP/UDP traffic destined towards Cloudflare or Google Anycast DNS</li>
+</ul>
+</li>
+
+
+
+<li><span style="font-size: 1em;">Lacks </span><a style="font-size: 1em;" href="https://forum.mikrotik.com/viewtopic.php?f=2&amp;t=54607" target="_blank" rel="noreferrer noopener">basic DDoS protection</a><span style="font-size: 1em;"> </span></li>
+
+
+
+<li>Lacks simple bogon filtering </li>
+
+
+
+<li>Lacks basic rules such as dropping invalid traffic on the input chain</li>
+
+
+
+<li>Lacks FastTracking for traffic destined towards your NATted pools</li>
+
+
+
+<li>Connection tracking of customers having a public IPv4 address makes no sense and wastes CPU cycles</li>
+
+
+
+<li>Incorrect ICMPv4/ICMPv6 filtering rules such as rate limiting fragmentation needed and then wonders why customers are facing strange issues with regards to PMTUD</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Solutions</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>Remove <strong>most</strong> “port blocking” rules
+<ul class="wp-block-list">
+<li>Customer Site security should be handled on the customer site such as having proper basic firewalling on their Edge Routers</li>
+
+
+
+<li>I’ve dropped some ports on the RAW table directly</li>
+</ul>
+</li>
+
+
+
+<li>Avoid Net Neutrality Violation unless otherwise enforced by your local state or central government</li>
+
+
+
+<li>I’ve shared the rule for FastTracking NATted pools</li>
+
+
+
+<li>I’ve shared the rule for reducing connection tracking impact on customers having public IPv4 address</li>
+
+
+
+<li>I have crafted ICMPv4/ICMPv6 manually to drop all deperecated ICMP types while accepting all valid ICMP types
+<ul class="wp-block-list">
+<li>Source of truth for <a href="https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml" target="_blank" rel="noreferrer noopener">ICMPv4 deprecated types</a></li>
+
+
+
+<li>Source of truth for <a href="https://www.iana.org/assignments/icmpv6-parameters/icmpv6-parameters.xhtml#icmpv6-parameters-4" target="_blank" rel="noreferrer noopener">ICMPv6 deprecated types</a></li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Below are the generic firewall rules that should be deployed on the BNG to cover basic security grounds.</p>
+
+
+
+<h3 class="wp-block-heading has-text-align-left" id="h-ipv4-firewall">IPv4 Firewall</h3>
+
+
+
+<pre class="wp-block-code"><code>#First we take care of address lists#
+/ip firewall address-list
+
+<strong>#Enter all local subnets/public subnets applicable to your AS for the specific BNG where you've routed pools for use#</strong>
+
+<strong>#Example I'm using only a /24 public+private pools for this specific BNG#</strong>
+add address=103.176.189.0/24 comment="Public Pool" list=lan_subnets
+add address=192.168.0.0/24 comment="Local interfaces" list=lan_subnets
+
+<strong>#The usual CGNAT pool entire range#
+</strong>add address=100.64.0.0/10 comment="CGNAT Pool" list=lan_subnets
+
+<strong>#Here we will enter the public pool used for giving customers public IP addresses directly, this will be used for no-tracking to boost performance of customers having public IPv4 addresses and reduce load on the CPU of the BNG#</strong>
+
+add address=103.176.189.0/25 comment="Public Pool" list=public_subnets
+
+###Required for DDoS protection rules###
+add list=ddos-attackers
+add list=ddos-targets
+
+###Bogon filtering addresses for each of the rules in RAW/Filter###
+add address=0.0.0.0/8 comment=RFC6890 list=not_in_internet
+add address=172.16.0.0/12 comment=RFC6890 list=not_in_internet
+add address=192.168.0.0/16 comment=RFC6890 list=not_in_internet
+add address=10.0.0.0/8 comment=RFC6890 list=not_in_internet
+add address=169.254.0.0/16 comment=RFC6890 list=not_in_internet
+add address=127.0.0.0/8 comment=RFC6890 list=not_in_internet
+add address=224.0.0.0/4 comment=Multicast list=not_in_internet
+add address=198.18.0.0/15 comment=RFC6890 list=not_in_internet
+add address=192.0.0.0/24 comment=RFC6890 list=not_in_internet
+add address=192.0.2.0/24 comment=RFC6890 list=not_in_internet
+add address=198.51.100.0/24 comment=RFC6890 list=not_in_internet
+add address=203.0.113.0/24 comment=RFC6890 list=not_in_internet
+add address=100.64.0.0/10 comment=RFC6890 list=not_in_internet
+add address=240.0.0.0/4 comment=RFC6890 list=not_in_internet
+add address=192.88.99.0/24 comment="6to4 relay Anycast [RFC 3068]" list=not_in_internet
+add address=255.255.255.255 comment=RFC6890 list=not_in_internet
+add address=127.0.0.0/8 comment="RAW Filtering - RFC6890" list=bad_ipv4
+add address=192.0.0.0/24 comment="RAW Filtering - RFC6890" list=bad_ipv4
+add address=192.0.2.0/24 comment="RAW Filtering - RFC6890 documentation" list=bad_ipv4
+add address=198.51.100.0/24 comment="RAW Filtering - RFC6890 documentation" list=bad_ipv4
+add address=203.0.113.0/24 comment="RAW Filtering - RFC6890 documentation" list=bad_ipv4
+add address=240.0.0.0/4 comment="RAW Filtering - RFC6890 reserved" list=bad_ipv4
+add address=224.0.0.0/4 comment="RAW Filtering - multicast" list=bad_src_ipv4
+add address=255.255.255.255 comment="RAW Filtering - RFC6890" list=bad_src_ipv4
+add address=0.0.0.0/8 comment="RAW Filtering - RFC6890" list=bad_dst_ipv4
+add address=224.0.0.0/4 comment="RAW Filtering - multicast" list=bad_dst_ipv4 disabled=yes
+
+/ip firewall raw
+add action=drop chain=prerouting comment="Drop DDoS src and dst address list" dst-address-list=ddos-targets src-address-list=ddos-attackers
+
+add action=drop chain=prerouting comment="drop port 25 to prevent spam" port=25 protocol=tcp
+add action=drop chain=prerouting comment="drop port 25 to prevent spam" port=25 protocol=udp
+
+<strong>#Required at least in India to reduce call spam/scam#</strong>
+add action=drop chain=prerouting comment="Drop outgoing SIP to block call centre scammers" port=5060,5061 protocol=tcp
+add action=drop chain=prerouting comment="Drop outgoing SIP to block call centre scammers" port=5060,5061 protocol=udp
+
+add action=accept chain=prerouting comment="Enable this rule for transparent mode" disabled=yes
+
+<strong>#If you are using DHCP, change this to accept#</strong>
+add action=drop chain=prerouting comment="defconf: Drop DHCP discover" dst-address=255.255.255.255 dst-port=67 in-interface-list=LAN protocol=udp src-address=0.0.0.0 src-port=68
+
+add action=drop chain=prerouting comment="defconf: drop bad src IPs" src-address-list=bad_ipv4
+add action=drop chain=prerouting comment="defconf: drop bad dst IPs" dst-address-list=bad_ipv4
+add action=drop chain=prerouting comment="defconf: drop bad src IPs" src-address-list=bad_src_ipv4
+add action=drop chain=prerouting comment="defconf: drop bad dst IPs" dst-address-list=bad_dst_ipv4
+add action=drop chain=prerouting comment="defconf: drop non global from WAN" in-interface-list=WAN src-address-list=not_in_internet
+add action=drop chain=prerouting comment="defconf: drop forward to private ranges from WAN" dst-address-list=not_in_internet in-interface-list=WAN
+
+<strong>#Remember to properly enter all subnets in the lan_subnet list for both your AS public IPv4 blocks and CGNAT/local subnets#</strong>
+add action=drop chain=prerouting comment="defconf: drop local if not from default IP range" in-interface-list=LAN src-address-list=!lan_subnets
+
+add action=drop chain=prerouting comment="defconf: drop bad UDP" port=0 protocol=udp
+add action=jump chain=prerouting comment="defconf: jump to TCP chain" jump-target=bad_tcp protocol=tcp
+add action=jump chain=prerouting comment="defconf: jump to ICMP chain" jump-target=icmp protocol=icmp
+
+<strong>#Rule for reducing connection tracking impact for public IPv4 customers</strong>, <strong>we no longer exlucde RFC6890 bound packets as the route to blackhole rules takes care of that#</strong>
+add action=notrack chain=prerouting comment="Reduce load on conn_track" in-interface-list=LAN src-address-list=public_subnets
+
+add action=accept chain=prerouting comment="defconf: accept everything else from LAN" in-interface-list=LAN
+add action=accept chain=prerouting comment="defconf: accept everything else from WAN" in-interface-list=WAN
+add action=accept chain=prerouting comment="Accept local traffic to self" src-address-type=local
+add action=drop chain=prerouting comment="defconf: drop the rest"
+
+add action=drop chain=bad_tcp comment="defconf: TCP port 0 drop" port=0 protocol=tcp
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=!fin,!syn,!rst,!ack
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=fin,syn
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=fin,rst
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=fin,!ack
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=fin,urg
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=syn,rst
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=rst,urg
+
+add action=drop chain=icmp comment="Drop Source Quench (Deprecated)" icmp-options=4 protocol=icmp
+add action=drop chain=icmp comment="Drop Alternate Host Address (Deprecated)" icmp-options=6 protocol=icmp
+add action=drop chain=icmp comment="Drop Information Request (Deprecated)" icmp-options=15 protocol=icmp
+add action=drop chain=icmp comment="Drop Information Reply (Deprecated)" icmp-options=16 protocol=icmp
+add action=drop chain=icmp comment="Drop Address Mask Request (Deprecated)" icmp-options=17 protocol=icmp
+add action=drop chain=icmp comment="Drop Address Mask Reply (Deprecated)" icmp-options=18 protocol=icmp
+add action=drop chain=icmp comment="Drop Traceroute (Deprecated)" icmp-options=30 protocol=icmp
+add action=drop chain=icmp comment="Drop Datagram Conversion Error (Deprecated)" icmp-options=31 protocol=icmp
+add action=drop chain=icmp comment="Drop Mobile Host Redirect (Deprecated)" icmp-options=32 protocol=icmp
+add action=drop chain=icmp comment="Drop IPv6 Where-Are-You (Deprecated)" icmp-options=33 protocol=icmp
+add action=drop chain=icmp comment="Drop IPv6 I-Am-Here (Deprecated)" icmp-options=34 protocol=icmp
+add action=drop chain=icmp comment="Drop Mobile Registration Request (Deprecated)" icmp-options=35 protocol=icmp
+add action=drop chain=icmp comment="Drop Mobile Registration Reply (Deprecated)" icmp-options=36 protocol=icmp
+add action=drop chain=icmp comment="Drop Domain Name Request (Deprecated)" icmp-options=37 protocol=icmp
+add action=drop chain=icmp comment="Drop Domain Name Reply (Deprecated)" icmp-options=38 protocol=icmp
+add action=drop chain=icmp comment="Drop SKIP (Deprecated)" icmp-options=39 protocol=icmp
+
+/ip firewall filter
+add action=accept chain=input comment="defconf: accept established,related,untracked" connection-state=established,related,untracked
+add action=drop chain=input comment="defconf: drop invalid" connection-state=invalid
+add action=accept chain=input comment="defconf: accept ICMP after RAW" protocol=icmp
+add action=accept chain=input comment="defconf: accept UDP traceroute" port=33434-33534 protocol=udp<strong>
+
+<strong>#Example to allow access to router's ports from all interfaces LAN/WAN#</strong>
+</strong>add action=accept chain=input comment="Accept Winbox TCP" dst-port=65000 protocol=tcp
+add action=accept chain=input comment="Accept API TCP" dst-port=8728 protocol=tcp
+add action=accept chain=input comment="Accept API UDP" dst-port=8728 protocol=udp
+add action=accept chain=input comment="Accept SNMP for internal use" dst-port=161 protocol=udp
+add action=accept chain=input comment="Accept RADIUS UDP" dst-port=1700,1812,1813 protocol=udp
+add action=accept chain=input comment="Accept RADIUS TCP" dst-port=1700,1812,1813 protocol=tcp
+<strong>#End of example#</strong>
+
+add action=drop chain=input comment="defconf: drop all not coming from LAN's interface list/subnets" in-interface-list=!LAN
+
+<strong>#PPPoE Clients are excluded as to not bypass queues, if using DHCP excluded src and dst address list of customer pool#
+</strong>add action=fasttrack-connection chain=forward comment="Rule for NAT Accelaration behaviour (Will reduce CPU usage for NATted traffic)" in-interface=!all-ppp out-interface=!all-ppp
+
+add action=accept chain=forward comment="allow already established connections" connection-state=established,related,untracked
+
+add action=jump chain=forward comment="Jump to DDoS detection" connection-state=new in-interface-list=WAN jump-target=detect-ddos
+add action=return chain=detect-ddos dst-limit=50,50,src-and-dst-addresses/10s
+add action=add-dst-to-address-list address-list=ddos-targets address-list-timeout=10m chain=detect-ddos
+add action=add-src-to-address-list address-list=ddos-attackers address-list-timeout=10m chain=detect-ddos
+
+<strong>#This rule should be redudant as we are now routing RFC6890 to blackhole directly and hence I am commenting it out#</strong>
+#add action=drop chain=forward comment="Drop tries to reach not public addresses from LAN" dst-address-list=not_in_internet in-interface-list=LAN out-interface-list=WAN#</code></pre>
+
+
+
+<h3 id="h-ipv6-firewall" class="wp-block-heading">IPv6 Firewall</h3>
+
+
+
+<p class="wp-block-paragraph">I have now added a rule in the raw table to drop<strong> header 0, 43</strong> as per <a href="https://theinternetprotocolblog.wordpress.com/2020/11/28/ipv6-security-best-practices/" target="_blank" rel="noreferrer noopener">this</a>, now the linked article also suggests dropping <strong>header 60</strong>, but I decided to <strong>not</strong> drop header 60 for reasons stated in the re-tweet <a href="https://twitter.com/DaryllSwer/status/1485577760483733505" target="_blank" rel="noreferrer noopener">here</a> – Please note, this only works in <strong>ROS v7.4</strong> <strong>onwards</strong> as there is a <a href="https://forum.mikrotik.com/viewtopic.php?p=947248#p947248:~:text=*)%20firewall%20%2D%20fixed%20IPv6/Firewall/RAW%20functionality%3B" target="_blank" rel="noreferrer noopener">bug that was fixed</a> in that version and going forward.</p>
+
+
+
+<p class="wp-block-paragraph">I have now also removed the forward rules completely to improve performance and moved them to the raw table.</p>
+
+
+
+<pre class="wp-block-code"><code>/ipv6 firewall address-list
+
+<strong>#Enter all the public prefixes that you've routed to this particular BNG#</strong>
+<strong>#We will use this to block spoofed IPv6 coming from customers#</strong>
+<strong>#We will also use this for no-tracking to boost performance of customers having behind the public IPv6 addresses and reduce load on the CPU of the BNG</strong>#
+
+<strong>#example#</strong>
+add address=2405:a140:8::/46 comment="CPE-LAN-Pool" list=lan_subnets
+add address=2405:a140:c::/54 comment="CPE-WAN-Pool" list=lan_subnets
+
+<strong>#Example of any IPv6 you're using on the BNG towards downstream switches/devices/VMs etc#</strong>
+add address=2405:a140:e::/48 comment="Backbone-Pool" list=lan_subnets
+
+<strong>#To prevent breaking link-local#
+</strong>add address=fe80::/10 comment="Link-local" list=lan_subnets
+
+<strong>#Add your BGP peers here, example below#</strong>
+add address=2400:7000:1::/126 comment="Peering with Transit on VLAN100" list=bgp_peers
+
+<strong>#Copy Paste all the following#</strong>
+add address=::/3 comment="IPv6 invalids" list=not_in_internet
+add address=4000::/3 comment="IPv6 invalids" list=not_in_internet
+add address=6000::/3 comment="IPv6 invalids" list=not_in_internet
+add address=8000::/3 comment="IPv6 invalids" list=not_in_internet
+add address=a000::/3 comment="IPv6 invalids" list=not_in_internet
+add address=c000::/3 comment="IPv6 invalids" list=not_in_internet
+add address=e000::/4 comment="IPv6 invalids" list=not_in_internet
+add address=f000::/5 comment="IPv6 invalids" list=not_in_internet
+add address=f800::/6 comment="IPv6 invalids" list=not_in_internet
+add address=fc00::/7 comment="IPv6 invalids" list=not_in_internet
+add address=fe00::/9 comment="IPv6 invalids" list=not_in_internet
+add address=fec0::/10 comment="IPv6 invalids" list=not_in_internet
+add address=2001::/23 comment="IPv6 invalids" list=not_in_internet
+add address=2001:2::/48 comment="IPv6 invalids" list=not_in_internet
+add address=2001:10::/28 comment="IPv6 invalids" list=not_in_internet
+add address=2001:db8::/32 comment="IPv6 invalids" list=not_in_internet
+add address=2002::/16 comment="IPv6 invalids" list=not_in_internet
+add address=3ffe::/16 comment="IPv6 invalids" list=not_in_internet
+
+<strong>#We will use this to eliminate the need for stateful firewalling on IPv6 to catch spoofed traffic in the raw table instead of forward chain#</strong>
+add address=2000::/3 list="global_unicast_prefix(es)"
+
+add address=fe80::/10 list=allowed
+add address=ff02::/16 comment="multicast" list=allowed
+add address=fe80::/10 comment="defconf: RFC6890 Linked-Scoped Unicast" list=no_forward_ipv6
+add address=ff00::/8 comment="defconf: multicast" list=no_forward_ipv6
+add address=::1/128 comment="defconf: lo" list=bad_ipv6
+add address=::ffff:0:0/96 comment="defconf: ipv4-mapped" list=bad_ipv6
+add address=::/96 comment="defconf: ipv4 compat" list=bad_ipv6
+add address=2001:db8::/32 comment="defconf: documentation" list=bad_ipv6
+add address=2001:10::/28 comment="defconf: ORCHID" list=bad_ipv6
+add address=2001::/23 comment="defconf: RFC6890" list=bad_ipv6
+add address=::/128 comment="defconf: unspecified" list=bad_dst_ipv6
+add address=::/128 comment="RAW Filtering" list=bad_src_ipv6
+add address=ff00::/8 comment="RAW Filtering" list=bad_src_ipv6
+
+/ipv6 firewall raw
+<strong>#New rule to drop deprecated header type 0 &amp; 40#</strong>
+
+<strong>#Works only on ROS v7.4 onwards#
+</strong>add action=drop chain=prerouting comment="Drop packets with extension header types 0, 43" headers=hop,route:contains
+
+add action=accept chain=prerouting comment="defconf: RFC4291, section 2.7.1" dst-address=ff02::1:ff00:0/104 icmp-options=135:0-255 protocol=icmpv6 src-address=::/128
+
+<strong>#Migrated this rule from the foward chain to make it more CPU efficient#</strong>
+add action=drop chain=prerouting comment="defconf: rfc4890 drop hop-limit=1" hop-limit=equal:1 in-interface-list=!LAN protocol=icmpv6
+
+add action=drop chain=prerouting comment="drop port 25 to prevent spam" port=25 protocol=tcp
+add action=drop chain=prerouting comment="drop port 25 to prevent spam" port=25 protocol=udp
+
+<strong>#This is required for traffic whereby the SRC may be Link-local and the DST is GUA for BGP peers particuarly in IXPs#</strong>
+add action=accept chain=prerouting comment="Accept all ICMPv6 traffic from BGP peers (Required for LL&lt;&gt;GUA packets)" icmp-options=!154:4-5 in-interface-list=WAN protocol=icmpv6 src-address-list=bgp_peers
+
+
+add action=drop chain=prerouting comment="Drop invalids from WAN" dst-address-list="global_unicast_prefix(es)" in-interface-list=WAN src-address-list=not_in_internet
+add action=drop chain=prerouting comment="Drop forwarded invalids from WAN" dst-address-list=not_in_internet in-interface-list=WAN src-address-list="global_unicast_prefix(es)"
+add action=drop chain=prerouting comment="Drop invalids from LAN" dst-address-list="global_unicast_prefix(es)" in-interface-list=LAN src-address-list=not_in_internet
+add action=drop chain=prerouting comment="Drop forwarded invalids from LAN" dst-address-list=not_in_internet in-interface-list=LAN src-address-list=lan_subnets
+
+
+<strong>#This rule replaces the need for forward chain rule for doing the same thing#</strong>
+add action=drop chain=prerouting comment="Drop spoofed traffic from LAN going towards Global Unicast" dst-address-list="global_unicast_prefix(es)" in-interface-list=LAN src-address-list=!lan_subnets
+
+add action=accept chain=prerouting comment="defconf: enable for transparent firewall" disabled=yes
+add action=drop chain=prerouting comment="defconf: drop bogon IP's" src-address-list=bad_ipv6
+add action=drop chain=prerouting comment="defconf: drop bogon IP's" dst-address-list=bad_ipv6
+add action=drop chain=prerouting comment="defconf: drop packets with bad src ipv6" src-address-list=bad_src_ipv6
+add action=drop chain=prerouting comment="defconf: drop packets with bad dst ipv6" dst-address-list=bad_dst_ipv6
+
+add action=accept chain=prerouting comment="defconf: accept local multicast scope" dst-address=ff02::/16
+add action=drop chain=prerouting comment="defconf: drop other multicast destinations" dst-address=ff00::/8
+add action=drop chain=prerouting comment="defconf: drop bad UDP" port=0 protocol=udp
+add action=drop chain=prerouting comment="defconf: drop bad TCP" port=0 protocol=tcp
+add action=jump chain=prerouting comment="defconf: jump to ICMP chain" jump-target=icmpv6 protocol=icmpv6
+
+<strong>#Since all filtering for LAN is done in RAW, we do not need to have stateful tracking for LAN, and hence we are notracking all LAN originating/bound traffic after filtering#</strong>
+add action=notrack chain=output comment="Reduce load on conn_track" in-interface-list=LAN
+add action=notrack chain=output comment="Reduce load on conn_track" out-interface-list=LAN
+add action=notrack chain=prerouting comment="Reduce load on conn_track" in-interface-list=LAN
+add action=notrack chain=prerouting comment="Reduce load on conn_track" dst-address-list=lan_subnets in-interface-list=WAN
+
+add action=accept chain=prerouting comment="defconf: accept everything else from LAN" in-interface-list=LAN
+add action=accept chain=prerouting comment="defconf: accept everything else from WAN" in-interface-list=WAN
+add action=accept chain=prerouting comment="Accept local traffic to self" src-address-type=local
+add action=drop chain=prerouting comment="defconf: drop the rest"
+add action=drop chain=icmpv6 comment="Drop FMIPv6 HI + FMIPv6 HAck - Deprecated (RFC5568)" icmp-options=154:4-5 protocol=icmpv6
+
+/ipv6 firewall filter
+add action=accept chain=input comment="defconf: accept established,related,untracked" connection-state=established,related,untracked
+add action=drop chain=input comment="defconf: drop invalid" connection-state=invalid
+add action=accept chain=input comment="defconf: accept ICMPv6" protocol=icmpv6
+add action=accept chain=input comment="defconf: accept UDP traceroute" port=33434-33534 protocol=udp
+add action=accept chain=input comment="defconf: accept DHCPv6-Client prefix delegation." dst-port=546 protocol=udp src-address=fe80::/10
+
+<strong>#Example to allow access to router's ports from all interfaces LAN/WAN#</strong>
+add action=accept chain=input comment="Accept Winbox TCP" dst-port=65000 protocol=tcp
+add action=accept chain=input comment="Accept API TCP" dst-port=8728 protocol=tcp
+add action=accept chain=input comment="Accept API UDP" dst-port=8728 protocol=udp
+add action=accept chain=input comment="Accept SNMP for internal use" dst-port=161 protocol=udp
+add action=accept chain=input comment="Accept RADIUS UDP" dst-port=1700,1812,1813 protocol=udp
+add action=accept chain=input comment="Accept RADIUS TCP" dst-port=1700,1812,1813 protocol=tcp
+<strong>#End of example#</strong>
+add action=accept chain=input comment="allow allowed addresses" src-address-list=allowed
+add action=drop chain=input comment="defconf: drop everything else not coming from LAN" in-interface-list=!LAN
+
+<strong>#All forward rules have been migrated to the RAW table for BNGs, so better performance and no stateful tracking required for customers#</strong></code></pre>
+
+
+
+<h2 class="wp-block-heading has-text-align-left" id="h-for-edge-router">For Edge Router</h2>
+
+
+
+<p class="wp-block-paragraph">The <strong>purpose </strong>of the <strong>Edge </strong>router is to <strong>route as fast as possible</strong>. So, with that in mind,<strong> along with </strong>the basic general changes I’ve mentioned at <strong>the beginning</strong> of this article, the following should also be kept in mind:</p>
+
+
+
+<ol class="wp-block-list">
+<li>No NAT</li>
+
+
+
+<li><strong>No connection tracking</strong> aka stateful firewalling (<strong>filter table</strong> on the firewall section)
+<ul class="wp-block-list">
+<li>If you enable stateful firewalling on the edge, the router will die in case of DDoS attacks or even just heavy traffic in general</li>
+</ul>
+</li>
+
+
+
+<li>No fancy “features” (like Hotspot, PPPoE)
+<ul class="wp-block-list">
+<li>Use your BNG routers for any customer delegation that is required</li>
+</ul>
+</li>
+</ol>
+
+
+
+<h3 class="wp-block-heading">BGP Optimisation</h3>
+
+
+
+<p class="wp-block-paragraph">This is a work in progress section and at this point in time, I am writing based on my experience with Indian ISPs, so if you’re in the EU/US or other locations, you’re probably already implementing the following:</p>
+
+
+
+<p class="wp-block-paragraph">Please note on RouterOS v7, you need to properly configure <a href="https://youtu.be/py4up-lO8zY">BGP affinity</a> to avoid CPU issues.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>BGP Timers</strong></p>
+
+
+
+<p class="wp-block-paragraph">Based on Huawei documentation <a href="https://support.huawei.com/enterprise/en/doc/EDOC1000178171/e2053a/configuring-bgp-keepalive-and-hold-timers#:~:text=Setting%20the%20Keepalive%20time%20to%2020s%20is%20recommended.%20If%20the%20Keepalive%20time%20is%20less%20than%2020s%2C%20sessions%20between%20peers%20may%20be%20closed." target="_blank" rel="noreferrer noopener">here</a> and <a href="https://support.huawei.com/enterprise/en/doc/EDOC1000178171/e2053a/configuring-bgp-keepalive-and-hold-timers#:~:text=or%20peer%20group.-,The%20proper%20maximum%20interval%20at%20which%20Keepalive%20messages%20are%20sent%20is%20one%20third%20the%20holdtime.,-By%20default%2C%20the" target="_blank" rel="noreferrer noopener">here</a>, I personally tested the following configuration and observed that BGP negotiation time and stability (during occasional link flaps/packet loss) improved significantly, so I would recommend network operators to set the same timers globally on their networks (for both eBGP and iBGP) – Keepalive time to 20s, Holdtime to 60s.</p>
+
+
+
+<ul class="wp-block-list">
+<li><code>/routing bgp template<br>set default as=149794 disabled=no hold-time=1m keepalive-time=20s</code></li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Preferably convince your peers to do the same config on their end as well at least for the individual BGP sessions that are between you and them.</p>
+
+
+
+<h4 class="wp-block-heading">Traffic Engineering and loop prevention</h4>
+
+
+
+<ul class="wp-block-list">
+<li>Always route your aggregated prefixes [Like say you have a  /24 or /22 (IPv4) or /32 or /36 (IPv6)] to blackhole for IPv4+IPv6 to prevent layer 3 looping and stop disabling synchronisation on RouterOS v6, it is anyways mandatory on RouterOS v7 to either route to blackhole or have the prefix assigned to an interface
+<ul class="wp-block-list">
+<li>This will also reduce CPU usage whenever downstream routers/users/switches go offline and incomplete traffic from remote hosts/networks keeps trying to establish a connection and since it gets routed to blackhole it will immediately timeout and save resources.
+<ul class="wp-block-list">
+<li>In other words, there’s no sense in doing things that increase CPU usage (not routing to blackhole)</li>
+
+
+
+<li>And there is no sense in avoiding loop prevention mechanisms</li>
+</ul>
+</li>
+
+
+
+<li>Example config on my own network (AS149794) on RouterOS v7<br><code>/ip route<br>add blackhole comment="Blackhole route" disabled=no dst-address=103.176.189.0/24</code><br><br><code>/ipv6 route<br>add blackhole comment="Blackhole Route" disabled=no dst-address=2400:7060::/32<br>add blackhole comment="Blackhole Route" disabled=no dst-address=2400:7060::/48</code></li>
+</ul>
+</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li>If you have multi-homing transit
+<ul class="wp-block-list">
+<li>Always at the very least, request for partial routing table from <strong>all</strong> the upstream providers you’re connected to. If the router can handle full tables from the upstreams, go for it!
+<ul class="wp-block-list">
+<li>This will ensure your router has the best paths to choose from</li>
+
+
+
+<li>Stop going with the strange concept of taking only default routes from the upstreams and creating asymmetric routing conditions where outgoing traffic is going via Transit A and incoming traffic is coming in via Transit B.</li>
+</ul>
+</li>
+
+
+
+<li>Always advertise <strong>all</strong> your IP pools to <strong>all</strong> transit providers to help minimise asymmetric routing which in turn leads to high latency and possibly packet loss in rare cases
+<ul class="wp-block-list">
+<li>If you need traffic engineering, you can consider BGP based load balancing or local preferences with some automation like <a href="https://pathvector.io/" target="_blank" rel="noreferrer noopener">Pathvector</a></li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li>If you have a single homing setup
+<ul class="wp-block-list">
+<li>Still request for partial table/full table whichever fits your router’s specs in order to futureproof in case you plan to go multi-home</li>
+</ul>
+</li>
+</ul>
+
+
+
+<h3 id="h-filtering-amp-security" class="wp-block-heading">Filtering &amp; Security</h3>
+
+
+
+<p class="wp-block-paragraph">We only need to do broadly <strong>two </strong>things for filtering and security:</p>
+
+
+
+<ol class="wp-block-list">
+<li>Implement <a href="https://github.com/manrs-tools/MANRS-Implementation-Guide/blob/main/MANRS-Network_Implementation_Guide.docx" target="_blank" rel="noreferrer noopener">MANRS throughout your network</a> (and business)</li>
+
+
+
+<li>Use the RAW table to drop remaining bogon/rubbish traffic similar to the one used on the BNG and you can also use it for ACL if you need that
+<ul class="wp-block-list">
+<li>CPU usage stays minimal when using the RAW table</li>
+
+
+
+<li>Absolutely <strong>nothing</strong> on the<strong> filter table</strong> i.e. no stateful firewalling
+<ul class="wp-block-list">
+<li>The only exception here is we can use FastTrack for untracked traffic i.e. stateless traffic to improve IPv4 routing performance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+
+
+<h4 id="h-ipv4-firewall-0" class="wp-block-heading">IPv4 Firewall</h4>
+
+
+
+<pre class="wp-block-code"><code><strong>#Disable conn_track for using FastTrack statelessly#</strong>
+/ip firewall connection tracking
+set enabled=no
+
+/ip firewall address-list
+<strong>#Enter all local subnets/public subnets applicable to your AS, use the full CIDR notation of the public IPv4 block assigned to you to avoid missing anything out, please avoid something like /30#</strong>
+
+add address=<strong>103.176.189.0/24</strong> comment="LAN subnets" list=lan_subnets
+add address=192.168.0.0/24 comment="LAN subnets" list=lan_subnets
+
+add address=0.0.0.0/8 comment=RFC6890 list=not_in_internet
+add address=172.16.0.0/12 comment=RFC6890 list=not_in_internet
+add address=192.168.0.0/16 comment=RFC6890 list=not_in_internet
+add address=10.0.0.0/8 comment=RFC6890 list=not_in_internet
+add address=169.254.0.0/16 comment=RFC6890 list=not_in_internet
+add address=127.0.0.0/8 comment=RFC6890 list=not_in_internet
+add address=224.0.0.0/4 comment=Multicast list=not_in_internet
+add address=198.18.0.0/15 comment=RFC6890 list=not_in_internet
+add address=192.0.0.0/24 comment=RFC6890 list=not_in_internet
+add address=192.0.2.0/24 comment=RFC6890 list=not_in_internet
+add address=198.51.100.0/24 comment=RFC6890 list=not_in_internet
+add address=203.0.113.0/24 comment=RFC6890 list=not_in_internet
+add address=100.64.0.0/10 comment=RFC6890 list=not_in_internet
+add address=240.0.0.0/4 comment=RFC6890 list=not_in_internet
+add address=192.88.99.0/24 comment="6to4 relay Anycast [RFC 3068]" list=not_in_internet
+add address=255.255.255.255 comment=RFC6890 list=not_in_internet
+add address=127.0.0.0/8 comment="RAW Filtering - RFC6890" list=bad_ipv4
+add address=192.0.0.0/24 comment="RAW Filtering - RFC6890" list=bad_ipv4
+add address=192.0.2.0/24 comment="RAW Filtering - RFC6890 documentation" list=bad_ipv4
+add address=198.51.100.0/24 comment="RAW Filtering - RFC6890 documentation" list=bad_ipv4
+add address=203.0.113.0/24 comment="RAW Filtering - RFC6890 documentation" list=bad_ipv4
+add address=240.0.0.0/4 comment="RAW Filtering - RFC6890 reserved" list=bad_ipv4
+add address=224.0.0.0/4 comment="RAW Filtering - multicast" list=bad_src_ipv4
+add address=255.255.255.255 comment="RAW Filtering - RFC6890" list=bad_src_ipv4
+add address=0.0.0.0/8 comment="RAW Filtering - RFC6890" list=bad_dst_ipv4
+add address=224.0.0.0/4 comment="RAW Filtering - multicast" list=bad_dst_ipv4 disabled=yes
+
+/ip firewall raw
+add action=accept chain=prerouting comment="Enable this rule for transparent mode" disabled=yes
+
+<strong>#If you are using DHCP, change this to accept#</strong>
+add action=drop chain=prerouting comment="defconf: Drop DHCP discover on LAN" dst-address=255.255.255.255 dst-port=67 in-interface-list=LAN protocol=udp src-address=0.0.0.0 src-port=68
+
+add action=drop chain=prerouting comment="defconf: drop bad src IPs" src-address-list=bad_ipv4
+add action=drop chain=prerouting comment="defconf: drop bad dst IPs" dst-address-list=bad_ipv4
+add action=drop chain=prerouting comment="defconf: drop bad src IPs" src-address-list=bad_src_ipv4
+add action=drop chain=prerouting comment="defconf: drop bad dst IPs" dst-address-list=bad_dst_ipv4
+add action=drop chain=prerouting comment="defconf: drop non global from WAN" in-interface-list=WAN src-address-list=not_in_internet
+add action=drop chain=prerouting comment="defconf: drop forward to private ranges from WAN" dst-address-list=not_in_internet in-interface-list=WAN
+
+<strong>#Remember that lan_subnets here should only include your public ranges not CGNAT#</strong>
+add action=drop chain=prerouting comment="defconf: drop local if not from default IP range" in-interface-list=LAN src-address-list=!lan_subnets
+
+add action=drop chain=prerouting comment="defconf: drop bad UDP" port=0 protocol=udp
+add action=jump chain=prerouting comment="defconf: jump to TCP chain" jump-target=bad_tcp protocol=tcp
+add action=jump chain=prerouting comment="defconf: jump to ICMP chain" jump-target=icmp protocol=icmp
+add action=accept chain=prerouting comment="defconf: accept UDP traceroute" dst-address-type=local port=33434-33534 protocol=udp
+add action=accept chain=prerouting comment="defconf: accept everything else from LAN" in-interface-list=LAN
+add action=accept chain=prerouting comment="defconf: accept everything else from WAN" in-interface-list=WAN
+add action=accept chain=prerouting comment="Accept local traffic to self" src-address-type=local
+add action=drop chain=prerouting comment="defconf: drop the rest"
+
+add action=drop chain=bad_tcp comment="defconf: TCP port 0 drop" port=0 protocol=tcp
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=!fin,!syn,!rst,!ack
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=fin,syn
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=fin,rst
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=fin,!ack
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=fin,urg
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=syn,rst
+add action=drop chain=bad_tcp comment="defconf: TCP flag filter" protocol=tcp tcp-flags=rst,urg
+add action=drop chain=icmp comment="Drop Source Quench (Deprecated)" icmp-options=4 protocol=icmp
+add action=drop chain=icmp comment="Drop Alternate Host Address (Deprecated)" icmp-options=6 protocol=icmp
+add action=drop chain=icmp comment="Drop Information Request (Deprecated)" icmp-options=15 protocol=icmp
+add action=drop chain=icmp comment="Drop Information Reply (Deprecated)" icmp-options=16 protocol=icmp
+add action=drop chain=icmp comment="Drop Address Mask Request (Deprecated)" icmp-options=17 protocol=icmp
+add action=drop chain=icmp comment="Drop Address Mask Reply (Deprecated)" icmp-options=18 protocol=icmp
+add action=drop chain=icmp comment="Drop Traceroute (Deprecated)" icmp-options=30 protocol=icmp
+add action=drop chain=icmp comment="Drop Datagram Conversion Error (Deprecated)" icmp-options=31 protocol=icmp
+add action=drop chain=icmp comment="Drop Mobile Host Redirect (Deprecated)" icmp-options=32 protocol=icmp
+add action=drop chain=icmp comment="Drop IPv6 Where-Are-You (Deprecated)" icmp-options=33 protocol=icmp
+add action=drop chain=icmp comment="Drop IPv6 I-Am-Here (Deprecated)" icmp-options=34 protocol=icmp
+add action=drop chain=icmp comment="Drop Mobile Registration Request (Deprecated)" icmp-options=35 protocol=icmp
+add action=drop chain=icmp comment="Drop Mobile Registration Reply (Deprecated)" icmp-options=36 protocol=icmp
+add action=drop chain=icmp comment="Drop Domain Name Request (Deprecated)" icmp-options=37 protocol=icmp
+add action=drop chain=icmp comment="Drop Domain Name Reply (Deprecated)" icmp-options=38 protocol=icmp
+add action=drop chain=icmp comment="Drop SKIP (Deprecated)" icmp-options=39 protocol=icmp
+
+<strong>#Filter rules for FastTracking stateless traffic#</strong>
+/ip firewall mangle
+add action=fasttrack-connection chain=prerouting
+add action=fasttrack-connection chain=output</code></pre>
+
+
+
+<h4 id="h-ipv6-firewall-0" class="wp-block-heading">IPv6 Firewall</h4>
+
+
+
+<pre class="wp-block-code"><code>/ipv6 firewall address-list
+
+<strong>#Enter the aggregated public prefixes originating from your AS that you use along with link-local</strong> <strong>fe80::/10#</strong>
+
+<strong>#example#</strong>
+add address=2405:a140::/32 comment="AS Prefix" list=lan_subnets
+add address=fe80::/10 comment="Link-local" list=lan_subnets
+
+<strong>#Add your BGP peers here, example below#</strong>
+add address=2400:7000:1::/126 comment="Peering with Transit on VLAN100" list=bgp_peers
+
+<strong>#Copy Paste all the following#</strong>
+add address=::/3 comment="IPv6 invalids" list=not_in_internet
+add address=4000::/3 comment="IPv6 invalids" list=not_in_internet
+add address=6000::/3 comment="IPv6 invalids" list=not_in_internet
+add address=8000::/3 comment="IPv6 invalids" list=not_in_internet
+add address=a000::/3 comment="IPv6 invalids" list=not_in_internet
+add address=c000::/3 comment="IPv6 invalids" list=not_in_internet
+add address=e000::/4 comment="IPv6 invalids" list=not_in_internet
+add address=f000::/5 comment="IPv6 invalids" list=not_in_internet
+add address=f800::/6 comment="IPv6 invalids" list=not_in_internet
+add address=fc00::/7 comment="IPv6 invalids" list=not_in_internet
+add address=fe00::/9 comment="IPv6 invalids" list=not_in_internet
+add address=fec0::/10 comment="IPv6 invalids" list=not_in_internet
+add address=2001::/23 comment="IPv6 invalids" list=not_in_internet
+add address=2001:2::/48 comment="IPv6 invalids" list=not_in_internet
+add address=2001:10::/28 comment="IPv6 invalids" list=not_in_internet
+add address=2001:db8::/32 comment="IPv6 invalids" list=not_in_internet
+add address=2002::/16 comment="IPv6 invalids" list=not_in_internet
+add address=3ffe::/16 comment="IPv6 invalids" list=not_in_internet
+add address=2000::/3 list="global_unicast_prefix(es)"
+add address=fe80::/10 list=allowed
+add address=ff02::/16 comment="multicast" list=allowed
+add address=fe80::/10 comment="defconf: RFC6890 Linked-Scoped Unicast" list=no_forward_ipv6
+add address=ff00::/8 comment="defconf: multicast" list=no_forward_ipv6
+add address=::1/128 comment="defconf: lo" list=bad_ipv6
+add address=::ffff:0:0/96 comment="defconf: ipv4-mapped" list=bad_ipv6
+add address=::/96 comment="defconf: ipv4 compat" list=bad_ipv6
+add address=2001:db8::/32 comment="defconf: documentation" list=bad_ipv6
+add address=2001:10::/28 comment="defconf: ORCHID" list=bad_ipv6
+add address=2001::/23 comment="defconf: RFC6890" list=bad_ipv6
+add address=::/128 comment="defconf: unspecified" list=bad_dst_ipv6
+add address=::/128 comment="RAW Filtering" list=bad_src_ipv6
+add address=ff00::/8 comment="RAW Filtering" list=bad_src_ipv6
+
+/ipv6 firewall raw
+<strong>#New rule to drop deprecated header type 0 &amp; 40#</strong>
+
+<strong>#Works only on ROS v7.4 onwards#</strong>
+add action=drop chain=prerouting comment="Drop packets with extension header types 0, 43 at network border" headers=hop,route:contains
+
+add action=accept chain=prerouting comment="defconf: RFC4291, section 2.7.1" dst-address=ff02::1:ff00:0/104 icmp-options=135:0-255 protocol=icmpv6 src-address=::/128
+
+<strong>#Migrated this rule from the foward chain in BNG to drop these packets on the network edge#</strong>
+add action=drop chain=prerouting comment="defconf: rfc4890 drop hop-limit=1" hop-limit=equal:1 in-interface-list=!LAN protocol=icmpv6
+
+add action=drop chain=prerouting comment="drop port 25 to prevent spam" port=25 protocol=tcp
+add action=drop chain=prerouting comment="drop port 25 to prevent spam" port=25 protocol=udp
+
+<strong>#This is required for traffic whereby the SRC may be Link-local and the DST is GUA for BGP peers particuarly in IXPs#</strong>
+add action=accept chain=prerouting comment="Accept all ICMPv6 traffic from BGP peers (Required for LL&lt;&gt;GUA packets)" icmp-options=!154:4-5 in-interface-list=WAN protocol=icmpv6 src-address-list=bgp_peers
+
+add action=drop chain=prerouting comment="Drop invalids from WAN" dst-address-list="global_unicast_prefix(es)" in-interface-list=WAN src-address-list=not_in_internet
+add action=drop chain=prerouting comment="Drop forwarded invalids from WAN" dst-address-list=not_in_internet in-interface-list=WAN src-address-list="global_unicast_prefix(es)"
+add action=drop chain=prerouting comment="Drop invalids from LAN" dst-address-list="global_unicast_prefix(es)" in-interface-list=LAN src-address-list=not_in_internet
+add action=drop chain=prerouting comment="Drop forwarded invalids from LAN" dst-address-list=not_in_internet in-interface-list=LAN src-address-list=lan_subnets
+
+add action=accept chain=prerouting comment="defconf: enable for transparent firewall" disabled=yes
+
+<strong>#Drop anything from your network going towards the public internet if source addresses does not match your allocated pools#</strong>
+add action=drop chain=prerouting comment="Drop spoofed traffic from LAN going towards Global Unicast" dst-address-list="global_unicast_prefix(es)" in-interface-list=LAN src-address-list=!lan_subnets
+
+add action=drop chain=prerouting comment="defconf: drop bogon IP's" src-address-list=bad_ipv6
+add action=drop chain=prerouting comment="defconf: drop bogon IP's" dst-address-list=bad_ipv6
+add action=drop chain=prerouting comment="defconf: drop packets with bad src ipv6" src-address-list=bad_src_ipv6
+add action=drop chain=prerouting comment="defconf: drop packets with bad dst ipv6" dst-address-list=bad_dst_ipv6
+
+add action=accept chain=prerouting comment="defconf: accept local multicast scope" dst-address=ff02::/16
+add action=drop chain=prerouting comment="defconf: drop other multicast destinations" dst-address=ff00::/8
+add action=drop chain=prerouting comment="defconf: drop bad UDP" port=0 protocol=udp
+add action=drop chain=prerouting comment="defconf: drop bad TCP" port=0 protocol=tcp
+add action=accept chain=prerouting comment="defconf: accept UDP traceroute" dst-address-type=local port=33434-33534 protocol=udp
+add action=jump chain=prerouting comment="defconf: jump to ICMP chain" jump-target=icmpv6 protocol=icmpv6
+add action=accept chain=prerouting comment="defconf: accept everything else from LAN" in-interface-list=LAN
+add action=accept chain=prerouting comment="defconf: accept everything else from WAN" in-interface-list=WAN
+add action=accept chain=prerouting comment="Accept local traffic to self" src-address-type=local
+add action=drop chain=prerouting comment="defconf: drop the rest"
+add action=drop chain=icmpv6 comment="Drop FMIPv6 HI + FMIPv6 HAck - Deprecated (RFC5568)" icmp-options=154:4-5 protocol=icmpv6</code></pre>
+
+
+
+<h2 class="wp-block-heading has-text-align-left" id="h-firewall-explanation">Firewall Explanation</h2>
+
+
+
+<p class="wp-block-paragraph">I will keep this concise as stated earlier I suggest you study and understand how iptables function in general and study the packet flow to know what rule does what: With that being said, I will break it down into simpler points</p>
+
+
+
+<ul class="wp-block-list">
+<li>I used <a href="https://help.mikrotik.com/docs/display/ROS/Building+Your+First+Firewall" target="_blank" rel="noreferrer noopener">this</a> and <a href="https://help.mikrotik.com/docs/display/ROS/Building+Advanced+Firewall" target="_blank" rel="noreferrer noopener">this</a> as the source for building the base for the firewall
+<ul class="wp-block-list">
+<li>MikroTik has ensured to conform to various RFCs and taken the efforts to not break any legitimate protocol/traffic</li>
+</ul>
+</li>
+
+
+
+<li>IPv6 firewall rules are trickier and more complex, but rest assured that the rules in this article do not break any protocol/standard nor do they impact customer’s end-to-end reachability</li>
+
+
+
+<li>We are dropping spoofed traffic<ul><li>The RAW rules drop anything coming from WAN that’s spoofed (RFC 6890 addresses)</li><li>The RAW rules drop anything coming from LAN that does not match your public prefixes/internal subnets (aka lan_subnets address list), meaning any spoofing traffic is dropped from exiting your network</li></ul>
+<ul class="wp-block-list">
+<li><a href="https://blog.apnic.net/2021/04/29/spoofing-packets-what-is-it-and-why-do-people-do-it/" target="_blank" rel="noreferrer noopener">Here’s</a> an APNIC blog post detailing more on this subject</li>
+</ul>
+</li>
+
+
+
+<li>Next, we are dropping bad traffic such as TCP/UDP port 0 or bad TCP flags</li>
+
+
+
+<li>The filter rules are pretty self-explanatory</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading has-text-align-left" id="h-strange-anomalies">Strange Anomalies</h2>
+
+
+
+<p class="wp-block-paragraph">These are some strange behaviours that I could not explain. If you have further information, please reach out to me.</p>
+
+
+
+<ol class="wp-block-list">
+<li>NAT Leak
+<ul class="wp-block-list">
+<li>For example, let’s say we CGNAT 100.64.0.0/24 to customers with 103.176.189.0/25. Now, it’s common sense that anything WAN bound will have a source IP belonging to the /25 on the other end of the NAT. But nope, this isn’t always the case. What I have observed is, sometimes (meaning all the time if you have thousands of customers), the source IP would be the CGNAT subnet and the destination IP would be public, hence it “escapes” from the NAT engine.</li>
+
+
+
+<li>This behaviour is <strong>NOT</strong> exclusive to MikroTik. I have observed the same thing on Ubuntu 20.04/Debian based distros, where the source IP is the NAT subnet and it escapes to the WAN interface with the destination IP being real-live public IPs
+<ul class="wp-block-list">
+<li>Solution: We just drop anything coming from the BNG that’s not public using the Edge Router, this is already taken care of in my configuration above, you just need to follow the instructions</li>
+</ul>
+</li>
+
+
+
+<li>I have been unable to find documentation or bug reports on this behaviour</li>
+</ul>
+</li>
+
+
+
+<li>Netmap vs Src Nat
+<ul class="wp-block-list">
+<li>Publicly available documentation suggests simple definitions for both<br>Src NAT = 1:Many binding<br>Netmap = 1:1 binding
+<ul class="wp-block-list">
+<li>But for whatever reason, when using src NAT as the action for a public prefix, it keeps on changing the “NATted” public IP and hence the source IP on the WAN for the customers. This results in traffic breaking or triggering DDoS protection on sites like Cloudflare protected ones</li>
+
+
+
+<li>And for whatever reason, even though Netmap is meant for 1:1, it works for 1:Many bindings and it does not result in the constant changing of source IP for the customers</li>
+</ul>
+</li>
+
+
+
+<li>I have not found any technical information on why these behaviours occur or why netmap even works in the first place for 1:Many bindings</li>
+</ul>
+</li>
+</ol>

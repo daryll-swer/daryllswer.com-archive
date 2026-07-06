@@ -1,0 +1,549 @@
+<p class="wp-block-paragraph"><em>Note: During the course of  writing this article, I <a href="https://twitter.com/DaryllSwer/status/1519575084687818752" target="_blank" rel="noreferrer noopener">migrated</a> from AS210777 to <a href="https://bgp.tools/as/149794" target="_blank" rel="noreferrer noopener">AS149794</a>. The rest pretty much stays the same.</em></p>
+
+
+
+<p class="wp-block-paragraph"><strong>This article has been published on the <a href="https://blog.apnic.net/2022/07/01/how-i-set-up-my-own-autonomous-system/" target="_blank" rel="noreferrer noopener">APNIC blog</a> as well.</strong></p>
+
+
+
+<p class="wp-block-paragraph">First, I would like to give <a href="https://www.civo.com/" target="_blank" rel="noreferrer noopener">Civo</a> a shout out for <a href="https://twitter.com/DaryllSwer/status/1436345785973497857" target="_blank" rel="noreferrer noopener">sponsoring</a> the Autonomous System Number ASN allocation (<a href="https://web.archive.org/web/20220428071633/https://bgp.tools/as/210777" target="_blank" rel="noreferrer noopener">AS210777</a>), a <a href="https://web.archive.org/web/20220428071817/https://bgp.tools/prefix/2a10:6747::/32" target="_blank" rel="noreferrer noopener">/32 IPv6 prefix</a> and also a <a href="https://web.archive.org/web/20220428071659/https://bgp.tools/prefix/103.176.189.0/24">/24 IPv4 prefix</a> for me. I’d also like to thank APNIC, which allocated the /24 for experimental purposes, and later allocated an IPv6 prefix and an ASN.</p>
+
+
+
+<p class="wp-block-paragraph">This AS is my own personal network. I use it for conducting experiments, research, and just <a href="https://en.wikipedia.org/wiki/Eyeball_network" target="_blank" rel="noreferrer noopener">eyeballing</a> in my free time.</p>
+
+
+
+<p class="wp-block-paragraph">In this post I’ll share the procedures I followed, serially, to have my prefix advertised to the world and get the network up and running. Anything of operational/ISP value that arose from this project has been entered into my <a href="https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/" target="_blank" rel="noreferrer noopener">guide</a>. Everything else is research, observation, and some minor operationally useful content such as IRR/GeoIP practices.</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="step-1-applying-for-the-resources-from-a-rir"> <strong>Step 1: Applying for the resources from a RIR</strong></h2>
+
+
+
+<p class="wp-block-paragraph">In my case, both the ASN (210777) allocation and IPv6 prefix (the old prefix before migration) were requested from and allocated by RIPE directly via the folk at Civo. However, I manually requested the /24 prefix from APNIC under the <a href="https://www.apnic.net/community/policy/resources#5.7.-Experimental-allocations-policy" target="_blank" rel="noreferrer noopener">experimental allocation</a> policies.</p>
+
+
+
+<p class="wp-block-paragraph">The procedure to apply for Internet number resources is similar, if not identical, at all RIRs. You can use <a href="https://blog.apnic.net/2021/10/27/how-to-connect-to-the-internet-with-your-own-ip-addresses-and-asns/" target="_blank" rel="noreferrer noopener">this</a> as a guide. Keep in mind that the RIRs will evaluate your request and may simply deny all resources at their discretion.</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-step-2-inputting-irr-information"><strong>Step 2: Inputting IRR information</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Inputting correct and up-to-date data in the Internet Routing Registry (IRR) can be of <a href="https://www.apnic.net/manage-ip/apnic-services/routing-registry/" target="_blank" rel="noreferrer noopener">great help</a> to network troubleshooting, route filtering, and so on, although I was unable to find any proper documentation on IRR best practices, except for the <a href="https://github.com/manrs-tools/MANRS-Implementation-Guide/blob/main/MANRS-Network_Implementation_Guide.docx" target="_blank" rel="noreferrer noopener">MANRS Implementation Guide</a>.</p>
+
+
+
+<h3 class="wp-block-heading" id="h-asn-essential-database-entries"><strong>ASN essential database entries</strong></h3>
+
+
+
+<p class="wp-block-paragraph">Below are some of the object entries that I feel are essential to ensuring other networks can get a clear idea of what your AS is for:</p>
+
+
+
+<ul class="wp-block-list">
+<li>AS-Name = Daryll-Swer — name of the organization/individual behind the AS.</li>
+
+
+
+<li>Description = This AS is used for non-profit research and experiments — explains the purpose of the AS.</li>
+
+
+
+<li>Displaying the AS-SET directly under the AS WHOIS to ensure other networks can quickly find it — no need to hunt for it on peeringdb or similar.</li>
+</ul>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET.png"><img loading="lazy" decoding="async" width="1920" height="932" src="https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET.png" alt="" class="wp-image-982" srcset="https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET.png 1920w, https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET-768x373.png 768w, https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET-1536x746.png 1536w" sizes="auto, (max-width: 1920px) 100vw, 1920px"></a><figcaption class="wp-element-caption">Figure-1 (AS-SET of AS 210777 in IRR.)</figcaption></figure>
+</div>
+
+
+<ul class="wp-block-list">
+<li>Up-to-date abuse contact info — for obvious reasons, this should always be pointing to a valid and working contact.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading"><strong>IPv4 essential prefix database entries</strong></h3>
+
+
+
+<p class="wp-block-paragraph">Ensure you create a <a href="https://apps.db.ripe.net/docs/RPSL-Object-Types/Descriptions-of-Primary-Objects/#description-of-the-route-object" target="_blank" rel="noreferrer noopener">route and origin object</a> to so everyone else knows which AS is supposed to originate the prefix. Set up <a href="https://blog.apnic.net/2019/09/11/how-to-creating-rpki-roas-in-myapnic/" target="_blank" rel="noreferrer noopener">RPKI/ROAs</a> for your routes. Input up-to-date abuse contact info.<meta charset="utf-8"></p>
+
+
+
+<p class="wp-block-paragraph"><strong>IPv6 essential prefix database entries</strong></p>
+
+
+
+<p class="wp-block-paragraph">Ensure you create a <a href="https://apps.db.ripe.net/docs/RPSL-Object-Types/Descriptions-of-Primary-Objects/#description-of-the-route6-object" target="_blank" rel="noreferrer noopener">route6 and origin object</a> to ensure everyone else knows which AS is supposed to originate the prefix. Set up <a href="https://blog.apnic.net/2019/09/11/how-to-creating-rpki-roas-in-myapnic/" target="_blank" rel="noreferrer noopener">RPKI/ROAs</a> for your routes. Input up-to-date abuse contact info.</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="step-3-dealing-with-geoip-data"><strong>Step 3: Dealing with GeoIP Data</strong></h2>
+
+
+
+<p class="wp-block-paragraph"><strong>Issue:</strong></p>
+
+
+
+<p class="wp-block-paragraph">Any network operator who has just received a fresh allocation or transfer would know the pain of having to deal with different GeoIP providers and manually correct the data for each provider! However, I have devised my own method to deal with this problem and within 15 days (I saw visible results within 10-14 days), I was able to see the correct geolocation propagating around the world/various databases.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Solutions:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>First, create a <a href="https://www.ripe.net/manage-ips-and-asns/db/tools/geolocation-in-the-ripe-database" target="_blank" rel="noreferrer noopener">Geoloc object</a> for your prefix using IRR via the RIR concerned</li>
+
+
+
+<li>The second and highly recommended step is to make use of Geofeeds (<a href="https://datatracker.ietf.org/doc/html/rfc8805" target="_blank" rel="noreferrer noopener">RFC 8805</a>) because it basically automates the process of GeoIP updates. Make use of your own domain and ensure that when a bot or someone clicks on the link, it should redirect to a .csv file, for example: <a href="https://www.daryllswer.com/geofeed/" target="_blank" rel="noreferrer noopener">http://daryllswer.com/geofeed/</a>
+<ul class="wp-block-list">
+<li>Submit your URL to the GeoIP providers that accept it (even Google will accept it via the <a href="https://isp.google.com/geo_feed/" target="_blank" rel="noreferrer noopener">ISP Portal</a>). You can attach your Geofeed link in the email template below (Form 1) to save yourself round-trip time!</li>
+
+
+
+<li>Add the URL to your Geofeed directly under your prefix’s IRR info, as shown in Figure 2 per <a href="https://datatracker.ietf.org/doc/html/rfc9092" target="_blank" rel="noreferrer noopener">RFC9092</a> via a remarks object. At the time of writing, the “geofeed” object for IRR is not supported on APNIC, but it should be used once it is available.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2022/12/image-1.png"><img loading="lazy" decoding="async" width="878" height="688" src="https://www.daryllswer.com/wp-content/uploads/2022/12/image-1.png" alt="" class="wp-image-1658" srcset="https://www.daryllswer.com/wp-content/uploads/2022/12/image-1.png 878w, https://www.daryllswer.com/wp-content/uploads/2022/12/image-1-768x602.png 768w" sizes="auto, (max-width: 878px) 100vw, 878px"></a><figcaption class="wp-element-caption">Figure-2 (The geoloc object and geofeed URL on IRR.)</figcaption></figure>
+
+
+
+<ul class="wp-block-list">
+<li>Thirdly, manually fill up the correction forms on a per provider basis for those that offer it. Below is a list of some of the forms that I could find on the web:
+<ul class="wp-block-list">
+<li>Maxmind’s <a href="https://www.maxmind.com/en/geoip-location-correction" target="_blank" rel="noreferrer noopener">Correct a GeoIP Location form</a></li>
+
+
+
+<li>iapi’s <a href="https://ipapi.co/update-location/" target="_blank" rel="noreferrer noopener">IP Address Location Update Request</a> (note: they also accept RFC 8805 geofeeds)</li>
+
+
+
+<li>IPWHOIS.IO’s <a href="https://ipwhois.io/contact" target="_blank" rel="noreferrer noopener">contact form</a></li>
+</ul>
+</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li>The fourth and final step is to mass email the remaining GeoIP data providers with a single email. Be sure to use the email address or abuse email address associated with your prefix on the IRR to ensure the providers view it as a valid email. Below is a sample template of what I used for myself:</li>
+</ul>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">Hi<br><br>We have an IPv4 Prefix allocated to us, whose location has just been recently updated/finalised on the APNIC Database. We would like to have the same changes reflected on your database.</p>
+
+
+
+<p class="wp-block-paragraph">Prefix: 103.176.189.0/24<br>You can also add our Geofeed (RFC8805) to your system: http://daryllswer.com/geofeed/<br><br>You can verify the location of the prefix by checking the geoloc object for the prefix <a href="https://wq.apnic.net/static/search.html" target="_blank" rel="noreferrer noopener">here</a> <em>[hyperlink the WHOIS link for your prefix(es)]</em></p>
+<cite>Daryll Swer</cite></blockquote>
+
+
+
+<ul class="wp-block-list">
+<li>Attach a screenshot like Figure 2 to make it easier for the providers to parse quickly and BCC the following:<ul><li>team@abstractapi.com</li></ul>
+<ul class="wp-block-list">
+<li>support@ip2location.com</li>
+
+
+
+<li>support@ipdata.co</li>
+
+
+
+<li>support@getfastah.com</li>
+
+
+
+<li>support@ipregistry.co</li>
+
+
+
+<li>support@ipgeolocation.io</li>
+
+
+
+<li>support@ipinfo.io</li>
+
+
+
+<li>service.desk@whoisxmlapi.com</li>
+
+
+
+<li>support@bigdatacloud.com</li>
+
+
+
+<li>support@apiip.net</li>
+
+
+
+<li>Tech@Melissa.com</li>
+
+
+
+<li>support@db-ip.com</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">You can additionally use this <a href="https://geolocatemuch.com/" target="_blank" rel="noreferrer noopener">tool</a> to test your Geofeed.</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="step-3-securing-ip-transit"><strong>Step 4: Securing IP Transit</strong></h2>
+
+
+
+<p class="wp-block-paragraph">The most important step of all, after handling all the trivial tasks, is to secure IP Transit. Now, being a non-profit individual, I cannot afford to pay for physical IP transit via the normal means, so the following is what I did to get the AS live on the global routing table:</p>
+
+
+
+<ol class="wp-block-list">
+<li>I initially spun up a VyOS/RouterOS instance on a cloud provider, but quickly dropped this idea due to high latency via VPN tunnels and losing access to my ISP’s Netflix Open Connect (OCA), caching, their bilateral peers, and so on.</li>
+
+
+
+<li>The second approach was securing a virtual PoP in Mumbai via my friend <a href="https://twitter.com/DaryllSwer/status/1446016772637802500" target="_blank" rel="noreferrer noopener">Vijay Ahire</a>. The network operating system of choice was VyOS 1.4. This solution had reasonable latency towards India-bound networks and reachability to caches and their peers. I used this until I was able to secure physical transit.</li>
+
+
+
+<li>The third approach was securing IP transit directly to my house! To get this working, I got help from <a href="https://www.linkedin.com/in/devendra-prasad-singh-4ab27854/" target="_blank" rel="noreferrer noopener">Devendra Singh</a> and his team at <a href="https://twitter.com/DaryllSwer/status/1462069688800661504" target="_blank" rel="noreferrer noopener">AS132559</a><strong> </strong>—<strong> </strong>a local ISP in Karnataka, India. I have known them for a while because I helped with various issues in their network in the past (the lesson here is to use your contacts). So, I was able to secure transit on a physical level where the fibre was terminated in my house. It is a dedicated single-mode fibre with a distance of about 0.5 kilometres that’s terminated with an LC connector and plugged into an SFP module on my end (1,310nm), and directly connected to an L2 switch on their end (1,550nm). It is an uncapped 1Gbps symmetrical link that is delivered without queuing, traffic shaping or any other shenanigans. At the time of writing, I am grateful that the transit is sponsored (free of cost) by the kind gesture of the provider.</li>
+</ol>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-network-topology"><strong>Network Topology</strong></h2>
+
+
+
+<p class="wp-block-paragraph">I lack the funds to build a high-end network lab in my home with all the fancy bells and whistles, so Figure 3 shows my simple and budget-friendly setup.</p>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology.png"><img loading="lazy" decoding="async" width="2720" height="1460" src="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology.png" alt="" class="wp-image-1395" srcset="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology.png 2720w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology-1920x1031.png 1920w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology-768x412.png 768w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology-1536x824.png 1536w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology-2048x1099.png 2048w" sizes="auto, (max-width: 2720px) 100vw, 2720px"></a><figcaption class="wp-element-caption">Figure-3 (Network Topology)</figcaption></figure>
+
+
+
+<h3 class="wp-block-heading"><strong>Hardware used</strong></h3>
+
+
+
+<ul class="wp-block-list">
+<li>MikroTik RB3011UiAS-RM — shout out to Praveen Gite (AS136342) for <a href="https://twitter.com/DaryllSwer/status/1490622518641958913" target="_blank" rel="noreferrer noopener">shipping it</a> to me</li>
+
+
+
+<li>Generic Chinese SFP module that just works without a problem — shout out to Devendra Singh again for that one</li>
+
+
+
+<li>TP-Link Archer C6 v3 (stock firmware, Wi-Fi AP configuration) — Once again, thanks to Devendra Singh.</li>
+
+
+
+<li>Raspberry Pi 3 Model B — many thanks to <a href="https://anuragbhatia.com/" target="_blank" rel="noreferrer noopener">Anurag Bhatia</a> for shipping this to me back in 2020!</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-bgp-configuration"><strong>BGP Configuration</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Since I am single-homed and only have a default route from the upstream, I did not implement route filters/RPKI validation (however, both of these are covered in my <a href="https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/" target="_blank" rel="noreferrer noopener">ISP guide</a>), so the configuration below is simple and straight-forward.</p>
+
+
+
+<p class="wp-block-paragraph">Below is my configuration using RouterOS v7:</p>
+
+
+
+<h3 class="wp-block-heading" id="h-ipv4"><strong>IPv4</strong></h3>
+
+
+
+<pre class="wp-block-code"><code><strong>#First we route the prefix to blackhole to eliminate any possibility of Layer 3 loops#
+</strong>/ip route
+add blackhole comment="Blackhole route" disabled=no dst-address=103.176.189.0/24
+<strong>#Next we add the prefix we'd like to advertise to our peer using firewall address-list#
+</strong>/ip firewall address-list
+add address=103.176.189.0/24 list=bgp-networks
+<strong>#Now we simply configure BGP#
+</strong>/routing bgp template
+set default as=210777 disabled=no name=default output.network=bgp-networks router-id=a.b.c.e routing-table=main
+/routing bgp connection
+add address-families=ip as=210777 disabled=no local.role=ebgp-customer name=IPv4-Deshkal output.network=bgp-networks remote.address=103.176.189.1/32 .as=132559 router-id=103.176.189.0 routing-table=main templates=default</code></pre>
+
+
+
+<h3 class="wp-block-heading"><strong>IPv6</strong></h3>
+
+
+
+<pre class="wp-block-code"><code><strong>#First we route the prefix to blackhole to eliminate any possibility of Layer 3 loops</strong>#
+/ipv6 route
+add blackhole comment="Blackhole Route" disabled=no dst-address=2400:7060::/32
+add blackhole comment="Blackhole Route" disabled=no dst-address=2400:7060::/48
+<strong>#Next we add the prefixes we'd like to advertise to our peer using firewall address-list#
+</strong>/ipv6 firewall address-list
+add address=2400:7060::/32 list=bgp-networks
+add address=2400:7060::/48 list=bgp-networks
+<strong>#Now we simply configure BGP</strong>#
+/routing bgp connection
+add address-families=ipv6 as=210777 disabled=no local.role=ebgp-customer name=IPv6-Deshkal output.network=bgp-networks remote.address=2400:7060::2 .as=132559 router-id=103.176.189.0 routing-table=main templates=default</code></pre>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-layer-3-4-configuration"><strong>Layer 3/4 Configuration</strong></h2>
+
+
+
+<p class="wp-block-paragraph">There are a few points to note on how I configured L3/L4 (or lack thereof) on my network. Every host in my LAN had a public IPv4 and IPv6 address assigned on the WAN interface (including iPhones, a MacBook Pro, Windows 11 laptop, and the Raspberry Pi), IPv4 was managed via DHCP and IPv6 was automated via SLAAC.</p>
+
+
+
+<p class="wp-block-paragraph">The hosts in the LAN were publicly reachable from the Internet. I did not use stateful firewalling on the forward chain in the edge router to avoid interfering with end-to-end connectivity because iOS has its own built-in firewall, Windows 11 has stateful firewalling, and the Debian-based OS on Pi had some basic iptables configuration. No security incident nor breaches ever occurred to my knowledge or observations. The network used absolutely no NAT, excluding times when I tested NAT44 and NAT444.</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-observations"><strong>Observations</strong></h2>
+
+
+
+<p class="wp-block-paragraph">I will try to keep this as readable as possible as there are a bunch of different observations that I have come across.</p>
+
+
+
+<h3 class="wp-block-heading" id="h-layer-3"><strong>Layer 3</strong></h3>
+
+
+
+<p class="wp-block-paragraph"><strong>IPv4</strong></p>
+
+
+
+<p class="wp-block-paragraph">Since each host on the network had a public IPv4 address and no NAT, we would expect to see native IPv4 end-to-end traffic. However, that was not the case — By using WireShark and sniffing directly from the WAN interface of the router I observed a lot of STUN traffic for several applications, ranging from social media apps to websites, to various apps on various OS platforms. P2P applications on the LAN hosts failed to talk to each other directly via their public IPs, instead, they are relayed via TURN. For example, iPhone X to iPhone 7 via WhatsApp/Telegram/Signal VoIP call should have been direct P2P connectivity, but that was not observed. Certain applications such as BitTorrent clients, Apple FaceTime, and similar, were able to establish P2P connectivity between LAN hosts without a problem or reliance on STUN.</p>
+
+
+
+<p class="wp-block-paragraph">No performance difference was discerned when a host was in the following environments:</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Behind NAT</strong> — P2P works via STUN and similar mechanisms.</li>
+
+
+
+<li><strong>Behind CGNAT</strong> — P2P works via STUN and similar mechanisms. Do note, that I used <a href="https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/" target="_blank" rel="noreferrer noopener">best practices for CGNAT</a> and not typically broken CGNAT implementations used in the wild</li>
+
+
+
+<li><strong>Public IP on the host </strong>— P2P works via both STUN and natively depending on the application(s)</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>IPv6</strong></p>
+
+
+
+<p class="wp-block-paragraph">Since each host on the network had a public IPv6 address and no NAT66 (please don’t use it), we would expect to see native IPv6 end-to-end traffic 100% of the time. However, that was not the case. As with IPv4, similar observations were made.</p>
+
+
+
+<p class="wp-block-paragraph">A smaller but still noticeable amount of STUN traffic —why is STUN even coded into these apps for IPv6 anyway? P2P applications on the LAN hosts failed to talk to each other directly via their public IPs, instead, they are relayed via TURN and often they fail to work over IPv6 and just fall back to IPv4. This suggests that <a href="https://en.wikipedia.org/wiki/Happy_Eyeballs" target="_blank" rel="noreferrer noopener">Happy Eyeballs</a> is broken for a large percentage of the apps out there. For example, iPhone X to iPhone 7 via WhatsApp/Telegram/Signal VoIP call should have had direct P2P connectivity over IPv6, but that was not observed. Telegram is a weird one – When I reran the test months later and sniffed with WireShark, I observed it was able to establish native IPv6 P2P, but only if IPv4 is completely disabled. Certain applications such as BitTorrent clients, Apple FaceTime, and similar were able to establish P2P connectivity between LAN hosts without a problem, without reliance on STUN or fallback to IPv4.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>A Quick Note on STUN</strong></p>
+
+
+
+<p class="wp-block-paragraph">I tweeted about this observation with some more interesting context below:</p>
+
+
+
+<figure class="wp-block-embed is-type-rich is-provider-twitter wp-block-embed-twitter"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true"><p lang="en" dir="ltr">So as of today, I packet sniffed on my WAN interface to see what's up and oddly enough, I saw zero STUN traffic! Maybe the remote end-points store data of the source IPs that have been determined to not be behind a NAT or something?</p>— Daryll Swer (@DaryllSwer) <a href="https://twitter.com/DaryllSwer/status/1488608520748425223?ref_src=twsrc%5Etfw">February 1, 2022</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+
+
+
+<p class="wp-block-paragraph"><strong>A Quick Note on Apple products</strong></p>
+
+
+
+<p class="wp-block-paragraph">During my observations, it seemed Apple software had clean NAT Traversal/Happy Eyeballs code — In 9 out of 10 cases apps like FaceTime were able to establish P2P connectivity between native IP (IPv4 and IPv6) end points, or even behind CGNAT where other apps failed and fell-back to STUN/TURN. Kudos to Apple for that one!</p>
+
+
+
+<h3 class="wp-block-heading"><strong>Layer 4 (IPv4 and IPv6)</strong></h3>
+
+
+
+<p class="wp-block-paragraph">Most of us already know of the classic transport protocols, TCP and UDP. However, both TCP and UDP have successors known as Datagram Congestion Control Protocol (DCCP), Stream Control Transmission Protocol (SCTP), UDP-Lite, and Multipath TCP, but we don’t see these protocols being deployed in the wild, at least not on the public Internet.</p>
+
+
+
+<p class="wp-block-paragraph">There are a few factors that I believe are responsible for the lack of usage in the wild:</p>
+
+
+
+<ol style="list-style-type:1" class="wp-block-list">
+<li>From the network engineering perspective, CGNAT is ugly, can break a lot of things, and forces the requirement for Application Layer Gateway (ALG) for various protocols including these Layer 4 protocols. So, it is only natural for TCP/UDP to remain in popular use due to well-known NAT traversal mechanisms for both. However, if you did deploy your CGNAT boxes with best practices from A to Z shown in my guide, all these protocols should, in theory, work just fine as the ALG will handle it out of the box.</li>
+
+
+
+<li>Another reason for the lack of usage is simply a lack of awareness or lack of <a href="https://www.daryllswer.com/the-human-side-of-isps/" target="_blank" rel="noreferrer noopener">competency</a>. I have spoken with folk who have been in the field for 10-22 years, and none of them had heard of TCP/UDP successors — Which is odd.</li>
+
+
+
+<li>Also, it’s possible that networks blanket drop non-TCP/UDP on the routers/firewalls.</li>
+
+
+
+<li>From the software development perspective, I suspect the issue is <a href="https://web.archive.org/web/20220503221044/https://twitter.com/rothgar/status/1521613185962311680" target="_blank" rel="noreferrer noopener">Layer 7-centric</a> software development. There doesn’t appear to be much focus on the lower layers, and an over-reliance on pre-existing libraries and functions for any over-the-network data transmission, namely TCP/UDP.
+<ol class="wp-block-list">
+<li>This has arguably contributed to the development of QUIC, which is over UDP — Sadly. But I hope to see mainstream usage of these non-TCP/UDP protocols grow over time.</li>
+</ol>
+</li>
+</ol>
+
+
+
+<h3 class="wp-block-heading"><strong>Interesting observations</strong></h3>
+
+
+
+<p class="wp-block-paragraph">For a <a href="https://twitter.com/DaryllSwer/status/1472823455754055683" target="_blank" rel="noreferrer noopener">brief period</a>, I observed SCTP traffic originating from Chinese ASNs (AS45102 and AS4538) hitting my network. This was likely the result of research and development work, and they were probably just as curious as me to see if any node or end point on the Internet would reply to SCTP packets. However, none of the OSes (Windows, macOS, Linux, iOS) I use replied to these packets, which I think is not RFC compliant at all.</p>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2022/04/Figure-4-SCTP-Traffic-Snippet.png"><img loading="lazy" decoding="async" width="1313" height="75" src="https://www.daryllswer.com/wp-content/uploads/2022/04/Figure-4-SCTP-Traffic-Snippet.png" alt="" class="wp-image-1291" srcset="https://www.daryllswer.com/wp-content/uploads/2022/04/Figure-4-SCTP-Traffic-Snippet.png 1313w, https://www.daryllswer.com/wp-content/uploads/2022/04/Figure-4-SCTP-Traffic-Snippet-768x44.png 768w" sizes="auto, (max-width: 1313px) 100vw, 1313px"></a><figcaption class="wp-element-caption">Figure-4 (SCTP Traffic Snippet)</figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">There are other less significant but still interesting observations I made while running this project. I usually just Tweet about them and some of them are listed below:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Internet censorship/blocking of sites seems to be less effective on <a href="https://twitter.com/DaryllSwer/status/1522553547472404481" target="_blank" rel="noreferrer noopener">IPv6 native sites</a></li>
+
+
+
+<li>Android Device(s) showing <a href="https://twitter.com/DaryllSwer/status/1517398523352064000" target="_blank" rel="noreferrer noopener">strange behaviour</a> with NDP NA</li>
+
+
+
+<li>IPv6 packets where source IP = ::/128 somehow <a href="https://twitter.com/DaryllSwer/status/1516777131883528193" target="_blank" rel="noreferrer noopener">traverses inter-AS</a>. RIPE Labs have <a href="https://labs.ripe.net/author/kistel/the-curious-case-of-packets-from/" target="_blank" rel="noreferrer noopener">published their analysis</a> of this behaviour; the mystery was <a href="https://twitter.com/DaryllSwer/status/1531265452831174656" target="_blank" rel="noreferrer noopener">solved</a> much later though</li>
+
+
+
+<li>Strange behaviour where the Linux kernel <a href="https://twitter.com/DaryllSwer/status/1516388176923074565" target="_blank" rel="noreferrer noopener">injects</a> an ‘anycast route’ (which according to the <a href="https://man7.org/linux/man-pages/man8/ip-route.8.html" target="_blank" rel="noreferrer noopener">manual page</a> does not exist) whenever we use ::/64 instead of ::1/64 on a link prefix at the router, to which a Linux host is connected. This results in a loop if the router (::) tries to ping a host that injected this route. It’s my understanding that using ::/64 instead of ::1/64 as a link prefix is perfectly <a href="https://twitter.com/DaryllSwer/status/1516769128862056451" target="_blank" rel="noreferrer noopener">RFC compliant</a></li>
+</ul>
+
+
+
+<figure class="wp-block-image size-full is-resized"><a href="https://www.daryllswer.com/wp-content/uploads/2022/04/image.png"><img loading="lazy" decoding="async" width="1070" height="194" src="https://www.daryllswer.com/wp-content/uploads/2022/04/image.png" alt="" class="wp-image-1305" style="width:645px;height:116px" srcset="https://www.daryllswer.com/wp-content/uploads/2022/04/image.png 1070w, https://www.daryllswer.com/wp-content/uploads/2022/04/image-768x139.png 768w" sizes="auto, (max-width: 1070px) 100vw, 1070px"></a><figcaption class="wp-element-caption">Figure-5 (Route type anycast is not implemented in Linux.)</figcaption></figure>
+
+
+
+<ul class="wp-block-list">
+<li>A <a href="https://twitter.com/DaryllSwer/status/1515246672523440129" target="_blank" rel="noreferrer noopener">small observation</a> on Windows’ default behaviour with IPv6 (Linux can also be configured the same way)</li>
+
+
+
+<li>Certain DDoS/Captcha protection platforms are <a href="https://twitter.com/DaryllSwer/status/1509894472427257863" target="_blank" rel="noreferrer noopener">overly aggressive</a></li>
+
+
+
+<li>An odd observation was made where old routes of AS210777 were still being advertised by AS29075 to its peers long after I withdrew them. This prevented AS210777 from being returned to RIPE as their policies require that an AS and its prefixes must be completely invisible on the public table before being decommissioned. This is possibly caused by a bug in their router(s)</li>
+</ul>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png"><img loading="lazy" decoding="async" width="1920" height="1572" src="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png" alt="" class="wp-image-1357" srcset="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png 1920w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777-1319x1080.png 1319w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777-768x629.png 768w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777-1536x1258.png 1536w" sizes="auto, (max-width: 1920px) 100vw, 1920px"></a><figcaption class="wp-element-caption">Figure-6 (BGPlay showing AS29075 still advertising old routes of AS210777.)</figcaption></figure>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-challenges"><strong>Challenges</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Although running your own AS is cool, fascinating, and cool (did I say that already?), there are challenges that come with it.</p>
+
+
+
+<p class="wp-block-paragraph">Various routing problems can take a lot of time to solve such as when the provider’s upstream (AS9498 in my case) <a href="https://twitter.com/DaryllSwer/status/1509889212207996930" target="_blank" rel="noreferrer noopener">randomly stopped</a> advertising my prefixes, <a href="https://twitter.com/DaryllSwer/status/1506182119114309632" target="_blank" rel="noreferrer noopener">causing route loops</a>, or taking <a href="https://twitter.com/DaryllSwer/status/1520158254269370368" target="_blank" rel="noreferrer noopener">days</a> to accept new prefixes. Also, asymmetric routing can be an issue when ISPs prefer default routes from upstreams instead of partial or full tables.</p>
+
+
+
+<p class="wp-block-paragraph">For all the benefits received by updating the GeoIP data of all your prefixes with all the GeoIP providers, there’s no guarantee that all companies, networks, and organizations will update their cached copy of the various databases for months. For me, this led to an issue where I was unable to establish VoWiFi from my network towards 4G providers such as <a href="https://twitter.com/DaryllSwer/status/1471009238864384001" target="_blank" rel="noreferrer noopener">Reliance Jio</a> and some random sites/services on the Internet refused to load (for months).</p>
+
+
+
+<p class="wp-block-paragraph">Maintaining the RIR membership account is not cheap, and neither is network equipment and power redundancy. I rely heavily on sponsorships from various folk to keep it well funded. Securing physical transit for a non-profit individual is next to impossible without some luck. Even if you’re able to secure it, physical redundancy will be an issue; no provider will sponsor multiple Gigabit links for free to an individual (this could possibly be solved by requesting the provider to provide BGP over PON).</p>
+
+
+
+<h2 class="wp-block-heading"><strong>IPv4 vs IPv6, actual usage</strong></h2>
+
+
+
+<p class="wp-block-paragraph">If we were to look at this from a content (CDN, YouTube, Netflix, and so on) point of view, then around 70% of traffic moves to IPv6 when dual-stacked, but it’s largely video content that drives these statistics. The reality is that a large percentage of non-video, non-content-based sites and applications are still IPv4-only or have broken IPv6 implementation (such as blocked ICMPv6 leading to broken PMTUD), which results in Happy Eyeballs kicking traffic over to IPv4.</p>
+
+
+
+<p class="wp-block-paragraph">You could easily prove/disprove my observations above by completely disabling IPv4 (with no NAT64 or translation mechanisms either) and trying to surf the web. It seems that at least 80% of the web is still lacking proper IPv6 support.</p>
+
+
+
+<p class="wp-block-paragraph">Remember, having AAAA records does not magically mean the end point is IPv6 ready. A major contributing factor to the lack of IPv6 in the world around us, in my opinion, is the big cloud providers like Google, AWS, Azure, and similar. They don’t provide routed /56s (or shorter prefixes) to the LAN side of the virtual machine (VM), which prevents a lot of admins and developers from being able to deploy native IPv6 apps on Docker or similar, where a routed /64 (at least) is needed to make things work natively. This forces the requirement for NAT66 and/or NDP Proxy, which is ugly and defeats the purpose of IPv6, which is to provide end-to-end connectivity without any form of NAT. Only a few niche cloud providers like <a href="https://ungleich.ch/" target="_blank" rel="noreferrer noopener">ungleich.ch</a> provide <a href="https://twitter.com/ungleich/status/1434582206945669123" target="_blank" rel="noreferrer noopener">routed prefixes</a> to the LAN side of the VM. Some cloud providers have decided that implementing a /64 link prefix <a href="https://twitter.com/DaryllSwer/status/1441248662667948037" target="_blank" rel="noreferrer noopener">via SLAAC</a> is a good idea. SLAAC creates problems when the ‘host’ VM is configured to forward packets (We are a router) – Learning the gateway via Router Advertisements (RAs) will require <a href="https://forum.vyos.io/t/ipv6-autoconf-forwarding/2349" target="_blank" rel="noreferrer noopener">some hacking</a>. The /64 is useless as it is a link prefix — If you want to use it you will still need NDP Proxy and/or NAT66.</p>
+
+
+
+<p class="wp-block-paragraph">However, over time I observed IPv6 usage on my personal network increasing and outperforming IPv4. Perhaps these various CDNs and content players store metadata of other ASes that are known to have fully functional IPv6 and redirect/route those networks via IPv6? It’s just a theory.</p>
+
+
+
+<h2 class="wp-block-heading"><strong>Is it worthwhile to run your own AS?</strong></h2>
+
+
+
+<p class="wp-block-paragraph">The answer to this question depends on your perspective. On one hand, running my own AS allowed me to make all these fascinating observations and learn various lessons like how to solve some layer 8/9 problems with routing, latency issues, and how to deal with upstream providers when things break. It also gives me control over the IP address space as it becomes a <a href="https://en.wikipedia.org/wiki/Provider-independent_address_space" target="_blank" rel="noreferrer noopener">provider-independent address</a> space in nature. Since I control the address space, I can also reliably host various stuff from home.</p>
+
+
+
+<h2 class="wp-block-heading"><strong>Future plans</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Networking is a vast field; it is impossible for me to learn and know everything, so the goal is to keep the AS live, keep learning, and keep experimenting. However, I do have one immediate and specific topic to investigate — using jumbo frames on the public Internet (or at least, with peers via bilateral/PNIs/IXPs). A larger frame size means a larger payload, which means the underlying L2 paths require a smaller number of frames to be forwarded and fewer packets to be routed on L3. In theory, this should improve end-to-end performance. I aim to find out how much of a performance improvement the end user really sees.</p>
+
+
+
+<p class="wp-block-paragraph">I currently do not have the capacity to peer/connect with IXPs, but hopefully I’ll be able to test this out and document the process, in the near future.</p>

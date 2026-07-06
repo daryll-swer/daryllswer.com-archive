@@ -1,0 +1,166 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      }
+    ],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      },
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/",
+  "categories": [
+    {
+      "id": 6,
+      "name": "ISP",
+      "slug": "isp-networking",
+      "taxonomy": "category"
+    },
+    {
+      "id": 7,
+      "name": "IXP",
+      "slug": "ixp-networking",
+      "taxonomy": "category"
+    },
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "Explore an interesting observation on the Neighbour Discovery Protocol (NDP) in IPv6, in regard to Neighbour Solicitation and Advertisements.\nContinue readingInteresting IPv6 observation on NDP (Neighbour Discovery Protocol)",
+  "featured_image": {
+    "alt": "",
+    "bytes": 7220368,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 1990,
+    "local_path": "content/posts/2022-12-16-interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/assets/featured.png",
+    "mime_type": "image/png",
+    "role": "featured",
+    "sha256": "471709913897ff1d5239663289085efa645a46514a1b8655a536e263757af4a8",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image.png",
+    "width": 4080
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "1536x1536": {
+      "file": "image-1536x749.png",
+      "filesize": 1285484,
+      "height": 749,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image-1536x749.png",
+      "width": 1536
+    },
+    "2048x2048": {
+      "file": "image-2048x999.png",
+      "filesize": 2128515,
+      "height": 999,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image-2048x999.png",
+      "width": 2048
+    },
+    "full": {
+      "file": "image.png",
+      "height": 1990,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image.png",
+      "width": 4080
+    },
+    "large": {
+      "file": "image-3840x1873.png",
+      "filesize": 6060861,
+      "height": 1873,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image-3840x1873.png",
+      "width": 3840
+    },
+    "medium": {
+      "file": "image-1920x936.png",
+      "filesize": 1889270,
+      "height": 936,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image-1920x936.png",
+      "width": 1920
+    },
+    "medium_large": {
+      "file": "image-768x375.png",
+      "filesize": 361017,
+      "height": 375,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image-768x375.png",
+      "width": 768
+    },
+    "thumbnail": {
+      "file": "image-1280x720.png",
+      "filesize": 1120809,
+      "height": 720,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image-1280x720.png",
+      "width": 1280
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "876d9ab6ce19cba998959811e4aeeb07a47109c7bd1f86ff0e68070f3c6ffd86",
+    "index_md_sha256": "341c6f2bdf6052c664223e7c49a5a811e5ea67dcd8532d9930626752d7d72fc0",
+    "rendered_article_html_sha256": "2b67d8a27df4824b8ffa69952f2f03685a4c105c6caa327b228adbffd5fc8415",
+    "wordpress_post_json_sha256": "3df2643b5bae3ed423cb2100451f48e803dfc84d88965ccb5b07e64c481078b6"
+  },
+  "id": 1674,
+  "modified": "2025-05-21T01:52:10",
+  "published": "2022-12-16T15:04:54",
+  "slug": "interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/1674",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 25,
+      "name": "IPv6",
+      "slug": "ipv6",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 27,
+      "name": "IXPs",
+      "slug": "ixps",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 34,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "Interesting IPv6 observation on NDP (Neighbour Discovery Protocol)",
+  "validation": {
+    "status": "pending"
+  }
+}

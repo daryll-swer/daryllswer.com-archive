@@ -1,0 +1,1065 @@
+{
+  "_archive_filters": [
+    {
+      "filter": "donation_or_support_cta",
+      "redacted": true,
+      "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+      "tag": "h4"
+    }
+  ],
+  "_embedded": {
+    "author": [
+      {
+        "_links": {
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "avatar_urls": {
+          "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+          "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+          "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+        },
+        "description": "Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794",
+        "id": 1,
+        "link": "https://www.daryllswer.com/author/daryll/",
+        "name": "Daryll Swer",
+        "slug": "daryll",
+        "url": "https://www.daryllswer.com/"
+      }
+    ],
+    "replies": [
+      [
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/1204"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/1205",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Move to IPv6 with BCOP-690 for everyone, problem solved for good.</p>\n"
+          },
+          "date": "2024-08-02T11:58:15",
+          "id": 1205,
+          "link": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/#comment-1205",
+          "parent": 1204,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=1204"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/1204",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/b39b58f13bbf9c3a24910b7f6178992d950067200a184eb10f45779218b333ab?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/b39b58f13bbf9c3a24910b7f6178992d950067200a184eb10f45779218b333ab?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/b39b58f13bbf9c3a24910b7f6178992d950067200a184eb10f45779218b333ab?s=96&r=g"
+          },
+          "author_name": "Chris",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>I shared this post at: <a href=\"https://forum.autonomi.community/t/update-1st-august-2024/40178/23?u=chrisfostertv\" rel=\"nofollow ugc\">https://forum.autonomi.community/t/update-1st-august-2024/40178/23?u=chrisfostertv</a></p>\n<p>Were currently Beta testing the upcoming Autonomi network (p2p) and one of the challenges in running nodes from behind a home router is hole punching/ port forwarding.</p>\n<p>Well I followed your advice, went to static IP to bypass CGNAT&#8230;what a difference. Better internet performance and can run nodes without udp port forwarding.</p>\n<p>All the big node runners are using port forwarding with powerful routers and worrying about NAT table entries&#8230;if that could be bypassed..wow.</p>\n<p>Thanks</p>\n<p>Chris</p>\n<p>It&#8217;s got me excited as it could be of great benefit to an autonomous p2p network and also the ISP&#8217;s as well.</p>\n"
+          },
+          "date": "2024-08-02T11:53:15",
+          "id": 1204,
+          "link": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/#comment-1204",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/9",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/0a845583ec6a9ffd2152b53b684dfe095bb19e92b0164a2a5e8275bc8b192205?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/0a845583ec6a9ffd2152b53b684dfe095bb19e92b0164a2a5e8275bc8b192205?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/0a845583ec6a9ffd2152b53b684dfe095bb19e92b0164a2a5e8275bc8b192205?s=96&r=g"
+          },
+          "author_name": "Jorge",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>I&#8217;m sorry, the comment was for the 2 WANs setup post but I pubished it in thr wrong one. Nevertheless, I&#8217;m a TIER3 for saying someway. So I can&#8217;t use LACP/Bonding because our WANs are from different TIER2 ISPs I don&#8217;t have an ASN yet. IPTV services reported are those that aren&#8217;t legal, but customers hire them, so I don&#8217;t have all the info from them like dst-address, ports etc, because everyone use a different setup or change the address every one in a while. I have been monitoring the balancing since August 5th and is working great, still waiting for a WAN to fail to confirm failover because with my previous config I was having an issue with all the marked connections reamining active until shutting down the interface.</p>\n"
+          },
+          "date": "2022-08-10T00:04:29",
+          "id": 9,
+          "link": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/#comment-9",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/7"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/8",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "https://www.daryllswer.com/",
+          "content": {
+            "rendered": "<p>IPTV would be ISP/Unicast specific/Multicast traffic and shouldn&#8217;t be subjected to the load balancing. Create seperate preceding rules for IPTV traffic and ensure it&#8217;s always &#8220;accepted&#8221; before hitting the PCC/Nth rules on the destination IP or port or both. Then you can still use Nth to achieve bandwidth aggregation for everything else.</p>\n<p>If you&#8217;re an ISP you should be using LACP/Bonding.</p>\n"
+          },
+          "date": "2022-08-05T04:35:50",
+          "id": 8,
+          "link": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/#comment-8",
+          "parent": 7,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=7"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/7",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/0a845583ec6a9ffd2152b53b684dfe095bb19e92b0164a2a5e8275bc8b192205?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/0a845583ec6a9ffd2152b53b684dfe095bb19e92b0164a2a5e8275bc8b192205?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/0a845583ec6a9ffd2152b53b684dfe095bb19e92b0164a2a5e8275bc8b192205?s=96&r=g"
+          },
+          "author_name": "Jorge",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Thank you for such a great info. I had PCC configured and was a little different so I decided to try your config, Yesterday I migrate the config to your example. With a few changes like, remove NTH and apply PCC to all ports/protocols with src-address as PCC. If I left the configuration as your example I was having trouble with 3rd party IPTV services. Other than that, is working great.</p>\n"
+          },
+          "date": "2022-08-05T04:29:58",
+          "id": 7,
+          "link": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/#comment-7",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/6",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/67f1c37e255c1d5b1ee2b8b3e188a9c481a23e949d17dd3a73506b5eef266400?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/67f1c37e255c1d5b1ee2b8b3e188a9c481a23e949d17dd3a73506b5eef266400?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/67f1c37e255c1d5b1ee2b8b3e188a9c481a23e949d17dd3a73506b5eef266400?s=96&r=g"
+          },
+          "author_name": "Febrian",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Thank you for the info</p>\n"
+          },
+          "date": "2021-03-27T09:50:41",
+          "id": 6,
+          "link": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/#comment-6",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/4",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/9c3462b868edb144666cc51253e083b6cb6308e4b2d1438405bdde01325394be?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/9c3462b868edb144666cc51253e083b6cb6308e4b2d1438405bdde01325394be?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/9c3462b868edb144666cc51253e083b6cb6308e4b2d1438405bdde01325394be?s=96&r=g"
+          },
+          "author_name": "Rupam",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Informative ..and these form of resources are important for the end users</p>\n"
+          },
+          "date": "2021-03-26T07:47:29",
+          "id": 4,
+          "link": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/#comment-4",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/2"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/3",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com",
+          "content": {
+            "rendered": "<p>No problem man.</p>\n"
+          },
+          "date": "2021-03-25T20:47:25",
+          "id": 3,
+          "link": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/#comment-3",
+          "parent": 2,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=2"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/2",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/a1ec7159ccfde6628be7965df4b82e1f1e61fe6ba146b09a7a50e252a7893a58?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/a1ec7159ccfde6628be7965df4b82e1f1e61fe6ba146b09a7a50e252a7893a58?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/a1ec7159ccfde6628be7965df4b82e1f1e61fe6ba146b09a7a50e252a7893a58?s=96&r=g"
+          },
+          "author_name": "Raajesh",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Well written blog with so much detail. Thanks for the info man</p>\n"
+          },
+          "date": "2021-03-25T20:45:25",
+          "id": 2,
+          "link": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/#comment-2",
+          "parent": 0,
+          "type": "comment"
+        }
+      ]
+    ],
+    "wp:term": [
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=3"
+              }
+            ]
+          },
+          "id": 3,
+          "link": "https://www.daryllswer.com/category/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "category"
+        }
+      ],
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/16",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=16"
+              }
+            ]
+          },
+          "id": 16,
+          "link": "https://www.daryllswer.com/tag/cgnat/",
+          "name": "CGNAT",
+          "slug": "cgnat",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/18",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=18"
+              }
+            ]
+          },
+          "id": 18,
+          "link": "https://www.daryllswer.com/tag/double-nat/",
+          "name": "Double NAT",
+          "slug": "double-nat",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/24",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=24"
+              }
+            ]
+          },
+          "id": 24,
+          "link": "https://www.daryllswer.com/tag/ipv4/",
+          "name": "IPv4",
+          "slug": "ipv4",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/26",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=26"
+              }
+            ]
+          },
+          "id": 26,
+          "link": "https://www.daryllswer.com/tag/isps/",
+          "name": "ISPs",
+          "slug": "isps",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/33",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=33"
+              }
+            ]
+          },
+          "id": 33,
+          "link": "https://www.daryllswer.com/tag/nat/",
+          "name": "NAT",
+          "slug": "nat",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/34",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=34"
+              }
+            ]
+          },
+          "id": 34,
+          "link": "https://www.daryllswer.com/tag/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "post_tag"
+        }
+      ]
+    ]
+  },
+  "_links": {
+    "about": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/types/post"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts"
+      }
+    ],
+    "curies": [
+      {
+        "href": "https://api.w.org/{rel}",
+        "name": "wp",
+        "templated": true
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=29"
+      }
+    ],
+    "self": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
+        "targetHints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      }
+    ],
+    "version-history": [
+      {
+        "count": 0,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29/revisions"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=29"
+      }
+    ],
+    "wp:term": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/categories?post=29",
+        "taxonomy": "category"
+      },
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/tags?post=29",
+        "taxonomy": "post_tag"
+      }
+    ]
+  },
+  "author": 1,
+  "categories": [
+    3
+  ],
+  "class_list": [
+    "post-29",
+    "post",
+    "type-post",
+    "status-publish",
+    "format-standard",
+    "hentry",
+    "category-networking",
+    "tag-cgnat",
+    "tag-double-nat",
+    "tag-ipv4",
+    "tag-isps",
+    "tag-nat",
+    "tag-networking",
+    "ratio-natural",
+    "entry"
+  ],
+  "comment_status": "open",
+  "content": {
+    "protected": false,
+    "rendered": "<blockquote class=\"wp-block-quote is-layout-flow wp-block-quote-is-layout-flow\">\n<p class=\"wp-block-paragraph\"><strong>2025 update <a href=\"https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/\">here</a>.</strong></p>\n</blockquote>\n\n\n\n<p class=\"wp-block-paragraph\">This article will mostly focus on the cons of deploying CGNAT and how it ultimately affects the end-user, and what are some of the methods that we can use to improve it.</p>\n\n\n\n<p class=\"wp-block-paragraph\">A quick recap on CGNAT, CGNAT is just a fancy name for NAT whereby an ISP will NAT or map multiple internal IPs (usually the ISP will incorrectly use <a href=\"https://www.rfc-editor.org/rfc/rfc1918\" target=\"_blank\" rel=\"noreferrer noopener\">RFC1918</a>, but ideally should use <a href=\"https://datatracker.ietf.org/doc/html/rfc6598\" target=\"_blank\" rel=\"noreferrer noopener\">RFC6598</a>) to a single external public IP, i.e., enabling a single public IP to be shared among n number of internal IPs, where each internal IP is assigned to an end-user. Methods used can vary from ISP to ISP, some would just use single source NATs, some would use deterministic NAT etc.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-shortcomings\">Shortcomings</h2>\n\n\n\n<ol class=\"wp-block-list\">\n<li>Breaks P2P traffic.</li>\n\n\n\n<li>Increases latency (due to TURN).</li>\n\n\n\n<li>It leads to NAT-keep alive traffic (such as NAT punching, NAT traversal mechanisms etc) on end-users’ local network as well as on the CGNAT device itself.\n<ol class=\"wp-block-list\">\n<li>Which in theory could affect battery life on end-user devices.</li>\n\n\n\n<li>Increased link utilisation/CPU cycles on the CGNAT device.</li>\n</ol>\n</li>\n\n\n\n<li>Some end-user applications will simply refuse to work or fail miserably like Xbox Networking (P2P Gaming services), Torrent clients etc.</li>\n\n\n\n<li>Lacks NAT traversal mechanisms/port forwarding (by default).</li>\n</ol>\n\n\n\n<p class=\"wp-block-paragraph\">Now the IETF published <a href=\"https://tools.ietf.org/html/rfc7021\" target=\"_blank\" rel=\"noreferrer noopener\">RFC 7021</a> in 2013 which details how CGNAT impacts networking performance and end-user experience, if you want technically backed data and testing methodologies please check that out.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-workarounds\">Workarounds</h2>\n\n\n\n<p class=\"wp-block-paragraph\">There are two broad ways to workaround CGNAT cons:</p>\n\n\n\n<h3 class=\"wp-block-heading\">At ISP Level</h3>\n\n\n\n<ol class=\"wp-block-list\">\n<li>Do the obvious and <a href=\"https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/\" target=\"_blank\" rel=\"noreferrer noopener\">deploy IPv6</a>.\n<ul class=\"wp-block-list\">\n<li>Once IPv6 is deployed, I recommend you remove CGNAT from the network and migrate to <a href=\"https://www.ripe.net/participate/meetings/open-house/presentations/richard-patterson-sky-italia-and-map-t\" target=\"_blank\" rel=\"noreferrer noopener\">MAP-T</a> in conjunction with point number 2 below.</li>\n</ul>\n</li>\n\n\n\n<li>Ensure your CGNAT vendor/configuration is complying with <a href=\"https://www.juniper.net/documentation/us/en/software/junos/interfaces-next-gen-services/topics/concept/app-eim-overview.html#address-pooling-and-endpoint-independent-mapping-for-port-translation__d17021e54\" target=\"_blank\" rel=\"noreferrer noopener\">Endpoint Independent Mapping/Endpoint Independent Filtering</a> (EIM-NAT). By doing so, you are ensuring that P2P (end-to-end) IPv4 traffic for your customers behind CGNAT will still work, this is the best solution short of migrating 100% to IPv6.\n<ul class=\"wp-block-list\">\n<li>For MikroTik follow the CGNAT section(s) <a href=\"https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/\" target=\"_blank\" rel=\"noreferrer noopener\">here</a>—Though MikroTik added support for EIM-NAT since RouterOS v7.10, in my testing, it is broken and not up to the mark, hence the original netmap method is still relevant in the article.</li>\n</ul>\n</li>\n\n\n\n<li>Ensure <a href=\"https://datatracker.ietf.org/doc/html/rfc4787.html#section-6\" target=\"_blank\" rel=\"noreferrer noopener\">Hairpinning</a> is enabled on the CGNAT software.</li>\n\n\n\n<li>Deploy Port Control Protocol [PCP (<a href=\"https://tools.ietf.org/html/rfc6887\" target=\"_blank\" rel=\"noreferrer noopener\">RFC 6887</a>)].\n<ul class=\"wp-block-list\">\n<li>PCP would allow port forwarding to work for end-users behind a CGNAT and hence improve their experience and reduce the visibility of the shortcomings.</li>\n\n\n\n<li>Needs a Server/Client model, so a client would need to run on end-user’s router/CPE.\n<ul class=\"wp-block-list\">\n<li>Can use OpenWRT with <a href=\"https://github.com/fingon/minimalist-pcproxy\" target=\"_blank\" rel=\"noreferrer noopener\">minimalist-pcproxy</a> to enable PCP client and PCP connectivity from end-users’ side for a cheap solution.</li>\n</ul>\n</li>\n\n\n\n<li>Many vendors like MikroTik (most widely used as a CGNAT device among Indian ISPs) do not support PCP.</li>\n\n\n\n<li>Lack of awareness among ISPs and network engineers.</li>\n\n\n\n<li>You can also have a <a href=\"https://danosproject.atlassian.net/wiki/spaces/DAN/pages/421101573/CGNAT+and+PCP#Introduction\" target=\"_blank\" rel=\"noreferrer noopener\">web dashboard</a> for PCP to permit users to assign their own ports.</li>\n</ul>\n</li>\n</ol>\n\n\n\n<h3 class=\"wp-block-heading\">At End User Level</h3>\n\n\n\n<ol class=\"wp-block-list\">\n<li>Ask your ISP to read this article, tell them to deploy Full-Cone NAT and EIM-NAT configuration on their CGNAT box.</li>\n\n\n\n<li>Get a public IP from your ISP (most optimal solution).</li>\n\n\n\n<li>VPN based solution where you route all traffic over the tunnel, including multicast traffic (UPnP).\n<ul class=\"wp-block-list\">\n<li>Many third party platforms exist such as Tailscale, ZeroTier etc.</li>\n\n\n\n<li>Set up your own VPN/VPS on a Cloud instance with public IP, and then run a VPN client on your home router/client device.</li>\n</ul>\n</li>\n</ol>\n\n\n\n<h2 class=\"wp-block-heading\">Conclusion</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Even if you properly configured CGNAT with full cone + EIM-NAT, it is still only a plaster solution. The proper solution is to migrate 100% to IPv6, and ensure IPv6 best practices are followed to the letter.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Additionally, for both ISPs and end-users, you can test the quality of your NAT44 (NAT) or NAT444 (CGNAT) configuration using this <a href=\"https://github.com/HMBSbige/NatTypeTester\" target=\"_blank\" rel=\"noreferrer noopener\">tool</a>. If you see EIM-NAT and Full-Cone, then your IPv4 P2P networking will work fine, until you migrate fully to IPv6.</p>\n"
+  },
+  "date": "2021-03-25T11:15:43",
+  "date_gmt": "2021-03-25T11:15:43",
+  "excerpt": {
+    "protected": false,
+    "rendered": "<p>An article on the limitations of CGNAT and what can be done to work around them.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/\">Continue reading<span class=\"screen-reader-text\">Shortcomings of CGNAT and Potential Workarounds</span></a></div>\n"
+  },
+  "featured_media": 0,
+  "format": "standard",
+  "guid": {
+    "rendered": "http://daryllswer.com/?p=29"
+  },
+  "id": 29,
+  "jetpack-related-posts": [
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "22 April 2025",
+      "excerpt": "Yet another blog article on IPv4, NAT, CGNAT, Hairpinning and native IPv6.",
+      "format": false,
+      "id": 5018,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Let&#8217;s talk about CGNAT and IPv6, yet again.",
+      "url": "https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/",
+      "url_meta": {
+        "origin": 29,
+        "position": 0
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "28 March 2021",
+      "excerpt": "An article on Multi-WAN setups using consumer-grade ISPs.",
+      "format": false,
+      "id": 66,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Multi-WAN setups with retail ISPs (Part 1 &#8211; Theory)",
+      "url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/",
+      "url_meta": {
+        "origin": 29,
+        "position": 1
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "1 July 2022",
+      "excerpt": "An article about setting up an Autonomous System (AS) from scratch.",
+      "format": false,
+      "id": 970,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=700%2C400&ssl=1 2x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How did I set up my own Autonomous System?",
+      "url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/",
+      "url_meta": {
+        "origin": 29,
+        "position": 2
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "8 June 2021",
+      "excerpt": "A best practices guide for engineers looking to improve network performance, security, and consistency using MikroTik for edge routers and BNG.",
+      "format": false,
+      "id": 269,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Edge Router &#038; BNG Optimisation Guide for ISPs",
+      "url": "https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/",
+      "url_meta": {
+        "origin": 29,
+        "position": 3
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "29 March 2021",
+      "excerpt": "An article on deploying Multi-WAN using RouterOS.",
+      "format": false,
+      "id": 115,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]",
+      "url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/",
+      "url_meta": {
+        "origin": 29,
+        "position": 4
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/architecture/",
+        "text": "Architecture"
+      },
+      "classes": [],
+      "context": "In &quot;Architecture&quot;",
+      "date": "12 November 2024",
+      "excerpt": "How to design OOB networks for ISPs, inspired by data centre networking.",
+      "format": false,
+      "id": 2931,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Out-of-Band Network Design for Service Provider Networks",
+      "url": "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/",
+      "url_meta": {
+        "origin": 29,
+        "position": 5
+      }
+    }
+  ],
+  "jetpack_featured_media_url": "",
+  "jetpack_sharing_enabled": true,
+  "link": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
+  "meta": {
+    "_jetpack_dont_email_post_to_subs": false,
+    "_jetpack_feature_clip_id": 0,
+    "_jetpack_memberships_contains_paid_content": false,
+    "_jetpack_memberships_contains_paywalled_content": false,
+    "_jetpack_newsletter_access": "",
+    "_jetpack_newsletter_tier_id": 0,
+    "footnotes": "",
+    "jetpack_post_was_ever_published": false
+  },
+  "modified": "2025-09-28T03:24:17",
+  "modified_gmt": "2025-09-27T21:54:17",
+  "ping_status": "open",
+  "slug": "shortcomings-of-cgnat-and-potential-work-arounds",
+  "status": "publish",
+  "sticky": false,
+  "tags": [
+    16,
+    18,
+    24,
+    26,
+    33,
+    34
+  ],
+  "template": "",
+  "title": {
+    "rendered": "Shortcomings of CGNAT and Potential Workarounds"
+  },
+  "type": "post"
+}

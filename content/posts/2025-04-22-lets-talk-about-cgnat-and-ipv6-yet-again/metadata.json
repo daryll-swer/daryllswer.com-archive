@@ -1,0 +1,143 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/",
+  "categories": [
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "Yet another blog article on IPv4, NAT, CGNAT, Hairpinning and native IPv6.\nContinue readingLet’s talk about CGNAT and IPv6, yet again.",
+  "featured_image": {
+    "alt": "",
+    "bytes": 189397,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 1050,
+    "local_path": "content/posts/2025-04-22-lets-talk-about-cgnat-and-ipv6-yet-again/assets/featured.png",
+    "mime_type": "image/png",
+    "role": "featured",
+    "sha256": "e810ea40caccf16fe2eb236db34d6461b117299e3b1a48b07f7e4f0db03f2e54",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png",
+    "width": 2000
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "1536x1536": {
+      "file": "NAT_Mess-1536x806.png",
+      "filesize": 82992,
+      "height": 806,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess-1536x806.png",
+      "width": 1536
+    },
+    "full": {
+      "file": "NAT_Mess.png",
+      "height": 1050,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png",
+      "width": 2000
+    },
+    "medium_large": {
+      "file": "NAT_Mess-768x403.png",
+      "filesize": 35757,
+      "height": 403,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess-768x403.png",
+      "width": 768
+    },
+    "thumbnail": {
+      "file": "NAT_Mess-1920x1008.png",
+      "filesize": 106168,
+      "height": 1008,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess-1920x1008.png",
+      "width": 1920
+    },
+    "widget-thumbnail": {
+      "file": "NAT_Mess-75x75.png",
+      "filesize": 2415,
+      "height": 75,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess-75x75.png",
+      "width": 75
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "ba56319fb5d2722aae5d4d96e6dc12ee2264c1bdfc68849e931b9e5e1221a54b",
+    "index_md_sha256": "b34be8579324ea018f798dd68ec7a3c11a61b1ee1442cfec1d37401f07c8df2a",
+    "rendered_article_html_sha256": "7c2fd374118ea66ac4cc00e7cfde1c5dae67727cda85cb5a93856bf8f24e39ac",
+    "wordpress_post_json_sha256": "f4e4c4d9ffdd8e38e8c3f0de219ffa1a287a0afe3cf44e0167b20781a62f409c"
+  },
+  "id": 5018,
+  "modified": "2026-06-06T17:45:08",
+  "published": "2025-04-22T15:54:09",
+  "slug": "lets-talk-about-cgnat-and-ipv6-yet-again",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/5018",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 16,
+      "name": "CGNAT",
+      "slug": "cgnat",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 18,
+      "name": "Double NAT",
+      "slug": "double-nat",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 24,
+      "name": "IPv4",
+      "slug": "ipv4",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 25,
+      "name": "IPv6",
+      "slug": "ipv6",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 26,
+      "name": "ISPs",
+      "slug": "isps",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 34,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "Let’s talk about CGNAT and IPv6, yet again.",
+  "validation": {
+    "status": "pending"
+  }
+}

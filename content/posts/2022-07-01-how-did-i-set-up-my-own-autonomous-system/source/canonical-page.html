@@ -1,0 +1,968 @@
+<html lang="en-GB">
+
+<head>
+	<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="template" content="Author 1.57">
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v27.7 (Yoast SEO v27.9) - https://yoast.com/product/yoast-seo-premium-wordpress/ -->
+	<title>How did I set up my own Autonomous System? – Daryll Swer</title>
+	<meta name="description" content="An article about setting up an Autonomous System (AS) from scratch.">
+	<link rel="canonical" href="https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/">
+	<meta property="og:locale" content="en_GB">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="How did I set up my own Autonomous System? – Daryll Swer">
+	<meta property="og:description" content="An article about setting up an Autonomous System (AS) from scratch.">
+	<meta property="og:url" content="https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/">
+	<meta property="og:site_name" content="Daryll Swer">
+	<meta property="article:published_time" content="2022-07-01T05:57:21+00:00">
+	<meta property="article:modified_time" content="2025-06-23T15:11:31+00:00">
+	<meta property="og:image" content="https://www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png">
+	<meta property="og:image:width" content="768">
+	<meta property="og:image:height" content="280">
+	<meta property="og:image:type" content="image/png">
+	<meta name="author" content="Daryll Swer">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:creator" content="@DaryllSwer">
+	<meta name="twitter:site" content="@DaryllSwer">
+	<meta name="twitter:label1" content="Written by">
+	<meta name="twitter:data1" content="Daryll Swer">
+	<meta name="twitter:label2" content="Estimated reading time">
+	<meta name="twitter:data2" content="1 minute">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https:\/\/schema.org","@graph":[{"@type":"TechArticle","@id":"https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/#article","isPartOf":{"@id":"https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/"},"author":{"name":"Daryll Swer","@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"headline":"How did I set up my own Autonomous System?","datePublished":"2022-07-01T05:57:21+00:00","dateModified":"2025-06-23T15:11:31+00:00","mainEntityOfPage":{"@id":"https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/"},"wordCount":3755,"commentCount":1,"publisher":{"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"image":{"@id":"https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/#primaryimage"},"thumbnailUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2022\/06\/AS-Cropped.png","keywords":["AS","ASN","Autonomous System","Geofeed","GeoIP","IP Geolocation","Networking","RFC8805"],"articleSection":["Networking"],"inLanguage":"en-GB","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/#respond"]}]},{"@type":"WebPage","@id":"https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/","url":"https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/","name":"How did I set up my own Autonomous System? &#8211; Daryll Swer","isPartOf":{"@id":"https:\/\/www.daryllswer.com\/#website"},"primaryImageOfPage":{"@id":"https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/#primaryimage"},"image":{"@id":"https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/#primaryimage"},"thumbnailUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2022\/06\/AS-Cropped.png","datePublished":"2022-07-01T05:57:21+00:00","dateModified":"2025-06-23T15:11:31+00:00","description":"An article about setting up an Autonomous System (AS) from scratch.","breadcrumb":{"@id":"https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/#breadcrumb"},"inLanguage":"en-GB","potentialAction":[{"@type":"ReadAction","target":["https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/"]}]},{"@type":"ImageObject","inLanguage":"en-GB","@id":"https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/#primaryimage","url":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2022\/06\/AS-Cropped.png","contentUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2022\/06\/AS-Cropped.png","width":768,"height":280},{"@type":"BreadcrumbList","@id":"https:\/\/www.daryllswer.com\/how-did-i-set-up-my-own-autonomous-system\/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https:\/\/www.daryllswer.com\/"},{"@type":"ListItem","position":2,"name":"How did I set up my own Autonomous System?"}]},{"@type":"WebSite","@id":"https:\/\/www.daryllswer.com\/#website","url":"https:\/\/www.daryllswer.com\/","name":"Daryll Swer","description":"Networking Defined","publisher":{"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"alternateName":"DS","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https:\/\/www.daryllswer.com\/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-GB"},{"@type":["Person","Organization"],"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076","name":"Daryll Swer","image":{"@type":"ImageObject","inLanguage":"en-GB","@id":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","url":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","contentUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","width":512,"height":512,"caption":"Daryll Swer"},"logo":{"@id":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg"},"description":"Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794","sameAs":["https:\/\/www.daryllswer.com\/","https:\/\/www.linkedin.com\/in\/daryllswer\/","https:\/\/x.com\/DaryllSwer"],"honorificPrefix":"Mr","gender":"male","knowsAbout":["Network engineering","IPv6","BGP","SR-MPLS","VXLAN","EVPN","OOB"],"knowsLanguage":["English","Khasi"],"jobTitle":"Principal Consultant, Proprietor","worksFor":"Swer Networks","publishingPrinciples":"https:\/\/www.daryllswer.com\/about\/","ownershipFundingInfo":"https:\/\/www.daryllswer.com\/donation\/"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel="dns-prefetch" href="//cdn.visibilitykit.ai">
+<link rel="dns-prefetch" href="//www.googletagmanager.com">
+<link rel="dns-prefetch" href="//stats.wp.com">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » Feed" href="https://www.daryllswer.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » Comments Feed" href="https://www.daryllswer.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » How did I set up my own Autonomous System? Comments Feed" href="https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/feed/">
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://www.daryllswer.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.daryllswer.com%2Fhow-did-i-set-up-my-own-autonomous-system%2F">
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://www.daryllswer.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.daryllswer.com%2Fhow-did-i-set-up-my-own-autonomous-system%2F&amp;format=xml">
+
+<link data-optimized="2" rel="stylesheet" href="https://www.daryllswer.com/wp-content/litespeed/css/aa8bbfa2ba923caee1903dc7915c1e34.css?ver=f1577">
+
+
+
+
+
+
+<style id="wp-block-image-inline-css">
+.wp-block-image>a,.wp-block-image>figure>a{display:inline-block}.wp-block-image img{box-sizing:border-box;height:auto;max-width:100%;vertical-align:bottom}@media not (prefers-reduced-motion){.wp-block-image img.hide{visibility:hidden}.wp-block-image img.show{animation:show-content-image .4s}}.wp-block-image[style*=border-radius] img,.wp-block-image[style*=border-radius]>a{border-radius:inherit}.wp-block-image.has-custom-border img{box-sizing:border-box}.wp-block-image.aligncenter{text-align:center}.wp-block-image.alignfull>a,.wp-block-image.alignwide>a{width:100%}.wp-block-image.alignfull img,.wp-block-image.alignwide img{height:auto;width:100%}.wp-block-image .aligncenter,.wp-block-image .alignleft,.wp-block-image .alignright,.wp-block-image.aligncenter,.wp-block-image.alignleft,.wp-block-image.alignright{display:table}.wp-block-image .aligncenter>figcaption,.wp-block-image .alignleft>figcaption,.wp-block-image .alignright>figcaption,.wp-block-image.aligncenter>figcaption,.wp-block-image.alignleft>figcaption,.wp-block-image.alignright>figcaption{caption-side:bottom;display:table-caption}.wp-block-image .alignleft{float:left;margin:.5em 1em .5em 0}.wp-block-image .alignright{float:right;margin:.5em 0 .5em 1em}.wp-block-image .aligncenter{margin-left:auto;margin-right:auto}.wp-block-image :where(figcaption){margin-bottom:1em;margin-top:.5em}.wp-block-image.is-style-circle-mask img{border-radius:9999px}@supports ((-webkit-mask-image:none) or (mask-image:none)) or (-webkit-mask-image:none){.wp-block-image.is-style-circle-mask img{border-radius:0;-webkit-mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-mode:alpha;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain}}:root :where(.wp-block-image.is-style-rounded img,.wp-block-image .is-style-rounded img){border-radius:9999px}.wp-block-image figure{margin:0}.wp-lightbox-container{display:flex;flex-direction:column;position:relative}.wp-lightbox-container img{cursor:zoom-in}.wp-lightbox-container img:hover+button{opacity:1}.wp-lightbox-container button{align-items:center;backdrop-filter:blur(16px) saturate(180%);background-color:#5a5a5a40;border:none;border-radius:4px;cursor:zoom-in;display:flex;height:20px;justify-content:center;opacity:0;padding:0;position:absolute;right:16px;text-align:center;top:16px;width:20px;z-index:100}@media not (prefers-reduced-motion){.wp-lightbox-container button{transition:opacity .2s ease}}.wp-lightbox-container button:focus-visible{outline:3px auto #5a5a5a40;outline:3px auto -webkit-focus-ring-color;outline-offset:3px}.wp-lightbox-container button:hover{cursor:pointer;opacity:1}.wp-lightbox-container button:focus{opacity:1}.wp-lightbox-container button:focus,.wp-lightbox-container button:hover,.wp-lightbox-container button:not(:hover):not(:active):not(.has-background){background-color:#5a5a5a40;border:none}.wp-lightbox-overlay{box-sizing:border-box;cursor:zoom-out;height:100vh;left:0;overflow:hidden;position:fixed;top:0;visibility:hidden;width:100%;z-index:100000}.wp-lightbox-overlay .wp-lightbox-close-button{align-items:center;cursor:pointer;display:flex;font-family:inherit;gap:8px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 4px;position:absolute;right:calc(env(safe-area-inset-right) + 16px);top:calc(env(safe-area-inset-top) + 16px);z-index:5000000}.wp-lightbox-overlay .wp-lightbox-close-button:focus,.wp-lightbox-overlay .wp-lightbox-close-button:hover,.wp-lightbox-overlay .wp-lightbox-close-button:not(:hover):not(:active):not(.has-background){background:none;border:none}.wp-lightbox-overlay .wp-lightbox-close-button:has(.wp-lightbox-close-text:not([hidden])) .wp-lightbox-close-icon svg{height:1em;width:1em}.wp-lightbox-overlay .wp-lightbox-close-icon svg{display:block}.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{align-items:center;bottom:16px;cursor:pointer;display:flex;font-family:inherit;gap:4px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 8px;position:absolute;z-index:2000002}.wp-lightbox-overlay .wp-lightbox-navigation-button-next[hidden],.wp-lightbox-overlay .wp-lightbox-navigation-button-prev[hidden]{display:none}@media (min-width:960px){.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{bottom:50%;transform:translateY(-50%)}}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:not(:hover):not(:active):not(.has-background),.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:not(:hover):not(:active):not(.has-background){background:none;border:none;padding:0 8px}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg{display:block;height:1.5em;width:1.5em}.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{left:calc(env(safe-area-inset-left) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-button-next{right:calc(env(safe-area-inset-right) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-icon svg{vertical-align:middle}.wp-lightbox-overlay .lightbox-image-container{height:var(--wp--lightbox-container-height);left:50%;overflow:hidden;position:absolute;top:50%;transform:translate(-50%,-50%);transform-origin:top left;width:var(--wp--lightbox-container-width);z-index:2000001}.wp-lightbox-overlay .wp-block-image{align-items:center;box-sizing:border-box;display:flex;height:100%;justify-content:center;margin:0;position:relative;transform-origin:0 0;width:100%;z-index:3000000}.wp-lightbox-overlay .wp-block-image img{height:var(--wp--lightbox-image-height);min-height:var(--wp--lightbox-image-height);min-width:var(--wp--lightbox-image-width);width:var(--wp--lightbox-image-width)}.wp-lightbox-overlay .wp-block-image figcaption{display:none}.wp-lightbox-overlay button{background:none;border:none}.wp-lightbox-overlay .scrim{background-color:#fff;height:100%;opacity:.9;position:absolute;width:100%;z-index:2000000}.wp-lightbox-overlay.active{visibility:visible}@media not (prefers-reduced-motion){.wp-lightbox-overlay.active{animation:turn-on-visibility .25s both}.wp-lightbox-overlay.active img{animation:turn-on-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active){animation:turn-off-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active) img{animation:turn-off-visibility .25s both}.wp-lightbox-overlay.zoom.active{animation:none;opacity:1;visibility:visible}.wp-lightbox-overlay.zoom.active .lightbox-image-container{animation:lightbox-zoom-in .4s}.wp-lightbox-overlay.zoom.active .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.active .scrim{animation:turn-on-visibility .4s forwards}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active){animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container{animation:lightbox-zoom-out .4s}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .scrim{animation:turn-off-visibility .4s forwards}}@keyframes show-content-image{0%{visibility:hidden}99%{visibility:hidden}to{visibility:visible}}@keyframes turn-on-visibility{0%{opacity:0}to{opacity:1}}@keyframes turn-off-visibility{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes lightbox-zoom-in{0%{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale))}to{transform:translate(-50%,-50%) scale(1)}}@keyframes lightbox-zoom-out{0%{transform:translate(-50%,-50%) scale(1);visibility:visible}99%{visibility:visible}to{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale));visibility:hidden}}
+/*# sourceURL=https://www.daryllswer.com/wp-includes/blocks/image/style.min.css */
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script data-optimized="1" id="jetpack_related-posts-js-extra">var related_posts_js_options={"post_heading":"h4"}</script>
+<script data-optimized="1" id="jetpack_related-posts-js" src="https://www.daryllswer.com/wp-content/litespeed/js/60629040d2f510e5c7bdf76819bb22ad.js?ver=75fcb"></script>
+<script id="jquery-core-js" src="https://www.daryllswer.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
+<script data-optimized="1" id="jquery-migrate-js" src="https://www.daryllswer.com/wp-content/litespeed/js/a0480947b50373b63214f29230694166.js?ver=aaa43"></script>
+<script data-optimized="1" id="simple-banner-script-js-before">const simpleBannerScriptParams={"pro_version_enabled":"","debug_mode":"","id":970,"version":"3.3.0","banner_params":[{"hide_simple_banner":"no","simple_banner_prepend_element":"body","simple_banner_position":"fixed","header_margin":"","header_padding":"","wp_body_open_enabled":"","wp_body_open":!0,"simple_banner_z_index":"","simple_banner_text":"For professional services, <a href=\"https:\/\/www.swernetworks.com\/\">click here<\/a>.","disabled_on_current_page":!1,"disabled_pages_array":[],"is_current_page_a_post":!0,"disabled_on_posts":"","simple_banner_disabled_page_paths":"","simple_banner_font_size":"","simple_banner_color":"#242526","simple_banner_text_color":"#ffffff","simple_banner_link_color":"#ffa500","simple_banner_close_color":"#242526","simple_banner_custom_css":"","simple_banner_scrolling_custom_css":"","simple_banner_text_custom_css":"","simple_banner_button_css":"","site_custom_css":"","keep_site_custom_css":"","site_custom_js":"","keep_site_custom_js":"","close_button_enabled":"on","close_button_expiration":"0.006944","close_button_cookie_set":!1,"current_date":{"date":"2026-07-05 18:22:24.940831","timezone_type":3,"timezone":"UTC"},"start_date":{"date":"2026-07-05 18:22:24.940838","timezone_type":3,"timezone":"UTC"},"end_date":{"date":"2026-07-05 18:22:24.940843","timezone_type":3,"timezone":"UTC"},"simple_banner_start_after_date":"","simple_banner_remove_after_date":"","simple_banner_insert_inside_element":""}]}</script>
+<script data-optimized="1" id="simple-banner-script-js" src="https://www.daryllswer.com/wp-content/litespeed/js/cc310f2289e8048ba2a726edebe8b939.js?ver=c906a"></script>
+
+<!-- Google tag (gtag.js) snippet added by Site Kit -->
+<!-- Google Analytics snippet added by Site Kit -->
+<script id="google_gtagjs-js" src="https://www.googletagmanager.com/gtag/js?id=G-PQZ28ELT4T" async></script>
+<script id="google_gtagjs-js-after">
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag("set","linker",{"domains":["www.daryllswer.com"]});
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "G-PQZ28ELT4T", {"googlesitekit_post_type":"post","googlesitekit_post_categories":"Networking","googlesitekit_post_date":"20220701"});
+ window._googlesitekit = window._googlesitekit || {}; window._googlesitekit.throttledEvents = []; window._googlesitekit.gtagEvent = (name, data) => { var key = JSON.stringify( { name, data } ); if ( !! window._googlesitekit.throttledEvents[ key ] ) { return; } window._googlesitekit.throttledEvents[ key ] = true; setTimeout( () => { delete window._googlesitekit.throttledEvents[ key ]; }, 5 ); gtag( "event", name, { ...data, event_source: "site-kit" } ); }; 
+//# sourceURL=google_gtagjs-js-after
+</script>
+<link rel="https://api.w.org/" href="https://www.daryllswer.com/wp-json/"><link rel="alternate" title="JSON" type="application/json" href="https://www.daryllswer.com/wp-json/wp/v2/posts/970"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.daryllswer.com/xmlrpc.php?rsd">
+
+<link rel="shortlink" href="https://www.daryllswer.com/?p=970">
+<meta name="generator" content="Site Kit by Google 1.182.0"><style id="simple-banner-site-custom-css-dummy" type="text/css"></style><script id="simple-banner-site-custom-js-dummy" type="text/javascript"></script>	
+		<link rel="llms-sitemap" href="https://www.daryllswer.com/llms.txt">
+<link rel="icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-32x32.png" sizes="32x32">
+<link rel="icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-180x180.png">
+<meta name="msapplication-TileImage" content="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-270x270.png">
+
+
+
+</head>
+
+<body id="author" class="wp-singular post-template-default single single-post postid-970 single-format-standard wp-theme-author singular singular-post singular-post-970">
+			<a class="skip-content" href="#main">Skip to content</a>
+		<div id="overflow-container" class="overflow-container">
+			<div class="max-width">
+				<div id="main-sidebar" class="main-sidebar">
+																<header class="site-header" id="site-header" role="banner">
+							<div id="title-container" class="title-container">
+																	<div id="site-avatar" class="site-avatar" style="background-image: url('https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g')"></div>
+																<div class="container">
+									<div id="site-title" class="site-title"><a href="https://www.daryllswer.com">Daryll Swer</a></div>									<p class="tagline">Networking Defined</p>								</div>
+							</div>
+							<button id="toggle-navigation" class="toggle-navigation" aria-expanded="false">
+								<span class="screen-reader-text">open primary menu</span>
+								<i class="fas fa-bars"></i>
+							</button>
+							<div class="social-media-icons"><ul>						<li>
+							<a class="twitter" target="_blank" href="https://x.com/daryllswer">
+								<i class="fab fa-square-x-twitter"></i>
+								<span class="screen-reader-text">twitter</span>
+															</a>
+						</li>
+												<li>
+							<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/daryllswer/">
+								<i class="fab fa-linkedin"></i>
+								<span class="screen-reader-text">linkedin</span>
+															</a>
+						</li>
+												<li>
+							<a class="rss" target="_blank" href="http://daryllswer.com/feed/">
+								<i class="fas fa-rss"></i>
+								<span class="screen-reader-text">rss</span>
+															</a>
+						</li>
+												<li>
+							<a class="telegram" target="_blank" href="https://t.me/NetworkOpsCentral">
+								<i class="fab fa-telegram"></i>
+								<span class="screen-reader-text">telegram</span>
+															</a>
+						</li>
+						</ul></div>							<div id="menu-primary" class="menu-container menu-primary" role="navigation">
+	<nav class="menu"><ul id="menu-primary-items" class="menu-primary-items"><li id="menu-item-2228" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2228"><a href="https://www.daryllswer.com/about/">About</a></li>
+<li id="menu-item-2229" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2229"><a href="https://www.daryllswer.com/contact/">Contact</a></li>
+<li id="menu-item-2187" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2187"><a href="https://www.daryllswer.com/as149794/">AS149794</a></li>
+<li id="menu-item-2186" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2186"><a href="https://www.daryllswer.com/geofeed/">Geofeed</a></li>
+</ul></nav></div>						</header>
+																<aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+		<h1 class="screen-reader-text">Sidebar</h1>
+		<section id="block-8" class="widget widget_block widget_search"><form role="search" method="get" action="https://www.daryllswer.com/" class="wp-block-search__button-outside wp-block-search__icon-button wp-block-search"><label class="wp-block-search__label screen-reader-text" for="wp-block-search__input-1">Search</label><div class="wp-block-search__inside-wrapper"><input class="wp-block-search__input" id="wp-block-search__input-1" placeholder="Search" value="" type="search" name="s" required><button aria-label="Search" class="wp-block-search__button has-background has-icon wp-element-button" type="submit" style="background-color: #c9c9c9"><svg class="search-icon" viewbox="0 0 24 24" width="24" height="24">
+					<path d="M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"></path>
+				</svg></button></div></form></section><section id="block-34" class="widget widget_block">	<div class="wp-block-jetpack-subscriptions__supports-newline wp-block-jetpack-subscriptions__use-newline is-style-split wp-block-jetpack-subscriptions">
+		<div class="wp-block-jetpack-subscriptions__container is-not-subscriber">
+							<form action="https://wordpress.com/email-subscriptions" method="post" accept-charset="utf-8" data-blog="191168008" data-post_access_level="everybody" data-subscriber_email="" id="subscribe-blog">
+					<div class="wp-block-jetpack-subscriptions__form-elements">
+												<p id="subscribe-email">
+							<label id="subscribe-field-label" for="subscribe-field" class="screen-reader-text">
+								Type your email…							</label>
+							<input required="required" type="email" name="email" autocomplete="email" class="no-border-radius has-12px-font-size " style="font-size: 12px;padding: 15px 23px 15px 23px;border-radius: 0px;border-width: 0px;" placeholder="Type your email…" value="" id="subscribe-field" title="Please fill in this field.">						</p>
+												<p id="subscribe-submit" style="width: 100%;max-width: 100%;">
+							<input type="hidden" name="action" value="subscribe">
+							<input type="hidden" name="blog_id" value="191168008">
+							<input type="hidden" name="source" value="https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/">
+							<input type="hidden" name="sub-type" value="subscribe-block">
+							<input type="hidden" name="app_source" value="">
+							<input type="hidden" name="redirect_fragment" value="subscribe-blog">
+							<input type="hidden" name="lang" value="en_GB">
+							<input type="hidden" id="_wpnonce" name="_wpnonce" value="9b483a7a13"><input type="hidden" name="_wp_http_referer" value="/how-did-i-set-up-my-own-autonomous-system/"><input type="hidden" name="post_id" value="970">							<button type="submit" class="wp-block-button__link no-border-radius has-12px-font-size has-text-color has-black-color" style="background: #c9c9c9;width: 100%;font-size: 12px;padding: 15px 23px 15px 23px;margin-top: 10px;border-radius: 0px;border-width: 0px;" name="jetpack_subscriptions_widget">
+								Subscribe							</button>
+						</p>
+					</div>
+				</form>
+								</div>
+	</div>
+	</section><section id="block-14" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-copyright">Copyright</h2>
+
+
+
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="http://daryllswer.com/">Daryll Swer and daryllswer.com</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="http://daryllswer.com/about/">Daryll Swer</a> is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
+</div></div>
+</section><section id="block-37" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-disclaimer">Disclaimer</h2>
+
+
+
+<p class="wp-block-paragraph">This is my personal site, all content, and media found here are not affiliated with any organisation or my employer but myself. All content is my own unless otherwise specified.</p>
+</div></div>
+</section><section id="block-20" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-recent-posts">Recent Posts</h2>
+
+
+<ul class="wp-block-latest-posts__list has-dates wp-block-latest-posts"><li><a class="wp-block-latest-posts__post-title" href="https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/">BGP Router ID Structuring in IPv6 Native Networks</a><time datetime="2026-06-04T14:36:35+05:30" class="wp-block-latest-posts__post-date">4 June 2026</time></li>
+<li><a class="wp-block-latest-posts__post-title" href="https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/">How to bring data centre-like connectivity to your home with IPTTTH</a><time datetime="2025-05-26T08:30:00+05:30" class="wp-block-latest-posts__post-date">26 May 2025</time></li>
+</ul></div></div>
+</section><section id="block-24" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-categories">Categories</h2>
+
+
+<ul class="wp-block-categories-list wp-block-categories-taxonomy-category wp-block-categories">	<li class="cat-item cat-item-3"><a href="https://www.daryllswer.com/category/networking/">Networking</a> (18)
+<ul class="children">
+	<li class="cat-item cat-item-4"><a href="https://www.daryllswer.com/category/networking/architecture/">Architecture</a> (3)
+</li>
+	<li class="cat-item cat-item-5"><a href="https://www.daryllswer.com/category/networking/dc-enterprise/">DC/Enterprise</a> (2)
+</li>
+	<li class="cat-item cat-item-58"><a href="https://www.daryllswer.com/category/networking/home-networking/">Home Networking</a> (1)
+</li>
+	<li class="cat-item cat-item-6"><a href="https://www.daryllswer.com/category/networking/isp-networking/">ISP</a> (6)
+</li>
+	<li class="cat-item cat-item-7"><a href="https://www.daryllswer.com/category/networking/ixp-networking/">IXP</a> (1)
+</li>
+	<li class="cat-item cat-item-55"><a href="https://www.daryllswer.com/category/networking/linux/">Linux</a> (2)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-45"><a href="https://www.daryllswer.com/category/non-tech/">Non-Tech</a> (1)
+<ul class="children">
+	<li class="cat-item cat-item-46"><a href="https://www.daryllswer.com/category/non-tech/khasi-ethnicity/">Khasi Ethnicity</a> (1)
+</li>
+</ul>
+</li>
+</ul></div></div>
+</section><section id="block-29" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-archives">Archives</h2>
+
+
+<ul class="wp-block-archives-list wp-block-archives">	<li><a href="https://www.daryllswer.com/2026/06/">June 2026</a></li>
+	<li><a href="https://www.daryllswer.com/2025/05/">May 2025</a></li>
+	<li><a href="https://www.daryllswer.com/2025/04/">April 2025</a></li>
+	<li><a href="https://www.daryllswer.com/2024/11/">November 2024</a></li>
+	<li><a href="https://www.daryllswer.com/2024/01/">January 2024</a></li>
+	<li><a href="https://www.daryllswer.com/2023/09/">September 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/08/">August 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/05/">May 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/04/">April 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/03/">March 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2022/12/">December 2022</a></li>
+	<li><a href="https://www.daryllswer.com/2022/07/">July 2022</a></li>
+	<li><a href="https://www.daryllswer.com/2021/08/">August 2021</a></li>
+	<li><a href="https://www.daryllswer.com/2021/06/">June 2021</a></li>
+	<li><a href="https://www.daryllswer.com/2021/03/">March 2021</a></li>
+</ul></div></div>
+</section><section id="block-32" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-tags">Tags</h2>
+
+
+<p class="is-style-default wp-block-tag-cloud"><a href="https://www.daryllswer.com/tag/architecture/" class="tag-cloud-link tag-link-8 tag-link-position-1" style="font-size: 8pt;" aria-label="Architecture (1 item)">Architecture<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/as/" class="tag-cloud-link tag-link-9 tag-link-position-2" style="font-size: 8pt;" aria-label="AS (1 item)">AS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/asn/" class="tag-cloud-link tag-link-10 tag-link-position-3" style="font-size: 8pt;" aria-label="ASN (1 item)">ASN<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/autonomous-system/" class="tag-cloud-link tag-link-11 tag-link-position-4" style="font-size: 8pt;" aria-label="Autonomous System (1 item)">Autonomous System<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/bandwidth/" class="tag-cloud-link tag-link-12 tag-link-position-5" style="font-size: 10.863636363636pt;" aria-label="Bandwidth (2 items)">Bandwidth<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/bandwidth-aggregation/" class="tag-cloud-link tag-link-13 tag-link-position-6" style="font-size: 10.863636363636pt;" aria-label="Bandwidth Aggregation (2 items)">Bandwidth Aggregation<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/bgp/" class="tag-cloud-link tag-link-14 tag-link-position-7" style="font-size: 14.363636363636pt;" aria-label="BGP (4 items)">BGP<span class="tag-link-count"> (4)</span></a>
+<a href="https://www.daryllswer.com/tag/bng/" class="tag-cloud-link tag-link-15 tag-link-position-8" style="font-size: 8pt;" aria-label="BNG (1 item)">BNG<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/cgnat/" class="tag-cloud-link tag-link-16 tag-link-position-9" style="font-size: 12.772727272727pt;" aria-label="CGNAT (3 items)">CGNAT<span class="tag-link-count"> (3)</span></a>
+<a href="https://www.daryllswer.com/tag/core/" class="tag-cloud-link tag-link-17 tag-link-position-10" style="font-size: 8pt;" aria-label="Core (1 item)">Core<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/docker/" class="tag-cloud-link tag-link-61 tag-link-position-11" style="font-size: 8pt;" aria-label="Docker (1 item)">Docker<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/double-nat/" class="tag-cloud-link tag-link-18 tag-link-position-12" style="font-size: 12.772727272727pt;" aria-label="Double NAT (3 items)">Double NAT<span class="tag-link-count"> (3)</span></a>
+<a href="https://www.daryllswer.com/tag/edge/" class="tag-cloud-link tag-link-19 tag-link-position-13" style="font-size: 8pt;" aria-label="Edge (1 item)">Edge<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/geofeed/" class="tag-cloud-link tag-link-20 tag-link-position-14" style="font-size: 8pt;" aria-label="Geofeed (1 item)">Geofeed<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/geoip/" class="tag-cloud-link tag-link-21 tag-link-position-15" style="font-size: 8pt;" aria-label="GeoIP (1 item)">GeoIP<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ip-geolocation/" class="tag-cloud-link tag-link-22 tag-link-position-16" style="font-size: 8pt;" aria-label="IP Geolocation (1 item)">IP Geolocation<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ip-planning/" class="tag-cloud-link tag-link-23 tag-link-position-17" style="font-size: 8pt;" aria-label="IP Planning (1 item)">IP Planning<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/iptables/" class="tag-cloud-link tag-link-57 tag-link-position-18" style="font-size: 8pt;" aria-label="iptables (1 item)">iptables<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ipv4/" class="tag-cloud-link tag-link-24 tag-link-position-19" style="font-size: 14.363636363636pt;" aria-label="IPv4 (4 items)">IPv4<span class="tag-link-count"> (4)</span></a>
+<a href="https://www.daryllswer.com/tag/ipv6/" class="tag-cloud-link tag-link-25 tag-link-position-20" style="font-size: 19.772727272727pt;" aria-label="IPv6 (10 items)">IPv6<span class="tag-link-count"> (10)</span></a>
+<a href="https://www.daryllswer.com/tag/isps/" class="tag-cloud-link tag-link-26 tag-link-position-21" style="font-size: 17.545454545455pt;" aria-label="ISPs (7 items)">ISPs<span class="tag-link-count"> (7)</span></a>
+<a href="https://www.daryllswer.com/tag/ixps/" class="tag-cloud-link tag-link-27 tag-link-position-22" style="font-size: 8pt;" aria-label="IXPs (1 item)">IXPs<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/juniper/" class="tag-cloud-link tag-link-28 tag-link-position-23" style="font-size: 8pt;" aria-label="Juniper (1 item)">Juniper<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/junos/" class="tag-cloud-link tag-link-29 tag-link-position-24" style="font-size: 8pt;" aria-label="JunOS (1 item)">JunOS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/khasi/" class="tag-cloud-link tag-link-47 tag-link-position-25" style="font-size: 8pt;" aria-label="Khasi (1 item)">Khasi<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/linux/" class="tag-cloud-link tag-link-56 tag-link-position-26" style="font-size: 8pt;" aria-label="Linux (1 item)">Linux<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/load-balancing/" class="tag-cloud-link tag-link-30 tag-link-position-27" style="font-size: 10.863636363636pt;" aria-label="Load Balancing (2 items)">Load Balancing<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/management-plane/" class="tag-cloud-link tag-link-54 tag-link-position-28" style="font-size: 8pt;" aria-label="Management Plane (1 item)">Management Plane<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/mikrotik/" class="tag-cloud-link tag-link-31 tag-link-position-29" style="font-size: 10.863636363636pt;" aria-label="MikroTik (2 items)">MikroTik<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/mpls/" class="tag-cloud-link tag-link-59 tag-link-position-30" style="font-size: 8pt;" aria-label="MPLS (1 item)">MPLS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/multi-wan/" class="tag-cloud-link tag-link-32 tag-link-position-31" style="font-size: 10.863636363636pt;" aria-label="Multi-WAN (2 items)">Multi-WAN<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/nat/" class="tag-cloud-link tag-link-33 tag-link-position-32" style="font-size: 10.863636363636pt;" aria-label="NAT (2 items)">NAT<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/networking/" class="tag-cloud-link tag-link-34 tag-link-position-33" style="font-size: 22pt;" aria-label="Networking (14 items)">Networking<span class="tag-link-count"> (14)</span></a>
+<a href="https://www.daryllswer.com/tag/non-tech/" class="tag-cloud-link tag-link-51 tag-link-position-34" style="font-size: 8pt;" aria-label="Non-Tech (1 item)">Non-Tech<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/oob/" class="tag-cloud-link tag-link-53 tag-link-position-35" style="font-size: 8pt;" aria-label="OOB (1 item)">OOB<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/planning/" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 8pt;" aria-label="Planning (1 item)">Planning<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/rfc4638/" class="tag-cloud-link tag-link-36 tag-link-position-37" style="font-size: 8pt;" aria-label="RFC4638 (1 item)">RFC4638<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/rfc8805/" class="tag-cloud-link tag-link-37 tag-link-position-38" style="font-size: 8pt;" aria-label="RFC8805 (1 item)">RFC8805<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/routeros/" class="tag-cloud-link tag-link-38 tag-link-position-39" style="font-size: 8pt;" aria-label="RouterOS (1 item)">RouterOS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/routing/" class="tag-cloud-link tag-link-52 tag-link-position-40" style="font-size: 8pt;" aria-label="Routing (1 item)">Routing<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/subnetting/" class="tag-cloud-link tag-link-39 tag-link-position-41" style="font-size: 8pt;" aria-label="Subnetting (1 item)">Subnetting<span class="tag-link-count"> (1)</span></a></p></div></div>
+</section>	</aside>
+									</div>
+								<section id="main" class="main" role="main">
+					<p id="breadcrumbs"><span><span><a href="https://www.daryllswer.com/">Home</a></span> » <span class="breadcrumb_last" aria-current="page">How did I set up my own Autonomous System?</span></span></p>	<div id="loop-container" class="loop-container">
+		<div class="post-970 post type-post status-publish format-standard has-post-thumbnail hentry category-networking tag-as tag-asn tag-autonomous-system tag-geofeed tag-geoip tag-ip-geolocation tag-networking tag-rfc8805 ratio-natural entry">
+		<div class="featured-image"><img width="768" height="280" src="https://www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png" class="attachment-full size-full wp-post-image" alt="" decoding="async" fetchpriority="high"></div>	<article>
+		<div class="post-header">
+			<h1 class="post-title">How did I set up my own Autonomous System?</h1>
+			<span class="post-meta">
+	Published on <span class="date"><a href="https://www.daryllswer.com/2022/07/">1 July 2022</a></span></span>		</div>
+		<div class="post-content">
+						
+<p class="wp-block-paragraph"><em>Note: During the course of  writing this article, I <a href="https://twitter.com/DaryllSwer/status/1519575084687818752" target="_blank" rel="noreferrer noopener">migrated</a> from AS210777 to <a href="https://bgp.tools/as/149794" target="_blank" rel="noreferrer noopener">AS149794</a>. The rest pretty much stays the same.</em></p>
+
+
+
+<p class="wp-block-paragraph"><strong>This article has been published on the <a href="https://blog.apnic.net/2022/07/01/how-i-set-up-my-own-autonomous-system/" target="_blank" rel="noreferrer noopener">APNIC blog</a> as well.</strong></p>
+
+
+
+<p class="wp-block-paragraph">First, I would like to give <a href="https://www.civo.com/" target="_blank" rel="noreferrer noopener">Civo</a> a shout out for <a href="https://twitter.com/DaryllSwer/status/1436345785973497857" target="_blank" rel="noreferrer noopener">sponsoring</a> the Autonomous System Number ASN allocation (<a href="https://web.archive.org/web/20220428071633/https://bgp.tools/as/210777" target="_blank" rel="noreferrer noopener">AS210777</a>), a <a href="https://web.archive.org/web/20220428071817/https://bgp.tools/prefix/2a10:6747::/32" target="_blank" rel="noreferrer noopener">/32 IPv6 prefix</a> and also a <a href="https://web.archive.org/web/20220428071659/https://bgp.tools/prefix/103.176.189.0/24">/24 IPv4 prefix</a> for me. I’d also like to thank APNIC, which allocated the /24 for experimental purposes, and later allocated an IPv6 prefix and an ASN.</p>
+
+
+
+<p class="wp-block-paragraph">This AS is my own personal network. I use it for conducting experiments, research, and just <a href="https://en.wikipedia.org/wiki/Eyeball_network" target="_blank" rel="noreferrer noopener">eyeballing</a> in my free time.</p>
+
+
+
+<p class="wp-block-paragraph">In this post I’ll share the procedures I followed, serially, to have my prefix advertised to the world and get the network up and running. Anything of operational/ISP value that arose from this project has been entered into my <a href="https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/" target="_blank" rel="noreferrer noopener">guide</a>. Everything else is research, observation, and some minor operationally useful content such as IRR/GeoIP practices.</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="step-1-applying-for-the-resources-from-a-rir"><a href="#step-1-applying-for-the-resources-from-a-rir" aria-hidden="true" class="aal_anchor" id="step-1-applying-for-the-resources-from-a-rir"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a> <strong>Step 1: Applying for the resources from a RIR</strong></h2>
+
+
+
+<p class="wp-block-paragraph">In my case, both the ASN (210777) allocation and IPv6 prefix (the old prefix before migration) were requested from and allocated by RIPE directly via the folk at Civo. However, I manually requested the /24 prefix from APNIC under the <a href="https://www.apnic.net/community/policy/resources#5.7.-Experimental-allocations-policy" target="_blank" rel="noreferrer noopener">experimental allocation</a> policies.</p>
+
+
+
+<p class="wp-block-paragraph">The procedure to apply for Internet number resources is similar, if not identical, at all RIRs. You can use <a href="https://blog.apnic.net/2021/10/27/how-to-connect-to-the-internet-with-your-own-ip-addresses-and-asns/" target="_blank" rel="noreferrer noopener">this</a> as a guide. Keep in mind that the RIRs will evaluate your request and may simply deny all resources at their discretion.</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-step-2-inputting-irr-information"><a href="#step-2-inputting-irr-information" aria-hidden="true" class="aal_anchor" id="step-2-inputting-irr-information"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Step 2: Inputting IRR information</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Inputting correct and up-to-date data in the Internet Routing Registry (IRR) can be of <a href="https://www.apnic.net/manage-ip/apnic-services/routing-registry/" target="_blank" rel="noreferrer noopener">great help</a> to network troubleshooting, route filtering, and so on, although I was unable to find any proper documentation on IRR best practices, except for the <a href="https://github.com/manrs-tools/MANRS-Implementation-Guide/blob/main/MANRS-Network_Implementation_Guide.docx" target="_blank" rel="noreferrer noopener">MANRS Implementation Guide</a>.</p>
+
+
+
+<h3 class="wp-block-heading" id="h-asn-essential-database-entries"><a href="#asn-essential-database-entries" aria-hidden="true" class="aal_anchor" id="asn-essential-database-entries"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>ASN essential database entries</strong></h3>
+
+
+
+<p class="wp-block-paragraph">Below are some of the object entries that I feel are essential to ensuring other networks can get a clear idea of what your AS is for:</p>
+
+
+
+<ul class="wp-block-list">
+<li>AS-Name = Daryll-Swer — name of the organization/individual behind the AS.</li>
+
+
+
+<li>Description = This AS is used for non-profit research and experiments — explains the purpose of the AS.</li>
+
+
+
+<li>Displaying the AS-SET directly under the AS WHOIS to ensure other networks can quickly find it — no need to hunt for it on peeringdb or similar.</li>
+</ul>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET.png"><img decoding="async" width="1920" height="932" src="https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET.png" alt="" class="wp-image-982" srcset="https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET.png 1920w, https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET-768x373.png 768w, https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET-1536x746.png 1536w" sizes="(max-width: 1920px) 100vw, 1920px"></a><figcaption class="wp-element-caption">Figure-1 (AS-SET of AS 210777 in IRR.)</figcaption></figure>
+</div>
+
+
+<ul class="wp-block-list">
+<li>Up-to-date abuse contact info — for obvious reasons, this should always be pointing to a valid and working contact.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading"><a href="#ipv4-essential-prefix-database-entries" aria-hidden="true" class="aal_anchor" id="ipv4-essential-prefix-database-entries"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>IPv4 essential prefix database entries</strong></h3>
+
+
+
+<p class="wp-block-paragraph">Ensure you create a <a href="https://apps.db.ripe.net/docs/RPSL-Object-Types/Descriptions-of-Primary-Objects/#description-of-the-route-object" target="_blank" rel="noreferrer noopener">route and origin object</a> to so everyone else knows which AS is supposed to originate the prefix. Set up <a href="https://blog.apnic.net/2019/09/11/how-to-creating-rpki-roas-in-myapnic/" target="_blank" rel="noreferrer noopener">RPKI/ROAs</a> for your routes. Input up-to-date abuse contact info.<meta charset="utf-8"></p>
+
+
+
+<p class="wp-block-paragraph"><strong>IPv6 essential prefix database entries</strong></p>
+
+
+
+<p class="wp-block-paragraph">Ensure you create a <a href="https://apps.db.ripe.net/docs/RPSL-Object-Types/Descriptions-of-Primary-Objects/#description-of-the-route6-object" target="_blank" rel="noreferrer noopener">route6 and origin object</a> to ensure everyone else knows which AS is supposed to originate the prefix. Set up <a href="https://blog.apnic.net/2019/09/11/how-to-creating-rpki-roas-in-myapnic/" target="_blank" rel="noreferrer noopener">RPKI/ROAs</a> for your routes. Input up-to-date abuse contact info.</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="step-3-dealing-with-geoip-data"><a href="#step-3-dealing-with-geoip-data" aria-hidden="true" class="aal_anchor" id="step-3-dealing-with-geoip-data"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Step 3: Dealing with GeoIP Data</strong></h2>
+
+
+
+<p class="wp-block-paragraph"><strong>Issue:</strong></p>
+
+
+
+<p class="wp-block-paragraph">Any network operator who has just received a fresh allocation or transfer would know the pain of having to deal with different GeoIP providers and manually correct the data for each provider! However, I have devised my own method to deal with this problem and within 15 days (I saw visible results within 10-14 days), I was able to see the correct geolocation propagating around the world/various databases.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Solutions:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>First, create a <a href="https://www.ripe.net/manage-ips-and-asns/db/tools/geolocation-in-the-ripe-database" target="_blank" rel="noreferrer noopener">Geoloc object</a> for your prefix using IRR via the RIR concerned</li>
+
+
+
+<li>The second and highly recommended step is to make use of Geofeeds (<a href="https://datatracker.ietf.org/doc/html/rfc8805" target="_blank" rel="noreferrer noopener">RFC 8805</a>) because it basically automates the process of GeoIP updates. Make use of your own domain and ensure that when a bot or someone clicks on the link, it should redirect to a .csv file, for example: <a href="https://www.daryllswer.com/geofeed/" target="_blank" rel="noreferrer noopener">http://daryllswer.com/geofeed/</a>
+<ul class="wp-block-list">
+<li>Submit your URL to the GeoIP providers that accept it (even Google will accept it via the <a href="https://isp.google.com/geo_feed/" target="_blank" rel="noreferrer noopener">ISP Portal</a>). You can attach your Geofeed link in the email template below (Form 1) to save yourself round-trip time!</li>
+
+
+
+<li>Add the URL to your Geofeed directly under your prefix’s IRR info, as shown in Figure 2 per <a href="https://datatracker.ietf.org/doc/html/rfc9092" target="_blank" rel="noreferrer noopener">RFC9092</a> via a remarks object. At the time of writing, the “geofeed” object for IRR is not supported on APNIC, but it should be used once it is available.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2022/12/image-1.png"><img decoding="async" width="878" height="688" src="https://www.daryllswer.com/wp-content/uploads/2022/12/image-1.png" alt="" class="wp-image-1658" srcset="https://www.daryllswer.com/wp-content/uploads/2022/12/image-1.png 878w, https://www.daryllswer.com/wp-content/uploads/2022/12/image-1-768x602.png 768w" sizes="(max-width: 878px) 100vw, 878px"></a><figcaption class="wp-element-caption">Figure-2 (The geoloc object and geofeed URL on IRR.)</figcaption></figure>
+
+
+
+<ul class="wp-block-list">
+<li>Thirdly, manually fill up the correction forms on a per provider basis for those that offer it. Below is a list of some of the forms that I could find on the web:
+<ul class="wp-block-list">
+<li>Maxmind’s <a href="https://www.maxmind.com/en/geoip-location-correction" target="_blank" rel="noreferrer noopener">Correct a GeoIP Location form</a></li>
+
+
+
+<li>iapi’s <a href="https://ipapi.co/update-location/" target="_blank" rel="noreferrer noopener">IP Address Location Update Request</a> (note: they also accept RFC 8805 geofeeds)</li>
+
+
+
+<li>IPWHOIS.IO’s <a href="https://ipwhois.io/contact" target="_blank" rel="noreferrer noopener">contact form</a></li>
+</ul>
+</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li>The fourth and final step is to mass email the remaining GeoIP data providers with a single email. Be sure to use the email address or abuse email address associated with your prefix on the IRR to ensure the providers view it as a valid email. Below is a sample template of what I used for myself:</li>
+</ul>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">Hi<br><br>We have an IPv4 Prefix allocated to us, whose location has just been recently updated/finalised on the APNIC Database. We would like to have the same changes reflected on your database.</p>
+
+
+
+<p class="wp-block-paragraph">Prefix: 103.176.189.0/24<br>You can also add our Geofeed (RFC8805) to your system: http://daryllswer.com/geofeed/<br><br>You can verify the location of the prefix by checking the geoloc object for the prefix <a href="https://wq.apnic.net/static/search.html" target="_blank" rel="noreferrer noopener">here</a> <em>[hyperlink the WHOIS link for your prefix(es)]</em></p>
+<cite>Daryll Swer</cite></blockquote>
+
+
+
+<ul class="wp-block-list">
+<li>Attach a screenshot like Figure 2 to make it easier for the providers to parse quickly and BCC the following:<ul><li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f18594909cb19093828583909285908198df929e9c">[email protected]</a></li></ul>
+<ul class="wp-block-list">
+<li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd8e888d8d928f89bd948dcf91929e9c89949293d39e9290">[email protected]</a></li>
+
+
+
+<li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4734323737283533072e3723263326692428">[email protected]</a></li>
+
+
+
+<li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7b080e0b0b14090f3b1c1e0f1d1a080f1a1355181416">[email protected]</a></li>
+
+
+
+<li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea999f9a9a85989eaa839a988f8d83999e9893c48985">[email protected]</a></li>
+
+
+
+<li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9cefe9ececf3eee8dcf5ecfbf9f3f0f3fffde8f5f3f2b2f5f3">[email protected]</a></li>
+
+
+
+<li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f1828481819e8385b19881989f979edf989e">[email protected]</a></li>
+
+
+
+<li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6f1c0a1d19060c0a410b0a1c042f180700061c1702030e1f06410c0002">[email protected]</a></li>
+
+
+
+<li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e2919792928d9096a2808b8586839683818e8d9786cc818d8f">[email protected]</a></li>
+
+
+
+<li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="25565055554a57516544554c4c550b4b4051">[email protected]</a></li>
+
+
+
+<li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c58696f644c416960657f7f6d226f6361">[email protected]</a></li>
+
+
+
+<li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3f4c4a4f4f504d4b7f5b5d12564f115c5052">[email protected]</a></li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">You can additionally use this <a href="https://geolocatemuch.com/" target="_blank" rel="noreferrer noopener">tool</a> to test your Geofeed.</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="step-3-securing-ip-transit"><a href="#step-4-securing-ip-transit" aria-hidden="true" class="aal_anchor" id="step-4-securing-ip-transit"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Step 4: Securing IP Transit</strong></h2>
+
+
+
+<p class="wp-block-paragraph">The most important step of all, after handling all the trivial tasks, is to secure IP Transit. Now, being a non-profit individual, I cannot afford to pay for physical IP transit via the normal means, so the following is what I did to get the AS live on the global routing table:</p>
+
+
+
+<ol class="wp-block-list">
+<li>I initially spun up a VyOS/RouterOS instance on a cloud provider, but quickly dropped this idea due to high latency via VPN tunnels and losing access to my ISP’s Netflix Open Connect (OCA), caching, their bilateral peers, and so on.</li>
+
+
+
+<li>The second approach was securing a virtual PoP in Mumbai via my friend <a href="https://twitter.com/DaryllSwer/status/1446016772637802500" target="_blank" rel="noreferrer noopener">Vijay Ahire</a>. The network operating system of choice was VyOS 1.4. This solution had reasonable latency towards India-bound networks and reachability to caches and their peers. I used this until I was able to secure physical transit.</li>
+
+
+
+<li>The third approach was securing IP transit directly to my house! To get this working, I got help from <a href="https://www.linkedin.com/in/devendra-prasad-singh-4ab27854/" target="_blank" rel="noreferrer noopener">Devendra Singh</a> and his team at <a href="https://twitter.com/DaryllSwer/status/1462069688800661504" target="_blank" rel="noreferrer noopener">AS132559</a><strong> </strong>—<strong> </strong>a local ISP in Karnataka, India. I have known them for a while because I helped with various issues in their network in the past (the lesson here is to use your contacts). So, I was able to secure transit on a physical level where the fibre was terminated in my house. It is a dedicated single-mode fibre with a distance of about 0.5 kilometres that’s terminated with an LC connector and plugged into an SFP module on my end (1,310nm), and directly connected to an L2 switch on their end (1,550nm). It is an uncapped 1Gbps symmetrical link that is delivered without queuing, traffic shaping or any other shenanigans. At the time of writing, I am grateful that the transit is sponsored (free of cost) by the kind gesture of the provider.</li>
+</ol>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-network-topology"><a href="#network-topology" aria-hidden="true" class="aal_anchor" id="network-topology"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Network Topology</strong></h2>
+
+
+
+<p class="wp-block-paragraph">I lack the funds to build a high-end network lab in my home with all the fancy bells and whistles, so Figure 3 shows my simple and budget-friendly setup.</p>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology.png"><img loading="lazy" decoding="async" width="2720" height="1460" src="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology.png" alt="" class="wp-image-1395" srcset="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology.png 2720w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology-1920x1031.png 1920w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology-768x412.png 768w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology-1536x824.png 1536w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology-2048x1099.png 2048w" sizes="auto, (max-width: 2720px) 100vw, 2720px"></a><figcaption class="wp-element-caption">Figure-3 (Network Topology)</figcaption></figure>
+
+
+
+<h3 class="wp-block-heading"><a href="#hardware-used" aria-hidden="true" class="aal_anchor" id="hardware-used"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Hardware used</strong></h3>
+
+
+
+<ul class="wp-block-list">
+<li>MikroTik RB3011UiAS-RM — shout out to Praveen Gite (AS136342) for <a href="https://twitter.com/DaryllSwer/status/1490622518641958913" target="_blank" rel="noreferrer noopener">shipping it</a> to me</li>
+
+
+
+<li>Generic Chinese SFP module that just works without a problem — shout out to Devendra Singh again for that one</li>
+
+
+
+<li>TP-Link Archer C6 v3 (stock firmware, Wi-Fi AP configuration) — Once again, thanks to Devendra Singh.</li>
+
+
+
+<li>Raspberry Pi 3 Model B — many thanks to <a href="https://anuragbhatia.com/" target="_blank" rel="noreferrer noopener">Anurag Bhatia</a> for shipping this to me back in 2020!</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-bgp-configuration"><a href="#bgp-configuration" aria-hidden="true" class="aal_anchor" id="bgp-configuration"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>BGP Configuration</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Since I am single-homed and only have a default route from the upstream, I did not implement route filters/RPKI validation (however, both of these are covered in my <a href="https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/" target="_blank" rel="noreferrer noopener">ISP guide</a>), so the configuration below is simple and straight-forward.</p>
+
+
+
+<p class="wp-block-paragraph">Below is my configuration using RouterOS v7:</p>
+
+
+
+<h3 class="wp-block-heading" id="h-ipv4"><a href="#ipv4" aria-hidden="true" class="aal_anchor" id="ipv4"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>IPv4</strong></h3>
+
+
+
+<pre class="wp-block-code"><code><strong>#First we route the prefix to blackhole to eliminate any possibility of Layer 3 loops#
+</strong>/ip route
+add blackhole comment="Blackhole route" disabled=no dst-address=103.176.189.0/24
+<strong>#Next we add the prefix we'd like to advertise to our peer using firewall address-list#
+</strong>/ip firewall address-list
+add address=103.176.189.0/24 list=bgp-networks
+<strong>#Now we simply configure BGP#
+</strong>/routing bgp template
+set default as=210777 disabled=no name=default output.network=bgp-networks router-id=a.b.c.e routing-table=main
+/routing bgp connection
+add address-families=ip as=210777 disabled=no local.role=ebgp-customer name=IPv4-Deshkal output.network=bgp-networks remote.address=103.176.189.1/32 .as=132559 router-id=103.176.189.0 routing-table=main templates=default</code></pre>
+
+
+
+<h3 class="wp-block-heading"><a href="#ipv6" aria-hidden="true" class="aal_anchor" id="ipv6"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>IPv6</strong></h3>
+
+
+
+<pre class="wp-block-code"><code><strong>#First we route the prefix to blackhole to eliminate any possibility of Layer 3 loops</strong>#
+/ipv6 route
+add blackhole comment="Blackhole Route" disabled=no dst-address=2400:7060::/32
+add blackhole comment="Blackhole Route" disabled=no dst-address=2400:7060::/48
+<strong>#Next we add the prefixes we'd like to advertise to our peer using firewall address-list#
+</strong>/ipv6 firewall address-list
+add address=2400:7060::/32 list=bgp-networks
+add address=2400:7060::/48 list=bgp-networks
+<strong>#Now we simply configure BGP</strong>#
+/routing bgp connection
+add address-families=ipv6 as=210777 disabled=no local.role=ebgp-customer name=IPv6-Deshkal output.network=bgp-networks remote.address=2400:7060::2 .as=132559 router-id=103.176.189.0 routing-table=main templates=default</code></pre>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-layer-3-4-configuration"><a href="#layer-3-4-configuration" aria-hidden="true" class="aal_anchor" id="layer-3-4-configuration"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Layer 3/4 Configuration</strong></h2>
+
+
+
+<p class="wp-block-paragraph">There are a few points to note on how I configured L3/L4 (or lack thereof) on my network. Every host in my LAN had a public IPv4 and IPv6 address assigned on the WAN interface (including iPhones, a MacBook Pro, Windows 11 laptop, and the Raspberry Pi), IPv4 was managed via DHCP and IPv6 was automated via SLAAC.</p>
+
+
+
+<p class="wp-block-paragraph">The hosts in the LAN were publicly reachable from the Internet. I did not use stateful firewalling on the forward chain in the edge router to avoid interfering with end-to-end connectivity because iOS has its own built-in firewall, Windows 11 has stateful firewalling, and the Debian-based OS on Pi had some basic iptables configuration. No security incident nor breaches ever occurred to my knowledge or observations. The network used absolutely no NAT, excluding times when I tested NAT44 and NAT444.</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-observations"><a href="#observations" aria-hidden="true" class="aal_anchor" id="observations"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Observations</strong></h2>
+
+
+
+<p class="wp-block-paragraph">I will try to keep this as readable as possible as there are a bunch of different observations that I have come across.</p>
+
+
+
+<h3 class="wp-block-heading" id="h-layer-3"><a href="#layer-3" aria-hidden="true" class="aal_anchor" id="layer-3"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Layer 3</strong></h3>
+
+
+
+<p class="wp-block-paragraph"><strong>IPv4</strong></p>
+
+
+
+<p class="wp-block-paragraph">Since each host on the network had a public IPv4 address and no NAT, we would expect to see native IPv4 end-to-end traffic. However, that was not the case — By using WireShark and sniffing directly from the WAN interface of the router I observed a lot of STUN traffic for several applications, ranging from social media apps to websites, to various apps on various OS platforms. P2P applications on the LAN hosts failed to talk to each other directly via their public IPs, instead, they are relayed via TURN. For example, iPhone X to iPhone 7 via WhatsApp/Telegram/Signal VoIP call should have been direct P2P connectivity, but that was not observed. Certain applications such as BitTorrent clients, Apple FaceTime, and similar, were able to establish P2P connectivity between LAN hosts without a problem or reliance on STUN.</p>
+
+
+
+<p class="wp-block-paragraph">No performance difference was discerned when a host was in the following environments:</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Behind NAT</strong> — P2P works via STUN and similar mechanisms.</li>
+
+
+
+<li><strong>Behind CGNAT</strong> — P2P works via STUN and similar mechanisms. Do note, that I used <a href="https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/" target="_blank" rel="noreferrer noopener">best practices for CGNAT</a> and not typically broken CGNAT implementations used in the wild</li>
+
+
+
+<li><strong>Public IP on the host </strong>— P2P works via both STUN and natively depending on the application(s)</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>IPv6</strong></p>
+
+
+
+<p class="wp-block-paragraph">Since each host on the network had a public IPv6 address and no NAT66 (please don’t use it), we would expect to see native IPv6 end-to-end traffic 100% of the time. However, that was not the case. As with IPv4, similar observations were made.</p>
+
+
+
+<p class="wp-block-paragraph">A smaller but still noticeable amount of STUN traffic —why is STUN even coded into these apps for IPv6 anyway? P2P applications on the LAN hosts failed to talk to each other directly via their public IPs, instead, they are relayed via TURN and often they fail to work over IPv6 and just fall back to IPv4. This suggests that <a href="https://en.wikipedia.org/wiki/Happy_Eyeballs" target="_blank" rel="noreferrer noopener">Happy Eyeballs</a> is broken for a large percentage of the apps out there. For example, iPhone X to iPhone 7 via WhatsApp/Telegram/Signal VoIP call should have had direct P2P connectivity over IPv6, but that was not observed. Telegram is a weird one – When I reran the test months later and sniffed with WireShark, I observed it was able to establish native IPv6 P2P, but only if IPv4 is completely disabled. Certain applications such as BitTorrent clients, Apple FaceTime, and similar were able to establish P2P connectivity between LAN hosts without a problem, without reliance on STUN or fallback to IPv4.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>A Quick Note on STUN</strong></p>
+
+
+
+<p class="wp-block-paragraph">I tweeted about this observation with some more interesting context below:</p>
+
+
+
+<figure class="wp-block-embed is-type-rich is-provider-twitter wp-block-embed-twitter"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true"><p lang="en" dir="ltr">So as of today, I packet sniffed on my WAN interface to see what's up and oddly enough, I saw zero STUN traffic! Maybe the remote end-points store data of the source IPs that have been determined to not be behind a NAT or something?</p>— Daryll Swer (@DaryllSwer) <a href="https://twitter.com/DaryllSwer/status/1488608520748425223?ref_src=twsrc%5Etfw">February 1, 2022</a></blockquote><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-optimized="1" async src="https://www.daryllswer.com/wp-content/litespeed/js/e977ef4213d778fa58919251dec3b331.js?ver=3b331" charset="utf-8"></script>
+</div></figure>
+
+
+
+<p class="wp-block-paragraph"><strong>A Quick Note on Apple products</strong></p>
+
+
+
+<p class="wp-block-paragraph">During my observations, it seemed Apple software had clean NAT Traversal/Happy Eyeballs code — In 9 out of 10 cases apps like FaceTime were able to establish P2P connectivity between native IP (IPv4 and IPv6) end points, or even behind CGNAT where other apps failed and fell-back to STUN/TURN. Kudos to Apple for that one!</p>
+
+
+
+<h3 class="wp-block-heading"><a href="#layer-4-ipv4-and-ipv6" aria-hidden="true" class="aal_anchor" id="layer-4-ipv4-and-ipv6"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Layer 4 (IPv4 and IPv6)</strong></h3>
+
+
+
+<p class="wp-block-paragraph">Most of us already know of the classic transport protocols, TCP and UDP. However, both TCP and UDP have successors known as Datagram Congestion Control Protocol (DCCP), Stream Control Transmission Protocol (SCTP), UDP-Lite, and Multipath TCP, but we don’t see these protocols being deployed in the wild, at least not on the public Internet.</p>
+
+
+
+<p class="wp-block-paragraph">There are a few factors that I believe are responsible for the lack of usage in the wild:</p>
+
+
+
+<ol style="list-style-type:1" class="wp-block-list">
+<li>From the network engineering perspective, CGNAT is ugly, can break a lot of things, and forces the requirement for Application Layer Gateway (ALG) for various protocols including these Layer 4 protocols. So, it is only natural for TCP/UDP to remain in popular use due to well-known NAT traversal mechanisms for both. However, if you did deploy your CGNAT boxes with best practices from A to Z shown in my guide, all these protocols should, in theory, work just fine as the ALG will handle it out of the box.</li>
+
+
+
+<li>Another reason for the lack of usage is simply a lack of awareness or lack of <a href="https://www.daryllswer.com/the-human-side-of-isps/" target="_blank" rel="noreferrer noopener">competency</a>. I have spoken with folk who have been in the field for 10-22 years, and none of them had heard of TCP/UDP successors — Which is odd.</li>
+
+
+
+<li>Also, it’s possible that networks blanket drop non-TCP/UDP on the routers/firewalls.</li>
+
+
+
+<li>From the software development perspective, I suspect the issue is <a href="https://web.archive.org/web/20220503221044/https://twitter.com/rothgar/status/1521613185962311680" target="_blank" rel="noreferrer noopener">Layer 7-centric</a> software development. There doesn’t appear to be much focus on the lower layers, and an over-reliance on pre-existing libraries and functions for any over-the-network data transmission, namely TCP/UDP.
+<ol class="wp-block-list">
+<li>This has arguably contributed to the development of QUIC, which is over UDP — Sadly. But I hope to see mainstream usage of these non-TCP/UDP protocols grow over time.</li>
+</ol>
+</li>
+</ol>
+
+
+
+<h3 class="wp-block-heading"><a href="#interesting-observations" aria-hidden="true" class="aal_anchor" id="interesting-observations"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Interesting observations</strong></h3>
+
+
+
+<p class="wp-block-paragraph">For a <a href="https://twitter.com/DaryllSwer/status/1472823455754055683" target="_blank" rel="noreferrer noopener">brief period</a>, I observed SCTP traffic originating from Chinese ASNs (AS45102 and AS4538) hitting my network. This was likely the result of research and development work, and they were probably just as curious as me to see if any node or end point on the Internet would reply to SCTP packets. However, none of the OSes (Windows, macOS, Linux, iOS) I use replied to these packets, which I think is not RFC compliant at all.</p>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2022/04/Figure-4-SCTP-Traffic-Snippet.png"><img loading="lazy" decoding="async" width="1313" height="75" src="https://www.daryllswer.com/wp-content/uploads/2022/04/Figure-4-SCTP-Traffic-Snippet.png" alt="" class="wp-image-1291" srcset="https://www.daryllswer.com/wp-content/uploads/2022/04/Figure-4-SCTP-Traffic-Snippet.png 1313w, https://www.daryllswer.com/wp-content/uploads/2022/04/Figure-4-SCTP-Traffic-Snippet-768x44.png 768w" sizes="auto, (max-width: 1313px) 100vw, 1313px"></a><figcaption class="wp-element-caption">Figure-4 (SCTP Traffic Snippet)</figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">There are other less significant but still interesting observations I made while running this project. I usually just Tweet about them and some of them are listed below:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Internet censorship/blocking of sites seems to be less effective on <a href="https://twitter.com/DaryllSwer/status/1522553547472404481" target="_blank" rel="noreferrer noopener">IPv6 native sites</a></li>
+
+
+
+<li>Android Device(s) showing <a href="https://twitter.com/DaryllSwer/status/1517398523352064000" target="_blank" rel="noreferrer noopener">strange behaviour</a> with NDP NA</li>
+
+
+
+<li>IPv6 packets where source IP = ::/128 somehow <a href="https://twitter.com/DaryllSwer/status/1516777131883528193" target="_blank" rel="noreferrer noopener">traverses inter-AS</a>. RIPE Labs have <a href="https://labs.ripe.net/author/kistel/the-curious-case-of-packets-from/" target="_blank" rel="noreferrer noopener">published their analysis</a> of this behaviour; the mystery was <a href="https://twitter.com/DaryllSwer/status/1531265452831174656" target="_blank" rel="noreferrer noopener">solved</a> much later though</li>
+
+
+
+<li>Strange behaviour where the Linux kernel <a href="https://twitter.com/DaryllSwer/status/1516388176923074565" target="_blank" rel="noreferrer noopener">injects</a> an ‘anycast route’ (which according to the <a href="https://man7.org/linux/man-pages/man8/ip-route.8.html" target="_blank" rel="noreferrer noopener">manual page</a> does not exist) whenever we use ::/64 instead of ::1/64 on a link prefix at the router, to which a Linux host is connected. This results in a loop if the router (::) tries to ping a host that injected this route. It’s my understanding that using ::/64 instead of ::1/64 as a link prefix is perfectly <a href="https://twitter.com/DaryllSwer/status/1516769128862056451" target="_blank" rel="noreferrer noopener">RFC compliant</a></li>
+</ul>
+
+
+
+<figure class="wp-block-image size-full is-resized"><a href="https://www.daryllswer.com/wp-content/uploads/2022/04/image.png"><img loading="lazy" decoding="async" width="1070" height="194" src="https://www.daryllswer.com/wp-content/uploads/2022/04/image.png" alt="" class="wp-image-1305" style="width:645px;height:116px" srcset="https://www.daryllswer.com/wp-content/uploads/2022/04/image.png 1070w, https://www.daryllswer.com/wp-content/uploads/2022/04/image-768x139.png 768w" sizes="auto, (max-width: 1070px) 100vw, 1070px"></a><figcaption class="wp-element-caption">Figure-5 (Route type anycast is not implemented in Linux.)</figcaption></figure>
+
+
+
+<ul class="wp-block-list">
+<li>A <a href="https://twitter.com/DaryllSwer/status/1515246672523440129" target="_blank" rel="noreferrer noopener">small observation</a> on Windows’ default behaviour with IPv6 (Linux can also be configured the same way)</li>
+
+
+
+<li>Certain DDoS/Captcha protection platforms are <a href="https://twitter.com/DaryllSwer/status/1509894472427257863" target="_blank" rel="noreferrer noopener">overly aggressive</a></li>
+
+
+
+<li>An odd observation was made where old routes of AS210777 were still being advertised by AS29075 to its peers long after I withdrew them. This prevented AS210777 from being returned to RIPE as their policies require that an AS and its prefixes must be completely invisible on the public table before being decommissioned. This is possibly caused by a bug in their router(s)</li>
+</ul>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png"><img loading="lazy" decoding="async" width="1920" height="1572" src="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png" alt="" class="wp-image-1357" srcset="https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png 1920w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777-1319x1080.png 1319w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777-768x629.png 768w, https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777-1536x1258.png 1536w" sizes="auto, (max-width: 1920px) 100vw, 1920px"></a><figcaption class="wp-element-caption">Figure-6 (BGPlay showing AS29075 still advertising old routes of AS210777.)</figcaption></figure>
+
+
+
+<h2 class="wp-block-heading has-text-align-center" id="h-challenges"><a href="#challenges" aria-hidden="true" class="aal_anchor" id="challenges"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Challenges</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Although running your own AS is cool, fascinating, and cool (did I say that already?), there are challenges that come with it.</p>
+
+
+
+<p class="wp-block-paragraph">Various routing problems can take a lot of time to solve such as when the provider’s upstream (AS9498 in my case) <a href="https://twitter.com/DaryllSwer/status/1509889212207996930" target="_blank" rel="noreferrer noopener">randomly stopped</a> advertising my prefixes, <a href="https://twitter.com/DaryllSwer/status/1506182119114309632" target="_blank" rel="noreferrer noopener">causing route loops</a>, or taking <a href="https://twitter.com/DaryllSwer/status/1520158254269370368" target="_blank" rel="noreferrer noopener">days</a> to accept new prefixes. Also, asymmetric routing can be an issue when ISPs prefer default routes from upstreams instead of partial or full tables.</p>
+
+
+
+<p class="wp-block-paragraph">For all the benefits received by updating the GeoIP data of all your prefixes with all the GeoIP providers, there’s no guarantee that all companies, networks, and organizations will update their cached copy of the various databases for months. For me, this led to an issue where I was unable to establish VoWiFi from my network towards 4G providers such as <a href="https://twitter.com/DaryllSwer/status/1471009238864384001" target="_blank" rel="noreferrer noopener">Reliance Jio</a> and some random sites/services on the Internet refused to load (for months).</p>
+
+
+
+<p class="wp-block-paragraph">Maintaining the RIR membership account is not cheap, and neither is network equipment and power redundancy. I rely heavily on sponsorships from various folk to keep it well funded. Securing physical transit for a non-profit individual is next to impossible without some luck. Even if you’re able to secure it, physical redundancy will be an issue; no provider will sponsor multiple Gigabit links for free to an individual (this could possibly be solved by requesting the provider to provide BGP over PON).</p>
+
+
+
+<h2 class="wp-block-heading"><a href="#ipv4-vs-ipv6-actual-usage" aria-hidden="true" class="aal_anchor" id="ipv4-vs-ipv6-actual-usage"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>IPv4 vs IPv6, actual usage</strong></h2>
+
+
+
+<p class="wp-block-paragraph">If we were to look at this from a content (CDN, YouTube, Netflix, and so on) point of view, then around 70% of traffic moves to IPv6 when dual-stacked, but it’s largely video content that drives these statistics. The reality is that a large percentage of non-video, non-content-based sites and applications are still IPv4-only or have broken IPv6 implementation (such as blocked ICMPv6 leading to broken PMTUD), which results in Happy Eyeballs kicking traffic over to IPv4.</p>
+
+
+
+<p class="wp-block-paragraph">You could easily prove/disprove my observations above by completely disabling IPv4 (with no NAT64 or translation mechanisms either) and trying to surf the web. It seems that at least 80% of the web is still lacking proper IPv6 support.</p>
+
+
+
+<p class="wp-block-paragraph">Remember, having AAAA records does not magically mean the end point is IPv6 ready. A major contributing factor to the lack of IPv6 in the world around us, in my opinion, is the big cloud providers like Google, AWS, Azure, and similar. They don’t provide routed /56s (or shorter prefixes) to the LAN side of the virtual machine (VM), which prevents a lot of admins and developers from being able to deploy native IPv6 apps on Docker or similar, where a routed /64 (at least) is needed to make things work natively. This forces the requirement for NAT66 and/or NDP Proxy, which is ugly and defeats the purpose of IPv6, which is to provide end-to-end connectivity without any form of NAT. Only a few niche cloud providers like <a href="https://ungleich.ch/" target="_blank" rel="noreferrer noopener">ungleich.ch</a> provide <a href="https://twitter.com/ungleich/status/1434582206945669123" target="_blank" rel="noreferrer noopener">routed prefixes</a> to the LAN side of the VM. Some cloud providers have decided that implementing a /64 link prefix <a href="https://twitter.com/DaryllSwer/status/1441248662667948037" target="_blank" rel="noreferrer noopener">via SLAAC</a> is a good idea. SLAAC creates problems when the ‘host’ VM is configured to forward packets (We are a router) – Learning the gateway via Router Advertisements (RAs) will require <a href="https://forum.vyos.io/t/ipv6-autoconf-forwarding/2349" target="_blank" rel="noreferrer noopener">some hacking</a>. The /64 is useless as it is a link prefix — If you want to use it you will still need NDP Proxy and/or NAT66.</p>
+
+
+
+<p class="wp-block-paragraph">However, over time I observed IPv6 usage on my personal network increasing and outperforming IPv4. Perhaps these various CDNs and content players store metadata of other ASes that are known to have fully functional IPv6 and redirect/route those networks via IPv6? It’s just a theory.</p>
+
+
+
+<h2 class="wp-block-heading"><a href="#is-it-worthwhile-to-run-your-own-as" aria-hidden="true" class="aal_anchor" id="is-it-worthwhile-to-run-your-own-as"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Is it worthwhile to run your own AS?</strong></h2>
+
+
+
+<p class="wp-block-paragraph">The answer to this question depends on your perspective. On one hand, running my own AS allowed me to make all these fascinating observations and learn various lessons like how to solve some layer 8/9 problems with routing, latency issues, and how to deal with upstream providers when things break. It also gives me control over the IP address space as it becomes a <a href="https://en.wikipedia.org/wiki/Provider-independent_address_space" target="_blank" rel="noreferrer noopener">provider-independent address</a> space in nature. Since I control the address space, I can also reliably host various stuff from home.</p>
+
+
+
+<h2 class="wp-block-heading"><a href="#future-plans" aria-hidden="true" class="aal_anchor" id="future-plans"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><strong>Future plans</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Networking is a vast field; it is impossible for me to learn and know everything, so the goal is to keep the AS live, keep learning, and keep experimenting. However, I do have one immediate and specific topic to investigate — using jumbo frames on the public Internet (or at least, with peers via bilateral/PNIs/IXPs). A larger frame size means a larger payload, which means the underlying L2 paths require a smaller number of frames to be forwarded and fewer packets to be routed on L3. In theory, this should improve end-to-end performance. I aim to find out how much of a performance improvement the end user really sees.</p>
+
+
+
+<p class="wp-block-paragraph">I currently do not have the capacity to peer/connect with IXPs, but hopefully I’ll be able to test this out and document the process, in the near future.</p>
+
+<div id="jp-relatedposts" class="jp-relatedposts">
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div>					</div>
+		<div class="post-categories"><span>Published in</span><a href="https://www.daryllswer.com/category/networking/" title="View all posts in Networking">Networking</a></div>		<div class="post-tags"><ul><li><a href="https://www.daryllswer.com/tag/as/" title="View all posts tagged AS">AS</a></li><li><a href="https://www.daryllswer.com/tag/asn/" title="View all posts tagged ASN">ASN</a></li><li><a href="https://www.daryllswer.com/tag/autonomous-system/" title="View all posts tagged Autonomous System">Autonomous System</a></li><li><a href="https://www.daryllswer.com/tag/geofeed/" title="View all posts tagged Geofeed">Geofeed</a></li><li><a href="https://www.daryllswer.com/tag/geoip/" title="View all posts tagged GeoIP">GeoIP</a></li><li><a href="https://www.daryllswer.com/tag/ip-geolocation/" title="View all posts tagged IP Geolocation">IP Geolocation</a></li><li><a href="https://www.daryllswer.com/tag/networking/" title="View all posts tagged Networking">Networking</a></li><li><a href="https://www.daryllswer.com/tag/rfc8805/" title="View all posts tagged RFC8805">RFC8805</a></li></ul></div>	</article>
+		<nav class="further-reading">
+	<div class="previous">
+		<span>Previous Post</span>
+		<a href="https://www.daryllswer.com/the-human-side-of-isps/" rel="prev">The Human Side of ISPs</a>	</div>
+	<div class="next">
+		<span>Next Post</span>
+		<a href="https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/" rel="next">Interesting IPv6 observation on NDP (Neighbour Discovery Protocol)</a>	</div>
+</nav>		<section id="comments" class="comments">
+		<div class="comments-number">
+			<h2>
+				One Comment			</h2>
+		</div>
+		<ol class="comment-list">
+					</ol>
+					<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/how-did-i-set-up-my-own-autonomous-system/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://www.daryllswer.com/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> <span class="required-field-message">Required fields are marked <span class="required">*</span></span></p><p class="comment-form-comment">
+	            <label for="comment">Comment</label>
+	            <textarea required id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+	        </p><p class="comment-form-author">
+	            <label for="author">Name*</label>
+	            <input id="author" name="author" type="text" value="" size="30" aria-required="true">
+	        </p>
+<p class="comment-form-email">
+	            <label for="email">Email*</label>
+	            <input id="email" name="email" type="email" value="" size="30" aria-required="true">
+	        </p>
+<p class="comment-form-url">
+	            <label for="url">Website</label>
+	            <input id="url" name="url" type="url" value="" size="30">
+	            </p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"> <label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="comment-subscription-form"><input type="checkbox" name="subscribe_comments" id="subscribe_comments" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;"> <label class="subscribe-label" id="subscribe-label" for="subscribe_comments">Notify me of follow-up comments by email.</label></p><p class="comment-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts by email.</label></p><p class="form-submit"><span id="cf-turnstile-c-2568523605" class="cf-turnstile cf-turnstile-comments" data-action="wordpress-comment" data-callback="turnstileCommentCallback" data-sitekey="0x4AAAAAAA6_yQlodGSa8aHG" data-theme="auto" data-language="en-us" data-appearance="always" data-size="normal" data-retry="auto" data-retry-interval="1000"></span><br class="cf-turnstile-br cf-turnstile-br-comments"><span class="cf-turnstile-comment" style="pointer-events: none; opacity: 0.5;"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment"></span><script type="text/javascript">document.addEventListener("DOMContentLoaded", function() { document.body.addEventListener("click", function(event) { if (event.target.matches(".comment-reply-link, #cancel-comment-reply-link")) { turnstile.reset(".comment-form .cf-turnstile"); } }); });</script> <input type="hidden" name="comment_post_ID" value="970" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="10abc3962c"></p><p style="display: none !important;" class="akismet-fields-container" data-prefix="ak_"><label>Δ<textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100"></textarea></label><input type="hidden" id="ak_js_1" name="ak_js" value="250"><script>document.getElementById("ak_js_1").setAttribute("value",(new Date()).getTime())</script>
+</p></form>	</div><!-- #respond -->
+		</section>
+	</div>	</div>
+</section><!-- .main -->
+    <footer class="site-footer" role="contentinfo">
+                <div class="design-credit">
+            <span>
+                Daryll Swer's network engineering blog.            </span>
+        </div>
+    </footer>
+</div><!-- .max-width -->
+</div><!-- .overflow-container -->
+<button id="scroll-to-top" class="scroll-to-top"><span class="screen-reader-text">Scroll to the top</span><i class="fas fa-arrow-up"></i></button><script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/author/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<div class="simple-banner simple-banner-text" style="display:none !important"></div><script data-optimized="1" id="wp-hooks-js" src="https://www.daryllswer.com/wp-content/litespeed/js/af5a3b20e2b2f72a01b980a85c91baef.js?ver=04141"></script>
+<script data-optimized="1" id="wp-i18n-js" src="https://www.daryllswer.com/wp-content/litespeed/js/5de800ad07f995b347322aea90af03c0.js?ver=0a0e8"></script>
+<script data-optimized="1" id="wp-i18n-js-after">wp.i18n.setLocaleData({'text direction\u0004ltr':['ltr']})</script>
+<script data-optimized="1" id="swv-js" src="https://www.daryllswer.com/wp-content/litespeed/js/e9a3b4c1746a8af8abcd36c78615d3d1.js?ver=ff06d"></script>
+<script data-optimized="1" id="contact-form-7-js-translations">(function(domain,translations){var localeData=translations.locale_data[domain]||translations.locale_data.messages;localeData[""].domain=domain;wp.i18n.setLocaleData(localeData,domain)})("contact-form-7",{"translation-revision-date":"2026-05-05 18:32:38+0000","generator":"GlotPress\/4.0.3","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"en_GB"},"This contact form is placed in the wrong place.":["This contact form is placed in the wrong place."],"Error:":["Error:"]}},"comment":{"reference":"includes\/js\/index.js"}})</script>
+<script data-optimized="1" id="contact-form-7-js-before">var wpcf7={"api":{"root":"https:\/\/www.daryllswer.com\/wp-json\/","namespace":"contact-form-7\/v1"},"cached":1}</script>
+<script data-optimized="1" id="contact-form-7-js" src="https://www.daryllswer.com/wp-content/litespeed/js/6f5ba2d8d8b0414d1517f12c26a89066.js?ver=b75a7"></script>
+<script data-optimized="1" id="cf7apps-honeypot-refill-js-extra">var cf7appsHoneypotRefill={"forceRefillOnInit":"1"}</script>
+<script data-optimized="1" id="cf7apps-honeypot-refill-js" src="https://www.daryllswer.com/wp-content/litespeed/js/9683e5ec59020b01bccff6e664d2adce.js?ver=9c4d9"></script>
+<script data-optimized="1" id="flying-pages-js-before">window.FPConfig={delay:0,ignoreKeywords:["\/wp-admin","\/wp-login.php","\/cart","\/checkout","add-to-cart","logout","#","?",".png",".jpeg",".jpg",".gif",".svg",".webp"],maxRPS:3,hoverDelay:50}</script>
+<script data-optimized="1" id="flying-pages-js" src="https://www.daryllswer.com/wp-content/litespeed/js/fe50f626487caccffa7740157e8208e6.js?ver=c1cec" defer></script>
+<script data-optimized="1" id="vk-core-js" src="https://www.daryllswer.com/wp-content/litespeed/js/8f8564c85a1e17a4b6378ba930c6ce16.js?ver=6ce16"></script>
+<script data-optimized="1" id="ct-author-js-js-extra">var ct_author_objectL10n={"openPrimaryMenu":"open primary menu","closePrimaryMenu":"close primary menu","openChildMenu":"open child menu","closeChildMenu":"close child menu"}</script>
+<script data-optimized="1" id="ct-author-js-js" src="https://www.daryllswer.com/wp-content/litespeed/js/d898effc76afe6694e4ad6edd4f65129.js?ver=4150e"></script>
+<script data-optimized="1" async data-wp-strategy="async" fetchpriority="low" id="comment-reply-js" src="https://www.daryllswer.com/wp-content/litespeed/js/db7c6b314012e474610aee0afc93c2e1.js?ver=dc2c3"></script>
+<script data-optimized="1" id="ct-author-pro-js-js" src="https://www.daryllswer.com/wp-content/litespeed/js/3131c6e7672f9e145db8ab0107d869ae.js?ver=48bb9"></script>
+<script data-optimized="1" id="googlesitekit-events-provider-contact-form-7-js" src="https://www.daryllswer.com/wp-content/litespeed/js/bfba499859625298182bcc5b86e4bc31.js?ver=4bc31" defer></script>
+<script data-optimized="1" id="googlesitekit-events-provider-wpforms-js" src="https://www.daryllswer.com/wp-content/litespeed/js/e61afbd70616d48e99a12d9de6ef65a6.js?ver=f65a6" defer></script>
+<script id="jetpack-stats-js-before">
+_stq = window._stq || [];
+_stq.push([ "view", {"v":"ext","blog":"191168008","post":"970","tz":"5.5","srv":"www.daryllswer.com","j":"1:15.9.1"} ]);
+_stq.push([ "clickTrackerInit", "191168008", "970" ]);
+//# sourceURL=jetpack-stats-js-before
+</script>
+<script data-wp-strategy="defer" defer id="jetpack-stats-js" src="https://stats.wp.com/e-202627.js"></script>
+<script data-optimized="1" id="jetpack-blocks-assets-base-url-js-before">var Jetpack_Block_Assets_Base_Url="https://www.daryllswer.com/wp-content/plugins/jetpack/_inc/blocks/"</script>
+<script data-optimized="1" id="wp-dom-ready-js" src="https://www.daryllswer.com/wp-content/litespeed/js/39516d145bee63f76a44e5f0e1cfa728.js?ver=8953c"></script>
+<script data-optimized="1" id="wp-polyfill-js" src="https://www.daryllswer.com/wp-content/litespeed/js/bc6fd11f0a48b2c20973835839c07264.js?ver=cc4fb"></script>
+<script data-optimized="1" data-wp-strategy="defer" defer id="jetpack-block-subscriptions-js" src="https://www.daryllswer.com/wp-content/plugins/jetpack/_inc/blocks/subscriptions/view.js?minify=false&amp;ver=15.9.1"></script>
+<script data-wp-strategy="defer" id="cfturnstile-js" src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=auto"></script>
+<script data-wp-strategy="defer" defer id="cfturnstile-js-js" src="https://www.daryllswer.com/wp-content/plugins/simple-cloudflare-turnstile/js/disable-submit.js?ver=5.2"></script>
+<script id="cfturnstile-render-js-after">
+(function(){var a=0,d=false,q=false;function r(){if(d)return;var e=document.getElementById("cf-turnstile-c-2568523605");if(!e)return;if(e.innerHTML.trim()){d=true;return;}if(window.turnstile&&typeof window.turnstile.render==="function"){try{window.turnstile.render(e);d=true;}catch(_){}}}function w(){r();if(d)return;if(window.turnstile&&typeof window.turnstile.ready==="function"&&!q){q=true;try{window.turnstile.ready(r);}catch(_){}}if(!d&&a++<100){setTimeout(w,100);}}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",w);}else{w();}})();
+//# sourceURL=cfturnstile-render-js-after
+</script>
+<script data-optimized="1" defer id="akismet-frontend-js" src="https://www.daryllswer.com/wp-content/litespeed/js/89bf05b99da4ebf312a007cde8ce694b.js?ver=f94a5"></script>
+<script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://www.daryllswer.com/wp-includes/js/wp-emoji-release.min.js?ver=7.0"}}
+</script>
+<script type="module">
+/*! This file is auto-generated */
+const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(window._wpemojiSettings=a,"wpEmojiSettingsSupports"),s=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const a=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===a[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,a){let r;const o=(r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),s=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(e=>{s[e]=t(o,e,n,a)}),s}function r(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}a.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),c.toString(),p.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"});const r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=e=>{i(n=e.data),r.terminate(),t(n)})}catch(e){}i(n=f(s,u,c,p))}t(n)}).then(e=>{for(const n in e)a.supports[n]=e[n],a.supports.everything=a.supports.everything&&a.supports[n],"flag"!==n&&(a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&a.supports[n]);var t;a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&!a.supports.flag,a.supports.everything||((t=a.source||{}).concatemoji?r(t.concatemoji):t.wpemoji&&t.twemoji&&(r(t.twemoji),r(t.wpemoji)))});
+//# sourceURL=https://www.daryllswer.com/wp-includes/js/wp-emoji-loader.min.js
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a16d9527eded7819',t:'MTc4MzMzMDE0MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

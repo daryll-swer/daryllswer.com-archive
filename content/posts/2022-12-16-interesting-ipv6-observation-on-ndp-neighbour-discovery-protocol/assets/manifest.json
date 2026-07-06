@@ -1,0 +1,33 @@
+{
+  "assets": [
+    {
+      "alt": "",
+      "bytes": 7220368,
+      "caption": "",
+      "detection_method": "rest_embedded_wp_featuredmedia",
+      "height": 1990,
+      "local_path": "content/posts/2022-12-16-interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/assets/featured.png",
+      "mime_type": "image/png",
+      "role": "featured",
+      "sha256": "471709913897ff1d5239663289085efa645a46514a1b8655a536e263757af4a8",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image.png",
+      "width": 4080
+    },
+    {
+      "alt": null,
+      "bytes": 6060861,
+      "caption": "Figure-1 (ICMPv6 packets for NDP showing source/destination addresses matching GUA<>LLA pattern)",
+      "detection_method": null,
+      "height": 1873,
+      "local_path": "content/posts/2022-12-16-interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/assets/inline/image-3840x1873.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "fe487c4c86ab7a8020e5967bb5d5f81c099efa0352fbdef8f3b0239567bd3bc6",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image-3840x1873.png",
+      "width": 3840
+    }
+  ],
+  "generated_at": "2026-07-06T09:28:35+00:00",
+  "post_id": 1674,
+  "post_slug": "interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol"
+}

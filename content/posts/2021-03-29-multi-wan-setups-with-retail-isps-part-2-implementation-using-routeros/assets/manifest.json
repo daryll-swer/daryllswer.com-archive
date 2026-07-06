@@ -1,0 +1,33 @@
+{
+  "assets": [
+    {
+      "alt": null,
+      "bytes": 9954,
+      "caption": null,
+      "detection_method": "open_graph_og_image",
+      "height": 232,
+      "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/featured.png",
+      "mime_type": "image/png",
+      "role": "featured",
+      "sha256": "cdd891df066ab38344c777c3ef0f30daa34123f34299c0a5f448a057a026f43a",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
+      "width": 1166
+    },
+    {
+      "alt": null,
+      "bytes": 15713,
+      "caption": "Figure-2 (PPPoE Client MTU Config)",
+      "detection_method": null,
+      "height": 520,
+      "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/inline/Figure-2.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "28857721bac4a53cb21b477659e1fc575f691571a7b57567c9d12999f162ef35",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2.png",
+      "width": 1092
+    }
+  ],
+  "generated_at": "2026-07-06T09:28:35+00:00",
+  "post_id": 115,
+  "post_slug": "multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros"
+}

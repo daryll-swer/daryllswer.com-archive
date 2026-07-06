@@ -1,0 +1,5 @@
+Prefix,Location,Notes
+2400:d960::/34,North India,Sliced into /40 per state
+2400:d960:4000::/34,East India,Sliced into /40 per state
+2400:d960:8000::/34,South India,Sliced into /40 per state
+2400:d960:c000::/34,West India,Sliced into /40 per state

@@ -1,0 +1,163 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/",
+  "categories": [
+    {
+      "id": 4,
+      "name": "Architecture",
+      "slug": "architecture",
+      "taxonomy": "category"
+    },
+    {
+      "id": 5,
+      "name": "DC/Enterprise",
+      "slug": "dc-enterprise",
+      "taxonomy": "category"
+    },
+    {
+      "id": 6,
+      "name": "ISP",
+      "slug": "isp-networking",
+      "taxonomy": "category"
+    },
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "How to design OOB networks for ISPs, inspired by data centre networking.\nContinue readingOut-of-Band Network Design for Service Provider Networks",
+  "featured_image": {
+    "alt": "",
+    "bytes": 2670667,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 1260,
+    "local_path": "content/posts/2024-11-12-out-of-band-network-design-for-service-provider-networks/assets/featured.png",
+    "mime_type": "image/png",
+    "role": "featured",
+    "sha256": "dc887b155e1262e989442eaf57052bf8b17748221dd635c6dbbe481c36847e3e",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png",
+    "width": 2400
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "1536x1536": {
+      "file": "OOB_FT-1536x806.png",
+      "filesize": 1098511,
+      "height": 806,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT-1536x806.png",
+      "width": 1536
+    },
+    "2048x2048": {
+      "file": "OOB_FT-2048x1075.png",
+      "filesize": 1805916,
+      "height": 1075,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT-2048x1075.png",
+      "width": 2048
+    },
+    "full": {
+      "file": "OOB_FT.png",
+      "height": 1260,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png",
+      "width": 2400
+    },
+    "medium_large": {
+      "file": "OOB_FT-768x403.png",
+      "filesize": 313858,
+      "height": 403,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT-768x403.png",
+      "width": 768
+    },
+    "thumbnail": {
+      "file": "OOB_FT-1920x1008.png",
+      "filesize": 1615435,
+      "height": 1008,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT-1920x1008.png",
+      "width": 1920
+    },
+    "widget-thumbnail": {
+      "file": "OOB_FT-75x75.png",
+      "filesize": 9713,
+      "height": 75,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT-75x75.png",
+      "width": 75
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "1a090888fb661e143ce438f4c6e5d2541f5fa71ab2cdb6ff72cb72da44c798c4",
+    "index_md_sha256": "6e89523b9bea35f9536dcdbf4b6492982c1b9af09854e3827df9d868c6a311d9",
+    "rendered_article_html_sha256": "16ef9d9b459784cc9368bf0a371ea80f58bab87fadb3babd9353823e2fa02583",
+    "wordpress_post_json_sha256": "f25c8fcc55b93685360e4c1a77794029bc037d2b2c37685e0c439cdfc0493d06"
+  },
+  "id": 2931,
+  "modified": "2026-06-06T17:45:13",
+  "published": "2024-11-12T08:00:00",
+  "slug": "out-of-band-network-design-for-service-provider-networks",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2931",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 25,
+      "name": "IPv6",
+      "slug": "ipv6",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 26,
+      "name": "ISPs",
+      "slug": "isps",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 54,
+      "name": "Management Plane",
+      "slug": "management-plane",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 34,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 53,
+      "name": "OOB",
+      "slug": "oob",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "Out-of-Band Network Design for Service Provider Networks",
+  "validation": {
+    "status": "pending"
+  }
+}

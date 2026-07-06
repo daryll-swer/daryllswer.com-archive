@@ -1,0 +1,144 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      }
+    ],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      },
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/",
+  "categories": [
+    {
+      "id": 4,
+      "name": "Architecture",
+      "slug": "architecture",
+      "taxonomy": "category"
+    },
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "An extensive article on IPv6 best practices, architecture, and implementation with real-life examples for engineers and operators.\nContinue readingIPv6 Architecture and Subnetting Guide for Network Engineers and Operators",
+  "featured_image": {
+    "alt": "",
+    "bytes": 724214,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 404,
+    "local_path": "content/posts/2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/assets/featured.png",
+    "mime_type": "image/png",
+    "role": "featured",
+    "sha256": "0a90b27ccd2db41f499183fe35697bce359890caa2e1a89a61761f1fbae0f328",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png",
+    "width": 1110
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "full": {
+      "file": "Scaffold_FT.png",
+      "height": 404,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png",
+      "width": 1110
+    },
+    "medium_large": {
+      "file": "Scaffold_FT-768x280.png",
+      "filesize": 404809,
+      "height": 280,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT-768x280.png",
+      "width": 768
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "5c3499a21a31ad731c127eb08979357b1c28d00ccca1dc957a9260b2c8b539f5",
+    "index_md_sha256": "325e441ac0abbc9e5973e83ef3f469a5414c0b8c4cf491905f941b81224df00e",
+    "rendered_article_html_sha256": "9219b2d1c182fa7efa093ee06eaff59a231b4555f8b71645e72dd8aebca07517",
+    "wordpress_post_json_sha256": "aa1ab04798fa015ce60fa2cd897a2a84797c79ebbbc3126af50485c8897a2dab"
+  },
+  "id": 1512,
+  "modified": "2026-06-06T17:44:32",
+  "published": "2023-04-04T04:30:00",
+  "slug": "ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/1512",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 8,
+      "name": "Architecture",
+      "slug": "architecture",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 23,
+      "name": "IP Planning",
+      "slug": "ip-planning",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 25,
+      "name": "IPv6",
+      "slug": "ipv6",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 26,
+      "name": "ISPs",
+      "slug": "isps",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 34,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 35,
+      "name": "Planning",
+      "slug": "planning",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 39,
+      "name": "Subnetting",
+      "slug": "subnetting",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "IPv6 Architecture and Subnetting Guide for Network Engineers and Operators",
+  "validation": {
+    "status": "pending"
+  }
+}

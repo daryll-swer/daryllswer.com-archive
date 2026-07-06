@@ -1,0 +1,126 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      }
+    ],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      },
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/",
+  "categories": [
+    {
+      "id": 6,
+      "name": "ISP",
+      "slug": "isp-networking",
+      "taxonomy": "category"
+    },
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "BGP false-alarm: What happened, and what can we learn from it?\nContinue readingBGPlay data misinterpretation led to BGP false alarm call on my number",
+  "featured_image": {
+    "alt": "",
+    "bytes": 1510489,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 630,
+    "local_path": "content/posts/2023-09-21-bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/assets/featured.png",
+    "mime_type": "image/png",
+    "role": "featured",
+    "sha256": "6bdce0ab39d52efc3dd3b066e661d3c3b8a50360c14204f2dd63e389ee814b81",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png",
+    "width": 1200
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "full": {
+      "file": "BGP_False_Alarm_Featured_Image.png",
+      "height": 630,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png",
+      "width": 1200
+    },
+    "medium_large": {
+      "file": "BGP_False_Alarm_Featured_Image-768x403.png",
+      "filesize": 742548,
+      "height": 403,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image-768x403.png",
+      "width": 768
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "b3d7823d4721c09fdafa5110e056da17b013383ff2cf60bc66edba90239ea1e9",
+    "index_md_sha256": "0cb1d5a00423a6f4ee093a1d89ec62b01748c96f4bf7989deab5e2f7062c7ce6",
+    "rendered_article_html_sha256": "7ae129e7e2ffb8d320280773e468f69a32f676beb32a060757fba63ec98cd148",
+    "wordpress_post_json_sha256": "98245f53796ab6f4a9bfad002c09d1828a3965438e44128c3fd9b03e92230962"
+  },
+  "id": 2803,
+  "modified": "2025-05-21T01:52:11",
+  "published": "2023-09-21T19:17:52",
+  "slug": "bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2803",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 14,
+      "name": "BGP",
+      "slug": "bgp",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 26,
+      "name": "ISPs",
+      "slug": "isps",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 34,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 52,
+      "name": "Routing",
+      "slug": "routing",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "BGPlay data misinterpretation led to BGP false alarm call on my number",
+  "validation": {
+    "status": "pending"
+  }
+}

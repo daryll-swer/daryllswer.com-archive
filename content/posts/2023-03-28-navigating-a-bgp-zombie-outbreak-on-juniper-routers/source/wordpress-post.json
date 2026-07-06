@@ -1,0 +1,878 @@
+{
+  "_archive_filters": [
+    {
+      "filter": "donation_or_support_cta",
+      "redacted": true,
+      "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+      "tag": "h4"
+    }
+  ],
+  "_embedded": {
+    "author": [
+      {
+        "_links": {
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "avatar_urls": {
+          "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+          "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+          "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+        },
+        "description": "Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794",
+        "id": 1,
+        "link": "https://www.daryllswer.com/author/daryll/",
+        "name": "Daryll Swer",
+        "slug": "daryll",
+        "url": "https://www.daryllswer.com/"
+      }
+    ],
+    "replies": [
+      [
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/128"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/129",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2053",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Indeed, the logic is sound. Approximately 8-ish Juniper employees saw this blog post at least once, via social media (I know via Analytics). However, knowing Juniper (or any other big vendor), they are unlikely to reach out to me or fix this bug, unless I report it via JTAC (which isn&#8217;t going to happen).</p>\n<p>For this type of reason (money/greed – Hello Flex Licensing), I extensively specialise in alternative vendors like MikroTik &#8211; Don&#8217;t need to pay $3k to get a bug fixed within a few weeks or months at the most. I strongly believe in open source networking 😉</p>\n<p>Anyway, like-wise, interesting discussion it was 🙂</p>\n"
+          },
+          "date": "2023-03-30T16:30:35",
+          "id": 129,
+          "link": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/#comment-129",
+          "parent": 128,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=128"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/128",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2053",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/92ef7312bde1d3fff17541e4397323b7ab6762a830502fc0dfa8bfb727307426?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/92ef7312bde1d3fff17541e4397323b7ab6762a830502fc0dfa8bfb727307426?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/92ef7312bde1d3fff17541e4397323b7ab6762a830502fc0dfa8bfb727307426?s=96&r=g"
+          },
+          "author_name": "Cathal Mooney",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Yep your logic is sound there &#8211; if a reboot fixes it it&#8217;s not about the config!  Very odd what&#8217;s happening alright.  Interesting discussing with you 🙂</p>\n"
+          },
+          "date": "2023-03-30T16:10:14",
+          "id": 128,
+          "link": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/#comment-128",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/126"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/127",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2053",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Hi</p>\n<p>The prefix list by default seems to be an exact match already, even though Juniper doesn&#8217;t explicitly say it <a href=\"https://www.juniper.net/documentation/us/en/software/junos/routing-policy/topics/ref/statement/prefix-list-edit-policy-options.html\" target=\"_blank\" rel=\"noopener nofollow ugc\">here</a>.</p>\n<p>We&#8217;ve been using prefix list on many other routers in different ASes with no problems for exporting only aggregates.</p>\n<p>Another user also tested the config and <a href=\"https://github.com/topranks/homerlabs/tree/main/labs/filterlab\" target=\"_blank\" rel=\"noopener nofollow ugc\">confirmed</a>, there&#8217;s nothing wrong with using prefix list directly as I did.</p>\n<p>It&#8217;s also based on the simple logical fact that if a reboot fixed the issue, then the issue isn&#8217;t in the config. If it was the config, then why would a reboot fix the issue?</p>\n"
+          },
+          "date": "2023-03-29T12:02:51",
+          "id": 127,
+          "link": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/#comment-127",
+          "parent": 126,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=126"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/126",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2053",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/916b8cf5ecc66a23edc79c45cf2fc6817f0b5424081e70f0a71c2cf53a043285?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/916b8cf5ecc66a23edc79c45cf2fc6817f0b5424081e70f0a71c2cf53a043285?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/916b8cf5ecc66a23edc79c45cf2fc6817f0b5424081e70f0a71c2cf53a043285?s=96&r=g"
+          },
+          "author_name": "gbe0",
+          "author_url": "https://gbe0.com",
+          "content": {
+            "rendered": "<p>Hi,</p>\n<p>In your export policy, did you try using a prefix-list-filter with exact match instead? A prefix filter alone will allow more specific routes.</p>\n<p>Eg.</p>\n<p>set policy-statement as6453-v4-out term prefixes-out from prefix-list-filter as48635-v4 exact</p>\n<p>Then remove the existing prefix-list from the term.</p>\n"
+          },
+          "date": "2023-03-29T11:20:32",
+          "id": 126,
+          "link": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/#comment-126",
+          "parent": 0,
+          "type": "comment"
+        }
+      ]
+    ],
+    "wp:featuredmedia": [
+      {
+        "_links": {
+          "about": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/types/attachment"
+            }
+          ],
+          "author": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+            }
+          ],
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media"
+            }
+          ],
+          "curies": [
+            {
+              "href": "https://api.w.org/{rel}",
+              "name": "wp",
+              "templated": true
+            }
+          ],
+          "replies": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=2235"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/2235",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ],
+          "wp:attached-to": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2053",
+              "id": 2053,
+              "post_type": "post"
+            }
+          ]
+        },
+        "alt_text": "",
+        "author": 1,
+        "caption": {
+          "rendered": ""
+        },
+        "date": "2023-04-16T22:39:31",
+        "featured_media": 0,
+        "id": 2235,
+        "jetpack_sharing_enabled": true,
+        "link": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/zombie-routes_ft/",
+        "media_details": {
+          "file": "2023/03/Zombie-routes_FT.webp",
+          "filesize": 267140,
+          "height": 404,
+          "image_meta": {
+            "aperture": "0",
+            "camera": "",
+            "caption": "",
+            "copyright": "",
+            "created_timestamp": "0",
+            "credit": "",
+            "focal_length": "0",
+            "iso": "0",
+            "keywords": [],
+            "orientation": "0",
+            "shutter_speed": "0",
+            "title": ""
+          },
+          "sizes": {
+            "full": {
+              "file": "Zombie-routes_FT.webp",
+              "height": 404,
+              "mime_type": "image/webp",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp",
+              "width": 1110
+            },
+            "medium_large": {
+              "file": "Zombie-routes_FT-768x280.webp",
+              "filesize": 23664,
+              "height": 280,
+              "mime_type": "image/webp",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT-768x280.webp",
+              "width": 768
+            }
+          },
+          "width": 1110
+        },
+        "media_type": "image",
+        "mime_type": "image/webp",
+        "slug": "zombie-routes_ft",
+        "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp",
+        "title": {
+          "rendered": "Zombie-routes_FT"
+        },
+        "type": "attachment"
+      }
+    ],
+    "wp:term": [
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/5",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3"
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=5"
+              }
+            ]
+          },
+          "id": 5,
+          "link": "https://www.daryllswer.com/category/networking/dc-enterprise/",
+          "name": "DC/Enterprise",
+          "slug": "dc-enterprise",
+          "taxonomy": "category"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=3"
+              }
+            ]
+          },
+          "id": 3,
+          "link": "https://www.daryllswer.com/category/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "category"
+        }
+      ],
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/14",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=14"
+              }
+            ]
+          },
+          "id": 14,
+          "link": "https://www.daryllswer.com/tag/bgp/",
+          "name": "BGP",
+          "slug": "bgp",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/28",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=28"
+              }
+            ]
+          },
+          "id": 28,
+          "link": "https://www.daryllswer.com/tag/juniper/",
+          "name": "Juniper",
+          "slug": "juniper",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/29",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=29"
+              }
+            ]
+          },
+          "id": 29,
+          "link": "https://www.daryllswer.com/tag/junos/",
+          "name": "JunOS",
+          "slug": "junos",
+          "taxonomy": "post_tag"
+        }
+      ]
+    ]
+  },
+  "_links": {
+    "about": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/types/post"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts"
+      }
+    ],
+    "curies": [
+      {
+        "href": "https://api.w.org/{rel}",
+        "name": "wp",
+        "templated": true
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=2053"
+      }
+    ],
+    "self": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2053",
+        "targetHints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      }
+    ],
+    "version-history": [
+      {
+        "count": 0,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2053/revisions"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=2053"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/2235"
+      }
+    ],
+    "wp:term": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/categories?post=2053",
+        "taxonomy": "category"
+      },
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/tags?post=2053",
+        "taxonomy": "post_tag"
+      }
+    ]
+  },
+  "author": 1,
+  "categories": [
+    5,
+    3
+  ],
+  "class_list": [
+    "post-2053",
+    "post",
+    "type-post",
+    "status-publish",
+    "format-standard",
+    "has-post-thumbnail",
+    "hentry",
+    "category-dc-enterprise",
+    "category-networking",
+    "tag-bgp",
+    "tag-juniper",
+    "tag-junos",
+    "ratio-natural",
+    "entry"
+  ],
+  "comment_status": "open",
+  "content": {
+    "protected": false,
+    "rendered": "<p class=\"wp-block-paragraph\"><strong>This article has been published on the <a href=\"https://blog.apnic.net/2023/04/13/navigating-a-bgp-zombie-outbreak-on-juniper-routers/\" target=\"_blank\" rel=\"noreferrer noopener\">APNIC blog</a> as well.</strong></p>\n\n\n\n<p class=\"wp-block-paragraph\">Border Gateway Protocol (BGP) routing issues in general, can be a headache for network engineers. However, when those issues start exhibiting <a href=\"https://labs.ripe.net/author/romain_fontugne/bgp-zombies/\" target=\"_blank\" rel=\"noreferrer noopener\">zombie-like behaviour</a>, it’s time to take a closer look. This is exactly what I have observed on some Juniper routers in production at <a href=\"https://bgp.tools/as/48635\" target=\"_blank\" rel=\"noreferrer noopener\">AS48635</a> running as edge routers (responsible for IP Transit, PNIs and IXP peering). This phenomenon is not only perplexing but can also impact traffic engineering efforts or in some rare cases, cause network disruptions.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In this article, I will share my experience with BGP zombie routes on Junos OS (JunOS).</p>\n\n\n\n<p class=\"wp-block-paragraph\">However, please note that <strong>personally</strong> I am not a big Juniper user or fan, my home base has always been FRRouting (Linux) and MikroTik (also Linux with minimal vendor abstraction), so I may not necessarily have complete knowledge of JunOS quirks.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-background\">Background</h2>\n\n\n\n<p class=\"wp-block-paragraph\">At AS48635, one of the projects I worked on was cleaning up redundant route objects on IRR and performing route aggregation, that is, exporting only aggregates wherever possible to our external peers.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In our Juniper routers, this translates to:</p>\n\n\n\n<ul class=\"wp-block-list\">\n<li>Automatic generation of up-to-date prefix lists for our route policies using bgpq3.</li>\n\n\n\n<li>Properly configuring the <a href=\"https://www.juniper.net/documentation/us/en/software/junos/static-routing/topics/topic-map/config-route-aggregation.html\" target=\"_blank\" rel=\"noreferrer noopener\">route aggregation</a> feature.</li>\n\n\n\n<li>The BGP peer export policy should only export aggregates, even if more specifics exist in the local routing table on a given router.</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\">Below is a real-life configuration sample from one of the affected routers in production to give the readers some context. Please note, only IPv4 config is shared in this article, as IPv6 is identically configured, with the exact same end result (Zombie routes).</p>\n\n\n\n<pre class=\"wp-block-code\"><code>#Up-to-date aggregate-only prefix list#\npolicy-options {\n    }\n    prefix-list as48635-v4 {\n        2.57.56.0/22;\n        5.157.80.0/21;\n    }\n\n#BGP Policy logic#\npolicy-statement as6453-v4-out {\n    term prefixes-out {\n        from {\n            family inet;\n            prefix-list as48635-v4;\n        }\n        then accept;\n    }\n    term else-reject {\n        then reject;\n    }\n}\n\n#Route Aggregation#\nrouting-options {\n    aggregate {\n        defaults {\n            as-path {\n                origin igp;\n            }\n        }\n        route 2.57.56.0/22 discard;\n        route 5.157.80.0/21 discard;\n    }\n    generate {\n        route 0.0.0.0/0 discard;\n    }\n\n#BGP Peer#\ngroup ebgp-6453-v4 {\n    type external;\n    import [ XYZ ];\n    export as6453-v4-out;\n    remove-private {\n        all;\n    }\n    peer-as 6453;\n    multipath multiple-as;\n    neighbor 80.231.152.77 {\n        description TATA-v4;\n    }\n}</code></pre>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-context-expectation-vs-reality\">Context (Expectation vs Reality)</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Based on the configuration sample shared, we expected to only see aggregates and not more-specific routes to be advertised to our peer. However, the following is what we observed:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>daryllswer@edge-juniper-router&gt; show route advertising-protocol bgp 80.231.152.77   \n\ninet.0: 909266 destinations, 3698169 routes (909000 active, 2 holddown, 317 hidden)\n  Prefix\t\t  Nexthop\t       MED     Lclpref    AS path\n* 2.57.56.0/22            Self                                    I\n* 5.157.80.0/21           Self                                    I\n* 5.157.80.0/22           Self                                    I\n* 5.157.86.0/23           Self                                    I</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">As we can see, for reasons I could not understand, our Juniper router in this example (multiple routers showed the same behaviour) is still exporting more specifics instead of only the aggregates to our peer. I understand from the configuration example shared that the router should only explicitly advertise aggregates, even if more specifics exist in the local table.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-debugging\">Debugging</h2>\n\n\n\n<p class=\"wp-block-paragraph\">The first step I took was to verify the route aggregation was working correctly and indeed it was:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>daryllswer@edge-juniper-router&gt; show route 2.57.56.0/22 \n\ninet.0: 909307 destinations, 3698305 routes (909043 active, 0 holddown, 317 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n2.57.56.0/22       *[Aggregate/130] 1w4d 11:15:19\n                      Discard\n\ndaryllswer@edge-juniper-router&gt; show route 5.157.80.0/21 \n\ninet.0: 909328 destinations, 3698589 routes (909064 active, 0 holddown, 317 hidden)\n+ = Active Route, - = Last Active, * = Both\n\n5.157.80.0/21      *[Aggregate/130] 1w4d 11:19:45\n                      Discard</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">The second step I tried was to clear the BGP session with the affected peer(s) (<code>clear bgp neighbor 80.231.152.77</code>), but that did not resolve the issue.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The third step I tried was deactivating the BGP peer completely, and then re-enabling it, but that didn’t resolve the issue either.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The fourth step I tried was to verify that no legacy config on the router could be responsible for the issue and config was clean as expected.</p>\n\n\n\n<pre class=\"wp-block-code\"><code>daryllswer@edge-juniper-router&gt; show configuration | display set | match 5.157.*\nset routing-options aggregate route 5.157.80.0/21 discard\nset policy-options prefix-list as48635-v4 5.157.80.0/21</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">The final step I tried was a fresh <strong>reboot</strong> on <strong>all</strong> our Juniper edge routers, and voilà! Zombie routes disappeared.</p>\n\n\n\n<pre class=\"wp-block-code\"><code>daryllswer@edge-juniper-router&gt; show route advertising-protocol bgp 80.231.152.77    \n\ninet.0: 909222 destinations, 3940003 routes (908958 active, 0 holddown, 317 hidden)\n  Prefix\t\t  Nexthop\t       MED     Lclpref    AS path\n* 2.57.56.0/22            Self                                    I\n* 5.157.80.0/21           Self                                    I</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>JunOS versions</strong>:</p>\n\n\n\n<p class=\"wp-block-paragraph\">Different routers ran different JunOS versions and all of them were affected by the same issue. Although of course, these versions may not be the latest recommended versions, it does show that the issue is impacting multiple versions. Versions in use at the time of this issue include:</p>\n\n\n\n<ul class=\"wp-block-list\">\n<li>17.3R3.10</li>\n\n\n\n<li>17.3R3-S7.2</li>\n\n\n\n<li>18.4R1-S6.3</li>\n\n\n\n<li>21.4R1-S1.6</li>\n\n\n\n<li>21.4R3.15</li>\n</ul>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-conclusion\">Conclusion</h2>\n\n\n\n<p class=\"wp-block-paragraph\">In my experience working with alternative vendors like MikroTik (RouterOS) for a few years, I have <strong>never</strong> seen a BGP zombie route issue on their platform.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Based on my understanding of the configuration logic, debugging steps taken to resolve the issue and my personal previous experience with alternative vendors, I’m inclined to believe that the issue I have observed is <em>likely</em> a Juniper-specific bug, especially based on the fact that a reboot fixed it with no further configuration changes being made.</p>\n\n\n\n<p class=\"wp-block-paragraph\">If this is indeed a Juniper-specific bug, this <em>could</em> also mean that a large part of Zombie routes in the Default-free zone (DFZ) could be due to the bug as many Tier 1, 2 and 3 networks (where zombie routes often are propagated) in the world also use Juniper equipment and one wouldn’t expect them to just reboot a router because of Zombie routes, so hence would leave Zombie routes lingering for a long time in the DFZ.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In short, a reboot should <strong>never</strong> be required to remove (or prevent) zombie routes in production.</p>\n\n\n\n<p class=\"wp-block-paragraph\">If someone reading this post is from Juniper or someone with extensive knowledge of JunOS knows what the reason and preventive solution could be for this issue, please feel free to <a href=\"https://www.daryllswer.com/contact/\" target=\"_blank\" rel=\"noreferrer noopener\">contact me</a> or via any of my professional social media profiles (DMs are open).</p>\n\n\n\n<h3 class=\"wp-block-heading\">Update, 30th March 2023</h3>\n\n\n\n<p class=\"wp-block-paragraph\">Some people have suggested using the ‘from protocol aggregate’ parameter in the policies as a mitigation/workaround. While this could in theory mitigate the issue, it also creates a problem with our internal policy logic because in this case we have downstream BGP customers, and their prefixes are part of as48635-v4 / as48635-v6 prefix list and for obvious reasons, we do not ‘aggregate’ customer prefixes. The as48635-v<strong>X</strong> prefix list is generated based on our AS-SET and hence this workaround isn’t ideal for us.</p>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>At the same time, it still doesn’t answer the question of why a reboot fixed the issue just fine.</strong></p>\n"
+  },
+  "date": "2023-03-28T13:18:58",
+  "date_gmt": "2023-03-28T07:48:58",
+  "excerpt": {
+    "protected": false,
+    "rendered": "<p>A small article detailing an observation on BGP Zombies in Juniper platform.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/\">Continue reading<span class=\"screen-reader-text\">Navigating a BGP Zombie Outbreak on Juniper Routers</span></a></div>\n"
+  },
+  "featured_media": 2235,
+  "format": "standard",
+  "guid": {
+    "rendered": "http://daryllswer.com/?p=2053"
+  },
+  "id": 2053,
+  "jetpack-related-posts": [
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "21 September 2023",
+      "excerpt": "BGP false-alarm: What happened, and what can we learn from it?",
+      "format": false,
+      "id": 2803,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "BGPlay data misinterpretation led to BGP false alarm call on my number",
+      "url": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/",
+      "url_meta": {
+        "origin": 2053,
+        "position": 0
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/architecture/",
+        "text": "Architecture"
+      },
+      "classes": [],
+      "context": "In &quot;Architecture&quot;",
+      "date": "4 June 2026",
+      "excerpt": "How to design and structure BGP Router IDs in IPv6-native networks.",
+      "format": false,
+      "id": 5324,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "BGP Router ID Structuring in IPv6 Native Networks",
+      "url": "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/",
+      "url_meta": {
+        "origin": 2053,
+        "position": 1
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "16 December 2022",
+      "excerpt": "Explore an interesting observation on the Neighbour Discovery Protocol (NDP) in IPv6, in regard to Neighbour Solicitation and Advertisements.",
+      "format": false,
+      "id": 1674,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Interesting IPv6 observation on NDP (Neighbour Discovery Protocol)",
+      "url": "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/",
+      "url_meta": {
+        "origin": 2053,
+        "position": 2
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/home-networking/",
+        "text": "Home Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Home Networking&quot;",
+      "date": "26 May 2025",
+      "excerpt": "The operational and financial feasibility of MPLS-delivered IP Transit-To-The-Home (IPTTTH).",
+      "format": false,
+      "id": 4285,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How to bring data centre-like connectivity to your home with IPTTTH",
+      "url": "https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/",
+      "url_meta": {
+        "origin": 2053,
+        "position": 3
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "1 July 2022",
+      "excerpt": "An article about setting up an Autonomous System (AS) from scratch.",
+      "format": false,
+      "id": 970,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=700%2C400&ssl=1 2x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How did I set up my own Autonomous System?",
+      "url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/",
+      "url_meta": {
+        "origin": 2053,
+        "position": 4
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "27 September 2023",
+      "excerpt": "IPv6 Router Advertisement (RA) is a core component of SLAAC and DHCPv6, but it's not required for all situations. Some network vendors enable RA by default, but you should disable it when not needed.",
+      "format": false,
+      "id": 2836,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "IPv6 Router Advertisement: Why is it enabled by default on some network vendors?",
+      "url": "https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/",
+      "url_meta": {
+        "origin": 2053,
+        "position": 5
+      }
+    }
+  ],
+  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp",
+  "jetpack_sharing_enabled": true,
+  "link": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/",
+  "meta": {
+    "_jetpack_dont_email_post_to_subs": false,
+    "_jetpack_feature_clip_id": 0,
+    "_jetpack_memberships_contains_paid_content": false,
+    "_jetpack_memberships_contains_paywalled_content": false,
+    "_jetpack_newsletter_access": "",
+    "_jetpack_newsletter_tier_id": 0,
+    "footnotes": "",
+    "jetpack_post_was_ever_published": false
+  },
+  "modified": "2025-05-21T01:47:21",
+  "modified_gmt": "2025-05-20T20:17:21",
+  "ping_status": "open",
+  "slug": "navigating-a-bgp-zombie-outbreak-on-juniper-routers",
+  "status": "publish",
+  "sticky": false,
+  "tags": [
+    14,
+    28,
+    29
+  ],
+  "template": "",
+  "title": {
+    "rendered": "Navigating a BGP Zombie Outbreak on Juniper Routers"
+  },
+  "type": "post"
+}

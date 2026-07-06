@@ -1,0 +1,141 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/",
+  "categories": [
+    {
+      "id": 4,
+      "name": "Architecture",
+      "slug": "architecture",
+      "taxonomy": "category"
+    },
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "How to design and structure BGP Router IDs in IPv6-native networks.\nContinue readingBGP Router ID Structuring in IPv6 Native Networks",
+  "featured_image": {
+    "alt": "",
+    "bytes": 1445521,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 2194,
+    "local_path": "content/posts/2026-06-04-bgp-router-id-structuring-in-ipv6-native-networks/assets/featured.jpg",
+    "mime_type": "image/jpeg",
+    "role": "featured",
+    "sha256": "fe0b0c5a96f83c58bdcdd11bfe76ff56fe7b9db7c2505a9ce10ff071c84a5dee",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg",
+    "width": 2560
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "1536x1536": {
+      "file": "BGP_RouterID_FT-1536x1317.jpg",
+      "filesize": 533994,
+      "height": 1317,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-1536x1317.jpg",
+      "width": 1536
+    },
+    "2048x2048": {
+      "file": "BGP_RouterID_FT-2048x1755.jpg",
+      "filesize": 945763,
+      "height": 1755,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-2048x1755.jpg",
+      "width": 2048
+    },
+    "full": {
+      "file": "BGP_RouterID_FT-scaled.jpg",
+      "height": 2194,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg",
+      "width": 2560
+    },
+    "medium": {
+      "file": "BGP_RouterID_FT-2520x2160.jpg",
+      "filesize": 1400272,
+      "height": 2160,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-2520x2160.jpg",
+      "width": 2520
+    },
+    "medium_large": {
+      "file": "BGP_RouterID_FT-768x658.jpg",
+      "filesize": 127085,
+      "height": 658,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-768x658.jpg",
+      "width": 768
+    },
+    "thumbnail": {
+      "file": "BGP_RouterID_FT-1260x1080.jpg",
+      "filesize": 355332,
+      "height": 1080,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-1260x1080.jpg",
+      "width": 1260
+    },
+    "widget-thumbnail": {
+      "file": "BGP_RouterID_FT-75x75.jpg",
+      "filesize": 4673,
+      "height": 75,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-75x75.jpg",
+      "width": 75
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "395aceafe5e6fee3d5ce2146a9e7886f2754b214cd1477b8ea8a072a78d9574d",
+    "index_md_sha256": "cafb7f055f635d1f4ed88d2487e956ef11b3531e44194adbe5ee0a9c9eee5d1f",
+    "rendered_article_html_sha256": "c56861b9921a374c3dfdcf12f83f1e5f022a8bdcba95e736adc072940972ea0b",
+    "wordpress_post_json_sha256": "fdfd89faf6120f78aed6df0155800ea61cccd12b92376e1f8441bd39bfbe8a80"
+  },
+  "id": 5324,
+  "modified": "2026-06-14T05:55:24",
+  "published": "2026-06-04T14:36:35",
+  "slug": "bgp-router-id-structuring-in-ipv6-native-networks",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/5324",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 14,
+      "name": "BGP",
+      "slug": "bgp",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 25,
+      "name": "IPv6",
+      "slug": "ipv6",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "BGP Router ID Structuring in IPv6 Native Networks",
+  "validation": {
+    "status": "pending"
+  }
+}

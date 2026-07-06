@@ -1,0 +1,142 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      }
+    ],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      },
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/",
+  "categories": [
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "An article on Multi-WAN setups using consumer-grade ISPs.\nContinue readingMulti-WAN setups with retail ISPs (Part 1 – Theory)",
+  "featured_image": {
+    "alt": "",
+    "bytes": 71656,
+    "caption": "IP Address is intentionally left visible as it poses no security risk (Dynamic IP Address)",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 947,
+    "local_path": "content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory/assets/featured.png",
+    "mime_type": "image/png",
+    "role": "featured",
+    "sha256": "d8f70ce4f0b29e4fbbc028c064767976f3427bdd8b1f6c9d948f832554083146",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+    "width": 1920
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "1536x1536": {
+      "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1536x758.png",
+      "filesize": 115595,
+      "height": 758,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1536x758.png",
+      "width": 1536
+    },
+    "full": {
+      "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+      "height": 947,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+      "width": 1920
+    },
+    "medium_large": {
+      "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-768x379.png",
+      "filesize": 44690,
+      "height": 379,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-768x379.png",
+      "width": 768
+    },
+    "thumbnail": {
+      "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1280x720.png",
+      "filesize": 106734,
+      "height": 720,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1280x720.png",
+      "width": 1280
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "1db3721764373c3e0f1fda576efa4adcaf2804881c1d1ea5f62b4f08335635ef",
+    "index_md_sha256": "2adaea9568221f759856a837bb88ade65caa307711ce962866390747fabd9911",
+    "rendered_article_html_sha256": "f542d402feb693f69635fdfbd3a693d4e65794c200a9efb2f666b4524b7153f1",
+    "wordpress_post_json_sha256": "beb4e1bee9bef08279ed2d4349818247f93b9570eacd182a6fa8e70b873a822c"
+  },
+  "id": 66,
+  "modified": "2025-06-23T20:40:50",
+  "published": "2021-03-28T13:44:36",
+  "slug": "multi-wan-setups-with-retail-isps-part-1-theory",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/66",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 12,
+      "name": "Bandwidth",
+      "slug": "bandwidth",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 13,
+      "name": "Bandwidth Aggregation",
+      "slug": "bandwidth-aggregation",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 30,
+      "name": "Load Balancing",
+      "slug": "load-balancing",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 32,
+      "name": "Multi-WAN",
+      "slug": "multi-wan",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 34,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "Multi-WAN setups with retail ISPs (Part 1 – Theory)",
+  "validation": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,1069 @@
+<html lang="en-GB">
+
+<head>
+	<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="template" content="Author 1.57">
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v27.7 (Yoast SEO v27.9) - https://yoast.com/product/yoast-seo-premium-wordpress/ -->
+	<title>Out-of-Band Network Design for Service Provider Networks – Daryll Swer</title>
+	<meta name="description" content="How to design OOB networks for ISPs, inspired by data centre networking.">
+	<link rel="canonical" href="https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/">
+	<meta property="og:locale" content="en_GB">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Out-of-Band Network Design for Service Provider Networks – Daryll Swer">
+	<meta property="og:description" content="How to design OOB networks for ISPs, inspired by data centre networking.">
+	<meta property="og:url" content="https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/">
+	<meta property="og:site_name" content="Daryll Swer">
+	<meta property="article:published_time" content="2024-11-12T02:30:00+00:00">
+	<meta property="article:modified_time" content="2026-06-06T12:15:13+00:00">
+	<meta property="og:image" content="https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png">
+	<meta property="og:image:width" content="2400">
+	<meta property="og:image:height" content="1260">
+	<meta property="og:image:type" content="image/png">
+	<meta name="author" content="Daryll Swer">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:creator" content="@DaryllSwer">
+	<meta name="twitter:site" content="@DaryllSwer">
+	<meta name="twitter:label1" content="Written by">
+	<meta name="twitter:data1" content="Daryll Swer">
+	<meta name="twitter:label2" content="Estimated reading time">
+	<meta name="twitter:data2" content="1 minute">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https:\/\/schema.org","@graph":[{"@type":"TechArticle","@id":"https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/#article","isPartOf":{"@id":"https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/"},"author":{"name":"Daryll Swer","@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"headline":"Out-of-Band Network Design for Service Provider Networks","datePublished":"2024-11-12T02:30:00+00:00","dateModified":"2026-06-06T12:15:13+00:00","mainEntityOfPage":{"@id":"https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/"},"wordCount":4895,"commentCount":2,"publisher":{"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"image":{"@id":"https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/#primaryimage"},"thumbnailUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2024\/11\/OOB_FT.png","keywords":["IPv6","ISPs","Management Plane","Networking","OOB"],"articleSection":["Architecture","DC\/Enterprise","ISP","Networking"],"inLanguage":"en-GB","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/#respond"]}]},{"@type":"WebPage","@id":"https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/","url":"https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/","name":"Out-of-Band Network Design for Service Provider Networks &#8211; Daryll Swer","isPartOf":{"@id":"https:\/\/www.daryllswer.com\/#website"},"primaryImageOfPage":{"@id":"https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/#primaryimage"},"image":{"@id":"https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/#primaryimage"},"thumbnailUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2024\/11\/OOB_FT.png","datePublished":"2024-11-12T02:30:00+00:00","dateModified":"2026-06-06T12:15:13+00:00","description":"How to design OOB networks for ISPs, inspired by data centre networking.","breadcrumb":{"@id":"https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/#breadcrumb"},"inLanguage":"en-GB","potentialAction":[{"@type":"ReadAction","target":["https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/"]}]},{"@type":"ImageObject","inLanguage":"en-GB","@id":"https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/#primaryimage","url":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2024\/11\/OOB_FT.png","contentUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2024\/11\/OOB_FT.png","width":2400,"height":1260},{"@type":"BreadcrumbList","@id":"https:\/\/www.daryllswer.com\/out-of-band-network-design-for-service-provider-networks\/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https:\/\/www.daryllswer.com\/"},{"@type":"ListItem","position":2,"name":"Out-of-Band Network Design for Service Provider Networks"}]},{"@type":"WebSite","@id":"https:\/\/www.daryllswer.com\/#website","url":"https:\/\/www.daryllswer.com\/","name":"Daryll Swer","description":"Networking Defined","publisher":{"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"alternateName":"DS","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https:\/\/www.daryllswer.com\/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-GB"},{"@type":["Person","Organization"],"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076","name":"Daryll Swer","image":{"@type":"ImageObject","inLanguage":"en-GB","@id":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","url":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","contentUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","width":512,"height":512,"caption":"Daryll Swer"},"logo":{"@id":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg"},"description":"Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794","sameAs":["https:\/\/www.daryllswer.com\/","https:\/\/www.linkedin.com\/in\/daryllswer\/","https:\/\/x.com\/DaryllSwer"],"honorificPrefix":"Mr","gender":"male","knowsAbout":["Network engineering","IPv6","BGP","SR-MPLS","VXLAN","EVPN","OOB"],"knowsLanguage":["English","Khasi"],"jobTitle":"Principal Consultant, Proprietor","worksFor":"Swer Networks","publishingPrinciples":"https:\/\/www.daryllswer.com\/about\/","ownershipFundingInfo":"https:\/\/www.daryllswer.com\/donation\/"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel="dns-prefetch" href="//cdn.visibilitykit.ai">
+<link rel="dns-prefetch" href="//www.googletagmanager.com">
+<link rel="dns-prefetch" href="//stats.wp.com">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » Feed" href="https://www.daryllswer.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » Comments Feed" href="https://www.daryllswer.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » Out-of-Band Network Design for Service Provider Networks Comments Feed" href="https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/feed/">
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://www.daryllswer.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.daryllswer.com%2Fout-of-band-network-design-for-service-provider-networks%2F">
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://www.daryllswer.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.daryllswer.com%2Fout-of-band-network-design-for-service-provider-networks%2F&amp;format=xml">
+
+<link data-optimized="2" rel="stylesheet" href="https://www.daryllswer.com/wp-content/litespeed/css/009539cadabc4368f1932a6db189108c.css?ver=f1577">
+
+
+
+
+
+
+<style id="wp-block-image-inline-css">
+.wp-block-image>a,.wp-block-image>figure>a{display:inline-block}.wp-block-image img{box-sizing:border-box;height:auto;max-width:100%;vertical-align:bottom}@media not (prefers-reduced-motion){.wp-block-image img.hide{visibility:hidden}.wp-block-image img.show{animation:show-content-image .4s}}.wp-block-image[style*=border-radius] img,.wp-block-image[style*=border-radius]>a{border-radius:inherit}.wp-block-image.has-custom-border img{box-sizing:border-box}.wp-block-image.aligncenter{text-align:center}.wp-block-image.alignfull>a,.wp-block-image.alignwide>a{width:100%}.wp-block-image.alignfull img,.wp-block-image.alignwide img{height:auto;width:100%}.wp-block-image .aligncenter,.wp-block-image .alignleft,.wp-block-image .alignright,.wp-block-image.aligncenter,.wp-block-image.alignleft,.wp-block-image.alignright{display:table}.wp-block-image .aligncenter>figcaption,.wp-block-image .alignleft>figcaption,.wp-block-image .alignright>figcaption,.wp-block-image.aligncenter>figcaption,.wp-block-image.alignleft>figcaption,.wp-block-image.alignright>figcaption{caption-side:bottom;display:table-caption}.wp-block-image .alignleft{float:left;margin:.5em 1em .5em 0}.wp-block-image .alignright{float:right;margin:.5em 0 .5em 1em}.wp-block-image .aligncenter{margin-left:auto;margin-right:auto}.wp-block-image :where(figcaption){margin-bottom:1em;margin-top:.5em}.wp-block-image.is-style-circle-mask img{border-radius:9999px}@supports ((-webkit-mask-image:none) or (mask-image:none)) or (-webkit-mask-image:none){.wp-block-image.is-style-circle-mask img{border-radius:0;-webkit-mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-mode:alpha;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain}}:root :where(.wp-block-image.is-style-rounded img,.wp-block-image .is-style-rounded img){border-radius:9999px}.wp-block-image figure{margin:0}.wp-lightbox-container{display:flex;flex-direction:column;position:relative}.wp-lightbox-container img{cursor:zoom-in}.wp-lightbox-container img:hover+button{opacity:1}.wp-lightbox-container button{align-items:center;backdrop-filter:blur(16px) saturate(180%);background-color:#5a5a5a40;border:none;border-radius:4px;cursor:zoom-in;display:flex;height:20px;justify-content:center;opacity:0;padding:0;position:absolute;right:16px;text-align:center;top:16px;width:20px;z-index:100}@media not (prefers-reduced-motion){.wp-lightbox-container button{transition:opacity .2s ease}}.wp-lightbox-container button:focus-visible{outline:3px auto #5a5a5a40;outline:3px auto -webkit-focus-ring-color;outline-offset:3px}.wp-lightbox-container button:hover{cursor:pointer;opacity:1}.wp-lightbox-container button:focus{opacity:1}.wp-lightbox-container button:focus,.wp-lightbox-container button:hover,.wp-lightbox-container button:not(:hover):not(:active):not(.has-background){background-color:#5a5a5a40;border:none}.wp-lightbox-overlay{box-sizing:border-box;cursor:zoom-out;height:100vh;left:0;overflow:hidden;position:fixed;top:0;visibility:hidden;width:100%;z-index:100000}.wp-lightbox-overlay .wp-lightbox-close-button{align-items:center;cursor:pointer;display:flex;font-family:inherit;gap:8px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 4px;position:absolute;right:calc(env(safe-area-inset-right) + 16px);top:calc(env(safe-area-inset-top) + 16px);z-index:5000000}.wp-lightbox-overlay .wp-lightbox-close-button:focus,.wp-lightbox-overlay .wp-lightbox-close-button:hover,.wp-lightbox-overlay .wp-lightbox-close-button:not(:hover):not(:active):not(.has-background){background:none;border:none}.wp-lightbox-overlay .wp-lightbox-close-button:has(.wp-lightbox-close-text:not([hidden])) .wp-lightbox-close-icon svg{height:1em;width:1em}.wp-lightbox-overlay .wp-lightbox-close-icon svg{display:block}.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{align-items:center;bottom:16px;cursor:pointer;display:flex;font-family:inherit;gap:4px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 8px;position:absolute;z-index:2000002}.wp-lightbox-overlay .wp-lightbox-navigation-button-next[hidden],.wp-lightbox-overlay .wp-lightbox-navigation-button-prev[hidden]{display:none}@media (min-width:960px){.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{bottom:50%;transform:translateY(-50%)}}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:not(:hover):not(:active):not(.has-background),.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:not(:hover):not(:active):not(.has-background){background:none;border:none;padding:0 8px}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg{display:block;height:1.5em;width:1.5em}.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{left:calc(env(safe-area-inset-left) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-button-next{right:calc(env(safe-area-inset-right) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-icon svg{vertical-align:middle}.wp-lightbox-overlay .lightbox-image-container{height:var(--wp--lightbox-container-height);left:50%;overflow:hidden;position:absolute;top:50%;transform:translate(-50%,-50%);transform-origin:top left;width:var(--wp--lightbox-container-width);z-index:2000001}.wp-lightbox-overlay .wp-block-image{align-items:center;box-sizing:border-box;display:flex;height:100%;justify-content:center;margin:0;position:relative;transform-origin:0 0;width:100%;z-index:3000000}.wp-lightbox-overlay .wp-block-image img{height:var(--wp--lightbox-image-height);min-height:var(--wp--lightbox-image-height);min-width:var(--wp--lightbox-image-width);width:var(--wp--lightbox-image-width)}.wp-lightbox-overlay .wp-block-image figcaption{display:none}.wp-lightbox-overlay button{background:none;border:none}.wp-lightbox-overlay .scrim{background-color:#fff;height:100%;opacity:.9;position:absolute;width:100%;z-index:2000000}.wp-lightbox-overlay.active{visibility:visible}@media not (prefers-reduced-motion){.wp-lightbox-overlay.active{animation:turn-on-visibility .25s both}.wp-lightbox-overlay.active img{animation:turn-on-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active){animation:turn-off-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active) img{animation:turn-off-visibility .25s both}.wp-lightbox-overlay.zoom.active{animation:none;opacity:1;visibility:visible}.wp-lightbox-overlay.zoom.active .lightbox-image-container{animation:lightbox-zoom-in .4s}.wp-lightbox-overlay.zoom.active .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.active .scrim{animation:turn-on-visibility .4s forwards}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active){animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container{animation:lightbox-zoom-out .4s}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .scrim{animation:turn-off-visibility .4s forwards}}@keyframes show-content-image{0%{visibility:hidden}99%{visibility:hidden}to{visibility:visible}}@keyframes turn-on-visibility{0%{opacity:0}to{opacity:1}}@keyframes turn-off-visibility{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes lightbox-zoom-in{0%{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale))}to{transform:translate(-50%,-50%) scale(1)}}@keyframes lightbox-zoom-out{0%{transform:translate(-50%,-50%) scale(1);visibility:visible}99%{visibility:visible}to{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale));visibility:hidden}}
+/*# sourceURL=https://www.daryllswer.com/wp-includes/blocks/image/style.min.css */
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script data-optimized="1" id="jetpack_related-posts-js-extra">var related_posts_js_options={"post_heading":"h4"}</script>
+<script data-optimized="1" id="jetpack_related-posts-js" src="https://www.daryllswer.com/wp-content/litespeed/js/60629040d2f510e5c7bdf76819bb22ad.js?ver=75fcb"></script>
+<script id="jquery-core-js" src="https://www.daryllswer.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
+<script data-optimized="1" id="jquery-migrate-js" src="https://www.daryllswer.com/wp-content/litespeed/js/a0480947b50373b63214f29230694166.js?ver=aaa43"></script>
+<script data-optimized="1" id="simple-banner-script-js-before">const simpleBannerScriptParams={"pro_version_enabled":"","debug_mode":"","id":2931,"version":"3.3.0","banner_params":[{"hide_simple_banner":"no","simple_banner_prepend_element":"body","simple_banner_position":"fixed","header_margin":"","header_padding":"","wp_body_open_enabled":"","wp_body_open":!0,"simple_banner_z_index":"","simple_banner_text":"For professional services, <a href=\"https:\/\/www.swernetworks.com\/\">click here<\/a>.","disabled_on_current_page":!1,"disabled_pages_array":[],"is_current_page_a_post":!0,"disabled_on_posts":"","simple_banner_disabled_page_paths":"","simple_banner_font_size":"","simple_banner_color":"#242526","simple_banner_text_color":"#ffffff","simple_banner_link_color":"#ffa500","simple_banner_close_color":"#242526","simple_banner_custom_css":"","simple_banner_scrolling_custom_css":"","simple_banner_text_custom_css":"","simple_banner_button_css":"","site_custom_css":"","keep_site_custom_css":"","site_custom_js":"","keep_site_custom_js":"","close_button_enabled":"on","close_button_expiration":"0.006944","close_button_cookie_set":!1,"current_date":{"date":"2026-07-06 07:08:09.342774","timezone_type":3,"timezone":"UTC"},"start_date":{"date":"2026-07-06 07:08:09.342778","timezone_type":3,"timezone":"UTC"},"end_date":{"date":"2026-07-06 07:08:09.342781","timezone_type":3,"timezone":"UTC"},"simple_banner_start_after_date":"","simple_banner_remove_after_date":"","simple_banner_insert_inside_element":""}]}</script>
+<script data-optimized="1" id="simple-banner-script-js" src="https://www.daryllswer.com/wp-content/litespeed/js/cc310f2289e8048ba2a726edebe8b939.js?ver=c906a"></script>
+
+<!-- Google tag (gtag.js) snippet added by Site Kit -->
+<!-- Google Analytics snippet added by Site Kit -->
+<script id="google_gtagjs-js" src="https://www.googletagmanager.com/gtag/js?id=G-PQZ28ELT4T" async></script>
+<script id="google_gtagjs-js-after">
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag("set","linker",{"domains":["www.daryllswer.com"]});
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "G-PQZ28ELT4T", {"googlesitekit_post_type":"post","googlesitekit_post_categories":"Architecture; DC\/Enterprise; ISP; Networking","googlesitekit_post_date":"20241112"});
+ window._googlesitekit = window._googlesitekit || {}; window._googlesitekit.throttledEvents = []; window._googlesitekit.gtagEvent = (name, data) => { var key = JSON.stringify( { name, data } ); if ( !! window._googlesitekit.throttledEvents[ key ] ) { return; } window._googlesitekit.throttledEvents[ key ] = true; setTimeout( () => { delete window._googlesitekit.throttledEvents[ key ]; }, 5 ); gtag( "event", name, { ...data, event_source: "site-kit" } ); }; 
+//# sourceURL=google_gtagjs-js-after
+</script>
+<link rel="https://api.w.org/" href="https://www.daryllswer.com/wp-json/"><link rel="alternate" title="JSON" type="application/json" href="https://www.daryllswer.com/wp-json/wp/v2/posts/2931"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.daryllswer.com/xmlrpc.php?rsd">
+
+<link rel="shortlink" href="https://www.daryllswer.com/?p=2931">
+<meta name="generator" content="Site Kit by Google 1.182.0"><style id="simple-banner-site-custom-css-dummy" type="text/css"></style><script id="simple-banner-site-custom-js-dummy" type="text/javascript"></script>	
+		<link rel="llms-sitemap" href="https://www.daryllswer.com/llms.txt">
+<link rel="icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-32x32.png" sizes="32x32">
+<link rel="icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-180x180.png">
+<meta name="msapplication-TileImage" content="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-270x270.png">
+
+
+
+</head>
+
+<body id="author" class="wp-singular post-template-default single single-post postid-2931 single-format-standard wp-theme-author singular singular-post singular-post-2931">
+			<a class="skip-content" href="#main">Skip to content</a>
+		<div id="overflow-container" class="overflow-container">
+			<div class="max-width">
+				<div id="main-sidebar" class="main-sidebar">
+																<header class="site-header" id="site-header" role="banner">
+							<div id="title-container" class="title-container">
+																	<div id="site-avatar" class="site-avatar" style="background-image: url('https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g')"></div>
+																<div class="container">
+									<div id="site-title" class="site-title"><a href="https://www.daryllswer.com">Daryll Swer</a></div>									<p class="tagline">Networking Defined</p>								</div>
+							</div>
+							<button id="toggle-navigation" class="toggle-navigation" aria-expanded="false">
+								<span class="screen-reader-text">open primary menu</span>
+								<i class="fas fa-bars"></i>
+							</button>
+							<div class="social-media-icons"><ul>						<li>
+							<a class="twitter" target="_blank" href="https://x.com/daryllswer">
+								<i class="fab fa-square-x-twitter"></i>
+								<span class="screen-reader-text">twitter</span>
+															</a>
+						</li>
+												<li>
+							<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/daryllswer/">
+								<i class="fab fa-linkedin"></i>
+								<span class="screen-reader-text">linkedin</span>
+															</a>
+						</li>
+												<li>
+							<a class="rss" target="_blank" href="http://daryllswer.com/feed/">
+								<i class="fas fa-rss"></i>
+								<span class="screen-reader-text">rss</span>
+															</a>
+						</li>
+												<li>
+							<a class="telegram" target="_blank" href="https://t.me/NetworkOpsCentral">
+								<i class="fab fa-telegram"></i>
+								<span class="screen-reader-text">telegram</span>
+															</a>
+						</li>
+						</ul></div>							<div id="menu-primary" class="menu-container menu-primary" role="navigation">
+	<nav class="menu"><ul id="menu-primary-items" class="menu-primary-items"><li id="menu-item-2228" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2228"><a href="https://www.daryllswer.com/about/">About</a></li>
+<li id="menu-item-2229" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2229"><a href="https://www.daryllswer.com/contact/">Contact</a></li>
+<li id="menu-item-2187" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2187"><a href="https://www.daryllswer.com/as149794/">AS149794</a></li>
+<li id="menu-item-2186" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2186"><a href="https://www.daryllswer.com/geofeed/">Geofeed</a></li>
+</ul></nav></div>						</header>
+																<aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+		<h1 class="screen-reader-text">Sidebar</h1>
+		<section id="block-8" class="widget widget_block widget_search"><form role="search" method="get" action="https://www.daryllswer.com/" class="wp-block-search__button-outside wp-block-search__icon-button wp-block-search"><label class="wp-block-search__label screen-reader-text" for="wp-block-search__input-1">Search</label><div class="wp-block-search__inside-wrapper"><input class="wp-block-search__input" id="wp-block-search__input-1" placeholder="Search" value="" type="search" name="s" required><button aria-label="Search" class="wp-block-search__button has-background has-icon wp-element-button" type="submit" style="background-color: #c9c9c9"><svg class="search-icon" viewbox="0 0 24 24" width="24" height="24">
+					<path d="M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"></path>
+				</svg></button></div></form></section><section id="block-34" class="widget widget_block">	<div class="wp-block-jetpack-subscriptions__supports-newline wp-block-jetpack-subscriptions__use-newline is-style-split wp-block-jetpack-subscriptions">
+		<div class="wp-block-jetpack-subscriptions__container is-not-subscriber">
+							<form action="https://wordpress.com/email-subscriptions" method="post" accept-charset="utf-8" data-blog="191168008" data-post_access_level="everybody" data-subscriber_email="" id="subscribe-blog">
+					<div class="wp-block-jetpack-subscriptions__form-elements">
+												<p id="subscribe-email">
+							<label id="subscribe-field-label" for="subscribe-field" class="screen-reader-text">
+								Type your email…							</label>
+							<input required="required" type="email" name="email" autocomplete="email" class="no-border-radius has-12px-font-size " style="font-size: 12px;padding: 15px 23px 15px 23px;border-radius: 0px;border-width: 0px;" placeholder="Type your email…" value="" id="subscribe-field" title="Please fill in this field.">						</p>
+												<p id="subscribe-submit" style="width: 100%;max-width: 100%;">
+							<input type="hidden" name="action" value="subscribe">
+							<input type="hidden" name="blog_id" value="191168008">
+							<input type="hidden" name="source" value="https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/">
+							<input type="hidden" name="sub-type" value="subscribe-block">
+							<input type="hidden" name="app_source" value="">
+							<input type="hidden" name="redirect_fragment" value="subscribe-blog">
+							<input type="hidden" name="lang" value="en_GB">
+							<input type="hidden" id="_wpnonce" name="_wpnonce" value="72a6b8335f"><input type="hidden" name="_wp_http_referer" value="/out-of-band-network-design-for-service-provider-networks/"><input type="hidden" name="post_id" value="2931">							<button type="submit" class="wp-block-button__link no-border-radius has-12px-font-size has-text-color has-black-color" style="background: #c9c9c9;width: 100%;font-size: 12px;padding: 15px 23px 15px 23px;margin-top: 10px;border-radius: 0px;border-width: 0px;" name="jetpack_subscriptions_widget">
+								Subscribe							</button>
+						</p>
+					</div>
+				</form>
+								</div>
+	</div>
+	</section><section id="block-14" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-copyright">Copyright</h2>
+
+
+
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="http://daryllswer.com/">Daryll Swer and daryllswer.com</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="http://daryllswer.com/about/">Daryll Swer</a> is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
+</div></div>
+</section><section id="block-37" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-disclaimer">Disclaimer</h2>
+
+
+
+<p class="wp-block-paragraph">This is my personal site, all content, and media found here are not affiliated with any organisation or my employer but myself. All content is my own unless otherwise specified.</p>
+</div></div>
+</section><section id="block-20" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-recent-posts">Recent Posts</h2>
+
+
+<ul class="wp-block-latest-posts__list has-dates wp-block-latest-posts"><li><a class="wp-block-latest-posts__post-title" href="https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/">BGP Router ID Structuring in IPv6 Native Networks</a><time datetime="2026-06-04T14:36:35+05:30" class="wp-block-latest-posts__post-date">4 June 2026</time></li>
+<li><a class="wp-block-latest-posts__post-title" href="https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/">How to bring data centre-like connectivity to your home with IPTTTH</a><time datetime="2025-05-26T08:30:00+05:30" class="wp-block-latest-posts__post-date">26 May 2025</time></li>
+</ul></div></div>
+</section><section id="block-24" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-categories">Categories</h2>
+
+
+<ul class="wp-block-categories-list wp-block-categories-taxonomy-category wp-block-categories">	<li class="cat-item cat-item-3"><a href="https://www.daryllswer.com/category/networking/">Networking</a> (18)
+<ul class="children">
+	<li class="cat-item cat-item-4"><a href="https://www.daryllswer.com/category/networking/architecture/">Architecture</a> (3)
+</li>
+	<li class="cat-item cat-item-5"><a href="https://www.daryllswer.com/category/networking/dc-enterprise/">DC/Enterprise</a> (2)
+</li>
+	<li class="cat-item cat-item-58"><a href="https://www.daryllswer.com/category/networking/home-networking/">Home Networking</a> (1)
+</li>
+	<li class="cat-item cat-item-6"><a href="https://www.daryllswer.com/category/networking/isp-networking/">ISP</a> (6)
+</li>
+	<li class="cat-item cat-item-7"><a href="https://www.daryllswer.com/category/networking/ixp-networking/">IXP</a> (1)
+</li>
+	<li class="cat-item cat-item-55"><a href="https://www.daryllswer.com/category/networking/linux/">Linux</a> (2)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-45"><a href="https://www.daryllswer.com/category/non-tech/">Non-Tech</a> (1)
+<ul class="children">
+	<li class="cat-item cat-item-46"><a href="https://www.daryllswer.com/category/non-tech/khasi-ethnicity/">Khasi Ethnicity</a> (1)
+</li>
+</ul>
+</li>
+</ul></div></div>
+</section><section id="block-29" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-archives">Archives</h2>
+
+
+<ul class="wp-block-archives-list wp-block-archives">	<li><a href="https://www.daryllswer.com/2026/06/">June 2026</a></li>
+	<li><a href="https://www.daryllswer.com/2025/05/">May 2025</a></li>
+	<li><a href="https://www.daryllswer.com/2025/04/">April 2025</a></li>
+	<li><a href="https://www.daryllswer.com/2024/11/">November 2024</a></li>
+	<li><a href="https://www.daryllswer.com/2024/01/">January 2024</a></li>
+	<li><a href="https://www.daryllswer.com/2023/09/">September 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/08/">August 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/05/">May 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/04/">April 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/03/">March 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2022/12/">December 2022</a></li>
+	<li><a href="https://www.daryllswer.com/2022/07/">July 2022</a></li>
+	<li><a href="https://www.daryllswer.com/2021/08/">August 2021</a></li>
+	<li><a href="https://www.daryllswer.com/2021/06/">June 2021</a></li>
+	<li><a href="https://www.daryllswer.com/2021/03/">March 2021</a></li>
+</ul></div></div>
+</section><section id="block-32" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-tags">Tags</h2>
+
+
+<p class="is-style-default wp-block-tag-cloud"><a href="https://www.daryllswer.com/tag/architecture/" class="tag-cloud-link tag-link-8 tag-link-position-1" style="font-size: 8pt;" aria-label="Architecture (1 item)">Architecture<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/as/" class="tag-cloud-link tag-link-9 tag-link-position-2" style="font-size: 8pt;" aria-label="AS (1 item)">AS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/asn/" class="tag-cloud-link tag-link-10 tag-link-position-3" style="font-size: 8pt;" aria-label="ASN (1 item)">ASN<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/autonomous-system/" class="tag-cloud-link tag-link-11 tag-link-position-4" style="font-size: 8pt;" aria-label="Autonomous System (1 item)">Autonomous System<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/bandwidth/" class="tag-cloud-link tag-link-12 tag-link-position-5" style="font-size: 10.863636363636pt;" aria-label="Bandwidth (2 items)">Bandwidth<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/bandwidth-aggregation/" class="tag-cloud-link tag-link-13 tag-link-position-6" style="font-size: 10.863636363636pt;" aria-label="Bandwidth Aggregation (2 items)">Bandwidth Aggregation<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/bgp/" class="tag-cloud-link tag-link-14 tag-link-position-7" style="font-size: 14.363636363636pt;" aria-label="BGP (4 items)">BGP<span class="tag-link-count"> (4)</span></a>
+<a href="https://www.daryllswer.com/tag/bng/" class="tag-cloud-link tag-link-15 tag-link-position-8" style="font-size: 8pt;" aria-label="BNG (1 item)">BNG<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/cgnat/" class="tag-cloud-link tag-link-16 tag-link-position-9" style="font-size: 12.772727272727pt;" aria-label="CGNAT (3 items)">CGNAT<span class="tag-link-count"> (3)</span></a>
+<a href="https://www.daryllswer.com/tag/core/" class="tag-cloud-link tag-link-17 tag-link-position-10" style="font-size: 8pt;" aria-label="Core (1 item)">Core<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/docker/" class="tag-cloud-link tag-link-61 tag-link-position-11" style="font-size: 8pt;" aria-label="Docker (1 item)">Docker<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/double-nat/" class="tag-cloud-link tag-link-18 tag-link-position-12" style="font-size: 12.772727272727pt;" aria-label="Double NAT (3 items)">Double NAT<span class="tag-link-count"> (3)</span></a>
+<a href="https://www.daryllswer.com/tag/edge/" class="tag-cloud-link tag-link-19 tag-link-position-13" style="font-size: 8pt;" aria-label="Edge (1 item)">Edge<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/geofeed/" class="tag-cloud-link tag-link-20 tag-link-position-14" style="font-size: 8pt;" aria-label="Geofeed (1 item)">Geofeed<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/geoip/" class="tag-cloud-link tag-link-21 tag-link-position-15" style="font-size: 8pt;" aria-label="GeoIP (1 item)">GeoIP<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ip-geolocation/" class="tag-cloud-link tag-link-22 tag-link-position-16" style="font-size: 8pt;" aria-label="IP Geolocation (1 item)">IP Geolocation<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ip-planning/" class="tag-cloud-link tag-link-23 tag-link-position-17" style="font-size: 8pt;" aria-label="IP Planning (1 item)">IP Planning<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/iptables/" class="tag-cloud-link tag-link-57 tag-link-position-18" style="font-size: 8pt;" aria-label="iptables (1 item)">iptables<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ipv4/" class="tag-cloud-link tag-link-24 tag-link-position-19" style="font-size: 14.363636363636pt;" aria-label="IPv4 (4 items)">IPv4<span class="tag-link-count"> (4)</span></a>
+<a href="https://www.daryllswer.com/tag/ipv6/" class="tag-cloud-link tag-link-25 tag-link-position-20" style="font-size: 19.772727272727pt;" aria-label="IPv6 (10 items)">IPv6<span class="tag-link-count"> (10)</span></a>
+<a href="https://www.daryllswer.com/tag/isps/" class="tag-cloud-link tag-link-26 tag-link-position-21" style="font-size: 17.545454545455pt;" aria-label="ISPs (7 items)">ISPs<span class="tag-link-count"> (7)</span></a>
+<a href="https://www.daryllswer.com/tag/ixps/" class="tag-cloud-link tag-link-27 tag-link-position-22" style="font-size: 8pt;" aria-label="IXPs (1 item)">IXPs<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/juniper/" class="tag-cloud-link tag-link-28 tag-link-position-23" style="font-size: 8pt;" aria-label="Juniper (1 item)">Juniper<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/junos/" class="tag-cloud-link tag-link-29 tag-link-position-24" style="font-size: 8pt;" aria-label="JunOS (1 item)">JunOS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/khasi/" class="tag-cloud-link tag-link-47 tag-link-position-25" style="font-size: 8pt;" aria-label="Khasi (1 item)">Khasi<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/linux/" class="tag-cloud-link tag-link-56 tag-link-position-26" style="font-size: 8pt;" aria-label="Linux (1 item)">Linux<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/load-balancing/" class="tag-cloud-link tag-link-30 tag-link-position-27" style="font-size: 10.863636363636pt;" aria-label="Load Balancing (2 items)">Load Balancing<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/management-plane/" class="tag-cloud-link tag-link-54 tag-link-position-28" style="font-size: 8pt;" aria-label="Management Plane (1 item)">Management Plane<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/mikrotik/" class="tag-cloud-link tag-link-31 tag-link-position-29" style="font-size: 10.863636363636pt;" aria-label="MikroTik (2 items)">MikroTik<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/mpls/" class="tag-cloud-link tag-link-59 tag-link-position-30" style="font-size: 8pt;" aria-label="MPLS (1 item)">MPLS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/multi-wan/" class="tag-cloud-link tag-link-32 tag-link-position-31" style="font-size: 10.863636363636pt;" aria-label="Multi-WAN (2 items)">Multi-WAN<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/nat/" class="tag-cloud-link tag-link-33 tag-link-position-32" style="font-size: 10.863636363636pt;" aria-label="NAT (2 items)">NAT<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/networking/" class="tag-cloud-link tag-link-34 tag-link-position-33" style="font-size: 22pt;" aria-label="Networking (14 items)">Networking<span class="tag-link-count"> (14)</span></a>
+<a href="https://www.daryllswer.com/tag/non-tech/" class="tag-cloud-link tag-link-51 tag-link-position-34" style="font-size: 8pt;" aria-label="Non-Tech (1 item)">Non-Tech<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/oob/" class="tag-cloud-link tag-link-53 tag-link-position-35" style="font-size: 8pt;" aria-label="OOB (1 item)">OOB<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/planning/" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 8pt;" aria-label="Planning (1 item)">Planning<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/rfc4638/" class="tag-cloud-link tag-link-36 tag-link-position-37" style="font-size: 8pt;" aria-label="RFC4638 (1 item)">RFC4638<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/rfc8805/" class="tag-cloud-link tag-link-37 tag-link-position-38" style="font-size: 8pt;" aria-label="RFC8805 (1 item)">RFC8805<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/routeros/" class="tag-cloud-link tag-link-38 tag-link-position-39" style="font-size: 8pt;" aria-label="RouterOS (1 item)">RouterOS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/routing/" class="tag-cloud-link tag-link-52 tag-link-position-40" style="font-size: 8pt;" aria-label="Routing (1 item)">Routing<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/subnetting/" class="tag-cloud-link tag-link-39 tag-link-position-41" style="font-size: 8pt;" aria-label="Subnetting (1 item)">Subnetting<span class="tag-link-count"> (1)</span></a></p></div></div>
+</section>	</aside>
+									</div>
+								<section id="main" class="main" role="main">
+					<p id="breadcrumbs"><span><span><a href="https://www.daryllswer.com/">Home</a></span> » <span class="breadcrumb_last" aria-current="page">Out-of-Band Network Design for Service Provider Networks</span></span></p>	<div id="loop-container" class="loop-container">
+		<div class="post-2931 post type-post status-publish format-standard has-post-thumbnail hentry category-architecture category-dc-enterprise category-isp-networking category-networking tag-ipv6 tag-isps tag-management-plane tag-networking tag-oob ratio-2-1 entry">
+		<div class="featured-image"><img width="2400" height="1260" src="https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png" class="attachment-full size-full wp-post-image" alt="" decoding="async" fetchpriority="high" srcset="https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png 2400w, https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT-1920x1008.png 1920w, https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT-768x403.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT-1536x806.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT-2048x1075.png 2048w" sizes="(max-width: 2400px) 100vw, 2400px"></div>	<article>
+		<div class="post-header">
+			<h1 class="post-title">Out-of-Band Network Design for Service Provider Networks</h1>
+			<span class="post-meta">
+	Published on <span class="date"><a href="https://www.daryllswer.com/2024/11/">12 November 2024</a></span></span>		</div>
+		<div class="post-content">
+						
+<h4 id="h-the-design-i-am-going-to-discuss-in-this-article-was-inspired-by-a-variant-that-wido-den-hollander-originally-built-in-a-data-centre-environment-where-he-architected-a-medium-large-network-it-is-not-a-typical-out-of-band-design-that-one-may-find-reference-for-on-the-public-internet" class="wp-block-heading"><a href="#the-design-i-am-going-to-discuss-in-this-article-was-inspired-by-a-variant-that-wido-den-hollander-originally-built-in-a-data-centre-environment-where-he-architected-a-medium-large-network-it-is-not" aria-hidden="true" class="aal_anchor" id="the-design-i-am-going-to-discuss-in-this-article-was-inspired-by-a-variant-that-wido-den-hollander-originally-built-in-a-data-centre-environment-where-he-architected-a-medium-large-network-it-is-not"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>The design I am going to discuss in this article was inspired by a variant that <a href="https://www.linkedin.com/in/widodh/" target="_blank" rel="noreferrer noopener">Wido den Hollander</a> originally built in a data centre environment, where he architected a medium-large network. It is not a typical Out-of-Band design that one may find reference for on the public Internet.</h4>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph"><strong>For professional Out-of-Band (OOB) network design services, <a href="https://www.swernetworks.com/">click here</a>.</strong></p>
+</blockquote>
+
+
+
+<p class="wp-block-paragraph"><strong>This article has been published on the <a href="https://blog.apnic.net/2024/11/12/out-of-band-network-design-for-service-provider-networks/" target="_blank" rel="noreferrer noopener">APNIC blog</a> as well as discussed on <a href="https://rule11.tech/hedge-265/" target="_blank" rel="noreferrer noopener">The Hedge Podcast</a>. It was also selected for APNIC’s 2024 “<a href="https://blog.apnic.net/2025/01/03/three-of-the-best-how-to-7/" target="_blank" rel="noreferrer noopener">Three of the best: How to</a>”.</strong></p>
+
+
+
+<p class="wp-block-paragraph">Firstly, I recommend you read my <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" target="_blank" rel="noreferrer noopener">IPv6 Architecture and Subnetting Guide</a> before proceeding with this article, as the implementations described here, are heavily dependent on global routing with IPv6.</p>
+
+
+
+<p class="wp-block-paragraph">A quick primer on Out-of-Band (OOB) networking — it is basically a network segment that is isolated from the production network or what I would call the ‘transit path’. Transit path, here, means the path used by customers to reach an endpoint on the public Internet and vice versa, the same way roads are public, but maintenance tunnels are not.</p>
+
+
+
+<p class="wp-block-paragraph">The OOB network is <strong>exclusively</strong> used for giving administrative access to the company’s authorised employees and systems. This access is used to automate, orchestrate, configure, monitor and troubleshoot a given network device, server, application software, or multiple devices at a time.</p>
+
+
+
+<p class="wp-block-paragraph">The ‘access’ can be in the form of SSH, SNMP, API, Web Portal, or some proprietary access method. This ‘OOB access path’ is behind a firewall and various access control lists (ACLs) that ensure only authorised end-points (such as a jump host or VPN server), and login credentials are permitted.</p>
+
+
+
+<p class="wp-block-paragraph">The security posture is inspired by <a href="https://en.wikipedia.org/wiki/Defense_in_depth_(computing)" target="_blank" rel="noreferrer noopener">defence in depth</a>, where the bare minimum is Layer 3+4 ACLs using a stateful firewall, and up to Layer 7 ACLs, or could go even up to Layer 8 with <a href="https://en.wikipedia.org/wiki/Role-based_access_control" target="_blank" rel="noreferrer noopener">Role-Based Access Control</a>.</p>
+
+
+
+<p class="wp-block-paragraph">A lot of network operators would tell me that the network is their ‘bread and butter’, well I say if the network is your bread-and-butter, then a proper OOB network is the ingredient to make the bread and butter combo happen.</p>
+
+
+
+<p class="wp-block-paragraph">We are using global routing with IPv6, for reachability over the Internet etc, something we cannot afford to do with legacy IPv4 public /24 per site just for OOB. Most, if not all configuration, access, monitoring, automation, and troubleshooting occurs over IPv6-only addressing. Legacy IPv4 only exists for the legacy devices to have legacy access to the legacy Internet with legacy <a href="https://datatracker.ietf.org/doc/html/rfc1918" target="_blank" rel="noreferrer noopener">RFC1918</a> or <a href="https://datatracker.ietf.org/doc/html/rfc6598" target="_blank" rel="noreferrer noopener">RFC6598</a> addressing and via legacy NAT44.</p>
+
+
+
+<h2 id="h-the-not-so-obvious-benefits-of-dedicated-oob" class="wp-block-heading"><a href="#the-not-so-obvious-benefits-of-dedicated-oob" aria-hidden="true" class="aal_anchor" id="the-not-so-obvious-benefits-of-dedicated-oob"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>The not-so-obvious benefits of dedicated OOB</h2>
+
+
+
+<p class="wp-block-paragraph">When we have a dedicated OOB infrastructure in place, we can perform critical or intrusive changes to the network and system configurations or updates, without risking loss of access. </p>
+
+
+
+<p class="wp-block-paragraph">For example, if you have Internet of Things (IoT) devices for access control — such as door locks or building entry systems — these should ideally be connected through an OOB network. Each device would receive an IPv6 address, protected by a firewall and ACLs (discussed later in this article), allowing them to remain fully reachable even if the production network is completely offline. The OOB backbone would maintain multiple connectivity paths, ensuring high availability in case of a production network outage. This network can also provide backup console access to critical systems, like network devices and servers.</p>
+
+
+
+<p class="wp-block-paragraph">Additionally, if the Authoritative DNS for the Second-Level Domain (<a href="https://en.wikipedia.org/wiki/Second-level_domain" target="_blank" rel="noreferrer noopener">SLD</a>) that we use for OOB networking is outside the company’s own infrastructure, it will stay online, even if your own infrastructure is offline at a global level — something that happened to <a href="https://engineering.fb.com/2021/10/05/networking-traffic/outage-details/" target="_blank" rel="noreferrer noopener">Meta on 4 October 2021</a>.</p>
+
+
+
+<p class="wp-block-paragraph">There was also <strong>speculation</strong> regarding the <a href="https://en.wikipedia.org/wiki/2023_Optus_outage" target="_blank" rel="noreferrer noopener">2023 Optus outage</a> that one of the key blockers to restoring their services was due to a lack of proper OOB network implementation by interpreting this <a href="https://www.theguardian.com/australia-news/live/2023/nov/13/australia-politics-live-monique-ryan-lobbyists-question-time-anthony-albanese-peter-dutton-cost-of-living-gaza?page=with:block-6551b7a78f08a95ef07ed924#block-6551b7a78f08a95ef07ed924" target="_blank" rel="noreferrer noopener">information</a> quoted below:</p>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">These routing information changes propagated through multiple layers in our network and exceeded preset safety levels on key routers which could not handle these. This resulted in those routers disconnecting from the Optus IP core network to protect themselves.</p>
+
+
+
+<p class="wp-block-paragraph">The restoration required a large-scale effort of the team and in some cases <strong>required</strong> Optus to reconnect or <strong>reboot routers physically</strong>, requiring the <strong>dispatch of people</strong> across <strong>a number of sites</strong> in Australia. This is why restoration was progressive over the afternoon.</p>
+
+
+
+<p class="wp-block-paragraph">— Optus Spokesperson. Source: <a href="https://www.theguardian.com/australia-news/live/2023/nov/13/australia-politics-live-monique-ryan-lobbyists-question-time-anthony-albanese-peter-dutton-cost-of-living-gaza?page=with:block-6551b7a78f08a95ef07ed924#block-6551b7a78f08a95ef07ed924" target="_blank" rel="noreferrer noopener">The Guardian</a></p>
+</blockquote>
+
+
+
+<h3 id="h-financial-benefits" class="wp-block-heading"><a href="#financial-benefits" aria-hidden="true" class="aal_anchor" id="financial-benefits"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Financial benefits</h3>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Reduced site visit costs:</strong> Remote troubleshooting minimises OpEx to far-off locations.</li>
+
+
+
+<li><strong>Lower personnel expenses:</strong> Centralised OOB management reduces the need for on-site staff and support teams.</li>
+
+
+
+<li><strong>Efficient network expansion: </strong>OOB can help assist support network growth.</li>
+
+
+
+<li><strong>Avoidance of SLA penalties: </strong>Faster issue resolution helps ISPs avoid financial penalties from service-level breaches.</li>
+
+
+
+<li><strong>Remote power management:</strong> Power cycling and device management can be done remotely, saving on-site intervention costs.</li>
+
+
+
+<li><strong>Employment:</strong> OOB may potentially <a href="https://www.theguardian.com/business/2023/nov/20/optus-ceo-kelly-bayer-rosmarin-resigns-network-outage-australia" target="_blank" rel="noreferrer noopener">even save your job</a>.</li>
+</ul>
+
+
+
+<h2 id="h-original-data-centre-variant-and-inspiration" class="wp-block-heading"><a href="#original-data-centre-variant-and-inspiration" aria-hidden="true" class="aal_anchor" id="original-data-centre-variant-and-inspiration"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Original data centre variant and inspiration</h2>
+
+
+
+<p class="wp-block-paragraph">In the original version of this network setup, which predate my time working at this particular network, it had some design flaws regarding how intra-AS traffic flowed between different OOB ‘backbones’ across sites, which impacted firewall filtering logic as it increased complexity for the stateful mechanism to track intra-as flows. I later revised the design to address these issues, simplifying and streamlining it. The version discussed in this article reflects this improved design.</p>
+
+
+
+<p class="wp-block-paragraph">The revised setup features a basic <a href="https://web.archive.org/web/20240128143515/https://study-ccna.com/collapsed-core-and-three-tier-architectures/" target="_blank" rel="noreferrer noopener">collapsed-core topology</a> for the OOB network. There are edge routers for public eBGP transit in each backbone site, a Layer 3 distribution router (L3 dist.) for stateful firewalling/ACLing in each site, and an L2 distribution switch, which then provides downstream connectivity to the rack-specific OOB L2 access switches. It should be strongly noted, that the <strong>OOB network</strong> is a <strong>completely seperate Autonomous System</strong> (with its own <strong>public Autonomous System Number</strong>) from the production network. This separation ensures that the OOB network will remain fully functional and online and fully accessible from the public Internet for employees or authorised system/software access, even if all devices in the production network go offline.</p>
+
+
+
+<p class="wp-block-paragraph">We used MikroTik routers for the OOB edge and L3 distribution because they are cheap, affordable, can easily handle 10Gigabit+ if required (which will never happen in an OOB setup for most networks), and it is Linux based. It allows us to use iptables-like logic for the firewall. I specifically opted for the <a href="https://mikrotik.com/product/ccr2116_12g_4splus" target="_blank" rel="noreferrer noopener">CCR2116-12G-4S+</a>, because of its <a href="https://i.mt.lv/cdn/product_files/CCR2116-12G-4S_240122.png" target="_blank" rel="noreferrer noopener">single-ASIC implementation</a> that allowed us to standardise the single Linux VLAN-aware bridge configuration approach across the entire OOB network. The single-Linux bridge config is <a href="https://help.mikrotik.com/docs/display/ROS/L3+Hardware+Offloading#L3HardwareOffloading-Creatingmultiplebridges" target="_blank" rel="noreferrer noopener">required</a> to achieve end-to-end hardware offloading on MikroTik hardware.</p>
+
+
+
+<p class="wp-block-paragraph">For the OOB L2 distribution and access switches, we used some Juniper EX switch variants such as EX3200, EX4200 etc.</p>
+
+
+
+<h3 id="h-edge" class="wp-block-heading"><a href="#edge" aria-hidden="true" class="aal_anchor" id="edge"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Edge</h3>
+
+
+
+<p class="wp-block-paragraph">The OOB edge router peers with third-party IP transit providers using its unique public ASN. In some sites, it also has an additional direct eBGP uplink to the production network’s edge router, serving as a secondary transit provider. From here, a <strong>/48 IPv6 prefix</strong> is originated for each OOB backbone site, following the guidance in my <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" target="_blank" rel="noreferrer noopener">IPv6 Architecture guide</a>. The OOB edge router uses single-area OSPF with the Layer 3 distribution router to handle routing for both IPv6 subnets and legacy RFC1918/RFC6598 address ranges.</p>
+
+
+
+<p class="wp-block-paragraph">The RFC1918/RFC6598 ranges are then NATted on the OOB edge on egress towards WAN. The OOB edge has at least one public IPv4 address, often from a Provider-Independent Address (PIA) space that the company owns, assigned to the loopback interface or using the Provider-Assigned (PA) address configured by the third-party transit provider.</p>
+
+
+
+<p class="wp-block-paragraph">The edge router has iptables <strong>NoTrack</strong> rules on the raw table for IPv6 (completely stateless) and for any traffic in IPv4 that’s <strong>not</strong> NATted (partially stateless). The edge has WAN/LAN and intra-AS interface list groupings (sometimes called zone-based firewalling). In this setup, intra-AS interfaces are those running iBGP with other OOB edge routers over an IGP underlay.</p>
+
+
+
+<h3 id="h-ibgp-peering-between-edges" class="wp-block-heading"><a href="#ibgp-peering-between-edges" aria-hidden="true" class="aal_anchor" id="ibgp-peering-between-edges"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>iBGP Peering between edges</h3>
+
+
+
+<p class="wp-block-paragraph">This setup involves a simple Internal Border Gateway Protocol (iBGP) route exchange with an Interior Gateway Protocol (IGP) underlay. We exchange the IPv6 /48s between OOB edges for localised routing (when inter-site transport is functional). If the inter-site transport fails, it will automatically fail over to your eBGP Transit(s).</p>
+
+
+
+<p class="wp-block-paragraph">For IPv4, the route redistribution is fully adaptable to your local environment. If all OOB clients are IPv6-enabled, then you do not need to re-distribute the RFC 1918/RFC 6598 subnets. However, you may choose to re-distribute the public loopback IPv4 addresses assigned to the OOB edges, these /32s of course, originate from your production network’s ASN.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-1_OOB_Edge_in_the_DC.png"><img decoding="async" width="7363" height="2100" src="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-1_OOB_Edge_in_the_DC.png" alt="" class="wp-image-4176" srcset="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-1_OOB_Edge_in_the_DC.png 7363w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-1_OOB_Edge_in_the_DC-1920x548.png 1920w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-1_OOB_Edge_in_the_DC-768x219.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-1_OOB_Edge_in_the_DC-1536x438.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-1_OOB_Edge_in_the_DC-2048x584.png 2048w" sizes="(max-width: 7363px) 100vw, 7363px"></a><figcaption class="wp-element-caption">Figure-1 OOB Edge in the DC</figcaption></figure>
+</div>
+
+
+<h3 id="h-layer-3-distribution" class="wp-block-heading"><a href="#layer-3-distribution" aria-hidden="true" class="aal_anchor" id="layer-3-distribution"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Layer 3 distribution</h3>
+
+
+
+<p class="wp-block-paragraph">Considering that the L3 distribution runs single-area OSPF with the edge, whereby the RFC1918 IPv4 and IPv6 prefixes are routed to the L3 distribution. The L3 distribution has a trunked port for the OOB distribution switch, with a unique VLAN per rack-served, where each VLAN (representing a rack) gets a /64 IPv6 prefix and a /24 legacy RFC1918 range. This means, if there are two racks, there are two VLANs, one for each. All the devices in a rack get their dedicated /128 Globally Unique Address (GUA) via SLAAC (EUI-64 is preferred to be enabled) and a /32 legacy IP over DHCP.</p>
+
+
+
+<p class="wp-block-paragraph">The L3 distribution then firewalls off WAN access to only permit established, related traffic, ICMPv4/ICMPv6, and any traffic where the source/destination IPs belong to various management-related servers/VPNs/jump hosts etc. All the rack-specific VLANs are grouped into an interface list called ‘LAN’ which simplifies firewall configuration, so we have a total of two groups, WAN (uplink to the edge) and LAN.</p>
+
+
+
+<h3 id="h-ospf-vs-is-is-for-igp" class="wp-block-heading"><a href="#ospf-vs-is-is-for-igp" aria-hidden="true" class="aal_anchor" id="ospf-vs-is-is-for-igp"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>OSPF vs is-is for IGP</h3>
+
+
+
+<p class="wp-block-paragraph">This article is not suitable for a routing protocol deep-dive, but as a quick recommendation, I would recommend moving everything IGP-related to is-is (in general) and highly recommend you <a href="https://youtu.be/jWdD8SCwzHk" target="_blank" rel="noreferrer noopener">watch this video</a> to understand why.</p>
+
+
+
+<p class="wp-block-paragraph">Another quick tip, for a use-case like this, when using is-is, use a single level (area) and configure both the OOB edge and L3 Dist. as Level 2-only routers — You can read more <a href="https://blog.ipspace.net/2011/11/multi-level-is-is-in-single-area-think/" target="_blank" rel="noreferrer noopener">here</a>.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-2_OOB_L3_Dist_in_the_DC.png"><img decoding="async" width="3639" height="2883" src="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-2_OOB_L3_Dist_in_the_DC.png" alt="" class="wp-image-4177" srcset="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-2_OOB_L3_Dist_in_the_DC.png 3639w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-2_OOB_L3_Dist_in_the_DC-1363x1080.png 1363w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-2_OOB_L3_Dist_in_the_DC-768x608.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-2_OOB_L3_Dist_in_the_DC-1536x1217.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-2_OOB_L3_Dist_in_the_DC-2048x1623.png 2048w" sizes="(max-width: 3639px) 100vw, 3639px"></a><figcaption class="wp-element-caption">Figure-2 OOB L3 Dist. in the DC</figcaption></figure>
+</div>
+
+
+<h3 id="h-l2-distribution-switch" class="wp-block-heading"><a href="#l2-distribution-switch" aria-hidden="true" class="aal_anchor" id="l2-distribution-switch"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>L2 distribution Switch</h3>
+
+
+
+<p class="wp-block-paragraph">The L2 distribution switch has a trunk port running upstream to the L3 distribution router carrying all the rack-specific VLANs.</p>
+
+
+
+<p class="wp-block-paragraph">The L2 distribution switch receives an optional DHCPv4 address and an IPv6 SLAAC address (or statically configured) from the rack-specific VLAN in which it resides. For example, let’s assume there is site01-rack01 and we assigned VLAN10. In this rack, you have the production network and the OOB network. In this case, all devices share the same VLAN10 for the OOB, and therefore the L2 distribution switch also is a member of the same VLAN10. This set up enables L3 reachability into the management (MGMT) plane of the device.</p>
+
+
+
+<p class="wp-block-paragraph">The L2 distribution switch’s MGMT port/interface is not used, from the POV of the distribution switch itself, it is ‘in-band’ MGMT, as the uplink to the L3 distribution is connected to one of the switch’s regular Ethernet/SFP ports. The uplink is a trunked port, allowing multiple ways to configure VLANs. My preferred approach is to configure an L3 sub-interface (for running the DHCP client/IPv6 address) to be ‘untagged’ on ingress to itself but tagged on egress back to the L3 distribution uplink. Alternatively, you could just configure the L3 sub-interface as tagged, for instance with an <a href="https://www.juniper.net/documentation/us/en/software/junos/multicast-l2/topics/topic-map/irb-and-bridging.html" target="_blank" rel="noreferrer noopener">IRB</a> on Juniper. Personally I prefer the L2 distribution switch’s L3 sub-interface to be untagged to itself. <strong>Note:</strong> My usage of the VLAN terminologies here is Linux-oriented and may not accurately reflect vendor-specific terms.</p>
+
+
+
+<p class="wp-block-paragraph">The switch then receives a DHCPv4 client IP (optional, for legacy support) and you can either configure the switch to accept IPv6 Router Advertisements (RAs) or configure a static IPv6 address from the prefix assigned to its rack-specific VLAN.</p>
+
+
+
+<p class="wp-block-paragraph">All downstream ports then become access ports for each specific rack with their respective VLANs tagged on ingress from those ports, and then ‘switched’ back to the trunk port. In most cases, one access port per rack is sufficient, but you could always do some variations if required.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-3_OOB_Dist_Switch_in_the_DC.png"><img loading="lazy" decoding="async" width="4345" height="1821" src="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-3_OOB_Dist_Switch_in_the_DC.png" alt="" class="wp-image-4178" srcset="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-3_OOB_Dist_Switch_in_the_DC.png 4345w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-3_OOB_Dist_Switch_in_the_DC-1920x805.png 1920w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-3_OOB_Dist_Switch_in_the_DC-768x322.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-3_OOB_Dist_Switch_in_the_DC-1536x644.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-3_OOB_Dist_Switch_in_the_DC-2048x858.png 2048w" sizes="auto, (max-width: 4345px) 100vw, 4345px"></a><figcaption class="wp-element-caption">Figure-3 OOB Dist. Switch in the DC</figcaption></figure>
+</div>
+
+
+<h3 id="h-rack-specific-l2-access-switch" class="wp-block-heading"><a href="#rack-specific-l2-access-switch" aria-hidden="true" class="aal_anchor" id="rack-specific-l2-access-switch"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Rack-Specific L2 Access Switch</h3>
+
+
+
+<p class="wp-block-paragraph">In this setup, the access switch operates similarly to the distribution switch, the MGMT is ‘in-band’.<strong> However</strong> the access switch has <strong>no</strong> VLAN awareness or config by design, it is purely an L2 switching device, single broadcast domain. We configure a simple IRB under VLAN unit 0, where on top of the IRB’s unit 0, we configure a static IPv6 address from within the OOB’s VLAN-specific /64. Legacy IP can be additionally configured using DHCP if needed, but often it is not. It then just switches L2 traffic across all ports, from which those ports then provide OOB connectivity to all the devices in a rack via their MGMT port/interfaces.</p>
+
+
+
+<p class="wp-block-paragraph">Devices that support SLAAC will autoconfigure with EUI-64 if enabled (because this is OOB, it is easier to do MAC mapping) or just regular privacy extensions with stable addressing. Manual IPv6 address config is also an option if required. Power Distribution Units (PDUs), UPSes, and other electronic devices connect to the access switch via their MGMT Ethernet ports, each receiving an IPv6 address for management purposes.</p>
+
+
+
+<p class="wp-block-paragraph">The diagram below illustrates this (DC) implementation from a physical standpoint:</p>
+
+
+
+<p class="wp-block-paragraph">Figure 4 illustrates this data centre implementation from a physical standpoint.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-4_OOB_in_the_DC_Layer_1.png"><img loading="lazy" decoding="async" width="6420" height="2940" src="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-4_OOB_in_the_DC_Layer_1.png" alt="" class="wp-image-4179" srcset="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-4_OOB_in_the_DC_Layer_1.png 6420w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-4_OOB_in_the_DC_Layer_1-1920x879.png 1920w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-4_OOB_in_the_DC_Layer_1-768x352.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-4_OOB_in_the_DC_Layer_1-1536x703.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-4_OOB_in_the_DC_Layer_1-2048x938.png 2048w" sizes="auto, (max-width: 6420px) 100vw, 6420px"></a><figcaption class="wp-element-caption">Figure-4 OOB in the DC (Layer 1)</figcaption></figure>
+</div>
+
+
+<p class="wp-block-paragraph">Figure 5 illustrates this data centre implementation from a logical standpoint.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-5_OOB_in_the_DC_Layer_2-3.png"><img loading="lazy" decoding="async" width="6900" height="3255" src="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-5_OOB_in_the_DC_Layer_2-3.png" alt="" class="wp-image-4180" srcset="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-5_OOB_in_the_DC_Layer_2-3.png 6900w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-5_OOB_in_the_DC_Layer_2-3-1920x906.png 1920w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-5_OOB_in_the_DC_Layer_2-3-768x362.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-5_OOB_in_the_DC_Layer_2-3-1536x725.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-5_OOB_in_the_DC_Layer_2-3-2048x966.png 2048w" sizes="auto, (max-width: 6900px) 100vw, 6900px"></a><figcaption class="wp-element-caption">Figure-5 OOB in the DC (Layer 2-3)</figcaption></figure>
+</div>
+
+
+<pre class="wp-block-verse">In the data centre example, I did not show the <strong>Mission Critical Infrastructure (MCI)</strong> for readability reasons, it is however <strong>elaborated in the ISP example</strong>, please read the ISP section even if you are a data centre network operator.</pre>
+
+
+
+<h2 id="h-vrf" class="wp-block-heading"><a href="#vrf" aria-hidden="true" class="aal_anchor" id="vrf"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>VRF</h2>
+
+
+
+<p class="wp-block-paragraph">The OOB IP addresses of the devices, are configured on the MGMT-only interfaces and VRF  to ensure that MGMT and transit traffic never collide or have any way of talking to each other for security and isolation from Layers 1-7.</p>
+
+
+
+<p class="wp-block-paragraph">The network devices (<strong>excluding</strong> the OOB-role switches) do have a <strong>separate</strong> <strong>loopback</strong> <strong>IP</strong> configured on the <strong>main</strong> VRF (<strong>transit</strong> path), these loopbacks can be pinged from the public Internet and allow easy traceroutes/troubleshooting and rDNS records. However, <strong>all</strong> MGMT services (SSH, SNMP, Streaming Telemetry, API etc) binds <strong>exclusively</strong> to the MGMT VRF.</p>
+
+
+
+<h2 id="h-dns-and-loopback-addressing" class="wp-block-heading"><a href="#dns-and-loopback-addressing" aria-hidden="true" class="aal_anchor" id="dns-and-loopback-addressing"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>DNS and Loopback addressing</h2>
+
+
+
+<p class="wp-block-paragraph"><strong>Everything is DNS-based, where possible, we don’t need team members memorising IP addresses</strong>.</p>
+
+
+
+<p class="wp-block-paragraph">Since everything is DNS-based, we should use an SLD that’s different from SLDs used for customers or production. The Authoritative DNS server for the SLD should ideally be outside the company’s own infrastructure. This can be offloaded to a third party instead or by setting up your own authoratives on third-party cloud providers, independent of your infrastructure. This approach ensures it is 100% accessible should the company’s own infrastructure go offline, as it did for Meta.</p>
+
+
+
+<p class="wp-block-paragraph">The IP addresses used for the FQDN AAAA records, representing each unique device and used in LibreNMS, monitoring software, automation frameworks, and user logins, are the OOB-assigned IP addresses on network devices, including the in-band addresses of distribution and access switches.</p>
+
+
+
+<p class="wp-block-paragraph">I prefer to have two types of FQDNs, one that represents the OOB IP addresses and another for loopback. For example, below is what I would do for my edge router:</p>
+
+
+
+<ul class="wp-block-list">
+<li>edge01-ams04.daryllswer.net — AAAA record is mapped to the OOB IPv6 address in the MGMT VRF.</li>
+
+
+
+<li>lo-edge01-ams04.daryllswer.net — AAAA or A record is mapped to the loopback IP addresses in the main VRF.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">In these examples, AMS is the IATA airport code for Amsterdam, and ‘edge’ is the device type, referring to the production edge device.</p>
+
+
+
+<h2 id="h-adapting-to-the-service-provider-environment" class="wp-block-heading"><a href="#adapting-to-the-service-provider-environment" aria-hidden="true" class="aal_anchor" id="adapting-to-the-service-provider-environment"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adapting to the service provider environment</h2>
+
+
+
+<p class="wp-block-paragraph">When tasked with designing an out-of-band (OOB) network from scratch for an ISP use case, I took a couple of weeks to step back, reflect, and analyse ways to adapt data centre-specific OOB designs for an ISP network. My goal was to incorporate a geographical denomination model similar to the one I’ve used in my <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" target="_blank" rel="noreferrer noopener">IPv6 Architecture</a>. Unlike data centres, which are typically uniform at the physical layer, ISP networking is shaped by geography and has unique constraints.</p>
+
+
+
+<p class="wp-block-paragraph">For example, in mountainous regions, it’s impractical and costly to dedicate separate fibre cores for OOB and transit traffic due to high CapEx, OpEx, and labour costs. Therefore, the geographical denomination model becomes essential, allowing the OOB network design to adapt to the unique demands and constraints of each physical environment.</p>
+
+
+
+<p class="wp-block-paragraph">Geography varies wildly and therefore, I cannot give an OOB design example for every possible geographical environment, Earth is a big place.</p>
+
+
+
+<p class="wp-block-paragraph">I will present a generalised ISP-specific OOB network design based on a real-world implementation that I did for a small wireless ISP and also based on various implementation methods used in fibre-only ISPs, where a colleague and I took advantage of the <strong>1310 nm port</strong> on<strong> DWDM gear </strong>and used multi-core single-mode dual fibre (or single-mode single fibre using BiDi modules) to deliver dedicated OOB transport for remote devices <strong>without expending</strong> channel ports on the DWDM gear.</p>
+
+
+
+<p class="wp-block-paragraph">The core design principles remain consistent for both WISP and fibre-optic-based service provider networks, the primary distinction lies at layer 1.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>In order to explain an ISP-specific OOB network design, I will assume a specific ISP setup with consistent variables in order to demonstrate a concise solution, from the perspective of a residential broadband ISP network.</strong></p>
+
+
+
+<h3 id="h-layer-1" class="wp-block-heading"><a href="#layer-1" aria-hidden="true" class="aal_anchor" id="layer-1"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Layer 1</h3>
+
+
+
+<h4 id="h-high-level-overview" class="wp-block-heading"><a href="#high-level-overview" aria-hidden="true" class="aal_anchor" id="high-level-overview"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>High-level overview</h4>
+
+
+
+<p class="wp-block-paragraph">The network is broadly broken down into three parent segments: The production network, the mission critical infrastructure (MCI) network and the OOB network.</p>
+
+
+
+<p class="wp-block-paragraph">The <strong>production</strong> network largely consists of edge routers, core routers, L3 distribution switches, CGNAT boxes, BNGs, MPLS P and PE routers, access switches behind the PE routers, wireless devices or PON OLTs in the case of fibre-based residential broadband.</p>
+
+
+
+<p class="wp-block-paragraph">The <strong>MCI</strong> network largely consists of a Clos Spine and Leaf architecture, and hosts (server nodes) and is always strictly in a DC environment.</p>
+
+
+
+<p class="wp-block-paragraph">The <strong>OOB</strong> network is mostly identical to the data centre variant in the first-kilometre of the network or when possible, also in the middle and last-kilometre.</p>
+
+
+
+<h4 id="h-low-level-overview" class="wp-block-heading"><a href="#low-level-overview" aria-hidden="true" class="aal_anchor" id="low-level-overview"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Low-level overview</h4>
+
+
+
+<p class="wp-block-paragraph">For <strong>production</strong> network:</p>
+
+
+
+<p class="wp-block-paragraph">The production network is further sliced into three metaphorical elements:</p>
+
+
+
+<ul class="wp-block-list">
+<li>The first-kilometre is often (but can vary) located in a data centre</li>
+
+
+
+<li>The middle-kilometre is a Point-of-Presence (PoP) that sits between the first-kilometre and the last-kilometre and acts as an aggregation point for the last-kilometre, often located in a Central Office, from my interpretation of American Telco lingo.</li>
+
+
+
+<li>The last-kilometre is the demarcation point that delivers physical connectivity to the customer’s premises.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">The edge, core, L3 distribution and often the BNG and CGNAT boxes sit in the first-kilometre of the network. The P and PE routers are installed where necessary. In the last mile, you may have wireless backhauls, APs and OLTs.</p>
+
+
+
+<p class="wp-block-paragraph">For the <strong>MCI</strong> network:</p>
+
+
+
+<p class="wp-block-paragraph">The MCI network almost always sits exclusively in the first-kilometre of the network or potentially on a third-party cloud provider for some application-specific software like Netbox. The MCI runs applications like DNS Recursor, LibreNMS, Grafana/Prometheus, FreeIPA, <a href="https://en.wikipedia.org/wiki/OSS/BSS" target="_blank" rel="noreferrer noopener">OSS/BSS</a> etc.</p>
+
+
+
+<p class="wp-block-paragraph">For the <strong>OOB </strong>network:</p>
+
+
+
+<p class="wp-block-paragraph">The edge and L3 distribution of the OOB network sits in the first-kilometre, always, but exceptions can <em>always </em>exist on a planet as big as Earth.</p>
+
+
+
+<p class="wp-block-paragraph">Figure 6 illustrates illustrates this service provider implementation from a physical standpoint.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><a href="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-6_OOB_for_ISP_Layer_1.png"><img loading="lazy" decoding="async" width="3074" height="4320" src="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-6_OOB_for_ISP_Layer_1-3074x4320.png" alt="" class="wp-image-4181" srcset="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-6_OOB_for_ISP_Layer_1-3074x4320.png 3074w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-6_OOB_for_ISP_Layer_1-1537x2160.png 1537w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-6_OOB_for_ISP_Layer_1-768x1079.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-6_OOB_for_ISP_Layer_1-1093x1536.png 1093w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-6_OOB_for_ISP_Layer_1-1457x2048.png 1457w" sizes="auto, (max-width: 3074px) 100vw, 3074px"></a><figcaption class="wp-element-caption">Figure-6 OOB for ISP (Layer 1)</figcaption></figure>
+</div>
+
+
+<h3 id="h-layer-2" class="wp-block-heading"><a href="#layer-2" aria-hidden="true" class="aal_anchor" id="layer-2"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Layer 2</h3>
+
+
+
+<p class="wp-block-paragraph">The ISP setup also uses identical rack-based VLAN segregation as in a data centre. However, for devices <strong>outside</strong> the rack or remote devices, VLANs are segmented on a per-site basis, which I’ll illustrate later with a diagram.</p>
+
+
+
+<p class="wp-block-paragraph">Remote devices have MGMT VLAN tagged, and that tagged VLAN is sent to the nearest device in the path that can carry that VLAN to the nearest OOB access switch or distribution switch depending on your topology.</p>
+
+
+
+<p class="wp-block-paragraph">This means for example, OLT’s MGMT VLAN is tagged in-band, back to the PE router, PE router may have an <strong>additional</strong> trunk port, where the OOB VLAN is tagged and ‘switched’ over back to an OOB access switch’s trunk port for example.</p>
+
+
+
+<p class="wp-block-paragraph">There are multiple possible combinations based on the setup, but the key point is that remote devices will send a tagged MGMT VLAN in-band to their nearest upstream neighbour, which continues the in-band transport until the VLAN reaches the OOB backbone network.</p>
+
+
+
+<h3 id="h-layer-3" class="wp-block-heading"><a href="#layer-3" aria-hidden="true" class="aal_anchor" id="layer-3"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Layer 3</h3>
+
+
+
+<p class="wp-block-paragraph">Layer 3 is identical to the data centre variant. It is all centralised on the L3 distribution router of the OOB backbone network.</p>
+
+
+
+<p class="wp-block-paragraph">Figure 7 illustrates illustrates this service provider implementation from a logical standpoint.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><a href="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-7_OOB_for_ISP_Layer_2-3.png"><img loading="lazy" decoding="async" width="3071" height="4320" src="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-7_OOB_for_ISP_Layer_2-3-3071x4320.png" alt="" class="wp-image-4182" srcset="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-7_OOB_for_ISP_Layer_2-3-3071x4320.png 3071w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-7_OOB_for_ISP_Layer_2-3-1536x2160.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-7_OOB_for_ISP_Layer_2-3-768x1080.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-7_OOB_for_ISP_Layer_2-3-1092x1536.png 1092w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-7_OOB_for_ISP_Layer_2-3-1456x2048.png 1456w" sizes="auto, (max-width: 3071px) 100vw, 3071px"></a><figcaption class="wp-element-caption">Figure-7 OOB for ISP (Layer 2-3)</figcaption></figure>
+</div>
+
+
+<h2 id="h-how-do-employees-and-systems-access-devices-services-behind-the-oob-network" class="wp-block-heading"><a href="#how-do-employees-and-systems-access-devices-services-behind-the-oob-network" aria-hidden="true" class="aal_anchor" id="how-do-employees-and-systems-access-devices-services-behind-the-oob-network"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How do employees and systems access devices/services behind the OOB network?</h2>
+
+
+
+<h3 id="h-for-employees" class="wp-block-heading"><a href="#for-employees" aria-hidden="true" class="aal_anchor" id="for-employees"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>For employees</h3>
+
+
+
+<p class="wp-block-paragraph">There are many ways to do this. For example, you can have jump hosts inside the MCI, that support regular SSH + SOCKS5 proxying dual-stacked (public IPv4/IPv6) and combine it with YubiKeys. Or, if you prefer VPN-based solutions, then the VPN server will have public v4/v6 addresses on its WAN interfaces, and then additionally a /64 is routed to the ‘LAN’ side of the host (either using BGP or DHCPv6 ia_pd), from this /64, we assign a /128 GUA address per employee profile or peer (in WireGuard), this ensures, even if the employees are behind legacy obsolete networks, they can still talk IPv6 over the VPN tunnel or SOCKS5 proxy.</p>
+
+
+
+<p class="wp-block-paragraph">Instead of using SOCKS5, you may want to build your own solutions by using something like <a href="https://github.com/sshuttle/sshuttle" target="_blank" rel="noreferrer noopener">sshuttle</a>, something that <a href="https://www.linkedin.com/in/ammar-zuberi/" target="_blank" rel="noreferrer noopener">Ammar Zuberi</a> pointed me to, it is an interesting approach.</p>
+
+
+
+<h3 id="h-for-systems" class="wp-block-heading"><a href="#for-systems" aria-hidden="true" class="aal_anchor" id="for-systems"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>For Systems</h3>
+
+
+
+<p class="wp-block-paragraph">As previously explained, the L3 distribution handles L3 and L4 firewalling. Therefore, system endpoints like LibreNMS, Ansible, Grafana, and similar tools will have their FQDNs included in the ACL list on the L3 distribution. This setup ensures that only authorised systems can access the devices and services behind the OOB network.</p>
+
+
+
+<h2 id="h-inter-site-oob-transport" class="wp-block-heading"><a href="#inter-site-oob-transport" aria-hidden="true" class="aal_anchor" id="inter-site-oob-transport"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Inter-Site OOB Transport</h2>
+
+
+
+<p class="wp-block-paragraph">There are broadly three aspects to transport in general:</p>
+
+
+
+<ol class="wp-block-list">
+<li>There is the <strong>downstream</strong>-facing inter-site transport (this is the case in <strong>Figures 6 and 7</strong>), typically this applies to service provider networks.</li>
+
+
+
+<li>There is the<strong> </strong>Data center interconnect (DCI), inter-site transport, often used for routing-adjacency or L2/L3VPN services or even VXLAN/EVPN use-cases, this applies to both data centre and service provider networks.</li>
+
+
+
+<li>There are hybrid data centre/service provider networks that share elements of both.</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">Generally speaking, most commercial networks have various PoPs, and these PoPs interconnect with each other, via various possible options such as active/passive DWDM, SR/MPLS L2/L3VPN, OTN, etc.</p>
+
+
+
+<p class="wp-block-paragraph">This guide cannot cover every possible inter-site transport architecture and implementation, so I will share a few generalised guidelines that you can modify to your specific needs:</p>
+
+
+
+<ol class="wp-block-list">
+<li>Any downstream-facing inter-site OOB transport generally, is just stretching (yes stretching, not transport via L2VPN or other encapsulations) of the L2 OOB access VLANs to their intended remote sites or devices. We stretch the VLANs using simple VLAN tagging/untagging instead of any fancy SR/MPLS transport, because we want the OOB to function for these remote sites, even if the SR/MPLS network is offline. If there are no layer 1 failures or other single points of failure (LTE augmentation for example), we should be able to reach any, and every device in the network, irrelevant of the status of the SR/MPLS network.
+<ul class="wp-block-list">
+<li>As mentioned earlier, the 1310 nm expansion port of a DWDM unit can be used for (downstream) inter-site transport of OOB connectivity as highlighted in <strong>Figure 6-7</strong>.</li>
+</ul>
+</li>
+
+
+
+<li>For DCI inter-site OOB transport, typically, this will be used to establish iBGP adjacency between OOB edge routers in each data centre (site). So, if your DCI is SR-MPLS/EVPN, you can absolutely create a pseudowire (EVPN-VPWS) to allow a point-to-point interconnect between both OOB edge routers.</li>
+
+
+
+<li>If you have <strong>N </strong>number of sites, at some point it may not be feasible for every OOB Edge router to peer with every other OOB edge router in N number of sites, using iBGP full mesh. For such cases, you can do any of the following:
+<ul class="wp-block-list">
+<li>Completely avoid iBGP adjacency between OOB edge routers, because OOB edges can still talk to each other over regular WAN routing via their IP transits. Because we are using globally reachable IPv6, with dedicated prefixes in each site, everything is just <strong>routing</strong>.</li>
+
+
+
+<li>Establish iBGP adjacency only between directly connected data centres that do not have another data centre in between. For example, there can be iBGP adjacency between DC1 and DC2, but DC1 and DC3 would not have iBGP adjacency if the path is DC1&lt;&gt;DC2&lt;&gt;DC3.</li>
+
+
+
+<li>Create your own rules and implementations as you see fit, for your specific use case and situation.</li>
+
+
+
+<li>Avoid adding too much complexity to the OOB backbone network, for instance, there is no good reason to mimic a production-grade service provider network where you have route reflectors involved to work around iBGP full-mesh</li>
+</ul>
+</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">Figure 8 shows an example of inter-site OOB transport using a traditional SR/MPLS topology as the preferred diagramming method.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><a href="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-8_Inter-Site_OOB_Transport.png"><img loading="lazy" decoding="async" width="7680" height="2042" src="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-8_Inter-Site_OOB_Transport-7680x2042.png" alt="" class="wp-image-4183" srcset="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-8_Inter-Site_OOB_Transport-7680x2042.png 7680w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-8_Inter-Site_OOB_Transport-1920x510.png 1920w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-8_Inter-Site_OOB_Transport-768x204.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-8_Inter-Site_OOB_Transport-1536x408.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-8_Inter-Site_OOB_Transport-2048x544.png 2048w" sizes="auto, (max-width: 7680px) 100vw, 7680px"></a><figcaption class="wp-element-caption">Figure-8 Inter-Site OOB Transport</figcaption></figure>
+</div>
+
+
+<h3 id="h-caveat" class="wp-block-heading"><a href="#caveat" aria-hidden="true" class="aal_anchor" id="caveat"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Caveat</h3>
+
+
+
+<p class="wp-block-paragraph">What about OOB <strong>access</strong> to the DCI inter-site <strong>transport gear itself</strong>, for example, your active DWDM/OTN gear, or your SR-MPLS/EVPN routers? There is no ‘clean’ answer to this.</p>
+
+
+
+<p class="wp-block-paragraph">For example, if there are two data centres — site01 and site03 — with a P router (site02) located between them, <strong>physically outside</strong> both data centres and equidistant from each, which site’s OOB backbone will provide in-band OOB access for this router?</p>
+
+
+
+<p class="wp-block-paragraph">As the network architect, it is entirely up to you to make this decision on a case-by-case basis, taking into account various factors and local environmental variables. For instance, if the physical route from site03 to site02 is easier than from site01, you might choose to use site01’s OOB backbone to facilitate the router’s in-band access, especially if most of the support staff are usually located at site02. Figure 9 illustrates what this setup could look like.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><a href="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear.png"><img loading="lazy" decoding="async" width="7680" height="2449" src="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear-7680x2449.png" alt="" class="wp-image-4184" srcset="https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear-7680x2449.png 7680w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear-1920x612.png 1920w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear-768x245.png 768w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear-1536x490.png 1536w, https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear-2048x653.png 2048w" sizes="auto, (max-width: 7680px) 100vw, 7680px"></a><figcaption class="wp-element-caption">Figure-9 OOB Access for Transport Gear</figcaption></figure>
+</div>
+
+
+<h2 id="h-augmentation-of-the-oob-network" class="wp-block-heading"><a href="#augmentation-of-the-oob-network" aria-hidden="true" class="aal_anchor" id="augmentation-of-the-oob-network"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Augmentation of the OOB network</h2>
+
+
+
+<p class="wp-block-paragraph">There are <strong>N</strong> number of possible combinations for network architecture, including OOB setups. While I cannot cover every possible scenario, here are some possible augmentations:</p>
+
+
+
+<ol class="wp-block-list">
+<li><strong>LTE connectivity:</strong> You can enhance your design with LTE connectivity in several ways. Here are a couple of examples:
+<ul class="wp-block-list">
+<li>You have an OOB site that does not have IP Transit, just regular residential broadband with additional LTE failover. In such a case, you can use WireGuard to establish a tunnel between the broadband circuit and the LTE circuit back to the OOB backbone in a data centre. In this setup, you could run BGP+BFD over the tunnels to route the IPv6 /48 prefix, your BGP route filters will have a lower local-preference for the LTE circuit on both ends of the tunnel, allowing simple failover and a higher preference for wired broadband.</li>
+
+
+
+<li>Another option is to further enhance the overall design by installing an additional serial console server at every site, point of presence (PoP), and rack. Each device’s serial console port would connect to the console server, which would then uplink to the OOB edge or an LTE router via USB at a remote site. This provides an additional access path in case the core IP side of the OOB network fails.</li>
+</ul>
+</li>
+
+
+
+<li><strong>Tunnelling solutions:</strong> If you choose to implement tunnelling solutions, I recommend keeping it simple with L3 and IPv6 routing. BGP and BFD work well over tunnels, but you should avoid any form of L2 tunnelling, as it increases complexity and overhead, which we want to minimise in OOB networks.</li>
+</ol>
+
+
+
+<h3 id="h-why-i-recommend-wireguard-for-any-tunnelling" class="wp-block-heading"><a href="#why-i-recommend-wireguard-for-any-tunnelling" aria-hidden="true" class="aal_anchor" id="why-i-recommend-wireguard-for-any-tunnelling"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Why I recommend WireGuard for any tunnelling?</h3>
+
+
+
+<p class="wp-block-paragraph">WireGuard has built-in support for 4in6/6in4 encapsulation, so IPv6 would work over the tunnel, even over IPv4-only residential broadband. Additionally, the MTU overhead for WireGuard is clearly <a href="https://en.wikipedia.org/wiki/WireGuard#MTU_overhead" target="_blank" rel="noreferrer noopener">defined</a>, so you should set the WireGuard interface MTU to 1420 on both ends, regardless of the underlay MTU. This makes it easy to configure, deploy, and delete, allowing you to manage the setup effortlessly with automated templates.</p>
+
+
+
+<h2 id="h-preference-for-managing-bum-traffic-in-the-oob-network" class="wp-block-heading"><a href="#preference-for-managing-bum-traffic-in-the-oob-network" aria-hidden="true" class="aal_anchor" id="preference-for-managing-bum-traffic-in-the-oob-network"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Preference for managing BUM traffic in the OOB network</h2>
+
+
+
+<p class="wp-block-paragraph">I’ll keep this short, simple, and emphasise that this is <strong>not</strong> mandatory, but if you have tens of thousands of devices, <a href="https://en.wikipedia.org/wiki/Broadcast,_unknown-unicast_and_multicast_traffic" target="_blank" rel="noreferrer noopener">BUM</a> traffic, even in OOB, can quickly get out of hand, I have seen this happening in real-life networks with under 1,000 thousand devices in a single OOB core network. My solution to this:</p>
+
+
+
+<ol class="wp-block-list">
+<li>Enable IGMP<strong>v3</strong>+MLD<strong>v2</strong> <strong>Snooping</strong> on OOB Distribution and access <strong>switches</strong> on <strong>all</strong> ports/VLANs.</li>
+
+
+
+<li>Configure and enable (simplified as possible) PIM-SM on the OOB L3 Distribution router for all OOB VLANs.</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">The simplest possible PIM-SM configuration would look like this on a MikroTik. It is literally just <strong>four lines</strong> to handle thousands of OOB VLANs. ‘OOB-Access-VLANs’ is an interface list grouping containing all the relevant L3 sub-interface VLANs.</p>
+
+
+
+<pre class="wp-block-code"><code>/routing pimsm instance
+add afi=ipv4 disabled=no name=pimsm-v4 vrf=main
+add afi=ipv6 disabled=no name=pimsm-v6 vrf=main
+
+/routing pimsm interface-template
+add disabled=no instance=pimsm-v4 interfaces=OOB-Access-VLANs
+add disabled=no instance=pimsm-v6 interfaces=OOB-Access-VLANs</code></pre>
+
+
+
+<p class="wp-block-paragraph">The end result is that at a large scale, the OOB L2 switches will have their MDB table intelligently populated with the help of PIM-SM acting as the IGMP/MLD Querier and therefore BUM Flooding <a href="https://en.wikipedia.org/wiki/IGMP_snooping" target="_blank" rel="noreferrer noopener">will reduce</a>.</p>
+
+
+
+<h2 id="h-conclusion" class="wp-block-heading"><a href="#conclusion" aria-hidden="true" class="aal_anchor" id="conclusion"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Conclusion</h2>
+
+
+
+<p class="wp-block-paragraph">In summary, if I am the owner of the network, I should be able to power cycle devices remotely, and globally. Even if my production network is offline, I should be able to access most devices via console over LTE for example, as a backup, in case the IP fabric of the OOB network itself fails. My reliance on on-site field personnel should be greatly reduced unless there is a physical issue.</p>
+
+
+
+<p class="wp-block-paragraph">I hope this article has broadened your understanding of the many ways to implement a dedicated OOB infrastructure. As the network architect, it’s your role to adapt, modify, and refine these concepts to suit your specific, localised use cases. My aim is for this content to be practical for everyone — from newcomers to experienced professionals and business owners.</p>
+
+<div id="jp-relatedposts" class="jp-relatedposts">
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div>					</div>
+		<div class="post-categories"><span>Published in</span><a href="https://www.daryllswer.com/category/networking/architecture/" title="View all posts in Architecture">Architecture</a><a href="https://www.daryllswer.com/category/networking/dc-enterprise/" title="View all posts in DC/Enterprise">DC/Enterprise</a><a href="https://www.daryllswer.com/category/networking/isp-networking/" title="View all posts in ISP">ISP</a><a href="https://www.daryllswer.com/category/networking/" title="View all posts in Networking">Networking</a></div>		<div class="post-tags"><ul><li><a href="https://www.daryllswer.com/tag/ipv6/" title="View all posts tagged IPv6">IPv6</a></li><li><a href="https://www.daryllswer.com/tag/isps/" title="View all posts tagged ISPs">ISPs</a></li><li><a href="https://www.daryllswer.com/tag/management-plane/" title="View all posts tagged Management Plane">Management Plane</a></li><li><a href="https://www.daryllswer.com/tag/networking/" title="View all posts tagged Networking">Networking</a></li><li><a href="https://www.daryllswer.com/tag/oob/" title="View all posts tagged OOB">OOB</a></li></ul></div>	</article>
+		<nav class="further-reading">
+	<div class="previous">
+		<span>Previous Post</span>
+		<a href="https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/" rel="prev">Drop Early, Drop Often: Raw vs Filter iptables packet filtering</a>	</div>
+	<div class="next">
+		<span>Next Post</span>
+		<a href="https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/" rel="next">Let’s talk about CGNAT and IPv6, yet again.</a>	</div>
+</nav>		<section id="comments" class="comments">
+		<div class="comments-number">
+			<h2>
+				2 Comments			</h2>
+		</div>
+		<ol class="comment-list">
+					<li class="comment even thread-even depth-1" id="li-comment-1484">
+		<article id="comment-1484" class="comment">
+			<div class="comment-author">
+				<img alt="Adam" src="https://secure.gravatar.com/avatar/0325afc2002433a649fa648b2e61293043a582869df78640ad0015ffbe2364f1?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/0325afc2002433a649fa648b2e61293043a582869df78640ad0015ffbe2364f1?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="https://www.coretransit.net" class="url" rel="ugc external nofollow">Adam</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Great write-up!  Exceptional detail and so many considerations are covered here.  Thanks!!</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/#comment-1484">
+                            # <span class="comment-date">12 November 2024</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-1484" data-commentid="1484" data-postid="2931" data-belowelement="comment-1484" data-respondelement="respond" data-replyto="Reply to Adam" aria-label="Reply to Adam">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+		</ol>
+					<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/out-of-band-network-design-for-service-provider-networks/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://www.daryllswer.com/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> <span class="required-field-message">Required fields are marked <span class="required">*</span></span></p><p class="comment-form-comment">
+	            <label for="comment">Comment</label>
+	            <textarea required id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+	        </p><p class="comment-form-author">
+	            <label for="author">Name*</label>
+	            <input id="author" name="author" type="text" value="" size="30" aria-required="true">
+	        </p>
+<p class="comment-form-email">
+	            <label for="email">Email*</label>
+	            <input id="email" name="email" type="email" value="" size="30" aria-required="true">
+	        </p>
+<p class="comment-form-url">
+	            <label for="url">Website</label>
+	            <input id="url" name="url" type="url" value="" size="30">
+	            </p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"> <label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="comment-subscription-form"><input type="checkbox" name="subscribe_comments" id="subscribe_comments" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;"> <label class="subscribe-label" id="subscribe-label" for="subscribe_comments">Notify me of follow-up comments by email.</label></p><p class="comment-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts by email.</label></p><p class="form-submit"><span id="cf-turnstile-c-3646080644" class="cf-turnstile cf-turnstile-comments" data-action="wordpress-comment" data-callback="turnstileCommentCallback" data-sitekey="0x4AAAAAAA6_yQlodGSa8aHG" data-theme="auto" data-language="en-us" data-appearance="always" data-size="normal" data-retry="auto" data-retry-interval="1000"></span><br class="cf-turnstile-br cf-turnstile-br-comments"><span class="cf-turnstile-comment" style="pointer-events: none; opacity: 0.5;"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment"></span><script type="text/javascript">document.addEventListener("DOMContentLoaded", function() { document.body.addEventListener("click", function(event) { if (event.target.matches(".comment-reply-link, #cancel-comment-reply-link")) { turnstile.reset(".comment-form .cf-turnstile"); } }); });</script> <input type="hidden" name="comment_post_ID" value="2931" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="715bbb5b94"></p><p style="display: none !important;" class="akismet-fields-container" data-prefix="ak_"><label>Δ<textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100"></textarea></label><input type="hidden" id="ak_js_1" name="ak_js" value="152"><script>document.getElementById("ak_js_1").setAttribute("value",(new Date()).getTime())</script>
+</p></form>	</div><!-- #respond -->
+		</section>
+	</div>	</div>
+</section><!-- .main -->
+    <footer class="site-footer" role="contentinfo">
+                <div class="design-credit">
+            <span>
+                Daryll Swer's network engineering blog.            </span>
+        </div>
+    </footer>
+</div><!-- .max-width -->
+</div><!-- .overflow-container -->
+<button id="scroll-to-top" class="scroll-to-top"><span class="screen-reader-text">Scroll to the top</span><i class="fas fa-arrow-up"></i></button><script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/author/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<div class="simple-banner simple-banner-text" style="display:none !important"></div><script data-optimized="1" id="wp-hooks-js" src="https://www.daryllswer.com/wp-content/litespeed/js/af5a3b20e2b2f72a01b980a85c91baef.js?ver=04141"></script>
+<script data-optimized="1" id="wp-i18n-js" src="https://www.daryllswer.com/wp-content/litespeed/js/5de800ad07f995b347322aea90af03c0.js?ver=0a0e8"></script>
+<script data-optimized="1" id="wp-i18n-js-after">wp.i18n.setLocaleData({'text direction\u0004ltr':['ltr']})</script>
+<script data-optimized="1" id="swv-js" src="https://www.daryllswer.com/wp-content/litespeed/js/e9a3b4c1746a8af8abcd36c78615d3d1.js?ver=ff06d"></script>
+<script data-optimized="1" id="contact-form-7-js-translations">(function(domain,translations){var localeData=translations.locale_data[domain]||translations.locale_data.messages;localeData[""].domain=domain;wp.i18n.setLocaleData(localeData,domain)})("contact-form-7",{"translation-revision-date":"2026-05-05 18:32:38+0000","generator":"GlotPress\/4.0.3","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"en_GB"},"This contact form is placed in the wrong place.":["This contact form is placed in the wrong place."],"Error:":["Error:"]}},"comment":{"reference":"includes\/js\/index.js"}})</script>
+<script data-optimized="1" id="contact-form-7-js-before">var wpcf7={"api":{"root":"https:\/\/www.daryllswer.com\/wp-json\/","namespace":"contact-form-7\/v1"},"cached":1}</script>
+<script data-optimized="1" id="contact-form-7-js" src="https://www.daryllswer.com/wp-content/litespeed/js/6f5ba2d8d8b0414d1517f12c26a89066.js?ver=b75a7"></script>
+<script data-optimized="1" id="cf7apps-honeypot-refill-js-extra">var cf7appsHoneypotRefill={"forceRefillOnInit":"1"}</script>
+<script data-optimized="1" id="cf7apps-honeypot-refill-js" src="https://www.daryllswer.com/wp-content/litespeed/js/9683e5ec59020b01bccff6e664d2adce.js?ver=9c4d9"></script>
+<script data-optimized="1" id="flying-pages-js-before">window.FPConfig={delay:0,ignoreKeywords:["\/wp-admin","\/wp-login.php","\/cart","\/checkout","add-to-cart","logout","#","?",".png",".jpeg",".jpg",".gif",".svg",".webp"],maxRPS:3,hoverDelay:50}</script>
+<script data-optimized="1" id="flying-pages-js" src="https://www.daryllswer.com/wp-content/litespeed/js/fe50f626487caccffa7740157e8208e6.js?ver=c1cec" defer></script>
+<script data-optimized="1" id="vk-core-js" src="https://www.daryllswer.com/wp-content/litespeed/js/8f8564c85a1e17a4b6378ba930c6ce16.js?ver=6ce16"></script>
+<script data-optimized="1" id="ct-author-js-js-extra">var ct_author_objectL10n={"openPrimaryMenu":"open primary menu","closePrimaryMenu":"close primary menu","openChildMenu":"open child menu","closeChildMenu":"close child menu"}</script>
+<script data-optimized="1" id="ct-author-js-js" src="https://www.daryllswer.com/wp-content/litespeed/js/d898effc76afe6694e4ad6edd4f65129.js?ver=4150e"></script>
+<script data-optimized="1" async data-wp-strategy="async" fetchpriority="low" id="comment-reply-js" src="https://www.daryllswer.com/wp-content/litespeed/js/db7c6b314012e474610aee0afc93c2e1.js?ver=dc2c3"></script>
+<script data-optimized="1" id="ct-author-pro-js-js" src="https://www.daryllswer.com/wp-content/litespeed/js/3131c6e7672f9e145db8ab0107d869ae.js?ver=48bb9"></script>
+<script data-optimized="1" id="googlesitekit-events-provider-contact-form-7-js" src="https://www.daryllswer.com/wp-content/litespeed/js/bfba499859625298182bcc5b86e4bc31.js?ver=4bc31" defer></script>
+<script data-optimized="1" id="googlesitekit-events-provider-wpforms-js" src="https://www.daryllswer.com/wp-content/litespeed/js/e61afbd70616d48e99a12d9de6ef65a6.js?ver=f65a6" defer></script>
+<script id="jetpack-stats-js-before">
+_stq = window._stq || [];
+_stq.push([ "view", {"v":"ext","blog":"191168008","post":"2931","tz":"5.5","srv":"www.daryllswer.com","j":"1:15.9.1"} ]);
+_stq.push([ "clickTrackerInit", "191168008", "2931" ]);
+//# sourceURL=jetpack-stats-js-before
+</script>
+<script data-wp-strategy="defer" defer id="jetpack-stats-js" src="https://stats.wp.com/e-202628.js"></script>
+<script data-optimized="1" id="jetpack-blocks-assets-base-url-js-before">var Jetpack_Block_Assets_Base_Url="https://www.daryllswer.com/wp-content/plugins/jetpack/_inc/blocks/"</script>
+<script data-optimized="1" id="wp-dom-ready-js" src="https://www.daryllswer.com/wp-content/litespeed/js/39516d145bee63f76a44e5f0e1cfa728.js?ver=8953c"></script>
+<script data-optimized="1" id="wp-polyfill-js" src="https://www.daryllswer.com/wp-content/litespeed/js/bc6fd11f0a48b2c20973835839c07264.js?ver=cc4fb"></script>
+<script data-optimized="1" data-wp-strategy="defer" defer id="jetpack-block-subscriptions-js" src="https://www.daryllswer.com/wp-content/plugins/jetpack/_inc/blocks/subscriptions/view.js?minify=false&amp;ver=15.9.1"></script>
+<script data-wp-strategy="defer" id="cfturnstile-js" src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=auto"></script>
+<script data-wp-strategy="defer" defer id="cfturnstile-js-js" src="https://www.daryllswer.com/wp-content/plugins/simple-cloudflare-turnstile/js/disable-submit.js?ver=5.2"></script>
+<script id="cfturnstile-render-js-after">
+(function(){var a=0,d=false,q=false;function r(){if(d)return;var e=document.getElementById("cf-turnstile-c-3646080644");if(!e)return;if(e.innerHTML.trim()){d=true;return;}if(window.turnstile&&typeof window.turnstile.render==="function"){try{window.turnstile.render(e);d=true;}catch(_){}}}function w(){r();if(d)return;if(window.turnstile&&typeof window.turnstile.ready==="function"&&!q){q=true;try{window.turnstile.ready(r);}catch(_){}}if(!d&&a++<100){setTimeout(w,100);}}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",w);}else{w();}})();
+//# sourceURL=cfturnstile-render-js-after
+</script>
+<script data-optimized="1" defer id="akismet-frontend-js" src="https://www.daryllswer.com/wp-content/litespeed/js/89bf05b99da4ebf312a007cde8ce694b.js?ver=f94a5"></script>
+<script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://www.daryllswer.com/wp-includes/js/wp-emoji-release.min.js?ver=7.0"}}
+</script>
+<script type="module">
+/*! This file is auto-generated */
+const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(window._wpemojiSettings=a,"wpEmojiSettingsSupports"),s=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const a=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===a[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,a){let r;const o=(r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),s=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(e=>{s[e]=t(o,e,n,a)}),s}function r(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}a.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),c.toString(),p.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"});const r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=e=>{i(n=e.data),r.terminate(),t(n)})}catch(e){}i(n=f(s,u,c,p))}t(n)}).then(e=>{for(const n in e)a.supports[n]=e[n],a.supports.everything=a.supports.everything&&a.supports[n],"flag"!==n&&(a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&a.supports[n]);var t;a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&!a.supports.flag,a.supports.everything||((t=a.source||{}).concatemoji?r(t.concatemoji):t.wpemoji&&t.twemoji&&(r(t.twemoji),r(t.wpemoji)))});
+//# sourceURL=https://www.daryllswer.com/wp-includes/js/wp-emoji-loader.min.js
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a16d94b5c99fb7d1',t:'MTc4MzMzMDEyMw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

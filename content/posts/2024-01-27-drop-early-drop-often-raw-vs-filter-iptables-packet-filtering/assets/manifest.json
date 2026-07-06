@@ -1,0 +1,59 @@
+{
+  "assets": [
+    {
+      "alt": "",
+      "bytes": 424832,
+      "caption": "",
+      "detection_method": "rest_embedded_wp_featuredmedia",
+      "height": 404,
+      "local_path": "content/posts/2024-01-27-drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/assets/featured.webp",
+      "mime_type": "image/webp",
+      "role": "featured",
+      "sha256": "81aee632d92513102aa7e577b92d6d0839d9c40edf06c05bdeab530b9be87d30",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/drop_packets_parachutes.webp",
+      "width": 1110
+    },
+    {
+      "alt": null,
+      "bytes": 18661,
+      "caption": "Figure-1 Virtual Topology",
+      "detection_method": null,
+      "height": 141,
+      "local_path": "content/posts/2024-01-27-drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/assets/inline/iptables_raw_filter_setup.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "03049b4f46e930c88a8087f1b72e59331c1bd2c9b0f20ee62fd598efb5c10435",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/iptables_raw_filter_setup.png",
+      "width": 741
+    },
+    {
+      "alt": null,
+      "bytes": 167667,
+      "caption": "Figure-2 Test 1 CPU usage",
+      "detection_method": null,
+      "height": 724,
+      "local_path": "content/posts/2024-01-27-drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/assets/inline/test-1-cpu-usage.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "1875ddf92958462a4679984a32a0cb516fd1bd3923fcd667bd36665f2ac80600",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/test-1-cpu-usage.png",
+      "width": 1380
+    },
+    {
+      "alt": null,
+      "bytes": 231592,
+      "caption": "Figure-3 Test 2 CPU usage",
+      "detection_method": null,
+      "height": 1040,
+      "local_path": "content/posts/2024-01-27-drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/assets/inline/test-2-cpu-usage.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "fab1b38183d66918fda42dfcf3195830e72c3e0bf3ea29c29cd367b25166500b",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/test-2-cpu-usage.png",
+      "width": 1380
+    }
+  ],
+  "generated_at": "2026-07-06T09:28:35+00:00",
+  "post_id": 3138,
+  "post_slug": "drop-early-drop-often-raw-vs-filter-iptables-packet-filtering"
+}

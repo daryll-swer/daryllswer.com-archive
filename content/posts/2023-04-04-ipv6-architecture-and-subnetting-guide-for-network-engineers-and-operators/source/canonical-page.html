@@ -1,0 +1,1485 @@
+<html lang="en-GB">
+
+<head>
+	<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="template" content="Author 1.57">
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v27.7 (Yoast SEO v27.9) - https://yoast.com/product/yoast-seo-premium-wordpress/ -->
+	<title>IPv6 Architecture and Subnetting Guide for Network Engineers and Operators – Daryll Swer</title>
+	<meta name="description" content="An extensive article on IPv6 best practices, subnetting, architecture, and implementation with real-life examples for engineers and operators.">
+	<link rel="canonical" href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/">
+	<meta property="og:locale" content="en_GB">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="IPv6 Architecture and Subnetting Guide for Network Engineers and Operators – Daryll Swer">
+	<meta property="og:description" content="An extensive article on IPv6 best practices, subnetting, architecture, and implementation with real-life examples for engineers and operators.">
+	<meta property="og:url" content="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/">
+	<meta property="og:site_name" content="Daryll Swer">
+	<meta property="article:published_time" content="2023-04-03T23:00:00+00:00">
+	<meta property="article:modified_time" content="2026-06-06T12:14:32+00:00">
+	<meta property="og:image" content="https://www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png">
+	<meta property="og:image:width" content="1110">
+	<meta property="og:image:height" content="404">
+	<meta property="og:image:type" content="image/png">
+	<meta name="author" content="Daryll Swer">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:creator" content="@DaryllSwer">
+	<meta name="twitter:site" content="@DaryllSwer">
+	<meta name="twitter:label1" content="Written by">
+	<meta name="twitter:data1" content="Daryll Swer">
+	<meta name="twitter:label2" content="Estimated reading time">
+	<meta name="twitter:data2" content="31 minutes">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https:\/\/schema.org","@graph":[{"@type":"TechArticle","@id":"https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/#article","isPartOf":{"@id":"https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/"},"author":{"name":"Daryll Swer","@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"headline":"IPv6 Architecture and Subnetting Guide for Network Engineers and Operators","datePublished":"2023-04-03T23:00:00+00:00","dateModified":"2026-06-06T12:14:32+00:00","mainEntityOfPage":{"@id":"https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/"},"wordCount":6754,"commentCount":6,"publisher":{"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"image":{"@id":"https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/#primaryimage"},"thumbnailUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/03\/Scaffold_FT.png","keywords":["Architecture","IP Planning","IPv6","ISPs","Networking","Planning","Subnetting"],"articleSection":["Architecture","Networking"],"inLanguage":"en-GB","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/#respond"]}]},{"@type":"WebPage","@id":"https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/","url":"https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/","name":"IPv6 Architecture and Subnetting Guide for Network Engineers and Operators &#8211; Daryll Swer","isPartOf":{"@id":"https:\/\/www.daryllswer.com\/#website"},"primaryImageOfPage":{"@id":"https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/#primaryimage"},"image":{"@id":"https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/#primaryimage"},"thumbnailUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/03\/Scaffold_FT.png","datePublished":"2023-04-03T23:00:00+00:00","dateModified":"2026-06-06T12:14:32+00:00","description":"An extensive article on IPv6 best practices, subnetting, architecture, and implementation with real-life examples for engineers and operators.","breadcrumb":{"@id":"https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/#breadcrumb"},"inLanguage":"en-GB","potentialAction":[{"@type":"ReadAction","target":["https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/"]}]},{"@type":"ImageObject","inLanguage":"en-GB","@id":"https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/#primaryimage","url":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/03\/Scaffold_FT.png","contentUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/03\/Scaffold_FT.png","width":1110,"height":404},{"@type":"BreadcrumbList","@id":"https:\/\/www.daryllswer.com\/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators\/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https:\/\/www.daryllswer.com\/"},{"@type":"ListItem","position":2,"name":"IPv6 Architecture and Subnetting Guide for Network Engineers and Operators"}]},{"@type":"WebSite","@id":"https:\/\/www.daryllswer.com\/#website","url":"https:\/\/www.daryllswer.com\/","name":"Daryll Swer","description":"Networking Defined","publisher":{"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"alternateName":"DS","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https:\/\/www.daryllswer.com\/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-GB"},{"@type":["Person","Organization"],"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076","name":"Daryll Swer","image":{"@type":"ImageObject","inLanguage":"en-GB","@id":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","url":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","contentUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","width":512,"height":512,"caption":"Daryll Swer"},"logo":{"@id":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg"},"description":"Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794","sameAs":["https:\/\/www.daryllswer.com\/","https:\/\/www.linkedin.com\/in\/daryllswer\/","https:\/\/x.com\/DaryllSwer"],"honorificPrefix":"Mr","gender":"male","knowsAbout":["Network engineering","IPv6","BGP","SR-MPLS","VXLAN","EVPN","OOB"],"knowsLanguage":["English","Khasi"],"jobTitle":"Principal Consultant, Proprietor","worksFor":"Swer Networks","publishingPrinciples":"https:\/\/www.daryllswer.com\/about\/","ownershipFundingInfo":"https:\/\/www.daryllswer.com\/donation\/"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel="dns-prefetch" href="//cdn.visibilitykit.ai">
+<link rel="dns-prefetch" href="//www.googletagmanager.com">
+<link rel="dns-prefetch" href="//stats.wp.com">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » Feed" href="https://www.daryllswer.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » Comments Feed" href="https://www.daryllswer.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » IPv6 Architecture and Subnetting Guide for Network Engineers and Operators Comments Feed" href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/feed/">
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://www.daryllswer.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.daryllswer.com%2Fipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators%2F">
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://www.daryllswer.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.daryllswer.com%2Fipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators%2F&amp;format=xml">
+
+<link data-optimized="2" rel="stylesheet" href="https://www.daryllswer.com/wp-content/litespeed/css/009539cadabc4368f1932a6db189108c.css?ver=f1577">
+
+
+
+
+
+
+<style id="wp-block-image-inline-css">
+.wp-block-image>a,.wp-block-image>figure>a{display:inline-block}.wp-block-image img{box-sizing:border-box;height:auto;max-width:100%;vertical-align:bottom}@media not (prefers-reduced-motion){.wp-block-image img.hide{visibility:hidden}.wp-block-image img.show{animation:show-content-image .4s}}.wp-block-image[style*=border-radius] img,.wp-block-image[style*=border-radius]>a{border-radius:inherit}.wp-block-image.has-custom-border img{box-sizing:border-box}.wp-block-image.aligncenter{text-align:center}.wp-block-image.alignfull>a,.wp-block-image.alignwide>a{width:100%}.wp-block-image.alignfull img,.wp-block-image.alignwide img{height:auto;width:100%}.wp-block-image .aligncenter,.wp-block-image .alignleft,.wp-block-image .alignright,.wp-block-image.aligncenter,.wp-block-image.alignleft,.wp-block-image.alignright{display:table}.wp-block-image .aligncenter>figcaption,.wp-block-image .alignleft>figcaption,.wp-block-image .alignright>figcaption,.wp-block-image.aligncenter>figcaption,.wp-block-image.alignleft>figcaption,.wp-block-image.alignright>figcaption{caption-side:bottom;display:table-caption}.wp-block-image .alignleft{float:left;margin:.5em 1em .5em 0}.wp-block-image .alignright{float:right;margin:.5em 0 .5em 1em}.wp-block-image .aligncenter{margin-left:auto;margin-right:auto}.wp-block-image :where(figcaption){margin-bottom:1em;margin-top:.5em}.wp-block-image.is-style-circle-mask img{border-radius:9999px}@supports ((-webkit-mask-image:none) or (mask-image:none)) or (-webkit-mask-image:none){.wp-block-image.is-style-circle-mask img{border-radius:0;-webkit-mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-mode:alpha;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain}}:root :where(.wp-block-image.is-style-rounded img,.wp-block-image .is-style-rounded img){border-radius:9999px}.wp-block-image figure{margin:0}.wp-lightbox-container{display:flex;flex-direction:column;position:relative}.wp-lightbox-container img{cursor:zoom-in}.wp-lightbox-container img:hover+button{opacity:1}.wp-lightbox-container button{align-items:center;backdrop-filter:blur(16px) saturate(180%);background-color:#5a5a5a40;border:none;border-radius:4px;cursor:zoom-in;display:flex;height:20px;justify-content:center;opacity:0;padding:0;position:absolute;right:16px;text-align:center;top:16px;width:20px;z-index:100}@media not (prefers-reduced-motion){.wp-lightbox-container button{transition:opacity .2s ease}}.wp-lightbox-container button:focus-visible{outline:3px auto #5a5a5a40;outline:3px auto -webkit-focus-ring-color;outline-offset:3px}.wp-lightbox-container button:hover{cursor:pointer;opacity:1}.wp-lightbox-container button:focus{opacity:1}.wp-lightbox-container button:focus,.wp-lightbox-container button:hover,.wp-lightbox-container button:not(:hover):not(:active):not(.has-background){background-color:#5a5a5a40;border:none}.wp-lightbox-overlay{box-sizing:border-box;cursor:zoom-out;height:100vh;left:0;overflow:hidden;position:fixed;top:0;visibility:hidden;width:100%;z-index:100000}.wp-lightbox-overlay .wp-lightbox-close-button{align-items:center;cursor:pointer;display:flex;font-family:inherit;gap:8px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 4px;position:absolute;right:calc(env(safe-area-inset-right) + 16px);top:calc(env(safe-area-inset-top) + 16px);z-index:5000000}.wp-lightbox-overlay .wp-lightbox-close-button:focus,.wp-lightbox-overlay .wp-lightbox-close-button:hover,.wp-lightbox-overlay .wp-lightbox-close-button:not(:hover):not(:active):not(.has-background){background:none;border:none}.wp-lightbox-overlay .wp-lightbox-close-button:has(.wp-lightbox-close-text:not([hidden])) .wp-lightbox-close-icon svg{height:1em;width:1em}.wp-lightbox-overlay .wp-lightbox-close-icon svg{display:block}.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{align-items:center;bottom:16px;cursor:pointer;display:flex;font-family:inherit;gap:4px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 8px;position:absolute;z-index:2000002}.wp-lightbox-overlay .wp-lightbox-navigation-button-next[hidden],.wp-lightbox-overlay .wp-lightbox-navigation-button-prev[hidden]{display:none}@media (min-width:960px){.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{bottom:50%;transform:translateY(-50%)}}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:not(:hover):not(:active):not(.has-background),.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:not(:hover):not(:active):not(.has-background){background:none;border:none;padding:0 8px}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg{display:block;height:1.5em;width:1.5em}.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{left:calc(env(safe-area-inset-left) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-button-next{right:calc(env(safe-area-inset-right) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-icon svg{vertical-align:middle}.wp-lightbox-overlay .lightbox-image-container{height:var(--wp--lightbox-container-height);left:50%;overflow:hidden;position:absolute;top:50%;transform:translate(-50%,-50%);transform-origin:top left;width:var(--wp--lightbox-container-width);z-index:2000001}.wp-lightbox-overlay .wp-block-image{align-items:center;box-sizing:border-box;display:flex;height:100%;justify-content:center;margin:0;position:relative;transform-origin:0 0;width:100%;z-index:3000000}.wp-lightbox-overlay .wp-block-image img{height:var(--wp--lightbox-image-height);min-height:var(--wp--lightbox-image-height);min-width:var(--wp--lightbox-image-width);width:var(--wp--lightbox-image-width)}.wp-lightbox-overlay .wp-block-image figcaption{display:none}.wp-lightbox-overlay button{background:none;border:none}.wp-lightbox-overlay .scrim{background-color:#fff;height:100%;opacity:.9;position:absolute;width:100%;z-index:2000000}.wp-lightbox-overlay.active{visibility:visible}@media not (prefers-reduced-motion){.wp-lightbox-overlay.active{animation:turn-on-visibility .25s both}.wp-lightbox-overlay.active img{animation:turn-on-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active){animation:turn-off-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active) img{animation:turn-off-visibility .25s both}.wp-lightbox-overlay.zoom.active{animation:none;opacity:1;visibility:visible}.wp-lightbox-overlay.zoom.active .lightbox-image-container{animation:lightbox-zoom-in .4s}.wp-lightbox-overlay.zoom.active .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.active .scrim{animation:turn-on-visibility .4s forwards}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active){animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container{animation:lightbox-zoom-out .4s}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .scrim{animation:turn-off-visibility .4s forwards}}@keyframes show-content-image{0%{visibility:hidden}99%{visibility:hidden}to{visibility:visible}}@keyframes turn-on-visibility{0%{opacity:0}to{opacity:1}}@keyframes turn-off-visibility{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes lightbox-zoom-in{0%{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale))}to{transform:translate(-50%,-50%) scale(1)}}@keyframes lightbox-zoom-out{0%{transform:translate(-50%,-50%) scale(1);visibility:visible}99%{visibility:visible}to{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale));visibility:hidden}}
+/*# sourceURL=https://www.daryllswer.com/wp-includes/blocks/image/style.min.css */
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script data-optimized="1" id="jetpack_related-posts-js-extra">var related_posts_js_options={"post_heading":"h4"}</script>
+<script data-optimized="1" id="jetpack_related-posts-js" src="https://www.daryllswer.com/wp-content/litespeed/js/60629040d2f510e5c7bdf76819bb22ad.js?ver=75fcb"></script>
+<script id="jquery-core-js" src="https://www.daryllswer.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
+<script data-optimized="1" id="jquery-migrate-js" src="https://www.daryllswer.com/wp-content/litespeed/js/a0480947b50373b63214f29230694166.js?ver=aaa43"></script>
+<script data-optimized="1" id="simple-banner-script-js-before">const simpleBannerScriptParams={"pro_version_enabled":"","debug_mode":"","id":1512,"version":"3.3.0","banner_params":[{"hide_simple_banner":"no","simple_banner_prepend_element":"body","simple_banner_position":"fixed","header_margin":"","header_padding":"","wp_body_open_enabled":"","wp_body_open":!0,"simple_banner_z_index":"","simple_banner_text":"For professional services, <a href=\"https:\/\/www.swernetworks.com\/\">click here<\/a>.","disabled_on_current_page":!1,"disabled_pages_array":[],"is_current_page_a_post":!0,"disabled_on_posts":"","simple_banner_disabled_page_paths":"","simple_banner_font_size":"","simple_banner_color":"#242526","simple_banner_text_color":"#ffffff","simple_banner_link_color":"#ffa500","simple_banner_close_color":"#242526","simple_banner_custom_css":"","simple_banner_scrolling_custom_css":"","simple_banner_text_custom_css":"","simple_banner_button_css":"","site_custom_css":"","keep_site_custom_css":"","site_custom_js":"","keep_site_custom_js":"","close_button_enabled":"on","close_button_expiration":"0.006944","close_button_cookie_set":!1,"current_date":{"date":"2026-07-05 19:00:19.983751","timezone_type":3,"timezone":"UTC"},"start_date":{"date":"2026-07-05 19:00:19.983759","timezone_type":3,"timezone":"UTC"},"end_date":{"date":"2026-07-05 19:00:19.983764","timezone_type":3,"timezone":"UTC"},"simple_banner_start_after_date":"","simple_banner_remove_after_date":"","simple_banner_insert_inside_element":""}]}</script>
+<script data-optimized="1" id="simple-banner-script-js" src="https://www.daryllswer.com/wp-content/litespeed/js/cc310f2289e8048ba2a726edebe8b939.js?ver=c906a"></script>
+
+<!-- Google tag (gtag.js) snippet added by Site Kit -->
+<!-- Google Analytics snippet added by Site Kit -->
+<script id="google_gtagjs-js" src="https://www.googletagmanager.com/gtag/js?id=G-PQZ28ELT4T" async></script>
+<script id="google_gtagjs-js-after">
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag("set","linker",{"domains":["www.daryllswer.com"]});
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "G-PQZ28ELT4T", {"googlesitekit_post_type":"post","googlesitekit_post_categories":"Architecture; Networking","googlesitekit_post_date":"20230404"});
+ window._googlesitekit = window._googlesitekit || {}; window._googlesitekit.throttledEvents = []; window._googlesitekit.gtagEvent = (name, data) => { var key = JSON.stringify( { name, data } ); if ( !! window._googlesitekit.throttledEvents[ key ] ) { return; } window._googlesitekit.throttledEvents[ key ] = true; setTimeout( () => { delete window._googlesitekit.throttledEvents[ key ]; }, 5 ); gtag( "event", name, { ...data, event_source: "site-kit" } ); }; 
+//# sourceURL=google_gtagjs-js-after
+</script>
+<link rel="https://api.w.org/" href="https://www.daryllswer.com/wp-json/"><link rel="alternate" title="JSON" type="application/json" href="https://www.daryllswer.com/wp-json/wp/v2/posts/1512"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.daryllswer.com/xmlrpc.php?rsd">
+
+<link rel="shortlink" href="https://www.daryllswer.com/?p=1512">
+<meta name="generator" content="Site Kit by Google 1.182.0"><style id="simple-banner-site-custom-css-dummy" type="text/css"></style><script id="simple-banner-site-custom-js-dummy" type="text/javascript"></script>	
+		<link rel="llms-sitemap" href="https://www.daryllswer.com/llms.txt">
+<link rel="icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-32x32.png" sizes="32x32">
+<link rel="icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-180x180.png">
+<meta name="msapplication-TileImage" content="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-270x270.png">
+
+
+
+</head>
+
+<body id="author" class="wp-singular post-template-default single single-post postid-1512 single-format-standard wp-theme-author singular singular-post singular-post-1512">
+			<a class="skip-content" href="#main">Skip to content</a>
+		<div id="overflow-container" class="overflow-container">
+			<div class="max-width">
+				<div id="main-sidebar" class="main-sidebar">
+																<header class="site-header" id="site-header" role="banner">
+							<div id="title-container" class="title-container">
+																	<div id="site-avatar" class="site-avatar" style="background-image: url('https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g')"></div>
+																<div class="container">
+									<div id="site-title" class="site-title"><a href="https://www.daryllswer.com">Daryll Swer</a></div>									<p class="tagline">Networking Defined</p>								</div>
+							</div>
+							<button id="toggle-navigation" class="toggle-navigation" aria-expanded="false">
+								<span class="screen-reader-text">open primary menu</span>
+								<i class="fas fa-bars"></i>
+							</button>
+							<div class="social-media-icons"><ul>						<li>
+							<a class="twitter" target="_blank" href="https://x.com/daryllswer">
+								<i class="fab fa-square-x-twitter"></i>
+								<span class="screen-reader-text">twitter</span>
+															</a>
+						</li>
+												<li>
+							<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/daryllswer/">
+								<i class="fab fa-linkedin"></i>
+								<span class="screen-reader-text">linkedin</span>
+															</a>
+						</li>
+												<li>
+							<a class="rss" target="_blank" href="http://daryllswer.com/feed/">
+								<i class="fas fa-rss"></i>
+								<span class="screen-reader-text">rss</span>
+															</a>
+						</li>
+												<li>
+							<a class="telegram" target="_blank" href="https://t.me/NetworkOpsCentral">
+								<i class="fab fa-telegram"></i>
+								<span class="screen-reader-text">telegram</span>
+															</a>
+						</li>
+						</ul></div>							<div id="menu-primary" class="menu-container menu-primary" role="navigation">
+	<nav class="menu"><ul id="menu-primary-items" class="menu-primary-items"><li id="menu-item-2228" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2228"><a href="https://www.daryllswer.com/about/">About</a></li>
+<li id="menu-item-2229" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2229"><a href="https://www.daryllswer.com/contact/">Contact</a></li>
+<li id="menu-item-2187" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2187"><a href="https://www.daryllswer.com/as149794/">AS149794</a></li>
+<li id="menu-item-2186" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2186"><a href="https://www.daryllswer.com/geofeed/">Geofeed</a></li>
+</ul></nav></div>						</header>
+																<aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+		<h1 class="screen-reader-text">Sidebar</h1>
+		<section id="block-8" class="widget widget_block widget_search"><form role="search" method="get" action="https://www.daryllswer.com/" class="wp-block-search__button-outside wp-block-search__icon-button wp-block-search"><label class="wp-block-search__label screen-reader-text" for="wp-block-search__input-1">Search</label><div class="wp-block-search__inside-wrapper"><input class="wp-block-search__input" id="wp-block-search__input-1" placeholder="Search" value="" type="search" name="s" required><button aria-label="Search" class="wp-block-search__button has-background has-icon wp-element-button" type="submit" style="background-color: #c9c9c9"><svg class="search-icon" viewbox="0 0 24 24" width="24" height="24">
+					<path d="M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"></path>
+				</svg></button></div></form></section><section id="block-34" class="widget widget_block">	<div class="wp-block-jetpack-subscriptions__supports-newline wp-block-jetpack-subscriptions__use-newline is-style-split wp-block-jetpack-subscriptions">
+		<div class="wp-block-jetpack-subscriptions__container is-not-subscriber">
+							<form action="https://wordpress.com/email-subscriptions" method="post" accept-charset="utf-8" data-blog="191168008" data-post_access_level="everybody" data-subscriber_email="" id="subscribe-blog">
+					<div class="wp-block-jetpack-subscriptions__form-elements">
+												<p id="subscribe-email">
+							<label id="subscribe-field-label" for="subscribe-field" class="screen-reader-text">
+								Type your email…							</label>
+							<input required="required" type="email" name="email" autocomplete="email" class="no-border-radius has-12px-font-size " style="font-size: 12px;padding: 15px 23px 15px 23px;border-radius: 0px;border-width: 0px;" placeholder="Type your email…" value="" id="subscribe-field" title="Please fill in this field.">						</p>
+												<p id="subscribe-submit" style="width: 100%;max-width: 100%;">
+							<input type="hidden" name="action" value="subscribe">
+							<input type="hidden" name="blog_id" value="191168008">
+							<input type="hidden" name="source" value="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/">
+							<input type="hidden" name="sub-type" value="subscribe-block">
+							<input type="hidden" name="app_source" value="">
+							<input type="hidden" name="redirect_fragment" value="subscribe-blog">
+							<input type="hidden" name="lang" value="en_GB">
+							<input type="hidden" id="_wpnonce" name="_wpnonce" value="9b483a7a13"><input type="hidden" name="_wp_http_referer" value="/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/"><input type="hidden" name="post_id" value="1512">							<button type="submit" class="wp-block-button__link no-border-radius has-12px-font-size has-text-color has-black-color" style="background: #c9c9c9;width: 100%;font-size: 12px;padding: 15px 23px 15px 23px;margin-top: 10px;border-radius: 0px;border-width: 0px;" name="jetpack_subscriptions_widget">
+								Subscribe							</button>
+						</p>
+					</div>
+				</form>
+								</div>
+	</div>
+	</section><section id="block-14" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-copyright">Copyright</h2>
+
+
+
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="http://daryllswer.com/">Daryll Swer and daryllswer.com</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="http://daryllswer.com/about/">Daryll Swer</a> is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
+</div></div>
+</section><section id="block-37" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-disclaimer">Disclaimer</h2>
+
+
+
+<p class="wp-block-paragraph">This is my personal site, all content, and media found here are not affiliated with any organisation or my employer but myself. All content is my own unless otherwise specified.</p>
+</div></div>
+</section><section id="block-20" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-recent-posts">Recent Posts</h2>
+
+
+<ul class="wp-block-latest-posts__list has-dates wp-block-latest-posts"><li><a class="wp-block-latest-posts__post-title" href="https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/">BGP Router ID Structuring in IPv6 Native Networks</a><time datetime="2026-06-04T14:36:35+05:30" class="wp-block-latest-posts__post-date">4 June 2026</time></li>
+<li><a class="wp-block-latest-posts__post-title" href="https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/">How to bring data centre-like connectivity to your home with IPTTTH</a><time datetime="2025-05-26T08:30:00+05:30" class="wp-block-latest-posts__post-date">26 May 2025</time></li>
+</ul></div></div>
+</section><section id="block-24" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-categories">Categories</h2>
+
+
+<ul class="wp-block-categories-list wp-block-categories-taxonomy-category wp-block-categories">	<li class="cat-item cat-item-3"><a href="https://www.daryllswer.com/category/networking/">Networking</a> (18)
+<ul class="children">
+	<li class="cat-item cat-item-4"><a href="https://www.daryllswer.com/category/networking/architecture/">Architecture</a> (3)
+</li>
+	<li class="cat-item cat-item-5"><a href="https://www.daryllswer.com/category/networking/dc-enterprise/">DC/Enterprise</a> (2)
+</li>
+	<li class="cat-item cat-item-58"><a href="https://www.daryllswer.com/category/networking/home-networking/">Home Networking</a> (1)
+</li>
+	<li class="cat-item cat-item-6"><a href="https://www.daryllswer.com/category/networking/isp-networking/">ISP</a> (6)
+</li>
+	<li class="cat-item cat-item-7"><a href="https://www.daryllswer.com/category/networking/ixp-networking/">IXP</a> (1)
+</li>
+	<li class="cat-item cat-item-55"><a href="https://www.daryllswer.com/category/networking/linux/">Linux</a> (2)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-45"><a href="https://www.daryllswer.com/category/non-tech/">Non-Tech</a> (1)
+<ul class="children">
+	<li class="cat-item cat-item-46"><a href="https://www.daryllswer.com/category/non-tech/khasi-ethnicity/">Khasi Ethnicity</a> (1)
+</li>
+</ul>
+</li>
+</ul></div></div>
+</section><section id="block-29" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-archives">Archives</h2>
+
+
+<ul class="wp-block-archives-list wp-block-archives">	<li><a href="https://www.daryllswer.com/2026/06/">June 2026</a></li>
+	<li><a href="https://www.daryllswer.com/2025/05/">May 2025</a></li>
+	<li><a href="https://www.daryllswer.com/2025/04/">April 2025</a></li>
+	<li><a href="https://www.daryllswer.com/2024/11/">November 2024</a></li>
+	<li><a href="https://www.daryllswer.com/2024/01/">January 2024</a></li>
+	<li><a href="https://www.daryllswer.com/2023/09/">September 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/08/">August 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/05/">May 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/04/">April 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/03/">March 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2022/12/">December 2022</a></li>
+	<li><a href="https://www.daryllswer.com/2022/07/">July 2022</a></li>
+	<li><a href="https://www.daryllswer.com/2021/08/">August 2021</a></li>
+	<li><a href="https://www.daryllswer.com/2021/06/">June 2021</a></li>
+	<li><a href="https://www.daryllswer.com/2021/03/">March 2021</a></li>
+</ul></div></div>
+</section><section id="block-32" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-tags">Tags</h2>
+
+
+<p class="is-style-default wp-block-tag-cloud"><a href="https://www.daryllswer.com/tag/architecture/" class="tag-cloud-link tag-link-8 tag-link-position-1" style="font-size: 8pt;" aria-label="Architecture (1 item)">Architecture<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/as/" class="tag-cloud-link tag-link-9 tag-link-position-2" style="font-size: 8pt;" aria-label="AS (1 item)">AS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/asn/" class="tag-cloud-link tag-link-10 tag-link-position-3" style="font-size: 8pt;" aria-label="ASN (1 item)">ASN<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/autonomous-system/" class="tag-cloud-link tag-link-11 tag-link-position-4" style="font-size: 8pt;" aria-label="Autonomous System (1 item)">Autonomous System<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/bandwidth/" class="tag-cloud-link tag-link-12 tag-link-position-5" style="font-size: 10.863636363636pt;" aria-label="Bandwidth (2 items)">Bandwidth<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/bandwidth-aggregation/" class="tag-cloud-link tag-link-13 tag-link-position-6" style="font-size: 10.863636363636pt;" aria-label="Bandwidth Aggregation (2 items)">Bandwidth Aggregation<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/bgp/" class="tag-cloud-link tag-link-14 tag-link-position-7" style="font-size: 14.363636363636pt;" aria-label="BGP (4 items)">BGP<span class="tag-link-count"> (4)</span></a>
+<a href="https://www.daryllswer.com/tag/bng/" class="tag-cloud-link tag-link-15 tag-link-position-8" style="font-size: 8pt;" aria-label="BNG (1 item)">BNG<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/cgnat/" class="tag-cloud-link tag-link-16 tag-link-position-9" style="font-size: 12.772727272727pt;" aria-label="CGNAT (3 items)">CGNAT<span class="tag-link-count"> (3)</span></a>
+<a href="https://www.daryllswer.com/tag/core/" class="tag-cloud-link tag-link-17 tag-link-position-10" style="font-size: 8pt;" aria-label="Core (1 item)">Core<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/docker/" class="tag-cloud-link tag-link-61 tag-link-position-11" style="font-size: 8pt;" aria-label="Docker (1 item)">Docker<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/double-nat/" class="tag-cloud-link tag-link-18 tag-link-position-12" style="font-size: 12.772727272727pt;" aria-label="Double NAT (3 items)">Double NAT<span class="tag-link-count"> (3)</span></a>
+<a href="https://www.daryllswer.com/tag/edge/" class="tag-cloud-link tag-link-19 tag-link-position-13" style="font-size: 8pt;" aria-label="Edge (1 item)">Edge<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/geofeed/" class="tag-cloud-link tag-link-20 tag-link-position-14" style="font-size: 8pt;" aria-label="Geofeed (1 item)">Geofeed<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/geoip/" class="tag-cloud-link tag-link-21 tag-link-position-15" style="font-size: 8pt;" aria-label="GeoIP (1 item)">GeoIP<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ip-geolocation/" class="tag-cloud-link tag-link-22 tag-link-position-16" style="font-size: 8pt;" aria-label="IP Geolocation (1 item)">IP Geolocation<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ip-planning/" class="tag-cloud-link tag-link-23 tag-link-position-17" style="font-size: 8pt;" aria-label="IP Planning (1 item)">IP Planning<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/iptables/" class="tag-cloud-link tag-link-57 tag-link-position-18" style="font-size: 8pt;" aria-label="iptables (1 item)">iptables<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ipv4/" class="tag-cloud-link tag-link-24 tag-link-position-19" style="font-size: 14.363636363636pt;" aria-label="IPv4 (4 items)">IPv4<span class="tag-link-count"> (4)</span></a>
+<a href="https://www.daryllswer.com/tag/ipv6/" class="tag-cloud-link tag-link-25 tag-link-position-20" style="font-size: 19.772727272727pt;" aria-label="IPv6 (10 items)">IPv6<span class="tag-link-count"> (10)</span></a>
+<a href="https://www.daryllswer.com/tag/isps/" class="tag-cloud-link tag-link-26 tag-link-position-21" style="font-size: 17.545454545455pt;" aria-label="ISPs (7 items)">ISPs<span class="tag-link-count"> (7)</span></a>
+<a href="https://www.daryllswer.com/tag/ixps/" class="tag-cloud-link tag-link-27 tag-link-position-22" style="font-size: 8pt;" aria-label="IXPs (1 item)">IXPs<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/juniper/" class="tag-cloud-link tag-link-28 tag-link-position-23" style="font-size: 8pt;" aria-label="Juniper (1 item)">Juniper<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/junos/" class="tag-cloud-link tag-link-29 tag-link-position-24" style="font-size: 8pt;" aria-label="JunOS (1 item)">JunOS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/khasi/" class="tag-cloud-link tag-link-47 tag-link-position-25" style="font-size: 8pt;" aria-label="Khasi (1 item)">Khasi<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/linux/" class="tag-cloud-link tag-link-56 tag-link-position-26" style="font-size: 8pt;" aria-label="Linux (1 item)">Linux<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/load-balancing/" class="tag-cloud-link tag-link-30 tag-link-position-27" style="font-size: 10.863636363636pt;" aria-label="Load Balancing (2 items)">Load Balancing<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/management-plane/" class="tag-cloud-link tag-link-54 tag-link-position-28" style="font-size: 8pt;" aria-label="Management Plane (1 item)">Management Plane<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/mikrotik/" class="tag-cloud-link tag-link-31 tag-link-position-29" style="font-size: 10.863636363636pt;" aria-label="MikroTik (2 items)">MikroTik<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/mpls/" class="tag-cloud-link tag-link-59 tag-link-position-30" style="font-size: 8pt;" aria-label="MPLS (1 item)">MPLS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/multi-wan/" class="tag-cloud-link tag-link-32 tag-link-position-31" style="font-size: 10.863636363636pt;" aria-label="Multi-WAN (2 items)">Multi-WAN<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/nat/" class="tag-cloud-link tag-link-33 tag-link-position-32" style="font-size: 10.863636363636pt;" aria-label="NAT (2 items)">NAT<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/networking/" class="tag-cloud-link tag-link-34 tag-link-position-33" style="font-size: 22pt;" aria-label="Networking (14 items)">Networking<span class="tag-link-count"> (14)</span></a>
+<a href="https://www.daryllswer.com/tag/non-tech/" class="tag-cloud-link tag-link-51 tag-link-position-34" style="font-size: 8pt;" aria-label="Non-Tech (1 item)">Non-Tech<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/oob/" class="tag-cloud-link tag-link-53 tag-link-position-35" style="font-size: 8pt;" aria-label="OOB (1 item)">OOB<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/planning/" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 8pt;" aria-label="Planning (1 item)">Planning<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/rfc4638/" class="tag-cloud-link tag-link-36 tag-link-position-37" style="font-size: 8pt;" aria-label="RFC4638 (1 item)">RFC4638<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/rfc8805/" class="tag-cloud-link tag-link-37 tag-link-position-38" style="font-size: 8pt;" aria-label="RFC8805 (1 item)">RFC8805<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/routeros/" class="tag-cloud-link tag-link-38 tag-link-position-39" style="font-size: 8pt;" aria-label="RouterOS (1 item)">RouterOS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/routing/" class="tag-cloud-link tag-link-52 tag-link-position-40" style="font-size: 8pt;" aria-label="Routing (1 item)">Routing<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/subnetting/" class="tag-cloud-link tag-link-39 tag-link-position-41" style="font-size: 8pt;" aria-label="Subnetting (1 item)">Subnetting<span class="tag-link-count"> (1)</span></a></p></div></div>
+</section>	</aside>
+									</div>
+								<section id="main" class="main" role="main">
+					<p id="breadcrumbs"><span><span><a href="https://www.daryllswer.com/">Home</a></span> » <span class="breadcrumb_last" aria-current="page">IPv6 Architecture and Subnetting Guide for Network Engineers and Operators</span></span></p>	<div id="loop-container" class="loop-container">
+		<div class="post-1512 post type-post status-publish format-standard has-post-thumbnail hentry category-architecture category-networking tag-architecture tag-ip-planning tag-ipv6 tag-isps tag-networking tag-planning tag-subnetting ratio-natural entry">
+		<div class="featured-image"><img width="1110" height="404" src="https://www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png" class="attachment-full size-full wp-post-image" alt="" decoding="async" fetchpriority="high" srcset="https://www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png 1110w, https://www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT-768x280.png 768w" sizes="(max-width: 1110px) 100vw, 1110px"></div>	<article>
+		<div class="post-header">
+			<h1 class="post-title">IPv6 Architecture and Subnetting Guide for Network Engineers and Operators</h1>
+			<span class="post-meta">
+	Published on <span class="date"><a href="https://www.daryllswer.com/2023/04/">4 April 2023</a></span></span>		</div>
+		<div class="post-content">
+			<p class="last-updated">Last updated on 6 June 2026 </p>			
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph"><strong>For professional IPv6 consulting, <a href="https://www.swernetworks.com/">click here</a>.</strong></p>
+</blockquote>
+
+
+
+<p class="wp-block-paragraph"><strong>This article has been published on the <a href="https://blog.apnic.net/2023/04/04/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" target="_blank" rel="noreferrer noopener">APNIC blog</a> as well as discussed on a Packet Pushers <a href="https://packetpushers.net/podcast/ipv6-buzz-129-ipv6-architecture-and-subnetting-with-daryll-swer/" target="_blank" rel="noreferrer noopener">podcast</a>. It was also selected for APNIC’s 2023 “<a href="https://blog.apnic.net/2023/12/28/three-of-the-best-ipv6-7/" target="_blank" rel="noreferrer noopener">Three of the best: IPv6</a>”, in addition this article has been offiically linked in APNIC’s <a href="https://www.apnic.net/community/ipv6/deploy-ipv6/#resources" target="_blank" rel="noreferrer noopener">IPv6 BCP</a> under the “Deployment and Addressing Planning” section.</strong></p>
+
+
+
+<h3 id="h-changelog" class="wp-block-heading"><a href="#changelog" aria-hidden="true" class="aal_anchor" id="changelog"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Changelog</h3>
+
+
+
+<ul class="wp-block-list">
+<li>20th November 2023
+<ul class="wp-block-list">
+<li>Updated the OOB subnetting logic in the Telco/ISP section, backbone sub-section. Also updated the Excel sheet in the same section.</li>
+</ul>
+</li>
+
+
+
+<li>18th August 2024
+<ul class="wp-block-list">
+<li>Updated grammar inconsistencies.</li>
+
+
+
+<li>Updated my advice on PtP link assignments.</li>
+
+
+
+<li>OOB subnetting logic is unified across the board for consistency.</li>
+
+
+
+<li>Updated PtP subnetting logic for both DC and ISP section for consistency.</li>
+
+
+
+<li>Updated diagrams to reflect updated PtP links assignments.</li>
+
+
+
+<li>All updates were made based on my real-life continous improvement work results, in production.</li>
+</ul>
+</li>
+
+
+
+<li>23rd August 2024
+<ul class="wp-block-list">
+<li>Deleted some remnant of “/127” references.</li>
+
+
+
+<li>Minor grammar fixes.</li>
+</ul>
+</li>
+
+
+
+<li>4th October 2024
+<ul class="wp-block-list">
+<li>Deleted previously missed, obsolete text on “/127” references, again.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">As networks continue to expand, the need for effective management of the Internet Protocol version 6 (IPv6) is becoming increasingly important. This guide is designed for network engineers and operators who are already familiar with the fundamentals and concepts of IPv6 and are looking for a practical guide on implementing an IPv6 architecture and subnetting system. I take an in-depth look at the most efficient ways to ensure a sufficient and future-proofed IPv6 subnetting model on a per-site and per-network segment basis.</p>
+
+
+
+<p class="wp-block-paragraph">For those who need a refresher on the IPv6 fundamentals, there are many <a href="https://networklessons.com/ipv6/introduction-to-ipv6" target="_blank" rel="noreferrer noopener">online resources</a> available to help.</p>
+
+
+
+<p class="wp-block-paragraph">This article provides a guide to IPv6 architecture and subnetting for network operators and enterprises. It draws upon my experience as an independent consultant and as a friendly peer in various industries, including telecommunications, data centres (DC)/enterprises, and ISPs. Through conversations with other network engineers, I observed resistance to learning the basics of IPv6, or an over-reliance on archaic IPv4 processes. This guide aims to provide a comprehensive overview of IPv6 architecture and subnetting for efficiently deploying IPv6 and <em>avoiding</em> the pitfalls of an <strong>IPv4-centric</strong> mindset as elaborated further in the podcast below.</p>
+
+
+
+<iframe width="320" height="30" src="https://packetpushers.net/?powerpress_embed=53518-podcast&amp;powerpress_player=mediaelement-audio" title="Blubrry Podcast Player" frameborder="0" scrolling="no"></iframe>
+
+
+
+<p class="wp-block-paragraph">The risks associated with an inefficient deployment or management of IPv6 are readily available. From an administrative point of view, it can lead to messy and non-scalable subnetting that results in fragile and unreliable networks. Regarding engineering, it can lead to unjustified use of small subnets and force the need to use Network Address Translation (NAT66) when not required. This goes hand-in-hand with the idea of using Unique Local Addresses (ULAs) when unnecessary – all of which are serious impediments to the ultimate goal of providing an efficient, reliable and scalable network service while preserving the <a href="https://en.wikipedia.org/wiki/End-to-end_principle" target="_blank" rel="noreferrer noopener">end-to-end principle</a> in the network layer to minimise or eliminate complexities brought about by NAT such as NAT traversal helpers and mechanisms.</p>
+
+
+
+<p class="wp-block-paragraph">Below are some examples of what happens when an organisation tries to deploy IPv6 with an IPv4-centric approach:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Without a proper IPv6 subnetting management plan, random IPv6 prefixes/addresses are allocated to Point-to-Point (PtP) links, servers, and other infrastructure, resulting in a chaotic and unmanageable situation. In the long run, this could lead to a ‘race to the bottom’ issue (running out of IPv6 addresses); a situation that must be avoided at all costs to keep the network secure and scalable.</li>
+
+
+
+<li>A single /64 LAN prefix per customer/CPE or, worse, a much longer (smaller) prefix.</li>
+
+
+
+<li>A dynamic LAN prefix that changes every time the user reconnects and <a href="https://www.6connect.com/blog/is-your-isp-constantly-changing-the-delegated-ipv6-prefix-on-your-cpe-router/" target="_blank" rel="noreferrer noopener">breaks connectivity</a>.</li>
+
+
+
+<li>The strange idea that IPv6 is IPv4, and you should use NAT66 to ‘save’ IPv6 addresses. A public example of this is DigitalOcean’s idea of a /124 per VM, and from a shared /64 per DC/rack/network segment.</li>
+
+
+
+<li>The even stranger idea of using <a href="https://blogs.infoblox.com/ipv6-coe/ula-is-broken-in-dual-stack-networks/" target="_blank" rel="noreferrer noopener">ULAs</a> in <em>certain</em> cases where it is not required.
+<ul class="wp-block-list">
+<li>With the exception of <a href="https://twitter.com/stubarea51/status/1511083163921092609" target="_blank" rel="noreferrer noopener">banking</a> or similar organisations, where compliances mandate NAT66 or you need it because of Provider-Aggregatable address space (PA) for load balancing and failover.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">While the pre-NAT era version of the end-to-end principle, in general, no longer exists in today’s era of the Internet due to the obsession with IPv4, it is still important to avoid NAT66 to prevent the requirement for Layer 5 – 7 helpers (Application Layer Gateways) and Traversal Using Relays around NAT (TURN) which just adds complexities and overhead to the network when you build networks for large scale use. Such ‘helper’ traffic consumes unnecessary resources that could be avoided completely.</p>
+
+
+
+<p class="wp-block-paragraph">In short, bad IPv6 architecture and subnetting leads to technical debt for your organisation in the long run.</p>
+
+
+
+<h2 id="h-things-to-keep-in-mind-with-ipv6" class="wp-block-heading"><a href="#things-to-keep-in-mind-with-ipv6" aria-hidden="true" class="aal_anchor" id="things-to-keep-in-mind-with-ipv6"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Things to keep in mind with IPv6</h2>
+
+
+
+<p class="wp-block-paragraph">We need to keep something in mind with IPv6. It is 128 bits in nature, and the mathematical structure of IPv6 allows a <a href="https://www.internetsociety.org/deploy360/ipv6/faq/#:~:text=There%20is%20an%20erroneous%20perception%20that%20the%20assignment%20of%20large%20IPv6%20prefixes%20to%20end%20customers%20is%20wasteful%2C%20but%20the%20IPv6%20address%20space%20is%20so%20huge%20that%20it%20has%20been%20calculated%20(by%20Tony%20Hain)%20that%20a%20/48%20could%20be%20assigned%20to%20every%20human%20for%20the%20next%20480%20years%20before%20they%20run%20out." target="_blank" rel="noreferrer noopener">/48 per human for 480 years</a>. This means there are no technical justifications for using a prefix delegation smaller than a /56 per customer, which is also documented in <a href="https://www.ripe.net/publications/docs/ripe-690#4-2-2---48-for-business-customers-and--56-for-residential-customers" target="_blank" rel="noreferrer noopener">BCOP 690</a>.</p>
+
+
+
+<p class="wp-block-paragraph">When deploying IPv6, bear in mind:</p>
+
+
+
+<ol class="wp-block-list">
+<li>The link-prefix (or WAN prefix) is used for inter-device connectivity.</li>
+
+
+
+<li>The routed prefix (or LAN prefix) refers to the prefix that is routed to the ‘LAN’ side of a device where the next-hop IP of that route equals the link-prefix address that is used on the device the prefix is being routed to.</li>
+
+
+
+<li>You should always strive to enable <strong>auto link-local config</strong> network wide, we should never burden ourselves with manually configuring link-local addressing.</li>
+
+
+
+<li>Avoid using the initial ‘leading zero’ address in an IPv6 subnet on an interface or network segment, that is, an address where the least significant <a href="https://web.archive.org/web/20230214115432/https://www.ibm.com/docs/en/ts4500-tape-library?topic=functionality-ipv4-ipv6-address-formats" target="_blank" rel="noreferrer noopener">address segment</a> (right-most group of four digits) are zeroes. This is known to cause <a href="https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/" target="_blank" rel="noreferrer noopener">unexpected behaviours</a>. For example, instead of 2001:db8<strong>::</strong>, use 2001:db8<strong>::1</strong> instead.
+<ul class="wp-block-list">
+<li>However, it should be fine to use leading zero addresses <strong>only</strong> for loopback on network devices (Routers, L3 switches) if you want to. I would still avoid using leading zero addresses on hosts.</li>
+</ul>
+</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">Below is an example of the principles described above:</p>
+
+
+
+<h2 class="wp-block-heading"><a href="#link-prefix" aria-hidden="true" class="aal_anchor" id="link-prefix"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Link prefix</h2>
+
+
+
+<p class="wp-block-paragraph">Let’s say we want to connect router <strong>A</strong> to router <strong>B</strong> via a Cat6a UTP cable on interface eth0 on both and assume we have the following prefix available for use: <strong>2001:db8::/64</strong>.</p>
+
+
+
+<p class="wp-block-paragraph">We will configure the addresses as shown:</p>
+
+
+
+<pre class="wp-block-code"><code>router A (eth0): 2001:db8::1/64
+router B (eth0): 2001:db8::2/64</code></pre>
+
+
+
+<p class="wp-block-paragraph">Both routers have a link-prefix with /64 prefix length, where they can now directly talk to each other on the assigned respective addresses ::1 and ::2.</p>
+
+
+
+<h2 class="wp-block-heading"><a href="#routed-prefix" aria-hidden="true" class="aal_anchor" id="routed-prefix"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Routed prefix</h2>
+
+
+
+<p class="wp-block-paragraph">Let us assume that router B is an access layer router where it is configured to handle 500 VLANs, and we have at least 800 PCs behind each VLAN, and we want to give native IPv6 connectivity to 800×500 hosts. How will we do this with the /64 link-prefix natively without the IPv4 mindset and approaches like NAT66 or the NDP Proxy? The answer is, we do not use a link-prefix for the LAN. We need a routed prefix, where each VLAN has a dedicated /64. In this example we need five hundred /64s in total.</p>
+
+
+
+<p class="wp-block-paragraph">So let us assume we have the following for LAN prefix use that is reachable via router A: <strong>2001:db8:1::/52</strong>.</p>
+
+
+
+<p class="wp-block-paragraph">A /52 gives us four thousand /64s, which is more than enough for our purpose, with room for growth and expansion in the future. </p>
+
+
+
+<p class="wp-block-paragraph">For the purpose of this example, we can now statically route the /52 to router B like the following, where next-hop/gateway is the IPv6 address of router B:</p>
+
+
+
+<pre class="wp-block-code"><code>ipv6 route 2001:db8:1::/52 next-hop 2001:db8::2</code></pre>
+
+
+
+<p class="wp-block-paragraph">So we can now use 2001:db8:1::/52 on router B and subnet it further to give us /64s, from which we can assign a unique /64 per VLAN. For example, VLAN1 gets 2001:db8:1::/64, VLAN2 has 2001:db8:1:1::/64, and so forth.</p>
+
+
+
+<h2 id="h-address-allocation-size" class="wp-block-heading"><a href="#address-allocation-size" aria-hidden="true" class="aal_anchor" id="address-allocation-size"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Address allocation size</h2>
+
+
+
+<p class="wp-block-paragraph">Although smaller companies may get away with a /48 or /44 or /40 and so on. I do not recommend following this method of incremental allocations because:</p>
+
+
+
+<ol class="wp-block-list">
+<li>You cannot aggregate them 10 years down the line as you scale your company.</li>
+
+
+
+<li>It results in a polluted IPv6 routing table that could be avoided by aggregation.</li>
+
+
+
+<li>It will impact your subnetting plan and architecture.</li>
+
+
+
+<li>You will always end up needing more subnets eventually.</li>
+
+
+
+<li>You end up going back and forth with your respective Regional Internet Registry (RIR), National Internet Registry (NIR), or Local Internet Registry (LIR) each time.</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">My recommendation is to apply for a /32 per Autonomous System Number (ASN), or RIR member account, as a minimum:</p>
+
+
+
+<ol class="wp-block-list">
+<li>You can aggregate to a /32 if possible or a few /36s or any combination based on your company’s scale and topology.</li>
+
+
+
+<li>It keeps the routing table clean.</li>
+
+
+
+<li>You have a scalable subnetting plan and architecture.</li>
+
+
+
+<li>There is room for additional subnets.</li>
+
+
+
+<li>It reduces the need for having to go back and forth with your respective RIR, NIR or LIR.</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">I hope somebody (or myself) eventually submits a policy proposal for making this (/32 minimum per ASN/Member) a reality at the RIR level, at least for APNIC.</p>
+
+
+
+<p class="wp-block-paragraph">You can also check Packet Pusher’s podcast on this subject below for further insights.</p>
+
+
+
+<iframe width="320" height="30" src="https://packetpushers.net/?powerpress_embed=54818-podcast&amp;powerpress_player=mediaelement-audio" title="Blubrry Podcast Player" frameborder="0" scrolling="no"></iframe>
+
+
+
+<h2 id="h-subnetting-guideline" class="wp-block-heading"><a href="#subnetting-guideline" aria-hidden="true" class="aal_anchor" id="subnetting-guideline"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Subnetting guideline</h2>
+
+
+
+<p class="wp-block-paragraph">Every network and organization is different, which includes different business models and network architecture and topology. I like to use what I call the geographical denomination model when it comes to IPv6 subnetting, that is, we plan and perform the subnetting based on how your network is set up in the physical world while accounting for future-proofing such as scaling up or down.</p>
+
+
+
+<p class="wp-block-paragraph">I will show some examples for ISPs/telcos, DC/enterprise from real-life hands-on deployments later in this article.</p>
+
+
+
+<p class="wp-block-paragraph">With the above in mind, the following is what I strongly believe is an optimised and generalised guideline that operators may want to follow:</p>
+
+
+
+<ul class="wp-block-list">
+<li>The bare minimum for every eBGP speaker (public ASN) is to have a /32 prefix as discussed in the previous section.</li>
+
+
+
+<li>Perform the planning based on the <strong>geographical distribution model</strong> of your network with a top-to-bottom approach. For example, per continent, then per economy, then per state, then per city, then per town or district, then per site, and per network segment.</li>
+
+
+
+<li>Ensure the prefix length is always a multiple of 4 where the lowest possible denomination is a /64, not anything smaller, with the reason being that we would want to <a href="https://blog.apnic.net/2018/08/10/how-to-calculating-ipv6-subnets-outside-the-nibble-boundary/" target="_blank" rel="noreferrer noopener">avoid exceeding</a> the <a href="https://web.archive.org/web/20250425113018/https://afrinic.net/support/ipv6/nibble" target="_blank" rel="noreferrer noopener">nibble bit boundary</a>.
+<ul class="wp-block-list">
+<li>However, sometimes we cannot avoid exceeding the nibble boundary, and it is perfectly fine as long as the ‘exceed’ stays in an administrative layer and never enters the network layer. I will highlight this with a real-life example in the architecture section.</li>
+</ul>
+</li>
+
+
+
+<li>Some prefer to use /126s or /127s for eBGP peering with third parties and also for PtP links between two devices, in such cases, we will reserve the entire /64 per interface (or peer) for every carved /126-/127 we use, in the event that we scale up the port/interface in the future ensuring a /64 is always available in the IPAM and therefore avoid messy subnetting/addressing records.</li>
+</ul>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large is-resized"><a href="https://www.ripe.net/about-us/press-centre/IPv6Chart_2015.png"><img decoding="async" src="https://www.ripe.net/about-us/press-centre/IPv6Chart_2015.png" alt="" style="width:422px;height:581px"></a><figcaption class="wp-element-caption">Figure-1 IPv6 cheat sheet from RIPE (source)</figcaption></figure>
+</div>
+
+
+<h2 class="wp-block-heading"><a href="#example-of-the-above-principles" aria-hidden="true" class="aal_anchor" id="example-of-the-above-principles"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example of the above principles</h2>
+
+
+
+<p class="wp-block-paragraph">Let us assume we have 2001:db8::/32 as our assigned prefix from the RIR. We can slice 2001:db8::/32 into /36s. Out of the resulting /36s, we can use the first four of them for the north, east, west, and south parts of an economy/state/city and so on where each geographical denomination receives a /36.</p>
+
+
+
+<p class="wp-block-paragraph">From the /36 we can slice it into /40 per Point of Presence (PoP) (site), out of which we slice it further into /44s, then into /48s. We can then use a /48 per function, for example, <a href="https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/" target="_blank" rel="noreferrer noopener">Out of Band</a> (OOB), management, internal servers, switches, PtP, and so on. We can then slice the /48 into /52s or /56s to ensure we get a sufficient amount of /64s per device. We can use a /64 per VLAN/VXLAN segment where we take a /127 for PtP links and reserve the entire /64 for it, in case the links grows in the future into a multipoint link. Where a /127 would no longer suffice we can then just use the entire reserved /64 without ever having to change the subnetting plan/IP Address Management (IPAM).</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Please note</strong>, the above is <strong>just an example</strong>. IPv6 is flexible, and you can subnet it in a way to match your network’s geographical distribution, which can vary. As long as you follow the general guidelines, you should be able to scale it up/down without much of an issue.</p>
+
+
+
+<pre class="wp-block-code"><code>I personally, stopped using /126s and /127s on PtP links, because it offers zero benefits, and only increases the human management overhead, therefore, I recommend you use a regular /64 per PtP interface from day zero, going forward.</code></pre>
+
+
+
+<h2 id="h-architecture" class="wp-block-heading"><a href="#architecture" aria-hidden="true" class="aal_anchor" id="architecture"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Architecture</h2>
+
+
+
+<p class="wp-block-paragraph">In this section, I will broadly cover two categories, DCs/enterprises and Telcos/ISPs, although generally speaking, you can use the subnetting guide similarly for both. However, there are technical and business model differences, which I believe is best explained with some real-life examples based on my own hands-on experience.</p>
+
+
+
+<h3 class="wp-block-heading"><a href="#dc-enterprise" aria-hidden="true" class="aal_anchor" id="dc-enterprise"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>DC/enterprise</h3>
+
+
+
+<p class="wp-block-paragraph">I will cover this with a real-life, but more generalised example, that’s based on what I deployed in production at my former employer’s network (<a href="https://bgp.tools/as/48635" target="_blank" rel="noreferrer noopener">AS48635</a>) at the time, to show how we implemented my guidelines above to fit our specific needs.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Context:</strong></p>
+
+
+
+<p class="wp-block-paragraph">In this real-life example, I decided to use a single /32 for infrastructure/backbone across multiple economies, locations, and sites as it is sufficient for the geographical denomination model of this particular organization. But for the customers, I opted for a dedicated /32 per site to ensure future scalability, with plenty of /48s or /56s routed to them as needed.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>For the backbone:</strong></p>
+
+
+
+<p class="wp-block-paragraph">This is how I decided to break the single /32 for ‘global’ substructure/backbone addressing:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Slice the /32 into /36s – where we use the first /36 and reserve the rest for future use.</li>
+
+
+
+<li>Then slice the first /36 into /40s – where we use the first /40 and reserve the rest for future use.</li>
+
+
+
+<li>Then slice the first /40 into /44s – where we use a /44 per site.
+<ul class="wp-block-list">
+<li>Here you can reserve the first /44 for future experiments/testing if ever required.</li>
+</ul>
+</li>
+
+
+
+<li>Then slice a /44 into /48s – here we use a /48 per function per site.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">A /48 per function in each site is broken down in the following manner:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Loopback IP function – one /48 sliced into /64s. Use a /64 per ‘row’ of devices type in a given topology, this simplifies readability and routing filters for OSPF/IS-IS on each row of devices you simply filter import/export to match a /64. Ultimately, we will assign a /128 per device for loopback. For example, a /64 for edge devices, another /64 for core or distribution devices, and so on, where each device type gets a /128 from the respective /64.</li>
+
+
+
+<li>OOB function – one /48 sliced into /52 per sub-function, example:
+<ul class="wp-block-list">
+<li>/52 for Loopback sub-function.
+<ul class="wp-block-list">
+<li>The /52 is sliced into /56 per ‘row’ of devices type. For example, a /56 for OOB edge devices, another /52 for OOB layer 3 distribution, and so on, where each device type gets a /128 from the respective /64.</li>
+</ul>
+</li>
+
+
+
+<li>/52 for PtP sub-function.
+<ul class="wp-block-list">
+<li>The /52 is sliced into /56 per ‘row’ of devices type. For example, a /56 for OOB edge devices, another /56 for OOB layer 3 distribution, and so on.</li>
+
+
+
+<li>We then slice each /56 into /64s for use on each corresponding device “row”, for example a /56 is assigned to the oob edge, out of which it is then sliced into /64s per Interface/VLAN.</li>
+</ul>
+</li>
+
+
+
+<li>/52 for OOB Rack Access sub-function.
+<ul class="wp-block-list">
+<li>The /52 is sliced into /64s, use a /64 per OOB VLAN on a given rack (single rack; has single OOB VLAN for all devices).</li>
+</ul>
+</li>
+
+
+
+<li>/52 for employee access sub-function.
+<ul class="wp-block-list">
+<li>The /52 is sliced into /64s, where we can use a /64 per VPN instance for VPN clients or employees to access the infrastructure. Each employee or user will get a /128 GUA assigned to them on the VPN’s client interface from the /64 pool.</li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li>PtP function intra/inter-AS – one /48 sliced into /52s per ‘row’ of devices in a given topology. For example, a /52 for edge, a /52 for Layer 3 distribution, a /52 for BNGs and so on.
+<ul class="wp-block-list">
+<li>We then slice each /52 into /64s for use on each corresponding device “row”, for example a /52 is assigned to the edge, out of which it is then sliced into /64s per Interface/VLAN.</li>
+</ul>
+</li>
+
+
+
+<li>Peering function (transit, PNIs, and so on) – one /48 sliced into /64 per peer.</li>
+
+
+
+<li>Top-of-Rack (ToR) switches – one /48 for all ToRs in a site, /55 per rack, then /56 per ToR device. Finally, from a /56 for each ToR device, slice it into /64s for use per port basis (or VLAN segments) for end-hosts such as SLAAC or DHCPv6, capable up to 256 ports/VLAN per ToR device.
+<ul class="wp-block-list">
+<li>This is an example of ‘<strong>exceeding</strong>‘ the nibble bit boundary in the <strong>administrative layer</strong> (/55) <strong>without</strong> percolating it down to the <strong>network layer</strong>, and hence this does not present any technical issues.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>For the customer:</strong></p>
+
+
+
+<p class="wp-block-paragraph">For the /32-customer pool, the logic should ideally be simpler than the backbone to avoid headaches down the road as your number of customers scales up.</p>
+
+
+
+<p class="wp-block-paragraph">In my former employer’s network, we decided the minimum pool for a customer to be /56, however, I will share a more generalized approach that is not specific to the business logic of my former employer. You can always go with a /48 per customer if you want to and that does allow more flexibility to the customer to subnet and route the prefixes to their corresponding VMs in whatever way they want it.</p>
+
+
+
+<p class="wp-block-paragraph">For the /56 logic:</p>
+
+
+
+<ul class="wp-block-list">
+<li>We slice the /32 into /40s, this gives you 256 /40s. Take the first /40, and slice it into /48s, this gives you 256 /48s.</li>
+
+
+
+<li>This pool of /48s will be used as /48 per rack for the PtP link between a hypervisor and the customer’s VM WAN interface. So, this means each rack gets a /48, and each /48 is sliced into /64s.
+<ul class="wp-block-list">
+<li>Therefore, we now have 65k /64s. Each rack can now support 65k VMs where each VM’s WAN interface gets a /64.</li>
+
+
+
+<li>However, you may also want to use a /64 for a single L2 domain across multiple VMs, whereby a customer’s VLAN or “VPC” has a single /64 for the VMs’ WAN interface, whereby each VM receives a /128.</li>
+</ul>
+</li>
+
+
+
+<li>Next, we will use the remaining /40s for providing routed prefixes to each customer’s VM. Each rack will get a dedicated /40 out of the original pool of /40s sliced from the /32.
+<ul class="wp-block-list">
+<li>Now that each rack has a dedicated /40, this gives us 65k /56s.</li>
+
+
+
+<li>We now simply route a /56 to each customer’s VM, therefore all customers will have their own dedicated /56 pool for their own uses on each VM which is by far larger than what most mainstream cloud providers do and hence is a future-proofed approach in the long run.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">For the /48 logic:</p>
+
+
+
+<ul class="wp-block-list">
+<li>We slice the /32 into /48s. This gives us 65k /48s. We can, for example, use/reserve the first 10k /48s for the PtP link between a hypervisor and the customer’s VM WAN interface. This means, we can handle 10k hypervisors, where each VM’s WAN interface will get a /64 or an entire L2 domain will get a /64, where each VM inside the L2 domain will get a /128.</li>
+
+
+
+<li>We now simply route/map a /48 to each customer account. Every customer will get their own /48, and then subnet it as needed, or you can default the subnetting to a routed /56 per VM, while still allowing the customer to change the subnetting should they want to.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Either approach is perfectly fine. However, you have probably noticed that the /56 approach has an additional overhead on the network layer, whereas the /48 has less overhead on the network layer but more overhead on the application layer as you will need to provide a web interface or CLI for your customer to subnet and break their own /48 if they choose to.</p>
+
+
+
+<p class="wp-block-paragraph">Since it is /32 per site, it does not result in confusion or a messy IPAM/subnet. You can easily just announce any /48 from the ToRs towards the L3 distribution switches (or VXLAN/VTEP gateway) which then announces that to the edge routers. You can always perform route aggregation on each layer of devices to minimise the routing table in your local network.</p>
+
+
+
+<p class="wp-block-paragraph">In short, for the customer pool in DCs/enterprises you can either opt for a /48 per customer (I prefer this to avoid subnetting any further and increasing the possibility of customers requesting more /56s) or a /56 per customer’s VM, so each VM will still get a /56.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Topology:</strong></p>
+
+
+
+<p class="wp-block-paragraph">It should be noted that the diagram below is only for reference to give you an idea on the IPv6 subnetting. It is a smaller, simplified topology diagram compared to the production topology, which is far bigger and more complex and would not fit in a single diagram.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-2-DC-Topology-Example.png"><img loading="lazy" decoding="async" width="5808" height="3808" src="https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-2-DC-Topology-Example.png" alt="" class="wp-image-3537" srcset="https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-2-DC-Topology-Example.png 5808w, https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-2-DC-Topology-Example-1647x1080.png 1647w, https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-2-DC-Topology-Example-768x504.png 768w, https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-2-DC-Topology-Example-1536x1007.png 1536w, https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-2-DC-Topology-Example-2048x1343.png 2048w" sizes="auto, (max-width: 5808px) 100vw, 5808px"></a><figcaption class="wp-element-caption">Figure-2 DC Topology Example</figcaption></figure>
+</div>
+
+
+<h3 id="h-isp-telco" class="wp-block-heading"><a href="#isp-telco" aria-hidden="true" class="aal_anchor" id="isp-telco"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ISP/Telco</h3>
+
+
+
+<p class="wp-block-paragraph">I will cover this with a real-life example, that I architected for <a href="https://bgp.tools/as/141253" target="_blank" rel="noreferrer noopener">AS141253</a> (one of my upstream providers at the time of writing this article), to implement an IPv6 architecture for their network that covers the whole of India, which serves as a good example for large scale networks.</p>
+
+
+
+<p class="wp-block-paragraph">Based on India’s geographical denomination (Country&gt;State&gt;District&gt;and so on), I believe it is a good example to reference due to its size and large population. I recommend you have a minimum /32-<strong>customer</strong> pool allocated <strong>per state</strong> for scalability and future-proofing.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Context example:</strong></p>
+
+
+
+<p class="wp-block-paragraph">They have a /32 ‘Global’ prefix for a nation-wide backbone and at the time of writing this, there is a separate /32 “Customer” prefix solely for the state of <a href="https://en.wikipedia.org/wiki/Mizoram" target="_blank" rel="noreferrer noopener">Mizoram</a>.</p>
+
+
+
+<p class="wp-block-paragraph">I use <a href="https://web.archive.org/web/20220707185957/https://www.dcmsme.gov.in/publications/tender/Final%20REoI/Annexure%201.pdf" target="_blank" rel="noreferrer noopener">this government document</a> as a source of truth for the geographical denomination of India up-to the state level.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>For the backbone:</strong></p>
+
+
+
+<p class="wp-block-paragraph">This is how I decided to break the single /32 for ‘global’ India-wide substructure/backbone addressing:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Slice the /32 into /34s – where we use each /34 (another example of outside nibble-bit boundary prefix length, but only on an administrative layer) for each geographical zone (North, East, South, West).</li>
+
+
+
+<li>Then slice each /34 into /40s – where we use a /40 per state/Union Territory in each respective zone mapping. This gives us 64 /40s.
+<ul class="wp-block-list">
+<li>Although this additional delegation is not mandatory, I prefer to reserve an “even” number of /40s for each state. This means, for example, the “North India” zone has a total of eight states—now we divide 64 by eight (the number of states in a zone), we get eight as the quotient. This means each state has a total of eight /40s allocated, which helps with administrative overhead and keeping the prefixes aligned geographically in an alphabetical/serial order.</li>
+</ul>
+</li>
+
+
+
+<li>Then slice the first /40 into /44s – where we use a /44 per site.
+<ul class="wp-block-list">
+<li>Here you can reserve the first /44 for future experiments/testing if ever required.</li>
+</ul>
+</li>
+
+
+
+<li>Then slice a /44 into /48s – here we use a /48 per function in a given site.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">A /48 per function in a given site is broken down in the following manner:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Loopback IP function – one /48 sliced into /64s. Use a /64 per ‘row’ of devices type in a given topology, this simplifies readability and routing filters for OSPF/IS-IS on each row of devices you simply filter import/export to match a /64. Ultimately, we will assign a /128 per device for loopback. For example, a /64 for edge devices, another /64 for core or distribution devices, and so on, where each device type gets a /128 from the respective /64.</li>
+
+
+
+<li>OOB function – one /48 sliced into /52 per sub-function, example:
+<ul class="wp-block-list">
+<li>/52 for Loopback sub-function.
+<ul class="wp-block-list">
+<li>The /52 is sliced into /56 per ‘row’ of devices type. For example, a /56 for OOB edge devices, another /52 for OOB layer 3 distribution, and so on, where each device type gets a /128 from the respective /64.</li>
+</ul>
+</li>
+
+
+
+<li>/52 for PtP sub-function.
+<ul class="wp-block-list">
+<li>The /52 is sliced into /56 per ‘row’ of devices type. For example, a /56 for OOB edge devices, another /56 for OOB layer 3 distribution, and so on.</li>
+
+
+
+<li>We then slice each /56 into /64s for use on each corresponding device “row”, for example a /56 is assigned to the oob edge, out of which it is then sliced into /64s per Interface/VLAN.</li>
+</ul>
+</li>
+
+
+
+<li>/52 for OOB Rack Access sub-function.
+<ul class="wp-block-list">
+<li>The /52 is sliced into /64s, use a /64 per OOB VLAN on a given rack (single rack; has single OOB VLAN for all devices).</li>
+</ul>
+</li>
+
+
+
+<li>/52 for employee access sub-function.
+<ul class="wp-block-list">
+<li>The /52 is sliced into /64s, where we can use a /64 per VPN instance for VPN clients or employees to access the infrastructure. Each employee or user will get a /128 GUA assigned to them on the VPN’s client interface from the /64 pool.</li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li>PtP function intra/inter-AS – one /48 sliced into /52s per ‘row’ of devices in a given topology. For example, a /52 for edge, a /52 for Layer 3 distribution, a /52 for BNGs and so on.
+<ul class="wp-block-list">
+<li>We then slice each /52 into /64s for use on each corresponding device “row”, for example a /52 is assigned to the edge, out of which it is then sliced into /64s per Interface/VLAN.</li>
+</ul>
+</li>
+
+
+
+<li>Peering function (transit, PNIs, and so on) – one /48 sliced into /64 per peer.</li>
+
+
+
+<li>CDN Caching node – one /48 sliced into /56s per CDN. For example, a /56 for Google, sliced into /64s for use on PtP links or for routed prefixes, ensures each CDN’s caching nodes/equipment has up to 256 /64s available for use in a site.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Ultimately this is for the backbone and not the customer pool. Hence, a single /32 can cover the whole network for India.</p>
+
+
+
+<pre class="wp-block-verse">You can find an example of the above principles in this <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml" target="_blank" rel="noreferrer noopener">Excel sheet</a> I made for AS141253.</pre>
+
+
+
+<p class="wp-block-paragraph"><strong>For the customer:</strong></p>
+
+
+
+<p class="wp-block-paragraph">The /32-customer pool for the state of Mizoram is sliced into /37s. Of these, sixteen /37s are group reserved for enterprise/commercial customers, and the remaining sixteen /37s are reserved for residential customers.</p>
+
+
+
+<p class="wp-block-paragraph">Each group of sixteen /37s  is then respectively mapped to each <a href="https://en.wikipedia.org/wiki/Mizoram#Administration" target="_blank" rel="noreferrer noopener">district</a> of the state, where each district gets a /37 with plenty more available if required. If you don’t have the exact number of districts, counties or province, you can slice the /32 into /38s or even further, until you get whatever works best for your geographical denomination.</p>
+
+
+
+<p class="wp-block-paragraph">Remember, that this is simply at an administrative level, not the network layer, however I recommend avoiding going too far into the hierarchy—with a general rule of thumb that the smallest prefix per BNG for the customer LAN pool will be a /42, based on the fact a /42 guarantees 16k customers will get a /56, and it gives room for some future proofing as you would likely want to limit the number of customers per BNG to 16k or lower and spread the load on other BNGs to avoid creating a Single Point of Failure (SPOF) scenario. Even if you add more customers beyond 16k, you can just route an additional /42 thereby ensuring 32k customers per BNG will all get a static /56.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>This is how I decided to break each /37 per district for residential customers:</strong></p>
+
+
+
+<p class="wp-block-paragraph">Each /37 in a given district is sliced into /42s, and the first /42 is sliced into /48s. Each /48 will be routed to each BNG, whereby it will provide a /64 WAN allocation to each customer for up to 65k customers per BNG, which is future-proofing as well. The remaining /42s will be allocated per BNG, where each /42 will provide static (persistent) /56s for up to 16k customers per BNG.</p>
+
+
+
+<p class="wp-block-paragraph">In short, residential customers will get a <strong>/64 for the WAN side</strong> and a<strong> static /56 for the LAN side</strong>.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>This is how I decided to break each /37 per district for enterprise customers:</strong></p>
+
+
+
+<p class="wp-block-paragraph">Each /37 in a given district, is sliced into /48s for use within the specified district. From here, we can use a /48 per site for the PtP between the provider and the customer, where it’s sliced into /64s per interface/VLAN.</p>
+
+
+
+<p class="wp-block-paragraph">Next, we simply route a dedicated /48 to each customer either via BGP with private ASN or with static routing of the /48 to the ::2/64 address of the customer’s PtP interface.</p>
+
+
+
+<p class="wp-block-paragraph">In short, <strong>enterprise</strong> customers will get a <strong>/64 for the WAN side</strong> and a <strong>static</strong> <strong>/48 for the LAN side</strong>.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Topology:</strong></p>
+
+
+
+<p class="wp-block-paragraph">The topology for an ISP is fairly typical; if you are already an ISP, you likely already have similar topologies. The scale is naturally much larger than a DC/enterprise operator and different altogether, as you typically have an edge, distribution layer (in some cases a core and distribution), access layer, Multiprotocol Label Switching (MPLS) rings, and so on.</p>
+
+
+
+<p class="wp-block-paragraph">The topology diagram below is only for reference to give you an idea on the IPv6 subnetting for ISPs.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><a href="https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1.png"><img loading="lazy" decoding="async" width="2710" height="4320" src="https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1-2710x4320.png" alt="" class="wp-image-3539" srcset="https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1-2710x4320.png 2710w, https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1-1355x2160.png 1355w, https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1-677x1080.png 677w, https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1-768x1224.png 768w, https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1-964x1536.png 964w, https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1-1285x2048.png 1285w" sizes="auto, (max-width: 2710px) 100vw, 2710px"></a><figcaption class="wp-element-caption">Figure-3 ISP Topology Example</figcaption></figure>
+</div>
+
+
+<h2 id="h-implementation" class="wp-block-heading"><a href="#implementation" aria-hidden="true" class="aal_anchor" id="implementation"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Implementation</h2>
+
+
+
+<h3 class="wp-block-heading"><a href="#dc-enterprise-2" aria-hidden="true" class="aal_anchor" id="dc-enterprise-2"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>DC/enterprise</h3>
+
+
+
+<p class="wp-block-paragraph">We used static addressing for PtP links, Open Shortest Path First (OSPF) for learning loopback IPs of each device, a combination of eBGP and iBGP for routing everything else and avoiding fully-mesh iBGP, and BGP confederation or route reflectors based on RFC 7938. In simple terms, iBGP is used between loopbacks of adjacent/redundant neighbors forming a horizontal relationship, for example, a set of edge routers each connected to different transits or IXPs. Whereas, eBGP is used between vertical neighbors establishing an upstream/downstream relationship where each of them is in separate Autonomous Systems using a private ASN extended range.</p>
+
+
+
+<p class="wp-block-paragraph">For OOB, we used SLAAC + EUI-64 to auto-generate addresses on network devices and hosts on the OOB VLAN that are easily mappable to their MAC addresses. This means our routers, switches, server nodes, Power Distribution Units (PDUs) (PDUs), and so on, all received a /128 Global Unicast Address (GUA) via SLAAC through the rack-specific OOB switch, which then obtains connectivity from the OOB distribution switch in the OOB rack. For production or main VLANs (customer VMs or machines), you should avoid EUI-64.</p>
+
+
+
+<p class="wp-block-paragraph">Although I have not deployed this configuration using DHCPv6 address assignment and prefix delegation in a DC/enterprise, it is a perfectly valid solution if you prefer stateful control over how hosts obtain their addresses and also for Authentication, Authorization, and Accounting (AAA) purposes.</p>
+
+
+
+<h3 id="h-isp" class="wp-block-heading"><a href="#isp" aria-hidden="true" class="aal_anchor" id="isp"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ISP</h3>
+
+
+
+<p class="wp-block-paragraph">In this particular ISP, the implementation was simple. We used static addressing for backbone PtP links, BGP/OSPF for routing internally and/or to enterprise customers similar to the DC/enterprise example, using PPPoE or DHCPv6-PD to delegate the /48s or /56s to customers. I will not do a deep dive into the implementation details as it varies wildly between different vendors. This is only to give you a general idea and guide to deploying BCOP-690-compliant IPv6 on your network.</p>
+
+
+
+<p class="wp-block-paragraph">However, I recommend that you use a vendor/AAA provider that supports static IPv6 addressing/PD for your customers. As mentioned in the introduction of this article, dynamic prefixes break SLAAC, and also make it impossible for a customer to use your GUA on their end-hosts for global accessibility should they want to.</p>
+
+
+
+<h2 class="wp-block-heading"><a href="#what-about-vpn" aria-hidden="true" class="aal_anchor" id="what-about-vpn"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What about VPN?</h2>
+
+
+
+<p class="wp-block-paragraph">You can have a dedicated /48 function for VPN in a given site, or it can be shared with the management function, where clients receive a stable (static) /128 GUA from a /64 pool. You now simply use a stateful firewall on the router or VPN server host, where you accept established, related, untracked traffic and accept ICMPv6, dropping the rest on the forward chain (iptables). That’s it. Your VPN clients will have native IPv6 without any hacks and be fully secured from the outside world. Of course, you will still need to apply access control list logic, but that is organisation-dependent and outside the scope of this article.</p>
+
+
+
+<p class="wp-block-paragraph">You can also even provide routed prefixes to VPN clients, where each client can be routed a /64. This helps employees working on application development on Docker to have a native /64 routed straight into their laptops for native IPv6 container networking.</p>
+
+
+
+<h2 class="wp-block-heading"><a href="#global-routing-approach" aria-hidden="true" class="aal_anchor" id="global-routing-approach"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Global routing approach</h2>
+
+
+
+<p class="wp-block-paragraph">Instead of announcing individual /48s to the Default-Free Zone (DFZ) and increasing the global routing table size, you should aim to announce aggregated prefixes to the largest possible extent for a given site or a given set of sites. For example, you can advertise a /44 ‘backbone’ prefix directly to all your peers and transit instead of individual /48s. Or if all your sites have direct Layer 2 reachability between each other and are geographically close enough for latency to not be of concern, you could then just announce the /32 ‘backbone’ prefix directly from all sites towards the transit and peers, therefore keeping the DFZ clean. For the customer pool, it is simply a matter of announcing a /32 per site directly to all peers and transits.</p>
+
+
+
+<p class="wp-block-paragraph">Note, this article does not cover BGP and traffic engineering. I would emphasise that aggregating your prefixes allows for cleaner and more efficient traffic engineering in the long run.</p>
+
+
+
+<h2 id="h-nat66-vs-nptv6-usage" class="wp-block-heading"><a href="#nat66-vs-nptv6-usage" aria-hidden="true" class="aal_anchor" id="nat66-vs-nptv6-usage"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>NAT66 vs NPTv6 usage</h2>
+
+
+
+<p class="wp-block-paragraph">I will not do a deep dive into NAT44, NAT66, or NPTv6 as it is outside the scope of this article, but there are a few points to note below as NPTv6 (not NAT66) is required in certain use cases.</p>
+
+
+
+<p class="wp-block-paragraph">NAT66 is no different from traditional NAT44, — along with all the problems such as breaking Layer 4 (L4) protocols, forcing the need for an ALG, and the list goes on. The only difference is NAT66 supports IPv6 addressing. For this reason, the IETF came up with a new solution and method of ‘translation’ for IPv6 that is free from issues introduced by NAT, that is, <a href="https://datatracker.ietf.org/doc/rfc6296/" target="_blank" rel="noreferrer noopener">IPv6-to-IPv6 Network Prefix Translation</a> (NPTv6).</p>
+
+
+
+<p class="wp-block-paragraph">NPTv6 is a <strong>stateless</strong> and<strong> transport-agnostic</strong> (L4) mechanism for translating one address space to another. Therefore, it preserves the end-to-end principle on the network layer and does not introduce a stateful mechanism that breaks L4 protocols, which is simply not possible on traditional NAT in a stateless manner.</p>
+
+
+
+<p class="wp-block-paragraph">In order for NPTv6 to work as intended (in a stateless manner) the ‘inside’ and ‘outside’ IPv6 prefixes both need to be of the <em>same prefix length</em>. For example, let’s say your internal prefix is ‘200::/64’ and you want to translate this into a different ‘outside’ prefix that is visible on the public Internet such as ‘2001:db8::/64’. You simply configure NPTv6 depending on your Network Operating System (NOS) to translate one /64 to another /64. You will have done the translation without breaking the network layer’s end-to-end reachability and L4 protocols.</p>
+
+
+
+<p class="wp-block-paragraph">So in general, I strongly recommend you avoid NAT66 to avoid problems associated with it and go with NPTv6 in all production networks. </p>
+
+
+
+<p class="wp-block-paragraph">However, if you are forced to use NAT66 such as being a customer of DigitalOcean where they only provide a /124, then you are unfortunately going to lose the benefits of IPv6 (native end-to-end principle and transport agnosticism on Layer 4) and have the same network related downfall as NATted IPv4. The only solution would be to demand them to provide best practice-compliant IPv6 or move to a different provider that does.</p>
+
+
+
+<h2 id="h-managing-pa-blocks" class="wp-block-heading"><a href="#managing-pa-blocks" aria-hidden="true" class="aal_anchor" id="managing-pa-blocks"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Managing PA blocks</h2>
+
+
+
+<p class="wp-block-paragraph"><a href="https://www.ripe.net/participate/member-support/faqs/isp-related-questions/pa-pi" target="_blank" rel="noreferrer noopener">PA blocks</a> are those assigned to a customer by an ISP, rather than the customer having their own Provider Independent (PI) IPv6 blocks. The main problem with PA blocks is, you need to perform renumbering when you change providers or when your provider goes out of business and shuts down or for any other reason.</p>
+
+
+
+<p class="wp-block-paragraph">Renumbering is one issue, the other is load-balancing and failover when you have multiple providers with their own unique PA block assigned to your business. You could use router advertisements in IPv6 to advertise one block or the other based on your preferences, but this does not allow true load balancing on the network layer to even out your bandwidth consumption.</p>
+
+
+
+<p class="wp-block-paragraph">The only way to work around this <strong>without</strong> using ULA and <a href="https://datatracker.ietf.org/doc/slides-114-v6ops-unintended-operational-issues-with-ula/" target="_blank" rel="noreferrer noopener">breaking</a> your dual-stack networks is to use NPTv6 in combination with non-ULA address space. At the time of writing this article, IANA has <strong>not</strong> assigned dedicated address space for this purpose. In theory, you can use the ‘200::/7’ block for your internal network, and subnet it based on the general guidelines laid out in this article.</p>
+
+
+
+<p class="wp-block-paragraph">However, you should be aware that since the ‘200::/7’ block is <strong>not officially</strong> assigned for NPTv6 usage, it remains in limbo, and it may be re-assigned in the future to become perhaps a documentation prefix or a Global Unicast Prefix, for which in either case, you will still need to re-number your internal network. It is the only prefix at this point in time that works as an alternative to ULA for NPTv6, and it is ‘free’ to use.</p>
+
+
+
+<p class="wp-block-paragraph">In short, there is no perfect solution provided by the IETF presently regarding operational issues with ULA in production networks.</p>
+
+
+
+<pre class="wp-block-verse">Please note that this is not an official recommendation by the IETF; you can proceed with my solution at your own discretion.</pre>
+
+
+
+<h2 class="wp-block-heading"><a href="#example" aria-hidden="true" class="aal_anchor" id="example"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Example</h2>
+
+
+
+<p class="wp-block-paragraph">Let’s assume that you have two providers that gave you a /48 each, and you have sliced each /48 identically to match your network infrastructure. You have also sliced two /48s out of the ‘200::/7’ block that you then slice to match your PA block subnetting.</p>
+
+
+
+<p class="wp-block-paragraph">We will assume that for example, you have VLAN1 and VLAN2, for which you have two /64s; one set from each provider and another set of two /64s from the ‘200::/7’ block.</p>
+
+
+
+<p class="wp-block-paragraph">Now you can do something to this effect, in order of precedence, for both load balancing and failover, noting that you need to do the config in both directions (internal&gt;external, external&gt;Internet) to preserve the end-to-end principle.</p>
+
+
+
+<pre class="wp-block-code"><code>#Source NPTv6#
+200::/64 &lt;NPTv6-translated&gt; ISP1 /64
+200:1::/64 &lt;NPTv6-translated&gt; ISP2 /64
+
+#Destination NPTv6#
+ISP1 /64 &lt;NPTv6-translated&gt; 200::/64
+ISP2 /64 &lt;NPTv6-translated&gt; 200:1::/64</code></pre>
+
+
+
+<p class="wp-block-paragraph">Below is the RouterOS v7-specific sample using a single ISP prefix where ‘200::/64’ is the internal prefix and ‘2001:db8::/64’ is the PA block from the ISP.</p>
+
+
+
+<pre class="wp-block-code"><code>/ipv6 firewall mangle
+add action=snpt chain=postrouting comment="NPTv6 (Internal&gt;External)" dst-prefix=2001:db8::/64 src-address=200::/64 src-prefix=200::/64
+
+add action=dnpt chain=prerouting comment="NPTv6 (External&gt;Internal)" dst-address=2001:db8::/64 dst-prefix=200::/64 src-prefix=2001:db8::/64
+</code></pre>
+
+
+
+<h2 id="h-ipv6-security" class="wp-block-heading"><a href="#ipv6-security" aria-hidden="true" class="aal_anchor" id="ipv6-security"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IPv6 security</h2>
+
+
+
+<p class="wp-block-paragraph">Although IPv6 security is a subject on its own, and therefore is not the focus of this article, I felt it is still important to mention a few key points to help guide you in the right direction for research and testing of IPv6 security in your own local network environment.</p>
+
+
+
+<ul class="wp-block-list">
+<li>Do not blindly block ICMPv6. ICMPv6 is already rate-limited by default on all major networking vendors and OSes and therefore does not represent some additional security concern. You can, however, block invalid or deprecated ICMPv6 subtypes as per <a href="https://www.iana.org/assignments/icmpv6-parameters/icmpv6-parameters.xhtml#icmpv6-parameters-4" target="_blank" rel="noreferrer noopener">IANA</a> guidelines. The same principles also apply to IPv4.</li>
+
+
+
+<li>There are some concerns about Neighbour Discovery Cache exhaustion attacks. However, as long as your OS is already rate limiting ICMPv6 out of the box, and you religiously ensure to route your prefixes to blackhole on your edge routers, access routers, L3 switches, and so on (which also prevents L3 loops), this should not pose an issue in practice.
+<ul class="wp-block-list">
+<li>You can limit your Neighbour Cache table to 8k/16k hosts, and then it really would not matter if someone is scanning your /64 VLAN segment, as the old entries that are unreachable will simply expire and those that are valid will remain cached. My own personal R&amp;D network (AS149794) was once a ‘victim’ of this type of attack, but even on an ancient MikroTik RB3011, <strong>no performance</strong> impact was visible on the network even though the neighbour cache table was flooded to the 16k limit I configured.</li>
+</ul>
+</li>
+
+
+
+<li><a href="https://theinternetprotocolblog.wordpress.com/2020/11/28/ipv6-security-best-practices/" target="_blank" rel="noreferrer noopener">This</a> is also a good source for IPv6 best security practices. Production-grade <a href="https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/" target="_blank" rel="noreferrer noopener">IPv6 security practices for MikroTik</a> is also available.</li>
+
+
+
+<li>NAT is not and never was a <a href="https://www.f5.com/services/resources/white-papers/the-myth-of-network-address-translation-as-security" target="_blank" rel="noreferrer noopener">security tool</a>.</li>
+
+
+
+<li>For insecure network segments such as guest VLANs, or IoT VLANs in enterprise, simply follow the same model as VPN clients, firewall in-bound on the forward chain using iptables (or nftables) to accept established, related, untracked and ICMPv6, and drop the rest. This ensures there is no possibility of external actors being able to reach your hosts from the outside directly, unless of course, your host is infected with malware or a botnet.</li>
+
+
+
+<li>I recommend keeping the network layer simple. Handle stateful firewalling directly on the host and implement OS policy control to prevent employees or guests from executing random files that are possibly malware or installing unauthorized software. You could always have a third-party firewall appliance as well that does the security, but I personally prefer a vendor-agnostic approach. On-host firewalling using iptables/nftables or even Windows’ built-in firewall combined with OS policy control would therefore be my personal preference.
+<ul class="wp-block-list">
+<li>You can also implement advanced filtering on Linux hosts using eBPF or XDP if you want fine-grained control in large-scale companies with the right skill set in their employees.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<h2 id="h-conclusion" class="wp-block-heading"><a href="#conclusion" aria-hidden="true" class="aal_anchor" id="conclusion"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Conclusion</h2>
+
+
+
+<p class="wp-block-paragraph">I will emphasize again that these are general guidelines and examples. Every organization can subnet things differently, but you should aim to ensure your backbone and customers get sufficient and persistent (static) subnets that are scalable for decades to come by. BCOP-690 is not a silver bullet for every scenario, but it, along with this article, serves as thorough end-to-end guidelines to help you reach the best-practices compliant design and architecture for your network and business needs.</p>
+
+
+
+<p class="wp-block-paragraph">Ideally, NAT66/NPTv6 should be avoided to the maximum possible extent as both defeat the purpose of native IPv6 (which is only possible in a network that complies with best practices) and only adds additional overhead to the network.</p>
+
+
+
+<p class="wp-block-paragraph">I also hope that the Payment Card Industry Data Security Standard (PCI DSS) learns that NAT(66) is not a security tool and there is no need for NAT in IPv6 to begin with, sooner than later, before their <a href="https://twitter.com/stubarea51/status/1511083163921092609" target="_blank" rel="noreferrer noopener">current requirements</a> create a technical debt that becomes far too difficult to remove in the future.</p>
+
+
+
+<p class="wp-block-paragraph">I want this article to drop a ground-shaking delivery to the networking industry for a best-practices-compliant-IPv6 roll-out! Let’s see more routed /48s!</p>
+
+<div id="jp-relatedposts" class="jp-relatedposts">
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div>					</div>
+		<div class="post-categories"><span>Published in</span><a href="https://www.daryllswer.com/category/networking/architecture/" title="View all posts in Architecture">Architecture</a><a href="https://www.daryllswer.com/category/networking/" title="View all posts in Networking">Networking</a></div>		<div class="post-tags"><ul><li><a href="https://www.daryllswer.com/tag/architecture/" title="View all posts tagged Architecture">Architecture</a></li><li><a href="https://www.daryllswer.com/tag/ip-planning/" title="View all posts tagged IP Planning">IP Planning</a></li><li><a href="https://www.daryllswer.com/tag/ipv6/" title="View all posts tagged IPv6">IPv6</a></li><li><a href="https://www.daryllswer.com/tag/isps/" title="View all posts tagged ISPs">ISPs</a></li><li><a href="https://www.daryllswer.com/tag/networking/" title="View all posts tagged Networking">Networking</a></li><li><a href="https://www.daryllswer.com/tag/planning/" title="View all posts tagged Planning">Planning</a></li><li><a href="https://www.daryllswer.com/tag/subnetting/" title="View all posts tagged Subnetting">Subnetting</a></li></ul></div>	</article>
+		<nav class="further-reading">
+	<div class="previous">
+		<span>Previous Post</span>
+		<a href="https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/" rel="prev">Navigating a BGP Zombie Outbreak on Juniper Routers</a>	</div>
+	<div class="next">
+		<span>Next Post</span>
+		<a href="https://www.daryllswer.com/an-interesting-folk-tale-behind-the-khasi-matrilineal-system/" rel="next">An Interesting Folk Tale Behind the Khasi Matrilineal System</a>	</div>
+</nav>		<section id="comments" class="comments">
+		<div class="comments-number">
+			<h2>
+				6 Comments			</h2>
+		</div>
+		<ol class="comment-list">
+					<li class="comment even thread-even depth-1" id="li-comment-115">
+		<article id="comment-115" class="comment">
+			<div class="comment-author">
+				<img alt="Adam" src="https://secure.gravatar.com/avatar/79af84da1de73993e193150fb23ec6ed2180078000e0a01e503b083eddc8c27c?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/79af84da1de73993e193150fb23ec6ed2180078000e0a01e503b083eddc8c27c?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">Adam</span>
+			</div>
+			<div class="comment-content">
+								<p>Great write up!  We have been having a lot of IPv6 conversations recently with our customers so this will be a handy resource to direct them to!</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/#comment-115">
+                            # <span class="comment-date">5 April 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-115" data-commentid="115" data-postid="1512" data-belowelement="comment-115" data-respondelement="respond" data-replyto="Reply to Adam" aria-label="Reply to Adam">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-116">
+		<article id="comment-116" class="comment">
+			<div class="comment-author">
+				<img alt="Tayfun" src="https://secure.gravatar.com/avatar/3e8ad498d4c2dd990106324f065a80431b44b13240a9cf3f55eb9740c005797d?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/3e8ad498d4c2dd990106324f065a80431b44b13240a9cf3f55eb9740c005797d?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">Tayfun</span>
+			</div>
+			<div class="comment-content">
+								<p>Great comprehensive article with good examples. I just have one request; if you don’t mind could you please share a topology for “load-balancing using NPTv6 in combination with non-ULA address space”. It would be very useful to fully understand the idea.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/#comment-116">
+                            # <span class="comment-date">12 April 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-116" data-commentid="116" data-postid="1512" data-belowelement="comment-116" data-respondelement="respond" data-replyto="Reply to Tayfun" aria-label="Reply to Tayfun">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor even depth-2" id="li-comment-117">
+		<article id="comment-117" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Hi</p>
+<p>Topology generally has limited scope regarding NPTv6 load balancing for PA blocks, as such networks are usually just enterprise/SOHO type setup that don’t have their own ASN and public IP blocks, so even their network topology is not going to be a complex infrastructure compared to backbone networks of an org, where generally such backbones also mean complex topology.</p>
+<p>What this means is, if you’re a customer of ISP A and ISP B, where both provided you with a routed /48 each, and you want to make full use of the bandwidth capacity/failover of both ISPs, then you simply use NPTv6 to do the seamless translation of internal prefix (non-ULA) with external prefix. So meaning /48 internal prefix is NPTv6’ed to both ISPs’ /48, of course order of precedence in the config will impact which ISP is preferred.</p>
+<p>You can refer to Figure 1 <a href="http://daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/" target="_blank" rel="noopener ugc nofollow">here</a> for example, it’s the same concept just that in this one it’s IPv4/NAT with Policy Based Routing.</p>
+<p>And you can even combine NPTv6 (as described) in conjunction with PBR to load balance and fully utilise bandwidth capacity of both providers. You simply apply PBR to the external prefixes, this way, if ISP A and ISP B, both are 1Gbps, you can more or less achieve 2Gbps throughput if done correctly. But this is outside the scope of the article.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/#comment-117">
+                            # <span class="comment-date">12 April 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-117" data-commentid="117" data-postid="1512" data-belowelement="comment-117" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1" id="li-comment-158">
+		<article id="comment-158" class="comment">
+			<div class="comment-author">
+				<img alt="Ed Horley" src="https://secure.gravatar.com/avatar/d75303465988385c4ded3792ede03dc0473ee249526b729d9e28955a6eb22137?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/d75303465988385c4ded3792ede03dc0473ee249526b729d9e28955a6eb22137?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="https://www.howfunky.com" class="url" rel="ugc external nofollow">Ed Horley</a></span>
+			</div>
+			<div class="comment-content">
+								<p>For NPTv6 this blog post might be useful to put some of the use cases into context. <a href="https://www.howfunky.com/2012/02/ipv6-to-ipv6-network-prefix-translation.html" rel="nofollow ugc">https://www.howfunky.com/2012/02/ipv6-to-ipv6-network-prefix-translation.html</a></p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/#comment-158">
+                            # <span class="comment-date">21 June 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-158" data-commentid="158" data-postid="1512" data-belowelement="comment-158" data-respondelement="respond" data-replyto="Reply to Ed Horley" aria-label="Reply to Ed Horley">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1" id="li-comment-937">
+		<article id="comment-937" class="comment">
+			<div class="comment-author">
+				<img alt="Adam" src="https://secure.gravatar.com/avatar/0325afc2002433a649fa648b2e61293043a582869df78640ad0015ffbe2364f1?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/0325afc2002433a649fa648b2e61293043a582869df78640ad0015ffbe2364f1?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="https://www.coretransit.net" class="url" rel="ugc external nofollow">Adam</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Wow, very complete and detailed!  Certainly saving this for later reference.  Appreciate it!</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/#comment-937">
+                            # <span class="comment-date">3 February 2024</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-937" data-commentid="937" data-postid="1512" data-belowelement="comment-937" data-respondelement="respond" data-replyto="Reply to Adam" aria-label="Reply to Adam">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-938">
+		<article id="comment-938" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Thanks, Adam, I hope you plan, deploy and implement a hard IPv6-everywhere policy in your organisation and business operations!</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/#comment-938">
+                            # <span class="comment-date">3 February 2024</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-938" data-commentid="938" data-postid="1512" data-belowelement="comment-938" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		</ol>
+					<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://www.daryllswer.com/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> <span class="required-field-message">Required fields are marked <span class="required">*</span></span></p><p class="comment-form-comment">
+	            <label for="comment">Comment</label>
+	            <textarea required id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+	        </p><p class="comment-form-author">
+	            <label for="author">Name*</label>
+	            <input id="author" name="author" type="text" value="" size="30" aria-required="true">
+	        </p>
+<p class="comment-form-email">
+	            <label for="email">Email*</label>
+	            <input id="email" name="email" type="email" value="" size="30" aria-required="true">
+	        </p>
+<p class="comment-form-url">
+	            <label for="url">Website</label>
+	            <input id="url" name="url" type="url" value="" size="30">
+	            </p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"> <label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="comment-subscription-form"><input type="checkbox" name="subscribe_comments" id="subscribe_comments" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;"> <label class="subscribe-label" id="subscribe-label" for="subscribe_comments">Notify me of follow-up comments by email.</label></p><p class="comment-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts by email.</label></p><p class="form-submit"><span id="cf-turnstile-c-1810460271" class="cf-turnstile cf-turnstile-comments" data-action="wordpress-comment" data-callback="turnstileCommentCallback" data-sitekey="0x4AAAAAAA6_yQlodGSa8aHG" data-theme="auto" data-language="en-us" data-appearance="always" data-size="normal" data-retry="auto" data-retry-interval="1000"></span><br class="cf-turnstile-br cf-turnstile-br-comments"><span class="cf-turnstile-comment" style="pointer-events: none; opacity: 0.5;"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment"></span><script type="text/javascript">document.addEventListener("DOMContentLoaded", function() { document.body.addEventListener("click", function(event) { if (event.target.matches(".comment-reply-link, #cancel-comment-reply-link")) { turnstile.reset(".comment-form .cf-turnstile"); } }); });</script> <input type="hidden" name="comment_post_ID" value="1512" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="dbc0f9c2eb"></p><p style="display: none !important;" class="akismet-fields-container" data-prefix="ak_"><label>Δ<textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100"></textarea></label><input type="hidden" id="ak_js_1" name="ak_js" value="243"><script>document.getElementById("ak_js_1").setAttribute("value",(new Date()).getTime())</script>
+</p></form>	</div><!-- #respond -->
+		</section>
+	</div>	</div>
+</section><!-- .main -->
+    <footer class="site-footer" role="contentinfo">
+                <div class="design-credit">
+            <span>
+                Daryll Swer's network engineering blog.            </span>
+        </div>
+    </footer>
+</div><!-- .max-width -->
+</div><!-- .overflow-container -->
+<button id="scroll-to-top" class="scroll-to-top"><span class="screen-reader-text">Scroll to the top</span><i class="fas fa-arrow-up"></i></button><script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/author/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<div class="simple-banner simple-banner-text" style="display:none !important"></div><script data-optimized="1" id="wp-hooks-js" src="https://www.daryllswer.com/wp-content/litespeed/js/af5a3b20e2b2f72a01b980a85c91baef.js?ver=04141"></script>
+<script data-optimized="1" id="wp-i18n-js" src="https://www.daryllswer.com/wp-content/litespeed/js/5de800ad07f995b347322aea90af03c0.js?ver=0a0e8"></script>
+<script data-optimized="1" id="wp-i18n-js-after">wp.i18n.setLocaleData({'text direction\u0004ltr':['ltr']})</script>
+<script data-optimized="1" id="swv-js" src="https://www.daryllswer.com/wp-content/litespeed/js/e9a3b4c1746a8af8abcd36c78615d3d1.js?ver=ff06d"></script>
+<script data-optimized="1" id="contact-form-7-js-translations">(function(domain,translations){var localeData=translations.locale_data[domain]||translations.locale_data.messages;localeData[""].domain=domain;wp.i18n.setLocaleData(localeData,domain)})("contact-form-7",{"translation-revision-date":"2026-05-05 18:32:38+0000","generator":"GlotPress\/4.0.3","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"en_GB"},"This contact form is placed in the wrong place.":["This contact form is placed in the wrong place."],"Error:":["Error:"]}},"comment":{"reference":"includes\/js\/index.js"}})</script>
+<script data-optimized="1" id="contact-form-7-js-before">var wpcf7={"api":{"root":"https:\/\/www.daryllswer.com\/wp-json\/","namespace":"contact-form-7\/v1"},"cached":1}</script>
+<script data-optimized="1" id="contact-form-7-js" src="https://www.daryllswer.com/wp-content/litespeed/js/6f5ba2d8d8b0414d1517f12c26a89066.js?ver=b75a7"></script>
+<script data-optimized="1" id="cf7apps-honeypot-refill-js-extra">var cf7appsHoneypotRefill={"forceRefillOnInit":"1"}</script>
+<script data-optimized="1" id="cf7apps-honeypot-refill-js" src="https://www.daryllswer.com/wp-content/litespeed/js/9683e5ec59020b01bccff6e664d2adce.js?ver=9c4d9"></script>
+<script data-optimized="1" id="flying-pages-js-before">window.FPConfig={delay:0,ignoreKeywords:["\/wp-admin","\/wp-login.php","\/cart","\/checkout","add-to-cart","logout","#","?",".png",".jpeg",".jpg",".gif",".svg",".webp"],maxRPS:3,hoverDelay:50}</script>
+<script data-optimized="1" id="flying-pages-js" src="https://www.daryllswer.com/wp-content/litespeed/js/fe50f626487caccffa7740157e8208e6.js?ver=c1cec" defer></script>
+<script data-optimized="1" id="vk-core-js" src="https://www.daryllswer.com/wp-content/litespeed/js/8f8564c85a1e17a4b6378ba930c6ce16.js?ver=6ce16"></script>
+<script data-optimized="1" id="ct-author-js-js-extra">var ct_author_objectL10n={"openPrimaryMenu":"open primary menu","closePrimaryMenu":"close primary menu","openChildMenu":"open child menu","closeChildMenu":"close child menu"}</script>
+<script data-optimized="1" id="ct-author-js-js" src="https://www.daryllswer.com/wp-content/litespeed/js/d898effc76afe6694e4ad6edd4f65129.js?ver=4150e"></script>
+<script data-optimized="1" async data-wp-strategy="async" fetchpriority="low" id="comment-reply-js" src="https://www.daryllswer.com/wp-content/litespeed/js/db7c6b314012e474610aee0afc93c2e1.js?ver=dc2c3"></script>
+<script data-optimized="1" id="ct-author-pro-js-js" src="https://www.daryllswer.com/wp-content/litespeed/js/3131c6e7672f9e145db8ab0107d869ae.js?ver=48bb9"></script>
+<script data-optimized="1" id="googlesitekit-events-provider-contact-form-7-js" src="https://www.daryllswer.com/wp-content/litespeed/js/bfba499859625298182bcc5b86e4bc31.js?ver=4bc31" defer></script>
+<script data-optimized="1" id="googlesitekit-events-provider-wpforms-js" src="https://www.daryllswer.com/wp-content/litespeed/js/e61afbd70616d48e99a12d9de6ef65a6.js?ver=f65a6" defer></script>
+<script id="jetpack-stats-js-before">
+_stq = window._stq || [];
+_stq.push([ "view", {"v":"ext","blog":"191168008","post":"1512","tz":"5.5","srv":"www.daryllswer.com","j":"1:15.9.1"} ]);
+_stq.push([ "clickTrackerInit", "191168008", "1512" ]);
+//# sourceURL=jetpack-stats-js-before
+</script>
+<script data-wp-strategy="defer" defer id="jetpack-stats-js" src="https://stats.wp.com/e-202627.js"></script>
+<script data-optimized="1" id="jetpack-blocks-assets-base-url-js-before">var Jetpack_Block_Assets_Base_Url="https://www.daryllswer.com/wp-content/plugins/jetpack/_inc/blocks/"</script>
+<script data-optimized="1" id="wp-dom-ready-js" src="https://www.daryllswer.com/wp-content/litespeed/js/39516d145bee63f76a44e5f0e1cfa728.js?ver=8953c"></script>
+<script data-optimized="1" id="wp-polyfill-js" src="https://www.daryllswer.com/wp-content/litespeed/js/bc6fd11f0a48b2c20973835839c07264.js?ver=cc4fb"></script>
+<script data-optimized="1" data-wp-strategy="defer" defer id="jetpack-block-subscriptions-js" src="https://www.daryllswer.com/wp-content/plugins/jetpack/_inc/blocks/subscriptions/view.js?minify=false&amp;ver=15.9.1"></script>
+<script data-wp-strategy="defer" id="cfturnstile-js" src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=auto"></script>
+<script data-wp-strategy="defer" defer id="cfturnstile-js-js" src="https://www.daryllswer.com/wp-content/plugins/simple-cloudflare-turnstile/js/disable-submit.js?ver=5.2"></script>
+<script id="cfturnstile-render-js-after">
+(function(){var a=0,d=false,q=false;function r(){if(d)return;var e=document.getElementById("cf-turnstile-c-1810460271");if(!e)return;if(e.innerHTML.trim()){d=true;return;}if(window.turnstile&&typeof window.turnstile.render==="function"){try{window.turnstile.render(e);d=true;}catch(_){}}}function w(){r();if(d)return;if(window.turnstile&&typeof window.turnstile.ready==="function"&&!q){q=true;try{window.turnstile.ready(r);}catch(_){}}if(!d&&a++<100){setTimeout(w,100);}}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",w);}else{w();}})();
+//# sourceURL=cfturnstile-render-js-after
+</script>
+<script data-optimized="1" defer id="akismet-frontend-js" src="https://www.daryllswer.com/wp-content/litespeed/js/89bf05b99da4ebf312a007cde8ce694b.js?ver=f94a5"></script>
+<script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://www.daryllswer.com/wp-includes/js/wp-emoji-release.min.js?ver=7.0"}}
+</script>
+<script type="module">
+/*! This file is auto-generated */
+const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(window._wpemojiSettings=a,"wpEmojiSettingsSupports"),s=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const a=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===a[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,a){let r;const o=(r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),s=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(e=>{s[e]=t(o,e,n,a)}),s}function r(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}a.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),c.toString(),p.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"});const r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=e=>{i(n=e.data),r.terminate(),t(n)})}catch(e){}i(n=f(s,u,c,p))}t(n)}).then(e=>{for(const n in e)a.supports[n]=e[n],a.supports.everything=a.supports.everything&&a.supports[n],"flag"!==n&&(a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&a.supports[n]);var t;a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&!a.supports.flag,a.supports.everything||((t=a.source||{}).concatemoji?r(t.concatemoji):t.wpemoji&&t.twemoji&&(r(t.twemoji),r(t.wpemoji)))});
+//# sourceURL=https://www.daryllswer.com/wp-includes/js/wp-emoji-loader.min.js
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a16d94fe5e349788',t:'MTc4MzMzMDEzNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

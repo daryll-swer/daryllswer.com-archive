@@ -1,0 +1,766 @@
+{
+  "_archive_filters": [],
+  "_embedded": {
+    "author": [
+      {
+        "_links": {
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "avatar_urls": {
+          "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+          "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+          "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+        },
+        "description": "Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794",
+        "id": 1,
+        "link": "https://www.daryllswer.com/author/daryll/",
+        "name": "Daryll Swer",
+        "slug": "daryll",
+        "url": "https://www.daryllswer.com/"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "_links": {
+          "about": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/types/attachment"
+            }
+          ],
+          "author": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+            }
+          ],
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media"
+            }
+          ],
+          "curies": [
+            {
+              "href": "https://api.w.org/{rel}",
+              "name": "wp",
+              "templated": true
+            }
+          ],
+          "replies": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=5063"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5063",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ],
+          "wp:attached-to": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5018",
+              "id": 5018,
+              "post_type": "post"
+            }
+          ]
+        },
+        "alt_text": "",
+        "author": 1,
+        "caption": {
+          "rendered": ""
+        },
+        "date": "2025-04-20T02:39:13",
+        "featured_media": 0,
+        "id": 5063,
+        "jetpack_sharing_enabled": true,
+        "link": "https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/nat_mess/",
+        "media_details": {
+          "file": "2025/04/NAT_Mess.png",
+          "filesize": 189397,
+          "height": 1050,
+          "image_meta": {
+            "aperture": "0",
+            "camera": "",
+            "caption": "",
+            "copyright": "",
+            "created_timestamp": "0",
+            "credit": "",
+            "focal_length": "0",
+            "iso": "0",
+            "keywords": [],
+            "orientation": "0",
+            "shutter_speed": "0",
+            "title": ""
+          },
+          "sizes": {
+            "1536x1536": {
+              "file": "NAT_Mess-1536x806.png",
+              "filesize": 82992,
+              "height": 806,
+              "mime_type": "image/png",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess-1536x806.png",
+              "width": 1536
+            },
+            "full": {
+              "file": "NAT_Mess.png",
+              "height": 1050,
+              "mime_type": "image/png",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png",
+              "width": 2000
+            },
+            "medium_large": {
+              "file": "NAT_Mess-768x403.png",
+              "filesize": 35757,
+              "height": 403,
+              "mime_type": "image/png",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess-768x403.png",
+              "width": 768
+            },
+            "thumbnail": {
+              "file": "NAT_Mess-1920x1008.png",
+              "filesize": 106168,
+              "height": 1008,
+              "mime_type": "image/png",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess-1920x1008.png",
+              "width": 1920
+            },
+            "widget-thumbnail": {
+              "file": "NAT_Mess-75x75.png",
+              "filesize": 2415,
+              "height": 75,
+              "mime_type": "image/png",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess-75x75.png",
+              "width": 75
+            }
+          },
+          "width": 2000
+        },
+        "media_type": "image",
+        "mime_type": "image/png",
+        "slug": "nat_mess",
+        "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png",
+        "title": {
+          "rendered": "NAT_Mess"
+        },
+        "type": "attachment"
+      }
+    ],
+    "wp:term": [
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=3"
+              }
+            ]
+          },
+          "id": 3,
+          "link": "https://www.daryllswer.com/category/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "category"
+        }
+      ],
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/16",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=16"
+              }
+            ]
+          },
+          "id": 16,
+          "link": "https://www.daryllswer.com/tag/cgnat/",
+          "name": "CGNAT",
+          "slug": "cgnat",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/18",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=18"
+              }
+            ]
+          },
+          "id": 18,
+          "link": "https://www.daryllswer.com/tag/double-nat/",
+          "name": "Double NAT",
+          "slug": "double-nat",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/24",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=24"
+              }
+            ]
+          },
+          "id": 24,
+          "link": "https://www.daryllswer.com/tag/ipv4/",
+          "name": "IPv4",
+          "slug": "ipv4",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/25",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=25"
+              }
+            ]
+          },
+          "id": 25,
+          "link": "https://www.daryllswer.com/tag/ipv6/",
+          "name": "IPv6",
+          "slug": "ipv6",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/26",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=26"
+              }
+            ]
+          },
+          "id": 26,
+          "link": "https://www.daryllswer.com/tag/isps/",
+          "name": "ISPs",
+          "slug": "isps",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/34",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=34"
+              }
+            ]
+          },
+          "id": 34,
+          "link": "https://www.daryllswer.com/tag/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "post_tag"
+        }
+      ]
+    ]
+  },
+  "_links": {
+    "about": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/types/post"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts"
+      }
+    ],
+    "curies": [
+      {
+        "href": "https://api.w.org/{rel}",
+        "name": "wp",
+        "templated": true
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=5018"
+      }
+    ],
+    "self": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5018",
+        "targetHints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      }
+    ],
+    "version-history": [
+      {
+        "count": 0,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5018/revisions"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=5018"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5063"
+      }
+    ],
+    "wp:term": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/categories?post=5018",
+        "taxonomy": "category"
+      },
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/tags?post=5018",
+        "taxonomy": "post_tag"
+      }
+    ]
+  },
+  "author": 1,
+  "categories": [
+    3
+  ],
+  "class_list": [
+    "post-5018",
+    "post",
+    "type-post",
+    "status-publish",
+    "format-standard",
+    "has-post-thumbnail",
+    "hentry",
+    "category-networking",
+    "tag-cgnat",
+    "tag-double-nat",
+    "tag-ipv4",
+    "tag-ipv6",
+    "tag-isps",
+    "tag-networking",
+    "ratio-2-1",
+    "entry"
+  ],
+  "comment_status": "open",
+  "content": {
+    "protected": false,
+    "rendered": "<h4 id=\"h-this-article-was-sponsored-by-the-cybersecurity-company-nbsp-fastnetmon-they-offer-ddos-detection-products-for-network-operators-ranging-from-telcos-to-small-isps-which-can-be-deployed-on-premise-or-in-the-cloud-it-features-easy-deployment-and-lightning-fast-attack-detection-you-can-claim-your-free-30-day-trial-using-this-nbsp-link\" class=\"wp-block-heading\">This article was sponsored by the cybersecurity company <a href=\"https://fastnetmon.com/product-overview/\" target=\"_blank\" rel=\"noreferrer noopener\">FastNetMon</a>. They offer DDoS detection products for network operators ranging from telcos to small ISPs, which can be deployed on-premise or in the cloud. It features easy deployment and lightning-fast attack detection. You can claim your free 30-day trial using this <a href=\"https://fastnetmon.com/trial/\" target=\"_blank\" rel=\"noreferrer noopener\">link</a>.</h4>\n\n\n\n<blockquote class=\"wp-block-quote is-layout-flow wp-block-quote-is-layout-flow\">\n<p class=\"wp-block-paragraph\"><strong>For professional CGNAT and IPv6 deployment services aligned with industry best practices, <a href=\"https://www.swernetworks.com/\">click here</a>.</strong></p>\n</blockquote>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>This article has been published on the <a href=\"https://blog.apnic.net/2025/05/13/lets-talk-about-cgnat-and-ipv6-again/\" target=\"_blank\" rel=\"noreferrer noopener\">APNIC blog</a> as well.</strong></p>\n\n\n\n<p class=\"wp-block-paragraph\">I have had a few back-and-forth with a fellow blogger, on a series of blog posts on the subject of IPv4, NAT, CGNAT and IPv6<sup>[<a href=\"#h-references\">1</a>][<a href=\"#h-references\">2</a>][<a href=\"#h-references\">3</a>]</sup>, along with consistently seeing people who do not understand the right way to do NAT-ting in general, motivated me to write this blog post.</p>\n\n\n\n<p class=\"wp-block-paragraph\">For years, I’ve tried advocating for best-practices when it comes to the ugly invention in network engineering called Network Address Translation (NAT), with its uglier sub-form called Port Address Translation (PAT), where the latter is what we commonly call ‘NAT’ in the modern day, this technology forced the creation of equally ugly hacks to work-around it.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The reality is, NAT broke the Internet by its very design in addition to default NAT configuration across most vendors and software implementations are often broken.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Software developers spent decades coming up with complex workarounds, simply because network engineers and network business stakeholders alike insisted decades ago that the way to future-proof the Internet ecosystem was to use (CG)NAT, handicap layer-4 across the planet to just TCP/UDP, destroy any hope of future replacements for either of these layer 4 protocols (DCCP, UDP-Lite, SCTP etc all died on arrival); instead of early adoption of native <strong>routed</strong> IPv6 (NAT-ted IPv4 <strong>isn’t</strong> <strong>routing</strong>), remember, IPv6 was first introduced into the public domain back in December 1995<sup>[<a href=\"#h-references\">4</a>]</sup>.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Sure, we could argue that stateful firewalls also played a role in handicapping layer 4, but that does not negate the point that NAT played a massive role in the state we are in today.</p>\n\n\n\n<p class=\"wp-block-paragraph\">For some reason, <strong>routing</strong> still feels like an alien concept to many organisations and IT folks. In far too many environments, there’s more NAT-ing than actual routing—whether it’s IGP, BGP, or anything in between. And this isn’t just an IPv6/IPv4 issue. The misunderstanding of routing bleeds into Layer 2 as well: people often default to messy bridged networks, riddled with loops and an over-reliance on Spanning Tree Protocol, instead of embracing clean Layer 3 routing.</p>\n\n\n\n<p class=\"wp-block-paragraph\">There’s a saying: <em>“Route when you can, bridge when you must.”</em> It’s solid advice—yet often ignored.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In fact, maybe we need a new one: <em>“Route when you can. Bridge when you must. But if you’re thinking NAT… just route IPv6 and walk away with dignity.</em>”</p>\n\n\n\n<p class=\"wp-block-paragraph\">Because here’s the thing—with IPv6, you don’t need NAT. If you just <strong>routed</strong> everything end-to-end, things would be simpler, cleaner, and far more scalable. Now I am well aware of issues with IPv6 multi-homing and PA space, that’s already covered in my <a href=\"https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/\" target=\"_blank\" rel=\"noreferrer noopener\">IPv6 Architecture guide</a>, which is why <em>‘routed’</em> is <strong>bolded</strong> 😉 – PA multi-homing issue is no excuse to avoid IPv6, because it’s the same problem in IPv4<sup>[<a href=\"#h-references\">5</a>]</sup>.</p>\n\n\n\n<h2 id=\"h-what-ugly-hacks\" class=\"wp-block-heading\">What ugly hacks?</h2>\n\n\n\n<p class=\"wp-block-paragraph\">In a nutshell, of acronyms — STUN, TURN, ICE, WebRTC, ALGs — things that didn’t need to exist in routed networks (excluding STUN, because we need it, even in routed networks due to stateful firewall deployments), but ended up coming into existence because of NAT.</p>\n\n\n\n<p class=\"wp-block-paragraph\">People think NAT has little to no overhead, but that isn’t true — The reason it <em>appears</em> as such is because of decades of hard work from software developers who implemented the above acronyms in actual code to mask the side effects of NAT. With some common sense, it is safe to say tens of thousands of coding hours and resources, were spent on hacking around NAT with relays (TURN) discovery (STUN) and punching hit-and-miss holes in the NAT state machine (WebRTC/ICE and regular TCP/UDP) along with hacky packet header re-writes using ALGs (sometimes called NAT Helpers in Linux Netfilter terminology).</p>\n\n\n\n<p class=\"wp-block-paragraph\">You don’t have to take my word for it, read a book or two about these acronyms<sup>[<a href=\"#h-references\">6</a>]</sup>, to see the insane complexity brought upon us by those who insisted NAT-ting &gt; routing (hello IPv6!).</p>\n\n\n\n<p class=\"wp-block-paragraph\">Despite these hacks being ubiquitous in most end-user applications today, it never truly unbroken the Internet ecosystem.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Let’s start with some P2P examples like VoIP/SIP and online gaming (a multi-billion dollar industry for starters, so there’s real business incentives here):</p>\n\n\n\n<ol class=\"wp-block-list\">\n<li>When we try to establish a P2P software telephony call between two endpoints over NAT, often times it’ll fail and the endpoint software will be forced to re-route traffic over a TURN server relay for the clients — this can result in insane latency, as the TURN server may be geographically and routing-wise really far away from the actual calling endpoints.</li>\n\n\n\n<li>Here’s where it gets even worse in NAT-ted networks: If both calling endpoints are in the same LAN/broadcast domain, and their calling application software called upon STUN discovery to try to initiate the call, the call will fail, because most NAT configurations are missing NAT hairpinning (aka NAT Loopback)<sup>[<a href=\"#h-references\">7</a>]</sup>, what happens is both endpoints for example will be NAT-ted to a public IP 1.1.1.1, each endpoint has a unique source port, for example 1025, 1026, so now STUN discovers 1.1.1.1:1025, 1.1.1.1:1026, and now the endpoints try to talk to each other destined towards each of these public IP port mappings — and fails spectacularly because no hairpinning by default on most NAT configurations. Such a problem doesn’t exist in <strong>routed</strong>, <strong>NAT-less</strong> environments. What happens now is, the call will be routed through the public internet via TURN relay server, and the latency jumped from 1ms on the LAN to who knows what latency on the public internet.</li>\n\n\n\n<li>Similarly, the same issue exists in online gaming, P2P gaming lobbies will often fail behind NAT and your game software will now use a TURN-relay instead, leading to unpredictable latencies. Even if all gamers in a lobby are within the same geographical location, all customers of the same BGP Autonomous System (AS), where latency would’ve been 1-2ms if it was pure routing, now thanks to (CG)NAT, and forced use of TURN-relay, their latency jumped to 50ms or whatever randomly or even more depending on the physical and routing-wise location of the TURN-relay.</li>\n\n\n\n<li>Has the side effect of content centralisation amongst a few hyperscaler cloud network providers, due to broken P2P leading to normalised Server/Client model of data transfer between A and B endpoints in application software — Are we really doing humanity a favour with so much centralisation of internet content and traffic? I’ll leave that to your imagination.</li>\n</ol>\n\n\n\n<p class=\"wp-block-paragraph\">“But this is hypothetical, isn’t it?” — Nope, you need to think about this in large scale SP networks and campus networks, a lot of endpoint-to-endpoint traffic does exist on everyday end-user applications like WhatsApp P2P calling for example, at large scale, so much traffic is TURN-relayed back into the public Internet, when it could’ve just stayed intra-AS or intra-LAN, with hairpinning<sup>[<a href=\"#h-references\">8</a>]</sup> or in the case of native <strong>routed</strong> IPv6.</p>\n\n\n\n<p class=\"wp-block-paragraph\">“Oh, but I’m a DC operator, I’m not an ISP or Enterprise, NAT is harmless for us, right?” — No. Give this podcast a listen<sup>[<a href=\"#h-references\">9</a>]</sup>, NAT has insane overhead even at hyperscaler companies like Meta or Google.</p>\n\n\n\n<p class=\"wp-block-paragraph\">All of these problems and hacks, have overhead that’s not visible in a GUI/UI to the end-users of NATting, up and until latency goes bonkers because of TURN or something broke, and they start whining about it to the L1 customer support of an ISP or even MSP/Consultant of the enterprise.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Let’s not forget about CGNAT, aside from the issues described above, it has the obvious issue of port exhaustion — there’s only so much port availability for shared IP space across billions of humans and devices in the world. Yet another issue that does not exist in <strong>routed</strong> networking (hello IPv6 again).</p>\n\n\n\n<h2 id=\"h-broken-nat-is-there-a-not-so-broken-nat\" class=\"wp-block-heading\">Broken NAT — is there a not-so-broken NAT?</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Long story short, yes, mostly.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Longer story:</p>\n\n\n\n<ol class=\"wp-block-list\">\n<li>We start by enabling hairpinning<sup>[<a href=\"#h-references\">7</a>]</sup> to ensure that intra-(CG)NAT traffic on the LAN or AS works correctly, this gets rid of TURN for intra-NAT traffic.</li>\n\n\n\n<li>Then we enable EIM &amp; EIF on the NAT device<sup>[<a href=\"#h-references\">10</a>] </sup>for port range 1024-65535 for both TCP and UDP, this will help ensure P2P traffic continues to work for TCP/UDP, it will get rid of TURN for general global NAT-ted traffic that egresses from the (CG)NAT device.</li>\n\n\n\n<li>You could go further and enable Port Control Protocol — But there’s no adoption of this in end-user OSes and applications, and the efforts to get adoption for this, is better spent on IPv6.</li>\n</ol>\n\n\n\n<h3 id=\"h-caveat\" class=\"wp-block-heading\">Caveat</h3>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>Not-so-broken != Not-Broken.</strong></p>\n\n\n\n<ol class=\"wp-block-list\">\n<li>NAT Hairpinning/Loopback doesn’t work the same way and/or doesn’t work correctly on all operating systems. For example, it works out-of-the-box without user configuration on proprietary CGNAT solutions like A10 Networks (page 31)<sup>[<a href=\"#h-references\">11</a>]</sup>, but it won’t be that simple on a Linux-based device, if you try to create a Hairpin NAT rule on a Linux box, it may or may not work depending on the implementation, for all Src-NAT-ted traffic — Remember, hairpinning is supposed to permit intra-NAT traffic to work, without them necessarily being DNAT-ted, such as Xbox gaming sessions P2P between two hosts behind the NAT, or two SIP Clients trying to talk to each other over their Src-NAT-ted IP using STUN discovery without TURN. I have not yet seen RFC-like hairpinning <strong>simplicity</strong> on any vendor other than A10 CGNAT, if we go by their official documentation.</li>\n\n\n\n<li>EIM+EIF NAT is often missing from operating systems or software that have a NAT functionality (such as vanilla Linux Kernel at the time of writing this article), or it is not implemented per the RFC. For example, on MikroTik, EIM is implemented only for UDP, but not TCP and EIF is missing completely.</li>\n\n\n\n<li>None of the above workarounds, even if implemented per the relevant RFCs, will fix IP space/port exhaustion; the only solution is to opt for <strong>routing</strong> with <strong>IPv6</strong>.</li>\n</ol>\n\n\n\n<h2 id=\"h-ipv6-adoption-is-just-as-broken\" class=\"wp-block-heading\">IPv6 adoption is just as broken</h2>\n\n\n\n<p class=\"wp-block-paragraph\">There’s no denying this, IPv6 adoption has been lack-lustre at best, and even when an ISP does deploy it, they do it, using IPv4-archaic mindset and fail to adhere to best practices such as <a href=\"https://www.ripe.net/publications/docs/ripe-690/\" target=\"_blank\" rel=\"noreferrer noopener\">BCOP-690</a>.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Happy Eyeballs is a useful mechanism, but perhaps from a human psychological perspective it ended up being a double-edged sword that indirectly incentivise lazy network operators from fixing broken IPv6 deployments.</p>\n\n\n\n<p class=\"wp-block-paragraph\">There’s no cure to broken IPv6 other than:</p>\n\n\n\n<ol class=\"wp-block-list\">\n<li>Obsolete IPv4 dinosaurs should head into retirement and allow the next-generation of engineers to replace them. The same way, IP/MPLS engineers replaced the circuit-switched dinosaurs who were against IP/MPLS during the <a href=\"https://en.wikipedia.org/wiki/Protocol_Wars#Packet_switching_vs_circuit_switching\" target=\"_blank\" rel=\"noreferrer noopener\">Protocol Wars</a>. Ludditism should be against corporate policies and against job contracts while we’re at it.</li>\n\n\n\n<li>Fix the education system along with vendor certification programmes — IPv6 should be the default Address Family when introducing IP addressing and routing concepts to beginners and aspiring network engineers. Teaching networking fundamentals through IPv6 offers a simpler, more scalable, and future-ready foundation compared to IPv4. IPv4, along with NAT and its complex workarounds such as TURN, ICE, WebRTC, EIM/EIF NAT, Hairpinning etc, should be introduced later as legacy technologies, not as the standard starting point. By prioritising IPv6 from the beginning of a course or certification programme, students should gain a clear understanding of networking principles without outdated constraints, setting them up for success in a world that’s rapidly transitioning beyond IPv4.</li>\n</ol>\n\n\n\n<h2 id=\"h-but-nat-is-a-firewall\" class=\"wp-block-heading\">But NAT is a firewall!</h2>\n\n\n\n<p class=\"wp-block-paragraph\">No, it isn’t<sup>[<a href=\"#h-references\">12</a>][<a href=\"#h-references\">13</a>] </sup>— If you need a firewall, then you enable a firewall for both IPv4 and IPv6, NAT isn’t a firewall technology.</p>\n\n\n\n<h2 id=\"h-conclusion\" class=\"wp-block-heading\">Conclusion</h2>\n\n\n\n<p class=\"wp-block-paragraph\">The conclusion is factually simple: Routing &gt; NAT-ting, and in order to route sufficient address space in today’s ever-growing world, IPv6 comes into play. But if broken IPv6 continues, then NAT-ting would persist in IPv6 (NAT66) and nothing actually gets solved.</p>\n\n\n\n<p class=\"wp-block-paragraph\">NAT was and always will be what we call in India, <a href=\"https://en.wikipedia.org/wiki/Jugaad\" target=\"_blank\" rel=\"noreferrer noopener\">jugaad engineering</a>, the English translation would closely resemble <a href=\"https://en.wikipedia.org/wiki/Frugal_innovation\" target=\"_blank\" rel=\"noreferrer noopener\">frugal engineering</a>.</p>\n\n\n\n<h2 id=\"h-references\" class=\"wp-block-heading\">References</h2>\n\n\n\n<ol class=\"wp-block-list\">\n<li><a href=\"https://blog.ipspace.net/2025/03/response-end-to-end-connectivity/#2585\" target=\"_blank\" rel=\"noreferrer noopener\">https://blog.ipspace.net/2025/03/response-end-to-end-connectivity/#2585</a></li>\n\n\n\n<li><a href=\"https://blog.ipspace.net/2025/04/response-nat-traversal/\" target=\"_blank\" rel=\"noreferrer noopener\">https://blog.ipspace.net/2025/04/response-nat-traversal/</a></li>\n\n\n\n<li><a href=\"https://blog.ipspace.net/2025/04/response-peer-to-peer-apps-ipv6/\" target=\"_blank\" rel=\"noreferrer noopener\">https://blog.ipspace.net/2025/04/response-peer-to-peer-apps-ipv6/</a></li>\n\n\n\n<li><a href=\"https://www.rfc-editor.org/rfc/rfc1883.html\" target=\"_blank\" rel=\"noreferrer noopener\">https://www.rfc-editor.org/rfc/rfc1883.html</a></li>\n\n\n\n<li><a href=\"https://blog.ipspace.net/kb/Internet/MH_Redundancy/\" target=\"_blank\" rel=\"noreferrer noopener\">https://blog.ipspace.net/kb/Internet/MH_Redundancy/</a></li>\n\n\n\n<li><a href=\"https://webrtcforthecurious.com/\" target=\"_blank\" rel=\"noreferrer noopener\">https://webrtcforthecurious.com/</a></li>\n\n\n\n<li><a href=\"https://www.rfc-editor.org/rfc/rfc4787#section-6\" target=\"_blank\" rel=\"noreferrer noopener\">https://www.rfc-editor.org/rfc/rfc4787#section-6</a></li>\n\n\n\n<li><a href=\"https://www.linkedin.com/feed/update/urn:li:activity:7315988308252086273?commentUrn=urn%3Ali%3Acomment%3A%28activity%3A7315988308252086273%2C7316010203462696961%29&amp;dashCommentUrn=urn%3Ali%3Afsd_comment%3A%287316010203462696961%2Curn%3Ali%3Aactivity%3A7315988308252086273%29\" target=\"_blank\" rel=\"noreferrer noopener\">https://www.linkedin.com/feed/update/urn:li:activity:7315988308252086273?commentUrn=urn%3Ali%3Acomment%3A%28activity%3A7315988308252086273%2C7316010203462696961%29&amp;dashCommentUrn=urn%3Ali%3Afsd_comment%3A%287316010203462696961%2Curn%3Ali%3Aactivity%3A7315988308252086273%29</a></li>\n\n\n\n<li><a href=\"https://www.buzzsprout.com/2127872/episodes/16106562\" target=\"_blank\" rel=\"noreferrer noopener\">https://www.buzzsprout.com/2127872/episodes/16106562</a></li>\n\n\n\n<li><a href=\"https://datatracker.ietf.org/doc/html/rfc7857#section-5\" target=\"_blank\" rel=\"noreferrer noopener\">https://datatracker.ietf.org/doc/html/rfc7857#section-5</a></li>\n\n\n\n<li><a href=\"https://www.a10networks.com/wp-content/uploads/A10-DG-Carrier_Grade_NAT_CGN_Large_Scale_NAT_LSN.pdf\" target=\"_blank\" rel=\"noreferrer noopener\">https://www.a10networks.com/wp-content/uploads/A10-DG-Carrier_Grade_NAT_CGN_Large_Scale_NAT_LSN.pdfhttps://www.a10networks.com/wp-content/uploads/A10-DG-Carrier_Grade_NAT_CGN_Large_Scale_NAT_LSN.pdf</a></li>\n\n\n\n<li><a href=\"https://www.f5.com/resources/white-papers/the-myth-of-network-address-translation-as-security\" target=\"_blank\" rel=\"noreferrer noopener\">https://www.f5.com/resources/white-papers/the-myth-of-network-address-translation-as-security</a></li>\n\n\n\n<li><a href=\"https://samy.pl/slipstream/\" target=\"_blank\" rel=\"noreferrer noopener\">https://samy.pl/slipstream/</a></li>\n</ol>\n"
+  },
+  "date": "2025-04-22T15:54:09",
+  "date_gmt": "2025-04-22T10:24:09",
+  "excerpt": {
+    "protected": false,
+    "rendered": "<p>Yet another blog article on IPv4, NAT, CGNAT, Hairpinning and native IPv6.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/\">Continue reading<span class=\"screen-reader-text\">Let&#8217;s talk about CGNAT and IPv6, yet again.</span></a></div>\n"
+  },
+  "featured_media": 5063,
+  "format": "standard",
+  "guid": {
+    "rendered": "https://www.daryllswer.com/?p=5018"
+  },
+  "id": 5018,
+  "jetpack-related-posts": [
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "25 March 2021",
+      "excerpt": "An article on the limitations of CGNAT and what can be done to work around them.",
+      "format": false,
+      "id": 29,
+      "img": {
+        "alt_text": "",
+        "height": 0,
+        "src": "",
+        "width": 0
+      },
+      "rel": "",
+      "title": "Shortcomings of CGNAT and Potential Workarounds",
+      "url": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
+      "url_meta": {
+        "origin": 5018,
+        "position": 0
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "28 March 2021",
+      "excerpt": "An article on Multi-WAN setups using consumer-grade ISPs.",
+      "format": false,
+      "id": 66,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Multi-WAN setups with retail ISPs (Part 1 &#8211; Theory)",
+      "url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/",
+      "url_meta": {
+        "origin": 5018,
+        "position": 1
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "1 July 2022",
+      "excerpt": "An article about setting up an Autonomous System (AS) from scratch.",
+      "format": false,
+      "id": 970,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=700%2C400&ssl=1 2x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How did I set up my own Autonomous System?",
+      "url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/",
+      "url_meta": {
+        "origin": 5018,
+        "position": 2
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/linux/",
+        "text": "Linux"
+      },
+      "classes": [],
+      "context": "In &quot;Linux&quot;",
+      "date": "19 May 2025",
+      "excerpt": "How to set up native routed IPv6 in Docker with routed mode.",
+      "format": false,
+      "id": 5136,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How to configure routed IPv6 in Docker",
+      "url": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/",
+      "url_meta": {
+        "origin": 5018,
+        "position": 3
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/architecture/",
+        "text": "Architecture"
+      },
+      "classes": [],
+      "context": "In &quot;Architecture&quot;",
+      "date": "4 June 2026",
+      "excerpt": "How to design and structure BGP Router IDs in IPv6-native networks.",
+      "format": false,
+      "id": 5324,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "BGP Router ID Structuring in IPv6 Native Networks",
+      "url": "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/",
+      "url_meta": {
+        "origin": 5018,
+        "position": 4
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "8 June 2021",
+      "excerpt": "A best practices guide for engineers looking to improve network performance, security, and consistency using MikroTik for edge routers and BNG.",
+      "format": false,
+      "id": 269,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Edge Router &#038; BNG Optimisation Guide for ISPs",
+      "url": "https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/",
+      "url_meta": {
+        "origin": 5018,
+        "position": 5
+      }
+    }
+  ],
+  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png",
+  "jetpack_sharing_enabled": true,
+  "link": "https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/",
+  "meta": {
+    "_jetpack_dont_email_post_to_subs": false,
+    "_jetpack_feature_clip_id": 0,
+    "_jetpack_memberships_contains_paid_content": false,
+    "_jetpack_memberships_contains_paywalled_content": false,
+    "_jetpack_newsletter_access": "",
+    "_jetpack_newsletter_tier_id": 0,
+    "footnotes": "[]",
+    "jetpack_post_was_ever_published": false
+  },
+  "modified": "2026-06-06T17:45:08",
+  "modified_gmt": "2026-06-06T12:15:08",
+  "ping_status": "open",
+  "slug": "lets-talk-about-cgnat-and-ipv6-yet-again",
+  "status": "publish",
+  "sticky": false,
+  "tags": [
+    16,
+    18,
+    24,
+    25,
+    26,
+    34
+  ],
+  "template": "",
+  "title": {
+    "rendered": "Let&#8217;s talk about CGNAT and IPv6, yet again."
+  },
+  "type": "post"
+}

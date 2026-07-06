@@ -1,0 +1,253 @@
+<p class="wp-block-paragraph"><strong>This article has been published on the <a href="https://blog.apnic.net/2025/05/26/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/" target="_blank" rel="noreferrer noopener">APNIC blog</a> as well.</strong></p>
+
+
+
+<p class="wp-block-paragraph">Most people get their Internet through a standard fibre or broadband service,<br>supplied by a residential ISP. What if you could bring enterprise-grade, carrier-level<br>connectivity direct to your home, bypassing the usual ISP setups and having your<br>own dedicated MPLS-delivered IP transit?</p>
+
+
+
+<p class="wp-block-paragraph">This post details my personal experience with this kind of set up in India. I’ll share<br>how I built the network (<a href="https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/" target="_blank" rel="noreferrer noopener">AS149794</a>), what it took to maintain, and whether the dream of true enterprise-grade Internet at home is worth it. It is a bit different from my usual focus.<br>Instead of diving into network engineering, I’ll be looking at the costs and the Layer 8<br>challenges of managing a unique home network.</p>
+
+
+
+<p class="wp-block-paragraph">I’m not the first or only person on to have had this type of setup. I’ve heard of people<br>from the USA, and at least of one other person in India, having similar<br>setups in their personal homes, but I believe you could probably count the total on one hand.</p>
+
+
+
+<h1 class="wp-block-heading" id="h-ipttth">IPTTTH</h1>
+
+
+
+<p class="wp-block-paragraph">What exactly do I mean by IP Transit-To-The-Home (IPTTTH) in the<br>context of this post? Put simply, it’s having <strong>physical</strong> IP transit — delivered over<br>MPLS — directly to your home. Not your typical Fibre-to-the-Home (FTTH), but<br>actual IP Transit-To-The-Home.</p>
+
+
+
+<p class="wp-block-paragraph">IP Transit isn’t to be conflated with DIA, <a href="https://www.zayo.com/resources/ip-transit-or-dedicated-internet-access-dia-which-is-right-for-me/" target="_blank" rel="noreferrer noopener">there is a difference</a>.</p>
+
+
+
+<p class="wp-block-paragraph">This post explores the concept of IPTTTH based on my own experience with this type of setup, in the Indian economy. I’ve actually had two distinct implementations of IPTTTH, and we’ll go through each one separately.</p>
+
+
+
+<p class="wp-block-paragraph">To kick things off, I’ll break down the setup — starting from Layer 1, moving up to Layer 3, and then jumping straight to Layer 8. And no, this isn’t about fancy virtual tunnels or software overlays. We’re talking about real, physical IP transit delivered over MPLS, all the way to a residential home.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-layer-1-overview">Layer 1 overview</h2>
+
+
+
+<p class="wp-block-paragraph">At Layer 1, the exact setup can vary depending on the location. However, for this blog post, we’ll focus on India as a real-world example of IPTTTH implementation, based on my firsthand experience.</p>
+
+
+
+<h3 class="wp-block-heading" id="h-implementation-blr-bengaluru-india">Implementation BLR (Bengaluru, India)</h3>
+
+
+
+<p class="wp-block-paragraph">For this implementation, the setup was based in <a href="https://en.wikipedia.org/wiki/Bengaluru" target="_blank" rel="noreferrer noopener">Bengaluru</a> (BLR). The MPLS carrier, physical fibre transport provider, and IP transit provider were all handled by AS132559, a local ISP in BLR. Since they owned the infrastructure end-to-end, they could deliver true MPLS Delivered IP transit directly to the home.</p>
+
+
+
+<p class="wp-block-paragraph">The setup was fairly straightforward. At the ISPs Point of Presence (PoP), they had a Layer 2 switch uplinked to an MPLS Provider Edge (PE) router, which itself had multipath protection back to their edge router. From that switch, a single fibre optic cable — using BiDi optics — ran approximately 1.5 kilometres directly to my flat in Bengaluru. It was a fairly straightforward implementation.</p>
+
+
+
+<p class="wp-block-paragraph">AS132559 also carried my VLAN to ExtremeIX BLR for IXP peering. Since ExtremeIX and AS132559 already had a cross-connect at a mutual data centre, setting up my peering was straightforward — they simply configured an additional VLAN for me. The topology is shown in Figure 1.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-1_BLR_Layer_1_Topology-scaled.png"><img loading="lazy" decoding="async" width="2560" height="809" src="https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-1_BLR_Layer_1_Topology-scaled.png" alt="" class="wp-image-5186" srcset="https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-1_BLR_Layer_1_Topology-scaled.png 2560w, https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-1_BLR_Layer_1_Topology-1920x607.png 1920w, https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-1_BLR_Layer_1_Topology-768x243.png 768w, https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-1_BLR_Layer_1_Topology-1536x485.png 1536w, https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-1_BLR_Layer_1_Topology-2048x647.png 2048w" sizes="auto, (max-width: 2560px) 100vw, 2560px"></a><figcaption class="wp-element-caption">Figure-1 BLR Layer 1 topology</figcaption></figure>
+</div>
+
+
+<h3 class="wp-block-heading" id="h-implementation-s-a-shillong-lt-gt-aizawl-india">Implementation S-A (Shillong&lt;&gt;Aizawl, India)</h3>
+
+
+
+<p class="wp-block-paragraph">This implementation involved a long-distance circuit between <a href="https://en.wikipedia.org/wiki/Shillong" target="_blank" rel="noreferrer noopener">Shillong</a> (SHL) and <a href="https://en.wikipedia.org/wiki/Aizawl" target="_blank" rel="noreferrer noopener">Aizawl</a> (AJL), with the total distance estimated by Google Maps to be around 800 km.</p>
+
+
+
+<p class="wp-block-paragraph">The carrier backbone and middle-mile were fully outsourced to AS9498, with the carrier delivering the MUX port hand-off at one of their <a href="https://en.wikipedia.org/wiki/Base_transceiver_station" target="_blank" rel="noreferrer noopener">BTS sites</a> in Shillong (SHL), the location closest to mine. From there, I contracted a fibre cable operator to run an overhead fibre from the MUX port directly to my home, spanning about 2 km. The fibre terminates in my residence and connects straight to a Small Form-factor Pluggable (SFP) module on my router (Figure 2).</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2025/03/IMG_1961.jpg"><img loading="lazy" decoding="async" width="2229" height="1484" src="https://www.daryllswer.com/wp-content/uploads/2025/03/IMG_1961.jpg" alt="" class="wp-image-4984" srcset="https://www.daryllswer.com/wp-content/uploads/2025/03/IMG_1961.jpg 2229w, https://www.daryllswer.com/wp-content/uploads/2025/03/IMG_1961-1622x1080.jpg 1622w, https://www.daryllswer.com/wp-content/uploads/2025/03/IMG_1961-768x511.jpg 768w, https://www.daryllswer.com/wp-content/uploads/2025/03/IMG_1961-1536x1023.jpg 1536w, https://www.daryllswer.com/wp-content/uploads/2025/03/IMG_1961-2048x1363.jpg 2048w" sizes="auto, (max-width: 2229px) 100vw, 2229px"></a><figcaption class="wp-element-caption">Figure-2 Fibre Termination in my SHL home</figcaption></figure>
+</div>
+
+
+<p class="wp-block-paragraph">On the other end of this MPLS circuit, there’s a similar setup that terminates at my transit provider sponsor at the time of writing this article, AS141253, in AJL. The circuit was initially set up with a capacity of 200 Mbps in 2023, but this was later revised to 150 Mbps starting from 2024. The topology is shown in Figure 3.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-3_SHL_Layer_1_Topology-scaled.png"><img loading="lazy" decoding="async" width="2560" height="503" src="https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-3_SHL_Layer_1_Topology-scaled.png" alt="" class="wp-image-5187" srcset="https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-3_SHL_Layer_1_Topology-scaled.png 2560w, https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-3_SHL_Layer_1_Topology-1920x378.png 1920w, https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-3_SHL_Layer_1_Topology-768x151.png 768w, https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-3_SHL_Layer_1_Topology-1536x302.png 1536w, https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-3_SHL_Layer_1_Topology-2048x403.png 2048w" sizes="auto, (max-width: 2560px) 100vw, 2560px"></a><figcaption class="wp-element-caption">Figure 3 — The SHL Layer 1 topology</figcaption></figure>
+</div>
+
+
+<h2 class="wp-block-heading" id="h-layer-2-overview">Layer 2 Overview</h2>
+
+
+
+<h3 class="wp-block-heading" id="h-implementation-blr">Implementation BLR</h3>
+
+
+
+<p class="wp-block-paragraph">Layer 2 of this implementation involved two tagged VLANs from my end. One VLAN was dedicated to IP transit directly with AS132559, and the other was for IXP connectivity with ExtremeIX BLR. These VLANs were then transported over VPLS on AS132559’s end for termination.</p>
+
+
+
+<h3 class="wp-block-heading" id="h-implementation-s-a">Implementation S-A</h3>
+
+
+
+<p class="wp-block-paragraph">Layer 2 of this implementation was largely handled by the carrier, AS9498, and was somewhat obscured. However, we know that the VLAN was manually tagged on the other end of the circuit by my transit provider, as multiple circuits were delivered over a single port. Given this setup, it’s safe to assume the circuit was an Ethernet Virtual Private Line (EVPL) and likely used SR-MPLS with EVPN on the carrier’s side. This assumption considers that AS9498 is a major Juniper customer, making it highly unlikely they would continue using legacy protocols like LDP/RSVP-TE and traditional L2 circuits indefinitely.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-layer-3-overview">Layer 3 Overview</h2>
+
+
+
+<h3 class="wp-block-heading" id="h-implementation-blr-0">Implementation BLR</h3>
+
+
+
+<p class="wp-block-paragraph">A simple BGP session was established with AS132559 for both IPv4 and IPv6, with a 9,000 L3MTU. I took full routing tables for both address families (AFIs) from AS132559, as their edge router supported a full table-capable Forwarding Information Base (FIB) at that time.</p>
+
+
+
+<p class="wp-block-paragraph">Separate BGP sessions were also set up with ExtremeIX Route Servers and other members with a 1,500 MTU.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2025/05/AS149794_BLR_BGP_Peers-scaled.png"><img loading="lazy" decoding="async" width="2560" height="1473" src="https://www.daryllswer.com/wp-content/uploads/2025/05/AS149794_BLR_BGP_Peers-scaled.png" alt="" class="wp-image-5130" srcset="https://www.daryllswer.com/wp-content/uploads/2025/05/AS149794_BLR_BGP_Peers-scaled.png 2560w, https://www.daryllswer.com/wp-content/uploads/2025/05/AS149794_BLR_BGP_Peers-1877x1080.png 1877w, https://www.daryllswer.com/wp-content/uploads/2025/05/AS149794_BLR_BGP_Peers-768x442.png 768w, https://www.daryllswer.com/wp-content/uploads/2025/05/AS149794_BLR_BGP_Peers-1536x884.png 1536w, https://www.daryllswer.com/wp-content/uploads/2025/05/AS149794_BLR_BGP_Peers-2048x1179.png 2048w" sizes="auto, (max-width: 2560px) 100vw, 2560px"></a><figcaption class="wp-element-caption">Figure-4 Screenshot of past BLR BGP peers that were live on Layer 1</figcaption></figure>
+</div>
+
+
+<h3 class="wp-block-heading" id="h-implementation-s-a-0">Implementation S-A</h3>
+
+
+
+<p class="wp-block-paragraph">A simple BGP session was established with AS141253 for both IPv4 and IPv6, using a 9,000 L3MTU. I received a default route for both AFIs from AS141253, as their edge router did not have a full table-capable FIB at that time.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-financial-feasibility">Financial Feasibility</h2>
+
+
+
+<p class="wp-block-paragraph">Here comes the fun part, finance!</p>
+
+
+
+<p class="wp-block-paragraph">The pricing for IP transit differs from that of a Point-to-Point (PtP) pseudowire and will always vary depending on the carrier, ISP, and location. It’s also worth noting that USD conversion rates fluctuate daily, and the value of the Indian rupee has been steadily dipping. So, the rates I’m converting to USD here aren’t going to be 100% accurate, but they should give a reasonable estimate.</p>
+
+
+
+<h3 class="wp-block-heading" id="h-general-isp-service-pricing-in-blr-2024">General ISP Service Pricing in BLR (2024)</h3>
+
+
+
+<p class="wp-block-paragraph">These rates were provided by the local ISP in BLR, are generally applicable across most of India (excluding taxes):</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>Service</td><td>Pricing (INR)</td><td>Pricing (USD)</td><td>Terms</td></tr><tr><td>9G PtP (pseudowire) circuit</td><td>₹6,750,000</td><td>$78,764</td><td>Per annum</td></tr><tr><td>1G PtP (pseudowire) circuit</td><td>₹750,000</td><td>$8,751</td><td>Per annum</td></tr><tr><td>9G IP Transit</td><td>₹13,050,000</td><td>$152,277</td><td>Per annum</td></tr><tr><td>1G IP Transit</td><td>₹1,450,000</td><td>$16,919</td><td>Per annum</td></tr></tbody></table><figcaption class="wp-element-caption">Table-1 IP transit and PtP circuit pricing (India)</figcaption></figure>
+
+
+
+<h3 class="wp-block-heading" id="h-shl-lt-gt-ajl-circuit-costs-2025">SHL&lt;&gt;AJL Circuit Costs (2025)</h3>
+
+
+
+<p class="wp-block-paragraph">For my specific setup, the costs between SHL and AJL in 2025 are shown in Table 2. These are based on actual quotations received.</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>Service</td><td>Pricing (INR)</td><td>Pricing (USD)</td><td>Terms</td></tr><tr><td>Fibre Installation (2023)</td><td>₹17,000</td><td>$200</td><td>One-time fee for 2 KM fibre link between BTS and my home.</td></tr><tr><td>Fibre Re-routing (2024)</td><td>₹2,000</td><td>$24</td><td>For adjusting fibre path inside my property.</td></tr><tr><td>200M PtP (pseudowire) circuit via AS9498</td><td>₹13,000</td><td>$152</td><td>Per month (₹15,340/$179 with GST)</td></tr><tr><td>150M PtP (pseudowire) circuit via AS9498</td><td>₹9,000</td><td>$106</td><td>Per month (₹10,620/$124 with GST)</td></tr><tr><td>IP Transit Pricing</td><td>Similar to BLR rates</td><td>Similar to BLR rates</td><td>Minor variations based on bandwidth</td></tr></tbody></table><figcaption class="wp-element-caption">Table-2 SHL — AJL circuit costs (2025)</figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">As shown in Tables 1 and 2, these prices are extremely high, making it virtually impossible for most people to afford IPTTTH without a sponsor. Alternatively, you could opt for lower bandwidth PtP circuits, cover the cost yourself, and then have someone sponsor the transit and cross-connect at the data centre. While this scenario is unlikely, it’s still technically possible.</p>
+
+
+
+<p class="wp-block-paragraph">You might wonder how I managed to secure these sponsors in the first place. The answer is simple — the barter system. I offer my network engineering expertise whenever they need it, and in exchange, I was able to secure these circuits.</p>
+
+
+
+<h3 class="wp-block-heading" id="h-what-about-global-pricing">What about global pricing?</h3>
+
+
+
+<p class="wp-block-paragraph">Obviously, it’s impossible to gather global pricing and implementation details for the sake of the blog post. However, based on anecdotal information from clients and friends in economies like the Netherlands and the US, laying underground PtP fibre from the carrier hand-off location (such as a central office or carrier/fibre hotel) to your home can cost tens of thousands of dollars. Unlike in India, where you can get away with overhead fibre cables, which wouldn’t be possible in many parts of the world unless you have jumped through many bureaucratic and legal hurdles.</p>
+
+
+
+<p class="wp-block-paragraph">This effectively makes IPTTTH virtually unfeasible in most western nations, where strict government regulations govern fibre deployment on public lands. Unless your ISP already has existing infrastructure, they can sponsor you with, or unless there are unique circumstances, it’s a tough challenge. </p>
+
+
+
+<p class="wp-block-paragraph">One potential workaround could be using Passive Optical Network (PON) infrastructure with VLAN tagging, which isn’t technically impossible. In this setup, the ISP could configure a unique, tagged VLAN for your Optical Network Terminal (ONT), then carry that VLAN through their SR-MPLS/EVPN pipe. From there, the VLAN would be routed to a PE router, which they use for selling Dedicated Internet Access (DIA)/IP transit services, rather than terminating it on the Broadband Network Gateway (BNG) like they do for regular residential users. However, this is a rare and complex solution.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-operational-feasibility">Operational Feasibility</h2>
+
+
+
+<p class="wp-block-paragraph">Here comes the other fun part, operational overhead!</p>
+
+
+
+<p class="wp-block-paragraph">While having your own transit at home physically delivered over an MPLS carrier, is incredibly fun and a unique experience — especially having the ability to assign public IPv4+IPv6 addresses to devices like your iPhone or MacBook without the need for NAT. This enables native P2P application software behaviour and a smoother experience compared to the TURN-relayed traffic most users deal with.</p>
+
+
+
+<p class="wp-block-paragraph">However, operating this type of home network is challenging for several reasons.</p>
+
+
+
+<p class="wp-block-paragraph">Sometimes the upstream Transit provider, or their own upstream(s), misconfigure their routers. This can cause routing loops and/or blackholing of your public IPv4/IPv6 prefixes, affecting your internet traffic at home. When that happens, you need to call up your contact person, or text them, and wait either for a 5 mins fix, or a 7-day fix depending on the problem, root cause and where the problem lies. Since this is a ‘sponsored’ setup, there is no SLA, there’s no guarantee of timely response for obvious reasons.</p>
+
+
+
+<p class="wp-block-paragraph">There have been times when routing issues occurred due to misconfigurations by the upstream providers of my upstream. One example was AS9498 looping traffic to my IPv6 prefix on the global routing table between themselves and AS6939. It took 4–5 days to resolve, with help from a contact I had at HE at the time.</p>
+
+
+
+<p class="wp-block-paragraph">On other occasions, misconfigurations in the provider’s Layer 2 switches led to problems with Neighbor Discovery Protocol (NDP), effectively breaking my IPv6 peering sessions. In the event of a fibre cut, the resolution time could vary greatly — it might be fixed within an hour, or it could take up days, depending on the situation.</p>
+
+
+
+<p class="wp-block-paragraph">I’m sure you can imagine many other issue scenarios, but one thing is certain — it can be difficult for a single individual to manage this type of setup.</p>
+
+
+
+<p class="wp-block-paragraph">A funny example would be me chasing down my Transit provider’s upstream to fix their broken routing policies facing the Default Free Zone (DFZ). This even involved their Network Operations Centre (NOC) team calling me at 12am. Luckily, I’m a night owl, so I was probably watching Netflix when they rang.</p>
+
+
+
+<p class="wp-block-paragraph">All these small — and sometimes large — issues add up to significant Layer 8 management overhead for the operator (in this case, me). Especially when something critical is going on in your life, the last thing you want to do is remotely log into your provider’s DFZ-facing edge routers to troubleshoot a misconfigured BGP policy. This is in stark contrast to the experience of a typical residential broadband user, who can outsource all that work to the ISP.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-conclusion">Conclusion</h2>
+
+
+
+<p class="wp-block-paragraph">Regardless of potential issues, having this unique setup helped me gain valuable insights from a Layer 8 perspective, particularly when dealing with my sponsoring providers, their upstreams, third parties from global network providers, and so on. This is the kind of knowledge that no network vendor certification programme can teach you — specifically, the unpredictable and complex human dynamics involved. From negotiation strategies in a barter system to building enough trust to gain super-admin access to networks worldwide, it’s a different kind of skill. In some cases, you’re trusted to the point where stakeholders forgo a formal legal contract, relying purely on trust and mutual understanding.</p>
+
+
+
+<p class="wp-block-paragraph">Still, nothing ‘free’ lasts forever, so my general advice would be to make the most of it while you can. For example, in my BLR setup, the provider went through an organisational restructure, I lost my point of contact (PoC). Soon after, my transit and transport service were discontinued. However, I was fortunate to have had a solid three-plus years of service before that happened! It also forged a friendship between the PoC and myself — which started as a phone call about <a href="https://datatracker.ietf.org/doc/html/rfc4638" target="_blank" rel="noreferrer noopener">RFC4638</a> on their residential broadband services when I first landed in BLR back in 2021.</p>
+
+
+
+<p class="wp-block-paragraph">All things considered, if you’re as passionate about network engineering as I am and believe the trade-offs discussed are worth it, then this unique Internet experience is something worth taking if you have the opportunity.</p>
+
+
+
+<p class="wp-block-paragraph">Thanks to owning my own IPv6 Provider-independent Address (PIA) space, nothing beats the feeling of being able to configure IPv6 SLAAC with an ‘infinity’ preferred and valid lifetime timer on my home LAN. Being both a network engineer and an end-user offers a truly rewarding perspective that I encourage you to pursue!</p>

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daryllswer.com/schemas/archive-manifest.schema.json",
+  "type": "object",
+  "required": ["generated_at", "source_site", "post_count", "posts"],
+  "properties": {
+    "generated_at": {"type": "string"},
+    "source_site": {"type": "string"},
+    "post_count": {"type": "integer"},
+    "posts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "slug", "title", "canonical_url", "bundle_path", "published", "modified"],
+        "properties": {
+          "id": {"type": "integer"},
+          "slug": {"type": "string"},
+          "title": {"type": "string"},
+          "canonical_url": {"type": "string"},
+          "bundle_path": {"type": "string"},
+          "published": {"type": "string"},
+          "modified": {"type": "string"},
+          "featured_image": {"type": ["string", "null"]},
+          "validation_status": {"type": "string"}
+        }
+      }
+    },
+    "sheets": {"type": "array"}
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "assets": [
+    {
+      "alt": "",
+      "bytes": 16765,
+      "caption": "",
+      "detection_method": "rest_embedded_wp_featuredmedia",
+      "height": 280,
+      "local_path": "content/posts/2022-07-01-how-did-i-set-up-my-own-autonomous-system/assets/featured.png",
+      "mime_type": "image/png",
+      "role": "featured",
+      "sha256": "33beb427eb42adf3a072916c599b12a83f9a4df6db511a885c10c3db4e7a05d3",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png",
+      "width": 768
+    },
+    {
+      "alt": null,
+      "bytes": 118391,
+      "caption": "Figure-1 (AS-SET of AS 210777 in IRR.)",
+      "detection_method": null,
+      "height": 932,
+      "local_path": "content/posts/2022-07-01-how-did-i-set-up-my-own-autonomous-system/assets/inline/Figure-1-AS-SET.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "4925ec090c6577698a07bbc4f1238366c89e79a0470d4241577070f8e8d5f5a5",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET.png",
+      "width": 1920
+    },
+    {
+      "alt": null,
+      "bytes": 99579,
+      "caption": "Figure-2 (The geoloc object and geofeed URL on IRR.)",
+      "detection_method": null,
+      "height": 688,
+      "local_path": "content/posts/2022-07-01-how-did-i-set-up-my-own-autonomous-system/assets/inline/image-1.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "6425e29fec1df51b9c7156c6cc06dcfb58747ad48f50ac82dd3593b8e00a14dc",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image-1.png",
+      "width": 878
+    },
+    {
+      "alt": null,
+      "bytes": 249512,
+      "caption": "Figure-3 (Network Topology)",
+      "detection_method": null,
+      "height": 1460,
+      "local_path": "content/posts/2022-07-01-how-did-i-set-up-my-own-autonomous-system/assets/inline/Figure-3-Network-Topology.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "7e0e18a4194a9521afe39b79a091715a42074b4e91a4740f43dfbedb5572e807",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology.png",
+      "width": 2720
+    },
+    {
+      "alt": null,
+      "bytes": 17043,
+      "caption": "Figure-4 (SCTP Traffic Snippet)",
+      "detection_method": null,
+      "height": 75,
+      "local_path": "content/posts/2022-07-01-how-did-i-set-up-my-own-autonomous-system/assets/inline/Figure-4-SCTP-Traffic-Snippet.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "7428a57c3a6153da7a71b484faeae35d9d2768b3eb0e1873f0b040670c830e83",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/04/Figure-4-SCTP-Traffic-Snippet.png",
+      "width": 1313
+    },
+    {
+      "alt": null,
+      "bytes": 137608,
+      "caption": "Figure-5 (Route type anycast is not implemented in Linux.)",
+      "detection_method": null,
+      "height": 194,
+      "local_path": "content/posts/2022-07-01-how-did-i-set-up-my-own-autonomous-system/assets/inline/image.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "567d4f53de6b2cb83587aba6637e1bc8ae78c57877ee551b4557b740face1bbe",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/04/image.png",
+      "width": 1070
+    },
+    {
+      "alt": null,
+      "bytes": 342548,
+      "caption": "Figure-6 (BGPlay showing AS29075 still advertising old routes of AS210777.)",
+      "detection_method": null,
+      "height": 1572,
+      "local_path": "content/posts/2022-07-01-how-did-i-set-up-my-own-autonomous-system/assets/inline/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "d83206269bd6d51d303e7e02196d1252b6f0eb6f591ad3042f26ce4d72c29204",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png",
+      "width": 1920
+    }
+  ],
+  "generated_at": "2026-07-06T09:28:35+00:00",
+  "post_id": 970,
+  "post_slug": "how-did-i-set-up-my-own-autonomous-system"
+}

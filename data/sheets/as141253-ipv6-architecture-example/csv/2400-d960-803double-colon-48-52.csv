@@ -1,0 +1,17 @@
+Prefix,Device Row Type,Notes
+2400:d960:803::/52,For Edge devices,"Sliced directly into /64s, use in any order for each row of device"
+2400:d960:803:1000::/52,For L3 Dist switches,"Sliced directly into /64s, use in any order for each row of device"
+2400:d960:803:2000::/52,For Transport Switches,"Sliced directly into /64s, use in any order for each row of device"
+2400:d960:803:3000::/52,For Future NAT/QoE (three tier architecture) devices,"Sliced directly into /64s, use in any order for each row of device"
+2400:d960:803:4000::/52,For BNGs,"Sliced directly into /64s, use in any order for each row of device"
+2400:d960:803:5000::/52,For Future dedicated P routers,"Sliced directly into /64s, use in any order for each row of device"
+2400:d960:803:6000::/52,For Future dedicated PE routers,"Sliced directly into /64s, use in any order for each row of device"
+2400:d960:803:7000::/52,For OLTs,"Sliced directly into /64s, use in any order for each row of device"
+2400:d960:803:8000::/52,For Wireless AP/Radio,"Sliced directly into /64s, use in any order for each row of device"
+2400:d960:803:9000::/52,Reserved,
+2400:d960:803:a000::/52,Reserved,
+2400:d960:803:b000::/52,Reserved,
+2400:d960:803:c000::/52,Reserved,
+2400:d960:803:d000::/52,Reserved,
+2400:d960:803:e000::/52,Reserved,
+2400:d960:803:f000::/52,Reserved,

@@ -1,0 +1,2075 @@
+<html lang="en-GB">
+
+<head>
+	<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="template" content="Author 1.57">
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v27.7 (Yoast SEO v27.9) - https://yoast.com/product/yoast-seo-premium-wordpress/ -->
+	<title>Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)] – Daryll Swer</title>
+	<meta name="description" content="An article on deploying Multi-WAN Load Balancing setup with failover using RouterOS">
+	<link rel="canonical" href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/">
+	<meta property="og:locale" content="en_GB">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)] – Daryll Swer">
+	<meta property="og:description" content="An article on deploying Multi-WAN Load Balancing setup with failover using RouterOS">
+	<meta property="og:url" content="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/">
+	<meta property="og:site_name" content="Daryll Swer">
+	<meta property="article:published_time" content="2021-03-29T15:04:19+00:00">
+	<meta property="article:modified_time" content="2025-05-20T20:17:29+00:00">
+	<meta property="og:image" content="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png">
+	<meta property="og:image:width" content="1166">
+	<meta property="og:image:height" content="232">
+	<meta property="og:image:type" content="image/png">
+	<meta name="author" content="Daryll Swer">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:creator" content="@DaryllSwer">
+	<meta name="twitter:site" content="@DaryllSwer">
+	<meta name="twitter:label1" content="Written by">
+	<meta name="twitter:data1" content="Daryll Swer">
+	<meta name="twitter:label2" content="Estimated reading time">
+	<meta name="twitter:data2" content="4 minutes">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https:\/\/schema.org","@graph":[{"@type":"TechArticle","@id":"https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/#article","isPartOf":{"@id":"https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/"},"author":{"name":"Daryll Swer","@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"headline":"Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]","datePublished":"2021-03-29T15:04:19+00:00","dateModified":"2025-05-20T20:17:29+00:00","mainEntityOfPage":{"@id":"https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/"},"wordCount":829,"commentCount":46,"publisher":{"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"image":{"@id":"https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/#primaryimage"},"thumbnailUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2021\/09\/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png","keywords":["Bandwidth","Bandwidth Aggregation","Load Balancing","MikroTik","Multi-WAN","Networking","RouterOS"],"articleSection":["Networking"],"inLanguage":"en-GB","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/#respond"]}]},{"@type":"WebPage","@id":"https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/","url":"https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/","name":"Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)] &#8211; Daryll Swer","isPartOf":{"@id":"https:\/\/www.daryllswer.com\/#website"},"primaryImageOfPage":{"@id":"https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/#primaryimage"},"image":{"@id":"https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/#primaryimage"},"thumbnailUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2021\/09\/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png","datePublished":"2021-03-29T15:04:19+00:00","dateModified":"2025-05-20T20:17:29+00:00","description":"An article on deploying Multi-WAN Load Balancing setup with failover using RouterOS","breadcrumb":{"@id":"https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/#breadcrumb"},"inLanguage":"en-GB","potentialAction":[{"@type":"ReadAction","target":["https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/"]}]},{"@type":"ImageObject","inLanguage":"en-GB","@id":"https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/#primaryimage","url":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2021\/09\/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png","contentUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2021\/09\/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png"},{"@type":"BreadcrumbList","@id":"https:\/\/www.daryllswer.com\/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros\/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https:\/\/www.daryllswer.com\/"},{"@type":"ListItem","position":2,"name":"Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]"}]},{"@type":"WebSite","@id":"https:\/\/www.daryllswer.com\/#website","url":"https:\/\/www.daryllswer.com\/","name":"Daryll Swer","description":"Networking Defined","publisher":{"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076"},"alternateName":"DS","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https:\/\/www.daryllswer.com\/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-GB"},{"@type":["Person","Organization"],"@id":"https:\/\/www.daryllswer.com\/#\/schema\/person\/ab15ea314c929fd9bc11d2072f0e8076","name":"Daryll Swer","image":{"@type":"ImageObject","inLanguage":"en-GB","@id":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","url":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","contentUrl":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg","width":512,"height":512,"caption":"Daryll Swer"},"logo":{"@id":"https:\/\/www.daryllswer.com\/wp-content\/uploads\/2023\/04\/cropped-Official-Photo.jpg"},"description":"Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794","sameAs":["https:\/\/www.daryllswer.com\/","https:\/\/www.linkedin.com\/in\/daryllswer\/","https:\/\/x.com\/DaryllSwer"],"honorificPrefix":"Mr","gender":"male","knowsAbout":["Network engineering","IPv6","BGP","SR-MPLS","VXLAN","EVPN","OOB"],"knowsLanguage":["English","Khasi"],"jobTitle":"Principal Consultant, Proprietor","worksFor":"Swer Networks","publishingPrinciples":"https:\/\/www.daryllswer.com\/about\/","ownershipFundingInfo":"https:\/\/www.daryllswer.com\/donation\/"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel="dns-prefetch" href="//cdn.visibilitykit.ai">
+<link rel="dns-prefetch" href="//www.googletagmanager.com">
+<link rel="dns-prefetch" href="//stats.wp.com">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » Feed" href="https://www.daryllswer.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » Comments Feed" href="https://www.daryllswer.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Daryll Swer » Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)] Comments Feed" href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/feed/">
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://www.daryllswer.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.daryllswer.com%2Fmulti-wan-setups-with-retail-isps-part-2-implementation-using-routeros%2F">
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://www.daryllswer.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.daryllswer.com%2Fmulti-wan-setups-with-retail-isps-part-2-implementation-using-routeros%2F&amp;format=xml">
+
+<link data-optimized="2" rel="stylesheet" href="https://www.daryllswer.com/wp-content/litespeed/css/c637e1efc43b97a4334d53682889aaa2.css?ver=f1577">
+
+
+
+
+
+
+<style id="wp-block-image-inline-css">
+.wp-block-image>a,.wp-block-image>figure>a{display:inline-block}.wp-block-image img{box-sizing:border-box;height:auto;max-width:100%;vertical-align:bottom}@media not (prefers-reduced-motion){.wp-block-image img.hide{visibility:hidden}.wp-block-image img.show{animation:show-content-image .4s}}.wp-block-image[style*=border-radius] img,.wp-block-image[style*=border-radius]>a{border-radius:inherit}.wp-block-image.has-custom-border img{box-sizing:border-box}.wp-block-image.aligncenter{text-align:center}.wp-block-image.alignfull>a,.wp-block-image.alignwide>a{width:100%}.wp-block-image.alignfull img,.wp-block-image.alignwide img{height:auto;width:100%}.wp-block-image .aligncenter,.wp-block-image .alignleft,.wp-block-image .alignright,.wp-block-image.aligncenter,.wp-block-image.alignleft,.wp-block-image.alignright{display:table}.wp-block-image .aligncenter>figcaption,.wp-block-image .alignleft>figcaption,.wp-block-image .alignright>figcaption,.wp-block-image.aligncenter>figcaption,.wp-block-image.alignleft>figcaption,.wp-block-image.alignright>figcaption{caption-side:bottom;display:table-caption}.wp-block-image .alignleft{float:left;margin:.5em 1em .5em 0}.wp-block-image .alignright{float:right;margin:.5em 0 .5em 1em}.wp-block-image .aligncenter{margin-left:auto;margin-right:auto}.wp-block-image :where(figcaption){margin-bottom:1em;margin-top:.5em}.wp-block-image.is-style-circle-mask img{border-radius:9999px}@supports ((-webkit-mask-image:none) or (mask-image:none)) or (-webkit-mask-image:none){.wp-block-image.is-style-circle-mask img{border-radius:0;-webkit-mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-mode:alpha;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain}}:root :where(.wp-block-image.is-style-rounded img,.wp-block-image .is-style-rounded img){border-radius:9999px}.wp-block-image figure{margin:0}.wp-lightbox-container{display:flex;flex-direction:column;position:relative}.wp-lightbox-container img{cursor:zoom-in}.wp-lightbox-container img:hover+button{opacity:1}.wp-lightbox-container button{align-items:center;backdrop-filter:blur(16px) saturate(180%);background-color:#5a5a5a40;border:none;border-radius:4px;cursor:zoom-in;display:flex;height:20px;justify-content:center;opacity:0;padding:0;position:absolute;right:16px;text-align:center;top:16px;width:20px;z-index:100}@media not (prefers-reduced-motion){.wp-lightbox-container button{transition:opacity .2s ease}}.wp-lightbox-container button:focus-visible{outline:3px auto #5a5a5a40;outline:3px auto -webkit-focus-ring-color;outline-offset:3px}.wp-lightbox-container button:hover{cursor:pointer;opacity:1}.wp-lightbox-container button:focus{opacity:1}.wp-lightbox-container button:focus,.wp-lightbox-container button:hover,.wp-lightbox-container button:not(:hover):not(:active):not(.has-background){background-color:#5a5a5a40;border:none}.wp-lightbox-overlay{box-sizing:border-box;cursor:zoom-out;height:100vh;left:0;overflow:hidden;position:fixed;top:0;visibility:hidden;width:100%;z-index:100000}.wp-lightbox-overlay .wp-lightbox-close-button{align-items:center;cursor:pointer;display:flex;font-family:inherit;gap:8px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 4px;position:absolute;right:calc(env(safe-area-inset-right) + 16px);top:calc(env(safe-area-inset-top) + 16px);z-index:5000000}.wp-lightbox-overlay .wp-lightbox-close-button:focus,.wp-lightbox-overlay .wp-lightbox-close-button:hover,.wp-lightbox-overlay .wp-lightbox-close-button:not(:hover):not(:active):not(.has-background){background:none;border:none}.wp-lightbox-overlay .wp-lightbox-close-button:has(.wp-lightbox-close-text:not([hidden])) .wp-lightbox-close-icon svg{height:1em;width:1em}.wp-lightbox-overlay .wp-lightbox-close-icon svg{display:block}.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{align-items:center;bottom:16px;cursor:pointer;display:flex;font-family:inherit;gap:4px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 8px;position:absolute;z-index:2000002}.wp-lightbox-overlay .wp-lightbox-navigation-button-next[hidden],.wp-lightbox-overlay .wp-lightbox-navigation-button-prev[hidden]{display:none}@media (min-width:960px){.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{bottom:50%;transform:translateY(-50%)}}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:not(:hover):not(:active):not(.has-background),.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:not(:hover):not(:active):not(.has-background){background:none;border:none;padding:0 8px}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg{display:block;height:1.5em;width:1.5em}.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{left:calc(env(safe-area-inset-left) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-button-next{right:calc(env(safe-area-inset-right) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-icon svg{vertical-align:middle}.wp-lightbox-overlay .lightbox-image-container{height:var(--wp--lightbox-container-height);left:50%;overflow:hidden;position:absolute;top:50%;transform:translate(-50%,-50%);transform-origin:top left;width:var(--wp--lightbox-container-width);z-index:2000001}.wp-lightbox-overlay .wp-block-image{align-items:center;box-sizing:border-box;display:flex;height:100%;justify-content:center;margin:0;position:relative;transform-origin:0 0;width:100%;z-index:3000000}.wp-lightbox-overlay .wp-block-image img{height:var(--wp--lightbox-image-height);min-height:var(--wp--lightbox-image-height);min-width:var(--wp--lightbox-image-width);width:var(--wp--lightbox-image-width)}.wp-lightbox-overlay .wp-block-image figcaption{display:none}.wp-lightbox-overlay button{background:none;border:none}.wp-lightbox-overlay .scrim{background-color:#fff;height:100%;opacity:.9;position:absolute;width:100%;z-index:2000000}.wp-lightbox-overlay.active{visibility:visible}@media not (prefers-reduced-motion){.wp-lightbox-overlay.active{animation:turn-on-visibility .25s both}.wp-lightbox-overlay.active img{animation:turn-on-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active){animation:turn-off-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active) img{animation:turn-off-visibility .25s both}.wp-lightbox-overlay.zoom.active{animation:none;opacity:1;visibility:visible}.wp-lightbox-overlay.zoom.active .lightbox-image-container{animation:lightbox-zoom-in .4s}.wp-lightbox-overlay.zoom.active .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.active .scrim{animation:turn-on-visibility .4s forwards}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active){animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container{animation:lightbox-zoom-out .4s}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .scrim{animation:turn-off-visibility .4s forwards}}@keyframes show-content-image{0%{visibility:hidden}99%{visibility:hidden}to{visibility:visible}}@keyframes turn-on-visibility{0%{opacity:0}to{opacity:1}}@keyframes turn-off-visibility{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes lightbox-zoom-in{0%{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale))}to{transform:translate(-50%,-50%) scale(1)}}@keyframes lightbox-zoom-out{0%{transform:translate(-50%,-50%) scale(1);visibility:visible}99%{visibility:visible}to{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale));visibility:hidden}}
+/*# sourceURL=https://www.daryllswer.com/wp-includes/blocks/image/style.min.css */
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script data-optimized="1" id="jetpack_related-posts-js-extra">var related_posts_js_options={"post_heading":"h4"}</script>
+<script data-optimized="1" id="jetpack_related-posts-js" src="https://www.daryllswer.com/wp-content/litespeed/js/60629040d2f510e5c7bdf76819bb22ad.js?ver=75fcb"></script>
+<script id="jquery-core-js" src="https://www.daryllswer.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
+<script data-optimized="1" id="jquery-migrate-js" src="https://www.daryllswer.com/wp-content/litespeed/js/a0480947b50373b63214f29230694166.js?ver=aaa43"></script>
+<script data-optimized="1" id="simple-banner-script-js-before">const simpleBannerScriptParams={"pro_version_enabled":"","debug_mode":"","id":115,"version":"3.3.0","banner_params":[{"hide_simple_banner":"no","simple_banner_prepend_element":"body","simple_banner_position":"fixed","header_margin":"","header_padding":"","wp_body_open_enabled":"","wp_body_open":!0,"simple_banner_z_index":"","simple_banner_text":"For professional services, <a href=\"https:\/\/www.swernetworks.com\/\">click here<\/a>.","disabled_on_current_page":!1,"disabled_pages_array":[],"is_current_page_a_post":!0,"disabled_on_posts":"","simple_banner_disabled_page_paths":"","simple_banner_font_size":"","simple_banner_color":"#242526","simple_banner_text_color":"#ffffff","simple_banner_link_color":"#ffa500","simple_banner_close_color":"#242526","simple_banner_custom_css":"","simple_banner_scrolling_custom_css":"","simple_banner_text_custom_css":"","simple_banner_button_css":"","site_custom_css":"","keep_site_custom_css":"","site_custom_js":"","keep_site_custom_js":"","close_button_enabled":"on","close_button_expiration":"0.006944","close_button_cookie_set":!1,"current_date":{"date":"2026-07-05 16:47:05.348377","timezone_type":3,"timezone":"UTC"},"start_date":{"date":"2026-07-05 16:47:05.348381","timezone_type":3,"timezone":"UTC"},"end_date":{"date":"2026-07-05 16:47:05.348384","timezone_type":3,"timezone":"UTC"},"simple_banner_start_after_date":"","simple_banner_remove_after_date":"","simple_banner_insert_inside_element":""}]}</script>
+<script data-optimized="1" id="simple-banner-script-js" src="https://www.daryllswer.com/wp-content/litespeed/js/cc310f2289e8048ba2a726edebe8b939.js?ver=c906a"></script>
+
+<!-- Google tag (gtag.js) snippet added by Site Kit -->
+<!-- Google Analytics snippet added by Site Kit -->
+<script id="google_gtagjs-js" src="https://www.googletagmanager.com/gtag/js?id=G-PQZ28ELT4T" async></script>
+<script id="google_gtagjs-js-after">
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
+gtag("set","linker",{"domains":["www.daryllswer.com"]});
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "G-PQZ28ELT4T", {"googlesitekit_post_type":"post","googlesitekit_post_categories":"Networking","googlesitekit_post_date":"20210329"});
+ window._googlesitekit = window._googlesitekit || {}; window._googlesitekit.throttledEvents = []; window._googlesitekit.gtagEvent = (name, data) => { var key = JSON.stringify( { name, data } ); if ( !! window._googlesitekit.throttledEvents[ key ] ) { return; } window._googlesitekit.throttledEvents[ key ] = true; setTimeout( () => { delete window._googlesitekit.throttledEvents[ key ]; }, 5 ); gtag( "event", name, { ...data, event_source: "site-kit" } ); }; 
+//# sourceURL=google_gtagjs-js-after
+</script>
+<link rel="https://api.w.org/" href="https://www.daryllswer.com/wp-json/"><link rel="alternate" title="JSON" type="application/json" href="https://www.daryllswer.com/wp-json/wp/v2/posts/115"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.daryllswer.com/xmlrpc.php?rsd">
+
+<link rel="shortlink" href="https://www.daryllswer.com/?p=115">
+<meta name="generator" content="Site Kit by Google 1.182.0"><style id="simple-banner-site-custom-css-dummy" type="text/css"></style><script id="simple-banner-site-custom-js-dummy" type="text/javascript"></script>	
+		<link rel="llms-sitemap" href="https://www.daryllswer.com/llms.txt">
+<link rel="icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-32x32.png" sizes="32x32">
+<link rel="icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-180x180.png">
+<meta name="msapplication-TileImage" content="https://www.daryllswer.com/wp-content/uploads/2026/01/cropped-01_DS_Favicon_Dark_Mode-270x270.png">
+
+
+
+
+</head>
+
+<body id="author" class="wp-singular post-template-default single single-post postid-115 single-format-standard wp-theme-author singular singular-post singular-post-115">
+			<a class="skip-content" href="#main">Skip to content</a>
+		<div id="overflow-container" class="overflow-container">
+			<div class="max-width">
+				<div id="main-sidebar" class="main-sidebar">
+																<header class="site-header" id="site-header" role="banner">
+							<div id="title-container" class="title-container">
+																	<div id="site-avatar" class="site-avatar" style="background-image: url('https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g')"></div>
+																<div class="container">
+									<div id="site-title" class="site-title"><a href="https://www.daryllswer.com">Daryll Swer</a></div>									<p class="tagline">Networking Defined</p>								</div>
+							</div>
+							<button id="toggle-navigation" class="toggle-navigation" aria-expanded="false">
+								<span class="screen-reader-text">open primary menu</span>
+								<i class="fas fa-bars"></i>
+							</button>
+							<div class="social-media-icons"><ul>						<li>
+							<a class="twitter" target="_blank" href="https://x.com/daryllswer">
+								<i class="fab fa-square-x-twitter"></i>
+								<span class="screen-reader-text">twitter</span>
+															</a>
+						</li>
+												<li>
+							<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/daryllswer/">
+								<i class="fab fa-linkedin"></i>
+								<span class="screen-reader-text">linkedin</span>
+															</a>
+						</li>
+												<li>
+							<a class="rss" target="_blank" href="http://daryllswer.com/feed/">
+								<i class="fas fa-rss"></i>
+								<span class="screen-reader-text">rss</span>
+															</a>
+						</li>
+												<li>
+							<a class="telegram" target="_blank" href="https://t.me/NetworkOpsCentral">
+								<i class="fab fa-telegram"></i>
+								<span class="screen-reader-text">telegram</span>
+															</a>
+						</li>
+						</ul></div>							<div id="menu-primary" class="menu-container menu-primary" role="navigation">
+	<nav class="menu"><ul id="menu-primary-items" class="menu-primary-items"><li id="menu-item-2228" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2228"><a href="https://www.daryllswer.com/about/">About</a></li>
+<li id="menu-item-2229" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2229"><a href="https://www.daryllswer.com/contact/">Contact</a></li>
+<li id="menu-item-2187" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2187"><a href="https://www.daryllswer.com/as149794/">AS149794</a></li>
+<li id="menu-item-2186" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2186"><a href="https://www.daryllswer.com/geofeed/">Geofeed</a></li>
+</ul></nav></div>						</header>
+																<aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+		<h1 class="screen-reader-text">Sidebar</h1>
+		<section id="block-8" class="widget widget_block widget_search"><form role="search" method="get" action="https://www.daryllswer.com/" class="wp-block-search__button-outside wp-block-search__icon-button wp-block-search"><label class="wp-block-search__label screen-reader-text" for="wp-block-search__input-1">Search</label><div class="wp-block-search__inside-wrapper"><input class="wp-block-search__input" id="wp-block-search__input-1" placeholder="Search" value="" type="search" name="s" required><button aria-label="Search" class="wp-block-search__button has-background has-icon wp-element-button" type="submit" style="background-color: #c9c9c9"><svg class="search-icon" viewbox="0 0 24 24" width="24" height="24">
+					<path d="M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"></path>
+				</svg></button></div></form></section><section id="block-34" class="widget widget_block">	<div class="wp-block-jetpack-subscriptions__supports-newline wp-block-jetpack-subscriptions__use-newline is-style-split wp-block-jetpack-subscriptions">
+		<div class="wp-block-jetpack-subscriptions__container is-not-subscriber">
+							<form action="https://wordpress.com/email-subscriptions" method="post" accept-charset="utf-8" data-blog="191168008" data-post_access_level="everybody" data-subscriber_email="" id="subscribe-blog">
+					<div class="wp-block-jetpack-subscriptions__form-elements">
+												<p id="subscribe-email">
+							<label id="subscribe-field-label" for="subscribe-field" class="screen-reader-text">
+								Type your email…							</label>
+							<input required="required" type="email" name="email" autocomplete="email" class="no-border-radius has-12px-font-size " style="font-size: 12px;padding: 15px 23px 15px 23px;border-radius: 0px;border-width: 0px;" placeholder="Type your email…" value="" id="subscribe-field" title="Please fill in this field.">						</p>
+												<p id="subscribe-submit" style="width: 100%;max-width: 100%;">
+							<input type="hidden" name="action" value="subscribe">
+							<input type="hidden" name="blog_id" value="191168008">
+							<input type="hidden" name="source" value="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/">
+							<input type="hidden" name="sub-type" value="subscribe-block">
+							<input type="hidden" name="app_source" value="">
+							<input type="hidden" name="redirect_fragment" value="subscribe-blog">
+							<input type="hidden" name="lang" value="en_GB">
+							<input type="hidden" id="_wpnonce" name="_wpnonce" value="9b483a7a13"><input type="hidden" name="_wp_http_referer" value="/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/"><input type="hidden" name="post_id" value="115">							<button type="submit" class="wp-block-button__link no-border-radius has-12px-font-size has-text-color has-black-color" style="background: #c9c9c9;width: 100%;font-size: 12px;padding: 15px 23px 15px 23px;margin-top: 10px;border-radius: 0px;border-width: 0px;" name="jetpack_subscriptions_widget">
+								Subscribe							</button>
+						</p>
+					</div>
+				</form>
+								</div>
+	</div>
+	</section><section id="block-14" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-copyright">Copyright</h2>
+
+
+
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="http://daryllswer.com/">Daryll Swer and daryllswer.com</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="http://daryllswer.com/about/">Daryll Swer</a> is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img decoding="async" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
+</div></div>
+</section><section id="block-37" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-disclaimer">Disclaimer</h2>
+
+
+
+<p class="wp-block-paragraph">This is my personal site, all content, and media found here are not affiliated with any organisation or my employer but myself. All content is my own unless otherwise specified.</p>
+</div></div>
+</section><section id="block-20" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-recent-posts">Recent Posts</h2>
+
+
+<ul class="wp-block-latest-posts__list has-dates wp-block-latest-posts"><li><a class="wp-block-latest-posts__post-title" href="https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/">BGP Router ID Structuring in IPv6 Native Networks</a><time datetime="2026-06-04T14:36:35+05:30" class="wp-block-latest-posts__post-date">4 June 2026</time></li>
+<li><a class="wp-block-latest-posts__post-title" href="https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/">How to bring data centre-like connectivity to your home with IPTTTH</a><time datetime="2025-05-26T08:30:00+05:30" class="wp-block-latest-posts__post-date">26 May 2025</time></li>
+</ul></div></div>
+</section><section id="block-24" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-categories">Categories</h2>
+
+
+<ul class="wp-block-categories-list wp-block-categories-taxonomy-category wp-block-categories">	<li class="cat-item cat-item-3"><a href="https://www.daryllswer.com/category/networking/">Networking</a> (18)
+<ul class="children">
+	<li class="cat-item cat-item-4"><a href="https://www.daryllswer.com/category/networking/architecture/">Architecture</a> (3)
+</li>
+	<li class="cat-item cat-item-5"><a href="https://www.daryllswer.com/category/networking/dc-enterprise/">DC/Enterprise</a> (2)
+</li>
+	<li class="cat-item cat-item-58"><a href="https://www.daryllswer.com/category/networking/home-networking/">Home Networking</a> (1)
+</li>
+	<li class="cat-item cat-item-6"><a href="https://www.daryllswer.com/category/networking/isp-networking/">ISP</a> (6)
+</li>
+	<li class="cat-item cat-item-7"><a href="https://www.daryllswer.com/category/networking/ixp-networking/">IXP</a> (1)
+</li>
+	<li class="cat-item cat-item-55"><a href="https://www.daryllswer.com/category/networking/linux/">Linux</a> (2)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-45"><a href="https://www.daryllswer.com/category/non-tech/">Non-Tech</a> (1)
+<ul class="children">
+	<li class="cat-item cat-item-46"><a href="https://www.daryllswer.com/category/non-tech/khasi-ethnicity/">Khasi Ethnicity</a> (1)
+</li>
+</ul>
+</li>
+</ul></div></div>
+</section><section id="block-29" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-archives">Archives</h2>
+
+
+<ul class="wp-block-archives-list wp-block-archives">	<li><a href="https://www.daryllswer.com/2026/06/">June 2026</a></li>
+	<li><a href="https://www.daryllswer.com/2025/05/">May 2025</a></li>
+	<li><a href="https://www.daryllswer.com/2025/04/">April 2025</a></li>
+	<li><a href="https://www.daryllswer.com/2024/11/">November 2024</a></li>
+	<li><a href="https://www.daryllswer.com/2024/01/">January 2024</a></li>
+	<li><a href="https://www.daryllswer.com/2023/09/">September 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/08/">August 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/05/">May 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/04/">April 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2023/03/">March 2023</a></li>
+	<li><a href="https://www.daryllswer.com/2022/12/">December 2022</a></li>
+	<li><a href="https://www.daryllswer.com/2022/07/">July 2022</a></li>
+	<li><a href="https://www.daryllswer.com/2021/08/">August 2021</a></li>
+	<li><a href="https://www.daryllswer.com/2021/06/">June 2021</a></li>
+	<li><a href="https://www.daryllswer.com/2021/03/">March 2021</a></li>
+</ul></div></div>
+</section><section id="block-32" class="widget widget_block">
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+<h2 class="wp-block-heading" id="h-tags">Tags</h2>
+
+
+<p class="is-style-default wp-block-tag-cloud"><a href="https://www.daryllswer.com/tag/architecture/" class="tag-cloud-link tag-link-8 tag-link-position-1" style="font-size: 8pt;" aria-label="Architecture (1 item)">Architecture<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/as/" class="tag-cloud-link tag-link-9 tag-link-position-2" style="font-size: 8pt;" aria-label="AS (1 item)">AS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/asn/" class="tag-cloud-link tag-link-10 tag-link-position-3" style="font-size: 8pt;" aria-label="ASN (1 item)">ASN<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/autonomous-system/" class="tag-cloud-link tag-link-11 tag-link-position-4" style="font-size: 8pt;" aria-label="Autonomous System (1 item)">Autonomous System<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/bandwidth/" class="tag-cloud-link tag-link-12 tag-link-position-5" style="font-size: 10.863636363636pt;" aria-label="Bandwidth (2 items)">Bandwidth<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/bandwidth-aggregation/" class="tag-cloud-link tag-link-13 tag-link-position-6" style="font-size: 10.863636363636pt;" aria-label="Bandwidth Aggregation (2 items)">Bandwidth Aggregation<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/bgp/" class="tag-cloud-link tag-link-14 tag-link-position-7" style="font-size: 14.363636363636pt;" aria-label="BGP (4 items)">BGP<span class="tag-link-count"> (4)</span></a>
+<a href="https://www.daryllswer.com/tag/bng/" class="tag-cloud-link tag-link-15 tag-link-position-8" style="font-size: 8pt;" aria-label="BNG (1 item)">BNG<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/cgnat/" class="tag-cloud-link tag-link-16 tag-link-position-9" style="font-size: 12.772727272727pt;" aria-label="CGNAT (3 items)">CGNAT<span class="tag-link-count"> (3)</span></a>
+<a href="https://www.daryllswer.com/tag/core/" class="tag-cloud-link tag-link-17 tag-link-position-10" style="font-size: 8pt;" aria-label="Core (1 item)">Core<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/docker/" class="tag-cloud-link tag-link-61 tag-link-position-11" style="font-size: 8pt;" aria-label="Docker (1 item)">Docker<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/double-nat/" class="tag-cloud-link tag-link-18 tag-link-position-12" style="font-size: 12.772727272727pt;" aria-label="Double NAT (3 items)">Double NAT<span class="tag-link-count"> (3)</span></a>
+<a href="https://www.daryllswer.com/tag/edge/" class="tag-cloud-link tag-link-19 tag-link-position-13" style="font-size: 8pt;" aria-label="Edge (1 item)">Edge<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/geofeed/" class="tag-cloud-link tag-link-20 tag-link-position-14" style="font-size: 8pt;" aria-label="Geofeed (1 item)">Geofeed<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/geoip/" class="tag-cloud-link tag-link-21 tag-link-position-15" style="font-size: 8pt;" aria-label="GeoIP (1 item)">GeoIP<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ip-geolocation/" class="tag-cloud-link tag-link-22 tag-link-position-16" style="font-size: 8pt;" aria-label="IP Geolocation (1 item)">IP Geolocation<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ip-planning/" class="tag-cloud-link tag-link-23 tag-link-position-17" style="font-size: 8pt;" aria-label="IP Planning (1 item)">IP Planning<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/iptables/" class="tag-cloud-link tag-link-57 tag-link-position-18" style="font-size: 8pt;" aria-label="iptables (1 item)">iptables<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/ipv4/" class="tag-cloud-link tag-link-24 tag-link-position-19" style="font-size: 14.363636363636pt;" aria-label="IPv4 (4 items)">IPv4<span class="tag-link-count"> (4)</span></a>
+<a href="https://www.daryllswer.com/tag/ipv6/" class="tag-cloud-link tag-link-25 tag-link-position-20" style="font-size: 19.772727272727pt;" aria-label="IPv6 (10 items)">IPv6<span class="tag-link-count"> (10)</span></a>
+<a href="https://www.daryllswer.com/tag/isps/" class="tag-cloud-link tag-link-26 tag-link-position-21" style="font-size: 17.545454545455pt;" aria-label="ISPs (7 items)">ISPs<span class="tag-link-count"> (7)</span></a>
+<a href="https://www.daryllswer.com/tag/ixps/" class="tag-cloud-link tag-link-27 tag-link-position-22" style="font-size: 8pt;" aria-label="IXPs (1 item)">IXPs<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/juniper/" class="tag-cloud-link tag-link-28 tag-link-position-23" style="font-size: 8pt;" aria-label="Juniper (1 item)">Juniper<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/junos/" class="tag-cloud-link tag-link-29 tag-link-position-24" style="font-size: 8pt;" aria-label="JunOS (1 item)">JunOS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/khasi/" class="tag-cloud-link tag-link-47 tag-link-position-25" style="font-size: 8pt;" aria-label="Khasi (1 item)">Khasi<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/linux/" class="tag-cloud-link tag-link-56 tag-link-position-26" style="font-size: 8pt;" aria-label="Linux (1 item)">Linux<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/load-balancing/" class="tag-cloud-link tag-link-30 tag-link-position-27" style="font-size: 10.863636363636pt;" aria-label="Load Balancing (2 items)">Load Balancing<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/management-plane/" class="tag-cloud-link tag-link-54 tag-link-position-28" style="font-size: 8pt;" aria-label="Management Plane (1 item)">Management Plane<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/mikrotik/" class="tag-cloud-link tag-link-31 tag-link-position-29" style="font-size: 10.863636363636pt;" aria-label="MikroTik (2 items)">MikroTik<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/mpls/" class="tag-cloud-link tag-link-59 tag-link-position-30" style="font-size: 8pt;" aria-label="MPLS (1 item)">MPLS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/multi-wan/" class="tag-cloud-link tag-link-32 tag-link-position-31" style="font-size: 10.863636363636pt;" aria-label="Multi-WAN (2 items)">Multi-WAN<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/nat/" class="tag-cloud-link tag-link-33 tag-link-position-32" style="font-size: 10.863636363636pt;" aria-label="NAT (2 items)">NAT<span class="tag-link-count"> (2)</span></a>
+<a href="https://www.daryllswer.com/tag/networking/" class="tag-cloud-link tag-link-34 tag-link-position-33" style="font-size: 22pt;" aria-label="Networking (14 items)">Networking<span class="tag-link-count"> (14)</span></a>
+<a href="https://www.daryllswer.com/tag/non-tech/" class="tag-cloud-link tag-link-51 tag-link-position-34" style="font-size: 8pt;" aria-label="Non-Tech (1 item)">Non-Tech<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/oob/" class="tag-cloud-link tag-link-53 tag-link-position-35" style="font-size: 8pt;" aria-label="OOB (1 item)">OOB<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/planning/" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 8pt;" aria-label="Planning (1 item)">Planning<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/rfc4638/" class="tag-cloud-link tag-link-36 tag-link-position-37" style="font-size: 8pt;" aria-label="RFC4638 (1 item)">RFC4638<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/rfc8805/" class="tag-cloud-link tag-link-37 tag-link-position-38" style="font-size: 8pt;" aria-label="RFC8805 (1 item)">RFC8805<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/routeros/" class="tag-cloud-link tag-link-38 tag-link-position-39" style="font-size: 8pt;" aria-label="RouterOS (1 item)">RouterOS<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/routing/" class="tag-cloud-link tag-link-52 tag-link-position-40" style="font-size: 8pt;" aria-label="Routing (1 item)">Routing<span class="tag-link-count"> (1)</span></a>
+<a href="https://www.daryllswer.com/tag/subnetting/" class="tag-cloud-link tag-link-39 tag-link-position-41" style="font-size: 8pt;" aria-label="Subnetting (1 item)">Subnetting<span class="tag-link-count"> (1)</span></a></p></div></div>
+</section>	</aside>
+									</div>
+								<section id="main" class="main" role="main">
+					<p id="breadcrumbs"><span><span><a href="https://www.daryllswer.com/">Home</a></span> » <span class="breadcrumb_last" aria-current="page">Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]</span></span></p>	<div id="loop-container" class="loop-container">
+		<div class="post-115 post type-post status-publish format-standard hentry category-networking tag-bandwidth tag-bandwidth-aggregation tag-load-balancing tag-mikrotik tag-multi-wan tag-networking tag-routeros ratio-natural entry">
+			<article>
+		<div class="post-header">
+			<h1 class="post-title">Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]</h1>
+			<span class="post-meta">
+	Published on <span class="date"><a href="https://www.daryllswer.com/2021/03/">29 March 2021</a></span></span>		</div>
+		<div class="post-content">
+						
+<div class="wp-block-group is-vertical is-layout-flex wp-container-core-group-is-layout-4fc3f8e1 wp-block-group-is-layout-flex">
+<h3 class="wp-block-heading"><a href="#please-note-it-is-very-unlikely-i-will-maintain-this-article-piece-even-though-the-underlying-concepts-and-principle-are-the-same-on-routeros-v7-if-you-are-still-facing-some-issues-or-confusion-i" aria-hidden="true" class="aal_anchor" id="please-note-it-is-very-unlikely-i-will-maintain-this-article-piece-even-though-the-underlying-concepts-and-principle-are-the-same-on-routeros-v7-if-you-are-still-facing-some-issues-or-confusion-i"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Please note, it is very unlikely I will maintain this article piece. Even though the underlying concepts and principle are the same on RouterOS v7, if you are still facing some issues or confusion, I would recommend you watch this <a href="https://youtu.be/nlb7XAv57tw" target="_blank" rel="noreferrer noopener">official video from MikroTik</a>.</h3>
+</div>
+
+
+
+<p class="wp-block-paragraph">In <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/" target="_blank" rel="noreferrer noopener">part one</a> of this series, I talked about the theoretical aspects, pros, and cons of a Multi-WAN setup. So now in part two, I will show how one can implement this setup in their network setup and this will be a lengthy article.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-requirements"><a href="#requirements" aria-hidden="true" class="aal_anchor" id="requirements"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Requirements</h2>
+
+
+
+<ul class="wp-block-list">
+<li>A router that is running either enterprise or open-source network OS.
+<ul class="wp-block-list">
+<li>Like RouterOS.</li>
+
+
+
+<li>Or like VyOS or pfSense for open-source.</li>
+</ul>
+</li>
+
+
+
+<li>More than one uplink to the same ISP or a different ISP.</li>
+
+
+
+<li>Minimum 1GbE on all your devices’ interfaces/ports.</li>
+
+
+
+<li>Bridging the ISP’s CPE device to ensure there is no double/triple/quadruple NAT situation.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading" id="h-implementation"><a href="#implementation" aria-hidden="true" class="aal_anchor" id="implementation"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Implementation</h2>
+
+
+
+<ul class="wp-block-list">
+<li>For this example, I will use RouterOS v6 stable.
+<ul class="wp-block-list">
+<li>Hardware: RB450Gx4.</li>
+
+
+
+<li>Only IPv4 config will be covered due to the lack of proper IPv6 support in RouterOS v6 stable at the time of this article, but it would essentially be the same thing.</li>
+
+
+
+<li>I will be using PCC and Nth together in order to achieve bandwidth aggregation.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Whatever is shown here using RouterOS can be replicated more or less on any other network OS like VyOS etc. Go through the vendor’s documentation if you are not on RouterOS.</p>
+
+
+
+<h3 class="wp-block-heading"><a href="#assumptions" aria-hidden="true" class="aal_anchor" id="assumptions"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Assumptions</h3>
+
+
+
+<ul class="wp-block-list">
+<li>I will assume you have already taken care of the basic configuration such as securing the router, firewalling, NATting etc.
+<ul class="wp-block-list">
+<li>Regarding <strong>NAT</strong>, use <strong><em>masquerade </em></strong>instead of src NAT, the reason being it <a href="https://help.mikrotik.com/docs/display/ROS/NAT#NAT-Masquerade" target="_blank" rel="noreferrer noopener">clears</a><strong> </strong>the conn_track table if an interface goes down and hence we can achieve sub 0ms failover effect.</li>
+</ul>
+</li>
+
+
+
+<li>I will assume you have some basic idea of computer networking and basic ideas on the routing.</li>
+
+
+
+<li>I will assume you have read MikroTik’s documentation on PCC, Nth, Mangle etc.</li>
+
+
+
+<li>Only two uplinks (relevant to the example here).</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Let us begin</p>
+
+
+
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-flow wp-block-group-is-layout-flow">
+<p class="wp-block-paragraph"><strong>Step 1</strong> we create two default routes for each uplink with distance attribute to enable the failover effect (meaning if one link goes down, the next immediate link will be used next)</p>
+
+
+
+<pre class="wp-block-code"><code>/ip route
+###ISP1 has lower distance and hence is the primary link###
+add check-gateway=ping comment="Default Route for ISP1" distance=1 gateway=pppoe-out1
+
+add check-gateway=ping comment="Default Route for ISP2" distance=2 gateway=pppoe-out2
+
+###If you have more than two uplinks, you simply increase the distance as required like this:
+add check-gateway=ping comment="Example Route for ISP3" distance=3 gateway=pppoe-out3###</code></pre>
+
+
+
+<p class="wp-block-paragraph"><strong>Step 2</strong>, we need to take care of <strong>MTU </strong>for the <strong>WAN </strong>interfaces, which is applicable to any networking device or OS in this world. If your uplink is using <strong>DHCP Client</strong>/<strong>Static IP address</strong>, then by default this is already taken care of with 1500 MTU.</p>
+
+
+
+<p class="wp-block-paragraph"><s>However, with <strong>PPPoE</strong>, this is not the case and on RouterOS, there are what a user calls “ghost bytes”. I will discuss PPPoE MTU in a future article, but for now, all that you need to do is set the underlying Ethernet interface’s actual MTU  to 1520 meaning the interface to which your uplink is connected.</s> As of <a href="https://forum.mikrotik.com/viewtopic.php?p=924589#p923904" target="_blank" rel="noreferrer noopener">RouterOS v7.2</a>, MikroTik <a href="https://web.archive.org/web/20220406203854/https://twitter.com/DaryllSwer/status/1511805609020366849" target="_blank" rel="noreferrer noopener">has fixed the ghost bytes</a>, so please set it to <strong>1508</strong> instead (note I did not bother to update the diagrams below).</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png"><img fetchpriority="high" decoding="async" width="1166" height="232" src="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png" alt="" class="wp-image-843" srcset="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png 1166w, https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces-768x153.png 768w" sizes="(max-width: 1166px) 100vw, 1166px"></a><figcaption class="wp-element-caption">Figure-1 (In this case, ether1 and ether2 are the underlying ethernet interfaces)</figcaption></figure>
+</div>
+
+
+<p class="wp-block-paragraph"><strong>Step 3</strong>, <strong>leave</strong> MTU, MRU, MRRU <strong>blank </strong>to enable auto-negotiation, RouterOS will <strong>automatically </strong>find the correct MTU value set by your ISP. Along with MRU.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2.png"><img decoding="async" width="1092" height="520" src="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2.png" alt="" class="wp-image-844" srcset="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2.png 1092w, https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-768x366.png 768w" sizes="(max-width: 1092px) 100vw, 1092px"></a><figcaption class="wp-element-caption">Figure-2 (PPPoE Client MTU Config)</figcaption></figure>
+</div>
+
+
+<p class="wp-block-paragraph"><strong>Step 4</strong>, now we get started with the multi-WAN rules that will enable load-balancing and bandwidth aggregation without breaking HTTP/HTTPS connections</p>
+
+
+
+<pre class="wp-block-code"><code>###Set Passthrough=no to reduce CPU usage for rules that do not need to be re-validated once they've been processed###
+###connection-mark=no-mark to prevent re-marking of already marked connections and hence waste CPU cycles###
+
+/ip firewall mangle
+###Incoming connections through ISP1 must leave through ISP1###
+add action=mark-connection chain=prerouting connection-mark=no-mark in-interface=pppoe-out1 new-connection-mark=ISP1_conn passthrough=no
+
+###Incoming connections through ISP2 must leave through ISP2###
+add action=mark-connection chain=prerouting connection-mark=no-mark in-interface=pppoe-out2 new-connection-mark=ISP2_conn passthrough=no
+
+###I am assuming a 50/50 split ratio between the two ISPs#
+
+###We are using dst-address-list=!not_in_internet &amp;&amp; dst-address-type=!local to prevent marking LAN-to-LAN traffic###
+
+###We can use PCC to handle HTTP/HTTPS traffic with "both-addresses" attribute to reduce chances of connections being marked more "randomly" which would break the connections as then connections would go through ISP1 and ISP2 more "randomly" and break. However in this case, I used "both-addresses-and-ports" based on my personal experience of traffic working just fine###
+
+###For old school HTTP/HTTPS traffic###
+###50% going to ISP1###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP1_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/0 protocol=tcp
+###50% going to ISP2###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP2_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/1 protocol=tcp
+
+###For new school HTTP3 traffic aka QUIC###
+###50% going to ISP1###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP1_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/0 protocol=udp
+###50% going to ISP2###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP2_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/1 protocol=udp
+
+###If you have a third uplink, then the split ratio would be 3/0, 3/1, 3/2###
+
+###Now we will use Nth for non HTTP/HTTPs traffic in order to acheieve bandwidth aggregation###
+
+###50% going to ISP1###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local in-interface-list=LAN new-connection-mark=ISP1_conn nth=2,1 passthrough=yes
+###50% going to ISP2###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local in-interface-list=LAN new-connection-mark=ISP2_conn nth=2,2 passthrough=yes
+
+###Now we will send the marked connections to their appropriate routing table###
+
+###For our marked/split traffic###
+add action=mark-routing chain=prerouting connection-mark=ISP1_conn in-interface-list=LAN new-routing-mark=to_ISP1 passthrough=no
+add action=mark-routing chain=prerouting connection-mark=ISP2_conn in-interface-list=LAN new-routing-mark=to_ISP2 passthrough=no
+
+###For the incoming traffic from WAN###
+add action=mark-routing chain=output connection-mark=ISP1_conn new-routing-mark=to_ISP1 out-interface=pppoe-out1 passthrough=no
+add action=mark-routing chain=output connection-mark=ISP2_conn new-routing-mark=to_ISP2 out-interface=pppoe-out2 passthrough=no
+
+###Now Finally we add the required routing tables###
+/ip route
+add check-gateway=ping comment="Load Balancing Route to ISP 1" distance=1 gateway=pppoe-out1 routing-mark=to_ISP1
+add check-gateway=ping comment="Load Balancing Route to ISP 2" distance=1 gateway=pppoe-out2 routing-mark=to_ISP2</code></pre>
+
+
+
+<p class="wp-block-paragraph">That’s it, you now have aggregated bandwidth capability, load balancing capability and HTTP/HTTPS stability using RouterOS.</p>
+
+
+
+<p class="wp-block-paragraph">For P2P networking (assuming all the uplinks have a public IP), you’d need to use a script like <a href="https://forum.mikrotik.com/viewtopic.php?f=9&amp;t=167773#p823917" target="_blank" rel="noreferrer noopener">this</a> for UPnP to work correctly (enable it on only one WAN interface and let the script handle the rest).</p>
+</div></div>
+
+
+
+<h2 class="wp-block-heading" id="h-bonus-material"><a href="#bonus-material" aria-hidden="true" class="aal_anchor" id="bonus-material"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bonus Material</h2>
+
+
+
+<ul class="wp-block-list">
+<li>Use <a href="https://tools.ietf.org/html/rfc6890" target="_blank" rel="noreferrer noopener">RFC 6890</a> to build the <strong><em>not_in_internet </em></strong>address list.</li>
+
+
+
+<li>RouterOS will automatically use the main routing table (default routes) should any uplink go down, so the “marked connections” will automatically be routed through whichever uplink is available even though for instance they are marked for ISP2, and ISP2 is down.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading" id="h-side-note"><a href="#side-note" aria-hidden="true" class="aal_anchor" id="side-note"><svg aria-hidden="true" class="aal_svg" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Side Note:</h3>
+
+
+
+<p class="wp-block-paragraph" style="font-size:14px">In <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/" target="_blank" rel="noreferrer noopener">part one</a>, you may have noticed the <a href="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png" target="_blank" rel="noreferrer noopener">upload speed</a> is lower than what I claimed, and below is the explanation for that.</p>
+
+
+
+<ul class="wp-block-list">
+<li>ISP1’s MTU = 1460, MRU = 1500</li>
+
+
+
+<li>ISP2’s MTU = 1500, MRU = 1500</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph" style="font-size:14px">The upload bandwidth never reached 300Mbps due to ISP1’s MTU of 1460 which resulted in packet fragmentation and hence affected throughput performance and was able to reach only an average of 170Mbps for upload. ISP2’s MTU is a straight 1500 and was able to reach its advertised speed, which I verified by looking at the link rate on the router itself. Since MRU for both links were 1500, download bandwidth was able to reach its advertised speed on both links.</p>
+
+
+
+<p class="wp-block-paragraph" style="font-size:14px">This is why MTU should be taken care of to prevent issues.</p>
+
+<div id="jp-relatedposts" class="jp-relatedposts">
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div>					</div>
+		<div class="post-categories"><span>Published in</span><a href="https://www.daryllswer.com/category/networking/" title="View all posts in Networking">Networking</a></div>		<div class="post-tags"><ul><li><a href="https://www.daryllswer.com/tag/bandwidth/" title="View all posts tagged Bandwidth">Bandwidth</a></li><li><a href="https://www.daryllswer.com/tag/bandwidth-aggregation/" title="View all posts tagged Bandwidth Aggregation">Bandwidth Aggregation</a></li><li><a href="https://www.daryllswer.com/tag/load-balancing/" title="View all posts tagged Load Balancing">Load Balancing</a></li><li><a href="https://www.daryllswer.com/tag/mikrotik/" title="View all posts tagged MikroTik">MikroTik</a></li><li><a href="https://www.daryllswer.com/tag/multi-wan/" title="View all posts tagged Multi-WAN">Multi-WAN</a></li><li><a href="https://www.daryllswer.com/tag/networking/" title="View all posts tagged Networking">Networking</a></li><li><a href="https://www.daryllswer.com/tag/routeros/" title="View all posts tagged RouterOS">RouterOS</a></li></ul></div>	</article>
+		<nav class="further-reading">
+	<div class="previous">
+		<span>Previous Post</span>
+		<a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/" rel="prev">Multi-WAN setups with retail ISPs (Part 1 – Theory)</a>	</div>
+	<div class="next">
+		<span>Next Post</span>
+		<a href="https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/" rel="next">Edge Router &amp; BNG Optimisation Guide for ISPs</a>	</div>
+</nav>		<section id="comments" class="comments">
+		<div class="comments-number">
+			<h2>
+				46 Comments			</h2>
+		</div>
+		<ol class="comment-list">
+					<li class="comment even thread-even depth-1" id="li-comment-10">
+		<article id="comment-10" class="comment">
+			<div class="comment-author">
+				<img alt="Ashish Wadekar" src="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" decoding="async">				<span class="author-name"><a href="http://gravatar.com/ashishwork" class="url" rel="ugc external nofollow">Ashish Wadekar</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Hi Daryll</p>
+<p>Thanks for sharing this. This is working great!</p>
+<p>I am a newbie to Mikrotik world &amp; not a networking guy.</p>
+<p>I had trouble with accessing my webserver from outside with an earlier config based on some guide. But your config solved this issue.</p>
+<p>Wanted your help on few things of you may please?</p>
+<p>1. I don’t have the not_in_internet_list setup &amp; have excluded it from Mangle rules. Still the config works. How can that be? Am I missing something here.(I can share my config with you if needed)</p>
+<p>2. What would be the hairpin NAT config so that LAN traffic can access webserver internally?</p>
+<p>3. I have set up dst-nat for port forwarding on one of the pppoe interface. Can I add the same for my other pppoe interface &amp; make it high availability for users accessing my services?</p>
+<p>Thanks in advance.</p>
+<p>Cheers,<br>
+Ashish</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-10">
+                            # <span class="comment-date">1 November 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-10" data-commentid="10" data-postid="115" data-belowelement="comment-10" data-respondelement="respond" data-replyto="Reply to Ashish Wadekar" aria-label="Reply to Ashish Wadekar">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-11">
+		<article id="comment-11" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>1. Without that list, LAN to LAN traffic would fail as the traffic would get routed to WAN instead.</p>
+<p>2. <a href="https://help.mikrotik.com/docs/display/ROS/NAT#NAT-HairpinNAT" rel="nofollow ugc">https://help.mikrotik.com/docs/display/ROS/NAT#NAT-HairpinNAT</a></p>
+<p>3. You can open it up for both WAN interfaces.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-11">
+                            # <span class="comment-date">1 November 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-11" data-commentid="11" data-postid="115" data-belowelement="comment-11" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1" id="li-comment-12">
+		<article id="comment-12" class="comment">
+			<div class="comment-author">
+				<img alt="Ashish Wadekar" src="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://gravatar.com/ashishwork" class="url" rel="ugc external nofollow">Ashish Wadekar</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Thanks for the response Daryll</p>
+<p>I have to convey that for the first time I was able to understand rules &amp; their working apart from the not_in_internet list.</p>
+<p>1. I am not able to understand which addresses should be in that list. Does !not_in_internet means in_internet based on plain logic? I have configured DHCP range on 10.10.10.0/24 for LAN interface(Ether-5) &amp; rest are the IP’s assigned by ISP which are handled in PPPOE dialling interfaces.</p>
+<p>2. Will setup Hairpin NAT based on the guide</p>
+<p>3. I have opened up the WAN interface and found out that my ISP is redirecting port 80 to their Mikrotik switch login page 😐 Have dropped them an email for correction. Will update on this once it is resolved from ISP’s end. One good thing is, I will now try to set MTU as 1520 on 1 ISP for Jumbo Frame support(based on your both articles as I now know about ISP’s hardware)</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-12">
+                            # <span class="comment-date">1 November 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-12" data-commentid="12" data-postid="115" data-belowelement="comment-12" data-respondelement="respond" data-replyto="Reply to Ashish Wadekar" aria-label="Reply to Ashish Wadekar">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-13">
+		<article id="comment-13" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>1. ALL the subnets from RFC6890 should be added to the list.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-13">
+                            # <span class="comment-date">1 November 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-13" data-commentid="13" data-postid="115" data-belowelement="comment-13" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="li-comment-14">
+		<article id="comment-14" class="comment">
+			<div class="comment-author">
+				<img alt="Ashish Wadekar" src="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://gravatar.com/ashishwork" class="url" rel="ugc external nofollow">Ashish Wadekar</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Thanks for the info Daryll. Added the list. Not sure how to test. But looks good, IMHO.</p>
+<p>I have a strange observation with MTU. Whatever MTU I set 1480, 1500, 1520 it reverts to 1500 / 1480 for one ISP &amp; other ISP’s PPPOE authentication fails if MTU is changed from 1480. Is it supposed to work this way?</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-14">
+                            # <span class="comment-date">1 November 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-14" data-commentid="14" data-postid="115" data-belowelement="comment-14" data-respondelement="respond" data-replyto="Reply to Ashish Wadekar" aria-label="Reply to Ashish Wadekar">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-15">
+		<article id="comment-15" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Follow exactly what I did in the article. I clearly mentioned to not specify the MTU manually on the PPPoE interface.</p>
+<p>And even then your ONT needs to support jumbo frames.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-15">
+                            # <span class="comment-date">1 November 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-15" data-commentid="15" data-postid="115" data-belowelement="comment-15" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1" id="li-comment-16">
+		<article id="comment-16" class="comment">
+			<div class="comment-author">
+				<img alt="ชื่อ นามสกุล" src="https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">ชื่อ นามสกุล</span>
+			</div>
+			<div class="comment-content">
+								<p>guy I have zero knowledge of microtik. I set up configuration by your following instruction. And I still have a problem with some https: website(just some of them just like <a href="http://www.teenee.com" rel="nofollow ugc">http://www.teenee.com</a> Its long time loading) and some application such as LINE messenger(sometime can’t download picture and files).<br>
+please advice if you have any solution that can fix this issue<br>
+and can I use per-connection-classifier=srt-addresses for all classifier<br>
+I read from some article and it mention that it can be solve https problem right?</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-16">
+                            # <span class="comment-date">16 December 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-16" data-commentid="16" data-postid="115" data-belowelement="comment-16" data-respondelement="respond" data-replyto="Reply to ชื่อ นามสกุล" aria-label="Reply to ชื่อ นามสกุล">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-17">
+		<article id="comment-17" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Without seeing your configuration, I can’t tell what you did wrong.<br>
+Dump the config with:<br>
+/export file myconfig</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-17">
+                            # <span class="comment-date">16 December 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-17" data-commentid="17" data-postid="115" data-belowelement="comment-17" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="li-comment-18">
+		<article id="comment-18" class="comment">
+			<div class="comment-author">
+				<img alt="ชื่อ นามสกุล" src="https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">ชื่อ นามสกุล</span>
+			</div>
+			<div class="comment-content">
+								<p>thank you very much for your fast reply here is myconfig</p>
+<blockquote><p>
+# dec/16/2021 15:28:37 by RouterOS 6.47.10<br>
+# software id = ZS4S-B9IN<br>
+#<br>
+# model = RB4011iGS+<br>
+# serial number = F03A0F603BBD<br>
+/interface bridge<br>
+add name=bridge-lan<br>
+/interface ethernet<br>
+set [ find default-name=ether1 ] name=ether1-ais<br>
+set [ find default-name=ether2 ] name=ether2-cat<br>
+set [ find default-name=ether8 ] name=ether8-nas<br>
+set [ find default-name=ether9 ] name=ether9-nas<br>
+set [ find default-name=ether10 ] name=ether10-office<br>
+/interface ethernet switch port<br>
+set 0 default-vlan-id=0<br>
+set 1 default-vlan-id=0<br>
+set 2 default-vlan-id=0<br>
+set 3 default-vlan-id=0<br>
+set 4 default-vlan-id=0<br>
+set 5 default-vlan-id=0<br>
+set 6 default-vlan-id=0<br>
+set 7 default-vlan-id=0<br>
+set 8 default-vlan-id=0<br>
+set 9 default-vlan-id=0<br>
+set 10 default-vlan-id=0<br>
+set 11 default-vlan-id=0<br>
+/interface wireless security-profiles<br>
+set [ find default=yes ] supplicant-identity=MikroTik<br>
+/ip pool<br>
+add name=dhcp_pool0 ranges=10.10.2.200-10.10.2.250<br>
+/ip dhcp-server<br>
+add address-pool=dhcp_pool0 disabled=no interface=bridge-lan name=dhcp1<br>
+/ppp profile<br>
+add name=pppoe-profile-cat on-down=”:local removeRoute do={ \r\<br>
+    \n /ip route remove [find comment=\$wan]\r\<br>
+    \n}\r\<br>
+    \n\r\<br>
+    \n:local gw [/ip route print as-value where gateway=\$\”remote-address\”];\<br>
+    \r\<br>
+    \n:if ((\$gw-&gt;0-&gt;\”comment\”) != \”\”) do={\r\<br>
+    \n \$removeRoute wan=(\$gw-&gt;0-&gt;\”comment\”)\r\<br>
+    \n}” on-up=”:local createRoute do={\r\<br>
+    \n /log info message=\”Add route \$remoteAddress\”\r\<br>
+    \n /ip route add dst-address=\$dstAddress gateway=\$remoteAddress scope=10\<br>
+    \_target-scope=10  comment=(\$wan)\r\<br>
+    \n /ip route add dst-address=0.0.0.0/0 gateway=\$gateway scope=30 target-s\<br>
+    cope=10 distance=\$distance check-gateway=ping routing-mark=nrm-cat commen\<br>
+    t=(\$wan)\r\<br>
+    \n}\r\<br>
+    \n\r\<br>
+    \n:local wanArr {\r\<br>
+    \n {\r\<br>
+    \n  \”remoteAddress\”=\$\”remote-address\”;\r\<br>
+    \n  \”dstAddress\”=8.8.8.8/32;\r\<br>
+    \n  \”gateway\”=8.8.8.8;\r\<br>
+    \n  \”distance\”=2;\r\<br>
+    \n  \”wan\”=\”pppoe-out-cat\”\r\<br>
+    \n };\r\<br>
+    \n}\r\<br>
+    \n\r\<br>
+    \n:local intf1 [/interface get \$interface];\r\<br>
+    \n:foreach w in=\$wanArr do={\r\<br>
+    \n if ((\$w-&gt;\”wan\”) = (\$intf1-&gt;\”name\”)) do={\r\<br>
+    \n  \$createRoute remoteAddress=(\$w-&gt;\”remoteAddress\”) dstAddress=(\$w-&gt;\<br>
+    \”dstAddress\”) gateway=(\$w-&gt;\”gateway\”) distance=(\$w-&gt;\”distance\”) wa\<br>
+    n=(\$w-&gt;\”wan\”)\r\<br>
+    \n }\r\<br>
+    \n}”<br>
+/interface pppoe-client<br>
+add disabled=no interface=ether2-cat name=pppoe-out-cat password=71560 \<br>
+    profile=pppoe-profile-cat user=sdno06722554@home<br>
+/interface bridge port<br>
+add bridge=bridge-lan interface=ether8-nas<br>
+add bridge=bridge-lan interface=ether9-nas<br>
+add bridge=bridge-lan interface=ether10-office<br>
+/ip address<br>
+add address=10.10.2.99/8 interface=bridge-lan network=10.0.0.0<br>
+add address=192.168.1.2 interface=ether1-ais network=192.168.1.1<br>
+/ip cloud<br>
+set ddns-enabled=yes<br>
+/ip dhcp-server lease<br>
+add address=10.10.2.31 client-id=1:c4:2c:3:7:eb:98 mac-address=\<br>
+    C4:2C:03:07:EB:98 server=dhcp1<br>
+add address=10.10.2.5 client-id=1:f4:4d:30:64:eb:75 mac-address=\<br>
+    F4:4D:30:64:EB:75 server=dhcp1<br>
+add address=10.10.2.10 client-id=1:1c:69:7a:68:e0:d7 mac-address=\<br>
+    1C:69:7A:68:E0:D7 server=dhcp1<br>
+add address=10.10.2.12 client-id=1:f4:4d:30:64:e4:c9 mac-address=\<br>
+    F4:4D:30:64:E4:C9 server=dhcp1<br>
+add address=10.10.2.14 client-id=1:f0:79:59:8d:97:73 mac-address=\<br>
+    F0:79:59:8D:97:73 server=dhcp1<br>
+add address=10.10.2.3 client-id=1:f4:4d:30:64:e7:f9 mac-address=\<br>
+    F4:4D:30:64:E7:F9 server=dhcp1<br>
+add address=10.10.2.16 client-id=1:1c:87:2c:63:2d:5b mac-address=\<br>
+    1C:87:2C:63:2D:5B server=dhcp1<br>
+add address=10.10.2.9 client-id=1:f4:4d:30:64:dd:3f mac-address=\<br>
+    F4:4D:30:64:DD:3F server=dhcp1<br>
+add address=10.10.2.6 client-id=1:f4:4d:30:64:e7:37 mac-address=\<br>
+    F4:4D:30:64:E7:37 server=dhcp1<br>
+add address=10.10.2.8 client-id=1:f4:4d:30:64:e6:e8 mac-address=\<br>
+    F4:4D:30:64:E6:E8 server=dhcp1<br>
+add address=10.10.2.7 client-id=1:f4:4d:30:64:ee:1c mac-address=\<br>
+    F4:4D:30:64:EE:1C server=dhcp1<br>
+add address=10.10.2.205 client-id=1:f4:4d:30:64:f0:b5 mac-address=\<br>
+    F4:4D:30:64:F0:B5 server=dhcp1<br>
+add address=10.10.2.11 client-id=1:f4:4d:30:64:e9:45 mac-address=\<br>
+    F4:4D:30:64:E9:45 server=dhcp1<br>
+add address=10.10.2.13 client-id=1:f4:4d:30:64:eb:69 mac-address=\<br>
+    F4:4D:30:64:EB:69 server=dhcp1<br>
+add address=10.10.2.2 client-id=1:f4:4d:30:64:d0:b mac-address=\<br>
+    F4:4D:30:64:D0:0B server=dhcp1<br>
+add address=10.10.2.50 client-id=1:1c:69:7a:6c:9c:34 mac-address=\<br>
+    1C:69:7A:6C:9C:34 server=dhcp1<br>
+add address=10.10.2.100 client-id=1:0:11:32:fe:e0:65 mac-address=\<br>
+    00:11:32:FE:E0:65 server=dhcp1<br>
+/ip dhcp-server network<br>
+add address=10.0.0.0/8 dns-server=8.8.8.8 gateway=10.10.2.99<br>
+/ip dns<br>
+set servers=8.8.8.8,8.8.4.4,1.1.1.1<br>
+/ip firewall address-list<br>
+add address=10.0.0.0/8 list=LAN<br>
+/ip firewall filter<br>
+add action=accept chain=input disabled=yes dst-port=8291 protocol=tcp<br>
+/ip firewall mangle<br>
+add action=mark-connection chain=prerouting comment=\<br>
+    “INCOMING CONNECTIONS MARK AS ncm-ais,ncm-cat” connection-mark=no-mark \<br>
+    in-interface=ether1-ais new-connection-mark=ncm-ais passthrough=no<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark \<br>
+    in-interface=pppoe-out-cat new-connection-mark=ncm-cat passthrough=no<br>
+add action=mark-connection chain=prerouting comment=\<br>
+    “PCC TO HANDLE HTTP/HTTPS ” connection-mark=no-mark disabled=yes \<br>
+    dst-address-list=!LAN dst-address-type=!local dst-port=80,443 \<br>
+    in-interface=bridge-lan new-connection-mark=ncm-ais passthrough=yes \<br>
+    per-connection-classifier=src-address:2/0 protocol=tcp<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark disabled=\<br>
+    yes dst-address-list=!LAN dst-address-type=!local dst-port=80,443 \<br>
+    in-interface=bridge-lan new-connection-mark=ncm-cat passthrough=yes \<br>
+    per-connection-classifier=src-address:2/1 protocol=tcp<br>
+add action=mark-connection chain=prerouting comment=\<br>
+    “PCC TO HANDLE HTTP3 TRAFFIC AKA QUIC” connection-mark=no-mark \<br>
+    dst-address-list=!LAN dst-address-type=!local dst-port=80,443 \<br>
+    in-interface=bridge-lan new-connection-mark=ncm-ais passthrough=yes \<br>
+    per-connection-classifier=src-address:2/0 protocol=udp src-port=””<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark \<br>
+    dst-address-list=!LAN dst-address-type=!local dst-port=80,443 \<br>
+    in-interface=bridge-lan new-connection-mark=ncm-cat passthrough=yes \<br>
+    per-connection-classifier=src-address:2/1 protocol=udp src-port=””<br>
+add action=mark-connection chain=prerouting comment=”NTH FOR NON HTTP/HTTPS” \<br>
+    connection-mark=no-mark dst-address-list=!LAN dst-address-type=!local \<br>
+    in-interface=bridge-lan new-connection-mark=ncm-ais nth=2,1 passthrough=\<br>
+    yes<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark \<br>
+    dst-address-list=!LAN dst-address-type=!local in-interface=bridge-lan \<br>
+    new-connection-mark=ncm-cat nth=2,2 passthrough=yes<br>
+add action=mark-routing chain=prerouting comment=”MARKED/SPLIT TRAFFIC” \<br>
+    connection-mark=ncm-ais dst-address-type=”” in-interface=bridge-lan \<br>
+    new-routing-mark=nrm-ais passthrough=no<br>
+add action=mark-routing chain=prerouting connection-mark=ncm-cat \<br>
+    dst-address-type=”” in-interface=bridge-lan new-routing-mark=nrm-cat \<br>
+    passthrough=no<br>
+add action=mark-routing chain=output comment=”INCOMING TRAFFIC FROM WAN” \<br>
+    connection-mark=ncm-ais dst-address-type=”” new-routing-mark=nrm-ais \<br>
+    out-interface=ether1-ais passthrough=no<br>
+add action=mark-routing chain=output connection-mark=ncm-cat \<br>
+    dst-address-type=”” new-routing-mark=nrm-cat out-interface=pppoe-out-cat \<br>
+    passthrough=no<br>
+/ip firewall nat<br>
+add action=masquerade chain=srcnat out-interface=ether1-ais<br>
+add action=masquerade chain=srcnat out-interface=pppoe-out-cat<br>
+add action=masquerade chain=srcnat src-address=10.0.0.0/8<br>
+add action=dst-nat chain=dstnat dst-port=10390 protocol=tcp to-addresses=\<br>
+    10.10.2.50 to-ports=5900<br>
+add action=dst-nat chain=dstnat dst-port=10391 protocol=tcp to-addresses=\<br>
+    10.10.2.31 to-ports=5900<br>
+add action=dst-nat chain=dstnat disabled=yes dst-port=10392 protocol=tcp \<br>
+    to-addresses=10.10.2.99 to-ports=8291<br>
+/ip firewall service-port<br>
+set ftp disabled=yes<br>
+set tftp disabled=yes<br>
+set irc disabled=yes<br>
+set h323 disabled=yes<br>
+set sip disabled=yes<br>
+set pptp disabled=yes<br>
+set udplite disabled=yes<br>
+set dccp disabled=yes<br>
+set sctp disabled=yes<br>
+/ip route<br>
+add check-gateway=ping comment=pppoe-out-cat distance=2 gateway=8.8.8.8 \<br>
+    routing-mark=nrm-cat<br>
+add check-gateway=ping comment=”static ether1-ais” distance=1 gateway=1.1.1.1 \<br>
+    routing-mark=nrm-ais<br>
+add comment=”static ether1-ais” distance=1 dst-address=1.1.1.1/32 gateway=\<br>
+    192.168.1.1 scope=10<br>
+add comment=pppoe-out-cat distance=1 dst-address=8.8.8.8/32 gateway=\<br>
+    100.70.192.1 scope=10<br>
+add comment=pppoe-out-cat distance=1 dst-address=8.8.8.8/32 gateway=\<br>
+    100.70.192.1 scope=10<br>
+/ip service<br>
+set telnet disabled=yes<br>
+set ftp disabled=yes<br>
+set www disabled=yes<br>
+set ssh disabled=yes<br>
+set api disabled=yes<br>
+set api-ssl disabled=yes<br>
+/ip upnp<br>
+set enabled=yes<br>
+/ip upnp interfaces<br>
+add interface=ether1-ais type=external<br>
+add interface=pppoe-out-cat type=external<br>
+add interface=bridge-lan type=internal<br>
+/system clock<br>
+set time-zone-name=Asia/Bangkok<br>
+/system identity<br>
+set name=”JPAC GATEWAY”</p></blockquote>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-18">
+                            # <span class="comment-date">16 December 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-18" data-commentid="18" data-postid="115" data-belowelement="comment-18" data-respondelement="respond" data-replyto="Reply to ชื่อ นามสกุล" aria-label="Reply to ชื่อ นามสกุล">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-19">
+		<article id="comment-19" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Your config is convoluted and wrong, why would you disable NAT Traversal helpers? What’s the point of VLAN 0’s? What’s with removeRoute? Where’s not_in_internet address list?</p>
+<p>I would reset it to null config and start again from scratch.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-19">
+                            # <span class="comment-date">16 December 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-19" data-commentid="19" data-postid="115" data-belowelement="comment-19" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1" id="li-comment-20">
+		<article id="comment-20" class="comment">
+			<div class="comment-author">
+				<img alt="ชื่อ นามสกุล" src="https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">ชื่อ นามสกุล</span>
+			</div>
+			<div class="comment-content">
+								<p>thank you for reply guy<br>
+not_in_internet is<br>
+/ip firewall address-list<br>
+add address=10.0.0.0/8 list=LAN</p>
+<p>removeRoute is from script to auto connect ppp and add route guy here is full script<br>
+i add in ppp profile</p>
+<blockquote><p>
+############PPP UP#######################<br>
+:local createRoute do={<br>
+ /log info message=”Add route $remoteAddress”<br>
+ /ip route add dst-address=$dstAddress gateway=$remoteAddress scope=10 target-scope=10 comment=(“D”.$wan)<br>
+ /ip route add dst-address=0.0.0.0/0 gateway=$gateway scope=30 target-scope=10 distance=$distance check-gateway=ping comment=(“D”.$wan)<br>
+}</p>
+<p>:local wanArr {<br>
+ {<br>
+  “remoteAddress”=$”remote-address”;<br>
+  “dstAddress”=8.8.8.8/32;<br>
+  “gateway”=8.8.8.8;<br>
+  “distance”=1;<br>
+  “wan”=”pppoe-out-cat”<br>
+ };<br>
+}</p>
+<p>:local intf1 [/interface get $interface];<br>
+:foreach w in=$wanArr do={<br>
+ if (($w-&gt;”wan”) = ($intf1-&gt;”name”)) do={<br>
+  $createRoute remoteAddress=($w-&gt;”remoteAddress”) dstAddress=($w-&gt;”dstAddress”) gateway=($w-&gt;”gateway”) distance=($w-&gt;”distance”) wan=($w-&gt;”wan”)<br>
+ }<br>
+}<br>
+############PPP UP#######################</p>
+<p>############PPP DOWN#######################<br>
+:local removeRoute do={<br>
+ /ip route remove [find comment=$wan]<br>
+}</p>
+<p>:local gw [/ip route print as-value where gateway=$”remote-address”];<br>
+:if (($gw-&gt;0-&gt;”comment”) != “”) do={<br>
+ $removeRoute wan=($gw-&gt;0-&gt;”comment”)<br>
+}<br>
+############PPP DOWN#######################</p></blockquote>
+<p>i have no idea about disable NAT Traversal<br>
+i was setup its from null config guy</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-20">
+                            # <span class="comment-date">16 December 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-20" data-commentid="20" data-postid="115" data-belowelement="comment-20" data-respondelement="respond" data-replyto="Reply to ชื่อ นามสกุล" aria-label="Reply to ชื่อ นามสกุล">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-21">
+		<article id="comment-21" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Where’s RFC6890 subnets in not_in_internet? Why are you using scripts when routes can failover based on reachability? This is NOT null config!</p>
+<p>Reset the router and start from scratch.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-21">
+                            # <span class="comment-date">16 December 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-21" data-commentid="21" data-postid="115" data-belowelement="comment-21" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="li-comment-22">
+		<article id="comment-22" class="comment">
+			<div class="comment-author">
+				<img alt="ชื่อ นามสกุล" src="https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">ชื่อ นามสกุล</span>
+			</div>
+			<div class="comment-content">
+								<p>Why are you using scripts when routes can failover based on reachability?<br>
+Its dynamic ip and i have to use script guy i have no problem with pppoe and static ip from wan router</p>
+<p>Where’s RFC6890 subnets in not_in_internet?<br>
+10.0.0.0/8 is this right guy?<br>
+/ip firewall address-list<br>
+add address=10.0.0.0/8 list=LAN<br>
+i was name it as LAN guy</p>
+<p>here is myscript after i cut all /r/n make its easy to read guy thanks</p>
+<blockquote><p>
+# dec/16/2021 15:28:37 by RouterOS 6.47.10<br>
+# software id = ZS4S-B9IN<br>
+#<br>
+# model = RB4011iGS+<br>
+# serial number = F03A0F603BBD<br>
+/interface bridge<br>
+add name=bridge-lan<br>
+/interface ethernet<br>
+set [ find default-name=ether1 ] name=ether1-ais<br>
+set [ find default-name=ether2 ] name=ether2-cat<br>
+set [ find default-name=ether8 ] name=ether8-nas<br>
+set [ find default-name=ether9 ] name=ether9-nas<br>
+set [ find default-name=ether10 ] name=ether10-office<br>
+/interface ethernet switch port<br>
+set 0 default-vlan-id=0<br>
+set 1 default-vlan-id=0<br>
+set 2 default-vlan-id=0<br>
+set 3 default-vlan-id=0<br>
+set 4 default-vlan-id=0<br>
+set 5 default-vlan-id=0<br>
+set 6 default-vlan-id=0<br>
+set 7 default-vlan-id=0<br>
+set 8 default-vlan-id=0<br>
+set 9 default-vlan-id=0<br>
+set 10 default-vlan-id=0<br>
+set 11 default-vlan-id=0<br>
+/interface wireless security-profiles<br>
+set [ find default=yes ] supplicant-identity=MikroTik<br>
+/ip pool<br>
+add name=dhcp_pool0 ranges=10.10.2.200-10.10.2.250<br>
+/ip dhcp-server<br>
+add address-pool=dhcp_pool0 disabled=no interface=bridge-lan name=dhcp1<br>
+/ppp profile<br>
+add name=pppoe-profile-cat<br>
+    on-down=”:local removeRoute do={<br>
+    /ip route remove [find comment=$wan]<br>
+    }<br>
+    :local gw [/ip route print as-value where gateway=$”remote-address”];<br>
+    :if (($gw-&gt;0-&gt;”comment”) != “”) do={<br>
+    $removeRoute wan=($gw-&gt;0-&gt;”comment”)<br>
+    }”<br>
+    on-up=”:local createRoute do={<br>
+    log info message=”Add route $remoteAddress”<br>
+    /ip route add dst-address=$dstAddress gateway=$remoteAddress scope=10 target-scope=10  comment=($wan)<br>
+    /ip route add dst-address=0.0.0.0/0 gateway=$gateway scope=30 target-scope=10 distance=$distance check-gateway=ping routing-mark=nrm-cat comment=($wan)<br>
+    }<br>
+    :local wanArr {<br>
+    {<br>
+    “remoteAddress”=$”remote-address”;<br>
+    “dstAddress”=8.8.8.8/32;<br>
+    “gateway”=8.8.8.8;<br>
+    “distance”=2;<br>
+    “wan”=”pppoe-out-cat”<br>
+    };<br>
+    }<br>
+    :local intf1 [/interface get $interface];<br>
+    :foreach w in=$wanArr do={<br>
+    if (($w-&gt;”wan”) = ($intf1-&gt;”name”)) do={<br>
+     $createRoute remoteAddress=($w-&gt;”remoteAddress”) dstAddress=($w-&gt;”dstAddress”) gateway=($w-&gt;”gateway”) distance=($w-&gt;”distance”) wan=($w-&gt;”wan”)<br>
+    }<br>
+    }”<br>
+/interface pppoe-client<br>
+add disabled=no interface=ether2-cat name=pppoe-out-cat password=71560 profile=pppoe-profile-cat user=sdno06722554@home<br>
+/interface bridge port<br>
+add bridge=bridge-lan interface=ether8-nas<br>
+add bridge=bridge-lan interface=ether9-nas<br>
+add bridge=bridge-lan interface=ether10-office<br>
+/ip address<br>
+add address=10.10.2.99/8 interface=bridge-lan network=10.0.0.0<br>
+add address=192.168.1.2 interface=ether1-ais network=192.168.1.1<br>
+/ip cloud<br>
+set ddns-enabled=yes<br>
+/ip dhcp-server lease<br>
+add address=10.10.2.31 client-id=1:c4:2c:3:7:eb:98 mac-address=C4:2C:03:07:EB:98 server=dhcp1<br>
+add address=10.10.2.5 client-id=1:f4:4d:30:64:eb:75 mac-address= F4:4D:30:64:EB:75 server=dhcp1<br>
+add address=10.10.2.10 client-id=1:1c:69:7a:68:e0:d7 mac-address=1C:69:7A:68:E0:D7 server=dhcp1<br>
+add address=10.10.2.12 client-id=1:f4:4d:30:64:e4:c9 mac-address= F4:4D:30:64:E4:C9 server=dhcp1<br>
+add address=10.10.2.14 client-id=1:f0:79:59:8d:97:73 mac-address=F0:79:59:8D:97:73 server=dhcp1<br>
+add address=10.10.2.3 client-id=1:f4:4d:30:64:e7:f9 mac-address= F4:4D:30:64:E7:F9 server=dhcp1<br>
+add address=10.10.2.16 client-id=1:1c:87:2c:63:2d:5b mac-address=1C:87:2C:63:2D:5B server=dhcp1<br>
+add address=10.10.2.9 client-id=1:f4:4d:30:64:dd:3f mac-address= F4:4D:30:64:DD:3F server=dhcp1<br>
+add address=10.10.2.6 client-id=1:f4:4d:30:64:e7:37 mac-address= F4:4D:30:64:E7:37 server=dhcp1<br>
+add address=10.10.2.8 client-id=1:f4:4d:30:64:e6:e8 mac-address= F4:4D:30:64:E6:E8 server=dhcp1<br>
+add address=10.10.2.7 client-id=1:f4:4d:30:64:ee:1c mac-address=F4:4D:30:64:EE:1C server=dhcp1<br>
+add address=10.10.2.205 client-id=1:f4:4d:30:64:f0:b5 mac-address= F4:4D:30:64:F0:B5 server=dhcp1<br>
+add address=10.10.2.11 client-id=1:f4:4d:30:64:e9:45 mac-address= F4:4D:30:64:E9:45 server=dhcp1<br>
+add address=10.10.2.13 client-id=1:f4:4d:30:64:eb:69 mac-address=F4:4D:30:64:EB:69 server=dhcp1<br>
+add address=10.10.2.2 client-id=1:f4:4d:30:64:d0:b mac-address=F4:4D:30:64:D0:0B server=dhcp1<br>
+add address=10.10.2.50 client-id=1:1c:69:7a:6c:9c:34 mac-address=1C:69:7A:6C:9C:34 server=dhcp1<br>
+add address=10.10.2.100 client-id=1:0:11:32:fe:e0:65 mac-address= 00:11:32:FE:E0:65 server=dhcp1<br>
+/ip dhcp-server network<br>
+add address=10.0.0.0/8 dns-server=8.8.8.8 gateway=10.10.2.99<br>
+/ip dns<br>
+set servers=8.8.8.8,8.8.4.4,1.1.1.1<br>
+/ip firewall address-list<br>
+add address=10.0.0.0/8 list=LAN<br>
+/ip firewall filter<br>
+add action=accept chain=input disabled=yes dst-port=8291 protocol=tcp<br>
+/ip firewall mangle<br>
+add action=mark-connection chain=prerouting comment=”INCOMING CONNECTIONS MARK AS ncm-ais,ncm-cat” connection-mark=no-mark  in-interface=ether1-ais new-connection-mark=ncm-ais passthrough=no<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark in-interface=pppoe-out-cat new-connection-mark=ncm-cat passthrough=no<br>
+add action=mark-connection chain=prerouting comment=”PCC TO HANDLE HTTP/HTTPS ” connection-mark=no-mark disabled=no dst-address-list=!LAN dst-address-type=!local dst-port=80,443 in-interface=bridge-lan new-connection-mark=ncm-ais passthrough=yes per-connection-classifier=src-address:2/0 protocol=tcp<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark disabled=no dst-address-list=!LAN dst-address-type=!local dst-port=80,443  in-interface=bridge-lan new-connection-mark=ncm-cat passthrough=yes per-connection-classifier=src-address:2/1 protocol=tcp<br>
+add action=mark-connection chain=prerouting comment=”PCC TO HANDLE HTTP3 TRAFFIC AKA QUIC” connection-mark=no-mark dst-address-list=!LAN dst-address-type=!local dst-port=80,443 in-interface=bridge-lan new-connection-mark=ncm-ais passthrough=yes per-connection-classifier=src-address:2/0 protocol=udp src-port=””<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!LAN dst-address-type=!local dst-port=80,443 in-interface=bridge-lan new-connection-mark=ncm-cat passthrough=yes  per-connection-classifier=src-address:2/1 protocol=udp src-port=””<br>
+add action=mark-connection chain=prerouting comment=”NTH FOR NON HTTP/HTTPS” connection-mark=no-mark dst-address-list=!LAN dst-address-type=!local in-interface=bridge-lan new-connection-mark=ncm-ais nth=2,1 passthrough=yes<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark  dst-address-list=!LAN dst-address-type=!local in-interface=bridge-lan new-connection-mark=ncm-cat nth=2,2 passthrough=yes<br>
+add action=mark-routing chain=prerouting comment=”MARKED/SPLIT TRAFFIC” connection-mark=ncm-ais dst-address-type=”” in-interface=bridge-lan new-routing-mark=nrm-ais passthrough=no<br>
+add action=mark-routing chain=prerouting connection-mark=ncm-cat dst-address-type=”” in-interface=bridge-lan new-routing-mark=nrm-cat passthrough=no<br>
+add action=mark-routing chain=output comment=”INCOMING TRAFFIC FROM WAN” connection-mark=ncm-ais dst-address-type=”” new-routing-mark=nrm-ais out-interface=ether1-ais passthrough=no<br>
+add action=mark-routing chain=output connection-mark=ncm-cat dst-address-type=”” new-routing-mark=nrm-cat out-interface=pppoe-out-cat passthrough=no<br>
+/ip firewall nat<br>
+add action=masquerade chain=srcnat out-interface=ether1-ais<br>
+add action=masquerade chain=srcnat out-interface=pppoe-out-cat<br>
+add action=masquerade chain=srcnat src-address=10.0.0.0/8<br>
+add action=dst-nat chain=dstnat dst-port=10390 protocol=tcp to-addresses=10.10.2.50 to-ports=5900<br>
+add action=dst-nat chain=dstnat dst-port=10391 protocol=tcp to-addresses=10.10.2.31 to-ports=5900<br>
+add action=dst-nat chain=dstnat disabled=yes dst-port=10392 protocol=tcp to-addresses=10.10.2.99 to-ports=8291<br>
+/ip firewall service-port<br>
+set ftp disabled=yes<br>
+set tftp disabled=yes<br>
+set irc disabled=yes<br>
+set h323 disabled=yes<br>
+set sip disabled=yes<br>
+set pptp disabled=yes<br>
+set udplite disabled=yes<br>
+set dccp disabled=yes<br>
+set sctp disabled=yes<br>
+/ip route<br>
+add check-gateway=ping comment=pppoe-out-cat distance=2 gateway=8.8.8.8  routing-mark=nrm-cat<br>
+add check-gateway=ping comment=”static ether1-ais” distance=1 gateway=1.1.1.1 routing-mark=nrm-ais<br>
+add comment=”static ether1-ais” distance=1 dst-address=1.1.1.1/32 gateway=192.168.1.1 scope=10<br>
+add comment=pppoe-out-cat distance=1 dst-address=8.8.8.8/32 gateway=100.70.192.1 scope=10<br>
+add comment=pppoe-out-cat distance=1 dst-address=8.8.8.8/32 gateway=100.70.192.1 scope=10<br>
+/ip service<br>
+set telnet disabled=yes<br>
+set ftp disabled=yes<br>
+set www disabled=yes<br>
+set ssh disabled=yes<br>
+set api disabled=yes<br>
+set api-ssl disabled=yes<br>
+/ip upnp<br>
+set enabled=yes<br>
+/ip upnp interfaces<br>
+add interface=ether1-ais type=external<br>
+add interface=pppoe-out-cat type=external<br>
+add interface=bridge-lan type=internal<br>
+/system clock<br>
+set time-zone-name=Asia/Bangkok<br>
+/system identity<br>
+set name=”JPAC GATEWAY”
+</p></blockquote>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-22">
+                            # <span class="comment-date">16 December 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-22" data-commentid="22" data-postid="115" data-belowelement="comment-22" data-respondelement="respond" data-replyto="Reply to ชื่อ นามสกุล" aria-label="Reply to ชื่อ นามสกุล">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-23">
+		<article id="comment-23" class="comment">
+			<div class="comment-author">
+				<img alt="ชื่อ นามสกุล" src="https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">ชื่อ นามสกุล</span>
+			</div>
+			<div class="comment-content">
+								<p>guy after i disabled this 2 mangle rule</p>
+<p>add action=mark-connection chain=prerouting comment=”PCC TO HANDLE HTTP/HTTPS ” connection-mark=no-mark disabled=no dst-address-list=!LAN dst-address-type=!local dst-port=80,443 in-interface=bridge-lan new-connection-mark=ncm-ais passthrough=yes per-connection-classifier=src-address:2/0 protocol=tcp</p>
+<p>add action=mark-connection chain=prerouting connection-mark=no-mark disabled=no dst-address-list=!LAN dst-address-type=!local dst-port=80,443 in-interface=bridge-lan new-connection-mark=ncm-cat passthrough=yes per-connection-classifier=src-address:2/1 protocol=tcp</p>
+<p>as above in example is<br>
+###For old school HTTP/HTTPS traffic###<br>
+###50% going to ISP1###</p>
+<p>its works without any problem guy i don’t understand this</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-23">
+                            # <span class="comment-date">16 December 2021</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-23" data-commentid="23" data-postid="115" data-belowelement="comment-23" data-respondelement="respond" data-replyto="Reply to ชื่อ นามสกุล" aria-label="Reply to ชื่อ นามสกุล">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="li-comment-24">
+		<article id="comment-24" class="comment">
+			<div class="comment-author">
+				<img alt="Carlos Andrés Escobar" src="https://secure.gravatar.com/avatar/83db52422bbde0ce58cdc9de23f1c4a7760ec328c9ca22e652c3c491210b05ad?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/83db52422bbde0ce58cdc9de23f1c4a7760ec328c9ca22e652c3c491210b05ad?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://gravatar.com/cescobarfuentes" class="url" rel="ugc external nofollow">Carlos Andrés Escobar</a></span>
+			</div>
+			<div class="comment-content">
+								<p>The issue I see with this kind of traffic identification is that you never know in what port is HTTP/HTTPS going to be in every network, so you may break some sites that use a non-standard http/https ports (80,443), another issue I see is that nth isn’t really doing a proper per packet load sharing because packets are being marked by connections and the linux iptables mangle engine will respect that over any packet routing mark, if it really was doing a per-packet load sharing you will be experience lots of protocol breaks because they’re not expecting connections to come from different path or ip address, they will ask? you don’t have an stablished connection with me?, so drop the previous connection because will timeout and stablish a new one, and that is basically a retransmission.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-24">
+                            # <span class="comment-date">15 January 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-24" data-commentid="24" data-postid="115" data-belowelement="comment-24" data-respondelement="respond" data-replyto="Reply to Carlos Andrés Escobar" aria-label="Reply to Carlos Andrés Escobar">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-25">
+		<article id="comment-25" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>I’ve been using this setup for years and never saw a problem with non-standard HTTP/HTTPs ports, as anyways the Nth rules mark the connection.</p>
+<p>The Nth here is not per-packet load balancing, it is simply preferred to traditional PCC as it is more randomised on a per-packet basis for connection marking and hence gives us better load distribution than just traditional PCC. Which can be proven by multi-threaded download/upload.</p>
+<p>If you want true native per-packet load balancing, you need your own ASN with a multi-homing IP Transit setup.</p>
+<p>You’re welcome to use any variation of the original setup, but for me, I’m using this config in all production cases and no reported cases have been reported for broken traffic or protocols. You can also use WireShark on the WAN interfaces and see that no traffic breaks/drops with my config.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-25">
+                            # <span class="comment-date">15 January 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-25" data-commentid="25" data-postid="115" data-belowelement="comment-25" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1" id="li-comment-26">
+		<article id="comment-26" class="comment">
+			<div class="comment-author">
+				<img alt="Sudanking" src="https://secure.gravatar.com/avatar/d38d27dda4d726ee16246ce45270dfcff688fc6ef313d2b9bedda269bffc6b71?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/d38d27dda4d726ee16246ce45270dfcff688fc6ef313d2b9bedda269bffc6b71?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://gravatar.com/sudanking" class="url" rel="ugc external nofollow">Sudanking</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Nice idea for load balance…<br>
+But how can I prioritize traffic (like VoIP or ICMP…etc or limit YouTube traffic) with queue trees and still get benefit from your loadbalancing configurations?</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-26">
+                            # <span class="comment-date">31 January 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-26" data-commentid="26" data-postid="115" data-belowelement="comment-26" data-respondelement="respond" data-replyto="Reply to Sudanking" aria-label="Reply to Sudanking">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-27">
+		<article id="comment-27" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>I opted for simple queues as it gets the job done for me. You’d have to research implementing queue trees, with something like this: <a href="https://forum.mikrotik.com/viewtopic.php?f=23&amp;t=73214" rel="nofollow ugc">https://forum.mikrotik.com/viewtopic.php?f=23&amp;t=73214</a></p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-27">
+                            # <span class="comment-date">1 February 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-27" data-commentid="27" data-postid="115" data-belowelement="comment-27" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="li-comment-28">
+		<article id="comment-28" class="comment">
+			<div class="comment-author">
+				<img alt="Andreas" src="https://secure.gravatar.com/avatar/c5aee83d2df05c2db15f6c0f516f373c343b8cf8ec767526d09fee5b0de5ed41?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/c5aee83d2df05c2db15f6c0f516f373c343b8cf8ec767526d09fee5b0de5ed41?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">Andreas</span>
+			</div>
+			<div class="comment-content">
+								<p>Many thanks for this from another newbie with this use case, cool!</p>
+<p>One thing I don’t understand: why is the classifier different for ISP1 for tcp?</p>
+<p>[ISP1_conn, tcp]: per-connection-classifier=both-addresses:2/0<br>
+[ISP2_conn, tcp]: per-connection-classifier=both-addresses-and-ports:2/1<br>
+[ISP1_conn, udp]: per-connection-classifier=both-addresses-and-ports:2/0<br>
+[ISP2_conn, udp]: per-connection-classifier=both-addresses-and-ports:2/1</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-28">
+                            # <span class="comment-date">2 February 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-28" data-commentid="28" data-postid="115" data-belowelement="comment-28" data-respondelement="respond" data-replyto="Reply to Andreas" aria-label="Reply to Andreas">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-29">
+		<article id="comment-29" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="https://www.daryllswer.com/" class="url" rel="ugc">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Hi</p>
+<p>Thank you for pointing this out, it’s a typo. I’ve fixed it.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-29">
+                            # <span class="comment-date">2 February 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-29" data-commentid="29" data-postid="115" data-belowelement="comment-29" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1" id="li-comment-30">
+		<article id="comment-30" class="comment">
+			<div class="comment-author">
+				<img alt="Andreas" src="https://secure.gravatar.com/avatar/c5aee83d2df05c2db15f6c0f516f373c343b8cf8ec767526d09fee5b0de5ed41?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/c5aee83d2df05c2db15f6c0f516f373c343b8cf8ec767526d09fee5b0de5ed41?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">Andreas</span>
+			</div>
+			<div class="comment-content">
+								<p>Nifty, got it. Just trying to puzzle out something similar at home. Thanks!</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-30">
+                            # <span class="comment-date">2 February 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-30" data-commentid="30" data-postid="115" data-belowelement="comment-30" data-respondelement="respond" data-replyto="Reply to Andreas" aria-label="Reply to Andreas">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1" id="li-comment-31">
+		<article id="comment-31" class="comment">
+			<div class="comment-author">
+				<img alt="Sudanking" src="https://secure.gravatar.com/avatar/d38d27dda4d726ee16246ce45270dfcff688fc6ef313d2b9bedda269bffc6b71?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/d38d27dda4d726ee16246ce45270dfcff688fc6ef313d2b9bedda269bffc6b71?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://gravatar.com/sudanking" class="url" rel="ugc external nofollow">Sudanking</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Thanks for your answer… but can you give me a hint how you do implement traffic prioritize with simple queues and using your load balance script? I mean, how to mangle what is already mangled!!?</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-31">
+                            # <span class="comment-date">14 February 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-31" data-commentid="31" data-postid="115" data-belowelement="comment-31" data-respondelement="respond" data-replyto="Reply to Sudanking" aria-label="Reply to Sudanking">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor even depth-2" id="li-comment-32">
+		<article id="comment-32" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>I don’t know, I never looked into it.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-32">
+                            # <span class="comment-date">14 February 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-32" data-commentid="32" data-postid="115" data-belowelement="comment-32" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-33">
+		<article id="comment-33" class="comment">
+			<div class="comment-author">
+				<img alt="Ashish Wadekar" src="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://gravatar.com/ashishwork" class="url" rel="ugc external nofollow">Ashish Wadekar</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Hi Daryll</p>
+<p>This setup is working great since I had configured it last time.</p>
+<p>I now need to add OpenVPN Server to this setup so that I can connect clients from outside to this network.</p>
+<p>I have tried to setup OpenVPN server but client is unable to connect.</p>
+<p>Can you help with any specific points that I should look out for or missing in such a scenario?</p>
+<p>Thanks in advance.</p>
+<p>Cheers.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-33">
+                            # <span class="comment-date">16 February 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-33" data-commentid="33" data-postid="115" data-belowelement="comment-33" data-respondelement="respond" data-replyto="Reply to Ashish Wadekar" aria-label="Reply to Ashish Wadekar">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor even depth-2" id="li-comment-34">
+		<article id="comment-34" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>There are many reasons for why it may not be working. I would suggest posting your issue and config dump on: forum.mikrotik.com</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-34">
+                            # <span class="comment-date">16 February 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-34" data-commentid="34" data-postid="115" data-belowelement="comment-34" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1" id="li-comment-35">
+		<article id="comment-35" class="comment">
+			<div class="comment-author">
+				<img alt="Ashish Wadekar" src="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://gravatar.com/ashishwork" class="url" rel="ugc external nofollow">Ashish Wadekar</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Got it Daryll. Thanks for the prompt response. Cheers.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-35">
+                            # <span class="comment-date">16 February 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-35" data-commentid="35" data-postid="115" data-belowelement="comment-35" data-respondelement="respond" data-replyto="Reply to Ashish Wadekar" aria-label="Reply to Ashish Wadekar">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1" id="li-comment-36">
+		<article id="comment-36" class="comment">
+			<div class="comment-author">
+				<img alt="Ashish Wadekar" src="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://gravatar.com/ashishwork" class="url" rel="ugc external nofollow">Ashish Wadekar</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Hi Daryll</p>
+<p>I was trying to apply defconf filter rules in Firewall &amp; I have observed 2 issues when I enable them:<br>
+1. Many packets are dropped in ! in LAN rule i.e. Rule # 5 specifically most of the traffic going to WAN 2<br>
+2. Connecting to a website take more time; about a couple of seconds more as compared to when all filter rules are off.</p>
+<p>Can you please help understand what is going on? Any security rules that you suggest to secure the device?</p>
+<p>Sharing config export : <a href="https://pastebin.com/Ttt46Ruh" rel="nofollow ugc">https://pastebin.com/Ttt46Ruh</a></p>
+<p>Thanks a ton man!</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-36">
+                            # <span class="comment-date">5 March 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-36" data-commentid="36" data-postid="115" data-belowelement="comment-36" data-respondelement="respond" data-replyto="Reply to Ashish Wadekar" aria-label="Reply to Ashish Wadekar">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1" id="li-comment-37">
+		<article id="comment-37" class="comment">
+			<div class="comment-author">
+				<img alt="Walker" src="https://secure.gravatar.com/avatar/b9fa4bb4be2cd7766015bf7014eaf1423152c5760a9d34770867e8a9bb2b6a30?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/b9fa4bb4be2cd7766015bf7014eaf1423152c5760a9d34770867e8a9bb2b6a30?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">Walker</span>
+			</div>
+			<div class="comment-content">
+								<p>First, thank you for taking the time to write this up!</p>
+<p>Your comment block inside the code says that ‘both-addresses’ is needed to avoid breaking HTTPS, but you have fixed the typo by changing the property to ‘both-addresses-and-ports’ for all 4 cases. Did you mean to change it to ‘both-addresses’ instead?</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-37">
+                            # <span class="comment-date">28 November 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-37" data-commentid="37" data-postid="115" data-belowelement="comment-37" data-respondelement="respond" data-replyto="Reply to Walker" aria-label="Reply to Walker">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor even depth-2" id="li-comment-38">
+		<article id="comment-38" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Fixed.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-38">
+                            # <span class="comment-date">28 November 2022</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-38" data-commentid="38" data-postid="115" data-belowelement="comment-38" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-39">
+		<article id="comment-39" class="comment">
+			<div class="comment-author">
+				<img alt="Syntax" src="https://secure.gravatar.com/avatar/6e740ddbaf6b0d7a24857cac92ff845d113163417f927e4fa4acdd9ee73de429?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/6e740ddbaf6b0d7a24857cac92ff845d113163417f927e4fa4acdd9ee73de429?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">Syntax</span>
+			</div>
+			<div class="comment-content">
+								<p>Hi, how to QoS if we have implemented the Load Balancing rules already in the mangle?</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-39">
+                            # <span class="comment-date">3 February 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-39" data-commentid="39" data-postid="115" data-belowelement="comment-39" data-respondelement="respond" data-replyto="Reply to Syntax" aria-label="Reply to Syntax">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor even depth-2" id="li-comment-40">
+		<article id="comment-40" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Use simple queues for QoS of each egress interface.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-40">
+                            # <span class="comment-date">3 February 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-40" data-commentid="40" data-postid="115" data-belowelement="comment-40" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1" id="li-comment-41">
+		<article id="comment-41" class="comment">
+			<div class="comment-author">
+				<img alt="Syntax" src="https://secure.gravatar.com/avatar/6e740ddbaf6b0d7a24857cac92ff845d113163417f927e4fa4acdd9ee73de429?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/6e740ddbaf6b0d7a24857cac92ff845d113163417f927e4fa4acdd9ee73de429?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">Syntax</span>
+			</div>
+			<div class="comment-content">
+								<p>Okay.. But if we have to identify them by protocols, do we still have to perform a mark connection again? Or we’ll directly use the mark packet and use the  previous connection mark (ex: ISP1, ISP2).</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-41">
+                            # <span class="comment-date">6 March 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-41" data-commentid="41" data-postid="115" data-belowelement="comment-41" data-respondelement="respond" data-replyto="Reply to Syntax" aria-label="Reply to Syntax">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor even depth-2" id="li-comment-42">
+		<article id="comment-42" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>I don’t understand your use case. But for routing, the packet mark is always required and the connection marking will be what determines which connections/packets gets marked.</p>
+<p>I haven’t used this type of setup in two years. I recommend you test and find out what works best.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-42">
+                            # <span class="comment-date">6 March 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-42" data-commentid="42" data-postid="115" data-belowelement="comment-42" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-43">
+		<article id="comment-43" class="comment">
+			<div class="comment-author">
+				<img alt="Agung" src="https://secure.gravatar.com/avatar/6be1e0afc7b29f5ed3b894b7f29aa0e45f1b1efa4711fe6383a6d7ccbbbf5896?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/6be1e0afc7b29f5ed3b894b7f29aa0e45f1b1efa4711fe6383a6d7ccbbbf5896?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">Agung</span>
+			</div>
+			<div class="comment-content">
+								<p>Hi Daryll,</p>
+<p>just seeing your website here and you are doing really good job..<br>
+hope you can keep inspire people.</p>
+<p>I have a question for your mangle configuration,<br>
+if you do it and let’s say your 1st ISP is down, is the traffic going 100% percent to the 2nd ISP?</p>
+<p>I am running the same PCC load balancing, holding on two ISP with 1Gbps and 500 Mbps Bandwidth coming in,</p>
+<p>PCC both address with 3/0 and 3/1 to 1st ISP and 3/2 to second ISP.</p>
+<p>based on my experience, whenever my 1st ISP down, the fail over is running and the traffic go to my 2nd ISP, but….. it’s only like 33%, since I divide the 66% remaining to 1st ISP (based on PCC configuration I set)<br>
+and I have to disable the PCC configuration first to have the 100% traffic going to 2nd ISP,</p>
+<p>do you get my point? is there any light you can share with this issue<br>
+appreciate your concern and efforts on loving networking man.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-43">
+                            # <span class="comment-date">9 March 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-43" data-commentid="43" data-postid="115" data-belowelement="comment-43" data-respondelement="respond" data-replyto="Reply to Agung" aria-label="Reply to Agung">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor even depth-2" id="li-comment-44">
+		<article id="comment-44" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>100% of traffic should failover. If it doesn’t then something is wrong. Re-do the configuration from the ground up.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-44">
+                            # <span class="comment-date">9 March 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-44" data-commentid="44" data-postid="115" data-belowelement="comment-44" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1" id="li-comment-45">
+		<article id="comment-45" class="comment">
+			<div class="comment-author">
+				<img alt="Thiện" src="https://secure.gravatar.com/avatar/788b604841833dbf2a416686867931bcff3c8969a4cf4f5b7435cf7b0ee2e8a1?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/788b604841833dbf2a416686867931bcff3c8969a4cf4f5b7435cf7b0ee2e8a1?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">Thiện</span>
+			</div>
+			<div class="comment-content">
+								<p>###Incoming connections through ISP1 must leave through ISP1###<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark in-interface=pppoe-out1 new-connection-mark=ISP1_conn passthrough=no<br>
+For the above Rule, I see in some configurations that many people recommend chain=input<br>
+Can you tell me the difference in this case?</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-45">
+                            # <span class="comment-date">13 March 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-45" data-commentid="45" data-postid="115" data-belowelement="comment-45" data-respondelement="respond" data-replyto="Reply to Thiện" aria-label="Reply to Thiện">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor even depth-2" id="li-comment-46">
+		<article id="comment-46" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Input means destination = local host itself i.e. router. It will not mark traffic destined towards the hosts i.e. forward chain. The whole point of prerouting is to be direction-agnostic. Not sure who suggested you to use input, that’s plain stupid. Learn the netfilter packet flow properly.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-46">
+                            # <span class="comment-date">13 March 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-46" data-commentid="46" data-postid="115" data-belowelement="comment-46" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-47">
+		<article id="comment-47" class="comment">
+			<div class="comment-author">
+				<img alt="Hasri Akbar Awal Rozaq" src="https://secure.gravatar.com/avatar/8076e0ba6730f6c267ed272a3f173b220c39c5376f770c1ccf1701fbaef2ad2e?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/8076e0ba6730f6c267ed272a3f173b220c39c5376f770c1ccf1701fbaef2ad2e?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">Hasri Akbar Awal Rozaq</span>
+			</div>
+			<div class="comment-content">
+								<p>The configuration is stable for me. I have more than 1000 clients and no problems right now. Thanks a lot! But I have one question, if we have one mangle for split connection (example : fb, yt, instagram) where we can write? I mean which order. Thank you for answer</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-47">
+                            # <span class="comment-date">29 March 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-47" data-commentid="47" data-postid="115" data-belowelement="comment-47" data-respondelement="respond" data-replyto="Reply to Hasri Akbar Awal Rozaq" aria-label="Reply to Hasri Akbar Awal Rozaq">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="li-comment-135">
+		<article id="comment-135" class="comment">
+			<div class="comment-author">
+				<img alt="VasVas" src="https://secure.gravatar.com/avatar/234cf5803bc9541826b074fada62e3f52fb87ddfe027dcf9e8204017dcf1d0e8?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/234cf5803bc9541826b074fada62e3f52fb87ddfe027dcf9e8204017dcf1d0e8?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">VasVas</span>
+			</div>
+			<div class="comment-content">
+								<p>Can you write same config for Ros 7?</p>
+<p>Thank you</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-135">
+                            # <span class="comment-date">26 April 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-135" data-commentid="135" data-postid="115" data-belowelement="comment-135" data-respondelement="respond" data-replyto="Reply to VasVas" aria-label="Reply to VasVas">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-136">
+		<article id="comment-136" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Hello</p>
+<p>I currently do not have the spare capacity to write fresh config and test for ROSv7. However, I know other people have done it successfully, and would recommend you ask in my public group <a href="https://t.me/NetworkOpsCentral" target="_blank" rel="noopener nofollow ugc">here</a> for help.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-136">
+                            # <span class="comment-date">26 April 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-136" data-commentid="136" data-postid="115" data-belowelement="comment-136" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1" id="li-comment-917">
+		<article id="comment-917" class="comment">
+			<div class="comment-author">
+				<img alt="ALBERT" src="https://secure.gravatar.com/avatar/30f0aeb7aafd69ba5a0e912bca79fa30e300ab1fe7ea613901c340cb8f63a4ae?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/30f0aeb7aafd69ba5a0e912bca79fa30e300ab1fe7ea613901c340cb8f63a4ae?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">ALBERT</span>
+			</div>
+			<div class="comment-content">
+								<p>Hello, i have problem with browsing and online class slow when i enable the loadbalance i used pcc.. but not work.. i dont know if correct. i see your page and i set to my mikrotik.. can you check if correct all rules.. please.. need help. below is the article you posted..<br>
+thanks.</p>
+<blockquote><p>/interface ethernet<br>
+set [ find default-name=ether1 ] mac-address=BE:C6:FE:27:C1:A3 mtu=1508 name=<br>
+    E1-WAN1<br>
+set [ find default-name=ether2 ] mtu=1508 name=E2-WAN2<br>
+set [ find default-name=ether3 ] mtu=1508 name=E3-WAN3<br>
+set [ find default-name=ether4 ] mtu=1508 name=E4-WAN4<br>
+set [ find default-name=ether5 ] name=E5-WAN5<br>
+set [ find default-name=ether6 ] name=E6-WAN6<br>
+set [ find default-name=ether7 ] name=E7-WAN7<br>
+set [ find default-name=ether8 ] name=E8-WAN8<br>
+set [ find default-name=ether9 ] name=E9-PPPoE<br>
+set [ find default-name=ether10 ] name=E10-LAN<br>
+set [ find default-name=ether11 ] comment=default-server1 name=E11-PPPoE<br>
+set [ find default-name=ether12 ] comment=default-server2 name=E12-PPPOE<br>
+set [ find default-name=ether13 ] name=E13-PPPoE<br>
+/interface list<br>
+add name=pppoe-list<br>
+/ip firewall address-list<br>
+add address=10.0.0.0/8 list=not_in_internet<br>
+add address=172.16.0.0/12 list=not_in_internet<br>
+add address=192.168.0.0/16 list=not_in_internet<br>
+/ip firewall mangle<br>
+add action=mark-connection chain=prerouting comment=new connection-mark=<br>
+    no-mark in-interface=E1-WAN1 new-connection-mark=wan1 passthrough=no<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    in-interface=E2-WAN2 new-connection-mark=wan2 passthrough=no<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    in-interface=E3-WAN3 new-connection-mark=wan3 passthrough=no<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    in-interface=E4-WAN4 new-connection-mark=wan4 passthrough=no<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br>
+    in-interface-list=pppoe-list new-connection-mark=wan1 passthrough=yes<br>
+    per-connection-classifier=both-addresses-and-ports:4/0 protocol=tcp<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br>
+    in-interface-list=pppoe-list new-connection-mark=wan2 passthrough=yes<br>
+    per-connection-classifier=both-addresses-and-ports:4/1 protocol=tcp<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br>
+    in-interface-list=pppoe-list new-connection-mark=wan3 passthrough=yes<br>
+    per-connection-classifier=both-addresses-and-ports:4/2 protocol=tcp<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br>
+    in-interface-list=pppoe-list new-connection-mark=wan4 passthrough=yes<br>
+    per-connection-classifier=both-addresses-and-ports:4/3 protocol=tcp<br>
+add action=mark-connection chain=prerouting comment=https connection-mark=<br>
+    no-mark dst-address-list=!not_in_internet dst-address-type=!local<br>
+    dst-port=80,443 in-interface-list=pppoe-list new-connection-mark=wan1<br>
+    passthrough=yes per-connection-classifier=both-addresses-and-ports:4/0<br>
+    protocol=udp<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br>
+    in-interface-list=pppoe-list new-connection-mark=wan2 passthrough=yes<br>
+    per-connection-classifier=both-addresses-and-ports:4/1 protocol=udp<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br>
+    in-interface-list=pppoe-list new-connection-mark=wan3 passthrough=yes<br>
+    per-connection-classifier=both-addresses-and-ports:4/2 protocol=udp<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br>
+    in-interface-list=pppoe-list new-connection-mark=wan4 passthrough=yes<br>
+    per-connection-classifier=both-addresses-and-ports:4/3 protocol=udp<br>
+add action=mark-connection chain=prerouting comment=nth connection-mark=<br>
+    no-mark dst-address-list=!not_in_internet dst-address-type=!local<br>
+    in-interface-list=pppoe-list new-connection-mark=wan1 nth=4,1<br>
+    passthrough=yes<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    dst-address-list=!not_in_internet dst-address-type=!local<br>
+    in-interface-list=pppoe-list new-connection-mark=wan2 nth=4,2<br>
+    passthrough=yes<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    dst-address-list=!not_in_internet dst-address-type=!local<br>
+    in-interface-list=pppoe-list new-connection-mark=wan3 nth=4,3<br>
+    passthrough=yes<br>
+add action=mark-connection chain=prerouting connection-mark=no-mark<br>
+    dst-address-list=!not_in_internet dst-address-type=!local<br>
+    in-interface-list=pppoe-list new-connection-mark=wan4 nth=4,4<br>
+    passthrough=yes<br>
+add action=mark-routing chain=prerouting connection-mark=wan1<br>
+    in-interface-list=pppoe-list new-routing-mark=ROUTE-WAN1 passthrough=no<br>
+add action=mark-routing chain=prerouting connection-mark=wan2<br>
+    in-interface-list=pppoe-list new-routing-mark=ROUTE-WAN2 passthrough=no<br>
+add action=mark-routing chain=prerouting connection-mark=wan3<br>
+    in-interface-list=pppoe-list new-routing-mark=ROUTE-WAN3 passthrough=no<br>
+add action=mark-routing chain=prerouting connection-mark=wan4<br>
+    in-interface-list=pppoe-list new-routing-mark=ROUTE-WAN4 passthrough=no<br>
+add action=mark-routing chain=output connection-mark=wan1 new-routing-mark=<br>
+    ROUTE-WAN1 out-interface=E1-WAN1 passthrough=no<br>
+add action=mark-routing chain=output connection-mark=wan2 new-routing-mark=<br>
+    ROUTE-WAN2 out-interface=E2-WAN2 passthrough=no<br>
+add action=mark-routing chain=output connection-mark=wan3 new-routing-mark=<br>
+    ROUTE-WAN3 out-interface=E3-WAN3 passthrough=no<br>
+add action=mark-routing chain=output connection-mark=wan4 new-routing-mark=<br>
+    ROUTE-WAN4 out-interface=E4-WAN4 passthrough=no</p></blockquote>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-917">
+                            # <span class="comment-date">8 December 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-917" data-commentid="917" data-postid="115" data-belowelement="comment-917" data-respondelement="respond" data-replyto="Reply to ALBERT" aria-label="Reply to ALBERT">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-919">
+		<article id="comment-919" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<blockquote><p>Please note, it is very unlikely I will maintain this article piece. Even though the underlying concepts and principle are the same on RouterOS v7, if you are still facing some issues or confusion, I would recommend you watch this <a href="https://youtu.be/nlb7XAv57tw" target="_blank" rel="noopener nofollow ugc">official video from MikroTik</a>.</p></blockquote>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-919">
+                            # <span class="comment-date">9 December 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-919" data-commentid="919" data-postid="115" data-belowelement="comment-919" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="li-comment-918">
+		<article id="comment-918" class="comment">
+			<div class="comment-author">
+				<img alt="Michael Bank" src="https://secure.gravatar.com/avatar/4426b2961af11bafbb23443c674b4fe69f526b73b8440e5dbb8fd98cb7541706?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/4426b2961af11bafbb23443c674b4fe69f526b73b8440e5dbb8fd98cb7541706?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://-" class="url" rel="ugc external nofollow">Michael Bank</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Hello Daryll</p>
+<p>Excellent website you have. What a lot of topics. I’ve been sniffing around, but unfortunately I can’t find the info I’m looking for. </p>
+<p>The situation in brief: I have had internet and TV from different providers for a long time. Since my ISP provides a rather ordinary Sagemcom router along with the internet connection, I use Mikrotik hAP AX2 instead – with the MAC address of the Sagemcom router and VLAN tagging on Ethernet 1. Really excellent. The internet has never been better at my house.</p>
+<p>Now I have accepted a favourable offer for IPTV from my ISP; but it just doesn’t work.</p>
+<p>It sounds easy to just set up Multicast Routing with IGMPv3; and sure, I can find Routing/IGMP Proxy in WinBox 7.12.1; but I can’t really get past that…?</p>
+<p>Can you share a hint or two about Multicast Routing with IGMPv3 in Mikrotik?</p>
+<p>Should it be enabled on the LAN bridge (Ethernet 2 to 5) or maybe better on e.g. Ethernet 5 alone?</p>
+<p>Best regards<br>
+Michael</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-918">
+                            # <span class="comment-date">9 December 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-918" data-commentid="918" data-postid="115" data-belowelement="comment-918" data-respondelement="respond" data-replyto="Reply to Michael Bank" aria-label="Reply to Michael Bank">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment byuser comment-author-daryll bypostauthor odd alt depth-2" id="li-comment-920">
+		<article id="comment-920" class="comment">
+			<div class="comment-author">
+				<img alt="Daryll Swer" src="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://daryllswer.com/" class="url" rel="ugc external nofollow">Daryll Swer</a></span>
+			</div>
+			<div class="comment-content">
+								<p>I never bothered to try IPTV, as I strongly believe IPTV belongs to the same grave as DSL and copper internet infrastructure. I would recommend trying to ask MikroTik support.</p>
+<p>But you need IGMP/MLD Snooping + PIM-SM to make this work, conceptually.</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-920">
+                            # <span class="comment-date">9 December 2023</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-920" data-commentid="920" data-postid="115" data-belowelement="comment-920" data-respondelement="respond" data-replyto="Reply to Daryll Swer" aria-label="Reply to Daryll Swer">Reply</a>									</div>
+					</article>
+		<ul class="children">
+		<li class="comment even depth-3" id="li-comment-975">
+		<article id="comment-975" class="comment">
+			<div class="comment-author">
+				<img alt="bob" src="https://secure.gravatar.com/avatar/90416c74048db44561834e81cc781d110eb666ead6d8c40eee4f1137be4f6ba8?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/90416c74048db44561834e81cc781d110eb666ead6d8c40eee4f1137be4f6ba8?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name">bob</span>
+			</div>
+			<div class="comment-content">
+								<p>hello Daryll<br>
+i have operating a small WISP. i have 3 pppoe uplinks  and 2 dynamic uplinks with equal bandwidths, my problem is on the ip routes,how do you go about it putting all the routes and  ensuring there is also  failover,, kindly assist</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-975">
+                            # <span class="comment-date">28 April 2024</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-975" data-commentid="975" data-postid="115" data-belowelement="comment-975" data-respondelement="respond" data-replyto="Reply to bob" aria-label="Reply to bob">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1373">
+		<article id="comment-1373" class="comment">
+			<div class="comment-author">
+				<img alt="Ethan" src="https://secure.gravatar.com/avatar/c926bfeb2cc587b9c5f76e856cb5d6fda96a9496bc5b69554a091dc01d48aa88?s=48&amp;r=g" srcset="https://secure.gravatar.com/avatar/c926bfeb2cc587b9c5f76e856cb5d6fda96a9496bc5b69554a091dc01d48aa88?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48" loading="lazy" decoding="async">				<span class="author-name"><a href="http://N/A" class="url" rel="ugc external nofollow">Ethan</a></span>
+			</div>
+			<div class="comment-content">
+								<p>Hi Daryll,</p>
+<p>Thank you for sharing your configuration. I’ve been using this and it works fine.<br>
+Except with this issue that I have experienced.</p>
+<p>I have 2 isp:<br>
+ISP1 = 500mb<br>
+ISP2 = 500mb</p>
+<p>Issue: When ISP1 is very slow but not totally down (like it becomes under 3MB and there are still packets flowing in its interface), the whole network performance goes down, too. I’m assuming this is because they’re sharing 50/50 of the total bandwidth consumption of the network, but since ISP1 cannot provide as fast as ISP2 does, the network performance slows. </p>
+<p>Now, Is there any chance can we make the failover triggered/activated whenever one of the isp is down like this?</p>
+<p>Thank you,<br>
+Ethan</p>
+			</div>
+							<div class="comment-footer">
+                    <span class="comment-link">
+                        <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-1373">
+                            # <span class="comment-date">8 October 2024</span>
+                        </a>
+                    </span>
+					<a rel="nofollow" class="comment-reply-link" href="#comment-1373" data-commentid="1373" data-postid="115" data-belowelement="comment-1373" data-respondelement="respond" data-replyto="Reply to Ethan" aria-label="Reply to Ethan">Reply</a>									</div>
+					</article>
+		</li><!-- #comment-## -->
+		</ol>
+					<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://www.daryllswer.com/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> <span class="required-field-message">Required fields are marked <span class="required">*</span></span></p><p class="comment-form-comment">
+	            <label for="comment">Comment</label>
+	            <textarea required id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+	        </p><p class="comment-form-author">
+	            <label for="author">Name*</label>
+	            <input id="author" name="author" type="text" value="" size="30" aria-required="true">
+	        </p>
+<p class="comment-form-email">
+	            <label for="email">Email*</label>
+	            <input id="email" name="email" type="email" value="" size="30" aria-required="true">
+	        </p>
+<p class="comment-form-url">
+	            <label for="url">Website</label>
+	            <input id="url" name="url" type="url" value="" size="30">
+	            </p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"> <label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="comment-subscription-form"><input type="checkbox" name="subscribe_comments" id="subscribe_comments" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;"> <label class="subscribe-label" id="subscribe-label" for="subscribe_comments">Notify me of follow-up comments by email.</label></p><p class="comment-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts by email.</label></p><p class="form-submit"><span id="cf-turnstile-c-2529705169" class="cf-turnstile cf-turnstile-comments" data-action="wordpress-comment" data-callback="turnstileCommentCallback" data-sitekey="0x4AAAAAAA6_yQlodGSa8aHG" data-theme="auto" data-language="en-us" data-appearance="always" data-size="normal" data-retry="auto" data-retry-interval="1000"></span><br class="cf-turnstile-br cf-turnstile-br-comments"><span class="cf-turnstile-comment" style="pointer-events: none; opacity: 0.5;"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment"></span><script type="text/javascript">document.addEventListener("DOMContentLoaded", function() { document.body.addEventListener("click", function(event) { if (event.target.matches(".comment-reply-link, #cancel-comment-reply-link")) { turnstile.reset(".comment-form .cf-turnstile"); } }); });</script> <input type="hidden" name="comment_post_ID" value="115" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="3c99b028ab"></p><p style="display: none !important;" class="akismet-fields-container" data-prefix="ak_"><label>Δ<textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100"></textarea></label><input type="hidden" id="ak_js_1" name="ak_js" value="181"><script>document.getElementById("ak_js_1").setAttribute("value",(new Date()).getTime())</script>
+</p></form>	</div><!-- #respond -->
+		</section>
+	</div>	</div>
+</section><!-- .main -->
+    <footer class="site-footer" role="contentinfo">
+                <div class="design-credit">
+            <span>
+                Daryll Swer's network engineering blog.            </span>
+        </div>
+    </footer>
+</div><!-- .max-width -->
+</div><!-- .overflow-container -->
+<button id="scroll-to-top" class="scroll-to-top"><span class="screen-reader-text">Scroll to the top</span><i class="fas fa-arrow-up"></i></button><script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/author/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<div class="simple-banner simple-banner-text" style="display:none !important"></div><script data-optimized="1" id="wp-hooks-js" src="https://www.daryllswer.com/wp-content/litespeed/js/af5a3b20e2b2f72a01b980a85c91baef.js?ver=04141"></script>
+<script data-optimized="1" id="wp-i18n-js" src="https://www.daryllswer.com/wp-content/litespeed/js/5de800ad07f995b347322aea90af03c0.js?ver=0a0e8"></script>
+<script data-optimized="1" id="wp-i18n-js-after">wp.i18n.setLocaleData({'text direction\u0004ltr':['ltr']})</script>
+<script data-optimized="1" id="swv-js" src="https://www.daryllswer.com/wp-content/litespeed/js/e9a3b4c1746a8af8abcd36c78615d3d1.js?ver=ff06d"></script>
+<script data-optimized="1" id="contact-form-7-js-translations">(function(domain,translations){var localeData=translations.locale_data[domain]||translations.locale_data.messages;localeData[""].domain=domain;wp.i18n.setLocaleData(localeData,domain)})("contact-form-7",{"translation-revision-date":"2026-05-05 18:32:38+0000","generator":"GlotPress\/4.0.3","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"en_GB"},"This contact form is placed in the wrong place.":["This contact form is placed in the wrong place."],"Error:":["Error:"]}},"comment":{"reference":"includes\/js\/index.js"}})</script>
+<script data-optimized="1" id="contact-form-7-js-before">var wpcf7={"api":{"root":"https:\/\/www.daryllswer.com\/wp-json\/","namespace":"contact-form-7\/v1"},"cached":1}</script>
+<script data-optimized="1" id="contact-form-7-js" src="https://www.daryllswer.com/wp-content/litespeed/js/6f5ba2d8d8b0414d1517f12c26a89066.js?ver=b75a7"></script>
+<script data-optimized="1" id="cf7apps-honeypot-refill-js-extra">var cf7appsHoneypotRefill={"forceRefillOnInit":"1"}</script>
+<script data-optimized="1" id="cf7apps-honeypot-refill-js" src="https://www.daryllswer.com/wp-content/litespeed/js/9683e5ec59020b01bccff6e664d2adce.js?ver=9c4d9"></script>
+<script data-optimized="1" id="flying-pages-js-before">window.FPConfig={delay:0,ignoreKeywords:["\/wp-admin","\/wp-login.php","\/cart","\/checkout","add-to-cart","logout","#","?",".png",".jpeg",".jpg",".gif",".svg",".webp"],maxRPS:3,hoverDelay:50}</script>
+<script data-optimized="1" id="flying-pages-js" src="https://www.daryllswer.com/wp-content/litespeed/js/fe50f626487caccffa7740157e8208e6.js?ver=c1cec" defer></script>
+<script data-optimized="1" id="vk-core-js" src="https://www.daryllswer.com/wp-content/litespeed/js/8f8564c85a1e17a4b6378ba930c6ce16.js?ver=6ce16"></script>
+<script data-optimized="1" id="ct-author-js-js-extra">var ct_author_objectL10n={"openPrimaryMenu":"open primary menu","closePrimaryMenu":"close primary menu","openChildMenu":"open child menu","closeChildMenu":"close child menu"}</script>
+<script data-optimized="1" id="ct-author-js-js" src="https://www.daryllswer.com/wp-content/litespeed/js/d898effc76afe6694e4ad6edd4f65129.js?ver=4150e"></script>
+<script data-optimized="1" async data-wp-strategy="async" fetchpriority="low" id="comment-reply-js" src="https://www.daryllswer.com/wp-content/litespeed/js/db7c6b314012e474610aee0afc93c2e1.js?ver=dc2c3"></script>
+<script data-optimized="1" id="ct-author-pro-js-js" src="https://www.daryllswer.com/wp-content/litespeed/js/3131c6e7672f9e145db8ab0107d869ae.js?ver=48bb9"></script>
+<script data-optimized="1" id="googlesitekit-events-provider-contact-form-7-js" src="https://www.daryllswer.com/wp-content/litespeed/js/bfba499859625298182bcc5b86e4bc31.js?ver=4bc31" defer></script>
+<script data-optimized="1" id="googlesitekit-events-provider-wpforms-js" src="https://www.daryllswer.com/wp-content/litespeed/js/e61afbd70616d48e99a12d9de6ef65a6.js?ver=f65a6" defer></script>
+<script id="jetpack-stats-js-before">
+_stq = window._stq || [];
+_stq.push([ "view", {"v":"ext","blog":"191168008","post":"115","tz":"5.5","srv":"www.daryllswer.com","j":"1:15.9.1"} ]);
+_stq.push([ "clickTrackerInit", "191168008", "115" ]);
+//# sourceURL=jetpack-stats-js-before
+</script>
+<script data-wp-strategy="defer" defer id="jetpack-stats-js" src="https://stats.wp.com/e-202627.js"></script>
+<script data-optimized="1" id="jetpack-blocks-assets-base-url-js-before">var Jetpack_Block_Assets_Base_Url="https://www.daryllswer.com/wp-content/plugins/jetpack/_inc/blocks/"</script>
+<script data-optimized="1" id="wp-dom-ready-js" src="https://www.daryllswer.com/wp-content/litespeed/js/39516d145bee63f76a44e5f0e1cfa728.js?ver=8953c"></script>
+<script data-optimized="1" id="wp-polyfill-js" src="https://www.daryllswer.com/wp-content/litespeed/js/bc6fd11f0a48b2c20973835839c07264.js?ver=cc4fb"></script>
+<script data-optimized="1" data-wp-strategy="defer" defer id="jetpack-block-subscriptions-js" src="https://www.daryllswer.com/wp-content/plugins/jetpack/_inc/blocks/subscriptions/view.js?minify=false&amp;ver=15.9.1"></script>
+<script data-wp-strategy="defer" id="cfturnstile-js" src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=auto"></script>
+<script data-wp-strategy="defer" defer id="cfturnstile-js-js" src="https://www.daryllswer.com/wp-content/plugins/simple-cloudflare-turnstile/js/disable-submit.js?ver=5.2"></script>
+<script id="cfturnstile-render-js-after">
+(function(){var a=0,d=false,q=false;function r(){if(d)return;var e=document.getElementById("cf-turnstile-c-2529705169");if(!e)return;if(e.innerHTML.trim()){d=true;return;}if(window.turnstile&&typeof window.turnstile.render==="function"){try{window.turnstile.render(e);d=true;}catch(_){}}}function w(){r();if(d)return;if(window.turnstile&&typeof window.turnstile.ready==="function"&&!q){q=true;try{window.turnstile.ready(r);}catch(_){}}if(!d&&a++<100){setTimeout(w,100);}}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",w);}else{w();}})();
+//# sourceURL=cfturnstile-render-js-after
+</script>
+<script data-optimized="1" defer id="akismet-frontend-js" src="https://www.daryllswer.com/wp-content/litespeed/js/89bf05b99da4ebf312a007cde8ce694b.js?ver=f94a5"></script>
+<script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://www.daryllswer.com/wp-includes/js/wp-emoji-release.min.js?ver=7.0"}}
+</script>
+<script type="module">
+/*! This file is auto-generated */
+const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(window._wpemojiSettings=a,"wpEmojiSettingsSupports"),s=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const a=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===a[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,a){let r;const o=(r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),s=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(e=>{s[e]=t(o,e,n,a)}),s}function r(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}a.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),c.toString(),p.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"});const r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=e=>{i(n=e.data),r.terminate(),t(n)})}catch(e){}i(n=f(s,u,c,p))}t(n)}).then(e=>{for(const n in e)a.supports[n]=e[n],a.supports.everything=a.supports.everything&&a.supports[n],"flag"!==n&&(a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&a.supports[n]);var t;a.supports.everythingExceptFlag=a.supports.everythingExceptFlag&&!a.supports.flag,a.supports.everything||((t=a.source||{}).concatemoji?r(t.concatemoji):t.wpemoji&&t.twemoji&&(r(t.twemoji),r(t.wpemoji)))});
+//# sourceURL=https://www.daryllswer.com/wp-includes/js/wp-emoji-loader.min.js
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a16d95607985fc34',t:'MTc4MzMzMDE1MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

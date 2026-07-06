@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daryllswer.com/schemas/post-metadata.schema.json",
+  "type": "object",
+  "required": ["id", "slug", "title", "canonical_url", "published", "modified", "source", "hashes", "featured_image", "assets_manifest"],
+  "properties": {
+    "id": {"type": "integer"},
+    "slug": {"type": "string"},
+    "title": {"type": "string"},
+    "canonical_url": {"type": "string"},
+    "published": {"type": "string"},
+    "modified": {"type": "string"},
+    "author": {"type": "object"},
+    "categories": {"type": "array"},
+    "tags": {"type": "array"},
+    "source": {"type": "object"},
+    "hashes": {"type": "object"},
+    "featured_image": {"type": ["object", "null"]},
+    "assets_manifest": {"type": "string"},
+    "validation": {"type": "object"}
+  }
+}

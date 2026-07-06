@@ -1,0 +1,89 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/",
+  "categories": [
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "IPv6 Router Advertisement (RA) is a core component of SLAAC and DHCPv6, but it’s not required for all situations. Some network vendors enable RA by default, but you should disable it when not needed.\nContinue readingIPv6 Router Advertisement: Why is it enabled by default on some network vendors?",
+  "featured_image": {
+    "alt": "",
+    "bytes": 24722,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 630,
+    "local_path": "content/posts/2023-09-27-ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/assets/featured.png",
+    "mime_type": "image/png",
+    "role": "featured",
+    "sha256": "d3c9d598f84e3aa1bd39f4527e1117dbdd4031d17c84873b11a0b29418d5ffb4",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png",
+    "width": 1200
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "full": {
+      "file": "IPv6_RA_featured_Image.png",
+      "height": 630,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png",
+      "width": 1200
+    },
+    "medium_large": {
+      "file": "IPv6_RA_featured_Image-768x403.png",
+      "filesize": 14666,
+      "height": 403,
+      "mime_type": "image/png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image-768x403.png",
+      "width": 768
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "e3f19ad650e9fcc8ee1c3be183eb2f63c73d7d1788d528f206d9f516d2e49d04",
+    "index_md_sha256": "079783264a4f79d38489d8832201a6e1e94f78f6e736f857d5998925eee580e4",
+    "rendered_article_html_sha256": "b20472298c730837d6fc9bde2ec2a4a9d3913cf64e2e0a66863a4825922944b0",
+    "wordpress_post_json_sha256": "d1994c4cad1655a9bc6a5ca95cb558e49355f0e98a41a51c6842535b0379cf24"
+  },
+  "id": 2836,
+  "modified": "2025-05-21T01:52:12",
+  "published": "2023-09-27T20:54:49",
+  "slug": "ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2836",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 25,
+      "name": "IPv6",
+      "slug": "ipv6",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "IPv6 Router Advertisement: Why is it enabled by default on some network vendors?",
+  "validation": {
+    "status": "pending"
+  }
+}

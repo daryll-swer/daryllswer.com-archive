@@ -1,0 +1,872 @@
+{
+  "_archive_filters": [],
+  "_embedded": {
+    "author": [
+      {
+        "_links": {
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "avatar_urls": {
+          "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+          "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+          "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+        },
+        "description": "Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794",
+        "id": 1,
+        "link": "https://www.daryllswer.com/author/daryll/",
+        "name": "Daryll Swer",
+        "slug": "daryll",
+        "url": "https://www.daryllswer.com/"
+      }
+    ],
+    "replies": [
+      [
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/1855"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/1856",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5136",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "https://www.daryllswer.com/",
+          "content": {
+            "rendered": "<p>A few things:<br />\n1. Ideally, the industry should&#8217;ve learnt from network design process and move the container firewalling to the container namespace itself, instead of complicating the host when there are hundreds/thousands of containers at scale. Since the namespace concept by itself is a unique network stack, it would&#8217;ve been trivial for this to happen, but it didn&#8217;t. I&#8217;ve seen some similar takes from the OpenBSD-type communities on how jails/container security should&#8217;ve been in Linux.</p>\n<p>2. Ideally as-is today, disable iptables manipulation of Docker and manage the firewall rules yourself using nftables &#8211; since you&#8217;re a software engineer, this is trivial, just automate it with some scripting and CI/CD pipeline for config management.</p>\n<p>3. I&#8217;ve been delaying nftables for too long for personal use, I plan to, later this year perhaps, create a “Daryll Swer nftables template” that matches (and improves upon) my legacy iptables rules that I&#8217;ve used in production networks. This would be use-able by Docker users as well, so keep an eye on my blog.</p>\n<p>4. Yes, don&#8217;t mix multiple networks (subnets), single custom bridge, single subnet (/64 is sufficient for scale) route that subnet over eBGP (since this is host-networking and eBGP is the recommended industry standard for host routing).</p>\n"
+          },
+          "date": "2025-10-15T20:58:47",
+          "id": 1856,
+          "link": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/#comment-1856",
+          "parent": 1855,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=1855"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/1854"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/1855",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5136",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/2379641e73e3046a64e070f0891b72e055f5be1e1f99661775c76fee0172baa2?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/2379641e73e3046a64e070f0891b72e055f5be1e1f99661775c76fee0172baa2?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/2379641e73e3046a64e070f0891b72e055f5be1e1f99661775c76fee0172baa2?s=96&r=g"
+          },
+          "author_name": "Tristan Velloza Kildaire",
+          "author_url": "https://deavmi.assigned.network",
+          "content": {
+            "rendered": "<p>Got it working.<br />\nFirstly, need to still publish the port for Docker firewalling reasons, so I had to add:</p>\n<p>&#8220;`yaml<br />\nports:<br />\n     # Port i want acessible<br />\n     &#8211; 3000/tcp<br />\n&#8220;`</p>\n<p>Secondly, having a mix of networks in `networks:` didn&#8217;t help. I removed those; only then did it seem to work.</p>\n<p>I haven&#8217;t remove ip6tables for this either, kept that there as it can still be useful for cases where I don&#8217;t do this `routed` mode.</p>\n"
+          },
+          "date": "2025-10-15T20:41:09",
+          "id": 1855,
+          "link": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/#comment-1855",
+          "parent": 1854,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=1854"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/1854",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5136",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/2379641e73e3046a64e070f0891b72e055f5be1e1f99661775c76fee0172baa2?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/2379641e73e3046a64e070f0891b72e055f5be1e1f99661775c76fee0172baa2?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/2379641e73e3046a64e070f0891b72e055f5be1e1f99661775c76fee0172baa2?s=96&r=g"
+          },
+          "author_name": "Tristan Velloza Kildaire",
+          "author_url": "https://deavmi.assigned.network",
+          "content": {
+            "rendered": "<p>I am able to get ICMPv6 packets in with this setup and have confirmed it (I exec&#8217;d into the container and then tcpdump&#8217;d).</p>\n<p>However, any port-based protocols like TCP and UDP seem to fail when sent form that same remote host (several hops away); only pinging works it seems.</p>\n<p>Any ideas? I know the container is bound correctly and I can reach 9from the container machine) the container&#8217;s port 3000. But trying to do so remotely doesn&#8217;t work.</p>\n<p>I have tried both with iptables6 set to `true` and `false`.</p>\n<p>My network config is here: <a href=\"https://github.com/deavmi/docker/blob/master/nodes/services/networks.yml#L26\" rel=\"nofollow ugc\">https://github.com/deavmi/docker/blob/master/nodes/services/networks.yml#L26</a><br />\nAnd the service, `gitea_old`, here: <a href=\"https://github.com/deavmi/docker/blob/master/nodes/services/git.yml#L23\" rel=\"nofollow ugc\">https://github.com/deavmi/docker/blob/master/nodes/services/git.yml#L23</a></p>\n"
+          },
+          "date": "2025-10-15T19:35:44",
+          "id": 1854,
+          "link": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/#comment-1854",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/1818",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5136",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/2056ca24a4f6f5b4eca4494c2a5db09c6fb2ee61efea9bfd9814c0df9e87a5fe?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/2056ca24a4f6f5b4eca4494c2a5db09c6fb2ee61efea9bfd9814c0df9e87a5fe?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/2056ca24a4f6f5b4eca4494c2a5db09c6fb2ee61efea9bfd9814c0df9e87a5fe?s=96&r=g"
+          },
+          "author_name": "Abel Martín",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>I&#8217;ve been years waiting for a write-up like yours. Hopefully, the Docker community starts embracing best practices when it comes to IPv6 networking. Your help pushing for a better understanding of IPv6 in Docker is much appreciated.</p>\n<p>Keep up the good work!</p>\n"
+          },
+          "date": "2025-05-27T03:06:01",
+          "id": 1818,
+          "link": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/#comment-1818",
+          "parent": 0,
+          "type": "comment"
+        }
+      ]
+    ],
+    "wp:featuredmedia": [
+      {
+        "_links": {
+          "about": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/types/attachment"
+            }
+          ],
+          "author": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+            }
+          ],
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media"
+            }
+          ],
+          "curies": [
+            {
+              "href": "https://api.w.org/{rel}",
+              "name": "wp",
+              "templated": true
+            }
+          ],
+          "replies": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=5178"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5178",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ],
+          "wp:attached-to": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5136",
+              "id": 5136,
+              "post_type": "post"
+            }
+          ]
+        },
+        "alt_text": "",
+        "author": 1,
+        "caption": {
+          "rendered": ""
+        },
+        "date": "2025-05-08T16:53:49",
+        "featured_media": 0,
+        "id": 5178,
+        "jetpack_sharing_enabled": true,
+        "link": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/docker-ipv6/",
+        "media_details": {
+          "file": "2025/05/Docker-IPv6.png",
+          "filesize": 20771,
+          "height": 630,
+          "image_meta": {
+            "aperture": "0",
+            "camera": "",
+            "caption": "",
+            "copyright": "",
+            "created_timestamp": "0",
+            "credit": "",
+            "focal_length": "0",
+            "iso": "0",
+            "keywords": [],
+            "orientation": "0",
+            "shutter_speed": "0",
+            "title": ""
+          },
+          "sizes": {
+            "full": {
+              "file": "Docker-IPv6.png",
+              "height": 630,
+              "mime_type": "image/png",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png",
+              "width": 1200
+            },
+            "medium_large": {
+              "file": "Docker-IPv6-768x403.png",
+              "filesize": 5313,
+              "height": 403,
+              "mime_type": "image/png",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6-768x403.png",
+              "width": 768
+            },
+            "widget-thumbnail": {
+              "file": "Docker-IPv6-75x75.png",
+              "filesize": 1030,
+              "height": 75,
+              "mime_type": "image/png",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6-75x75.png",
+              "width": 75
+            }
+          },
+          "width": 1200
+        },
+        "media_type": "image",
+        "mime_type": "image/png",
+        "slug": "docker-ipv6",
+        "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png",
+        "title": {
+          "rendered": "Docker-IPv6"
+        },
+        "type": "attachment"
+      }
+    ],
+    "wp:term": [
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/55",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3"
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=55"
+              }
+            ]
+          },
+          "id": 55,
+          "link": "https://www.daryllswer.com/category/networking/linux/",
+          "name": "Linux",
+          "slug": "linux",
+          "taxonomy": "category"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=3"
+              }
+            ]
+          },
+          "id": 3,
+          "link": "https://www.daryllswer.com/category/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "category"
+        }
+      ],
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/61",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=61"
+              }
+            ]
+          },
+          "id": 61,
+          "link": "https://www.daryllswer.com/tag/docker/",
+          "name": "Docker",
+          "slug": "docker",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/25",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=25"
+              }
+            ]
+          },
+          "id": 25,
+          "link": "https://www.daryllswer.com/tag/ipv6/",
+          "name": "IPv6",
+          "slug": "ipv6",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/34",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=34"
+              }
+            ]
+          },
+          "id": 34,
+          "link": "https://www.daryllswer.com/tag/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "post_tag"
+        }
+      ]
+    ]
+  },
+  "_links": {
+    "about": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/types/post"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts"
+      }
+    ],
+    "curies": [
+      {
+        "href": "https://api.w.org/{rel}",
+        "name": "wp",
+        "templated": true
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=5136"
+      }
+    ],
+    "self": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5136",
+        "targetHints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      }
+    ],
+    "version-history": [
+      {
+        "count": 0,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5136/revisions"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=5136"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5178"
+      }
+    ],
+    "wp:term": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/categories?post=5136",
+        "taxonomy": "category"
+      },
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/tags?post=5136",
+        "taxonomy": "post_tag"
+      }
+    ]
+  },
+  "author": 1,
+  "categories": [
+    55,
+    3
+  ],
+  "class_list": [
+    "post-5136",
+    "post",
+    "type-post",
+    "status-publish",
+    "format-standard",
+    "has-post-thumbnail",
+    "hentry",
+    "category-linux",
+    "category-networking",
+    "tag-docker",
+    "tag-ipv6",
+    "tag-networking",
+    "ratio-2-1",
+    "entry"
+  ],
+  "comment_status": "open",
+  "content": {
+    "protected": false,
+    "rendered": "<p class=\"wp-block-paragraph\"><strong>This article has been published on the <a href=\"https://blog.apnic.net/2025/05/19/how-to-configure-routed-ipv6-in-docker/\" target=\"_blank\" rel=\"noreferrer noopener\">APNIC blog</a> as well.</strong></p>\n\n\n\n<p class=\"wp-block-paragraph\">I felt the need to write this short blog post, as I still receive DMs and emails from people who were not able to get native <strong>routed</strong> IPv6 working on Docker. In this post, I’ll show you how to do it in a simplified manner, while obscuring some details of network architecture for the purpose of solely focusing on Docker.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I have been using routed IPv6 on Docker for years before the ‘<a href=\"https://github.com/moby/moby/pull/47871\" target=\"_blank\" rel=\"noreferrer noopener\">routed mode</a>‘ configuration was officially added in 2024. However, even with the updates added in <a href=\"https://docs.docker.com/engine/release-notes/27/#ipv6\" target=\"_blank\" rel=\"noreferrer noopener\">Docker v27</a>, I still see users online struggling to get IPv6 working properly.</p>\n\n\n\n<p class=\"wp-block-paragraph\">A lot of the confusion seems to stem from misinformation across the web and the lack of network engineering knowledge amongst the public in general. The concept of <strong>routing</strong> is alien-enough even in the <a href=\"https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/\" target=\"_blank\" rel=\"noreferrer noopener\">network engineering world</a>. This creates confusion for people with terms like ‘NAT’, ‘Bridge’, ‘Host Driver’, and ‘NDP Proxy’ in the context of Docker.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I had planned to write a more detailed article on how to do IPv6 with Docker in collaboration with Docker Inc. and publish it <a href=\"https://docs.docker.com/guides/\" target=\"_blank\" rel=\"noreferrer noopener\">here</a>. But life got in the way. I still plan to make it happen one day, so keep an eye on this <a href=\"https://github.com/docker/docs/issues/19556\" target=\"_blank\" rel=\"noreferrer noopener\">GitHub issue</a> for updates.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-what-does-routed-really-mean\">What does ‘routed’ really mean?</h2>\n\n\n\n<p class=\"wp-block-paragraph\">In this context, the IPv6 prefix is reachable via native Layer 3 packets forwarding without hacks like NAT66 and/or NDP proxying. Specifically, in the Docker additional context, it means the Docker ‘network’ isn’t bridged with the <a href=\"https://docs.docker.com/engine/network/drivers/macvlan/#bridge-mode\" target=\"_blank\" rel=\"noreferrer noopener\">host’s underlying network infrastructure</a>, and containers aren’t relying on the host’s IPv6 address for connectivity.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In other words, routing means <strong>no</strong> bridging, <strong>no</strong> NAT-ting, <strong>no</strong> sharing of the host’s public IPv6 address on the WAN interface. It’s completely Layer 3 native packet forwarding from your network infrastructure to the host’s Docker network segment.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-assumptions\">Assumptions</h2>\n\n\n\n<ol class=\"wp-block-list\">\n<li>We will use <a href=\"https://docs.docker.com/compose/\" target=\"_blank\" rel=\"noreferrer noopener\">Docker Compose</a>.</li>\n\n\n\n<li>You know how routing works.</li>\n\n\n\n<li>You know <a href=\"https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/\" target=\"_blank\" rel=\"noreferrer noopener\">how to route an IPv6 prefix</a> (preferably a /64) from the underlay network to the Docker host.</li>\n\n\n\n<li>The Docker host can be a Pi, a laptop running Debian, a server box running a hypervisor or a regular Debian OS, or a Virtual Machine (VM) behind a hypervisor or possibly behind a KubeVirt.</li>\n\n\n\n<li>The Docker host’s iptables/nftables is clean; there’s no user-defined configuration that could break Docker and/or IPv6 networking.</li>\n\n\n\n<li>Let’s assume our Docker public IPv6 Prefix is <code>2001:db8::/64</code>, and it is routed to the Docker host from the underlying network.</li>\n</ol>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-routing-protocol-recommendation\">Routing Protocol Recommendation</h2>\n\n\n\n<p class=\"wp-block-paragraph\">I recommend BGP as the preferred routing protocol, as it’s the standard approach in data centre Clos fabrics. Alternatively, <a href=\"https://youtu.be/jWdD8SCwzHk\" target=\"_blank\" rel=\"noreferrer noopener\">is-is</a> is a viable option. </p>\n\n\n\n<p class=\"wp-block-paragraph\">As a best practice, remember to route the IPv6 prefix to a blackhole with a high administrative distance (or metric) on the Docker host. This acts as a safety net if Docker fails in production. Any traffic that was previously live at scale would now just get routed to the blackhole, minimizing CPU load that would otherwise be spent generating ICMPv6 ‘Destination Unreachable’ packets.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-docker-compose-configuration\">Docker Compose configuration</h2>\n\n\n\n<p class=\"wp-block-paragraph\">You can create a custom Docker bridge and assign the routed IPv6 prefix to it. From here, the rest is simple; containers will get an IPv6 address from the configured prefix, or you can also assign a static IPv6 address to a container if you prefer that.</p>\n\n\n\n<pre class=\"wp-block-code\"><code>networks:\n  ipv6_native:\n    driver: bridge\n    driver_opts:\n      com.docker.network.bridge.gateway_mode_ipv6: \"<strong>routed</strong>\"\n    enable_ipv6: true\n    ipam:\n      driver: default\n      config:\n        - subnet: 2001:db8::/64\n          gateway: 2001:db8::1</code></pre>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-additional-tips-on-firewall-rules\">Additional tips on firewall rules</h2>\n\n\n\n<p class=\"wp-block-paragraph\">I recommend using network engineering-centric firewall rules whereby the rules are constructed to permit <strong>solicited</strong> peer-to-peer (P2P) traffic in both directions, permit certain ports directly, permit ICMPv4/v6, permit UDP traceroute etc. To achieve this, you can disable Docker’s manipulation of the iptables and ip6tables (or eventually nftables).</p>\n\n\n\n<p class=\"wp-block-paragraph\">Disable Docker’s iptables/ip6tables manipulation using <a href=\"https://docs.docker.com/engine/network/packet-filtering-firewalls/#prevent-docker-from-manipulating-iptables\" target=\"_blank\" rel=\"noreferrer noopener\">this</a>:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>#Add these lines in your /etc/docker/daemon.json\n{\n  \"iptables\": false,\n  \"ip6tables\": false\n}</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">But remember, you need to build your own rules to protect the host and containers along with NAT rules for IPv4 to work. A quick example of NAT-ting IPv4 using nftables; the ‘persistent’ keyword just helps make STUN work better from the client-side due to persistent port mapping between <a href=\"https://datatracker.ietf.org/doc/html/rfc1918\" target=\"_blank\" rel=\"noreferrer noopener\">RFC1918</a> address and the public IP, but this is a complex topic of its own and outside the scope of this post. Just move everything to IPv6 and forget about these NAT-related hacks and complexities.</p>\n\n\n\n<pre class=\"wp-block-code\"><code>table inet docker {\n    chain postrouting {\n\ttype nat hook postrouting priority 100; policy accept;\n\tip saddr 172.16.0.0/16 oifname \"eth0\" snat to 192.0.2.1 persistent;\n    }\n}</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">If you want to continue using Docker’s built-in iptables manipulation, then remember, even with routed IPv6, you still need to <a href=\"https://docs.docker.com/get-started/docker-concepts/running-containers/publishing-ports/#use-docker-compose\" target=\"_blank\" rel=\"noreferrer noopener\">publish the ports</a> that you want global accessibility to.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-conclusion\">Conclusion</h2>\n\n\n\n<p class=\"wp-block-paragraph\">As we’ve seen in this post, routed IPv6 with Docker doesn’t need to be complex.</p>\n"
+  },
+  "date": "2025-05-19T08:30:00",
+  "date_gmt": "2025-05-19T03:00:00",
+  "excerpt": {
+    "protected": false,
+    "rendered": "<p>How to set up native routed IPv6 in Docker with routed mode.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/\">Continue reading<span class=\"screen-reader-text\">How to configure routed IPv6 in Docker</span></a></div>\n"
+  },
+  "featured_media": 5178,
+  "format": "standard",
+  "guid": {
+    "rendered": "https://www.daryllswer.com/?p=5136"
+  },
+  "id": 5136,
+  "jetpack-related-posts": [
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "22 April 2025",
+      "excerpt": "Yet another blog article on IPv4, NAT, CGNAT, Hairpinning and native IPv6.",
+      "format": false,
+      "id": 5018,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Let&#8217;s talk about CGNAT and IPv6, yet again.",
+      "url": "https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/",
+      "url_meta": {
+        "origin": 5136,
+        "position": 0
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/architecture/",
+        "text": "Architecture"
+      },
+      "classes": [],
+      "context": "In &quot;Architecture&quot;",
+      "date": "4 June 2026",
+      "excerpt": "How to design and structure BGP Router IDs in IPv6-native networks.",
+      "format": false,
+      "id": 5324,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "BGP Router ID Structuring in IPv6 Native Networks",
+      "url": "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/",
+      "url_meta": {
+        "origin": 5136,
+        "position": 1
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "1 July 2022",
+      "excerpt": "An article about setting up an Autonomous System (AS) from scratch.",
+      "format": false,
+      "id": 970,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=700%2C400&ssl=1 2x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How did I set up my own Autonomous System?",
+      "url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/",
+      "url_meta": {
+        "origin": 5136,
+        "position": 2
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/architecture/",
+        "text": "Architecture"
+      },
+      "classes": [],
+      "context": "In &quot;Architecture&quot;",
+      "date": "4 April 2023",
+      "excerpt": "An extensive article on IPv6 best practices, architecture, and implementation with real-life examples for engineers and operators.",
+      "format": false,
+      "id": 1512,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "IPv6 Architecture and Subnetting Guide for Network Engineers and Operators",
+      "url": "https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/",
+      "url_meta": {
+        "origin": 5136,
+        "position": 3
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "27 September 2023",
+      "excerpt": "IPv6 Router Advertisement (RA) is a core component of SLAAC and DHCPv6, but it's not required for all situations. Some network vendors enable RA by default, but you should disable it when not needed.",
+      "format": false,
+      "id": 2836,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "IPv6 Router Advertisement: Why is it enabled by default on some network vendors?",
+      "url": "https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/",
+      "url_meta": {
+        "origin": 5136,
+        "position": 4
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "25 March 2021",
+      "excerpt": "An article on the limitations of CGNAT and what can be done to work around them.",
+      "format": false,
+      "id": 29,
+      "img": {
+        "alt_text": "",
+        "height": 0,
+        "src": "",
+        "width": 0
+      },
+      "rel": "",
+      "title": "Shortcomings of CGNAT and Potential Workarounds",
+      "url": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
+      "url_meta": {
+        "origin": 5136,
+        "position": 5
+      }
+    }
+  ],
+  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png",
+  "jetpack_sharing_enabled": true,
+  "link": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/",
+  "meta": {
+    "_jetpack_dont_email_post_to_subs": false,
+    "_jetpack_feature_clip_id": 0,
+    "_jetpack_memberships_contains_paid_content": false,
+    "_jetpack_memberships_contains_paywalled_content": false,
+    "_jetpack_newsletter_access": "",
+    "_jetpack_newsletter_tier_id": 0,
+    "footnotes": "",
+    "jetpack_post_was_ever_published": false
+  },
+  "modified": "2025-05-19T12:04:34",
+  "modified_gmt": "2025-05-19T06:34:34",
+  "ping_status": "open",
+  "slug": "how-to-configure-routed-ipv6-in-docker",
+  "status": "publish",
+  "sticky": false,
+  "tags": [
+    61,
+    25,
+    34
+  ],
+  "template": "",
+  "title": {
+    "rendered": "How to configure routed IPv6 in Docker"
+  },
+  "type": "post"
+}

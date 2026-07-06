@@ -1,0 +1,120 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      }
+    ],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      },
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/",
+  "categories": [
+    {
+      "id": 5,
+      "name": "DC/Enterprise",
+      "slug": "dc-enterprise",
+      "taxonomy": "category"
+    },
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "A small article detailing an observation on BGP Zombies in Juniper platform.\nContinue readingNavigating a BGP Zombie Outbreak on Juniper Routers",
+  "featured_image": {
+    "alt": "",
+    "bytes": 267140,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 404,
+    "local_path": "content/posts/2023-03-28-navigating-a-bgp-zombie-outbreak-on-juniper-routers/assets/featured.webp",
+    "mime_type": "image/webp",
+    "role": "featured",
+    "sha256": "57ba97a3b485cedf2be5e42a771b2a421472cd6703e4aeb69dbba9372292a148",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp",
+    "width": 1110
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "full": {
+      "file": "Zombie-routes_FT.webp",
+      "height": 404,
+      "mime_type": "image/webp",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp",
+      "width": 1110
+    },
+    "medium_large": {
+      "file": "Zombie-routes_FT-768x280.webp",
+      "filesize": 23664,
+      "height": 280,
+      "mime_type": "image/webp",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT-768x280.webp",
+      "width": 768
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "75db3e1e7af414814b6785e39fb0fcd3a9aea64ec8e9add50102cbf3a8676000",
+    "index_md_sha256": "e010c7616ffe8c95304aa7be66debcd5ee776fc2942dc6776bb723d285bbd0cf",
+    "rendered_article_html_sha256": "fe1bb6efe72b01f313a699206141ed12b1c9a74e3ab7b28d3995b7599d3c4023",
+    "wordpress_post_json_sha256": "340057e334c073ec1f24b352a17b5ed80306ee9565d657f9af17969ee99e9a58"
+  },
+  "id": 2053,
+  "modified": "2025-05-21T01:47:21",
+  "published": "2023-03-28T13:18:58",
+  "slug": "navigating-a-bgp-zombie-outbreak-on-juniper-routers",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2053",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 14,
+      "name": "BGP",
+      "slug": "bgp",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 28,
+      "name": "Juniper",
+      "slug": "juniper",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 29,
+      "name": "JunOS",
+      "slug": "junos",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "Navigating a BGP Zombie Outbreak on Juniper Routers",
+  "validation": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/",
+  "categories": [
+    {
+      "id": 58,
+      "name": "Home Networking",
+      "slug": "home-networking",
+      "taxonomy": "category"
+    },
+    {
+      "id": 6,
+      "name": "ISP",
+      "slug": "isp-networking",
+      "taxonomy": "category"
+    },
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "The operational and financial feasibility of MPLS-delivered IP Transit-To-The-Home (IPTTTH).\nContinue readingHow to bring data centre-like connectivity to your home with IPTTTH",
+  "featured_image": {
+    "alt": "",
+    "bytes": 304976,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 1706,
+    "local_path": "content/posts/2025-05-26-how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/assets/featured.jpg",
+    "mime_type": "image/jpeg",
+    "role": "featured",
+    "sha256": "374e4e046b7c574cda68309a3f0ecd0c2a7523b4f59bde79fe3e64ab45bd8023",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg",
+    "width": 2560
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "1536x1536": {
+      "file": "Data-centre_cables_FT-1536x1024.jpg",
+      "filesize": 141609,
+      "height": 1024,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-1536x1024.jpg",
+      "width": 1536
+    },
+    "2048x2048": {
+      "file": "Data-centre_cables_FT-2048x1365.jpg",
+      "filesize": 215982,
+      "height": 1365,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-2048x1365.jpg",
+      "width": 2048
+    },
+    "full": {
+      "file": "Data-centre_cables_FT-scaled.jpg",
+      "height": 1706,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg",
+      "width": 2560
+    },
+    "medium": {
+      "file": "Data-centre_cables_FT-3241x2160.jpg",
+      "filesize": 453482,
+      "height": 2160,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-3241x2160.jpg",
+      "width": 3241
+    },
+    "medium_large": {
+      "file": "Data-centre_cables_FT-768x512.jpg",
+      "filesize": 53824,
+      "height": 512,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-768x512.jpg",
+      "width": 768
+    },
+    "thumbnail": {
+      "file": "Data-centre_cables_FT-1620x1080.jpg",
+      "filesize": 153440,
+      "height": 1080,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-1620x1080.jpg",
+      "width": 1620
+    },
+    "widget-thumbnail": {
+      "file": "Data-centre_cables_FT-75x75.jpg",
+      "filesize": 5311,
+      "height": 75,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-75x75.jpg",
+      "width": 75
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "5805996b3bcfc6f9e0b11c6540b54e05ff4db4936449576f6f5077a2a845561a",
+    "index_md_sha256": "9de43e7472dc4517d1038ff9aee0eb7af723f0f279b4dc9b541f9100283391bb",
+    "rendered_article_html_sha256": "22b7a4ee24bca27a17c930aa1b95d6328f1e734b5652233b4cad67cddcc88b3c",
+    "wordpress_post_json_sha256": "0bca81260aa9f41c06edfceb98b844d5644d31fafccfb1c98f411e915af4529f"
+  },
+  "id": 4285,
+  "modified": "2025-08-29T16:02:17",
+  "published": "2025-05-26T08:30:00",
+  "slug": "how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/4285",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 14,
+      "name": "BGP",
+      "slug": "bgp",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 24,
+      "name": "IPv4",
+      "slug": "ipv4",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 25,
+      "name": "IPv6",
+      "slug": "ipv6",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 59,
+      "name": "MPLS",
+      "slug": "mpls",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 34,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "How to bring data centre-like connectivity to your home with IPTTTH",
+  "validation": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "assets": [
+    {
+      "alt": "",
+      "bytes": 189397,
+      "caption": "",
+      "detection_method": "rest_embedded_wp_featuredmedia",
+      "height": 1050,
+      "local_path": "content/posts/2025-04-22-lets-talk-about-cgnat-and-ipv6-yet-again/assets/featured.png",
+      "mime_type": "image/png",
+      "role": "featured",
+      "sha256": "e810ea40caccf16fe2eb236db34d6461b117299e3b1a48b07f7e4f0db03f2e54",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png",
+      "width": 2000
+    }
+  ],
+  "generated_at": "2026-07-06T09:28:35+00:00",
+  "post_id": 5018,
+  "post_slug": "lets-talk-about-cgnat-and-ipv6-yet-again"
+}

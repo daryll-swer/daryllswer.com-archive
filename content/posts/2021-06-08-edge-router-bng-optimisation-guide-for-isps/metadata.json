@@ -1,0 +1,207 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      },
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "99134c20b7efa118e827bc1a33491b7baa1c458b8612e0758df4febf7a904e10",
+        "tag": "p"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/",
+  "categories": [
+    {
+      "id": 6,
+      "name": "ISP",
+      "slug": "isp-networking",
+      "taxonomy": "category"
+    },
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "A best practices guide for engineers looking to improve network performance, security, and consistency using MikroTik for edge routers and BNG.\nContinue readingEdge Router & BNG Optimisation Guide for ISPs",
+  "featured_image": {
+    "alt": "",
+    "bytes": 1177170,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 3024,
+    "local_path": "content/posts/2021-06-08-edge-router-bng-optimisation-guide-for-isps/assets/featured.jpg",
+    "mime_type": "image/jpeg",
+    "role": "featured",
+    "sha256": "c39d8d721ccb142a3907ecfa20a3bebcd286aa75e15b041338742ab23aa83f13",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg",
+    "width": 4032
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "1536x1536": {
+      "file": "834B1158-30C5-42F5-A513-FDA123138559-1536x1152.jpg",
+      "filesize": 59635,
+      "height": 1152,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559-1536x1152.jpg",
+      "width": 1536
+    },
+    "2048x2048": {
+      "file": "834B1158-30C5-42F5-A513-FDA123138559-2048x1536.jpg",
+      "filesize": 117529,
+      "height": 1536,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559-2048x1536.jpg",
+      "width": 2048
+    },
+    "full": {
+      "file": "834B1158-30C5-42F5-A513-FDA123138559.jpg",
+      "height": 3024,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg",
+      "width": 4032
+    },
+    "large": {
+      "file": "834B1158-30C5-42F5-A513-FDA123138559-2880x2160.jpg",
+      "filesize": 273338,
+      "height": 2160,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559-2880x2160.jpg",
+      "width": 2880
+    },
+    "medium": {
+      "file": "834B1158-30C5-42F5-A513-FDA123138559-1440x1080.jpg",
+      "filesize": 51453,
+      "height": 1080,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559-1440x1080.jpg",
+      "width": 1440
+    },
+    "medium_large": {
+      "file": "834B1158-30C5-42F5-A513-FDA123138559-768x576.jpg",
+      "filesize": 15888,
+      "height": 576,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559-768x576.jpg",
+      "width": 768
+    },
+    "thumbnail": {
+      "file": "834B1158-30C5-42F5-A513-FDA123138559-1280x720.jpg",
+      "filesize": 33399,
+      "height": 720,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559-1280x720.jpg",
+      "width": 1280
+    }
+  },
+  "hashes": {
+    "canonical_page_html_sha256": "f7552847d19c387ef74f86ea4fcc8bc48785d5bb6306f9f52efc7e0fbae8bf25",
+    "index_md_sha256": "4ba5cab661536c3431db24fc13485460f488b6cc630f4de1a6569aaa86a61ded",
+    "rendered_article_html_sha256": "052be600754e2e38cee6f838fe4b2711f25d0e42469288f4d091fb7fd68215c9",
+    "wordpress_post_json_sha256": "3ab85705c55b316bc6056199f62c38af1321c0af06a8013be511b1c4ba78c014"
+  },
+  "id": 269,
+  "modified": "2026-05-30T00:09:08",
+  "published": "2021-06-08T20:32:48",
+  "slug": "edge-router-bng-optimisation-guide-for-isps",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/269",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 15,
+      "name": "BNG",
+      "slug": "bng",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 16,
+      "name": "CGNAT",
+      "slug": "cgnat",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 17,
+      "name": "Core",
+      "slug": "core",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 18,
+      "name": "Double NAT",
+      "slug": "double-nat",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 19,
+      "name": "Edge",
+      "slug": "edge",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 24,
+      "name": "IPv4",
+      "slug": "ipv4",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 25,
+      "name": "IPv6",
+      "slug": "ipv6",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 26,
+      "name": "ISPs",
+      "slug": "isps",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 31,
+      "name": "MikroTik",
+      "slug": "mikrotik",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 33,
+      "name": "NAT",
+      "slug": "nat",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 34,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 36,
+      "name": "RFC4638",
+      "slug": "rfc4638",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "Edge Router & BNG Optimisation Guide for ISPs",
+  "validation": {
+    "status": "pending"
+  }
+}

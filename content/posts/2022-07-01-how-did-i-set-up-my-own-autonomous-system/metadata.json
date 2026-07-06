@@ -1,0 +1,140 @@
+{
+  "archive_filters": {
+    "applied": true,
+    "article_body_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      },
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "355c7987352eb1f9e3d8be819ac9de0cfc8c2945d95a47ec6e953c3dc0fed613",
+        "tag": "p"
+      }
+    ],
+    "canonical_page_exclusions": [
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
+        "tag": "li"
+      },
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+        "tag": "h4"
+      },
+      {
+        "filter": "donation_or_support_cta",
+        "redacted": true,
+        "removed_text_sha256": "355c7987352eb1f9e3d8be819ac9de0cfc8c2945d95a47ec6e953c3dc0fed613",
+        "tag": "p"
+      }
+    ]
+  },
+  "assets_manifest": "assets/manifest.json",
+  "author": {
+    "id": 1,
+    "name": "Daryll Swer"
+  },
+  "canonical_url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/",
+  "categories": [
+    {
+      "id": 3,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "category"
+    }
+  ],
+  "excerpt": "An article about setting up an Autonomous System (AS) from scratch.\nContinue readingHow did I set up my own Autonomous System?",
+  "featured_image": {
+    "alt": "",
+    "bytes": 16765,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
+    "height": 280,
+    "local_path": "content/posts/2022-07-01-how-did-i-set-up-my-own-autonomous-system/assets/featured.png",
+    "mime_type": "image/png",
+    "role": "featured",
+    "sha256": "33beb427eb42adf3a072916c599b12a83f9a4df6db511a885c10c3db4e7a05d3",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png",
+    "width": 768
+  },
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {},
+  "hashes": {
+    "canonical_page_html_sha256": "3c349f08045c1597e1586d9d35d789d38b7c6228d040c21aff05ac92e509785e",
+    "index_md_sha256": "5c4b84d2a274fe83da363c917e2c6d2b378a57c9e8cf683eff2604432eb4445b",
+    "rendered_article_html_sha256": "1002a75c9563e5696d72d02c35eb1e0f39313360ecb998604f852a6c2cab390a",
+    "wordpress_post_json_sha256": "35079d1a314e7148b88aef8be96db7ef4a98bcdac368282855ae2a036207e4aa"
+  },
+  "id": 970,
+  "modified": "2025-06-23T20:41:31",
+  "published": "2022-07-01T11:27:21",
+  "slug": "how-did-i-set-up-my-own-autonomous-system",
+  "source": {
+    "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/970",
+    "canonical_html_path": "source/canonical-page.html",
+    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "rendered_article_path": "source/rendered-article.html",
+    "wordpress_post_path": "source/wordpress-post.json"
+  },
+  "tags": [
+    {
+      "id": 9,
+      "name": "AS",
+      "slug": "as",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 10,
+      "name": "ASN",
+      "slug": "asn",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 11,
+      "name": "Autonomous System",
+      "slug": "autonomous-system",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 20,
+      "name": "Geofeed",
+      "slug": "geofeed",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 21,
+      "name": "GeoIP",
+      "slug": "geoip",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 22,
+      "name": "IP Geolocation",
+      "slug": "ip-geolocation",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 34,
+      "name": "Networking",
+      "slug": "networking",
+      "taxonomy": "post_tag"
+    },
+    {
+      "id": 37,
+      "name": "RFC8805",
+      "slug": "rfc8805",
+      "taxonomy": "post_tag"
+    }
+  ],
+  "title": "How did I set up my own Autonomous System?",
+  "validation": {
+    "status": "pending"
+  }
+}
