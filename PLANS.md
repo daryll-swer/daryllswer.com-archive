@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; README/media/workbook update pushed and live Pages verified
+- Status: in progress; clean GitHub Pages root URL polish locally verified
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-06 12:54 UTC
+- Last updated: 2026-07-06 13:39 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -31,14 +31,15 @@
   - Complete locally: README is reader-focused; maintainer commands moved to `AGENTS.md` and `docs/MIRRORING.md`.
   - Complete locally: WordPress media downloads preserve URL basenames and direct response bytes wherever possible, with filename-preservation fields in asset manifests.
   - Complete locally: AS141253 sheet is rendered as a CSV-backed tabbed `workbook.html` and generated Pages workbook.
+  - Complete locally: generated root navigation/canonical handling now uses clean GitHub Pages directory URLs instead of human-facing `index.html` links.
 - Last material update:
-  - 2026-07-06 12:54 UTC Pushed commit `982244a` and verified GitHub Pages rebuilt the README/media/workbook update.
+  - 2026-07-06 13:39 UTC Regenerated, validated, and browser-checked the clean-root-link update locally.
 - Next pickup action:
-  - Optional repository metadata polish and future sync automation.
+  - Commit, push, and verify Pages rebuild.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - None for the current README/media/workbook update.
+  - Live Pages verification is pending for the clean-root-link update.
 
 ## Purpose / Big Picture
 
@@ -105,6 +106,9 @@
 - [x] 2026-07-06 12:45 UTC Added CSV-backed tabbed AS141253 workbook generation.
 - [x] 2026-07-06 12:51 UTC Regenerated and browser-checked the updated Pages output.
 - [x] 2026-07-06 12:54 UTC Validated, committed `982244a`, pushed to `main`, and verified GitHub Pages rebuild.
+- [x] 2026-07-06 13:34 UTC Implemented clean GitHub Pages root URL navigation/canonical rule.
+- [x] 2026-07-06 13:39 UTC Regenerated, validated, and browser-checked clean root links locally.
+- [ ] Commit, push, and verify Pages rebuild for clean root links.
 
 ## Decision Log
 
@@ -178,6 +182,11 @@
   - Date/Author: 2026-07-06, user/Codex
   - Status: final locally
   - Impact: `workbook.html` is generated under `data/sheets/...`; Pages serves the same workbook as `docs/sheets/as141253-ipv6-architecture-example/index.html`.
+- Decision: Prefer clean GitHub Pages directory URLs for human-facing root links.
+  - Rationale: GitHub Pages still needs `docs/index.html` as the static entry file, but reader-facing links should use `./`, `../../`, or the clean project root URL.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final locally
+  - Impact: `scripts/render-site.py` no longer generates visible root navigation links to `index.html`; `scripts/validate-mirror.py` guards against regression.
 
 ## Validation and Acceptance
 
@@ -205,6 +214,12 @@
   - `git diff --check`: passed at 2026-07-06 12:51 UTC.
   - GitHub Pages API: passed at 2026-07-06 12:54 UTC; status `built`, source `main` `/docs`.
   - Live route check: passed at 2026-07-06 12:54 UTC; homepage, IPv6 article, AS141253 workbook, ODS artefact, and `Scaffold_FT.png` returned HTTP 200. Live workbook had 9 tabs/9 panels; live homepage had 19 post cards; live article had 2 embed wrappers and the local sheet link.
+  - `make render-site validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 13:35 UTC; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
+  - Local browser click QA against `http://127.0.0.1:4173/`: passed at 2026-07-06 13:39 UTC; homepage canonical used the clean project root, homepage Index used `./`, article Index used `../../`, workbook Archive index used `../../`, and click targets resolved to `/` without `index.html`.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-06 13:39 UTC.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 13:39 UTC; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
+  - `git diff --check`: passed at 2026-07-06 13:39 UTC.
+  - `rg` check for generated `index.html` root navigation/canonical regressions under `docs/*.html`: no matches at 2026-07-06 13:39 UTC.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`

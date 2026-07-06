@@ -5,9 +5,9 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: README, media fidelity, and sheet workbook update
-- Status: complete; README/media/workbook update pushed and live Pages verified
-- Last updated: 2026-07-06 12:54 UTC
+- Current sprint / workstream: GitHub Pages clean root URL polish
+- Status: in progress; local validation/browser QA passed, commit/push pending
+- Last updated: 2026-07-06 13:39 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -76,6 +76,9 @@
 - AS141253 tabbed workbook:
   - Status: complete and pushed
   - Notes: `scripts/export-google-sheet.py` generates `data/sheets/as141253-ipv6-architecture-example/workbook.html`; `scripts/render-site.py` publishes it as the Pages sheet route.
+- Clean GitHub Pages root URL navigation:
+  - Status: complete and locally verified
+  - Notes: `docs/index.html` remains the generated Pages entry file, but visible root navigation and root canonical metadata now use clean directory URLs.
 
 ## Execution Log
 
@@ -171,6 +174,14 @@
   - Action: Pushed commit `982244a` and verified GitHub Pages rebuilt from `main` `/docs`.
   - Evidence: GitHub Pages API reported `built`; live homepage, IPv6 article, AS141253 workbook, ODS artefact, and `Scaffold_FT.png` returned HTTP 200. Live workbook had 9 tabs/9 panels, live homepage had 19 post cards, and live article had 2 embed wrappers plus the local sheet link.
   - Result: pass
+- 2026-07-06 13:34 UTC:
+  - Action: Implemented clean GitHub Pages root URL navigation/canonical handling.
+  - Evidence: `scripts/render-site.py`, `scripts/validate-mirror.py`, `ARCHITECTURE.md`, `docs/MIRRORING.md`, and `docs/DECISIONS.md`.
+  - Result: pending regeneration and verification
+- 2026-07-06 13:39 UTC:
+  - Action: Regenerated Pages output and browser-checked clean root navigation locally.
+  - Evidence: `make render-site validate scan-secrets PYTHON=<bundled-python>` passed with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings. Browser click QA confirmed homepage Index `./`, article Index `../../`, workbook Archive index `../../`, and all clicked routes resolved to `/` without `index.html`. Final `py_compile`, `make validate scan-secrets`, `git diff --check`, and generated HTML regression search also passed.
+  - Result: pass locally
 
 ## Tests and Verification
 
@@ -200,18 +211,18 @@
   - `git diff --check`: pass at 2026-07-06 12:51 UTC.
   - GitHub Pages API and live route checks: pass at 2026-07-06 12:54 UTC.
 - Not run:
-  - None for the current README/media/workbook update.
+  - Live Pages verification for the clean-root-link update.
 
 ## Next Pickup
 
 - Next action:
-  - Optional repository metadata polish and future sync automation.
+  - Commit, push, and verify Pages rebuild.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for the current README/media/workbook update.
+  - Clean-root-link update still needs live Pages verification after push.
 
 ## Completion Criteria
 
