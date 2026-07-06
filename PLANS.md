@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: in progress; targeted article refresh, drift automation, and IPv6 hierarchy PoC implemented locally
+- Status: complete; targeted article refresh, drift automation, and IPv6 hierarchy PoC pushed and live verified
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-06 18:04 UTC
+- Last updated: 2026-07-06 18:09 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -38,16 +38,17 @@
   - Complete locally: canonical drift automation was added with a weekly/manual GitHub Actions workflow, `archive-status.json`, and `docs/CANONICAL_DRIFT.md`.
   - Complete locally: drift automation uses a `healthy` -> `degraded` -> `canonical_unavailable` -> `frozen_archive` state model; `frozen_archive` no-ops before canonical network requests.
   - Complete locally: AS141253 now has a CSV-derived IPv6 prefix containment tree proof of concept with HTML, JSON, and Graphviz DOT artefacts.
-  - Complete locally: validation and browser QA passed for refreshed article featured images, workbook link, and CIDR hierarchy page.
+  - Complete: validation and browser QA passed for refreshed article featured images, workbook link, and CIDR hierarchy page.
+  - Complete: commit `6b00f09` pushed to `main`; GitHub Pages deployed successfully and live routes were verified.
 - Last material update:
-  - 2026-07-06 18:04 UTC Implemented targeted article refresh, canonical drift automation with frozen-archive sentinel, and AS141253 CIDR hierarchy proof of concept; local validation/browser QA passed.
+  - 2026-07-06 18:09 UTC Pushed commit `6b00f09`, verified GitHub Pages deployment succeeded, and live-checked refreshed article images plus AS141253 hierarchy routes.
 - Next pickup action:
-  - Commit, push to `main`, and verify live GitHub Pages output after deployment.
+  - Optional: decide whether to mirror the non-target A10 PDF drift reported for `lets-talk-about-cgnat-and-ipv6-yet-again`.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
   - Current drift report flags one non-target article drift: `lets-talk-about-cgnat-and-ipv6-yet-again` links a WordPress-hosted A10 PDF that is not yet mirrored.
 - Verification gap:
-  - Live GitHub Pages verification pending until after push/deploy.
+  - None for the current update.
 
 ## Purpose / Big Picture
 
@@ -122,6 +123,7 @@
 - [x] 2026-07-06 17:59 UTC Added CSV-derived AS141253 IPv6 CIDR hierarchy HTML/JSON/DOT proof of concept.
 - [x] 2026-07-06 18:01 UTC Regenerated sheet artefacts and GitHub Pages output.
 - [x] 2026-07-06 18:04 UTC Validation, public-safety scan, script compile, whitespace check, and local browser QA passed.
+- [x] 2026-07-06 18:09 UTC Committed `6b00f09`, pushed to `main`, verified Pages deployment success, and live-checked updated routes/assets.
 
 ## Decision Log
 
@@ -251,6 +253,8 @@
   - `git diff --check`: passed at 2026-07-06 18:01 UTC.
   - `make validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 18:01 UTC; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
   - Local browser QA against `http://127.0.0.1:4173/`: passed at 2026-07-06 18:04 UTC; homepage had 19 cards, refreshed target articles had updated featured images, lazy inline images loaded after scroll, workbook linked the CIDR hierarchy, hierarchy page had 153 nodes, and desktop/mobile checks had no page overflow.
+  - GitHub Pages deployment for `6b00f09`: passed at 2026-07-06 18:08 UTC; pages-build-deployment completed successfully.
+  - Live Pages check: passed at 2026-07-06 18:09 UTC; root showed `Shortcomings_CGNAT_FT-scaled.jpg` and `Multi_WAN_FT-scaled.jpg`, target article/image URLs returned HTTP 200, AS141253 workbook/hierarchy/JSON/DOT routes returned HTTP 200, and hierarchy HTML included the clean `./` workbook link.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`
@@ -280,6 +284,6 @@
 - Achieved:
   - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, preview generation, and generated GitHub Pages site completed.
 - Remaining:
-  - Push and live Pages verification for the current local implementation.
+  - Optional follow-up: resolve the non-target A10 PDF drift currently reported by `docs/CANONICAL_DRIFT.md`.
 - Retrospective timestamp:
   - 2026-07-06 09:20 UTC

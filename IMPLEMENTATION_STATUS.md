@@ -6,8 +6,8 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: targeted post refresh, canonical drift automation, and IPv6 hierarchy PoC
-- Status: in progress locally; validation and browser QA passed, push/live verification pending
-- Last updated: 2026-07-06 18:04 UTC
+- Status: complete; pushed to `main` and live GitHub Pages output verified
+- Last updated: 2026-07-06 18:09 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -80,19 +80,19 @@
   - Status: complete and pushed
   - Notes: `docs/index.html` remains the generated Pages entry file, but visible root navigation and root canonical metadata now use clean directory URLs.
 - Targeted article refresh:
-  - Status: complete locally
+  - Status: complete and pushed
   - Notes: The three requested articles were re-synced from canonical WordPress. Featured media now uses `Shortcomings_CGNAT_FT-scaled.jpg` for the CGNAT shortcomings article and `Multi_WAN_FT-scaled.jpg` for both Multi-WAN articles, with source filenames preserved.
 - Targeted sync tooling:
-  - Status: complete locally
+  - Status: complete and pushed
   - Notes: `scripts/sync-wordpress-posts.py` supports `--slug` and `--slugs` to refresh selected posts while preserving the rest of `archive-manifest.json`.
 - Canonical drift automation:
-  - Status: complete locally
+  - Status: complete and pushed
   - Notes: `.github/workflows/canonical-drift.yml` runs weekly/manual checks. `scripts/check-canonical-drift.py` writes `archive-status.json` and `docs/CANONICAL_DRIFT.md`, with `frozen_archive` no-op behaviour for permanent canonical failure.
 - AS141253 IPv6 hierarchy proof of concept:
-  - Status: complete locally
+  - Status: complete and pushed
   - Notes: `scripts/ipv6_hierarchy.py` derives a rooted IPv6 prefix containment tree from CSV, producing HTML, JSON, and Graphviz DOT artefacts. Current graph has 153 nodes and max depth 5.
 - Drift report:
-  - Status: generated locally
+  - Status: generated and pushed
   - Notes: Current state is `healthy` / `frozen=false`; report flags one non-target drift item for the CGNAT article's linked A10 PDF.
 
 ## Execution Log
@@ -221,6 +221,10 @@
   - Action: Browser-checked local generated Pages output.
   - Evidence: Homepage 19 cards/no overflow; target article featured images present; lazy inline images loaded after scroll; workbook linked CIDR hierarchy; hierarchy page had 153 nodes; mobile viewport checks had no page overflow.
   - Result: pass locally
+- 2026-07-06 18:09 UTC:
+  - Action: Committed and pushed `6b00f09`, then verified live GitHub Pages output.
+  - Evidence: pages-build-deployment completed successfully. Live root showed updated featured image filenames; target article pages, image assets, AS141253 workbook, hierarchy HTML, JSON, and DOT routes returned HTTP 200.
+  - Result: pass
 
 ## Tests and Verification
 
@@ -253,23 +257,25 @@
   - `git diff --check`: pass at 2026-07-06 18:01 UTC.
   - `make validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-06 18:01 UTC with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
   - Local browser QA against `http://127.0.0.1:4173/`: pass at 2026-07-06 18:04 UTC for desktop/default and 390x844 mobile viewport.
+  - GitHub Pages deployment for `6b00f09`: pass at 2026-07-06 18:08 UTC.
+  - Live route checks: pass at 2026-07-06 18:09 UTC for refreshed articles/images and AS141253 workbook/hierarchy artefacts.
 - Not run:
-  - Live GitHub Pages verification for the current update; pending push/deploy.
+  - None for the current update.
 
 ## Next Pickup
 
 - Next action:
-  - Commit, push to `main`, and verify live GitHub Pages output after deployment.
+  - Optional: decide whether to mirror the non-target A10 PDF drift reported for `lets-talk-about-cgnat-and-ipv6-yet-again`.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Live GitHub Pages verification pending for this update.
+  - None for the current update.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
-  - Push current implementation and verify live Pages deployment.
+  - Optional follow-up: resolve the non-target A10 PDF drift currently reported by `docs/CANONICAL_DRIFT.md`.
