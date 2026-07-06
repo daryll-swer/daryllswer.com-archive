@@ -22,7 +22,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SITE = "https://www.daryllswer.com"
 POSTS_ENDPOINT = f"{SITE}/wp-json/wp/v2/posts?per_page=100&_embed=1"
-UA = "daryllswer-com-archive-drift-check/1.0 (+https://github.com/daryll-swer/daryllswer.com-archive)"
+UA = (
+    "Mozilla/5.0 (compatible; daryllswer-com-archive-drift-check/1.0; "
+    "+https://github.com/daryll-swer/daryllswer.com-archive)"
+)
 STATUS_PATH = ROOT / "archive-status.json"
 REPORT_PATH = ROOT / "docs" / "CANONICAL_DRIFT.md"
 UNAVAILABLE_AFTER_FAILURES = 3

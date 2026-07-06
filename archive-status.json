@@ -2,20 +2,20 @@
   "canonical_site": "https://www.daryllswer.com",
   "created_at": "2026-07-06T17:52:37Z",
   "failure": {
-    "consecutive_failures": 1,
-    "first_failure_at": "2026-07-06T18:11:41Z",
-    "last_failure_at": "2026-07-06T18:11:41Z",
-    "last_failure_detail": "HTTP Error 403: Forbidden",
-    "last_failure_kind": "HTTPError"
+    "consecutive_failures": 0,
+    "first_failure_at": null,
+    "last_failure_at": null,
+    "last_failure_detail": null,
+    "last_failure_kind": null
   },
   "frozen": false,
   "http_cache": {
     "https://www.daryllswer.com/wp-json/wp/v2/posts?per_page=100&_embed=1": {}
   },
-  "last_drift_detected_at": "2026-07-06T17:53:07Z",
+  "last_drift_detected_at": "2026-07-06T18:13:19Z",
   "last_drift_hash": "dbb5a9068216ceb23f727314912fb9e0096d0cdbb6d63fd39b3856b6b2ca4ff6",
   "last_live_post_count": 19,
-  "last_success_at": "2026-07-06T17:53:07Z",
+  "last_success_at": "2026-07-06T18:13:19Z",
   "manual_recovery": {
     "unfreeze_steps": [
       "Confirm the canonical site is again under the owner's control.",
@@ -31,7 +31,7 @@
     "frozen_archive_minimum_failure_window_days": 30,
     "frozen_archive_noops_without_network": true
   },
-  "state": "degraded",
-  "updated_at": "2026-07-06T18:11:41Z",
+  "state": "healthy",
+  "updated_at": "2026-07-06T18:13:19Z",
   "version": 1
 }
