@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: in progress; clean GitHub Pages root URL polish locally verified
+- Status: complete; clean GitHub Pages root URL polish pushed and live verified
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-06 13:39 UTC
+- Last updated: 2026-07-06 13:48 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -33,13 +33,13 @@
   - Complete locally: AS141253 sheet is rendered as a CSV-backed tabbed `workbook.html` and generated Pages workbook.
   - Complete locally: generated root navigation/canonical handling now uses clean GitHub Pages directory URLs instead of human-facing `index.html` links.
 - Last material update:
-  - 2026-07-06 13:39 UTC Regenerated, validated, and browser-checked the clean-root-link update locally.
+  - 2026-07-06 13:48 UTC Pushed clean-root-link update, retried a transient Pages deployment failure with empty commit `46ec8cc`, and verified the live Pages output.
 - Next pickup action:
-  - Commit, push, and verify Pages rebuild.
+  - Optional repository metadata polish and future sync automation.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - Live Pages verification is pending for the clean-root-link update.
+  - None for the clean-root-link update.
 
 ## Purpose / Big Picture
 
@@ -108,7 +108,7 @@
 - [x] 2026-07-06 12:54 UTC Validated, committed `982244a`, pushed to `main`, and verified GitHub Pages rebuild.
 - [x] 2026-07-06 13:34 UTC Implemented clean GitHub Pages root URL navigation/canonical rule.
 - [x] 2026-07-06 13:39 UTC Regenerated, validated, and browser-checked clean root links locally.
-- [ ] Commit, push, and verify Pages rebuild for clean root links.
+- [x] 2026-07-06 13:48 UTC Committed `822f47c`, pushed, retried transient Pages deploy failure with empty commit `46ec8cc`, and verified live clean root links.
 
 ## Decision Log
 
@@ -220,6 +220,8 @@
   - `make validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 13:39 UTC; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
   - `git diff --check`: passed at 2026-07-06 13:39 UTC.
   - `rg` check for generated `index.html` root navigation/canonical regressions under `docs/*.html`: no matches at 2026-07-06 13:39 UTC.
+  - GitHub Pages deployment: first run for `822f47c` failed during `actions/deploy-pages@v5` with `Deployment failed, try again later`; empty commit `46ec8cc` retriggered Pages successfully at 2026-07-06 13:47 UTC.
+  - Live Pages check: passed at 2026-07-06 13:48 UTC; root returned HTTP 200 with clean canonical and `href="./"` Index link, IPv6 article returned HTTP 200 with `href="../../"` Index link, AS141253 workbook returned HTTP 200 with `href="../../"` Archive index and 9 sheet tabs.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`

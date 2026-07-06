@@ -6,8 +6,8 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: GitHub Pages clean root URL polish
-- Status: in progress; local validation/browser QA passed, commit/push pending
-- Last updated: 2026-07-06 13:39 UTC
+- Status: complete; clean GitHub Pages root URL polish pushed and live verified
+- Last updated: 2026-07-06 13:48 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -77,7 +77,7 @@
   - Status: complete and pushed
   - Notes: `scripts/export-google-sheet.py` generates `data/sheets/as141253-ipv6-architecture-example/workbook.html`; `scripts/render-site.py` publishes it as the Pages sheet route.
 - Clean GitHub Pages root URL navigation:
-  - Status: complete and locally verified
+  - Status: complete and pushed
   - Notes: `docs/index.html` remains the generated Pages entry file, but visible root navigation and root canonical metadata now use clean directory URLs.
 
 ## Execution Log
@@ -182,6 +182,10 @@
   - Action: Regenerated Pages output and browser-checked clean root navigation locally.
   - Evidence: `make render-site validate scan-secrets PYTHON=<bundled-python>` passed with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings. Browser click QA confirmed homepage Index `./`, article Index `../../`, workbook Archive index `../../`, and all clicked routes resolved to `/` without `index.html`. Final `py_compile`, `make validate scan-secrets`, `git diff --check`, and generated HTML regression search also passed.
   - Result: pass locally
+- 2026-07-06 13:48 UTC:
+  - Action: Pushed clean-root-link update and verified live Pages output.
+  - Evidence: Commit `822f47c` contained the generator/output update. Its first Pages deployment failed at `actions/deploy-pages@v5` with `Deployment failed, try again later`; empty commit `46ec8cc` retriggered the same content deployment successfully. Live root/article/workbook checks returned HTTP 200 with clean `./` and `../../` links and no visible root `index.html` links.
+  - Result: pass
 
 ## Tests and Verification
 
@@ -211,18 +215,18 @@
   - `git diff --check`: pass at 2026-07-06 12:51 UTC.
   - GitHub Pages API and live route checks: pass at 2026-07-06 12:54 UTC.
 - Not run:
-  - Live Pages verification for the clean-root-link update.
+  - None for the clean-root-link update.
 
 ## Next Pickup
 
 - Next action:
-  - Commit, push, and verify Pages rebuild.
+  - Optional repository metadata polish and future sync automation.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Clean-root-link update still needs live Pages verification after push.
+  - None for the clean-root-link update.
 
 ## Completion Criteria
 
