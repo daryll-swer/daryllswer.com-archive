@@ -42,6 +42,12 @@ GitHub Pages is static hosting, so the site is regenerated from repository
 content by `make render-site`; it does not fetch article bodies from WordPress
 or GitHub at runtime.
 
+The generated source still contains `docs/index.html` because GitHub Pages
+serves that entry file for the project site. Human-facing navigation and
+canonical metadata should use clean directory URLs, for example
+`https://daryll-swer.github.io/daryllswer.com-archive/` and relative `./` or
+`../../` links, instead of redundant `index.html` links.
+
 ## Maintainer Workflow
 
 Use these commands when refreshing or validating the archive:

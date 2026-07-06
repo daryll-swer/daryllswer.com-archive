@@ -47,6 +47,10 @@ flowchart LR
   tabbed HTML workbook for the AS141253 sheet. It is rendered from repository
   CSV files and keeps adjacent ODS, CSV, CSVW, and Google HTML snapshots for
   editing/provenance.
+- Human-facing navigation and canonical URLs use clean directory URLs such as
+  `https://daryll-swer.github.io/daryllswer.com-archive/`. The physical
+  `docs/index.html` file remains the GitHub Pages entry point and generated
+  artefact, not the preferred public link.
 
 ## Invariants
 
@@ -69,6 +73,9 @@ flowchart LR
   binary artefact.
 - GitHub Pages output is generated, not hand-authored; rerun
   `make render-site` after sync/content changes.
+- GitHub Pages output must not expose redundant `index.html` links in visible
+  navigation or root canonical metadata when an equivalent clean directory URL
+  exists.
 - GitHub Pages output must not point article media back to
   `www.daryllswer.com/wp-content/uploads/` when a local archive copy exists.
 - Remote destructive GitHub actions are outside normal script behaviour.

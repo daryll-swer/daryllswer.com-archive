@@ -282,14 +282,19 @@ def page_shell(title: str, description: str, body: str, css_href: str, canonical
 """
 
 
+def clean_home_href(prefix: str) -> str:
+    return prefix or "./"
+
+
 def site_header(prefix: str = "") -> str:
+    home_href = clean_home_href(prefix)
     return f"""<header class="site-header">
-  <a class="brand" href="{prefix}index.html" aria-label="daryllswer.com Archive home">
+  <a class="brand" href="{home_href}" aria-label="daryllswer.com Archive home">
     <span class="brand-mark">DS</span>
     <span><strong>daryllswer.com</strong><small>Archive</small></span>
   </a>
   <nav class="site-nav" aria-label="Primary">
-    <a href="{prefix}index.html">Index</a>
+    <a href="{home_href}">Index</a>
     <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
     <a href="https://www.daryllswer.com/">Canonical site</a>
   </nav>
@@ -340,7 +345,7 @@ def render_home(posts: list[dict], metadata_by_slug: dict[str, dict]) -> None:
             "Public mirror of daryllswer.com network engineering articles.",
             body,
             "assets/theme.css",
-            "index.html",
+            "",
         ),
     )
 
@@ -402,7 +407,7 @@ def render_sheet_page() -> None:
             root=ROOT,
             manifest=manifest,
             sheet_slug=SHEET_SLUG,
-            home_href="../../index.html",
+            home_href="../../",
             repo_href="https://github.com/daryll-swer/daryllswer.com-archive",
         ),
     )

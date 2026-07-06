@@ -227,9 +227,15 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
         expected_tabs = len(load_json(ROOT / "data" / "sheets" / "as141253-ipv6-architecture-example" / "manifest.json").get("tabs", []))
         if sheet_html.count('class="sheet-tab-label"') != expected_tabs:
             errors.append("GitHub Pages AS141253 workbook tab count does not match manifest")
+        if 'href="../../index.html"' in sheet_html:
+            errors.append("GitHub Pages AS141253 workbook navigation should use ../../ instead of ../../index.html")
     index_html = site_index.read_text(encoding="utf-8", errors="replace")
     if "posts/" not in index_html:
         errors.append("GitHub Pages index does not link to generated post pages")
+    if 'href="index.html"' in index_html:
+        errors.append("GitHub Pages index navigation should use the clean ./ root URL, not index.html")
+    if 'rel="canonical" href="https://daryll-swer.github.io/daryllswer.com-archive/index.html"' in index_html:
+        errors.append("GitHub Pages index canonical URL should use the clean project root")
     for post in posts:
         page = ROOT / "docs" / "posts" / post["slug"] / "index.html"
         if not page.exists():
@@ -237,6 +243,8 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
             continue
         html = page.read_text(encoding="utf-8", errors="replace")
         validate_excluded_operational_ctas(page, errors)
+        if 'href="../../index.html"' in html:
+            errors.append(f"{post['slug']}: GitHub Pages article navigation should use ../../ instead of ../../index.html")
         if WORDPRESS_MEDIA_PATTERN.search(html):
             errors.append(f"{post['slug']}: GitHub Pages article still links WordPress upload media")
         if post["slug"] == "ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators":

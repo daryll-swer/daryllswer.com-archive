@@ -130,3 +130,20 @@
   `data/sheets/as141253-ipv6-architecture-example/workbook.html`.
   `scripts/render-site.py` publishes the same workbook at
   `docs/sheets/as141253-ipv6-architecture-example/index.html`.
+
+## 2026-07-06: Prefer Clean GitHub Pages Directory URLs
+
+- Decision: Keep `docs/index.html` as the generated GitHub Pages entry file,
+  but use clean directory URLs in human-facing navigation and root canonical
+  metadata.
+- Rationale: GitHub Pages publishes static files from the configured source
+  folder, including `/docs` on a branch, and `index.html` is the entry file for
+  the site. The public project URL is clearer and avoids duplicate-looking
+  `index.html` links for readers.
+- Evidence: GitHub's Pages documentation describes publishing from a branch
+  folder such as `/docs` and creating a Pages site with an `index.html` entry
+  file.
+- Impact: `scripts/render-site.py` generates homepage links as `./`, nested
+  archive-index links as `../../`, and the homepage canonical as
+  `https://daryll-swer.github.io/daryllswer.com-archive/`. `make validate`
+  fails if generated navigation regresses to visible `index.html` root links.
