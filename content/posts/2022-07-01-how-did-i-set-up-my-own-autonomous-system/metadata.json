@@ -3,13 +3,13 @@
     "applied": true,
     "article_body_exclusions": [
       {
-        "filter": "donation_or_support_cta",
+        "filter": "site_operational_cta",
         "redacted": true,
         "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
         "tag": "h4"
       },
       {
-        "filter": "donation_or_support_cta",
+        "filter": "site_operational_cta",
         "redacted": true,
         "removed_text_sha256": "355c7987352eb1f9e3d8be819ac9de0cfc8c2945d95a47ec6e953c3dc0fed613",
         "tag": "p"
@@ -17,19 +17,19 @@
     ],
     "canonical_page_exclusions": [
       {
-        "filter": "donation_or_support_cta",
+        "filter": "site_operational_cta",
         "redacted": true,
         "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
         "tag": "li"
       },
       {
-        "filter": "donation_or_support_cta",
+        "filter": "site_operational_cta",
         "redacted": true,
         "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
         "tag": "h4"
       },
       {
-        "filter": "donation_or_support_cta",
+        "filter": "site_operational_cta",
         "redacted": true,
         "removed_text_sha256": "355c7987352eb1f9e3d8be819ac9de0cfc8c2945d95a47ec6e953c3dc0fed613",
         "tag": "p"
@@ -67,10 +67,10 @@
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
   "featured_media_sizes": {},
   "hashes": {
-    "canonical_page_html_sha256": "3c349f08045c1597e1586d9d35d789d38b7c6228d040c21aff05ac92e509785e",
+    "canonical_page_html_sha256": "72cd5ecbea41cdbfc7509af717ffa6121159791ebaa0b84a7941b9d2919e675e",
     "index_md_sha256": "5c4b84d2a274fe83da363c917e2c6d2b378a57c9e8cf683eff2604432eb4445b",
     "rendered_article_html_sha256": "1002a75c9563e5696d72d02c35eb1e0f39313360ecb998604f852a6c2cab390a",
-    "wordpress_post_json_sha256": "35079d1a314e7148b88aef8be96db7ef4a98bcdac368282855ae2a036207e4aa"
+    "wordpress_post_json_sha256": "29f8a5193f891ac995d1cefac0be5b869a0166677628bd21ffd4ac6ae62497c4"
   },
   "id": 970,
   "modified": "2025-06-23T20:41:31",
@@ -79,7 +79,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/970",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "fetched_at": "2026-07-06T09:46:49+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

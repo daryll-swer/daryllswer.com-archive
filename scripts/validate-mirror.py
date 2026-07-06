@@ -25,7 +25,10 @@ ARCHIVE_EXCLUDED_PATTERNS = [
     re.compile(r"Click here</a>\s*to donate now", re.I),
     re.compile(r"Click here to donate now", re.I),
     re.compile(r"https://www\.daryllswer\.com/donation/?", re.I),
+    re.compile(r"This article was sponsored by the cybersecurity company", re.I),
+    re.compile(r"You can claim your free 30-day trial using this", re.I),
 ]
+REMOTE_REFERENCE_ANCHOR_PATTERN = re.compile(r"https://www\.daryllswer\.com/[^)\s]+/#(?:h-)?references", re.I)
 
 
 def now_iso() -> str:
@@ -73,7 +76,7 @@ def validate_excluded_operational_ctas(path: Path, errors: list[str]) -> None:
     text = path.read_text(encoding="utf-8", errors="replace")
     for pattern in ARCHIVE_EXCLUDED_PATTERNS:
         if pattern.search(text):
-            errors.append(f"{rel(path)}: excluded donation/support CTA remains")
+            errors.append(f"{rel(path)}: excluded site-operational CTA remains")
             return
 
 
@@ -101,6 +104,8 @@ def validate_post(post_item: dict, errors: list[str], warnings: list[str]) -> No
         errors.append(f"{post_item['slug']}: featured image missing at {featured['local_path']}")
     if index.exists():
         md = index.read_text(encoding="utf-8")
+        if REMOTE_REFERENCE_ANCHOR_PATTERN.search(md):
+            errors.append(f"{post_item['slug']}: generated Markdown still links reference markers to WordPress #h-references")
         for img_path in markdown_image_paths(md):
             if re.match(r"https?://", img_path):
                 warnings.append(f"{post_item['slug']}: Markdown image still remote: {img_path}")

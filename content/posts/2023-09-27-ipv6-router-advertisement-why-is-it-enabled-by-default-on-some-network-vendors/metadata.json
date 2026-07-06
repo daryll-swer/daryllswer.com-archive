@@ -1,13 +1,26 @@
 {
   "archive_filters": {
     "applied": true,
-    "article_body_exclusions": [],
+    "article_body_exclusions": [
+      {
+        "filter": "site_operational_cta",
+        "redacted": true,
+        "removed_text_sha256": "e437c43030518b2b6ed3e1403610cddfaf947c5917d37219a2e758079c3e204d",
+        "tag": "h4"
+      }
+    ],
     "canonical_page_exclusions": [
       {
-        "filter": "donation_or_support_cta",
+        "filter": "site_operational_cta",
         "redacted": true,
         "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
         "tag": "li"
+      },
+      {
+        "filter": "site_operational_cta",
+        "redacted": true,
+        "removed_text_sha256": "e437c43030518b2b6ed3e1403610cddfaf947c5917d37219a2e758079c3e204d",
+        "tag": "h4"
       }
     ]
   },
@@ -58,10 +71,10 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "e3f19ad650e9fcc8ee1c3be183eb2f63c73d7d1788d528f206d9f516d2e49d04",
-    "index_md_sha256": "079783264a4f79d38489d8832201a6e1e94f78f6e736f857d5998925eee580e4",
-    "rendered_article_html_sha256": "b20472298c730837d6fc9bde2ec2a4a9d3913cf64e2e0a66863a4825922944b0",
-    "wordpress_post_json_sha256": "d1994c4cad1655a9bc6a5ca95cb558e49355f0e98a41a51c6842535b0379cf24"
+    "canonical_page_html_sha256": "dc061bfb7747136837b4c8f2c8b2aae75bdcbfdf2eadd3828062d364eeacc224",
+    "index_md_sha256": "5ea04e606db96a562713424559ceb0511ae54cd692331c66ca5abace0957caed",
+    "rendered_article_html_sha256": "3b2e013cd774d410135506ba3613a1b8788bedd8c9e079114ac32acd069509d7",
+    "wordpress_post_json_sha256": "f80d4fcca852065b92e56440dcb9d607f35e5b76d2d916885f37e45b4d95bdc5"
   },
   "id": 2836,
   "modified": "2025-05-21T01:52:12",
@@ -70,7 +83,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2836",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "fetched_at": "2026-07-06T09:46:49+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

@@ -5,9 +5,9 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: pending `ARCHITECTURE.md`
-- Current sprint / workstream: initial public mirror scaffold and sync
-- Status: complete; published to GitHub and old repo deleted
-- Last updated: 2026-07-06 09:42 UTC
+- Current sprint / workstream: archive fidelity cleanup
+- Status: complete; validated
+- Last updated: 2026-07-06 09:50 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -46,6 +46,12 @@
 - Donation/support CTA archive filter:
   - Status: complete
   - Notes: `scripts/sync-wordpress-posts.py` removes article blocks containing the donation CTA or `/donation/` links and stores only redacted/hash audit metadata.
+- Sponsor/trial CTA archive filter:
+  - Status: complete
+  - Notes: `scripts/sync-wordpress-posts.py` removes operational sponsor/trial lead CTAs from generated article bodies and records redacted/hash audit metadata.
+- Numbered reference link rewriting:
+  - Status: complete
+  - Notes: Same-post `#h-references`/`#references` citation links are rewritten to the matching source URL in the article's References list, with local `#references` as fallback.
 - Licensing:
   - Status: complete
   - Notes: Scripts/tooling are MIT licensed; mirrored blog content is `CC-BY-NC-SA-4.0`; third-party media/external artefacts are not assumed covered by either licence.
@@ -99,6 +105,14 @@
   - Action: Rewrote the new archive repo's initial commit history to use GitHub no-reply commit identity.
   - Evidence: Commits now use `Daryll Swer <80836254+daryll-swer@users.noreply.github.com>`.
   - Result: pass
+- 2026-07-06 09:50 UTC:
+  - Action: Added site-operational sponsor/trial CTA filtering and direct source URL rewriting for same-article numbered reference markers.
+  - Evidence: `scripts/sync-wordpress-posts.py`, `scripts/validate-mirror.py`, `content/posts/2025-04-22-lets-talk-about-cgnat-and-ipv6-yet-again/index.md`, `docs/MIRRORING.md`, `docs/DECISIONS.md`, `AGENTS.md`.
+  - Result: pass
+- 2026-07-06 09:50 UTC:
+  - Action: Regenerated archive content and reran validation/public-safety checks.
+  - Evidence: `docs/VALIDATION.md` reports 0 errors and 1 sitemap warning; `docs/PUBLIC_SAFETY.md` reports 0 findings.
+  - Result: pass
 
 ## Tests and Verification
 
@@ -110,6 +124,8 @@
 - Last run:
   - `make sync validate scan-secrets render-preview`: pass at 2026-07-06 09:29 UTC.
   - Direct `rg` check for excluded donation CTA/donation URL in generated article files: no matches at 2026-07-06 09:29 UTC.
+  - `make validate scan-secrets PYTHON=/Users/daryllswer/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3`: pass at 2026-07-06 09:49 UTC.
+  - `rg -n "https://www\\.daryllswer\\.com/[^)\\s]+/#(?:h-)?references|#h-references|This article was sponsored|FastNetMon|free 30-day" content/posts -g 'index.md'`: no matches at 2026-07-06 09:50 UTC.
 - Not run:
   - Browser visual QA against `.preview/index.html`.
 

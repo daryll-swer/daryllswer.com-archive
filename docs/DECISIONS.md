@@ -35,3 +35,24 @@
 - Impact: `make sync` filters these blocks, and `make validate` checks they do
   not reappear in generated Markdown, rendered article snapshots, or archived
   REST post JSON.
+
+## 2026-07-06: Exclude Operational Sponsor Lead CTAs
+
+- Decision: Remove sponsor/trial lead CTAs from generated archive article
+  bodies when they are operational promotion rather than durable article
+  substance.
+- Rationale: Trial links and sponsor CTAs can become stale and are not part of
+  the long-lived technical article archive.
+- Impact: `make sync` filters these blocks, and `make validate` checks they do
+  not reappear in generated article files.
+
+## 2026-07-06: Rewrite Numbered Reference Links
+
+- Decision: Rewrite same-article numbered reference links from WordPress
+  `#h-references` anchors to the matching source URL in the article's
+  References list.
+- Rationale: GitHub readers should not be sent back to daryllswer.com just to
+  resolve a local reference marker.
+- Impact: `make sync` maps reference marker `1`, `2`, etc. to the corresponding
+  numbered reference URL, and validation fails if WordPress `#h-references`
+  links remain in generated Markdown.

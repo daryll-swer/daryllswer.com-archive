@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; published to GitHub and old repo deleted
+- Status: complete; published to GitHub and old repo deleted; reference-link and operational CTA archive fix validated locally
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-06 09:37 UTC
+- Last updated: 2026-07-06 09:50 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -23,10 +23,11 @@
 
 - Current state:
   - Complete: archive published to `daryll-swer/daryllswer.com-archive`; old `daryll-swer/daryllswer.com-neteng-blog` repo deleted.
+  - Complete locally: sponsor/trial lead CTAs are filtered from generated article bodies, and same-post numbered reference markers are rewritten to source URLs where extractable.
 - Last material update:
-  - 2026-07-06 09:37 UTC Created/pushed new public GitHub repo and deleted old repo.
+  - 2026-07-06 09:50 UTC Regenerated and validated the CGNAT article reference-link/sponsor CTA fix.
 - Next pickup action:
-  - Review public repo and decide whether to add repository topics/description tweaks or future automation.
+  - Review public repo and decide whether to add repository topics/description tweaks or future sync automation.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
@@ -78,6 +79,7 @@
 - [x] 2026-07-06 09:35 UTC Owner selected repo name `daryllswer.com-archive`.
 - [x] 2026-07-06 09:37 UTC Created and pushed `daryll-swer/daryllswer.com-archive`.
 - [x] 2026-07-06 09:37 UTC Deleted old repo `daryll-swer/daryllswer.com-neteng-blog`.
+- [x] 2026-07-06 09:50 UTC Added sponsor/trial CTA filtering and direct source URL rewrites for numbered reference markers; regenerated archive and validated.
 
 ## Decision Log
 
@@ -96,6 +98,16 @@
   - Date/Author: 2026-07-06, Codex
   - Status: final
   - Impact: `make sync` filters these blocks; `make validate` fails if they reappear in generated article files.
+- Decision: Exclude sponsor/trial lead CTAs from archived article bodies.
+  - Rationale: Sponsor trial promotions are live-site operational content and can become stale or broken in a durable archive.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final
+  - Impact: `make sync` filters these blocks; `make validate` fails if they reappear in generated article files.
+- Decision: Rewrite same-article numbered reference anchors to source URLs.
+  - Rationale: GitHub readers should not be redirected back to WordPress `#h-references` anchors for citation numbers.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final
+  - Impact: `make sync` maps marker `1`, `2`, etc. to matching URLs in the References list, falling back to local `#references` if needed.
 - Decision: License scripts and tooling under MIT.
   - Rationale: Owner explicitly selected MIT in side-thread decision.
   - Date/Author: 2026-07-06, user/Codex
@@ -120,6 +132,8 @@
   - `make scan-secrets`: passed at 2026-07-06 09:29 UTC; public-safety scan recorded 0 findings.
   - `make render-preview`: passed; generated `.preview/index.html`.
   - `rg -n "It would be appreciated|Click here to donate|https://www\\.daryllswer\\.com/donation/?" content/posts -g 'index.md' -g 'source/rendered-article.html' -g 'source/wordpress-post.json' -g 'source/canonical-page.html'`: no matches.
+  - `make validate scan-secrets PYTHON=/Users/daryllswer/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3`: passed at 2026-07-06 09:49 UTC; validation recorded 0 errors and 1 warning, public-safety scan recorded 0 findings.
+  - `rg -n "https://www\\.daryllswer\\.com/[^)\\s]+/#(?:h-)?references|#h-references|This article was sponsored|FastNetMon|free 30-day" content/posts -g 'index.md'`: no matches.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/PUBLIC_SAFETY.md`

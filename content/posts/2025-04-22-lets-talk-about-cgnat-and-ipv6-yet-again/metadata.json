@@ -1,13 +1,26 @@
 {
   "archive_filters": {
     "applied": true,
-    "article_body_exclusions": [],
+    "article_body_exclusions": [
+      {
+        "filter": "site_operational_cta",
+        "redacted": true,
+        "removed_text_sha256": "e437c43030518b2b6ed3e1403610cddfaf947c5917d37219a2e758079c3e204d",
+        "tag": "h4"
+      }
+    ],
     "canonical_page_exclusions": [
       {
-        "filter": "donation_or_support_cta",
+        "filter": "site_operational_cta",
         "redacted": true,
         "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
         "tag": "li"
+      },
+      {
+        "filter": "site_operational_cta",
+        "redacted": true,
+        "removed_text_sha256": "e437c43030518b2b6ed3e1403610cddfaf947c5917d37219a2e758079c3e204d",
+        "tag": "h4"
       }
     ]
   },
@@ -82,10 +95,10 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "ba56319fb5d2722aae5d4d96e6dc12ee2264c1bdfc68849e931b9e5e1221a54b",
-    "index_md_sha256": "b34be8579324ea018f798dd68ec7a3c11a61b1ee1442cfec1d37401f07c8df2a",
-    "rendered_article_html_sha256": "7c2fd374118ea66ac4cc00e7cfde1c5dae67727cda85cb5a93856bf8f24e39ac",
-    "wordpress_post_json_sha256": "f4e4c4d9ffdd8e38e8c3f0de219ffa1a287a0afe3cf44e0167b20781a62f409c"
+    "canonical_page_html_sha256": "dad40b0a4f33acaf4d2e5c06e2c52b1127b7f98e302fbd46d8aeb9335221b7f3",
+    "index_md_sha256": "22e7f31ab1726f041a3db07876e924fd97e23c8bd794d15d07341029a0dda9c8",
+    "rendered_article_html_sha256": "66267fb7ce112b2009b9d71c7b8840199d7188cb6e43021aebea1b5023c0ed98",
+    "wordpress_post_json_sha256": "6a7690ca1e57a29395798714b7581fccf60e52475eec8767aaf4955453602dc0"
   },
   "id": 5018,
   "modified": "2026-06-06T17:45:08",
@@ -94,7 +107,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/5018",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T09:28:35+00:00",
+    "fetched_at": "2026-07-06T09:46:49+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

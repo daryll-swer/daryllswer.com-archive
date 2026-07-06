@@ -1,7 +1,7 @@
 {
   "_archive_filters": [
     {
-      "filter": "donation_or_support_cta",
+      "filter": "site_operational_cta",
       "redacted": true,
       "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
       "tag": "h4"
