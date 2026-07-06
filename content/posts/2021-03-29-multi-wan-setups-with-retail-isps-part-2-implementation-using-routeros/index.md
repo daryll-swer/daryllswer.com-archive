@@ -2,10 +2,10 @@
 title: "Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]"
 slug: "multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros"
 date: "2021-03-29T20:34:19"
-last_modified: "2025-05-21T01:47:29"
+last_modified: "2026-07-06T21:24:21"
 canonical_url: "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/"
 wordpress_id: 115
-featured_image: "assets/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png"
+featured_image: "assets/Multi_WAN_FT-scaled.jpg"
 categories:
   - "Networking"
 tags:
@@ -17,7 +17,7 @@ tags:
   - "Networking"
   - "RouterOS"
 ---
-![Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]](assets/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png)
+![Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]](assets/Multi_WAN_FT-scaled.jpg)
 
 ### Please note, it is very unlikely I will maintain this article piece. Even though the underlying concepts and principle are the same on RouterOS v7, if you are still facing some issues or confusion, I would recommend you watch this official video from MikroTik.
 
@@ -73,6 +73,8 @@ add check-gateway=ping comment="Example Route for ISP3" distance=3 gateway=pppoe
 **Step 2**, we need to take care of **MTU**for the **WAN**interfaces, which is applicable to any networking device or OS in this world. If your uplink is using **DHCP Client**/**Static IP address**, then by default this is already taken care of with 1500 MTU.
 
 However, with **PPPoE**, this is not the case and on RouterOS, there are what a user calls “ghost bytes”. I will discuss PPPoE MTU in a future article, but for now, all that you need to do is set the underlying Ethernet interface’s actual MTU  to 1520 meaning the interface to which your uplink is connected. As of [RouterOS v7.2](https://forum.mikrotik.com/viewtopic.php?p=924589#p923904), MikroTik [has fixed the ghost bytes](https://web.archive.org/web/20220406203854/https://twitter.com/DaryllSwer/status/1511805609020366849), so please set it to **1508** instead (note I did not bother to update the diagrams below).
+
+[![](assets/inline/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png)](assets/inline/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png)
 
 _Figure-1 (In this case, ether1 and ether2 are the underlying ethernet interfaces)_
 

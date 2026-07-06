@@ -5,9 +5,9 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: GitHub Pages clean root URL polish
-- Status: complete; clean GitHub Pages root URL polish pushed and live verified
-- Last updated: 2026-07-06 13:48 UTC
+- Current sprint / workstream: targeted post refresh, canonical drift automation, and IPv6 hierarchy PoC
+- Status: in progress locally; validation and browser QA passed, push/live verification pending
+- Last updated: 2026-07-06 18:04 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -79,6 +79,21 @@
 - Clean GitHub Pages root URL navigation:
   - Status: complete and pushed
   - Notes: `docs/index.html` remains the generated Pages entry file, but visible root navigation and root canonical metadata now use clean directory URLs.
+- Targeted article refresh:
+  - Status: complete locally
+  - Notes: The three requested articles were re-synced from canonical WordPress. Featured media now uses `Shortcomings_CGNAT_FT-scaled.jpg` for the CGNAT shortcomings article and `Multi_WAN_FT-scaled.jpg` for both Multi-WAN articles, with source filenames preserved.
+- Targeted sync tooling:
+  - Status: complete locally
+  - Notes: `scripts/sync-wordpress-posts.py` supports `--slug` and `--slugs` to refresh selected posts while preserving the rest of `archive-manifest.json`.
+- Canonical drift automation:
+  - Status: complete locally
+  - Notes: `.github/workflows/canonical-drift.yml` runs weekly/manual checks. `scripts/check-canonical-drift.py` writes `archive-status.json` and `docs/CANONICAL_DRIFT.md`, with `frozen_archive` no-op behaviour for permanent canonical failure.
+- AS141253 IPv6 hierarchy proof of concept:
+  - Status: complete locally
+  - Notes: `scripts/ipv6_hierarchy.py` derives a rooted IPv6 prefix containment tree from CSV, producing HTML, JSON, and Graphviz DOT artefacts. Current graph has 153 nodes and max depth 5.
+- Drift report:
+  - Status: generated locally
+  - Notes: Current state is `healthy` / `frozen=false`; report flags one non-target drift item for the CGNAT article's linked A10 PDF.
 
 ## Execution Log
 
@@ -186,6 +201,26 @@
   - Action: Pushed clean-root-link update and verified live Pages output.
   - Evidence: Commit `822f47c` contained the generator/output update. Its first Pages deployment failed at `actions/deploy-pages@v5` with `Deployment failed, try again later`; empty commit `46ec8cc` retriggered the same content deployment successfully. Live root/article/workbook checks returned HTTP 200 with clean `./` and `../../` links and no visible root `index.html` links.
   - Result: pass
+- 2026-07-06 17:49 UTC:
+  - Action: Target-refreshed the three requested posts from canonical WordPress.
+  - Evidence: WordPress REST showed modified timestamps on 2026-07-06 and featured URLs `Shortcomings_CGNAT_FT-scaled.jpg` / `Multi_WAN_FT-scaled.jpg`; local manifests preserve filenames and bytes.
+  - Result: pass locally
+- 2026-07-06 17:53 UTC:
+  - Action: Added canonical drift automation and initial drift report.
+  - Evidence: `.github/workflows/canonical-drift.yml`, `scripts/check-canonical-drift.py`, `archive-status.json`, `docs/CANONICAL_DRIFT.md`.
+  - Result: pass locally; one non-target drift item reported.
+- 2026-07-06 17:59 UTC:
+  - Action: Added AS141253 IPv6 prefix hierarchy proof of concept.
+  - Evidence: `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html`, `.json`, `.dot`; manifest reports 153 nodes and max depth 5.
+  - Result: pass locally
+- 2026-07-06 18:01 UTC:
+  - Action: Regenerated sheet artefacts, GitHub Pages output, validation report, and public-safety report.
+  - Evidence: `make validate scan-secrets PYTHON=<bundled-python>` reported 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
+  - Result: pass locally
+- 2026-07-06 18:04 UTC:
+  - Action: Browser-checked local generated Pages output.
+  - Evidence: Homepage 19 cards/no overflow; target article featured images present; lazy inline images loaded after scroll; workbook linked CIDR hierarchy; hierarchy page had 153 nodes; mobile viewport checks had no page overflow.
+  - Result: pass locally
 
 ## Tests and Verification
 
@@ -214,23 +249,27 @@
   - `python3 -m py_compile scripts/*.py`: pass at 2026-07-06 12:51 UTC.
   - `git diff --check`: pass at 2026-07-06 12:51 UTC.
   - GitHub Pages API and live route checks: pass at 2026-07-06 12:54 UTC.
+  - `python3 -m py_compile scripts/*.py`: pass at 2026-07-06 18:01 UTC.
+  - `git diff --check`: pass at 2026-07-06 18:01 UTC.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-06 18:01 UTC with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
+  - Local browser QA against `http://127.0.0.1:4173/`: pass at 2026-07-06 18:04 UTC for desktop/default and 390x844 mobile viewport.
 - Not run:
-  - None for the clean-root-link update.
+  - Live GitHub Pages verification for the current update; pending push/deploy.
 
 ## Next Pickup
 
 - Next action:
-  - Optional repository metadata polish and future sync automation.
+  - Commit, push to `main`, and verify live GitHub Pages output after deployment.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for the clean-root-link update.
+  - Live GitHub Pages verification pending for this update.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
-  - Optional repository topics/description tweaks and future sync automation.
+  - Push current implementation and verify live Pages deployment.

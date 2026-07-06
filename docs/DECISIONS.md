@@ -147,3 +147,48 @@
   archive-index links as `../../`, and the homepage canonical as
   `https://daryll-swer.github.io/daryllswer.com-archive/`. `make validate`
   fails if generated navigation regresses to visible `index.html` root links.
+
+## 2026-07-06: Use Detection-First Canonical Drift Automation
+
+- Decision: Add a weekly/manual GitHub Actions drift check that records drift
+  state and reports, but does not silently rewrite mirrored article bundles.
+- Rationale: daryllswer.com remains canonical while alive, but archive changes
+  should stay reviewable because content/media changes can affect provenance,
+  licensing, and long-term fidelity.
+- Evidence: GitHub Actions supports scheduled and manually dispatched
+  workflows, concurrency controls, job timeouts, and workflow disabling through
+  documented UI/API paths.
+- Impact: `.github/workflows/canonical-drift.yml` runs
+  `scripts/check-canonical-drift.py`. Durable output lives in
+  `archive-status.json` and `docs/CANONICAL_DRIFT.md`.
+
+## 2026-07-06: Prefer Frozen-Archive Sentinel Over Workflow Self-Disabling
+
+- Decision: If canonical failures persist, transition to `frozen_archive` in
+  `archive-status.json` and make future scheduled checks no-op before any
+  canonical network request.
+- Rationale: A repo-visible sentinel avoids extra Actions API credentials,
+  avoids fragile self-modifying workflow behaviour, and preserves the last known
+  good public archive if the owner is unavailable and the canonical site dies.
+- Impact: `scripts/check-canonical-drift.py` moves through
+  `healthy`, `degraded`, `canonical_unavailable`, and `frozen_archive`.
+  `frozen_archive` requires at least 8 consecutive failures over at least 30
+  days.
+
+## 2026-07-06: Model AS141253 IPv6 Data as a Prefix Containment Tree
+
+- Decision: Generate a graph-theory proof of concept from the AS141253 CSV
+  files as a rooted IPv6 prefix containment tree.
+- Rationale: CIDR allocation hierarchy is naturally a parent/child containment
+  tree when each child prefix has one most-specific containing supernet. That
+  model is easier to inspect than a multi-sheet workbook and can be rendered as
+  static HTML, JSON, and Graphviz DOT.
+- Evidence: RFC 4291 defines IPv6 addressing architecture; RFC 5952 defines
+  canonical text representation expectations; Python `ipaddress` provides
+  IPv4/IPv6 network manipulation including containment operations; D3
+  hierarchy, Cytoscape.js, Mermaid, and Graphviz were evaluated as possible
+  visualisation paths.
+- Impact: `scripts/ipv6_hierarchy.py` generates
+  `cidr-hierarchy.html`, `cidr-hierarchy.json`, and `cidr-hierarchy.dot` from
+  CSV. The workbook remains the default sheet page until the graph view is
+  validated further.

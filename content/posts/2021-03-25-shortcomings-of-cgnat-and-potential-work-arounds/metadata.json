@@ -40,36 +40,85 @@
   ],
   "excerpt": "An article on the limitations of CGNAT and what can be done to work around them.\nContinue readingShortcomings of CGNAT and Potential Workarounds",
   "featured_image": {
-    "alt": null,
-    "bytes": 33421,
-    "caption": null,
-    "detection_method": "open_graph_og_image",
+    "alt": "",
+    "bytes": 270456,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
     "filename_preserved": true,
-    "height": 1344,
-    "local_path": "content/posts/2021-03-25-shortcomings-of-cgnat-and-potential-work-arounds/assets/13_DS_Logo_Dark_Mode_SEO-scaled.png",
-    "mime_type": "image/png",
+    "height": 1659,
+    "local_path": "content/posts/2021-03-25-shortcomings-of-cgnat-and-potential-work-arounds/assets/Shortcomings_CGNAT_FT-scaled.jpg",
+    "mime_type": "image/jpeg",
     "role": "featured",
-    "sha256": "9f3bcf4e2b290ed7b1149ffe837a5ea8f3eae335d32c59dc994543c9e7073e21",
-    "source_filename": "13_DS_Logo_Dark_Mode_SEO-scaled.png",
-    "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/01/13_DS_Logo_Dark_Mode_SEO-scaled.png",
-    "stored_filename": "13_DS_Logo_Dark_Mode_SEO-scaled.png",
+    "sha256": "787f2482f4b10d18f2922126aeaa3bd547331bf0055fbb8f1c2bfe8c180e7e31",
+    "source_filename": "Shortcomings_CGNAT_FT-scaled.jpg",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg",
+    "stored_filename": "Shortcomings_CGNAT_FT-scaled.jpg",
     "width": 2560
   },
-  "featured_image_detection_method": "open_graph_og_image",
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "1536x1536": {
+      "file": "Shortcomings_CGNAT_FT-1536x996.jpg",
+      "filesize": 131402,
+      "height": 996,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-1536x996.jpg",
+      "width": 1536
+    },
+    "2048x2048": {
+      "file": "Shortcomings_CGNAT_FT-2048x1328.jpg",
+      "filesize": 197333,
+      "height": 1328,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-2048x1328.jpg",
+      "width": 2048
+    },
+    "full": {
+      "file": "Shortcomings_CGNAT_FT-scaled.jpg",
+      "height": 1659,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg",
+      "width": 2560
+    },
+    "medium": {
+      "file": "Shortcomings_CGNAT_FT-3332x2160.jpg",
+      "filesize": 394329,
+      "height": 2160,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-3332x2160.jpg",
+      "width": 3332
+    },
+    "medium_large": {
+      "file": "Shortcomings_CGNAT_FT-768x498.jpg",
+      "filesize": 47946,
+      "height": 498,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-768x498.jpg",
+      "width": 768
+    },
+    "thumbnail": {
+      "file": "Shortcomings_CGNAT_FT-1666x1080.jpg",
+      "filesize": 147569,
+      "height": 1080,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-1666x1080.jpg",
+      "width": 1666
+    }
+  },
   "hashes": {
-    "canonical_page_html_sha256": "12a15175ea398e7410e55c551241ad37fc998c545e5f3f69c4aa4ecaf5154206",
-    "index_md_sha256": "7ea8079d0dfcf830dd0d33c57b5b1b14b0309370a2e45828a00626ab8016672a",
+    "canonical_page_html_sha256": "78e273c42a3132603e2e4c3af8d1cddd26b7a9b04de5ee547e117ca686b596dd",
+    "index_md_sha256": "ebe7b4933f2f2db32c75418010d07e0fc016fd2091932b77f057b2616e6feb82",
     "rendered_article_html_sha256": "b18b2937dce9778587cc37bc0a7a883709c441d8d4d7e533e6cc2e7485f32b4c",
-    "wordpress_post_json_sha256": "11f326ea9c12291a11e3677716c48b05faf228adb7ff54c33b2a92461b79a031"
+    "wordpress_post_json_sha256": "f06b0952a31e1a0dceba8dcf07787c6b23b80e94c7b95b96563cfa60169f3355"
   },
   "id": 29,
-  "modified": "2025-09-28T03:24:17",
+  "modified": "2026-07-06T19:06:12",
   "published": "2021-03-25T11:15:43",
   "slug": "shortcomings-of-cgnat-and-potential-work-arounds",
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/29",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:46:54+00:00",
+    "fetched_at": "2026-07-06T17:49:36+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

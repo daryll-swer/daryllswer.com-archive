@@ -20,6 +20,7 @@ metadata, original media files, and an asset manifest.
 - `schemas/` - JSON Schemas for generated metadata and manifests.
 - `scripts/` - public sync, export, validation, preview, and safety-scan tools.
 - `archive-manifest.json` - generated root index of mirrored posts and checks.
+- `archive-status.json` - public canonical drift/frozen-archive state.
 
 ## Licence
 

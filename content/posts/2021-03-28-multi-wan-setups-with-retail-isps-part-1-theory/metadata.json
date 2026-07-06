@@ -41,68 +41,84 @@
   "excerpt": "An article on Multi-WAN setups using consumer-grade ISPs.\nContinue readingMulti-WAN setups with retail ISPs (Part 1 – Theory)",
   "featured_image": {
     "alt": "",
-    "bytes": 71656,
-    "caption": "IP Address is intentionally left visible as it poses no security risk (Dynamic IP Address)",
+    "bytes": 174866,
+    "caption": "",
     "detection_method": "rest_embedded_wp_featuredmedia",
     "filename_preserved": true,
-    "height": 947,
-    "local_path": "content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory/assets/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-    "mime_type": "image/png",
+    "height": 1707,
+    "local_path": "content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory/assets/Multi_WAN_FT-scaled.jpg",
+    "mime_type": "image/jpeg",
     "role": "featured",
-    "sha256": "d8f70ce4f0b29e4fbbc028c064767976f3427bdd8b1f6c9d948f832554083146",
-    "source_filename": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-    "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-    "stored_filename": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-    "width": 1920
+    "sha256": "846feb197eec47c031e1dabd693f745deda48da074f35004acfc1c61aac471ea",
+    "source_filename": "Multi_WAN_FT-scaled.jpg",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
+    "stored_filename": "Multi_WAN_FT-scaled.jpg",
+    "width": 2560
   },
   "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
   "featured_media_sizes": {
     "1536x1536": {
-      "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1536x758.png",
-      "filesize": 115595,
-      "height": 758,
-      "mime_type": "image/png",
-      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1536x758.png",
+      "file": "Multi_WAN_FT-1536x1024.jpg",
+      "filesize": 76494,
+      "height": 1024,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-1536x1024.jpg",
       "width": 1536
     },
+    "2048x2048": {
+      "file": "Multi_WAN_FT-2048x1365.jpg",
+      "filesize": 120902,
+      "height": 1365,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-2048x1365.jpg",
+      "width": 2048
+    },
     "full": {
-      "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-      "height": 947,
-      "mime_type": "image/png",
-      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-      "width": 1920
+      "file": "Multi_WAN_FT-scaled.jpg",
+      "height": 1707,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
+      "width": 2560
+    },
+    "medium": {
+      "file": "Multi_WAN_FT-3240x2160.jpg",
+      "filesize": 264397,
+      "height": 2160,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-3240x2160.jpg",
+      "width": 3240
     },
     "medium_large": {
-      "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-768x379.png",
-      "filesize": 44690,
-      "height": 379,
-      "mime_type": "image/png",
-      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-768x379.png",
+      "file": "Multi_WAN_FT-768x512.jpg",
+      "filesize": 27543,
+      "height": 512,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-768x512.jpg",
       "width": 768
     },
     "thumbnail": {
-      "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1280x720.png",
-      "filesize": 106734,
-      "height": 720,
-      "mime_type": "image/png",
-      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1280x720.png",
-      "width": 1280
+      "file": "Multi_WAN_FT-1620x1080.jpg",
+      "filesize": 83245,
+      "height": 1080,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-1620x1080.jpg",
+      "width": 1620
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "c1b17817945a9b642ce4eb18b896963fe47043a206370f29e7f9b72ed985ddb5",
-    "index_md_sha256": "57b94d1af7966cd266d661a4a33e77c4643a10b4a5d086b4ec94cd39cddae03d",
+    "canonical_page_html_sha256": "cbb7f59e399f6583378b4274eba7f5736bd519a27fec49d8e0dbcdc1e0b3b4c9",
+    "index_md_sha256": "fefa65b3fbc46cf56990489f6a61c111b411ae43d987a252f4bf71fe15506851",
     "rendered_article_html_sha256": "f542d402feb693f69635fdfbd3a693d4e65794c200a9efb2f666b4524b7153f1",
-    "wordpress_post_json_sha256": "41dca81877d884cdac8e8cf9e6bd0120d52a046668200cf04e1964b356fd747f"
+    "wordpress_post_json_sha256": "480f0727ed46b25c5bc7fbfce2516cb79289cff1463f8da1db89356b9fac0115"
   },
   "id": 66,
-  "modified": "2025-06-23T20:40:50",
+  "modified": "2026-07-06T21:25:28",
   "published": "2021-03-28T13:44:36",
   "slug": "multi-wan-setups-with-retail-isps-part-1-theory",
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/66",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:46:54+00:00",
+    "fetched_at": "2026-07-06T17:49:36+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

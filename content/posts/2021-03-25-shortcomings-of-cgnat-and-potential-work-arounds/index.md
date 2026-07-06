@@ -2,10 +2,10 @@
 title: "Shortcomings of CGNAT and Potential Workarounds"
 slug: "shortcomings-of-cgnat-and-potential-work-arounds"
 date: "2021-03-25T11:15:43"
-last_modified: "2025-09-28T03:24:17"
+last_modified: "2026-07-06T19:06:12"
 canonical_url: "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/"
 wordpress_id: 29
-featured_image: "assets/13_DS_Logo_Dark_Mode_SEO-scaled.png"
+featured_image: "assets/Shortcomings_CGNAT_FT-scaled.jpg"
 categories:
   - "Networking"
 tags:
@@ -16,7 +16,7 @@ tags:
   - "NAT"
   - "Networking"
 ---
-![Shortcomings of CGNAT and Potential Workarounds](assets/13_DS_Logo_Dark_Mode_SEO-scaled.png)
+![Shortcomings of CGNAT and Potential Workarounds](assets/Shortcomings_CGNAT_FT-scaled.jpg)
 
 > **2025 update [here](https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/).**
 

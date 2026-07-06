@@ -2,19 +2,19 @@
   "assets": [
     {
       "alt": "",
-      "bytes": 71656,
-      "caption": "IP Address is intentionally left visible as it poses no security risk (Dynamic IP Address)",
+      "bytes": 174866,
+      "caption": "",
       "detection_method": "rest_embedded_wp_featuredmedia",
       "filename_preserved": true,
-      "height": 947,
-      "local_path": "content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory/assets/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-      "mime_type": "image/png",
+      "height": 1707,
+      "local_path": "content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory/assets/Multi_WAN_FT-scaled.jpg",
+      "mime_type": "image/jpeg",
       "role": "featured",
-      "sha256": "d8f70ce4f0b29e4fbbc028c064767976f3427bdd8b1f6c9d948f832554083146",
-      "source_filename": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-      "stored_filename": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-      "width": 1920
+      "sha256": "846feb197eec47c031e1dabd693f745deda48da074f35004acfc1c61aac471ea",
+      "source_filename": "Multi_WAN_FT-scaled.jpg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
+      "stored_filename": "Multi_WAN_FT-scaled.jpg",
+      "width": 2560
     },
     {
       "alt": null,
@@ -31,9 +31,25 @@
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png",
       "stored_filename": "Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png",
       "width": 599
+    },
+    {
+      "alt": null,
+      "bytes": 71656,
+      "caption": "Figure-2 [IP Address is intentionally left visible as it poses no security risk (Dynamic IP Address)]",
+      "detection_method": null,
+      "filename_preserved": true,
+      "height": 947,
+      "local_path": "content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory/assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "d8f70ce4f0b29e4fbbc028c064767976f3427bdd8b1f6c9d948f832554083146",
+      "source_filename": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+      "stored_filename": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+      "width": 1920
     }
   ],
-  "generated_at": "2026-07-06T12:46:54+00:00",
+  "generated_at": "2026-07-06T17:49:36+00:00",
   "post_id": 66,
   "post_slug": "multi-wan-setups-with-retail-isps-part-1-theory"
 }

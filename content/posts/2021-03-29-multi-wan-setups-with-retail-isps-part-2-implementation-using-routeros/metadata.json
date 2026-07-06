@@ -40,36 +40,85 @@
   ],
   "excerpt": "An article on deploying Multi-WAN using RouterOS.\nContinue readingMulti-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]",
   "featured_image": {
-    "alt": null,
-    "bytes": 9954,
-    "caption": null,
-    "detection_method": "open_graph_og_image",
+    "alt": "",
+    "bytes": 174866,
+    "caption": "",
+    "detection_method": "rest_embedded_wp_featuredmedia",
     "filename_preserved": true,
-    "height": 232,
-    "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
-    "mime_type": "image/png",
+    "height": 1707,
+    "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/Multi_WAN_FT-scaled.jpg",
+    "mime_type": "image/jpeg",
     "role": "featured",
-    "sha256": "cdd891df066ab38344c777c3ef0f30daa34123f34299c0a5f448a057a026f43a",
-    "source_filename": "Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
-    "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
-    "stored_filename": "Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
-    "width": 1166
+    "sha256": "846feb197eec47c031e1dabd693f745deda48da074f35004acfc1c61aac471ea",
+    "source_filename": "Multi_WAN_FT-scaled.jpg",
+    "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
+    "stored_filename": "Multi_WAN_FT-scaled.jpg",
+    "width": 2560
   },
-  "featured_image_detection_method": "open_graph_og_image",
+  "featured_image_detection_method": "rest_embedded_wp_featuredmedia",
+  "featured_media_sizes": {
+    "1536x1536": {
+      "file": "Multi_WAN_FT-1536x1024.jpg",
+      "filesize": 76494,
+      "height": 1024,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-1536x1024.jpg",
+      "width": 1536
+    },
+    "2048x2048": {
+      "file": "Multi_WAN_FT-2048x1365.jpg",
+      "filesize": 120902,
+      "height": 1365,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-2048x1365.jpg",
+      "width": 2048
+    },
+    "full": {
+      "file": "Multi_WAN_FT-scaled.jpg",
+      "height": 1707,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
+      "width": 2560
+    },
+    "medium": {
+      "file": "Multi_WAN_FT-3240x2160.jpg",
+      "filesize": 264397,
+      "height": 2160,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-3240x2160.jpg",
+      "width": 3240
+    },
+    "medium_large": {
+      "file": "Multi_WAN_FT-768x512.jpg",
+      "filesize": 27543,
+      "height": 512,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-768x512.jpg",
+      "width": 768
+    },
+    "thumbnail": {
+      "file": "Multi_WAN_FT-1620x1080.jpg",
+      "filesize": 83245,
+      "height": 1080,
+      "mime_type": "image/jpeg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-1620x1080.jpg",
+      "width": 1620
+    }
+  },
   "hashes": {
-    "canonical_page_html_sha256": "96fd4c47662771fcc7037279a03fdfc8a4428dfc0a9ef9eea7f0da0ab03f2f7b",
-    "index_md_sha256": "ca46f94d2d17cf49b8ac6dd9de7117545aa7b9da60624239096eefbdf25a50e2",
+    "canonical_page_html_sha256": "d14c45b82cfd0e4b43fa0908fc9177aa67154190cb8551415b261626cc8c0465",
+    "index_md_sha256": "4196476f95e1042ce8d8a3762a7003bab5791704827d8fe39e6f9c8da2c54180",
     "rendered_article_html_sha256": "aec67eb6a951c73dc3397ad7abdb5aed8e51753a4ee56480b0270478ea549540",
-    "wordpress_post_json_sha256": "77ff5666c111440262ed113eea9306f1a313dcbe4402d2748cb1d71bcf00083a"
+    "wordpress_post_json_sha256": "d02d85afa0c1008ea728ecd406e2332ed3d517510373f9946ccc130de2867f49"
   },
   "id": 115,
-  "modified": "2025-05-21T01:47:29",
+  "modified": "2026-07-06T21:24:21",
   "published": "2021-03-29T20:34:19",
   "slug": "multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros",
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-06T12:46:54+00:00",
+    "fetched_at": "2026-07-06T17:49:36+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },
