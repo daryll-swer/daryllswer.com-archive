@@ -6,8 +6,8 @@
 - Active plan: `PLANS.md`
 - Architecture reference: pending `ARCHITECTURE.md`
 - Current sprint / workstream: initial public mirror scaffold and sync
-- Status: publishing to GitHub; old repo deletion explicitly approved by owner
-- Last updated: 2026-07-06 09:35 UTC
+- Status: complete; published to GitHub and old repo deleted
+- Last updated: 2026-07-06 09:37 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -49,6 +49,9 @@
 - Licensing:
   - Status: complete
   - Notes: Scripts/tooling are MIT licensed; mirrored blog content is `CC-BY-NC-SA-4.0`; third-party media/external artefacts are not assumed covered by either licence.
+- GitHub publication:
+  - Status: complete
+  - Notes: New public repo `daryll-swer/daryllswer.com-archive` created and pushed; old repo `daryll-swer/daryllswer.com-neteng-blog` deleted.
 
 ## Execution Log
 
@@ -84,6 +87,14 @@
   - Action: Owner selected `daryllswer.com-archive` and explicitly requested creation/push plus complete deletion of old `daryllswer.com-neteng-blog` repo.
   - Evidence: User instruction in current thread.
   - Result: in progress
+- 2026-07-06 09:37 UTC:
+  - Action: Created and pushed `daryll-swer/daryllswer.com-archive`.
+  - Evidence: GitHub URL `https://github.com/daryll-swer/daryllswer.com-archive`, remote `main` at `517dca873eaabb649d5cf93651eb485f7b9d5270` before this status commit.
+  - Result: pass
+- 2026-07-06 09:37 UTC:
+  - Action: Deleted `daryll-swer/daryllswer.com-neteng-blog`.
+  - Evidence: `gh repo view daryll-swer/daryllswer.com-neteng-blog` returned repository-not-found after deletion.
+  - Result: pass
 
 ## Tests and Verification
 
@@ -101,7 +112,7 @@
 ## Next Pickup
 
 - Next action:
-  - Commit locally, create/push `daryll-swer/daryllswer.com-archive`, then delete `daryll-swer/daryllswer.com-neteng-blog`.
+  - Optional public repo metadata polish and future sync automation.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
@@ -114,4 +125,4 @@
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
-  - Owner review and explicit approval for any remote GitHub action.
+  - Optional repository topics/description tweaks and future sync automation.
