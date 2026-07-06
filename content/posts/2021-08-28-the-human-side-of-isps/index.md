@@ -5,7 +5,7 @@ date: "2021-08-28T01:50:13"
 last_modified: "2025-05-21T01:47:31"
 canonical_url: "https://www.daryllswer.com/the-human-side-of-isps/"
 wordpress_id: 558
-featured_image: "assets/featured.png"
+featured_image: "assets/Computer-with-people.png"
 categories:
   - "ISP"
   - "Networking"
@@ -13,7 +13,7 @@ tags:
   - "ISPs"
   - "Networking"
 ---
-![The Human Side of ISPs](assets/featured.png)
+![The Human Side of ISPs](assets/Computer-with-people.png)
 
 We spend a lot of time examining the technical problems that can occur at Internet Service Providers (ISPs), but relatively little time looking at the most important element of all — the people actually working at them.
 

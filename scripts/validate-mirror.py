@@ -11,6 +11,7 @@ import hashlib
 import json
 import re
 import sys
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -57,6 +58,12 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: fh.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def source_filename_from_url(url: str) -> str:
+    parsed = urllib.parse.urlsplit(url)
+    name = urllib.parse.unquote(Path(parsed.path).name).replace("\x00", "")
+    return name.replace("/", "-").replace("\\", "-").strip()
 
 
 def check_required(data, schema, path: str, errors: list[str]) -> None:
@@ -129,6 +136,13 @@ def validate_post(post_item: dict, errors: list[str], warnings: list[str]) -> No
                 errors.append(f"{post_item['slug']}: asset missing at {local_path}")
             elif asset.get("sha256") and sha256_file(path) != asset["sha256"]:
                 errors.append(f"{post_item['slug']}: checksum mismatch for {local_path}")
+            if "/wp-content/uploads/" in (asset.get("source_url") or ""):
+                expected = asset.get("source_filename") or source_filename_from_url(asset.get("source_url") or "")
+                stored = asset.get("stored_filename") or Path(local_path).name
+                if expected and stored != expected:
+                    errors.append(f"{post_item['slug']}: asset filename not preserved for {local_path}; expected {expected}")
+                if asset.get("filename_preserved") is not True:
+                    errors.append(f"{post_item['slug']}: asset manifest does not confirm filename preservation for {local_path}")
 
 
 def sitemap_urls() -> set[str]:
@@ -156,6 +170,19 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
         errors.append("spreadsheet ODS export missing")
     elif sha256_file(ROOT / ods["path"]) != ods.get("sha256"):
         errors.append("spreadsheet ODS checksum mismatch")
+    workbook = manifest.get("workbook_html", {})
+    workbook_path = ROOT / workbook.get("path", "")
+    if not workbook.get("path") or not workbook_path.exists():
+        errors.append("spreadsheet tabbed workbook HTML missing")
+    elif sha256_file(workbook_path) != workbook.get("sha256"):
+        errors.append("spreadsheet tabbed workbook HTML checksum mismatch")
+    else:
+        workbook_html = workbook_path.read_text(encoding="utf-8", errors="replace")
+        expected_tabs = len(manifest.get("tabs", []))
+        if "sheet-tabs" not in workbook_html:
+            errors.append("spreadsheet tabbed workbook HTML missing sheet tabs")
+        if workbook_html.count('class="sheet-tab-label"') != expected_tabs:
+            errors.append("spreadsheet tabbed workbook HTML tab count does not match manifest")
     for tab in manifest.get("tabs", []):
         csv_info = tab.get("csv", {})
         csv_path = ROOT / csv_info.get("path", "")
@@ -190,6 +217,16 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
         errors.append("GitHub Pages theme missing at docs/assets/theme.css")
     if not (ROOT / "docs" / ".nojekyll").exists():
         errors.append("GitHub Pages .nojekyll marker missing")
+    sheet_page = ROOT / "docs" / "sheets" / "as141253-ipv6-architecture-example" / "index.html"
+    if not sheet_page.exists():
+        errors.append("GitHub Pages AS141253 workbook page missing")
+    else:
+        sheet_html = sheet_page.read_text(encoding="utf-8", errors="replace")
+        if "sheet-tabs" not in sheet_html:
+            errors.append("GitHub Pages AS141253 workbook page missing sheet tabs")
+        expected_tabs = len(load_json(ROOT / "data" / "sheets" / "as141253-ipv6-architecture-example" / "manifest.json").get("tabs", []))
+        if sheet_html.count('class="sheet-tab-label"') != expected_tabs:
+            errors.append("GitHub Pages AS141253 workbook tab count does not match manifest")
     index_html = site_index.read_text(encoding="utf-8", errors="replace")
     if "posts/" not in index_html:
         errors.append("GitHub Pages index does not link to generated post pages")

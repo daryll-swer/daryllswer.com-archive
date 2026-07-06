@@ -5,7 +5,7 @@ date: "2025-04-22T15:54:09"
 last_modified: "2026-06-06T17:45:08"
 canonical_url: "https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/"
 wordpress_id: 5018
-featured_image: "assets/featured.png"
+featured_image: "assets/NAT_Mess.png"
 categories:
   - "Networking"
 tags:
@@ -16,7 +16,7 @@ tags:
   - "ISPs"
   - "Networking"
 ---
-![Let’s talk about CGNAT and IPv6, yet again.](assets/featured.png)
+![Let’s talk about CGNAT and IPv6, yet again.](assets/NAT_Mess.png)
 
 > **For professional CGNAT and IPv6 deployment services aligned with industry best practices, [click here](https://www.swernetworks.com/).**
 

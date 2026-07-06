@@ -34,12 +34,30 @@ where Markdown cannot represent the original formatting safely.
 - `docs/index.html` is the public archive index.
 - `docs/posts/<slug>/index.html` is the rendered article page.
 - `docs/assets/theme.css` is the shared minimal visual theme.
-- `docs/sheets/as141253-ipv6-architecture-example/` exposes the mirrored
-  spreadsheet artefacts for human readers.
+- `docs/sheets/as141253-ipv6-architecture-example/index.html` is the tabbed
+  AS141253 workbook generated from repository CSV files. The ODS, CSV, CSVW,
+  and Google HTML snapshots are copied next to it for editing/provenance.
 
 GitHub Pages is static hosting, so the site is regenerated from repository
 content by `make render-site`; it does not fetch article bodies from WordPress
 or GitHub at runtime.
+
+## Maintainer Workflow
+
+Use these commands when refreshing or validating the archive:
+
+```sh
+make sync
+make render-site
+make validate
+make scan-secrets
+make render-preview
+```
+
+The scripts use public WordPress/API/sitemap/RSS/export surfaces only. If a
+future task needs authentication, private WordPress export, database access, SSH
+backend access, or destructive GitHub actions, stop for explicit owner approval
+first.
 
 ## Archive Filters
 
@@ -76,14 +94,35 @@ Inline images and WordPress-uploaded media links are downloaded where possible
 and rewritten to local archive paths. This applies to image figures and to text
 links that point directly at files under `www.daryllswer.com/wp-content/uploads/`.
 
+Downloaded media files are stored as direct response bytes with no image
+re-encoding, resizing, or metadata stripping. This keeps embedded image
+metadata/EXIF identical to the public WordPress media response. The archive
+preserves the WordPress URL basename for featured, inline, and linked media
+wherever possible, and the asset manifest records the source filename, stored
+filename, SHA-256 checksum, and whether the filename was preserved. The only
+allowed exception is a same-directory filename collision.
+
 Unsupported embeds such as podcast iframes are converted to durable Markdown
 links in `content/posts/.../index.md`. The generated GitHub Pages site keeps a
 styled embed wrapper with a fallback outbound link, so readers do not see raw
 HTML in the repository view.
 
 The AS141253 Google Sheet link in the IPv6 architecture article is rewritten to
-the repository-hosted spreadsheet archive in Markdown and to the generated
-Pages sheet landing page in HTML.
+the repository-hosted `data/sheets/as141253-ipv6-architecture-example/workbook.html`
+in Markdown and to the generated Pages workbook in HTML.
+
+## Spreadsheet Workbook
+
+The AS141253 Google Sheet is archived as a CSV-backed HTML workbook:
+
+- `data/sheets/as141253-ipv6-architecture-example/workbook.html` is the
+  standalone repository copy with clickable sheet tabs.
+- `docs/sheets/as141253-ipv6-architecture-example/index.html` is the generated
+  GitHub Pages copy of the same workbook.
+- `data/sheets/as141253-ipv6-architecture-example/csv/` remains the editable
+  text source for each tab.
+- `AS141253-ipv6-architecture-example.ods` and `html/` snapshots preserve
+  styled/provenance references.
 
 Google's CSV exports are normalised to LF line endings when written to the
 repository so tabular diffs remain stable under `.gitattributes`. Generated HTML

@@ -34,6 +34,24 @@
           "local_path": {
             "type": "string"
           },
+          "source_filename": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "stored_filename": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "filename_preserved": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
           "sha256": {
             "type": "string"
           },

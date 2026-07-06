@@ -5,12 +5,15 @@
       "bytes": 9954,
       "caption": null,
       "detection_method": "open_graph_og_image",
+      "filename_preserved": true,
       "height": 232,
-      "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/featured.png",
+      "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
       "mime_type": "image/png",
       "role": "featured",
       "sha256": "cdd891df066ab38344c777c3ef0f30daa34123f34299c0a5f448a057a026f43a",
+      "source_filename": "Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
+      "stored_filename": "Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
       "width": 1166
     },
     {
@@ -18,12 +21,15 @@
       "bytes": 15713,
       "caption": "Figure-2 (PPPoE Client MTU Config)",
       "detection_method": null,
+      "filename_preserved": true,
       "height": 520,
       "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/inline/Figure-2.png",
       "mime_type": "image/png",
       "role": "inline",
       "sha256": "28857721bac4a53cb21b477659e1fc575f691571a7b57567c9d12999f162ef35",
+      "source_filename": "Figure-2.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2.png",
+      "stored_filename": "Figure-2.png",
       "width": 1092
     },
     {
@@ -31,16 +37,19 @@
       "bytes": 71656,
       "caption": null,
       "detection_method": null,
+      "filename_preserved": true,
       "height": 947,
       "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
       "mime_type": "image/png",
       "role": "linked-media",
       "sha256": "d8f70ce4f0b29e4fbbc028c064767976f3427bdd8b1f6c9d948f832554083146",
+      "source_filename": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+      "stored_filename": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
       "width": 1920
     }
   ],
-  "generated_at": "2026-07-06T12:02:51+00:00",
+  "generated_at": "2026-07-06T12:46:54+00:00",
   "post_id": 115,
   "post_slug": "multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros"
 }

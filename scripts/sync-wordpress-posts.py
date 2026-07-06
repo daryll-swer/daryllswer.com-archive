@@ -13,6 +13,7 @@ import json
 import mimetypes
 import os
 import re
+import shutil
 import sys
 import textwrap
 import urllib.parse
@@ -47,7 +48,7 @@ DONATION_URL_MARKERS = (
     "/donation/",
 )
 ARCHIVE_LINK_REWRITES = {
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml": "../../../data/sheets/as141253-ipv6-architecture-example/README.md",
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml": "../../../data/sheets/as141253-ipv6-architecture-example/workbook.html",
 }
 BLOCK_TAGS = {
     "address",
@@ -263,6 +264,15 @@ def slugify_filename(value: str, fallback: str = "asset") -> str:
     return value or fallback
 
 
+def source_filename_from_url(url: str, fallback: str = "asset") -> str:
+    """Return the WordPress filename from a media URL without image re-encoding."""
+    parsed = urllib.parse.urlsplit(url)
+    raw_name = Path(parsed.path).name
+    name = html_lib.unescape(urllib.parse.unquote(raw_name)).replace("\x00", "")
+    name = name.replace("/", "-").replace("\\", "-").strip()
+    return name or fallback
+
+
 def date_slug(post: dict) -> str:
     date_part = post["date"][:10]
     return f"{date_part}-{post['slug']}"
@@ -448,25 +458,30 @@ def download_asset(
         }
     content_type = headers.get("Content-Type")
     ext = ext_from_url_or_type(url, content_type)
+    source_filename = source_filename_from_url(url, f"{role}{ext}")
     if target_name:
         filename = target_name if Path(target_name).suffix else f"{target_name}{ext}"
     else:
-        parsed_name = Path(urllib.parse.urlparse(url).path).name
-        filename = slugify_filename(parsed_name or f"{role}{ext}")
+        filename = source_filename
         if not Path(filename).suffix:
             filename += ext
     dest_dir.mkdir(parents=True, exist_ok=True)
     dest = dest_dir / filename
+    filename_preserved = filename == source_filename
     if dest.exists() and dest.read_bytes() != body:
         stem = dest.stem
         suffix = dest.suffix
         dest = dest.with_name(f"{stem}-{sha256_bytes(body)[:8]}{suffix}")
+        filename_preserved = False
     dest.write_bytes(body)
     width, height = image_dimensions(dest)
     return {
         "role": role,
         "source_url": url,
         "local_path": relpath(dest),
+        "source_filename": source_filename,
+        "stored_filename": dest.name,
+        "filename_preserved": filename_preserved,
         "sha256": sha256_bytes(body),
         "mime_type": content_type,
         "bytes": len(body),
@@ -749,6 +764,8 @@ def sync_post(post: dict, generated_at: str) -> dict:
     source_dir = bundle / "source"
     assets_dir = bundle / "assets"
     inline_dir = assets_dir / "inline"
+    if assets_dir.exists():
+        shutil.rmtree(assets_dir)
     source_dir.mkdir(parents=True, exist_ok=True)
     inline_dir.mkdir(parents=True, exist_ok=True)
 
@@ -774,12 +791,10 @@ def sync_post(post: dict, generated_at: str) -> dict:
     featured_url, featured_media, featured_method = featured_candidate(post, canonical_meta, canonical_html)
     featured_asset = None
     if featured_url:
-        ext = ext_from_url_or_type(featured_url, None, ".img")
         featured_asset = download_asset(
             featured_url,
             assets_dir,
             "featured",
-            target_name=f"featured{ext}",
             alt=(featured_media or {}).get("alt_text") if featured_media else None,
             caption=strip_html((featured_media or {}).get("caption", {}).get("rendered")) if featured_media else None,
             detection_method=featured_method,

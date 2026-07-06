@@ -5,16 +5,19 @@
       "bytes": 1445521,
       "caption": "",
       "detection_method": "rest_embedded_wp_featuredmedia",
+      "filename_preserved": true,
       "height": 2194,
-      "local_path": "content/posts/2026-06-04-bgp-router-id-structuring-in-ipv6-native-networks/assets/featured.jpg",
+      "local_path": "content/posts/2026-06-04-bgp-router-id-structuring-in-ipv6-native-networks/assets/BGP_RouterID_FT-scaled.jpg",
       "mime_type": "image/jpeg",
       "role": "featured",
       "sha256": "fe0b0c5a96f83c58bdcdd11bfe76ff56fe7b9db7c2505a9ce10ff071c84a5dee",
+      "source_filename": "BGP_RouterID_FT-scaled.jpg",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg",
+      "stored_filename": "BGP_RouterID_FT-scaled.jpg",
       "width": 2560
     }
   ],
-  "generated_at": "2026-07-06T12:02:51+00:00",
+  "generated_at": "2026-07-06T12:46:54+00:00",
   "post_id": 5324,
   "post_slug": "bgp-router-id-structuring-in-ipv6-native-networks"
 }

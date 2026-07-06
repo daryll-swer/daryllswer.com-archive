@@ -5,7 +5,7 @@ date: "2024-11-12T08:00:00"
 last_modified: "2026-06-06T17:45:13"
 canonical_url: "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/"
 wordpress_id: 2931
-featured_image: "assets/featured.png"
+featured_image: "assets/OOB_FT.png"
 categories:
   - "Architecture"
   - "DC/Enterprise"
@@ -18,7 +18,7 @@ tags:
   - "Networking"
   - "OOB"
 ---
-![Out-of-Band Network Design for Service Provider Networks](assets/featured.png)
+![Out-of-Band Network Design for Service Provider Networks](assets/OOB_FT.png)
 
 #### The design I am going to discuss in this article was inspired by a variant that Wido den Hollander originally built in a data centre environment, where he architected a medium-large network. It is not a typical Out-of-Band design that one may find reference for on the public Internet.
 

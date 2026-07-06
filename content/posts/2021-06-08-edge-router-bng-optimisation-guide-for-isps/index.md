@@ -5,7 +5,7 @@ date: "2021-06-08T20:32:48"
 last_modified: "2026-05-30T00:09:08"
 canonical_url: "https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/"
 wordpress_id: 269
-featured_image: "assets/featured.jpg"
+featured_image: "assets/834B1158-30C5-42F5-A513-FDA123138559.jpg"
 categories:
   - "ISP"
   - "Networking"
@@ -23,7 +23,7 @@ tags:
   - "Networking"
   - "RFC4638"
 ---
-![Edge Router & BNG Optimisation Guide for ISPs](assets/featured.jpg)
+![Edge Router & BNG Optimisation Guide for ISPs](assets/834B1158-30C5-42F5-A513-FDA123138559.jpg)
 
 ```
 AnnouncementThis documentation will no longer be maintained.For any professional services, click here.
@@ -368,11 +368,11 @@ The screenshots below are for references to give you an idea of what MTU mix/mat
 
 The VLANs on top of the bridge (excluding the pe01) are tagged to the VPLS circuit (also member of bridge) which are configured to 1500 MTU as these are layer 3 terminating interfaces, as my residential customers behind these VLANs, don’t have routers with jumbo frames, so 1500 makes sense. But if for example, on VLAN1501, one day, I moved all customers to jumbo frames 9k enabled routers? Then I simply change the MTU config on my VLAN interface right here, as the underlying transport network is already enabled with jumbo frames from day one.
 
-[![](assets/inline/Screenshot-2024-01-20-at-2.36.45-E2-80-AFAM.png)](assets/inline/Screenshot-2024-01-20-at-2.36.45-E2-80-AFAM.png)
+[![](assets/inline/Screenshot-2024-01-20-at-2.36.45 AM.png)](assets/inline/Screenshot-2024-01-20-at-2.36.45 AM.png)
 
 _Figure-3 MTU Overview_
 
-[![](assets/inline/Screenshot-2024-01-20-at-2.37.02-E2-80-AFAM.png)](assets/inline/Screenshot-2024-01-20-at-2.37.02-E2-80-AFAM.png)
+[![](assets/inline/Screenshot-2024-01-20-at-2.37.02 AM.png)](assets/inline/Screenshot-2024-01-20-at-2.37.02 AM.png)
 
 _Figure-4 VPLS MTU_
 
@@ -779,7 +779,7 @@ add authentication=pap default-profile=profile2 disabled=no interface=vlan21 kee
 - Make use of the **100.64.0.0/10** subnet as it’s [meant](https://datatracker.ietf.org/doc/html/rfc6598) for CGNAT usage to prevent clashing on the customer site
 - Enable **all** the NAT traversal Helpers on the NAT box, as shown below.
 
-[![](assets/inline/Screenshot-2024-01-20-at-2.31.27-E2-80-AFAM.png)](assets/inline/Screenshot-2024-01-20-at-2.31.27-E2-80-AFAM.png)
+[![](assets/inline/Screenshot-2024-01-20-at-2.31.27 AM.png)](assets/inline/Screenshot-2024-01-20-at-2.31.27 AM.png)
 
 _Figure-8 (NAT Traversal Helpers on RouterOS)_
 
@@ -831,7 +831,7 @@ So tl;dr you can use a /30 per 200 users as long as you follow the steps properl
 
 **End Result**
 
-[![](assets/inline/Screenshot-2024-01-20-at-2.27.19-E2-80-AFAM.png)](assets/inline/Screenshot-2024-01-20-at-2.27.19-E2-80-AFAM.png)
+[![](assets/inline/Screenshot-2024-01-20-at-2.27.19 AM.png)](assets/inline/Screenshot-2024-01-20-at-2.27.19 AM.png)
 
 _Figure-11 (Your NAT Table should look as dead simple as this one)_
 

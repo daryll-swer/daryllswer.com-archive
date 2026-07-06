@@ -5,7 +5,7 @@ date: "2021-03-29T20:34:19"
 last_modified: "2025-05-21T01:47:29"
 canonical_url: "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/"
 wordpress_id: 115
-featured_image: "assets/featured.png"
+featured_image: "assets/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png"
 categories:
   - "Networking"
 tags:
@@ -17,7 +17,7 @@ tags:
   - "Networking"
   - "RouterOS"
 ---
-![Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]](assets/featured.png)
+![Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]](assets/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png)
 
 ### Please note, it is very unlikely I will maintain this article piece. Even though the underlying concepts and principle are the same on RouterOS v7, if you are still facing some issues or confusion, I would recommend you watch this official video from MikroTik.
 

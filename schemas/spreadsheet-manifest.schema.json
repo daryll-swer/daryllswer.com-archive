@@ -22,6 +22,12 @@
     "ods": {
       "type": "object"
     },
+    "workbook_html": {
+      "type": "object"
+    },
+    "published_workbook_html": {
+      "type": "object"
+    },
     "tabs": {
       "type": "array",
       "items": {

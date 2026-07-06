@@ -5,13 +5,13 @@ date: "2023-09-27T20:54:49"
 last_modified: "2025-05-21T01:52:12"
 canonical_url: "https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/"
 wordpress_id: 2836
-featured_image: "assets/featured.png"
+featured_image: "assets/IPv6_RA_featured_Image.png"
 categories:
   - "Networking"
 tags:
   - "IPv6"
 ---
-![IPv6 Router Advertisement: Why is it enabled by default on some network vendors?](assets/featured.png)
+![IPv6 Router Advertisement: Why is it enabled by default on some network vendors?](assets/IPv6_RA_featured_Image.png)
 
 **This article has been published on the [APNIC blog](https://blog.apnic.net/2023/11/30/why-is-ipv6-router-advertisement-default-enabled-by-some-network-vendors/) as well.**
 

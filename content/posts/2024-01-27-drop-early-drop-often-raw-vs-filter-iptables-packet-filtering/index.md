@@ -5,7 +5,7 @@ date: "2024-01-27T01:09:13"
 last_modified: "2025-05-21T01:52:14"
 canonical_url: "https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/"
 wordpress_id: 3138
-featured_image: "assets/featured.webp"
+featured_image: "assets/drop_packets_parachutes.webp"
 categories:
   - "Linux"
   - "Networking"
@@ -13,7 +13,7 @@ tags:
   - "iptables"
   - "Linux"
 ---
-![Drop Early, Drop Often: Raw vs Filter iptables packet filtering](assets/featured.webp)
+![Drop Early, Drop Often: Raw vs Filter iptables packet filtering](assets/drop_packets_parachutes.webp)
 
 #### In this article, the context and writing structure will be a bit different. The original content was written by a friend of mine who would like to remain anonymous. He originally wanted to keep this information to just the two of us, but I felt that this would benefit the networking community. I would also emphasise this article’s intention is to shed some awareness into iptables raw vs filter table performance and potentially help you make a more efficient decision. It is definitely not one of my comprehensive guides.
 

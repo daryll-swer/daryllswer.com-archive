@@ -5,7 +5,7 @@ date: "2025-05-26T08:30:00"
 last_modified: "2025-08-29T16:02:17"
 canonical_url: "https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/"
 wordpress_id: 4285
-featured_image: "assets/featured.jpg"
+featured_image: "assets/Data-centre_cables_FT-scaled.jpg"
 categories:
   - "Home Networking"
   - "ISP"
@@ -17,7 +17,7 @@ tags:
   - "MPLS"
   - "Networking"
 ---
-![How to bring data centre-like connectivity to your home with IPTTTH](assets/featured.jpg)
+![How to bring data centre-like connectivity to your home with IPTTTH](assets/Data-centre_cables_FT-scaled.jpg)
 
 **This article has been published on the [APNIC blog](https://blog.apnic.net/2025/05/26/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/) as well.**
 

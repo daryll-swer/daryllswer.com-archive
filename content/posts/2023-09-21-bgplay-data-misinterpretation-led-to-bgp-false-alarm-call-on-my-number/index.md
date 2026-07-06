@@ -5,7 +5,7 @@ date: "2023-09-21T19:17:52"
 last_modified: "2025-05-21T01:52:11"
 canonical_url: "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/"
 wordpress_id: 2803
-featured_image: "assets/featured.png"
+featured_image: "assets/BGP_False_Alarm_Featured_Image.png"
 categories:
   - "ISP"
   - "Networking"
@@ -15,7 +15,7 @@ tags:
   - "Networking"
   - "Routing"
 ---
-![BGPlay data misinterpretation led to BGP false alarm call on my number](assets/featured.png)
+![BGPlay data misinterpretation led to BGP false alarm call on my number](assets/BGP_False_Alarm_Featured_Image.png)
 
 **This article has been published on the [APNIC blog](https://blog.apnic.net/2023/11/20/bgplay-data-misinterpretation-led-to-a-bgp-false-alarm-call/) as well.**
 

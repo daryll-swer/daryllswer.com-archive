@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; GitHub Pages site deployed and verified
+- Status: in progress; local validation/browser QA passed, commit/push pending
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-06 12:06 UTC
+- Last updated: 2026-07-06 12:51 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -28,14 +28,17 @@
   - Complete locally: desktop and 390x844 mobile browser QA passed for homepage, IPv6 article, responsive figures, media embeds, and sheet landing page.
   - Complete locally: the AS141253 sheet README has clickable artefact links and generated text artefacts are normalised for stable diffs.
   - Complete: GitHub Pages publishes `main` `/docs` at `https://daryll-swer.github.io/daryllswer.com-archive/`.
+  - Complete locally: README is reader-focused; maintainer commands moved to `AGENTS.md` and `docs/MIRRORING.md`.
+  - Complete locally: WordPress media downloads preserve URL basenames and direct response bytes wherever possible, with filename-preservation fields in asset manifests.
+  - Complete locally: AS141253 sheet is rendered as a CSV-backed tabbed `workbook.html` and generated Pages workbook.
 - Last material update:
-  - 2026-07-06 12:06 UTC Pushed the generated site, enabled GitHub Pages from `main` `/docs`, and verified the live homepage returns HTTP 200.
+  - 2026-07-06 12:51 UTC Regenerated, validated, public-safety scanned, and browser-checked the README/media/workbook update locally.
 - Next pickup action:
-  - Optional repository metadata polish and future sync automation.
+  - Commit, push, and verify Pages rebuild.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - None for the requested Pages/archive update.
+  - Live Pages verification still pending for the current local update.
 
 ## Purpose / Big Picture
 
@@ -97,6 +100,11 @@
 - [x] 2026-07-06 11:54 UTC Browser-checked generated Pages output on desktop and 390x844 mobile.
 - [x] 2026-07-06 12:03 UTC Added clickable AS141253 sheet README artefact links and generated text artefact normalisation.
 - [x] 2026-07-06 12:06 UTC Pushed generated Pages site, enabled Pages from `main` `/docs`, and verified live homepage HTTP 200.
+- [x] 2026-07-06 12:45 UTC Moved maintainer commands out of README and into directive/process docs.
+- [x] 2026-07-06 12:45 UTC Added WordPress media filename preservation and manifest validation.
+- [x] 2026-07-06 12:45 UTC Added CSV-backed tabbed AS141253 workbook generation.
+- [x] 2026-07-06 12:51 UTC Regenerated and browser-checked the updated Pages output.
+- [ ] Validate, commit, push, and verify GitHub Pages rebuild.
 
 ## Decision Log
 
@@ -155,6 +163,21 @@
   - Date/Author: 2026-07-06, Codex
   - Status: final locally
   - Impact: `scripts/export-google-sheet.py` normalises CSV response bodies and Google Sheet HTML snapshots; `scripts/render-site.py` strips trailing line whitespace from generated Pages text output.
+- Decision: Keep `README.md` concise and reader-facing.
+  - Rationale: Maintainer commands are primarily for AI agents and future repository maintainers, not casual archive readers.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final locally
+  - Impact: README lists purpose/layout/licence only; `AGENTS.md` and `docs/MIRRORING.md` contain commands and approval boundaries.
+- Decision: Preserve WordPress media basenames and bytes.
+  - Rationale: Featured and inline images should remain 1:1 with public WordPress media responses, including embedded metadata/EXIF.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final locally
+  - Impact: Sync stores media under WordPress URL basenames, records filename preservation, and validation fails on unexpected filename drift.
+- Decision: Render AS141253 as a CSV-backed tabbed HTML workbook.
+  - Rationale: A standalone HTML workbook mirrors the Google Sheet experience while keeping CSV files editable and diffable.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final locally
+  - Impact: `workbook.html` is generated under `data/sheets/...`; Pages serves the same workbook as `docs/sheets/as141253-ipv6-architecture-example/index.html`.
 
 ## Validation and Acceptance
 
@@ -173,6 +196,12 @@
   - `make validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 12:00 UTC; validation recorded 0 errors and 1 warning, public-safety scan recorded 0 findings.
   - `git diff --check`: passed at 2026-07-06 12:04 UTC.
   - Local browser QA against `http://127.0.0.1:4173/`: passed at 2026-07-06 11:54 UTC for desktop and 390x844 mobile.
+  - `make sync render-site validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 12:51 UTC; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
+  - Media filename preservation check: passed at 2026-07-06 12:52 UTC; 68 WordPress media assets, 19 featured images, 0 preservation failures.
+  - Workbook structure check: passed at 2026-07-06 12:52 UTC; 9 manifest tabs, 9 radio inputs, 9 visible tab labels, and 9 panels in both `data/.../workbook.html` and `docs/.../index.html`.
+  - Local browser QA against `http://127.0.0.1:4173/`: passed at 2026-07-06 12:51 UTC for desktop and mobile-sized viewport; index had 19 cards, no broken images, no page overflow, IPv6 article linked local sheet page, workbook tabs switched correctly.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-06 12:51 UTC.
+  - `git diff --check`: passed at 2026-07-06 12:51 UTC.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`
@@ -202,6 +231,6 @@
 - Achieved:
   - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, preview generation, and generated GitHub Pages site completed.
 - Remaining:
-  - Optional public repo metadata polish and future sync automation.
+  - Commit, push, and live Pages verification for the current update.
 - Retrospective timestamp:
   - 2026-07-06 09:20 UTC

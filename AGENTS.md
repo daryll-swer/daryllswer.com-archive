@@ -44,11 +44,30 @@
   deletion, force-push, replacing default branch, changing visibility, or
   creating a replacement repo.
 
+## Maintainer Commands
+
+```sh
+make sync
+make render-site
+make validate
+make scan-secrets
+make render-preview
+```
+
+The scripts use public WordPress/API/sitemap/RSS/export surfaces only. If a
+future task needs authentication, private WordPress export, database access, SSH
+backend access, or destructive GitHub actions, stop for explicit owner approval
+first.
+
 ## Structure
 
 - Use `content/posts/YYYY-MM-DD-slug/index.md` page bundles.
 - Keep post source snapshots in `source/`.
 - Keep post assets in `assets/` and record checksums in `assets/manifest.json`.
+- Preserve WordPress media basenames and downloaded bytes for media assets.
+  Featured images and inline images must not be renamed or re-encoded unless a
+  same-directory filename collision makes exact preservation impossible; record
+  any such exception in the asset manifest.
 - Keep generated machine-readable metadata in JSON and validate it against
   `schemas/`.
 - Keep the GitHub Pages static site generated under `docs/`; do not hand-edit
