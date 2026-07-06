@@ -1,0 +1,603 @@
+{
+  "_archive_filters": [
+    {
+      "filter": "donation_or_support_cta",
+      "redacted": true,
+      "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+      "tag": "h4"
+    }
+  ],
+  "_embedded": {
+    "author": [
+      {
+        "_links": {
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "avatar_urls": {
+          "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+          "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+          "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+        },
+        "description": "Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794",
+        "id": 1,
+        "link": "https://www.daryllswer.com/author/daryll/",
+        "name": "Daryll Swer",
+        "slug": "daryll",
+        "url": "https://www.daryllswer.com/"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "_links": {
+          "about": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/types/attachment"
+            }
+          ],
+          "author": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+            }
+          ],
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media"
+            }
+          ],
+          "replies": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=2725"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/2725",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "alt_text": "",
+        "author": 1,
+        "caption": {
+          "rendered": ""
+        },
+        "date": "2023-08-24T18:39:10",
+        "featured_media": 0,
+        "id": 2725,
+        "jetpack_sharing_enabled": true,
+        "link": "https://www.daryllswer.com/subnet-router-anycast/",
+        "media_details": {
+          "file": "2023/08/Subnet-Router-Anycast.jpg",
+          "filesize": 3137582,
+          "height": 3840,
+          "image_meta": {
+            "aperture": "0",
+            "camera": "",
+            "caption": "",
+            "copyright": "",
+            "created_timestamp": "0",
+            "credit": "",
+            "focal_length": "0",
+            "iso": "0",
+            "keywords": [],
+            "orientation": "0",
+            "shutter_speed": "0",
+            "title": ""
+          },
+          "sizes": {
+            "1536x1536": {
+              "file": "Subnet-Router-Anycast-1536x1024.jpg",
+              "filesize": 154767,
+              "height": 1024,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast-1536x1024.jpg",
+              "width": 1536
+            },
+            "2048x2048": {
+              "file": "Subnet-Router-Anycast-2048x1365.jpg",
+              "filesize": 255055,
+              "height": 1365,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast-2048x1365.jpg",
+              "width": 2048
+            },
+            "full": {
+              "file": "Subnet-Router-Anycast.jpg",
+              "height": 3840,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg",
+              "width": 5760
+            },
+            "large": {
+              "file": "Subnet-Router-Anycast-3240x2160.jpg",
+              "filesize": 551919,
+              "height": 2160,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast-3240x2160.jpg",
+              "width": 3240
+            },
+            "medium": {
+              "file": "Subnet-Router-Anycast-1620x1080.jpg",
+              "filesize": 170756,
+              "height": 1080,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast-1620x1080.jpg",
+              "width": 1620
+            },
+            "medium_large": {
+              "file": "Subnet-Router-Anycast-768x512.jpg",
+              "filesize": 44764,
+              "height": 512,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast-768x512.jpg",
+              "width": 768
+            },
+            "thumbnail": {
+              "file": "Subnet-Router-Anycast-1280x720.jpg",
+              "filesize": 101386,
+              "height": 720,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast-1280x720.jpg",
+              "width": 1280
+            }
+          },
+          "width": 5760
+        },
+        "media_type": "image",
+        "mime_type": "image/jpeg",
+        "slug": "subnet-router-anycast",
+        "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg",
+        "title": {
+          "rendered": "Subnet-Router Anycast"
+        },
+        "type": "attachment"
+      }
+    ],
+    "wp:term": [
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=3"
+              }
+            ]
+          },
+          "id": 3,
+          "link": "https://www.daryllswer.com/category/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "category"
+        }
+      ],
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/25",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=25"
+              }
+            ]
+          },
+          "id": 25,
+          "link": "https://www.daryllswer.com/tag/ipv6/",
+          "name": "IPv6",
+          "slug": "ipv6",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/34",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=34"
+              }
+            ]
+          },
+          "id": 34,
+          "link": "https://www.daryllswer.com/tag/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "post_tag"
+        }
+      ]
+    ]
+  },
+  "_links": {
+    "about": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/types/post"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts"
+      }
+    ],
+    "curies": [
+      {
+        "href": "https://api.w.org/{rel}",
+        "name": "wp",
+        "templated": true
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=2739"
+      }
+    ],
+    "self": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2739",
+        "targetHints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      }
+    ],
+    "version-history": [
+      {
+        "count": 0,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2739/revisions"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=2739"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/2725"
+      }
+    ],
+    "wp:term": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/categories?post=2739",
+        "taxonomy": "category"
+      },
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/tags?post=2739",
+        "taxonomy": "post_tag"
+      }
+    ]
+  },
+  "author": 1,
+  "categories": [
+    3
+  ],
+  "class_list": [
+    "post-2739",
+    "post",
+    "type-post",
+    "status-publish",
+    "format-standard",
+    "has-post-thumbnail",
+    "hentry",
+    "category-networking",
+    "tag-ipv6",
+    "tag-networking",
+    "ratio-2-1",
+    "entry"
+  ],
+  "comment_status": "open",
+  "content": {
+    "protected": false,
+    "rendered": "<p class=\"wp-block-paragraph\"><strong><strong>This article has been published on the <a href=\"https://blog.apnic.net/2023/08/28/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/\">APNIC blog</a> as well.</strong></strong></p>\n\n\n\n<p class=\"wp-block-paragraph\">The subnet-router anycast address is a unique IPv6 address that is autoconfigured on a device that <em>is</em> a router (meaning <code>net.ipv6.conf.all.forwarding=1</code> in Linux context) when the subnet prefix length is <a href=\"https://datatracker.ietf.org/doc/html/rfc6164\" target=\"_blank\" rel=\"noreferrer noopener\">shorter than a /127</a>. In theory, when a host on the subnet/local link sends a packet to this address, it reaches the closest router in the subnet from the host, this can mean the host itself if IPv6 forwarding is enabled. This implies the initial leading zero address of an IPv6 subnet (::) is going to be auto-injected into the host’s (router) local routing table as an address of type anycast. So for example if 2001:db8::/64 is your subnet, then 2001:db8:: is the subnet-router anycast address.</p>\n\n\n\n<p class=\"wp-block-paragraph\">A more <a href=\"https://web.archive.org/web/20230619150012/https:/into6.com.au/2014/03/30/subnet-router-anycast-addresses-what-are-they-how-do-they-work/\" target=\"_blank\" rel=\"noreferrer noopener\">in-depth introduction to the subnet-router anycast</a> address is available.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Below is an example of a host on my Autonomous System (AS) that I have configured as a ‘router’ via the IPv6 forwarding flag. We can see the subnet-router anycast address being auto-injected into the local routing table of the device.</p>\n\n\n\n<pre class=\"wp-block-code\"><code>daryll@host1-blr01-as149794:~ $ ip -6 route show table local| grep anycast\nanycast 2400:7060:2:100:: dev eth0 proto kernel metric 0 pref medium\nanycast 2400:7060:2:102:: dev br-34a147a222f6 proto kernel metric 0 pref medium\nanycast fe80:: dev eth0 proto kernel metric 0 pref medium\nanycast fe80:: dev veth45d0ffb proto kernel metric 0 pref medium\nanycast fe80:: dev br-34a147a222f6 proto kernel metric 0 pref medium\nanycast fe80:: dev veth7c6a363 proto kernel metric 0 pref medium</code></pre>\n\n\n\n<h2 class=\"wp-block-heading\">Background</h2>\n\n\n\n<p class=\"wp-block-paragraph\">In this article, I do not think it is a matter of RFC compliances per se, at least to my understanding of the relevant RFC(s) for this subject, but it is more about how certain aspects of the anycast address seem to be vaguely implemented on vendors <em>possibly<strong> </strong></em>due to vagueness in the RFC(s). The article linked above, mentions that, by default, processes and daemons do not listen on the anycast address. This, however, contradicts my findings, which is the foundation for this article.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I will give a background on how I discovered this contradiction. I subscribe to <a href=\"https://www.shadowserver.org/\" target=\"_blank\" rel=\"noreferrer noopener\">Shadowserver</a> alerts for my <a href=\"https://www.daryllswer.com/as149794\" target=\"_blank\" rel=\"noreferrer noopener\">AS149794</a> for exposed ports/services and one day I received email alerts from their platform that notified me some ports were exposed on :: addresses on my network. These addresses live on my edge routers whereby they run the Linux-based MikroTik RouterOS, meaning the underlying network stack is based on the <a href=\"https://en.wikipedia.org/wiki/Netfilter\" target=\"_blank\" rel=\"noreferrer noopener\">Netfilter Framework</a>.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I prefer my edge routers to be <strong>stateless</strong>. Anybody who knows me, knows I like my network backbone/underlay to be stateless. Meaning any packet filtering I do have in place, is done statelessly using the raw table of iptables in the prerouting and output chain on the network underlay.</p>\n\n\n\n<p class=\"wp-block-paragraph\">This means that if, for example, I want to block WAN access to the DNS port on my router, I need to create a prerouting chain rule that drops all traffic from WAN destined towards port 53 TCP/UDP <strong>and</strong> <em>destination-address-type=local</em>. And here is where it gets interesting, in the world of IPv4, <em>dst-<em>address</em>-type=local</em> is sufficient to catch all traffic destined towards IPs sitting on the local device, but not in IPv6, because in the world of IPv6, we have the subnet-router anycast address, which is categorised as a different address type eponymously named <a href=\"https://ipset.netfilter.org/iptables-extensions.man.html\" target=\"_blank\" rel=\"noreferrer noopener\">anycast address type</a>.</p>\n\n\n\n<p class=\"wp-block-paragraph\">So, on my part it was an oversight, I mistakenly assumed that the ‘local’ address type was sufficient to cover both ‘local’ and ‘anycast’ (also, <em>local</em> in practice, in my opinion). The solution to fix the exposed ports was simple, I needed to modify my stateless rules to match <em>dst-address-type=local, anycast</em> and this worked.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Linux Netfilter logic vagueness</h2>\n\n\n\n<p class=\"wp-block-paragraph\">This is my personal opinion and understanding that not everyone may agree with, and I may be incorrect.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I think the Linux logic of address type differentiation is both useful (especially for stateless filtering) and confusing. For example, when I create a raw prerouting chain rule, whereby I ask it to match against all packets whose dst-IP type is local, I expect it to also match the anycast address by default, because the anycast address <strong>is</strong> <strong>local</strong> on the host (router) that the packet is destined for, but this did not happen.</p>\n\n\n\n<p class=\"wp-block-paragraph\">But now if we use the filter table (input chain), and ask it to drop packets, it will drop so without discriminating between local and anycast, even though the input chain has the parameter support for specifying address types.</p>\n\n\n\n<p class=\"wp-block-paragraph\">So, if the input chain treats anycast as local, why does prerouting chain not treat anycast as local?</p>\n\n\n\n<p class=\"wp-block-paragraph\">I brought up this discussion with my friend <a href=\"https://www.linkedin.com/in/ammar-zuberi/\" target=\"_blank\" rel=\"noreferrer noopener\">Ammar Zuberi</a> who is a system/low-level programmer more familiar with the Linux Kernel’s underlying network stack and how it all works at the code level than I am. In his opinion, which I echo, the idea of address types in Netfilter has good intentions but a bad implementation, because it leaves room for ambiguity and ambiguity in general does no favour for network implementations or security as evident from my own experience of dealing with address types and other examples in my previous articles.</p>\n\n\n\n<p class=\"wp-block-paragraph\">There is another strange behaviour with anycast addresses on Linux, that I have <a href=\"https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/#:~:text=Strange%20behaviour%20where,perfectly%C2%A0RFC%20compliant\">mentioned before</a>. In summary, let us assume 2001:db8::/64 is our subnet prefix, and we configured 2001:db8::/64 on a router, and we have a host that gets an address via SLAAC from the router (2001:db8::). When we enable IPv6 forwarding on the host, the host will inject the subnet-router anycast address (2001:db8::) into its local routing table. By doing so, the host will no longer be able to reach the actual router because it now shares the same subnet-router anycast address, which also happens to be the IP address configured on the layer 3 interface of the router, and hence IPv6 communication from host&lt;&gt;router or outside world breaks. The only way to avoid this is by configuring 2001:db8::<strong>1</strong>/64 on the router, this ensures the router’s Layer 3 interface has an address that is different from the anycast address.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I honestly do not know if we need to change the existing implementation on Linux at least, update the relevant RFC maybe, or leave it as it is. But what I do know is if the ambiguity caught me in a blind spot, it can certainly catch others out there in a blind spot as well.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Behavioural Differences Between Vendors</h2>\n\n\n\n<p class=\"wp-block-paragraph\">After discovered the exposed anycast addresses on my personal AS and how it works in Linux implementation, I decided to look for a larger sample size in a large production network that consists of Arista, Cisco, Cumulus Linux and Juniper devices to try to figure out if processes and daemons were listening on the anycast address by default.</p>\n\n\n\n<p class=\"wp-block-paragraph\">For this purpose, it was a simple nmap scan against the anycast addresses on these devices for SSH port, as all the devices had SSH listening. I additionally checked for ICMPv6 reachability, as shown in Table 1.</p>\n\n\n\n<figure class=\"wp-block-table is-style-regular\"><table class=\"has-fixed-layout\"><thead><tr><th class=\"has-text-align-left\" data-align=\"left\">Vendor</th><th>ICMPv6</th><th>Listening on daemons</th></tr></thead><tbody><tr><td class=\"has-text-align-left\" data-align=\"left\">Arista</td><td>Yes</td><td>No</td></tr><tr><td class=\"has-text-align-left\" data-align=\"left\">Juniper (FreeBSD)</td><td>No</td><td>No</td></tr><tr><td class=\"has-text-align-left\" data-align=\"left\">Cisco</td><td>Yes</td><td>No</td></tr><tr><td class=\"has-text-align-left\" data-align=\"left\">Linux (Cumulus, MikroTik)</td><td>Yes</td><td>Yes</td></tr></tbody></table><figcaption class=\"wp-element-caption\">Table-1 Vendor Behavioural Differences</figcaption></figure>\n\n\n\n<p class=\"wp-block-paragraph\">Linux-driven OSes like Cumulus Linux (or RouterOS) listens on the anycast address, unless you either configured explicit ACLs, bind the daemon only to specific addresses, or made sure the daemons are <a href=\"https://docs.nvidia.com/networking-ethernet-software/cumulus-linux-55/System-Configuration/Authentication-Authorization-and-Accounting/SSH-for-Remote-Access/#ssh-and-vrfs\">listening only on a MGMT VRF</a>. But even if they are listening only on an MGMT VRF, if there are anycast addresses within that VRF, they would be accessible over the anycast address. Although it is Linux-based, it appears that the default behaviour of listening on the anycast address is not applicable to Arista EOS, perhaps due to vendor abstraction and modifications.</p>\n\n\n\n<p class=\"wp-block-paragraph\">As the number of Cisco devices on the network I checked is limited, I only checked older devices running Cisco IOS 15.1(2)SY9. The behaviour is likely consistent across all Cisco OSes, but I have not personally tested across all of them.</p>\n\n\n\n<p class=\"wp-block-paragraph\">For Juniper, I checked against Junos OS and <strong>not</strong> Junos OS Evolved. Since Junos OS is FreeBSD-based, it is highly possible the behaviour of not listening on the anycast address is inherent on FreeBSD, however I cannot confirm this, as I don’t have access to any production network using FreeBSD nor am I willing to spin up a FreeBSD instance on my personal devices to test this.</p>\n\n\n\n<p class=\"wp-block-paragraph\">If someone reading this article decides to do more thorough testing against more vendors and OSes, I’m happy to update the table with more data.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Operational Security Implications</h2>\n\n\n\n<p class=\"wp-block-paragraph\">The behavioural disparities of subnet-router anycast addresses carry some operational security implications. In Linux environments, where processes listen on the anycast address by default, operational oversights may inadvertently expose services to unintended accessibility. This emphasises the importance of implementing hyper-specific firewall configurations to safeguard against potential vulnerabilities.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Similarly, the variation in ICMPv6 responses across vendors could possibly pose potential challenges in monitoring and diagnosing network issues that we have not foreseen.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Conclusion</h2>\n\n\n\n<p class=\"wp-block-paragraph\">In conclusion, our exploration of subnet-router anycast addresses has shed light on the behavioural differences that exist across various network vendors and operating systems. Understanding these nuances is crucial for network administrators to ensure protection against unintended accessibility or exposure.</p>\n"
+  },
+  "date": "2023-08-28T06:53:42",
+  "date_gmt": "2023-08-28T01:23:42",
+  "excerpt": {
+    "protected": false,
+    "rendered": "<p>Finding inconsistencies in vendor implementations of IPv6 subnet-router anycast addressing.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/\">Continue reading<span class=\"screen-reader-text\">Behavioural differences of IPv6 subnet-router anycast address implementations</span></a></div>\n"
+  },
+  "featured_media": 2725,
+  "format": "standard",
+  "guid": {
+    "rendered": "http://daryllswer.com/?p=2739"
+  },
+  "id": 2739,
+  "jetpack-related-posts": [
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/architecture/",
+        "text": "Architecture"
+      },
+      "classes": [],
+      "context": "In &quot;Architecture&quot;",
+      "date": "4 June 2026",
+      "excerpt": "How to design and structure BGP Router IDs in IPv6-native networks.",
+      "format": false,
+      "id": 5324,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "BGP Router ID Structuring in IPv6 Native Networks",
+      "url": "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/",
+      "url_meta": {
+        "origin": 2739,
+        "position": 0
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "27 September 2023",
+      "excerpt": "IPv6 Router Advertisement (RA) is a core component of SLAAC and DHCPv6, but it's not required for all situations. Some network vendors enable RA by default, but you should disable it when not needed.",
+      "format": false,
+      "id": 2836,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "IPv6 Router Advertisement: Why is it enabled by default on some network vendors?",
+      "url": "https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/",
+      "url_meta": {
+        "origin": 2739,
+        "position": 1
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/architecture/",
+        "text": "Architecture"
+      },
+      "classes": [],
+      "context": "In &quot;Architecture&quot;",
+      "date": "4 April 2023",
+      "excerpt": "An extensive article on IPv6 best practices, architecture, and implementation with real-life examples for engineers and operators.",
+      "format": false,
+      "id": 1512,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "IPv6 Architecture and Subnetting Guide for Network Engineers and Operators",
+      "url": "https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/",
+      "url_meta": {
+        "origin": 2739,
+        "position": 2
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/linux/",
+        "text": "Linux"
+      },
+      "classes": [],
+      "context": "In &quot;Linux&quot;",
+      "date": "19 May 2025",
+      "excerpt": "How to set up native routed IPv6 in Docker with routed mode.",
+      "format": false,
+      "id": 5136,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How to configure routed IPv6 in Docker",
+      "url": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/",
+      "url_meta": {
+        "origin": 2739,
+        "position": 3
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "16 December 2022",
+      "excerpt": "Explore an interesting observation on the Neighbour Discovery Protocol (NDP) in IPv6, in regard to Neighbour Solicitation and Advertisements.",
+      "format": false,
+      "id": 1674,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Interesting IPv6 observation on NDP (Neighbour Discovery Protocol)",
+      "url": "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/",
+      "url_meta": {
+        "origin": 2739,
+        "position": 4
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "8 June 2021",
+      "excerpt": "A best practices guide for engineers looking to improve network performance, security, and consistency using MikroTik for edge routers and BNG.",
+      "format": false,
+      "id": 269,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Edge Router &#038; BNG Optimisation Guide for ISPs",
+      "url": "https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/",
+      "url_meta": {
+        "origin": 2739,
+        "position": 5
+      }
+    }
+  ],
+  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg",
+  "jetpack_sharing_enabled": true,
+  "link": "https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/",
+  "meta": {
+    "_jetpack_dont_email_post_to_subs": false,
+    "_jetpack_feature_clip_id": 0,
+    "_jetpack_memberships_contains_paid_content": false,
+    "_jetpack_memberships_contains_paywalled_content": false,
+    "_jetpack_newsletter_access": "",
+    "_jetpack_newsletter_tier_id": 0,
+    "footnotes": "",
+    "jetpack_post_was_ever_published": false
+  },
+  "modified": "2025-05-21T01:47:33",
+  "modified_gmt": "2025-05-20T20:17:33",
+  "ping_status": "open",
+  "slug": "behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations",
+  "status": "publish",
+  "sticky": false,
+  "tags": [
+    25,
+    34
+  ],
+  "template": "",
+  "title": {
+    "rendered": "Behavioural differences of IPv6 subnet-router anycast address implementations"
+  },
+  "type": "post"
+}

@@ -1,0 +1,138 @@
+<p class="wp-block-paragraph"><strong>This article has been published on the <a href="https://blog.apnic.net/2025/05/19/how-to-configure-routed-ipv6-in-docker/" target="_blank" rel="noreferrer noopener">APNIC blog</a> as well.</strong></p>
+
+
+
+<p class="wp-block-paragraph">I felt the need to write this short blog post, as I still receive DMs and emails from people who were not able to get native <strong>routed</strong> IPv6 working on Docker. In this post, I’ll show you how to do it in a simplified manner, while obscuring some details of network architecture for the purpose of solely focusing on Docker.</p>
+
+
+
+<p class="wp-block-paragraph">I have been using routed IPv6 on Docker for years before the ‘<a href="https://github.com/moby/moby/pull/47871" target="_blank" rel="noreferrer noopener">routed mode</a>‘ configuration was officially added in 2024. However, even with the updates added in <a href="https://docs.docker.com/engine/release-notes/27/#ipv6" target="_blank" rel="noreferrer noopener">Docker v27</a>, I still see users online struggling to get IPv6 working properly.</p>
+
+
+
+<p class="wp-block-paragraph">A lot of the confusion seems to stem from misinformation across the web and the lack of network engineering knowledge amongst the public in general. The concept of <strong>routing</strong> is alien-enough even in the <a href="https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/" target="_blank" rel="noreferrer noopener">network engineering world</a>. This creates confusion for people with terms like ‘NAT’, ‘Bridge’, ‘Host Driver’, and ‘NDP Proxy’ in the context of Docker.</p>
+
+
+
+<p class="wp-block-paragraph">I had planned to write a more detailed article on how to do IPv6 with Docker in collaboration with Docker Inc. and publish it <a href="https://docs.docker.com/guides/" target="_blank" rel="noreferrer noopener">here</a>. But life got in the way. I still plan to make it happen one day, so keep an eye on this <a href="https://github.com/docker/docs/issues/19556" target="_blank" rel="noreferrer noopener">GitHub issue</a> for updates.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-what-does-routed-really-mean">What does ‘routed’ really mean?</h2>
+
+
+
+<p class="wp-block-paragraph">In this context, the IPv6 prefix is reachable via native Layer 3 packets forwarding without hacks like NAT66 and/or NDP proxying. Specifically, in the Docker additional context, it means the Docker ‘network’ isn’t bridged with the <a href="https://docs.docker.com/engine/network/drivers/macvlan/#bridge-mode" target="_blank" rel="noreferrer noopener">host’s underlying network infrastructure</a>, and containers aren’t relying on the host’s IPv6 address for connectivity.</p>
+
+
+
+<p class="wp-block-paragraph">In other words, routing means <strong>no</strong> bridging, <strong>no</strong> NAT-ting, <strong>no</strong> sharing of the host’s public IPv6 address on the WAN interface. It’s completely Layer 3 native packet forwarding from your network infrastructure to the host’s Docker network segment.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-assumptions">Assumptions</h2>
+
+
+
+<ol class="wp-block-list">
+<li>We will use <a href="https://docs.docker.com/compose/" target="_blank" rel="noreferrer noopener">Docker Compose</a>.</li>
+
+
+
+<li>You know how routing works.</li>
+
+
+
+<li>You know <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" target="_blank" rel="noreferrer noopener">how to route an IPv6 prefix</a> (preferably a /64) from the underlay network to the Docker host.</li>
+
+
+
+<li>The Docker host can be a Pi, a laptop running Debian, a server box running a hypervisor or a regular Debian OS, or a Virtual Machine (VM) behind a hypervisor or possibly behind a KubeVirt.</li>
+
+
+
+<li>The Docker host’s iptables/nftables is clean; there’s no user-defined configuration that could break Docker and/or IPv6 networking.</li>
+
+
+
+<li>Let’s assume our Docker public IPv6 Prefix is <code>2001:db8::/64</code>, and it is routed to the Docker host from the underlying network.</li>
+</ol>
+
+
+
+<h2 class="wp-block-heading" id="h-routing-protocol-recommendation">Routing Protocol Recommendation</h2>
+
+
+
+<p class="wp-block-paragraph">I recommend BGP as the preferred routing protocol, as it’s the standard approach in data centre Clos fabrics. Alternatively, <a href="https://youtu.be/jWdD8SCwzHk" target="_blank" rel="noreferrer noopener">is-is</a> is a viable option. </p>
+
+
+
+<p class="wp-block-paragraph">As a best practice, remember to route the IPv6 prefix to a blackhole with a high administrative distance (or metric) on the Docker host. This acts as a safety net if Docker fails in production. Any traffic that was previously live at scale would now just get routed to the blackhole, minimizing CPU load that would otherwise be spent generating ICMPv6 ‘Destination Unreachable’ packets.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-docker-compose-configuration">Docker Compose configuration</h2>
+
+
+
+<p class="wp-block-paragraph">You can create a custom Docker bridge and assign the routed IPv6 prefix to it. From here, the rest is simple; containers will get an IPv6 address from the configured prefix, or you can also assign a static IPv6 address to a container if you prefer that.</p>
+
+
+
+<pre class="wp-block-code"><code>networks:
+  ipv6_native:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.gateway_mode_ipv6: "<strong>routed</strong>"
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 2001:db8::/64
+          gateway: 2001:db8::1</code></pre>
+
+
+
+<h2 class="wp-block-heading" id="h-additional-tips-on-firewall-rules">Additional tips on firewall rules</h2>
+
+
+
+<p class="wp-block-paragraph">I recommend using network engineering-centric firewall rules whereby the rules are constructed to permit <strong>solicited</strong> peer-to-peer (P2P) traffic in both directions, permit certain ports directly, permit ICMPv4/v6, permit UDP traceroute etc. To achieve this, you can disable Docker’s manipulation of the iptables and ip6tables (or eventually nftables).</p>
+
+
+
+<p class="wp-block-paragraph">Disable Docker’s iptables/ip6tables manipulation using <a href="https://docs.docker.com/engine/network/packet-filtering-firewalls/#prevent-docker-from-manipulating-iptables" target="_blank" rel="noreferrer noopener">this</a>:</p>
+
+
+
+<pre class="wp-block-code"><code>#Add these lines in your /etc/docker/daemon.json
+{
+  "iptables": false,
+  "ip6tables": false
+}</code></pre>
+
+
+
+<p class="wp-block-paragraph">But remember, you need to build your own rules to protect the host and containers along with NAT rules for IPv4 to work. A quick example of NAT-ting IPv4 using nftables; the ‘persistent’ keyword just helps make STUN work better from the client-side due to persistent port mapping between <a href="https://datatracker.ietf.org/doc/html/rfc1918" target="_blank" rel="noreferrer noopener">RFC1918</a> address and the public IP, but this is a complex topic of its own and outside the scope of this post. Just move everything to IPv6 and forget about these NAT-related hacks and complexities.</p>
+
+
+
+<pre class="wp-block-code"><code>table inet docker {
+    chain postrouting {
+	type nat hook postrouting priority 100; policy accept;
+	ip saddr 172.16.0.0/16 oifname "eth0" snat to 192.0.2.1 persistent;
+    }
+}</code></pre>
+
+
+
+<p class="wp-block-paragraph">If you want to continue using Docker’s built-in iptables manipulation, then remember, even with routed IPv6, you still need to <a href="https://docs.docker.com/get-started/docker-concepts/running-containers/publishing-ports/#use-docker-compose" target="_blank" rel="noreferrer noopener">publish the ports</a> that you want global accessibility to.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-conclusion">Conclusion</h2>
+
+
+
+<p class="wp-block-paragraph">As we’ve seen in this post, routed IPv6 with Docker doesn’t need to be complex.</p>

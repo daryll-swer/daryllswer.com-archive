@@ -1,0 +1,32 @@
+{
+  "@context": "http://www.w3.org/ns/csvw",
+  "dc:source": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pub?gid=638030841&single=true&output=csv",
+  "dc:title": "2400:d960:801::/48-52",
+  "dialect": {
+    "delimiter": ",",
+    "encoding": "utf-8",
+    "header": true,
+    "quoteChar": "\""
+  },
+  "tableSchema": {
+    "columns": [
+      {
+        "name": "Prefix",
+        "titles": "Prefix"
+      },
+      {
+        "name": "Sub-Function",
+        "titles": "Sub-Function"
+      },
+      {
+        "name": "Notes",
+        "titles": "Notes"
+      },
+      {
+        "name": "Caveat",
+        "titles": "Caveat"
+      }
+    ]
+  },
+  "url": "../csv/2400-d960-801double-colon-48-52.csv"
+}

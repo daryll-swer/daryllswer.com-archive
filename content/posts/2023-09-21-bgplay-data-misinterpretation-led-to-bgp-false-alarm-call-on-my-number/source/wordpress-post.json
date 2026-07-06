@@ -1,0 +1,819 @@
+{
+  "_archive_filters": [
+    {
+      "filter": "donation_or_support_cta",
+      "redacted": true,
+      "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+      "tag": "h4"
+    }
+  ],
+  "_embedded": {
+    "author": [
+      {
+        "_links": {
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "avatar_urls": {
+          "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+          "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+          "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+        },
+        "description": "Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794",
+        "id": 1,
+        "link": "https://www.daryllswer.com/author/daryll/",
+        "name": "Daryll Swer",
+        "slug": "daryll",
+        "url": "https://www.daryllswer.com/"
+      }
+    ],
+    "replies": [
+      [
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/895"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/896",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2803",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Ah, fixed, thanks.</p>\n"
+          },
+          "date": "2023-09-22T19:13:40",
+          "id": 896,
+          "link": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/#comment-896",
+          "parent": 895,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=895"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/895",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2803",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/4b5ffbd94f1eabf241ba6bb5292de11b69a922c200b3d6a9a36187401da8a3da?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/4b5ffbd94f1eabf241ba6bb5292de11b69a922c200b3d6a9a36187401da8a3da?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/4b5ffbd94f1eabf241ba6bb5292de11b69a922c200b3d6a9a36187401da8a3da?s=96&r=g"
+          },
+          "author_name": "Alexis V",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Are you a time traveler?</p>\n<p>On the first actual line of your article</p>\n<p>&gt; On September 14, 2024,</p>\n"
+          },
+          "date": "2023-09-22T19:00:24",
+          "id": 895,
+          "link": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/#comment-895",
+          "parent": 0,
+          "type": "comment"
+        }
+      ]
+    ],
+    "wp:featuredmedia": [
+      {
+        "_links": {
+          "about": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/types/attachment"
+            }
+          ],
+          "author": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+            }
+          ],
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media"
+            }
+          ],
+          "curies": [
+            {
+              "href": "https://api.w.org/{rel}",
+              "name": "wp",
+              "templated": true
+            }
+          ],
+          "replies": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=2956"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/2956",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ],
+          "wp:attached-to": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2803",
+              "id": 2803,
+              "post_type": "post"
+            }
+          ]
+        },
+        "alt_text": "",
+        "author": 1,
+        "caption": {
+          "rendered": ""
+        },
+        "date": "2023-11-09T05:38:02",
+        "featured_media": 0,
+        "id": 2956,
+        "jetpack_sharing_enabled": true,
+        "link": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/bgp_false_alarm_featured_image/",
+        "media_details": {
+          "file": "2023/09/BGP_False_Alarm_Featured_Image.png",
+          "filesize": 1510489,
+          "height": 630,
+          "image_meta": {
+            "aperture": "0",
+            "camera": "",
+            "caption": "",
+            "copyright": "",
+            "created_timestamp": "0",
+            "credit": "",
+            "focal_length": "0",
+            "iso": "0",
+            "keywords": [],
+            "orientation": "0",
+            "shutter_speed": "0",
+            "title": ""
+          },
+          "sizes": {
+            "full": {
+              "file": "BGP_False_Alarm_Featured_Image.png",
+              "height": 630,
+              "mime_type": "image/png",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png",
+              "width": 1200
+            },
+            "medium_large": {
+              "file": "BGP_False_Alarm_Featured_Image-768x403.png",
+              "filesize": 742548,
+              "height": 403,
+              "mime_type": "image/png",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image-768x403.png",
+              "width": 768
+            }
+          },
+          "width": 1200
+        },
+        "media_type": "image",
+        "mime_type": "image/png",
+        "slug": "bgp_false_alarm_featured_image",
+        "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png",
+        "title": {
+          "rendered": "BGP_False_Alarm_Featured_Image"
+        },
+        "type": "attachment"
+      }
+    ],
+    "wp:term": [
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/6",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3"
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=6"
+              }
+            ]
+          },
+          "id": 6,
+          "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+          "name": "ISP",
+          "slug": "isp-networking",
+          "taxonomy": "category"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=3"
+              }
+            ]
+          },
+          "id": 3,
+          "link": "https://www.daryllswer.com/category/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "category"
+        }
+      ],
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/14",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=14"
+              }
+            ]
+          },
+          "id": 14,
+          "link": "https://www.daryllswer.com/tag/bgp/",
+          "name": "BGP",
+          "slug": "bgp",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/26",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=26"
+              }
+            ]
+          },
+          "id": 26,
+          "link": "https://www.daryllswer.com/tag/isps/",
+          "name": "ISPs",
+          "slug": "isps",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/34",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=34"
+              }
+            ]
+          },
+          "id": 34,
+          "link": "https://www.daryllswer.com/tag/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/52",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=52"
+              }
+            ]
+          },
+          "id": 52,
+          "link": "https://www.daryllswer.com/tag/routing/",
+          "name": "Routing",
+          "slug": "routing",
+          "taxonomy": "post_tag"
+        }
+      ]
+    ]
+  },
+  "_links": {
+    "about": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/types/post"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts"
+      }
+    ],
+    "curies": [
+      {
+        "href": "https://api.w.org/{rel}",
+        "name": "wp",
+        "templated": true
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=2803"
+      }
+    ],
+    "self": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2803",
+        "targetHints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      }
+    ],
+    "version-history": [
+      {
+        "count": 0,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2803/revisions"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=2803"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/2956"
+      }
+    ],
+    "wp:term": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/categories?post=2803",
+        "taxonomy": "category"
+      },
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/tags?post=2803",
+        "taxonomy": "post_tag"
+      }
+    ]
+  },
+  "author": 1,
+  "categories": [
+    6,
+    3
+  ],
+  "class_list": [
+    "post-2803",
+    "post",
+    "type-post",
+    "status-publish",
+    "format-standard",
+    "has-post-thumbnail",
+    "hentry",
+    "category-isp-networking",
+    "category-networking",
+    "tag-bgp",
+    "tag-isps",
+    "tag-networking",
+    "tag-routing",
+    "ratio-2-1",
+    "entry"
+  ],
+  "comment_status": "open",
+  "content": {
+    "protected": false,
+    "rendered": "<p class=\"wp-block-paragraph\"><strong>This article has been published on the <a href=\"https://blog.apnic.net/2023/11/20/bgplay-data-misinterpretation-led-to-a-bgp-false-alarm-call/\" target=\"_blank\" rel=\"noreferrer noopener\">APNIC blog</a> as well.</strong></p>\n\n\n\n<p class=\"wp-block-paragraph\">On September 14, 2023, I received a call from a transit provider (<a href=\"https://bgp.tools/as/17439\" target=\"_blank\" rel=\"noreferrer noopener\">AS17439</a>) in a far-away location from where I actually operate. They were concerned that I was potentially leaking and/or hijacking a route (<a href=\"https://web.archive.org/web/20230921032726/https://bgp.tools/prefix/103.11.84.0/24#connectivity\" target=\"_blank\" rel=\"noreferrer noopener\">103.11.84.0/24</a>) that originates from one of their downstream BGP customers (<a href=\"https://web.archive.org/web/20230921032837/https://bgp.tools/as/132052\" target=\"_blank\" rel=\"noreferrer noopener\">AS132052</a>), through my <a href=\"https://www.daryllswer.com/as149794/\" target=\"_blank\" rel=\"noreferrer noopener\">AS149794</a>, based on RIPE’s <a href=\"https://stat.ripe.net/ui2013/widget/bgplay#w.ignoreReannouncements=false&amp;w.resource=103.11.84.0/24&amp;w.starttime=1694680320&amp;w.endtime=1694680335&amp;w.rrcs=0,1,3,4,5,6,7,10,11,12,13,14,15,16,18,19,20,21,22,23,24,25,26&amp;w.instant=null&amp;w.type=bgp\" target=\"_blank\" rel=\"noreferrer noopener\">BGPlay data</a>.</p>\n\n\n\n<p class=\"wp-block-paragraph\">However, after investigating the issue myself using various tools, I determined that they had misinterpreted the data from BGPlay. In this article, I will explain what actually happened and why it is important for network managers, administrators, and engineers to have a good understanding of how to read BGP data correctly.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-context\">Context</h2>\n\n\n\n<p class=\"wp-block-paragraph\">I have peered my AS with RIPE’s <a href=\"https://www.ripe.net/analyse/internet-measurements/routing-information-service-ris\" target=\"_blank\" rel=\"noreferrer noopener\">RIS</a>, whereby I export the full routing table from my POV to RIPE for both IPv4 and IPv6. This gives BGPlay full access to routing information from my AS.</p>\n\n\n\n<p class=\"wp-block-paragraph\">BGPlay is a tool that allows network operators to view the routing tables of other networks. This can be useful for troubleshooting routing problems and for understanding how traffic is flowing across the Internet.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-how-to-avoid-bgp-false-alarms\">How to avoid BGP false alarms</h2>\n\n\n\n<p class=\"wp-block-paragraph\">In this harmless incident, the staff of the transit provider saw the BGP data for 103.11.84.0/24 from my AS’s POV on BGPlay for a very specific time-frame (Date and time: 2023-09-14 08:32:06) on BGPlay, though I am unsure of the timezone utilised by BGPlay.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The AS-PATH of the route showed my ASN on the left and the origin (AS132052) on the right. This shows that I learnt the route directly from AS132559, my upstream transit provider, moving from left to right in the AS-PATH.</p>\n\n\n<div class=\"wp-block-image\">\n<figure class=\"aligncenter size-full\"><a href=\"https://www.daryllswer.com/wp-content/uploads/2023/09/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg\"><img loading=\"lazy\" decoding=\"async\" width=\"2880\" height=\"2516\" src=\"https://www.daryllswer.com/wp-content/uploads/2023/09/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg\" alt=\"\" class=\"wp-image-2808\" srcset=\"https://www.daryllswer.com/wp-content/uploads/2023/09/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg 2880w, https://www.daryllswer.com/wp-content/uploads/2023/09/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output-1236x1080.jpg 1236w, https://www.daryllswer.com/wp-content/uploads/2023/09/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output-768x671.jpg 768w, https://www.daryllswer.com/wp-content/uploads/2023/09/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output-1536x1342.jpg 1536w, https://www.daryllswer.com/wp-content/uploads/2023/09/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output-2048x1789.jpg 2048w\" sizes=\"auto, (max-width: 2880px) 100vw, 2880px\"></a><figcaption class=\"wp-element-caption\">Figure-1 Screenshot from RIPE BGPlay of the very specific BGP data output</figcaption></figure>\n</div>\n\n\n<p class=\"wp-block-paragraph\">The transit provider in question misinterpreted this data to mean that I was either hijacking their prefix and/or leaking it. However, this is not the case. What we are seeing here is a simple route output from my AS towards RIPE RIS, that shows the path on my end towards this specific prefix changed from ‘149794 132559 <strong>4755</strong> 17439 132052′ to ‘149794 132559 <strong>9498</strong> 4755 17439 132052′.</p>\n\n\n\n<p class=\"wp-block-paragraph\">During my conversation with the transit provider in question who called me, I pointed them to other tools for confirming the situation, following are the tools I used myself:</p>\n\n\n\n<ol class=\"wp-block-list\">\n<li><a href=\"https://radar.cloudflare.com/\" target=\"_blank\" rel=\"noreferrer noopener\">Cloudflare Radar</a></li>\n\n\n\n<li>bgp.tools’s <a href=\"https://bgp.tools/super-lg\" target=\"_blank\" rel=\"noreferrer noopener\">super looking glass</a></li>\n\n\n\n<li>Some data output from <a href=\"https://www.kentik.com/blog/bgp-monitoring-from-kentik/\" target=\"_blank\" rel=\"noreferrer noopener\">Kentik</a> – Shout out to <a href=\"https://www.linkedin.com/in/dougmadory/\" target=\"_blank\" rel=\"noreferrer noopener\">Doug Madory</a> and <a href=\"https://www.linkedin.com/in/wilhelmsch/\" target=\"_blank\" rel=\"noreferrer noopener\">Wilhelm</a> who were kind enough to support me with some data output from Kentik’s platform.</li>\n</ol>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-conclusion\">Conclusion</h2>\n\n\n\n<p class=\"wp-block-paragraph\">This is a common mistake that network operators make, especially those who are not familiar with how to read BGP data correctly. It is important to remember that the AS-PATH simply shows the path that a route has taken from the origin AS to the current AS and vice versa. </p>\n\n\n\n<p class=\"wp-block-paragraph\">In the case of a route <strong>hijack</strong>, it is easy to spot the event by looking at the right-most AS in the AS-PATH, the right-most AS will be the origin AS for said route and one can determine if said AS is a valid AS or invalid AS by checking the route object and/or RPKI ROA. However, there can also be a case of a route hijack via <a href=\"https://datatracker.ietf.org/meeting/108/materials/slides-108-sidrops-draft-sriram-sidrops-as-hijack-detection-00-00\" target=\"_blank\" rel=\"noreferrer noopener\">ASN hijacking</a>.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In the case of a route <strong>leak</strong>, the leak can occur anywhere between any AS in the AS-PATH, especially in provider-to-provider AS relationships. Detecting a route leak is not as straightforward, but it can be done so by using a myriad of publicly available tools such as looking glasses and the tools I linked above.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In this particular incident, the false-alarm was harmless. However, it is essential to be aware of the potential for misinterpreting BGP data, as this can lead to unnecessary and costly troubleshooting exercises.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Network operators should educate themselves on how to read BGP data correctly. There are many resources available online and in books, and there are also many experienced network operators who are willing to share their knowledge.</p>\n"
+  },
+  "date": "2023-09-21T19:17:52",
+  "date_gmt": "2023-09-21T13:47:52",
+  "excerpt": {
+    "protected": false,
+    "rendered": "<p>BGP false-alarm: What happened, and what can we learn from it?</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/\">Continue reading<span class=\"screen-reader-text\">BGPlay data misinterpretation led to BGP false alarm call on my number</span></a></div>\n"
+  },
+  "featured_media": 2956,
+  "format": "standard",
+  "guid": {
+    "rendered": "http://daryllswer.com/?p=2803"
+  },
+  "id": 2803,
+  "jetpack-related-posts": [
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/architecture/",
+        "text": "Architecture"
+      },
+      "classes": [],
+      "context": "In &quot;Architecture&quot;",
+      "date": "4 June 2026",
+      "excerpt": "How to design and structure BGP Router IDs in IPv6-native networks.",
+      "format": false,
+      "id": 5324,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "BGP Router ID Structuring in IPv6 Native Networks",
+      "url": "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/",
+      "url_meta": {
+        "origin": 2803,
+        "position": 0
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/dc-enterprise/",
+        "text": "DC/Enterprise"
+      },
+      "classes": [],
+      "context": "In &quot;DC/Enterprise&quot;",
+      "date": "28 March 2023",
+      "excerpt": "A small article detailing an observation on BGP Zombies in Juniper platform.",
+      "format": false,
+      "id": 2053,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Navigating a BGP Zombie Outbreak on Juniper Routers",
+      "url": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/",
+      "url_meta": {
+        "origin": 2803,
+        "position": 1
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "1 July 2022",
+      "excerpt": "An article about setting up an Autonomous System (AS) from scratch.",
+      "format": false,
+      "id": 970,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=700%2C400&ssl=1 2x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How did I set up my own Autonomous System?",
+      "url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/",
+      "url_meta": {
+        "origin": 2803,
+        "position": 2
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "16 December 2022",
+      "excerpt": "Explore an interesting observation on the Neighbour Discovery Protocol (NDP) in IPv6, in regard to Neighbour Solicitation and Advertisements.",
+      "format": false,
+      "id": 1674,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Interesting IPv6 observation on NDP (Neighbour Discovery Protocol)",
+      "url": "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/",
+      "url_meta": {
+        "origin": 2803,
+        "position": 3
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/home-networking/",
+        "text": "Home Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Home Networking&quot;",
+      "date": "26 May 2025",
+      "excerpt": "The operational and financial feasibility of MPLS-delivered IP Transit-To-The-Home (IPTTTH).",
+      "format": false,
+      "id": 4285,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How to bring data centre-like connectivity to your home with IPTTTH",
+      "url": "https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/",
+      "url_meta": {
+        "origin": 2803,
+        "position": 4
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/linux/",
+        "text": "Linux"
+      },
+      "classes": [],
+      "context": "In &quot;Linux&quot;",
+      "date": "19 May 2025",
+      "excerpt": "How to set up native routed IPv6 in Docker with routed mode.",
+      "format": false,
+      "id": 5136,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How to configure routed IPv6 in Docker",
+      "url": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/",
+      "url_meta": {
+        "origin": 2803,
+        "position": 5
+      }
+    }
+  ],
+  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png",
+  "jetpack_sharing_enabled": true,
+  "link": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/",
+  "meta": {
+    "_jetpack_dont_email_post_to_subs": false,
+    "_jetpack_feature_clip_id": 0,
+    "_jetpack_memberships_contains_paid_content": false,
+    "_jetpack_memberships_contains_paywalled_content": false,
+    "_jetpack_newsletter_access": "",
+    "_jetpack_newsletter_tier_id": 0,
+    "footnotes": "",
+    "jetpack_post_was_ever_published": false
+  },
+  "modified": "2025-05-21T01:52:11",
+  "modified_gmt": "2025-05-20T20:22:11",
+  "ping_status": "open",
+  "slug": "bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number",
+  "status": "publish",
+  "sticky": false,
+  "tags": [
+    14,
+    26,
+    34,
+    52
+  ],
+  "template": "",
+  "title": {
+    "rendered": "BGPlay data misinterpretation led to BGP false alarm call on my number"
+  },
+  "type": "post"
+}

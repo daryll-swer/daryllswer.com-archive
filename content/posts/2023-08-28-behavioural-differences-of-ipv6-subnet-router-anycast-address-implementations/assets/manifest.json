@@ -1,0 +1,20 @@
+{
+  "assets": [
+    {
+      "alt": "",
+      "bytes": 3137582,
+      "caption": "",
+      "detection_method": "rest_embedded_wp_featuredmedia",
+      "height": 3840,
+      "local_path": "content/posts/2023-08-28-behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/assets/featured.jpg",
+      "mime_type": "image/jpeg",
+      "role": "featured",
+      "sha256": "6fcaba3322b826e977c415690eb88716533295b8ac9610e39953f92c8c0534ba",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg",
+      "width": 5760
+    }
+  ],
+  "generated_at": "2026-07-06T09:28:35+00:00",
+  "post_id": 2739,
+  "post_slug": "behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations"
+}

@@ -1,0 +1,33 @@
+{
+  "assets": [
+    {
+      "alt": "",
+      "bytes": 71656,
+      "caption": "IP Address is intentionally left visible as it poses no security risk (Dynamic IP Address)",
+      "detection_method": "rest_embedded_wp_featuredmedia",
+      "height": 947,
+      "local_path": "content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory/assets/featured.png",
+      "mime_type": "image/png",
+      "role": "featured",
+      "sha256": "d8f70ce4f0b29e4fbbc028c064767976f3427bdd8b1f6c9d948f832554083146",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+      "width": 1920
+    },
+    {
+      "alt": null,
+      "bytes": 19972,
+      "caption": "Figure-1 (A simple non-technical diagram to illustrate Multi-WAN setup with two ISPs)",
+      "detection_method": null,
+      "height": 1115,
+      "local_path": "content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory/assets/inline/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "15e187bcfc7f5917c93e1b1e027d31f4596c3f73781d921b399859cc33aa316c",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png",
+      "width": 599
+    }
+  ],
+  "generated_at": "2026-07-06T09:28:35+00:00",
+  "post_id": 66,
+  "post_slug": "multi-wan-setups-with-retail-isps-part-1-theory"
+}

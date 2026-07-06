@@ -1,0 +1,647 @@
+{
+  "_archive_filters": [],
+  "_embedded": {
+    "author": [
+      {
+        "_links": {
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "avatar_urls": {
+          "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+          "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+          "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+        },
+        "description": "Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794",
+        "id": 1,
+        "link": "https://www.daryllswer.com/author/daryll/",
+        "name": "Daryll Swer",
+        "slug": "daryll",
+        "url": "https://www.daryllswer.com/"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "_links": {
+          "about": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/types/attachment"
+            }
+          ],
+          "author": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+            }
+          ],
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media"
+            }
+          ],
+          "replies": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=5560"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5560",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "alt_text": "",
+        "author": 1,
+        "caption": {
+          "rendered": ""
+        },
+        "date": "2026-06-04T19:53:55",
+        "featured_media": 0,
+        "id": 5560,
+        "jetpack_sharing_enabled": true,
+        "link": "https://www.daryllswer.com/bgp_routerid_ft/",
+        "media_details": {
+          "file": "2026/06/BGP_RouterID_FT-scaled.jpg",
+          "filesize": 1445521,
+          "height": 2194,
+          "image_meta": {
+            "alt": "",
+            "aperture": "0",
+            "camera": "",
+            "caption": "",
+            "copyright": "",
+            "created_timestamp": "0",
+            "credit": "",
+            "focal_length": "0",
+            "iso": "0",
+            "keywords": [],
+            "orientation": "0",
+            "shutter_speed": "0",
+            "title": ""
+          },
+          "original_image": "BGP_RouterID_FT.jpg",
+          "sizes": {
+            "1536x1536": {
+              "file": "BGP_RouterID_FT-1536x1317.jpg",
+              "filesize": 533994,
+              "height": 1317,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-1536x1317.jpg",
+              "width": 1536
+            },
+            "2048x2048": {
+              "file": "BGP_RouterID_FT-2048x1755.jpg",
+              "filesize": 945763,
+              "height": 1755,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-2048x1755.jpg",
+              "width": 2048
+            },
+            "full": {
+              "file": "BGP_RouterID_FT-scaled.jpg",
+              "height": 2194,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg",
+              "width": 2560
+            },
+            "medium": {
+              "file": "BGP_RouterID_FT-2520x2160.jpg",
+              "filesize": 1400272,
+              "height": 2160,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-2520x2160.jpg",
+              "width": 2520
+            },
+            "medium_large": {
+              "file": "BGP_RouterID_FT-768x658.jpg",
+              "filesize": 127085,
+              "height": 658,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-768x658.jpg",
+              "width": 768
+            },
+            "thumbnail": {
+              "file": "BGP_RouterID_FT-1260x1080.jpg",
+              "filesize": 355332,
+              "height": 1080,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-1260x1080.jpg",
+              "width": 1260
+            },
+            "widget-thumbnail": {
+              "file": "BGP_RouterID_FT-75x75.jpg",
+              "filesize": 4673,
+              "height": 75,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-75x75.jpg",
+              "width": 75
+            }
+          },
+          "width": 2560
+        },
+        "media_type": "image",
+        "mime_type": "image/jpeg",
+        "slug": "bgp_routerid_ft",
+        "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg",
+        "title": {
+          "rendered": "BGP_RouterID_FT"
+        },
+        "type": "attachment"
+      }
+    ],
+    "wp:term": [
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/4",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3"
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=4"
+              }
+            ]
+          },
+          "id": 4,
+          "link": "https://www.daryllswer.com/category/networking/architecture/",
+          "name": "Architecture",
+          "slug": "architecture",
+          "taxonomy": "category"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=3"
+              }
+            ]
+          },
+          "id": 3,
+          "link": "https://www.daryllswer.com/category/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "category"
+        }
+      ],
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/14",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=14"
+              }
+            ]
+          },
+          "id": 14,
+          "link": "https://www.daryllswer.com/tag/bgp/",
+          "name": "BGP",
+          "slug": "bgp",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/25",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=25"
+              }
+            ]
+          },
+          "id": 25,
+          "link": "https://www.daryllswer.com/tag/ipv6/",
+          "name": "IPv6",
+          "slug": "ipv6",
+          "taxonomy": "post_tag"
+        }
+      ]
+    ]
+  },
+  "_links": {
+    "about": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/types/post"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts"
+      }
+    ],
+    "curies": [
+      {
+        "href": "https://api.w.org/{rel}",
+        "name": "wp",
+        "templated": true
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=5324"
+      }
+    ],
+    "self": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5324",
+        "targetHints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      }
+    ],
+    "version-history": [
+      {
+        "count": 0,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/5324/revisions"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=5324"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5560"
+      }
+    ],
+    "wp:term": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/categories?post=5324",
+        "taxonomy": "category"
+      },
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/tags?post=5324",
+        "taxonomy": "post_tag"
+      }
+    ]
+  },
+  "author": 1,
+  "categories": [
+    4,
+    3
+  ],
+  "class_list": [
+    "post-5324",
+    "post",
+    "type-post",
+    "status-publish",
+    "format-standard",
+    "has-post-thumbnail",
+    "hentry",
+    "category-architecture",
+    "category-networking",
+    "tag-bgp",
+    "tag-ipv6",
+    "ratio-2-1",
+    "entry"
+  ],
+  "comment_status": "open",
+  "content": {
+    "protected": false,
+    "rendered": "<p class=\"wp-block-paragraph\">At <a href=\"https://swernetworks.com\" type=\"link\" id=\"swernetworks.com\" target=\"_blank\" rel=\"noreferrer noopener\">Swer Networks</a>, we design and implement scalable, future-ready IPv6 architectures for our clients. This includes everything from tailoring <a href=\"https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/\" type=\"link\" id=\"https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/\" target=\"_blank\" rel=\"noreferrer noopener\">geographical addressing models</a> to the structuring of Border Gateway Protocol (BGP) Router IDs in modern networks. In this post, we focus specifically on the design and structuring of BGP Router IDs within IPv6-native environments.</p>\n\n\n\n<h2 id=\"h-introduction\" class=\"wp-block-heading\">Introduction</h2>\n\n\n\n<p class=\"wp-block-paragraph\">BGP Router ID is also formally known as BGP Identifier, which was first defined in <a href=\"https://datatracker.ietf.org/doc/html/rfc4271#section-1.1\" target=\"_blank\" rel=\"noreferrer noopener\">RFC 4271</a>, quoted below.</p>\n\n\n\n<blockquote class=\"wp-block-quote is-layout-flow wp-block-quote-is-layout-flow\">\n<p class=\"wp-block-paragraph\">A 4-octet unsigned integer that indicates the BGP Identifier of the sender of BGP messages. A given BGP speaker sets the value of its BGP Identifier to an <strong>IP address assigned to that BGP speaker</strong>. The value of the BGP Identifier is determined upon startup and is the same for every local interface and BGP peer.</p>\n\n\n\n<p class=\"wp-block-paragraph\">— <a href=\"https://datatracker.ietf.org/doc/html/rfc4271#section-1.1\" type=\"link\" id=\"https://datatracker.ietf.org/doc/html/rfc4271#section-1.1\" target=\"_blank\" rel=\"noreferrer noopener\">RFC 4271, Section 1.1</a></p>\n</blockquote>\n\n\n\n<p class=\"wp-block-paragraph\">RFC 4271 states that the BGP Router ID is an IP address that is assigned to a local interface on a given BGP speaker. Over the years, this led to the common practice of having a legacy /32 IPv4 address assigned to the loopback interface, and that loopback IPv4 address is then used in the BGP configuration templates, and the practice of pinging or tracerouting to the loopback /32 IPv4 address became common.</p>\n\n\n\n<p class=\"wp-block-paragraph\">It’s important to note that this older RFC and practice over the years led to network engineers making the ‘permanent’ assumption that BGP Router ID is the equivalent of an IPv4 address, and said IP address must be reachable on some local interface of a BGP speaker.</p>\n\n\n\n<h2 id=\"h-implications-for-ipv6-native-networks\" class=\"wp-block-heading\">Implications for IPv6 Native Networks</h2>\n\n\n\n<p class=\"wp-block-paragraph\">However, when we deploy IPv6 native networks, there is no IPv4 configuration on the underlay services and policies, meaning Point-to-Point (PtP) links only have IPv6 addressing or IPv6 unnumbered addressing with link-local. Loopback only has a /128 Global Unicast Address (GUA), and any customer services requiring IPv4 are routed over <a href=\"https://datatracker.ietf.org/doc/html/rfc8950\" target=\"_blank\" rel=\"noreferrer noopener\">RFC 8950</a>, which means purely IPv6 next hops in the routing table.</p>\n\n\n\n<p class=\"wp-block-paragraph\">So the question arises — how do we handle BGP Router ID numbering structure in IPv6 native networks?</p>\n\n\n\n<p class=\"wp-block-paragraph\"><a href=\"https://datatracker.ietf.org/doc/html/rfc6286#section-2.1\" target=\"_blank\" rel=\"noreferrer noopener\">RFC 6286</a> revised the definition of BGP Identifier to the following:</p>\n\n\n\n<blockquote class=\"wp-block-quote is-layout-flow wp-block-quote-is-layout-flow\">\n<p class=\"wp-block-paragraph\">The BGP Identifier is a 4-octet, unsigned, non-zero integer that should be unique within an AS. The value of the BGP Identifier for a BGP speaker is determined on startup and is the same for every local interface and every BGP peer.</p>\n\n\n\n<p class=\"wp-block-paragraph\">— <a href=\"https://datatracker.ietf.org/doc/html/rfc6286#section-2.1\" type=\"link\" id=\"https://datatracker.ietf.org/doc/html/rfc6286#section-2.1\">RFC 6286, Section 2.1</a></p>\n</blockquote>\n\n\n\n<p class=\"wp-block-paragraph\">It’s now clear that the BGP Router ID is no longer an IPv4 address in any meaningful sense. There’s a familiar saying: ‘If it looks like a duck, swims like a duck, and quacks like a duck, then it’s probably a duck.’</p>\n\n\n\n<p class=\"wp-block-paragraph\">With RFC 6286, however, the situation becomes more like: ‘It looks like a duck, but it doesn’t swim, doesn’t quack, and definitely isn’t a duck.’</p>\n\n\n\n<p class=\"wp-block-paragraph\">In fact, the RFC explicitly states that the shift was driven by the needs of IPv6‑only networks, where relying on an IPv4 address for an identifier was no longer viable:</p>\n\n\n\n<blockquote class=\"wp-block-quote is-layout-flow wp-block-quote-is-layout-flow\">\n<p class=\"wp-block-paragraph\">To accommodate situations where the current requirements for the BGP Identifier are not met (such as in the case of an <strong>IPv6-only network</strong>), this document relaxes the definition of the BGP Identifier to be a 4-octet, unsigned, non-zero integer and relaxes the “uniqueness” requirement so that only AS-wide uniqueness of the BGP Identifiers is required. These revisions to the base BGP specification do not<br>introduce any backward compatibility issues.</p>\n\n\n\n<p class=\"wp-block-paragraph\">— <a href=\"https://datatracker.ietf.org/doc/html/rfc6286#section-1\" target=\"_blank\" rel=\"noreferrer noopener\">RFC 6286, Section 1</a></p>\n</blockquote>\n\n\n\n<p class=\"wp-block-paragraph\">So now that we have established both the original and revised definitions of BGP Router ID, there are different ways based on client-specific needs for structuring the 4-octet unsigned, <strong>non-zero integer</strong> with quad-dotted notation.</p>\n\n\n\n<h2 id=\"h-example-of-bgp-router-id-structuring\" class=\"wp-block-heading\">Example of BGP Router ID Structuring</h2>\n\n\n\n<p class=\"wp-block-paragraph\">The Router ID ranges from 0.0.0.1 (zero integer is excluded) to 255.255.255.255. Using the same maths for calculating the number of IPv4 addresses (2<sup>32</sup>), there are 4,294,967,295 (1 is subtracted by excluding zero integer) possible unique BGP Router IDs in an organisation. Now, just like legacy IPv4 <a href=\"https://datatracker.ietf.org/doc/html/rfc1918\" type=\"link\" id=\"https://datatracker.ietf.org/doc/html/rfc1918\" target=\"_blank\" rel=\"noreferrer noopener\">RFC1918</a> space, the risk of overlap (collision) across AS (organisation) boundaries is possible, which, fortunately, has already been addressed as follows:</p>\n\n\n\n<blockquote class=\"wp-block-quote is-layout-flow wp-block-quote-is-layout-flow\">\n<p class=\"wp-block-paragraph\">If the BGP Identifiers of the peers involved in the connection collision are identical, then the connection initiated by the BGP speaker with the larger AS number is preserved.</p>\n\n\n\n<p class=\"wp-block-paragraph\">— <a href=\"https://datatracker.ietf.org/doc/html/rfc6286#section-2.3\" target=\"_blank\" rel=\"noreferrer noopener\">RFC 6286, Section 2.3</a></p>\n</blockquote>\n\n\n\n<p class=\"wp-block-paragraph\">At Swer Networks, we prefer to inject some logic into the individual ‘octets’ (segments in IPv6) to improve human readability and comprehension during real-life operations of a network. For example, the Router ID’s basic structure is A.B.C.D; we assign a meaning to each of these octets (the meaning will vary from organisation to organisation), as demonstrated below.</p>\n\n\n\n<p class=\"wp-block-paragraph\"><mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-amber-color\">A</mark>.<mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-vivid-red-color\">B</mark>.<mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-orange-color\">C</mark>.<mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-orange-color\">D</mark>, where:</p>\n\n\n\n<ul class=\"wp-block-list\">\n<li><mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-amber-color\">A</mark> → Represents a hierarchical network (device) function code (like a PE router, or P router, or BNG, etc.).</li>\n\n\n\n<li><mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-vivid-red-color\">B</mark> → Represents a tenant region or is reserved for future use, with a default value of zero.</li>\n\n\n\n<li><mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-orange-color\">C</mark>–<mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-orange-color\">D</mark> → Represents a 16-bit instance ID, allowing up to 512 unique IDs per Function Code <mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-amber-color\">A</mark>.</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\">This means, for example, if <mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-amber-color\">A</mark>=3 and <mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-vivid-red-color\">B</mark>=0, then for function 3, C – D gives us 512 possible instances of the Router ID, meaning 65,536 possible BGP routers in an organisation matching the function code <mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-amber-color\">A</mark>=3.</p>\n\n\n\n<p class=\"wp-block-paragraph\">To help visualise this, Table 1 is an example table of what this <em>could</em> look like in production.</p>\n\n\n\n<figure class=\"wp-block-table\"><table class=\"has-fixed-layout\"><tbody><tr><td><strong><strong>Function code (<mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-amber-color\">A</mark>)</strong></strong></td><td><strong>Function name</strong></td><td><strong><strong>Tenant/reserved (<mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-vivid-red-color\">B</mark>)</strong></strong></td><td><strong><strong>Router ID range (<mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-orange-color\">C</mark>–<mark style=\"background-color:rgba(0, 0, 0, 0)\" class=\"has-inline-color has-luminous-vivid-orange-color\">D</mark>)</strong></strong></td></tr><tr><td>0</td><td>Lab/test/R&amp;D</td><td>0</td><td>0.0.0.1 – 0.0.255.255</td></tr><tr><td>1</td><td>DFZ-Facing PE routers</td><td>0</td><td>1.0.0.0 – 1.0.255.255</td></tr><tr><td>2</td><td>P routers</td><td>0</td><td>2.0.0.0 – 2.0.255.255</td></tr><tr><td>3</td><td>DIA/IP Transit customer-facing PE Routers</td><td>0</td><td>3.0.0.0 – 3.0.255.255</td></tr><tr><td>4</td><td>NNI/UNI-facing PE Routers</td><td>0</td><td>4.0.0.0 – 4.0.255.255</td></tr></tbody></table><figcaption class=\"wp-element-caption\">Table-1 Router ID Structure example</figcaption></figure>\n\n\n\n<h2 id=\"h-igp-operational-simplicity\" class=\"wp-block-heading\">IGP Operational Simplicity</h2>\n\n\n\n<p class=\"wp-block-paragraph\">As a side bonus of the structured BGP Router ID numbering schema, the same schema can be used for your Interior Gateway Protocol’s (IGP’s) local ID, for both OSPFv3 Router ID and for IS-IS system ID, that is, there is no /32 IPv4 address on the loopback interface of a router.</p>\n\n\n\n<h2 id=\"h-what-about-troubleshooting\" class=\"wp-block-heading\">What about troubleshooting?</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Assuming your network vendor’s software implementation is 100% compliant with RFC 6286 and has no bugs impacting BGP with the <strong>not</strong>-IPv4 router ID, you may be used to relying on ping/traceroute towards the /32 IPv4 loopback IP, but since we are discussing IPv6 native networks, the answer is you ping/traceroute towards the /128 IPv6 loopback IP for troubleshooting, as IPv6, anyway, will be responsible for next-hop routing of IPv4.</p>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>Quick tip</strong>: As with <a href=\"https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/#dns-and-loopback-addressing\" target=\"_blank\" rel=\"noreferrer noopener\">OOB network design</a>, we recommend you use structured DNS schemas for easy memory of IPv6 loopback endpoints.</p>\n\n\n\n<p class=\"wp-block-paragraph\">With IGP, as long as your OSPFv3 implementation is compliant with <a href=\"https://www.rfc-editor.org/rfc/rfc7503#section-5\" target=\"_blank\" rel=\"noreferrer noopener\">RFC7503</a>, it should work as intended. As for IS-IS, it works using Connectionless-mode Network Service (CLNS), so it does not matter either way.</p>\n\n\n\n<p class=\"wp-block-paragraph\">That said, you should exercise caution and double-check with your vendor on the software support for truly IPv6-only loopbacks; some implementations of BGP SR-TE, for example, may not support IPv6-only loopbacks and require /32 IPv4 loopbacks.</p>\n\n\n\n<h2 id=\"h-conclusion\" class=\"wp-block-heading\">Conclusion</h2>\n\n\n\n<p class=\"wp-block-paragraph\">There are different ways to design a Router ID numbering scheme to suit your needs. Alternatively, you can also have no structured numbering at all if your network infrastructure is 100% orchestrated and automated via a CI/CD pipeline. In such cases, software systems dynamically assign and track Router IDs, with algorithms determining allocation and maintaining state, effectively removing the need for manual overhead from the human layer.</p>\n"
+  },
+  "date": "2026-06-04T14:36:35",
+  "date_gmt": "2026-06-04T09:06:35",
+  "excerpt": {
+    "protected": false,
+    "rendered": "<p>How to design and structure BGP Router IDs in IPv6-native networks.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/\">Continue reading<span class=\"screen-reader-text\">BGP Router ID Structuring in IPv6 Native Networks</span></a></div>\n"
+  },
+  "featured_media": 5560,
+  "format": "standard",
+  "guid": {
+    "rendered": "https://www.daryllswer.com/?p=5324"
+  },
+  "id": 5324,
+  "jetpack-related-posts": [
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "1 July 2022",
+      "excerpt": "An article about setting up an Autonomous System (AS) from scratch.",
+      "format": false,
+      "id": 970,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=700%2C400&ssl=1 2x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How did I set up my own Autonomous System?",
+      "url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/",
+      "url_meta": {
+        "origin": 5324,
+        "position": 0
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/dc-enterprise/",
+        "text": "DC/Enterprise"
+      },
+      "classes": [],
+      "context": "In &quot;DC/Enterprise&quot;",
+      "date": "28 March 2023",
+      "excerpt": "A small article detailing an observation on BGP Zombies in Juniper platform.",
+      "format": false,
+      "id": 2053,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Navigating a BGP Zombie Outbreak on Juniper Routers",
+      "url": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/",
+      "url_meta": {
+        "origin": 5324,
+        "position": 1
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "16 December 2022",
+      "excerpt": "Explore an interesting observation on the Neighbour Discovery Protocol (NDP) in IPv6, in regard to Neighbour Solicitation and Advertisements.",
+      "format": false,
+      "id": 1674,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Interesting IPv6 observation on NDP (Neighbour Discovery Protocol)",
+      "url": "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/",
+      "url_meta": {
+        "origin": 5324,
+        "position": 2
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "21 September 2023",
+      "excerpt": "BGP false-alarm: What happened, and what can we learn from it?",
+      "format": false,
+      "id": 2803,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "BGPlay data misinterpretation led to BGP false alarm call on my number",
+      "url": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/",
+      "url_meta": {
+        "origin": 5324,
+        "position": 3
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "27 September 2023",
+      "excerpt": "IPv6 Router Advertisement (RA) is a core component of SLAAC and DHCPv6, but it's not required for all situations. Some network vendors enable RA by default, but you should disable it when not needed.",
+      "format": false,
+      "id": 2836,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "IPv6 Router Advertisement: Why is it enabled by default on some network vendors?",
+      "url": "https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/",
+      "url_meta": {
+        "origin": 5324,
+        "position": 4
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/home-networking/",
+        "text": "Home Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Home Networking&quot;",
+      "date": "26 May 2025",
+      "excerpt": "The operational and financial feasibility of MPLS-delivered IP Transit-To-The-Home (IPTTTH).",
+      "format": false,
+      "id": 4285,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How to bring data centre-like connectivity to your home with IPTTTH",
+      "url": "https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/",
+      "url_meta": {
+        "origin": 5324,
+        "position": 5
+      }
+    }
+  ],
+  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg",
+  "jetpack_sharing_enabled": true,
+  "link": "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/",
+  "meta": {
+    "_jetpack_dont_email_post_to_subs": false,
+    "_jetpack_feature_clip_id": 0,
+    "_jetpack_memberships_contains_paid_content": false,
+    "_jetpack_memberships_contains_paywalled_content": false,
+    "_jetpack_newsletter_access": "",
+    "_jetpack_newsletter_tier_id": 0,
+    "footnotes": "",
+    "jetpack_post_was_ever_published": false
+  },
+  "modified": "2026-06-14T05:55:24",
+  "modified_gmt": "2026-06-14T00:25:24",
+  "ping_status": "open",
+  "slug": "bgp-router-id-structuring-in-ipv6-native-networks",
+  "status": "publish",
+  "sticky": false,
+  "tags": [
+    14,
+    25
+  ],
+  "template": "",
+  "title": {
+    "rendered": "BGP Router ID Structuring in IPv6 Native Networks"
+  },
+  "type": "post"
+}

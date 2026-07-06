@@ -1,0 +1,40 @@
+.DS_Store
+Thumbs.db
+
+# Python/runtime caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local virtual environments and dependencies
+.venv/
+venv/
+node_modules/
+
+# Secrets and local-only state
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.sqlite
+*.sqlite3
+*.db
+cookies.txt
+cookies.json
+secrets/
+
+# Local fetch/build scratch
+.cache/
+.tmp/
+.preview/
+tmp/
+dist/
+build/
+
+# Tool outputs that should be regenerated
+docs/VALIDATION.local.md

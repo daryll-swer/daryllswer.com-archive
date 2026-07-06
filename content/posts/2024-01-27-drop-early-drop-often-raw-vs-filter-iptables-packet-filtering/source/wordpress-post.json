@@ -1,0 +1,620 @@
+{
+  "_archive_filters": [],
+  "_embedded": {
+    "author": [
+      {
+        "_links": {
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "avatar_urls": {
+          "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+          "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+          "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+        },
+        "description": "Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794",
+        "id": 1,
+        "link": "https://www.daryllswer.com/author/daryll/",
+        "name": "Daryll Swer",
+        "slug": "daryll",
+        "url": "https://www.daryllswer.com/"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "_links": {
+          "about": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/types/attachment"
+            }
+          ],
+          "author": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+            }
+          ],
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media"
+            }
+          ],
+          "curies": [
+            {
+              "href": "https://api.w.org/{rel}",
+              "name": "wp",
+              "templated": true
+            }
+          ],
+          "replies": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=3202"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/3202",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ],
+          "wp:attached-to": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/3138",
+              "id": 3138,
+              "post_type": "post"
+            }
+          ]
+        },
+        "alt_text": "",
+        "author": 1,
+        "caption": {
+          "rendered": ""
+        },
+        "date": "2024-02-01T23:56:10",
+        "featured_media": 0,
+        "id": 3202,
+        "jetpack_sharing_enabled": true,
+        "link": "https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/drop_packets_parachutes-2/",
+        "media_details": {
+          "file": "2024/01/drop_packets_parachutes.webp",
+          "filesize": 424832,
+          "height": 404,
+          "image_meta": {
+            "aperture": "0",
+            "camera": "",
+            "caption": "",
+            "copyright": "",
+            "created_timestamp": "0",
+            "credit": "",
+            "focal_length": "0",
+            "iso": "0",
+            "keywords": [],
+            "orientation": "0",
+            "shutter_speed": "0",
+            "title": ""
+          },
+          "sizes": {
+            "full": {
+              "file": "drop_packets_parachutes.webp",
+              "height": 404,
+              "mime_type": "image/webp",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/drop_packets_parachutes.webp",
+              "width": 1110
+            },
+            "medium_large": {
+              "file": "drop_packets_parachutes-768x280.webp",
+              "filesize": 12864,
+              "height": 280,
+              "mime_type": "image/webp",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/drop_packets_parachutes-768x280.webp",
+              "width": 768
+            }
+          },
+          "width": 1110
+        },
+        "media_type": "image",
+        "mime_type": "image/webp",
+        "slug": "drop_packets_parachutes-2",
+        "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/drop_packets_parachutes.webp",
+        "title": {
+          "rendered": "drop_packets_parachutes"
+        },
+        "type": "attachment"
+      }
+    ],
+    "wp:term": [
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/55",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3"
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=55"
+              }
+            ]
+          },
+          "id": 55,
+          "link": "https://www.daryllswer.com/category/networking/linux/",
+          "name": "Linux",
+          "slug": "linux",
+          "taxonomy": "category"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=3"
+              }
+            ]
+          },
+          "id": 3,
+          "link": "https://www.daryllswer.com/category/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "category"
+        }
+      ],
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/57",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=57"
+              }
+            ]
+          },
+          "id": 57,
+          "link": "https://www.daryllswer.com/tag/iptables/",
+          "name": "iptables",
+          "slug": "iptables",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/56",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=56"
+              }
+            ]
+          },
+          "id": 56,
+          "link": "https://www.daryllswer.com/tag/linux/",
+          "name": "Linux",
+          "slug": "linux",
+          "taxonomy": "post_tag"
+        }
+      ]
+    ]
+  },
+  "_links": {
+    "about": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/types/post"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts"
+      }
+    ],
+    "curies": [
+      {
+        "href": "https://api.w.org/{rel}",
+        "name": "wp",
+        "templated": true
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=3138"
+      }
+    ],
+    "self": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/3138",
+        "targetHints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      }
+    ],
+    "version-history": [
+      {
+        "count": 0,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/3138/revisions"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=3138"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/3202"
+      }
+    ],
+    "wp:term": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/categories?post=3138",
+        "taxonomy": "category"
+      },
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/tags?post=3138",
+        "taxonomy": "post_tag"
+      }
+    ]
+  },
+  "author": 1,
+  "categories": [
+    55,
+    3
+  ],
+  "class_list": [
+    "post-3138",
+    "post",
+    "type-post",
+    "status-publish",
+    "format-standard",
+    "has-post-thumbnail",
+    "hentry",
+    "category-linux",
+    "category-networking",
+    "tag-iptables",
+    "tag-linux",
+    "ratio-natural",
+    "entry"
+  ],
+  "comment_status": "open",
+  "content": {
+    "protected": false,
+    "rendered": "<h4 class=\"wp-block-heading\" id=\"h-in-this-article-the-context-and-writing-structure-will-be-a-bit-different-the-original-content-was-written-by-a-friend-of-mine-who-would-like-to-remain-anonymous-he-originally-wanted-to-keep-this-information-to-just-the-two-of-us-but-i-felt-that-this-would-benefit-the-networking-community-i-would-also-emphasise-this-article-s-intention-is-to-shed-some-awareness-into-iptables-raw-vs-filter-table-performance-and-potentially-help-you-make-a-more-efficient-decision-it-is-definitely-not-one-of-my-comprehensive-guides\">In this article, the context and writing structure will be a bit different. The original content was written by a friend of mine who would like to remain anonymous. He originally wanted to keep this information to just the two of us, but I felt that this would benefit the networking community. I would also emphasise this article’s intention is to shed some awareness into iptables raw vs filter table performance and potentially help you make a more efficient decision. It is definitely not one of my comprehensive guides.</h4>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>This article has been published on the <a href=\"https://blog.apnic.net/2024/02/09/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/\" target=\"_blank\" rel=\"noreferrer noopener\">APNIC blog</a> as well.</strong></p>\n\n\n\n<p class=\"wp-block-paragraph\">This post is not an assessment of the most efficient packet processing technologies such as XDP or DPDK, it strictly pertains to legacy iptables. However, the concepts here are reasonably applicable to nftables, which supports various <a href=\"https://wiki.nftables.org/wiki-nftables/index.php/Netfilter_hooks#Priority_within_hook\" target=\"_blank\" rel=\"noreferrer noopener\">priorities within hook</a>.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In a discussion with my friend, a question came up about the best place in Netfilter/legacy iptables to filter out spurious traffic where the destination is any of the local addresses on a router (or host). To be specific, the use case is a Linux device acting as a router, with certain services running locally on it, we want to use iptables to prevent unauthorised external parties from connecting to said services such as BGP, SSH, etc.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Although in this test scenario, we only used IPv4, the same 1:1 identical concepts and underlying logic applies to IPv6. There is no discrimination between the address families for the raw vs filter performance comparison.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-the-hypothesis\">The Hypothesis</h2>\n\n\n\n<p class=\"wp-block-paragraph\">I maintained it was always preferable to have the rules to drop such traffic in the prerouting chain of the raw table, ensuring it happens prior to the route lookup. Especially in the case of a router with a full routing table of about 1 million IPv4 routes, where the route lookup becomes a very expensive operation.</p>\n\n\n\n<p class=\"wp-block-paragraph\">It made perfect sense to my friend that it was more efficient to drop packets before doing the route lookup, however he wondered — in the case where the vast majority of packets coming in get <strong>forwarded</strong> through the router,  does it still make sense to evaluate all of them against the DROP rule in the prerouting chain, given the vast majority will pass on to the route lookup anyway?</p>\n\n\n\n<p class=\"wp-block-paragraph\">The question ultimately condenses into:<br>Is it more costly to do a route table lookup for the small number of packets we eventually drop, or do a rule evaluation for the large number of packets we end up forwarding? Consider the two situation:</p>\n\n\n\n<ol class=\"wp-block-list\">\n<li>Rule in <strong>raw</strong>/prerouting\n<ul class=\"wp-block-list\">\n<li>All packets get evaluated on ingress by the DROP rule</li>\n\n\n\n<li>Dropped packets do not go through route lookup</li>\n</ul>\n</li>\n\n\n\n<li>Rule in <strong>filter</strong>/input\n<ul class=\"wp-block-list\">\n<li>All packets go through the route lookup stage</li>\n\n\n\n<li>Only those for the local system get evaluated by the DROP rule</li>\n</ul>\n</li>\n</ol>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-test-environment\">Test Environment</h2>\n\n\n\n<p class=\"wp-block-paragraph\">We set up 3 VMs as shown below, the router’s VM had conn_track module loaded <strong>but </strong>NoTrack rule was configured in the raw table. They were running on Linux with QEMU, with the connections between them made with virtio devices bound to a separate hypervisor bridge device for each link:</p>\n\n\n<div class=\"wp-block-image\">\n<figure class=\"aligncenter size-full\"><a href=\"https://www.daryllswer.com/wp-content/uploads/2024/01/iptables_raw_filter_setup.png\"><img loading=\"lazy\" decoding=\"async\" width=\"741\" height=\"141\" src=\"https://www.daryllswer.com/wp-content/uploads/2024/01/iptables_raw_filter_setup.png\" alt=\"\" class=\"wp-image-3139\"></a><figcaption class=\"wp-element-caption\">Figure-1 Virtual Topology</figcaption></figure>\n</div>\n\n\n<p class=\"wp-block-paragraph\">The router VM had over 900,000 routes added to a selection of approx. 50 next-hops, all of which were configured on the receiver node. This was to ensure there was a very large routing table the system needed to look up as packets went through it. We set the next-hops to a bunch of about 50 IP addresses that we configured on the “traffic dest” VM, so there were plenty of next-hops groups too, for example:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>root@iptrules:~# ip route show | head -6\ndefault via 192.168.122.1 dev enp1s0\n1.0.0.0/24 via 203.0.113.8 dev enp8s0\n1.0.4.0/22 via 203.0.113.22 dev enp8s0\n1.0.5.0/24 via 203.0.113.5 dev enp8s0\n1.0.16.0/24 via 203.0.113.16 dev enp8s0\n1.0.32.0/24 via 203.0.113.1 dev enp8s0\n\nroot@iptrules:~# ip route show | wc -l\n925525\n\nroot@iptrules:~# ip neigh show dev enp8s0 | head -4\n203.0.113.32 lladdr 52:54:00:5f:02:5f REACHABLE\n203.0.113.28 lladdr 52:54:00:5f:02:5f STALE\n203.0.113.10 lladdr 52:54:00:5f:02:5f REACHABLE\n203.0.113.6 lladdr 52:54:00:5f:02:5f REACHABLE</code></pre>\n\n\n\n<h3 class=\"wp-block-heading\" id=\"h-test-1-raw-vs-filter-table-with-packets-sent-only-to-the-router-s-local-ip-addresses\">Test 1: Raw vs Filter table, with packets sent only to the router’s local IP addresses</h3>\n\n\n\n<p class=\"wp-block-paragraph\">In this test, we do a 1-to-1 test on using raw vs. filter table where all the packets we send will get dropped, so the question is if it is more efficient to drop them in raw, before route lookup, than in filter which is post route lookup. In theory, it should be more efficient to drop them in raw.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In both situations (raw vs filter), approximately 280k 128-byte UDP packets were sent per second for 10 minutes. <strong>iPerf2</strong> was used to generate the UDP streams on the traffic source VM, to the IP configured on enp8s0 of the router VM. iPerf2 command was as follows:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>iperf -l 128 -i 10 -t 600 -c 203.0.113.1 -u -b 300M</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">The iptables raw table rules were as follows, this shows the state after the test including packet counters:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>root@iptrules:~# iptables -L -v --line -n -t raw\nChain PREROUTING (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n1     165M   26G CT         all  --  *      *       0.0.0.0/0            0.0.0.0/0            NOTRACK\n2     165M   26G DROP       udp  --  *      *       198.51.100.1         0.0.0.0/0            udp dpt:5001 ADDRTYPE match dst-type LOCAL\n\nChain OUTPUT (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n1      753  402K CT         all  --  *      *       0.0.0.0/0            0.0.0.0/0            NOTRACK</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">The iptables filter table test variant were configured as follows, this shows the state after the test including packet counters, the counters look similar in terms of total packets and drops:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>root@iptrules:~# iptables -L -v --line -n -t raw \nChain PREROUTING (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n1     165M   26G CT         all  --  *      *       0.0.0.0/0            0.0.0.0/0            NOTRACK\n\nChain OUTPUT (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n1      446  205K CT         all  --  *      *       0.0.0.0/0            0.0.0.0/0            NOTRACK</code></pre>\n\n\n\n<pre class=\"wp-block-code\"><code>root@iptrules:~# iptables -L -v --line -n -t filter \nChain INPUT (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n1     165M   26G DROP       udp  --  *      *       198.51.100.1         0.0.0.0/0            udp dpt:5001\n\nChain FORWARD (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n\nChain OUTPUT (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">Figure 2 shows the CPU usage for Test 1 comparison.</p>\n\n\n<div class=\"wp-block-image\">\n<figure class=\"aligncenter size-full\"><a href=\"https://www.daryllswer.com/wp-content/uploads/2024/01/test-1-cpu-usage.png\"><img loading=\"lazy\" decoding=\"async\" width=\"1380\" height=\"724\" src=\"https://www.daryllswer.com/wp-content/uploads/2024/01/test-1-cpu-usage.png\" alt=\"\" class=\"wp-image-3143\" srcset=\"https://www.daryllswer.com/wp-content/uploads/2024/01/test-1-cpu-usage.png 1380w, https://www.daryllswer.com/wp-content/uploads/2024/01/test-1-cpu-usage-768x403.png 768w\" sizes=\"auto, (max-width: 1380px) 100vw, 1380px\"></a><figcaption class=\"wp-element-caption\">Figure-2 Test 1 CPU usage</figcaption></figure>\n</div>\n\n\n<p class=\"wp-block-paragraph\">As expected, dropping in raw, before the route lookup, used less CPU, which hovered around 10% average as opposed to 12% average when the packet dropping was done post route lookup. When removing 1.5% background CPU, is about 15% more CPU used when using the filter table.</p>\n\n\n\n<h3 class=\"wp-block-heading\" id=\"h-test-2-raw-vs-filter-table-with-most-packets-forwarded-to-the-destination\">Test 2: Raw vs Filter table, with most packets forwarded to the destination</h3>\n\n\n\n<p class=\"wp-block-paragraph\">In this test, we do a 1-to-1 test on using raw vs. filter table on the original hypothesis. In this case, we generated 4 iPerf2 streams of traffic towards some IP addresses on the destination VM. These streams will be <strong>forwarded</strong> through the router, in parallel with the forwarded traffic, we also sent a lower number of packets to the router’s local IP addresses (similar to Test 1 but at a lower rate). The idea was to test the relative impact of doing the rule evaluation on all packets (when the rule is in the raw table), versus skipping that but having to do a routing lookup on everything, including what we’re going to drop.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The iptables raw table rules were as follows, this shows the state after the test including packet counters:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>root@iptrules:~# iptables -L -v --line -n -t raw\nChain PREROUTING (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n1     155M   84G CT         all  --  *      *       0.0.0.0/0            0.0.0.0/0            NOTRACK\n2    58604 9142K DROP       udp  --  *      *       198.51.100.1         0.0.0.0/0            udp dpt:5001 ADDRTYPE match dst-type LOCAL\n\nChain OUTPUT (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n1      386  185K CT         all  --  *      *       0.0.0.0/0            0.0.0.0/0            NOTRACK</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">The iptables filter table test variant were configured as follows, this shows the state after the test including packet counters:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>root@iptrules:~# iptables -L -v --line -n -t raw \nChain PREROUTING (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n1     155M   83G CT         all  --  *      *       0.0.0.0/0            0.0.0.0/0            NOTRACK\n\nChain OUTPUT (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n1      412  187K CT         all  --  *      *       0.0.0.0/0            0.0.0.0/0            NOTRACK</code></pre>\n\n\n\n<pre class=\"wp-block-code\"><code>root@iptrules:~# iptables -L -v --line -n -t filter \nChain INPUT (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n1    58603 9142K DROP       udp  --  *      *       198.51.100.1         0.0.0.0/0            udp dpt:5001\n\nChain FORWARD (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n\nChain OUTPUT (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">Figure 3 shows the CPU usage for Test 2 comparison.</p>\n\n\n<div class=\"wp-block-image\">\n<figure class=\"aligncenter size-full\"><a href=\"https://www.daryllswer.com/wp-content/uploads/2024/01/test-2-cpu-usage.png\"><img loading=\"lazy\" decoding=\"async\" width=\"1380\" height=\"1040\" src=\"https://www.daryllswer.com/wp-content/uploads/2024/01/test-2-cpu-usage.png\" alt=\"\" class=\"wp-image-3145\" srcset=\"https://www.daryllswer.com/wp-content/uploads/2024/01/test-2-cpu-usage.png 1380w, https://www.daryllswer.com/wp-content/uploads/2024/01/test-2-cpu-usage-768x579.png 768w\" sizes=\"auto, (max-width: 1380px) 100vw, 1380px\"></a><figcaption class=\"wp-element-caption\">Figure-3 Test 2 CPU usage</figcaption></figure>\n</div>\n\n\n<p class=\"wp-block-paragraph\">There’s clearly only a marginal difference, but it does appear the CPU usage was slightly lower with the drop rule placed in the filter table’s input chain. Despite the system having to do a routing lookup on the 58603 packets it dropped, not having to evaluate the DROP rule against the 155 million packets <strong>forwarded</strong> made the overall CPU usage lower.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-conclusion\">Conclusion</h2>\n\n\n\n<p class=\"wp-block-paragraph\">We think it is safe to say that the traffic mixture ratio is definitely a factor on deciding where it is best to deploy filtering rules for a given situation, which was my friend’s original contention. This test does not conform to a strict a controlled environment, but it is sufficient to derive an approximated conclusion.</p>\n\n\n\n<p class=\"wp-block-paragraph\">As the ratio of packets being dropped increases, with the ultimate situation that everything is dropped (Test 1), being able to skip the route lookup for those packets brings lower CPU usage.</p>\n\n\n\n<p class=\"wp-block-paragraph\">However, it’s worth nothing that, even if the majority of the packets are forwarded through the router (Test 2), a DoS/DDoS destined towards the router’s local IP addresses may drastically change the ratio of traffic, for which then, it would make sense to protect your router by dropping said packets in the raw table, as it would then be critical in such a situation to drop early to have any chance of preserving the system’s CPU.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Essentially, you may want to do something that’s less efficient in the normal circumstance, because of some benefit in some unusual circumstance.</p>\n\n\n\n<p class=\"wp-block-paragraph\">It’s worth remembering that connection tracking is expensive and becomes vulnerable to a DDoS attack as the table may flood. I believe that opting for a stateless approach is preferable when the circumstances allow. However, if you are compelled to adopt a stateful approach, it is advisable to establish NoTrack rules for trusted traffic, <a href=\"https://en.wikipedia.org/wiki/Broadcast,_unknown-unicast_and_multicast_traffic\" target=\"_blank\" rel=\"noreferrer noopener\">BUM traffic</a>, as well as trusted BGP/OSPF/LDP neighbours. Additionally, consider dropping certain types of traffic in the raw and filter stages based on your traffic distribution.</p>\n\n\n\n<p class=\"wp-block-paragraph\">My friend’s intention with this test was not to determine the best thing for every situation, but rather to get a small sense of the relative performance of one of these options versus the other.</p>\n"
+  },
+  "date": "2024-01-27T01:09:13",
+  "date_gmt": "2024-01-26T19:39:13",
+  "excerpt": {
+    "protected": false,
+    "rendered": "<p>This article examines iptables&#8217; performance in filtering traffic at different processing stages within a Linux-based router. Tests were conducted comparing raw and filter tables&#8217; efficiency in handling dropped traffic.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/\">Continue reading<span class=\"screen-reader-text\">Drop Early, Drop Often: Raw vs Filter iptables packet filtering</span></a></div>\n"
+  },
+  "featured_media": 3202,
+  "format": "standard",
+  "guid": {
+    "rendered": "http://daryllswer.com/?p=3138"
+  },
+  "id": 3138,
+  "jetpack-related-posts": [
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/linux/",
+        "text": "Linux"
+      },
+      "classes": [],
+      "context": "In &quot;Linux&quot;",
+      "date": "19 May 2025",
+      "excerpt": "How to set up native routed IPv6 in Docker with routed mode.",
+      "format": false,
+      "id": 5136,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How to configure routed IPv6 in Docker",
+      "url": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/",
+      "url_meta": {
+        "origin": 3138,
+        "position": 0
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "28 August 2023",
+      "excerpt": "Finding inconsistencies in vendor implementations of IPv6 subnet-router anycast addressing.",
+      "format": false,
+      "id": 2739,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Behavioural differences of IPv6 subnet-router anycast address implementations",
+      "url": "https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/",
+      "url_meta": {
+        "origin": 3138,
+        "position": 1
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "28 August 2021",
+      "excerpt": "An insight into ISP operations in South East Asia with a particular focus on India.",
+      "format": false,
+      "id": 558,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "The Human Side of ISPs",
+      "url": "https://www.daryllswer.com/the-human-side-of-isps/",
+      "url_meta": {
+        "origin": 3138,
+        "position": 2
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "8 June 2021",
+      "excerpt": "A best practices guide for engineers looking to improve network performance, security, and consistency using MikroTik for edge routers and BNG.",
+      "format": false,
+      "id": 269,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Edge Router &#038; BNG Optimisation Guide for ISPs",
+      "url": "https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/",
+      "url_meta": {
+        "origin": 3138,
+        "position": 3
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "16 December 2022",
+      "excerpt": "Explore an interesting observation on the Neighbour Discovery Protocol (NDP) in IPv6, in regard to Neighbour Solicitation and Advertisements.",
+      "format": false,
+      "id": 1674,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Interesting IPv6 observation on NDP (Neighbour Discovery Protocol)",
+      "url": "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/",
+      "url_meta": {
+        "origin": 3138,
+        "position": 4
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/architecture/",
+        "text": "Architecture"
+      },
+      "classes": [],
+      "context": "In &quot;Architecture&quot;",
+      "date": "12 November 2024",
+      "excerpt": "How to design OOB networks for ISPs, inspired by data centre networking.",
+      "format": false,
+      "id": 2931,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Out-of-Band Network Design for Service Provider Networks",
+      "url": "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/",
+      "url_meta": {
+        "origin": 3138,
+        "position": 5
+      }
+    }
+  ],
+  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/drop_packets_parachutes.webp",
+  "jetpack_sharing_enabled": true,
+  "link": "https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/",
+  "meta": {
+    "_jetpack_dont_email_post_to_subs": false,
+    "_jetpack_feature_clip_id": 0,
+    "_jetpack_memberships_contains_paid_content": false,
+    "_jetpack_memberships_contains_paywalled_content": false,
+    "_jetpack_newsletter_access": "",
+    "_jetpack_newsletter_tier_id": 0,
+    "footnotes": "",
+    "jetpack_post_was_ever_published": false
+  },
+  "modified": "2025-05-21T01:52:14",
+  "modified_gmt": "2025-05-20T20:22:14",
+  "ping_status": "open",
+  "slug": "drop-early-drop-often-raw-vs-filter-iptables-packet-filtering",
+  "status": "publish",
+  "sticky": false,
+  "tags": [
+    57,
+    56
+  ],
+  "template": "",
+  "title": {
+    "rendered": "Drop Early, Drop Often: Raw vs Filter iptables packet filtering"
+  },
+  "type": "post"
+}

@@ -1,0 +1,20 @@
+{
+  "assets": [
+    {
+      "alt": "Landscape photo in Sohra by Daryll Swer",
+      "bytes": 7075626,
+      "caption": "Shot in Sohra by Daryll Swer\nContinue readingShot in Sohra by Daryll Swer",
+      "detection_method": "rest_embedded_wp_featuredmedia",
+      "height": 3024,
+      "local_path": "content/posts/2023-05-29-an-interesting-folk-tale-behind-the-khasi-matrilineal-system/assets/featured.jpg",
+      "mime_type": "image/jpeg",
+      "role": "featured",
+      "sha256": "d9b03d942ebf3edf04ff5721ba64e41bfc996fc4a3ef3156d5d7f22d9181a8c7",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer.jpg",
+      "width": 4032
+    }
+  ],
+  "generated_at": "2026-07-06T09:28:35+00:00",
+  "post_id": 2492,
+  "post_slug": "an-interesting-folk-tale-behind-the-khasi-matrilineal-system"
+}

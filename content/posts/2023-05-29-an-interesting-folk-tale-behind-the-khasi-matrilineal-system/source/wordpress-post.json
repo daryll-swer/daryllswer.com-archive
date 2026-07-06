@@ -1,0 +1,645 @@
+{
+  "_archive_filters": [],
+  "_embedded": {
+    "author": [
+      {
+        "_links": {
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "avatar_urls": {
+          "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+          "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+          "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+        },
+        "description": "Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794",
+        "id": 1,
+        "link": "https://www.daryllswer.com/author/daryll/",
+        "name": "Daryll Swer",
+        "slug": "daryll",
+        "url": "https://www.daryllswer.com/"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "_links": {
+          "about": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/types/attachment"
+            }
+          ],
+          "author": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+            }
+          ],
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media"
+            }
+          ],
+          "replies": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=2501"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/2501",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "alt_text": "Landscape photo in Sohra by Daryll Swer",
+        "author": 1,
+        "caption": {
+          "rendered": "<p>Shot in Sohra by Daryll Swer</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/processed-with-vsco-with-c3-preset/\">Continue reading<span class=\"screen-reader-text\">Shot in Sohra by Daryll Swer</span></a></div>\n"
+        },
+        "date": "2023-05-29T16:14:58",
+        "featured_media": 0,
+        "id": 2501,
+        "jetpack_sharing_enabled": true,
+        "link": "https://www.daryllswer.com/processed-with-vsco-with-c3-preset/",
+        "media_details": {
+          "file": "2023/05/ShotInSohra-DaryllSwer.jpg",
+          "filesize": 7075626,
+          "height": 3024,
+          "image_meta": {
+            "aperture": "1.8",
+            "camera": "iPhone 7",
+            "caption": "Processed with VSCO with c3 preset",
+            "copyright": "Copyright 2017 Daryll Swer. All right reserved.",
+            "created_timestamp": "1513086638",
+            "credit": "",
+            "focal_length": "3.99",
+            "iso": "25",
+            "keywords": [],
+            "orientation": "0",
+            "shutter_speed": "0.00018867924528302",
+            "title": "Processed with VSCO with c3 preset"
+          },
+          "sizes": {
+            "1536x1536": {
+              "file": "ShotInSohra-DaryllSwer-1536x1152.jpg",
+              "filesize": 222761,
+              "height": 1152,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-1536x1152.jpg",
+              "width": 1536
+            },
+            "2048x2048": {
+              "file": "ShotInSohra-DaryllSwer-2048x1536.jpg",
+              "filesize": 394051,
+              "height": 1536,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-2048x1536.jpg",
+              "width": 2048
+            },
+            "full": {
+              "file": "ShotInSohra-DaryllSwer.jpg",
+              "height": 3024,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer.jpg",
+              "width": 4032
+            },
+            "large": {
+              "file": "ShotInSohra-DaryllSwer-2880x2160.jpg",
+              "filesize": 787377,
+              "height": 2160,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-2880x2160.jpg",
+              "width": 2880
+            },
+            "medium": {
+              "file": "ShotInSohra-DaryllSwer-1440x1080.jpg",
+              "filesize": 196515,
+              "height": 1080,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-1440x1080.jpg",
+              "width": 1440
+            },
+            "medium_large": {
+              "file": "ShotInSohra-DaryllSwer-768x576.jpg",
+              "filesize": 59180,
+              "height": 576,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-768x576.jpg",
+              "width": 768
+            },
+            "thumbnail": {
+              "file": "ShotInSohra-DaryllSwer-1280x720.jpg",
+              "filesize": 121513,
+              "height": 720,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer-1280x720.jpg",
+              "width": 1280
+            }
+          },
+          "width": 4032
+        },
+        "media_type": "image",
+        "mime_type": "image/jpeg",
+        "slug": "processed-with-vsco-with-c3-preset",
+        "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer.jpg",
+        "title": {
+          "rendered": "Shot in Sohra by Daryll Swer"
+        },
+        "type": "attachment"
+      }
+    ],
+    "wp:term": [
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/46",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/45"
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=46"
+              }
+            ]
+          },
+          "id": 46,
+          "link": "https://www.daryllswer.com/category/non-tech/khasi-ethnicity/",
+          "name": "Khasi Ethnicity",
+          "slug": "khasi-ethnicity",
+          "taxonomy": "category"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/45",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=45"
+              }
+            ]
+          },
+          "id": 45,
+          "link": "https://www.daryllswer.com/category/non-tech/",
+          "name": "Non-Tech",
+          "slug": "non-tech",
+          "taxonomy": "category"
+        }
+      ],
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/47",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=47"
+              }
+            ]
+          },
+          "id": 47,
+          "link": "https://www.daryllswer.com/tag/khasi/",
+          "name": "Khasi",
+          "slug": "khasi",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/51",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=51"
+              }
+            ]
+          },
+          "id": 51,
+          "link": "https://www.daryllswer.com/tag/non-tech/",
+          "name": "Non-Tech",
+          "slug": "non-tech",
+          "taxonomy": "post_tag"
+        }
+      ]
+    ]
+  },
+  "_links": {
+    "about": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/types/post"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts"
+      }
+    ],
+    "curies": [
+      {
+        "href": "https://api.w.org/{rel}",
+        "name": "wp",
+        "templated": true
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=2492"
+      }
+    ],
+    "self": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2492",
+        "targetHints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      }
+    ],
+    "version-history": [
+      {
+        "count": 0,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/2492/revisions"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=2492"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/2501"
+      }
+    ],
+    "wp:term": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/categories?post=2492",
+        "taxonomy": "category"
+      },
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/tags?post=2492",
+        "taxonomy": "post_tag"
+      }
+    ]
+  },
+  "author": 1,
+  "categories": [
+    46,
+    45
+  ],
+  "class_list": [
+    "post-2492",
+    "post",
+    "type-post",
+    "status-publish",
+    "format-standard",
+    "has-post-thumbnail",
+    "hentry",
+    "category-khasi-ethnicity",
+    "category-non-tech",
+    "tag-khasi",
+    "tag-non-tech",
+    "ratio-2-1",
+    "entry"
+  ],
+  "comment_status": "open",
+  "content": {
+    "protected": false,
+    "rendered": "<p class=\"wp-block-paragraph\">This article will be a unique departure from my usual technology and network engineering posts. As an author predominantly focused on those subjects, this marks a special occasion as I delve into a topic that resonates deeply with my own ethnicity and cultural heritage. Growing up immersed in the world of technology, I have always been fascinated by its advancements. However, I believe it is equally important to explore and celebrate the rich tapestry of my roots. My ethnicity is called Khasi and my native language is the Khasi language.</p>\n\n\n\n<p class=\"wp-block-paragraph\">But before I jump into the folk (oral) tale, I first need to cover some historical basics behind the Khasi ethnic group to bring my readers up to speed.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Origins of the Khasi ethnic group</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Speaking as a network engineer here – The internet penetration prior to 2010 in the Indian state of <a href=\"https://en.wikipedia.org/wiki/Meghalaya\" target=\"_blank\" rel=\"noreferrer noopener\">Meghalaya</a> (where the natives are Khasis) was almost nil—Therefore data and information about the Khasis was scantily available on the internet. However, as of 2023, thanks to the strong penetration of fibre optics and optical transport networks, it has given internet access to various government and private entities (usually researchers and academics) who were able to publish information about the Khasi people on the public internet.</p>\n\n\n\n<p class=\"wp-block-paragraph\">There are a lot of scholarly data and information present on the internet, that discusses on the historical origins of the group. The <a href=\"https://en.wikipedia.org/wiki/Khasi_people\" target=\"_blank\" rel=\"noreferrer noopener\">Wikipedia article</a> is a good place to start. Additional sources are available <a href=\"https://eastkhasihills.gov.in/culture/\" target=\"_blank\" rel=\"noreferrer noopener\">here</a>, <a href=\"https://study.com/academy/lesson/khasi-history-culture-facts-people.html\" target=\"_blank\" rel=\"noreferrer noopener\">here</a> and <a href=\"https://www.tandfonline.com/doi/abs/10.1080/09709274.2000.11907567\" target=\"_blank\" rel=\"noreferrer noopener\">here</a>.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The basic gist of it is, the Khasis have mythical stories about how we originated from a <a href=\"https://en.wikipedia.org/wiki/Khasi_people#Khasi_mythology\" target=\"_blank\" rel=\"noreferrer noopener\">different dimension</a>. And how we were divided into 7 subtribes that remains on Earth:</p>\n\n\n\n<ul class=\"wp-block-list\">\n<li>Khynriam</li>\n\n\n\n<li>Pnar</li>\n\n\n\n<li>Bhoi</li>\n\n\n\n<li>War</li>\n\n\n\n<li>Maram</li>\n\n\n\n<li>Lyngngam</li>\n\n\n\n<li>Diko (extinct)</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\">Each subtribe is then divided into “clans”, where each clan forms a “surname” to uniquely identify them based on genetical relationships and help avoid incest, which in turn prevents <a href=\"https://cptsdfoundation.org/2022/04/18/incest-and-genetic-disorders/\" target=\"_blank\" rel=\"noreferrer noopener\">genetic disorders</a> as per modern science.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Each subtribe have their own unique dialects (in the case of Pnar subtribe, a completely <a href=\"https://en.wikipedia.org/wiki/Pnar_language\" target=\"_blank\" rel=\"noreferrer noopener\">different language</a> altogether), practices, food habits/cooking methods and cultural traditions.</p>\n\n\n\n<p class=\"wp-block-paragraph\">My surname “Swer” is a clan-name of origin from the location of <a href=\"https://en.wikipedia.org/wiki/Cherrapunji\" target=\"_blank\" rel=\"noreferrer noopener\">Sohra</a> (pictured in the featured image of this article), though additionally, there have been inter-tribe relationships which gave birth to Swers in the Pnar subtribe. I personally, am from the Khynriam subtribe, as my genetical lineage traces back to Sohra from my maternal side.</p>\n\n\n\n<h3 class=\"wp-block-heading\">Khasi Language</h3>\n\n\n\n<p class=\"wp-block-paragraph\">The language spoken by the Khasi people is eponymously also named after the ethnic group name, called the <a href=\"https://en.wikipedia.org/wiki/Khasi_language\" target=\"_blank\" rel=\"noreferrer noopener\">Khasi language</a>.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Unlike many cultures, the Khasi people originally did not possess a traditional writing system to document our history and customs. Instead, our knowledge and traditions have been faithfully transmitted through the art of <a href=\"https://en.wikipedia.org/wiki/Oral_tradition\" target=\"_blank\" rel=\"noreferrer noopener\">storytelling</a>. For generations, our elders have shared their wisdom, preserving our heritage and ensuring its continuation.</p>\n\n\n\n<h3 class=\"wp-block-heading\">Origins of Our Writing System</h3>\n\n\n\n<p class=\"wp-block-paragraph\">The Khasi writing system was invented by <a href=\"https://web.archive.org/web/20230324130029/https://www.northeasttoday.in/2022/06/22/meghalaya-pays-rich-tributes-to-founding-father-of-khasi-alphabet-thomas-jones/\" target=\"_blank\" rel=\"noreferrer noopener\">Thomas Jones</a> in the early 1840s, which means that 100% of our ancient knowledge, practices and historical information cannot be ascertained for information accuracy and facts, we can only speculate and give a probability rating to the accuracy of any given piece of orally driven tale or story. Therefore, any information prior to the 1840s was purely oral history.</p>\n\n\n\n<blockquote class=\"wp-block-quote is-layout-flow wp-block-quote-is-layout-flow\">\n<p class=\"wp-block-paragraph\">Please keep this fact in mind, as this is critical for the interesting tale, shared in this article.</p>\n</blockquote>\n\n\n\n<h2 class=\"wp-block-heading\">The Matrilineal System</h2>\n\n\n\n<p class=\"wp-block-paragraph\">A defining characteristic of the Khasi people is our <a href=\"https://en.wikipedia.org/wiki/Matrilineal_society_of_Meghalaya\" target=\"_blank\" rel=\"noreferrer noopener\">matrilineal system</a>, which forms the bedrock of our social fabric. In our society, one’s lineage and inheritance are traced through the maternal line, with property, wealth, and clan identity passed down from mothers to their daughters. It is crucial to understand that our matrilineal system does not imply a matriarchal society, as men also hold significant roles within our families and communities.</p>\n\n\n\n<h2 class=\"wp-block-heading\">The Interesting Tale</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Finally, I will share the folk tale. I personally learnt this tale from a friend of mine, who in turn learnt it from the elders in his clan, I also heard the exact same tale from my girlfriend (also Khasi ethnicity) at the time of writing this article, who in turn heard it from her elders in her own clan, which seems to support some foundation in the tale. However, as previously explained, there is <strong>no</strong> <strong>written</strong> evidence of this tale.</p>\n\n\n\n<p class=\"wp-block-paragraph\">According to the tale, our ancestors once thrived in a patrilineal society. However, during an era for which written records are absent, a devastating war consumed our land, resulting in heavy casualties among the Khasi men who were warriors (soldiers). Faced with the potential loss of our clan identities among the children left behind, and the fear of forgetting our heritage, our ancestors made a pivotal decision.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In a moment that would shape the course of our history, our forbearers decided to shift our surnames to the mother’s side. This crucial choice ensured the preservation of our lineage, kinship, and identity. By anchoring our family heritage to the maternal line, we safeguarded the continuity of our clans and nurtured a profound sense of belonging. Thus, the Khasi matrilineal system was born—an enduring testament to our resilience and the profound significance of our cultural legacy.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Current Developments</h2>\n\n\n\n<p class=\"wp-block-paragraph\">As of 2023, there’s currently an <a href=\"https://www.thehindu.com/news/national/other-states/row-over-adopting-fathers-surname-in-matrilineal-meghalaya/article66856681.ece\" target=\"_blank\" rel=\"noreferrer noopener\">ongoing debate/legal issue</a> regarding issuing of the <a href=\"https://vikaspedia.in/social-welfare/scheduled-tribes-welfare/scheduled-tribes-in-india\" target=\"_blank\" rel=\"noreferrer noopener\">scheduled tribe</a> certificates only to those with matrilineal surnames and not patriarchal surnames based on the long stand tradition.</p>\n\n\n\n<h3 class=\"wp-block-heading\" id=\"h-scientific-reasoning\">Scientific reasoning</h3>\n\n\n\n<p class=\"wp-block-paragraph\">I personally do not care about the political viewpoint on the matter, I am generally only interested in scientific and logical reasoning – As a network engineer, I work on a daily basis with scientific principles such as analytical, empirical, deductive, inductive and logical working methodologies. Therefore, although I am not an expert in biological and medical sciences, I can deduce some basic rationale as to why <strong>suddenly</strong> changing the system from matrilineal to patriarchal society could hurt the Khasi people and society’s health. Below is my personal opinion and reasoning:</p>\n\n\n\n<p class=\"wp-block-paragraph\">Shifting the matrilineal system to a paternal-based system in the Khasi society could have significant implications from a logical and scientific standpoint, particularly concerning genetic lineage and the prevention of incest. Here is a compelling logical reasoning to explain why such a sudden shift would be a bad idea:</p>\n\n\n\n<ol class=\"wp-block-list\">\n<li>Genetic Lineage: The matrilineal system, which the Khasi people have followed for thousands of years, provides a clear and reliable method of tracing genetic lineage through the maternal line. This system has helped avoid accidental incest by ensuring that individuals do not engage in relationships with close relatives on their mother’s side. Shifting to a paternal-based system would disrupt this established lineage tracking procedure and create confusion regarding familial relationships and risk potential genetic risks by increasing the probability of inbreeding (incestuous relationships).</li>\n\n\n\n<li>Disruption of Social Structure: The matrilineal system has played a significant role in shaping the social structure and gender dynamics within Khasi society in the areas of family, decision-making processes, and property inheritance. A sudden shift to a paternal-based system could disrupt the current balance (or imbalance) in society that the matrilineal system has influenced, potentially leading to social and gender imbalances within the community.</li>\n</ol>\n\n\n\n<p class=\"wp-block-paragraph\">Considering these points, it becomes evident in my opinion, that a <strong>sudden</strong> shift from the matrilineal system to a paternal-based system would introduce <strong>genetic chaos</strong> and pose significant risks among others to the Khasi society. It would undermine the long-established practices of lineage tracing, increase the chances of accidental incest, and disrupt the social structure that has been integral to their culture for generations. Therefore, maintaining the matrilineal system would be a more logical and scientifically sound approach for preserving <strong>genetic diversity </strong>and the social fabric of the Khasi community.</p>\n\n\n\n<p class=\"wp-block-paragraph\">This is not to say that a flexible system that may be derived in the future based on expert consensus may not come to fruition. But at this point in the time, the health risks are genuine and very real.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Conclusion</h2>\n\n\n\n<p class=\"wp-block-paragraph\">As a Khasi individual, I note the importance of our matrilineal system and how it supposedly originated, and the stories that weave our cultural tapestry. Through the power of oral tradition, we have safeguarded our heritage, passing down the wisdom of our ancestors from one generation to the next.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Whether or not we can easily move from matrilineal to patriarchal or maybe even support both, remains to be seen. I would personally like to hear input from experts in the medical and relevant fields. Accidental incest should be minimised to prevent diseases and genetic disorders.</p>\n"
+  },
+  "date": "2023-05-29T16:51:12",
+  "date_gmt": "2023-05-29T11:21:12",
+  "excerpt": {
+    "protected": false,
+    "rendered": "<p>A rarely known tale about the origins of the Khasi Matrilineal System.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/an-interesting-folk-tale-behind-the-khasi-matrilineal-system/\">Continue reading<span class=\"screen-reader-text\">An Interesting Folk Tale Behind the Khasi Matrilineal System</span></a></div>\n"
+  },
+  "featured_media": 2501,
+  "format": "standard",
+  "guid": {
+    "rendered": "http://daryllswer.com/?p=2492"
+  },
+  "id": 2492,
+  "jetpack-related-posts": [
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "1 July 2022",
+      "excerpt": "An article about setting up an Autonomous System (AS) from scratch.",
+      "format": false,
+      "id": 970,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png?resize=700%2C400&ssl=1 2x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "How did I set up my own Autonomous System?",
+      "url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/",
+      "url_meta": {
+        "origin": 2492,
+        "position": 0
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "28 August 2021",
+      "excerpt": "An insight into ISP operations in South East Asia with a particular focus on India.",
+      "format": false,
+      "id": 558,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "The Human Side of ISPs",
+      "url": "https://www.daryllswer.com/the-human-side-of-isps/",
+      "url_meta": {
+        "origin": 2492,
+        "position": 1
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "21 September 2023",
+      "excerpt": "BGP false-alarm: What happened, and what can we learn from it?",
+      "format": false,
+      "id": 2803,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "BGPlay data misinterpretation led to BGP false alarm call on my number",
+      "url": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/",
+      "url_meta": {
+        "origin": 2492,
+        "position": 2
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "28 March 2021",
+      "excerpt": "An article on Multi-WAN setups using consumer-grade ISPs.",
+      "format": false,
+      "id": 66,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Multi-WAN setups with retail ISPs (Part 1 &#8211; Theory)",
+      "url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/",
+      "url_meta": {
+        "origin": 2492,
+        "position": 3
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "16 December 2022",
+      "excerpt": "Explore an interesting observation on the Neighbour Discovery Protocol (NDP) in IPv6, in regard to Neighbour Solicitation and Advertisements.",
+      "format": false,
+      "id": 1674,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Interesting IPv6 observation on NDP (Neighbour Discovery Protocol)",
+      "url": "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/",
+      "url_meta": {
+        "origin": 2492,
+        "position": 4
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "28 August 2023",
+      "excerpt": "Finding inconsistencies in vendor implementations of IPv6 subnet-router anycast addressing.",
+      "format": false,
+      "id": 2739,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Behavioural differences of IPv6 subnet-router anycast address implementations",
+      "url": "https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/",
+      "url_meta": {
+        "origin": 2492,
+        "position": 5
+      }
+    }
+  ],
+  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer.jpg",
+  "jetpack_sharing_enabled": true,
+  "link": "https://www.daryllswer.com/an-interesting-folk-tale-behind-the-khasi-matrilineal-system/",
+  "meta": {
+    "_jetpack_dont_email_post_to_subs": false,
+    "_jetpack_feature_clip_id": 0,
+    "_jetpack_memberships_contains_paid_content": false,
+    "_jetpack_memberships_contains_paywalled_content": false,
+    "_jetpack_newsletter_access": "",
+    "_jetpack_newsletter_tier_id": 0,
+    "footnotes": "",
+    "jetpack_post_was_ever_published": false
+  },
+  "modified": "2025-05-21T02:00:28",
+  "modified_gmt": "2025-05-20T20:30:28",
+  "ping_status": "open",
+  "slug": "an-interesting-folk-tale-behind-the-khasi-matrilineal-system",
+  "status": "publish",
+  "sticky": false,
+  "tags": [
+    47,
+    51
+  ],
+  "template": "",
+  "title": {
+    "rendered": "An Interesting Folk Tale Behind the Khasi Matrilineal System"
+  },
+  "type": "post"
+}

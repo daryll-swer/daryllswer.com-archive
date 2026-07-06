@@ -1,0 +1,140 @@
+<p class="wp-block-paragraph">This will be a series with a <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/" target="_blank" rel="noreferrer noopener">Part Two</a>.</p>
+
+
+
+<p class="wp-block-paragraph">In <strong>part one</strong>, I would like to talk about a particular networking environment where a site (home, office etc) has more than one uplink either to the same or a different ISP, where the ISP(s) are <strong>retail </strong>meaning “home grade” ISPs or “consumer” ISPs instead of dedicated leased circuits/business-grade ISPs.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-definition">Definition</h2>
+
+
+
+<p class="wp-block-paragraph">I could not find a textbook definition for Multi-WAN as it is an umbrella term for many things such as Multi-WAN based load balancing, Multi-WAN based failover etc. </p>
+
+
+
+<p class="wp-block-paragraph">My<strong> </strong>definition of Multi-WAN is fairly straightforward, i.e. A router/network/site that has more than one uplink to an ISP or a different ISP is a Multi-WAN setup.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-pros">Pros</h2>
+
+
+
+<ul class="wp-block-list">
+<li>Significantly cheaper than dedicated leased circuits.
+<ul class="wp-block-list">
+<li>Can be deployed for SOHO, Small Businesses and perhaps even enterprise (private firms that do not require their own ASN).</li>
+</ul>
+</li>
+
+
+
+<li>Redundancy/Failover/High Reliability.
+<ul class="wp-block-list">
+<li>If one uplink goes down, traffic is routed over the next available uplink.</li>
+</ul>
+</li>
+
+
+
+<li><span style="font-size: 1em;">Load Balancing</span>.
+<ul class="wp-block-list">
+<li>Where traffic is split/balanced between the available uplinks.</li>
+
+
+
+<li><strong>Bandwidth aggregation</strong> is also possible without any bonding or routing protocols like ECMP i.e. in other words, you can achieve increased bandwidth throughput in downloads/uploads by using the available bandwidth from the uplinks simultaneously.</li>
+</ul>
+</li>
+
+
+
+<li>You can route specific destination IPv4/IPv6 addresses/prefixes via a specific WAN interface that happens to have better routing to the said subnets (example: ISP2 has lower latency to Cloudflare’s DNS resolvers when compared to ISP1).
+<ul class="wp-block-list">
+<li>I have done exactly just this <a href="https://twitter.com/DaryllSwer/status/1350443020949155840">here</a>.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading" id="h-cons">Cons</h2>
+
+
+
+<ul class="wp-block-list">
+<li>Total cost may be higher for the initial installation of CPE/ONT/Router/Switches etc, but this is usually negligible.</li>
+
+
+
+<li>You will not have SLAs like dedicated lines, but this is somewhat mitigated by having multiple uplinks.</li>
+
+
+
+<li>If a proper configuration is not done, HTTPS traffic will break (for example banking sites) since the source IPs would change frequently.</li>
+
+
+
+<li>The monthly cost of the ISPs combined may or may not be higher, depending on the available tariffs in that particular area.
+<ul class="wp-block-list">
+<li>For example, if ISP1 had a ₹500 tariff and the other had ₹300, then the total monthly cost is pretty cheap in my opinion.</li>
+</ul>
+</li>
+
+
+
+<li>Likely behind an <a href="https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/">ugly</a> CGNAT deployment.
+<ul class="wp-block-list">
+<li>And likely that they will not provide a public IP as their IPv4 pools are again likely to be exhausted.</li>
+
+
+
+<li>Also, likely that they will only give a single /64 IPv6 prefix, which makes subnetting impossible without breaking SLAAC (Read <a href="https://www.techrepublic.com/article/androids-lack-of-dhcpv6-support-frustrates-enterprise-network-admins/">Android</a>).</li>
+</ul>
+</li>
+</ul>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full is-resized"><a href="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png"><img loading="lazy" decoding="async" width="599" height="1115" src="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png" alt="" class="wp-image-833" style="width:247px;height:auto" srcset="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png 599w, https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs-580x1080.png 580w" sizes="auto, (max-width: 599px) 100vw, 599px"></a><figcaption class="wp-element-caption">Figure-1 (A simple non-technical diagram to illustrate Multi-WAN setup with two ISPs)</figcaption></figure>
+</div>
+
+
+<h2 class="wp-block-heading" id="h-real-life-example">Real-Life Example</h2>
+
+
+
+<p class="wp-block-paragraph">I have deployed a Multi-WAN environment in my own home using RB450Gx4 as the router where:</p>
+
+
+
+<ul class="wp-block-list">
+<li>ISP1 (<a href="https://bgp.tools/as/9829">AS9829</a>) has a 200Mbps symmetrical bandwidth (at the time of deployment/testing).</li>
+
+
+
+<li>ISP2 (<a href="https://bgp.tools/as/135756">AS135756</a>) has a 100Mbps symmetrical bandwidth (at the time of deployment/testing).</li>
+
+
+
+<li>Monthly Tariffs (at the time of deployment/testing).
+<ul class="wp-block-list">
+<li>ISP1 – ₹1277</li>
+
+
+
+<li>ISP2 – ₹1375</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="has-text-align-left wp-block-paragraph">The end result of my setup is demonstrated below:</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png"><img loading="lazy" decoding="async" width="1920" height="947" src="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png" alt="" class="wp-image-836" srcset="https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png 1920w, https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-768x379.png 768w, https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1536x758.png 1536w" sizes="auto, (max-width: 1920px) 100vw, 1920px"></a><figcaption class="wp-element-caption">Figure-2 [IP Address is intentionally left visible as it poses no security risk (Dynamic IP Address)]</figcaption></figure>
+</div>

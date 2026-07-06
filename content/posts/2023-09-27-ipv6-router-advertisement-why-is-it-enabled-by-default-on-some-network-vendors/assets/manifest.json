@@ -1,0 +1,33 @@
+{
+  "assets": [
+    {
+      "alt": "",
+      "bytes": 24722,
+      "caption": "",
+      "detection_method": "rest_embedded_wp_featuredmedia",
+      "height": 630,
+      "local_path": "content/posts/2023-09-27-ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/assets/featured.png",
+      "mime_type": "image/png",
+      "role": "featured",
+      "sha256": "d3c9d598f84e3aa1bd39f4527e1117dbdd4031d17c84873b11a0b29418d5ffb4",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png",
+      "width": 1200
+    },
+    {
+      "alt": null,
+      "bytes": 146927,
+      "caption": "Figure-1 IPv6 RAs on ExtremeIX Bangalore",
+      "detection_method": null,
+      "height": 254,
+      "local_path": "content/posts/2023-09-27-ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/assets/inline/image.png",
+      "mime_type": "image/png",
+      "role": "inline",
+      "sha256": "5249246138f3acfc8c26a2f8b94a4ef773d0c54aac16cc04bacbcea03c7fd562",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/image.png",
+      "width": 2880
+    }
+  ],
+  "generated_at": "2026-07-06T09:28:35+00:00",
+  "post_id": 2836,
+  "post_slug": "ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors"
+}

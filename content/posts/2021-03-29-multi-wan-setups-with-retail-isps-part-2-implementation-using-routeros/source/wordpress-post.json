@@ -1,0 +1,2967 @@
+{
+  "_archive_filters": [
+    {
+      "filter": "donation_or_support_cta",
+      "redacted": true,
+      "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
+      "tag": "h4"
+    }
+  ],
+  "_embedded": {
+    "author": [
+      {
+        "_links": {
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "avatar_urls": {
+          "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+          "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+          "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+        },
+        "description": "Principal Consultant — Swer Networks | ISP Network Consultant | Work Featured on APNIC Blog, IPv6 Buzz, PCMag &amp; The Hedge Podcast | Researcher — AS149794",
+        "id": 1,
+        "link": "https://www.daryllswer.com/author/daryll/",
+        "name": "Daryll Swer",
+        "slug": "daryll",
+        "url": "https://www.daryllswer.com/"
+      }
+    ],
+    "replies": [
+      [
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/1373",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/c926bfeb2cc587b9c5f76e856cb5d6fda96a9496bc5b69554a091dc01d48aa88?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/c926bfeb2cc587b9c5f76e856cb5d6fda96a9496bc5b69554a091dc01d48aa88?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/c926bfeb2cc587b9c5f76e856cb5d6fda96a9496bc5b69554a091dc01d48aa88?s=96&r=g"
+          },
+          "author_name": "Ethan",
+          "author_url": "http://N/A",
+          "content": {
+            "rendered": "<p>Hi Daryll,</p>\n<p>Thank you for sharing your configuration. I&#8217;ve been using this and it works fine.<br />\nExcept with this issue that I have experienced.</p>\n<p>I have 2 isp:<br />\nISP1 = 500mb<br />\nISP2 = 500mb</p>\n<p>Issue: When ISP1 is very slow but not totally down (like it becomes under 3MB and there are still packets flowing in its interface), the whole network performance goes down, too. I&#8217;m assuming this is because they&#8217;re sharing 50/50 of the total bandwidth consumption of the network, but since ISP1 cannot provide as fast as ISP2 does, the network performance slows. </p>\n<p>Now, Is there any chance can we make the failover triggered/activated whenever one of the isp is down like this?</p>\n<p>Thank you,<br />\nEthan</p>\n"
+          },
+          "date": "2024-10-08T08:48:47",
+          "id": 1373,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-1373",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/920"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/975",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/90416c74048db44561834e81cc781d110eb666ead6d8c40eee4f1137be4f6ba8?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/90416c74048db44561834e81cc781d110eb666ead6d8c40eee4f1137be4f6ba8?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/90416c74048db44561834e81cc781d110eb666ead6d8c40eee4f1137be4f6ba8?s=96&r=g"
+          },
+          "author_name": "bob",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>hello Daryll<br />\ni have operating a small WISP. i have 3 pppoe uplinks  and 2 dynamic uplinks with equal bandwidths, my problem is on the ip routes,how do you go about it putting all the routes and  ensuring there is also  failover,, kindly assist</p>\n"
+          },
+          "date": "2024-04-28T02:57:57",
+          "id": 975,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-975",
+          "parent": 920,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=920"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/918"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/920",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>I never bothered to try IPTV, as I strongly believe IPTV belongs to the same grave as DSL and copper internet infrastructure. I would recommend trying to ask MikroTik support.</p>\n<p>But you need IGMP/MLD Snooping + PIM-SM to make this work, conceptually.</p>\n"
+          },
+          "date": "2023-12-09T20:18:37",
+          "id": 920,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-920",
+          "parent": 918,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/917"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/919",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<blockquote><p>Please note, it is very unlikely I will maintain this article piece. Even though the underlying concepts and principle are the same on RouterOS v7, if you are still facing some issues or confusion, I would recommend you watch this <a href=\"https://youtu.be/nlb7XAv57tw\" target=\"_blank\" rel=\"noopener nofollow ugc\">official video from MikroTik</a>.</p></blockquote>\n"
+          },
+          "date": "2023-12-09T20:17:11",
+          "id": 919,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-919",
+          "parent": 917,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=918"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/918",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/4426b2961af11bafbb23443c674b4fe69f526b73b8440e5dbb8fd98cb7541706?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/4426b2961af11bafbb23443c674b4fe69f526b73b8440e5dbb8fd98cb7541706?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/4426b2961af11bafbb23443c674b4fe69f526b73b8440e5dbb8fd98cb7541706?s=96&r=g"
+          },
+          "author_name": "Michael Bank",
+          "author_url": "http://-",
+          "content": {
+            "rendered": "<p>Hello Daryll</p>\n<p>Excellent website you have. What a lot of topics. I&#8217;ve been sniffing around, but unfortunately I can&#8217;t find the info I&#8217;m looking for. </p>\n<p>The situation in brief: I have had internet and TV from different providers for a long time. Since my ISP provides a rather ordinary Sagemcom router along with the internet connection, I use Mikrotik hAP AX2 instead &#8211; with the MAC address of the Sagemcom router and VLAN tagging on Ethernet 1. Really excellent. The internet has never been better at my house.</p>\n<p>Now I have accepted a favourable offer for IPTV from my ISP; but it just doesn&#8217;t work.</p>\n<p>It sounds easy to just set up Multicast Routing with IGMPv3; and sure, I can find Routing/IGMP Proxy in WinBox 7.12.1; but I can&#8217;t really get past that&#8230;?</p>\n<p>Can you share a hint or two about Multicast Routing with IGMPv3 in Mikrotik?</p>\n<p>Should it be enabled on the LAN bridge (Ethernet 2 to 5) or maybe better on e.g. Ethernet 5 alone?</p>\n<p>Best regards<br />\nMichael</p>\n"
+          },
+          "date": "2023-12-09T07:22:33",
+          "id": 918,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-918",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=917"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/917",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/30f0aeb7aafd69ba5a0e912bca79fa30e300ab1fe7ea613901c340cb8f63a4ae?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/30f0aeb7aafd69ba5a0e912bca79fa30e300ab1fe7ea613901c340cb8f63a4ae?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/30f0aeb7aafd69ba5a0e912bca79fa30e300ab1fe7ea613901c340cb8f63a4ae?s=96&r=g"
+          },
+          "author_name": "ALBERT",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Hello, i have problem with browsing and online class slow when i enable the loadbalance i used pcc.. but not work.. i dont know if correct. i see your page and i set to my mikrotik.. can you check if correct all rules.. please.. need help. below is the article you posted..<br />\nthanks.</p>\n<blockquote><p>/interface ethernet<br />\nset [ find default-name=ether1 ] mac-address=BE:C6:FE:27:C1:A3 mtu=1508 name=<br />\n    E1-WAN1<br />\nset [ find default-name=ether2 ] mtu=1508 name=E2-WAN2<br />\nset [ find default-name=ether3 ] mtu=1508 name=E3-WAN3<br />\nset [ find default-name=ether4 ] mtu=1508 name=E4-WAN4<br />\nset [ find default-name=ether5 ] name=E5-WAN5<br />\nset [ find default-name=ether6 ] name=E6-WAN6<br />\nset [ find default-name=ether7 ] name=E7-WAN7<br />\nset [ find default-name=ether8 ] name=E8-WAN8<br />\nset [ find default-name=ether9 ] name=E9-PPPoE<br />\nset [ find default-name=ether10 ] name=E10-LAN<br />\nset [ find default-name=ether11 ] comment=default-server1 name=E11-PPPoE<br />\nset [ find default-name=ether12 ] comment=default-server2 name=E12-PPPOE<br />\nset [ find default-name=ether13 ] name=E13-PPPoE<br />\n/interface list<br />\nadd name=pppoe-list<br />\n/ip firewall address-list<br />\nadd address=10.0.0.0/8 list=not_in_internet<br />\nadd address=172.16.0.0/12 list=not_in_internet<br />\nadd address=192.168.0.0/16 list=not_in_internet<br />\n/ip firewall mangle<br />\nadd action=mark-connection chain=prerouting comment=new connection-mark=<br />\n    no-mark in-interface=E1-WAN1 new-connection-mark=wan1 passthrough=no<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    in-interface=E2-WAN2 new-connection-mark=wan2 passthrough=no<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    in-interface=E3-WAN3 new-connection-mark=wan3 passthrough=no<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    in-interface=E4-WAN4 new-connection-mark=wan4 passthrough=no<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br />\n    in-interface-list=pppoe-list new-connection-mark=wan1 passthrough=yes<br />\n    per-connection-classifier=both-addresses-and-ports:4/0 protocol=tcp<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br />\n    in-interface-list=pppoe-list new-connection-mark=wan2 passthrough=yes<br />\n    per-connection-classifier=both-addresses-and-ports:4/1 protocol=tcp<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br />\n    in-interface-list=pppoe-list new-connection-mark=wan3 passthrough=yes<br />\n    per-connection-classifier=both-addresses-and-ports:4/2 protocol=tcp<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br />\n    in-interface-list=pppoe-list new-connection-mark=wan4 passthrough=yes<br />\n    per-connection-classifier=both-addresses-and-ports:4/3 protocol=tcp<br />\nadd action=mark-connection chain=prerouting comment=https connection-mark=<br />\n    no-mark dst-address-list=!not_in_internet dst-address-type=!local<br />\n    dst-port=80,443 in-interface-list=pppoe-list new-connection-mark=wan1<br />\n    passthrough=yes per-connection-classifier=both-addresses-and-ports:4/0<br />\n    protocol=udp<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br />\n    in-interface-list=pppoe-list new-connection-mark=wan2 passthrough=yes<br />\n    per-connection-classifier=both-addresses-and-ports:4/1 protocol=udp<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br />\n    in-interface-list=pppoe-list new-connection-mark=wan3 passthrough=yes<br />\n    per-connection-classifier=both-addresses-and-ports:4/2 protocol=udp<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443<br />\n    in-interface-list=pppoe-list new-connection-mark=wan4 passthrough=yes<br />\n    per-connection-classifier=both-addresses-and-ports:4/3 protocol=udp<br />\nadd action=mark-connection chain=prerouting comment=nth connection-mark=<br />\n    no-mark dst-address-list=!not_in_internet dst-address-type=!local<br />\n    in-interface-list=pppoe-list new-connection-mark=wan1 nth=4,1<br />\n    passthrough=yes<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    dst-address-list=!not_in_internet dst-address-type=!local<br />\n    in-interface-list=pppoe-list new-connection-mark=wan2 nth=4,2<br />\n    passthrough=yes<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    dst-address-list=!not_in_internet dst-address-type=!local<br />\n    in-interface-list=pppoe-list new-connection-mark=wan3 nth=4,3<br />\n    passthrough=yes<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark<br />\n    dst-address-list=!not_in_internet dst-address-type=!local<br />\n    in-interface-list=pppoe-list new-connection-mark=wan4 nth=4,4<br />\n    passthrough=yes<br />\nadd action=mark-routing chain=prerouting connection-mark=wan1<br />\n    in-interface-list=pppoe-list new-routing-mark=ROUTE-WAN1 passthrough=no<br />\nadd action=mark-routing chain=prerouting connection-mark=wan2<br />\n    in-interface-list=pppoe-list new-routing-mark=ROUTE-WAN2 passthrough=no<br />\nadd action=mark-routing chain=prerouting connection-mark=wan3<br />\n    in-interface-list=pppoe-list new-routing-mark=ROUTE-WAN3 passthrough=no<br />\nadd action=mark-routing chain=prerouting connection-mark=wan4<br />\n    in-interface-list=pppoe-list new-routing-mark=ROUTE-WAN4 passthrough=no<br />\nadd action=mark-routing chain=output connection-mark=wan1 new-routing-mark=<br />\n    ROUTE-WAN1 out-interface=E1-WAN1 passthrough=no<br />\nadd action=mark-routing chain=output connection-mark=wan2 new-routing-mark=<br />\n    ROUTE-WAN2 out-interface=E2-WAN2 passthrough=no<br />\nadd action=mark-routing chain=output connection-mark=wan3 new-routing-mark=<br />\n    ROUTE-WAN3 out-interface=E3-WAN3 passthrough=no<br />\nadd action=mark-routing chain=output connection-mark=wan4 new-routing-mark=<br />\n    ROUTE-WAN4 out-interface=E4-WAN4 passthrough=no</p></blockquote>\n"
+          },
+          "date": "2023-12-08T03:21:39",
+          "id": 917,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-917",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/135"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/136",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Hello</p>\n<p>I currently do not have the spare capacity to write fresh config and test for ROSv7. However, I know other people have done it successfully, and would recommend you ask in my public group <a href=\"https://t.me/NetworkOpsCentral\" target=\"_blank\" rel=\"noopener nofollow ugc\">here</a> for help.</p>\n"
+          },
+          "date": "2023-04-26T17:31:50",
+          "id": 136,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-136",
+          "parent": 135,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=135"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/135",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/234cf5803bc9541826b074fada62e3f52fb87ddfe027dcf9e8204017dcf1d0e8?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/234cf5803bc9541826b074fada62e3f52fb87ddfe027dcf9e8204017dcf1d0e8?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/234cf5803bc9541826b074fada62e3f52fb87ddfe027dcf9e8204017dcf1d0e8?s=96&r=g"
+          },
+          "author_name": "VasVas",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Can you write same config for Ros 7?</p>\n<p>Thank you</p>\n"
+          },
+          "date": "2023-04-26T15:51:36",
+          "id": 135,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-135",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/47",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/8076e0ba6730f6c267ed272a3f173b220c39c5376f770c1ccf1701fbaef2ad2e?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/8076e0ba6730f6c267ed272a3f173b220c39c5376f770c1ccf1701fbaef2ad2e?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/8076e0ba6730f6c267ed272a3f173b220c39c5376f770c1ccf1701fbaef2ad2e?s=96&r=g"
+          },
+          "author_name": "Hasri Akbar Awal Rozaq",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>The configuration is stable for me. I have more than 1000 clients and no problems right now. Thanks a lot! But I have one question, if we have one mangle for split connection (example : fb, yt, instagram) where we can write? I mean which order. Thank you for answer</p>\n"
+          },
+          "date": "2023-03-29T08:56:10",
+          "id": 47,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-47",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/45"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/46",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Input means destination = local host itself i.e. router. It will not mark traffic destined towards the hosts i.e. forward chain. The whole point of prerouting is to be direction-agnostic. Not sure who suggested you to use input, that&#8217;s plain stupid. Learn the netfilter packet flow properly.</p>\n"
+          },
+          "date": "2023-03-13T09:58:38",
+          "id": 46,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-46",
+          "parent": 45,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=45"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/45",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/788b604841833dbf2a416686867931bcff3c8969a4cf4f5b7435cf7b0ee2e8a1?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/788b604841833dbf2a416686867931bcff3c8969a4cf4f5b7435cf7b0ee2e8a1?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/788b604841833dbf2a416686867931bcff3c8969a4cf4f5b7435cf7b0ee2e8a1?s=96&r=g"
+          },
+          "author_name": "Thiện",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>###Incoming connections through ISP1 must leave through ISP1###<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark in-interface=pppoe-out1 new-connection-mark=ISP1_conn passthrough=no<br />\nFor the above Rule, I see in some configurations that many people recommend chain=input<br />\nCan you tell me the difference in this case?</p>\n"
+          },
+          "date": "2023-03-13T08:26:16",
+          "id": 45,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-45",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/43"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/44",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>100% of traffic should failover. If it doesn&#8217;t then something is wrong. Re-do the configuration from the ground up.</p>\n"
+          },
+          "date": "2023-03-09T11:24:14",
+          "id": 44,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-44",
+          "parent": 43,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=43"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/43",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/6be1e0afc7b29f5ed3b894b7f29aa0e45f1b1efa4711fe6383a6d7ccbbbf5896?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/6be1e0afc7b29f5ed3b894b7f29aa0e45f1b1efa4711fe6383a6d7ccbbbf5896?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/6be1e0afc7b29f5ed3b894b7f29aa0e45f1b1efa4711fe6383a6d7ccbbbf5896?s=96&r=g"
+          },
+          "author_name": "Agung",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Hi Daryll,</p>\n<p>just seeing your website here and you are doing really good job..<br />\nhope you can keep inspire people.</p>\n<p>I have a question for your mangle configuration,<br />\nif you do it and let&#8217;s say your 1st ISP is down, is the traffic going 100% percent to the 2nd ISP?</p>\n<p>I am running the same PCC load balancing, holding on two ISP with 1Gbps and 500 Mbps Bandwidth coming in,</p>\n<p>PCC both address with 3/0 and 3/1 to 1st ISP and 3/2 to second ISP.</p>\n<p>based on my experience, whenever my 1st ISP down, the fail over is running and the traffic go to my 2nd ISP, but&#8230;.. it&#8217;s only like 33%, since I divide the 66% remaining to 1st ISP (based on PCC configuration I set)<br />\nand I have to disable the PCC configuration first to have the 100% traffic going to 2nd ISP,</p>\n<p>do you get my point? is there any light you can share with this issue<br />\nappreciate your concern and efforts on loving networking man.</p>\n"
+          },
+          "date": "2023-03-09T08:23:15",
+          "id": 43,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-43",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/41"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/42",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>I don&#8217;t understand your use case. But for routing, the packet mark is always required and the connection marking will be what determines which connections/packets gets marked.</p>\n<p>I haven&#8217;t used this type of setup in two years. I recommend you test and find out what works best.</p>\n"
+          },
+          "date": "2023-03-06T16:39:11",
+          "id": 42,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-42",
+          "parent": 41,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=41"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/41",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/6e740ddbaf6b0d7a24857cac92ff845d113163417f927e4fa4acdd9ee73de429?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/6e740ddbaf6b0d7a24857cac92ff845d113163417f927e4fa4acdd9ee73de429?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/6e740ddbaf6b0d7a24857cac92ff845d113163417f927e4fa4acdd9ee73de429?s=96&r=g"
+          },
+          "author_name": "Syntax",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Okay.. But if we have to identify them by protocols, do we still have to perform a mark connection again? Or we&#8217;ll directly use the mark packet and use the  previous connection mark (ex: ISP1, ISP2).</p>\n"
+          },
+          "date": "2023-03-06T16:35:48",
+          "id": 41,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-41",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/39"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/40",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Use simple queues for QoS of each egress interface.</p>\n"
+          },
+          "date": "2023-02-03T08:58:25",
+          "id": 40,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-40",
+          "parent": 39,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=39"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/39",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/6e740ddbaf6b0d7a24857cac92ff845d113163417f927e4fa4acdd9ee73de429?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/6e740ddbaf6b0d7a24857cac92ff845d113163417f927e4fa4acdd9ee73de429?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/6e740ddbaf6b0d7a24857cac92ff845d113163417f927e4fa4acdd9ee73de429?s=96&r=g"
+          },
+          "author_name": "Syntax",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Hi, how to QoS if we have implemented the Load Balancing rules already in the mangle?</p>\n"
+          },
+          "date": "2023-02-03T08:22:19",
+          "id": 39,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-39",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/37"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/38",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Fixed.</p>\n"
+          },
+          "date": "2022-11-28T21:12:32",
+          "id": 38,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-38",
+          "parent": 37,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=37"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/37",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/b9fa4bb4be2cd7766015bf7014eaf1423152c5760a9d34770867e8a9bb2b6a30?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/b9fa4bb4be2cd7766015bf7014eaf1423152c5760a9d34770867e8a9bb2b6a30?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/b9fa4bb4be2cd7766015bf7014eaf1423152c5760a9d34770867e8a9bb2b6a30?s=96&r=g"
+          },
+          "author_name": "Walker",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>First, thank you for taking the time to write this up!</p>\n<p>Your comment block inside the code says that &#8216;both-addresses&#8217; is needed to avoid breaking HTTPS, but you have fixed the typo by changing the property to &#8216;both-addresses-and-ports&#8217; for all 4 cases. Did you mean to change it to &#8216;both-addresses&#8217; instead?</p>\n"
+          },
+          "date": "2022-11-28T21:06:42",
+          "id": 37,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-37",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/36",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&r=g"
+          },
+          "author_name": "Ashish Wadekar",
+          "author_url": "http://gravatar.com/ashishwork",
+          "content": {
+            "rendered": "<p>Hi Daryll</p>\n<p>I was trying to apply defconf filter rules in Firewall &amp; I have observed 2 issues when I enable them:<br />\n1. Many packets are dropped in ! in LAN rule i.e. Rule # 5 specifically most of the traffic going to WAN 2<br />\n2. Connecting to a website take more time; about a couple of seconds more as compared to when all filter rules are off.</p>\n<p>Can you please help understand what is going on? Any security rules that you suggest to secure the device?</p>\n<p>Sharing config export : <a href=\"https://pastebin.com/Ttt46Ruh\" rel=\"nofollow ugc\">https://pastebin.com/Ttt46Ruh</a></p>\n<p>Thanks a ton man!</p>\n"
+          },
+          "date": "2022-03-05T11:43:13",
+          "id": 36,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-36",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/35",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&r=g"
+          },
+          "author_name": "Ashish Wadekar",
+          "author_url": "http://gravatar.com/ashishwork",
+          "content": {
+            "rendered": "<p>Got it Daryll. Thanks for the prompt response. Cheers.</p>\n"
+          },
+          "date": "2022-02-16T16:27:51",
+          "id": 35,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-35",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/33"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/34",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>There are many reasons for why it may not be working. I would suggest posting your issue and config dump on: forum.mikrotik.com</p>\n"
+          },
+          "date": "2022-02-16T15:51:31",
+          "id": 34,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-34",
+          "parent": 33,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=33"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/33",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&r=g"
+          },
+          "author_name": "Ashish Wadekar",
+          "author_url": "http://gravatar.com/ashishwork",
+          "content": {
+            "rendered": "<p>Hi Daryll</p>\n<p>This setup is working great since I had configured it last time.</p>\n<p>I now need to add OpenVPN Server to this setup so that I can connect clients from outside to this network.</p>\n<p>I have tried to setup OpenVPN server but client is unable to connect.</p>\n<p>Can you help with any specific points that I should look out for or missing in such a scenario?</p>\n<p>Thanks in advance.</p>\n<p>Cheers.</p>\n"
+          },
+          "date": "2022-02-16T15:49:50",
+          "id": 33,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-33",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/31"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/32",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>I don&#8217;t know, I never looked into it.</p>\n"
+          },
+          "date": "2022-02-14T15:46:18",
+          "id": 32,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-32",
+          "parent": 31,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=31"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/31",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/d38d27dda4d726ee16246ce45270dfcff688fc6ef313d2b9bedda269bffc6b71?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/d38d27dda4d726ee16246ce45270dfcff688fc6ef313d2b9bedda269bffc6b71?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/d38d27dda4d726ee16246ce45270dfcff688fc6ef313d2b9bedda269bffc6b71?s=96&r=g"
+          },
+          "author_name": "Sudanking",
+          "author_url": "http://gravatar.com/sudanking",
+          "content": {
+            "rendered": "<p>Thanks for your answer&#8230; but can you give me a hint how you do implement traffic prioritize with simple queues and using your load balance script? I mean, how to mangle what is already mangled!!?</p>\n"
+          },
+          "date": "2022-02-14T04:56:37",
+          "id": 31,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-31",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/30",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/c5aee83d2df05c2db15f6c0f516f373c343b8cf8ec767526d09fee5b0de5ed41?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/c5aee83d2df05c2db15f6c0f516f373c343b8cf8ec767526d09fee5b0de5ed41?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/c5aee83d2df05c2db15f6c0f516f373c343b8cf8ec767526d09fee5b0de5ed41?s=96&r=g"
+          },
+          "author_name": "Andreas",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Nifty, got it. Just trying to puzzle out something similar at home. Thanks!</p>\n"
+          },
+          "date": "2022-02-02T02:33:41",
+          "id": 30,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-30",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/28"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/29",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "https://www.daryllswer.com/",
+          "content": {
+            "rendered": "<p>Hi</p>\n<p>Thank you for pointing this out, it&#8217;s a typo. I&#8217;ve fixed it.</p>\n"
+          },
+          "date": "2022-02-02T02:18:43",
+          "id": 29,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-29",
+          "parent": 28,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=28"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/28",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/c5aee83d2df05c2db15f6c0f516f373c343b8cf8ec767526d09fee5b0de5ed41?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/c5aee83d2df05c2db15f6c0f516f373c343b8cf8ec767526d09fee5b0de5ed41?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/c5aee83d2df05c2db15f6c0f516f373c343b8cf8ec767526d09fee5b0de5ed41?s=96&r=g"
+          },
+          "author_name": "Andreas",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Many thanks for this from another newbie with this use case, cool!</p>\n<p>One thing I don&#8217;t understand: why is the classifier different for ISP1 for tcp?</p>\n<p>[ISP1_conn, tcp]: per-connection-classifier=both-addresses:2/0<br />\n[ISP2_conn, tcp]: per-connection-classifier=both-addresses-and-ports:2/1<br />\n[ISP1_conn, udp]: per-connection-classifier=both-addresses-and-ports:2/0<br />\n[ISP2_conn, udp]: per-connection-classifier=both-addresses-and-ports:2/1</p>\n"
+          },
+          "date": "2022-02-02T02:08:36",
+          "id": 28,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-28",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/26"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/27",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>I opted for simple queues as it gets the job done for me. You&#8217;d have to research implementing queue trees, with something like this: <a href=\"https://forum.mikrotik.com/viewtopic.php?f=23&#038;t=73214\" rel=\"nofollow ugc\">https://forum.mikrotik.com/viewtopic.php?f=23&#038;t=73214</a></p>\n"
+          },
+          "date": "2022-02-01T02:50:08",
+          "id": 27,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-27",
+          "parent": 26,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=26"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/26",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/d38d27dda4d726ee16246ce45270dfcff688fc6ef313d2b9bedda269bffc6b71?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/d38d27dda4d726ee16246ce45270dfcff688fc6ef313d2b9bedda269bffc6b71?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/d38d27dda4d726ee16246ce45270dfcff688fc6ef313d2b9bedda269bffc6b71?s=96&r=g"
+          },
+          "author_name": "Sudanking",
+          "author_url": "http://gravatar.com/sudanking",
+          "content": {
+            "rendered": "<p>Nice idea for load balance&#8230;<br />\nBut how can I prioritize traffic (like VoIP or ICMP&#8230;etc or limit YouTube traffic) with queue trees and still get benefit from your loadbalancing configurations?</p>\n"
+          },
+          "date": "2022-01-31T06:36:39",
+          "id": 26,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-26",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/24"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/25",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>I&#8217;ve been using this setup for years and never saw a problem with non-standard HTTP/HTTPs ports, as anyways the Nth rules mark the connection.</p>\n<p>The Nth here is not per-packet load balancing, it is simply preferred to traditional PCC as it is more randomised on a per-packet basis for connection marking and hence gives us better load distribution than just traditional PCC. Which can be proven by multi-threaded download/upload.</p>\n<p>If you want true native per-packet load balancing, you need your own ASN with a multi-homing IP Transit setup.</p>\n<p>You&#8217;re welcome to use any variation of the original setup, but for me, I&#8217;m using this config in all production cases and no reported cases have been reported for broken traffic or protocols. You can also use WireShark on the WAN interfaces and see that no traffic breaks/drops with my config.</p>\n"
+          },
+          "date": "2022-01-15T19:22:41",
+          "id": 25,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-25",
+          "parent": 24,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=24"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/24",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/83db52422bbde0ce58cdc9de23f1c4a7760ec328c9ca22e652c3c491210b05ad?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/83db52422bbde0ce58cdc9de23f1c4a7760ec328c9ca22e652c3c491210b05ad?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/83db52422bbde0ce58cdc9de23f1c4a7760ec328c9ca22e652c3c491210b05ad?s=96&r=g"
+          },
+          "author_name": "Carlos Andrés Escobar",
+          "author_url": "http://gravatar.com/cescobarfuentes",
+          "content": {
+            "rendered": "<p>The issue I see with this kind of traffic identification is that you never know in what port is HTTP/HTTPS going to be in every network, so you may break some sites that use a non-standard http/https ports (80,443), another issue I see is that nth isn&#8217;t really doing a proper per packet load sharing because packets are being marked by connections and the linux iptables mangle engine will respect that over any packet routing mark, if it really was doing a per-packet load sharing you will be experience lots of protocol breaks because they&#8217;re not expecting connections to come from different path or ip address, they will ask? you don&#8217;t have an stablished connection with me?, so drop the previous connection because will timeout and stablish a new one, and that is basically a retransmission.</p>\n"
+          },
+          "date": "2022-01-15T18:41:52",
+          "id": 24,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-24",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/23",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=96&r=g"
+          },
+          "author_name": "ชื่อ นามสกุล",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>guy after i disabled this 2 mangle rule</p>\n<p>add action=mark-connection chain=prerouting comment=&#8221;PCC TO HANDLE HTTP/HTTPS &#8221; connection-mark=no-mark disabled=no dst-address-list=!LAN dst-address-type=!local dst-port=80,443 in-interface=bridge-lan new-connection-mark=ncm-ais passthrough=yes per-connection-classifier=src-address:2/0 protocol=tcp</p>\n<p>add action=mark-connection chain=prerouting connection-mark=no-mark disabled=no dst-address-list=!LAN dst-address-type=!local dst-port=80,443 in-interface=bridge-lan new-connection-mark=ncm-cat passthrough=yes per-connection-classifier=src-address:2/1 protocol=tcp</p>\n<p>as above in example is<br />\n###For old school HTTP/HTTPS traffic###<br />\n###50% going to ISP1###</p>\n<p>its works without any problem guy i don&#8217;t understand this</p>\n"
+          },
+          "date": "2021-12-16T14:50:38",
+          "id": 23,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-23",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/22",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=96&r=g"
+          },
+          "author_name": "ชื่อ นามสกุล",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>Why are you using scripts when routes can failover based on reachability?<br />\nIts dynamic ip and i have to use script guy i have no problem with pppoe and static ip from wan router</p>\n<p>Where’s RFC6890 subnets in not_in_internet?<br />\n10.0.0.0/8 is this right guy?<br />\n/ip firewall address-list<br />\nadd address=10.0.0.0/8 list=LAN<br />\ni was name it as LAN guy</p>\n<p>here is myscript after i cut all /r/n make its easy to read guy thanks</p>\n<blockquote><p>\n# dec/16/2021 15:28:37 by RouterOS 6.47.10<br />\n# software id = ZS4S-B9IN<br />\n#<br />\n# model = RB4011iGS+<br />\n# serial number = F03A0F603BBD<br />\n/interface bridge<br />\nadd name=bridge-lan<br />\n/interface ethernet<br />\nset [ find default-name=ether1 ] name=ether1-ais<br />\nset [ find default-name=ether2 ] name=ether2-cat<br />\nset [ find default-name=ether8 ] name=ether8-nas<br />\nset [ find default-name=ether9 ] name=ether9-nas<br />\nset [ find default-name=ether10 ] name=ether10-office<br />\n/interface ethernet switch port<br />\nset 0 default-vlan-id=0<br />\nset 1 default-vlan-id=0<br />\nset 2 default-vlan-id=0<br />\nset 3 default-vlan-id=0<br />\nset 4 default-vlan-id=0<br />\nset 5 default-vlan-id=0<br />\nset 6 default-vlan-id=0<br />\nset 7 default-vlan-id=0<br />\nset 8 default-vlan-id=0<br />\nset 9 default-vlan-id=0<br />\nset 10 default-vlan-id=0<br />\nset 11 default-vlan-id=0<br />\n/interface wireless security-profiles<br />\nset [ find default=yes ] supplicant-identity=MikroTik<br />\n/ip pool<br />\nadd name=dhcp_pool0 ranges=10.10.2.200-10.10.2.250<br />\n/ip dhcp-server<br />\nadd address-pool=dhcp_pool0 disabled=no interface=bridge-lan name=dhcp1<br />\n/ppp profile<br />\nadd name=pppoe-profile-cat<br />\n    on-down=&#8221;:local removeRoute do={<br />\n    /ip route remove [find comment=$wan]<br />\n    }<br />\n    :local gw [/ip route print as-value where gateway=$&#8221;remote-address&#8221;];<br />\n    :if (($gw-&gt;0-&gt;&#8221;comment&#8221;) != &#8220;&#8221;) do={<br />\n    $removeRoute wan=($gw-&gt;0-&gt;&#8221;comment&#8221;)<br />\n    }&#8221;<br />\n    on-up=&#8221;:local createRoute do={<br />\n    log info message=&#8221;Add route $remoteAddress&#8221;<br />\n    /ip route add dst-address=$dstAddress gateway=$remoteAddress scope=10 target-scope=10  comment=($wan)<br />\n    /ip route add dst-address=0.0.0.0/0 gateway=$gateway scope=30 target-scope=10 distance=$distance check-gateway=ping routing-mark=nrm-cat comment=($wan)<br />\n    }<br />\n    :local wanArr {<br />\n    {<br />\n    &#8220;remoteAddress&#8221;=$&#8221;remote-address&#8221;;<br />\n    &#8220;dstAddress&#8221;=8.8.8.8/32;<br />\n    &#8220;gateway&#8221;=8.8.8.8;<br />\n    &#8220;distance&#8221;=2;<br />\n    &#8220;wan&#8221;=&#8221;pppoe-out-cat&#8221;<br />\n    };<br />\n    }<br />\n    :local intf1 [/interface get $interface];<br />\n    :foreach w in=$wanArr do={<br />\n    if (($w-&gt;&#8221;wan&#8221;) = ($intf1-&gt;&#8221;name&#8221;)) do={<br />\n     $createRoute remoteAddress=($w-&gt;&#8221;remoteAddress&#8221;) dstAddress=($w-&gt;&#8221;dstAddress&#8221;) gateway=($w-&gt;&#8221;gateway&#8221;) distance=($w-&gt;&#8221;distance&#8221;) wan=($w-&gt;&#8221;wan&#8221;)<br />\n    }<br />\n    }&#8221;<br />\n/interface pppoe-client<br />\nadd disabled=no interface=ether2-cat name=pppoe-out-cat password=71560 profile=pppoe-profile-cat user=sdno06722554@home<br />\n/interface bridge port<br />\nadd bridge=bridge-lan interface=ether8-nas<br />\nadd bridge=bridge-lan interface=ether9-nas<br />\nadd bridge=bridge-lan interface=ether10-office<br />\n/ip address<br />\nadd address=10.10.2.99/8 interface=bridge-lan network=10.0.0.0<br />\nadd address=192.168.1.2 interface=ether1-ais network=192.168.1.1<br />\n/ip cloud<br />\nset ddns-enabled=yes<br />\n/ip dhcp-server lease<br />\nadd address=10.10.2.31 client-id=1:c4:2c:3:7:eb:98 mac-address=C4:2C:03:07:EB:98 server=dhcp1<br />\nadd address=10.10.2.5 client-id=1:f4:4d:30:64:eb:75 mac-address= F4:4D:30:64:EB:75 server=dhcp1<br />\nadd address=10.10.2.10 client-id=1:1c:69:7a:68:e0:d7 mac-address=1C:69:7A:68:E0:D7 server=dhcp1<br />\nadd address=10.10.2.12 client-id=1:f4:4d:30:64:e4:c9 mac-address= F4:4D:30:64:E4:C9 server=dhcp1<br />\nadd address=10.10.2.14 client-id=1:f0:79:59:8d:97:73 mac-address=F0:79:59:8D:97:73 server=dhcp1<br />\nadd address=10.10.2.3 client-id=1:f4:4d:30:64:e7:f9 mac-address= F4:4D:30:64:E7:F9 server=dhcp1<br />\nadd address=10.10.2.16 client-id=1:1c:87:2c:63:2d:5b mac-address=1C:87:2C:63:2D:5B server=dhcp1<br />\nadd address=10.10.2.9 client-id=1:f4:4d:30:64:dd:3f mac-address= F4:4D:30:64:DD:3F server=dhcp1<br />\nadd address=10.10.2.6 client-id=1:f4:4d:30:64:e7:37 mac-address= F4:4D:30:64:E7:37 server=dhcp1<br />\nadd address=10.10.2.8 client-id=1:f4:4d:30:64:e6:e8 mac-address= F4:4D:30:64:E6:E8 server=dhcp1<br />\nadd address=10.10.2.7 client-id=1:f4:4d:30:64:ee:1c mac-address=F4:4D:30:64:EE:1C server=dhcp1<br />\nadd address=10.10.2.205 client-id=1:f4:4d:30:64:f0:b5 mac-address= F4:4D:30:64:F0:B5 server=dhcp1<br />\nadd address=10.10.2.11 client-id=1:f4:4d:30:64:e9:45 mac-address= F4:4D:30:64:E9:45 server=dhcp1<br />\nadd address=10.10.2.13 client-id=1:f4:4d:30:64:eb:69 mac-address=F4:4D:30:64:EB:69 server=dhcp1<br />\nadd address=10.10.2.2 client-id=1:f4:4d:30:64:d0:b mac-address=F4:4D:30:64:D0:0B server=dhcp1<br />\nadd address=10.10.2.50 client-id=1:1c:69:7a:6c:9c:34 mac-address=1C:69:7A:6C:9C:34 server=dhcp1<br />\nadd address=10.10.2.100 client-id=1:0:11:32:fe:e0:65 mac-address= 00:11:32:FE:E0:65 server=dhcp1<br />\n/ip dhcp-server network<br />\nadd address=10.0.0.0/8 dns-server=8.8.8.8 gateway=10.10.2.99<br />\n/ip dns<br />\nset servers=8.8.8.8,8.8.4.4,1.1.1.1<br />\n/ip firewall address-list<br />\nadd address=10.0.0.0/8 list=LAN<br />\n/ip firewall filter<br />\nadd action=accept chain=input disabled=yes dst-port=8291 protocol=tcp<br />\n/ip firewall mangle<br />\nadd action=mark-connection chain=prerouting comment=&#8221;INCOMING CONNECTIONS MARK AS ncm-ais,ncm-cat&#8221; connection-mark=no-mark  in-interface=ether1-ais new-connection-mark=ncm-ais passthrough=no<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark in-interface=pppoe-out-cat new-connection-mark=ncm-cat passthrough=no<br />\nadd action=mark-connection chain=prerouting comment=&#8221;PCC TO HANDLE HTTP/HTTPS &#8221; connection-mark=no-mark disabled=no dst-address-list=!LAN dst-address-type=!local dst-port=80,443 in-interface=bridge-lan new-connection-mark=ncm-ais passthrough=yes per-connection-classifier=src-address:2/0 protocol=tcp<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark disabled=no dst-address-list=!LAN dst-address-type=!local dst-port=80,443  in-interface=bridge-lan new-connection-mark=ncm-cat passthrough=yes per-connection-classifier=src-address:2/1 protocol=tcp<br />\nadd action=mark-connection chain=prerouting comment=&#8221;PCC TO HANDLE HTTP3 TRAFFIC AKA QUIC&#8221; connection-mark=no-mark dst-address-list=!LAN dst-address-type=!local dst-port=80,443 in-interface=bridge-lan new-connection-mark=ncm-ais passthrough=yes per-connection-classifier=src-address:2/0 protocol=udp src-port=&#8221;&#8221;<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!LAN dst-address-type=!local dst-port=80,443 in-interface=bridge-lan new-connection-mark=ncm-cat passthrough=yes  per-connection-classifier=src-address:2/1 protocol=udp src-port=&#8221;&#8221;<br />\nadd action=mark-connection chain=prerouting comment=&#8221;NTH FOR NON HTTP/HTTPS&#8221; connection-mark=no-mark dst-address-list=!LAN dst-address-type=!local in-interface=bridge-lan new-connection-mark=ncm-ais nth=2,1 passthrough=yes<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark  dst-address-list=!LAN dst-address-type=!local in-interface=bridge-lan new-connection-mark=ncm-cat nth=2,2 passthrough=yes<br />\nadd action=mark-routing chain=prerouting comment=&#8221;MARKED/SPLIT TRAFFIC&#8221; connection-mark=ncm-ais dst-address-type=&#8221;&#8221; in-interface=bridge-lan new-routing-mark=nrm-ais passthrough=no<br />\nadd action=mark-routing chain=prerouting connection-mark=ncm-cat dst-address-type=&#8221;&#8221; in-interface=bridge-lan new-routing-mark=nrm-cat passthrough=no<br />\nadd action=mark-routing chain=output comment=&#8221;INCOMING TRAFFIC FROM WAN&#8221; connection-mark=ncm-ais dst-address-type=&#8221;&#8221; new-routing-mark=nrm-ais out-interface=ether1-ais passthrough=no<br />\nadd action=mark-routing chain=output connection-mark=ncm-cat dst-address-type=&#8221;&#8221; new-routing-mark=nrm-cat out-interface=pppoe-out-cat passthrough=no<br />\n/ip firewall nat<br />\nadd action=masquerade chain=srcnat out-interface=ether1-ais<br />\nadd action=masquerade chain=srcnat out-interface=pppoe-out-cat<br />\nadd action=masquerade chain=srcnat src-address=10.0.0.0/8<br />\nadd action=dst-nat chain=dstnat dst-port=10390 protocol=tcp to-addresses=10.10.2.50 to-ports=5900<br />\nadd action=dst-nat chain=dstnat dst-port=10391 protocol=tcp to-addresses=10.10.2.31 to-ports=5900<br />\nadd action=dst-nat chain=dstnat disabled=yes dst-port=10392 protocol=tcp to-addresses=10.10.2.99 to-ports=8291<br />\n/ip firewall service-port<br />\nset ftp disabled=yes<br />\nset tftp disabled=yes<br />\nset irc disabled=yes<br />\nset h323 disabled=yes<br />\nset sip disabled=yes<br />\nset pptp disabled=yes<br />\nset udplite disabled=yes<br />\nset dccp disabled=yes<br />\nset sctp disabled=yes<br />\n/ip route<br />\nadd check-gateway=ping comment=pppoe-out-cat distance=2 gateway=8.8.8.8  routing-mark=nrm-cat<br />\nadd check-gateway=ping comment=&#8221;static ether1-ais&#8221; distance=1 gateway=1.1.1.1 routing-mark=nrm-ais<br />\nadd comment=&#8221;static ether1-ais&#8221; distance=1 dst-address=1.1.1.1/32 gateway=192.168.1.1 scope=10<br />\nadd comment=pppoe-out-cat distance=1 dst-address=8.8.8.8/32 gateway=100.70.192.1 scope=10<br />\nadd comment=pppoe-out-cat distance=1 dst-address=8.8.8.8/32 gateway=100.70.192.1 scope=10<br />\n/ip service<br />\nset telnet disabled=yes<br />\nset ftp disabled=yes<br />\nset www disabled=yes<br />\nset ssh disabled=yes<br />\nset api disabled=yes<br />\nset api-ssl disabled=yes<br />\n/ip upnp<br />\nset enabled=yes<br />\n/ip upnp interfaces<br />\nadd interface=ether1-ais type=external<br />\nadd interface=pppoe-out-cat type=external<br />\nadd interface=bridge-lan type=internal<br />\n/system clock<br />\nset time-zone-name=Asia/Bangkok<br />\n/system identity<br />\nset name=&#8221;JPAC GATEWAY&#8221;\n</p></blockquote>\n"
+          },
+          "date": "2021-12-16T14:43:49",
+          "id": 22,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-22",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/20"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/21",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Where&#8217;s RFC6890 subnets in not_in_internet? Why are you using scripts when routes can failover based on reachability? This is NOT null config!</p>\n<p>Reset the router and start from scratch.</p>\n"
+          },
+          "date": "2021-12-16T14:24:37",
+          "id": 21,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-21",
+          "parent": 20,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=20"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/20",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=96&r=g"
+          },
+          "author_name": "ชื่อ นามสกุล",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>thank you for reply guy<br />\nnot_in_internet is<br />\n/ip firewall address-list<br />\nadd address=10.0.0.0/8 list=LAN</p>\n<p>removeRoute is from script to auto connect ppp and add route guy here is full script<br />\ni add in ppp profile</p>\n<blockquote><p>\n############PPP UP#######################<br />\n:local createRoute do={<br />\n /log info message=&#8221;Add route $remoteAddress&#8221;<br />\n /ip route add dst-address=$dstAddress gateway=$remoteAddress scope=10 target-scope=10 comment=(&#8220;D&#8221;.$wan)<br />\n /ip route add dst-address=0.0.0.0/0 gateway=$gateway scope=30 target-scope=10 distance=$distance check-gateway=ping comment=(&#8220;D&#8221;.$wan)<br />\n}</p>\n<p>:local wanArr {<br />\n {<br />\n  &#8220;remoteAddress&#8221;=$&#8221;remote-address&#8221;;<br />\n  &#8220;dstAddress&#8221;=8.8.8.8/32;<br />\n  &#8220;gateway&#8221;=8.8.8.8;<br />\n  &#8220;distance&#8221;=1;<br />\n  &#8220;wan&#8221;=&#8221;pppoe-out-cat&#8221;<br />\n };<br />\n}</p>\n<p>:local intf1 [/interface get $interface];<br />\n:foreach w in=$wanArr do={<br />\n if (($w-&gt;&#8221;wan&#8221;) = ($intf1-&gt;&#8221;name&#8221;)) do={<br />\n  $createRoute remoteAddress=($w-&gt;&#8221;remoteAddress&#8221;) dstAddress=($w-&gt;&#8221;dstAddress&#8221;) gateway=($w-&gt;&#8221;gateway&#8221;) distance=($w-&gt;&#8221;distance&#8221;) wan=($w-&gt;&#8221;wan&#8221;)<br />\n }<br />\n}<br />\n############PPP UP#######################</p>\n<p>############PPP DOWN#######################<br />\n:local removeRoute do={<br />\n /ip route remove [find comment=$wan]<br />\n}</p>\n<p>:local gw [/ip route print as-value where gateway=$&#8221;remote-address&#8221;];<br />\n:if (($gw-&gt;0-&gt;&#8221;comment&#8221;) != &#8220;&#8221;) do={<br />\n $removeRoute wan=($gw-&gt;0-&gt;&#8221;comment&#8221;)<br />\n}<br />\n############PPP DOWN#######################</p></blockquote>\n<p>i have no idea about disable NAT Traversal<br />\ni was setup its from null config guy</p>\n"
+          },
+          "date": "2021-12-16T14:22:22",
+          "id": 20,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-20",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/18"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/19",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Your config is convoluted and wrong, why would you disable NAT Traversal helpers? What&#8217;s the point of VLAN 0&#8217;s? What&#8217;s with removeRoute? Where&#8217;s not_in_internet address list?</p>\n<p>I would reset it to null config and start again from scratch.</p>\n"
+          },
+          "date": "2021-12-16T14:14:50",
+          "id": 19,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-19",
+          "parent": 18,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=18"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/18",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=96&r=g"
+          },
+          "author_name": "ชื่อ นามสกุล",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>thank you very much for your fast reply here is myconfig</p>\n<blockquote><p>\n# dec/16/2021 15:28:37 by RouterOS 6.47.10<br />\n# software id = ZS4S-B9IN<br />\n#<br />\n# model = RB4011iGS+<br />\n# serial number = F03A0F603BBD<br />\n/interface bridge<br />\nadd name=bridge-lan<br />\n/interface ethernet<br />\nset [ find default-name=ether1 ] name=ether1-ais<br />\nset [ find default-name=ether2 ] name=ether2-cat<br />\nset [ find default-name=ether8 ] name=ether8-nas<br />\nset [ find default-name=ether9 ] name=ether9-nas<br />\nset [ find default-name=ether10 ] name=ether10-office<br />\n/interface ethernet switch port<br />\nset 0 default-vlan-id=0<br />\nset 1 default-vlan-id=0<br />\nset 2 default-vlan-id=0<br />\nset 3 default-vlan-id=0<br />\nset 4 default-vlan-id=0<br />\nset 5 default-vlan-id=0<br />\nset 6 default-vlan-id=0<br />\nset 7 default-vlan-id=0<br />\nset 8 default-vlan-id=0<br />\nset 9 default-vlan-id=0<br />\nset 10 default-vlan-id=0<br />\nset 11 default-vlan-id=0<br />\n/interface wireless security-profiles<br />\nset [ find default=yes ] supplicant-identity=MikroTik<br />\n/ip pool<br />\nadd name=dhcp_pool0 ranges=10.10.2.200-10.10.2.250<br />\n/ip dhcp-server<br />\nadd address-pool=dhcp_pool0 disabled=no interface=bridge-lan name=dhcp1<br />\n/ppp profile<br />\nadd name=pppoe-profile-cat on-down=&#8221;:local removeRoute do={ \\r\\<br />\n    \\n /ip route remove [find comment=\\$wan]\\r\\<br />\n    \\n}\\r\\<br />\n    \\n\\r\\<br />\n    \\n:local gw [/ip route print as-value where gateway=\\$\\&#8221;remote-address\\&#8221;];\\<br />\n    \\r\\<br />\n    \\n:if ((\\$gw-&gt;0-&gt;\\&#8221;comment\\&#8221;) != \\&#8221;\\&#8221;) do={\\r\\<br />\n    \\n \\$removeRoute wan=(\\$gw-&gt;0-&gt;\\&#8221;comment\\&#8221;)\\r\\<br />\n    \\n}&#8221; on-up=&#8221;:local createRoute do={\\r\\<br />\n    \\n /log info message=\\&#8221;Add route \\$remoteAddress\\&#8221;\\r\\<br />\n    \\n /ip route add dst-address=\\$dstAddress gateway=\\$remoteAddress scope=10\\<br />\n    \\_target-scope=10  comment=(\\$wan)\\r\\<br />\n    \\n /ip route add dst-address=0.0.0.0/0 gateway=\\$gateway scope=30 target-s\\<br />\n    cope=10 distance=\\$distance check-gateway=ping routing-mark=nrm-cat commen\\<br />\n    t=(\\$wan)\\r\\<br />\n    \\n}\\r\\<br />\n    \\n\\r\\<br />\n    \\n:local wanArr {\\r\\<br />\n    \\n {\\r\\<br />\n    \\n  \\&#8221;remoteAddress\\&#8221;=\\$\\&#8221;remote-address\\&#8221;;\\r\\<br />\n    \\n  \\&#8221;dstAddress\\&#8221;=8.8.8.8/32;\\r\\<br />\n    \\n  \\&#8221;gateway\\&#8221;=8.8.8.8;\\r\\<br />\n    \\n  \\&#8221;distance\\&#8221;=2;\\r\\<br />\n    \\n  \\&#8221;wan\\&#8221;=\\&#8221;pppoe-out-cat\\&#8221;\\r\\<br />\n    \\n };\\r\\<br />\n    \\n}\\r\\<br />\n    \\n\\r\\<br />\n    \\n:local intf1 [/interface get \\$interface];\\r\\<br />\n    \\n:foreach w in=\\$wanArr do={\\r\\<br />\n    \\n if ((\\$w-&gt;\\&#8221;wan\\&#8221;) = (\\$intf1-&gt;\\&#8221;name\\&#8221;)) do={\\r\\<br />\n    \\n  \\$createRoute remoteAddress=(\\$w-&gt;\\&#8221;remoteAddress\\&#8221;) dstAddress=(\\$w-&gt;\\<br />\n    \\&#8221;dstAddress\\&#8221;) gateway=(\\$w-&gt;\\&#8221;gateway\\&#8221;) distance=(\\$w-&gt;\\&#8221;distance\\&#8221;) wa\\<br />\n    n=(\\$w-&gt;\\&#8221;wan\\&#8221;)\\r\\<br />\n    \\n }\\r\\<br />\n    \\n}&#8221;<br />\n/interface pppoe-client<br />\nadd disabled=no interface=ether2-cat name=pppoe-out-cat password=71560 \\<br />\n    profile=pppoe-profile-cat user=sdno06722554@home<br />\n/interface bridge port<br />\nadd bridge=bridge-lan interface=ether8-nas<br />\nadd bridge=bridge-lan interface=ether9-nas<br />\nadd bridge=bridge-lan interface=ether10-office<br />\n/ip address<br />\nadd address=10.10.2.99/8 interface=bridge-lan network=10.0.0.0<br />\nadd address=192.168.1.2 interface=ether1-ais network=192.168.1.1<br />\n/ip cloud<br />\nset ddns-enabled=yes<br />\n/ip dhcp-server lease<br />\nadd address=10.10.2.31 client-id=1:c4:2c:3:7:eb:98 mac-address=\\<br />\n    C4:2C:03:07:EB:98 server=dhcp1<br />\nadd address=10.10.2.5 client-id=1:f4:4d:30:64:eb:75 mac-address=\\<br />\n    F4:4D:30:64:EB:75 server=dhcp1<br />\nadd address=10.10.2.10 client-id=1:1c:69:7a:68:e0:d7 mac-address=\\<br />\n    1C:69:7A:68:E0:D7 server=dhcp1<br />\nadd address=10.10.2.12 client-id=1:f4:4d:30:64:e4:c9 mac-address=\\<br />\n    F4:4D:30:64:E4:C9 server=dhcp1<br />\nadd address=10.10.2.14 client-id=1:f0:79:59:8d:97:73 mac-address=\\<br />\n    F0:79:59:8D:97:73 server=dhcp1<br />\nadd address=10.10.2.3 client-id=1:f4:4d:30:64:e7:f9 mac-address=\\<br />\n    F4:4D:30:64:E7:F9 server=dhcp1<br />\nadd address=10.10.2.16 client-id=1:1c:87:2c:63:2d:5b mac-address=\\<br />\n    1C:87:2C:63:2D:5B server=dhcp1<br />\nadd address=10.10.2.9 client-id=1:f4:4d:30:64:dd:3f mac-address=\\<br />\n    F4:4D:30:64:DD:3F server=dhcp1<br />\nadd address=10.10.2.6 client-id=1:f4:4d:30:64:e7:37 mac-address=\\<br />\n    F4:4D:30:64:E7:37 server=dhcp1<br />\nadd address=10.10.2.8 client-id=1:f4:4d:30:64:e6:e8 mac-address=\\<br />\n    F4:4D:30:64:E6:E8 server=dhcp1<br />\nadd address=10.10.2.7 client-id=1:f4:4d:30:64:ee:1c mac-address=\\<br />\n    F4:4D:30:64:EE:1C server=dhcp1<br />\nadd address=10.10.2.205 client-id=1:f4:4d:30:64:f0:b5 mac-address=\\<br />\n    F4:4D:30:64:F0:B5 server=dhcp1<br />\nadd address=10.10.2.11 client-id=1:f4:4d:30:64:e9:45 mac-address=\\<br />\n    F4:4D:30:64:E9:45 server=dhcp1<br />\nadd address=10.10.2.13 client-id=1:f4:4d:30:64:eb:69 mac-address=\\<br />\n    F4:4D:30:64:EB:69 server=dhcp1<br />\nadd address=10.10.2.2 client-id=1:f4:4d:30:64:d0:b mac-address=\\<br />\n    F4:4D:30:64:D0:0B server=dhcp1<br />\nadd address=10.10.2.50 client-id=1:1c:69:7a:6c:9c:34 mac-address=\\<br />\n    1C:69:7A:6C:9C:34 server=dhcp1<br />\nadd address=10.10.2.100 client-id=1:0:11:32:fe:e0:65 mac-address=\\<br />\n    00:11:32:FE:E0:65 server=dhcp1<br />\n/ip dhcp-server network<br />\nadd address=10.0.0.0/8 dns-server=8.8.8.8 gateway=10.10.2.99<br />\n/ip dns<br />\nset servers=8.8.8.8,8.8.4.4,1.1.1.1<br />\n/ip firewall address-list<br />\nadd address=10.0.0.0/8 list=LAN<br />\n/ip firewall filter<br />\nadd action=accept chain=input disabled=yes dst-port=8291 protocol=tcp<br />\n/ip firewall mangle<br />\nadd action=mark-connection chain=prerouting comment=\\<br />\n    &#8220;INCOMING CONNECTIONS MARK AS ncm-ais,ncm-cat&#8221; connection-mark=no-mark \\<br />\n    in-interface=ether1-ais new-connection-mark=ncm-ais passthrough=no<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark \\<br />\n    in-interface=pppoe-out-cat new-connection-mark=ncm-cat passthrough=no<br />\nadd action=mark-connection chain=prerouting comment=\\<br />\n    &#8220;PCC TO HANDLE HTTP/HTTPS &#8221; connection-mark=no-mark disabled=yes \\<br />\n    dst-address-list=!LAN dst-address-type=!local dst-port=80,443 \\<br />\n    in-interface=bridge-lan new-connection-mark=ncm-ais passthrough=yes \\<br />\n    per-connection-classifier=src-address:2/0 protocol=tcp<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark disabled=\\<br />\n    yes dst-address-list=!LAN dst-address-type=!local dst-port=80,443 \\<br />\n    in-interface=bridge-lan new-connection-mark=ncm-cat passthrough=yes \\<br />\n    per-connection-classifier=src-address:2/1 protocol=tcp<br />\nadd action=mark-connection chain=prerouting comment=\\<br />\n    &#8220;PCC TO HANDLE HTTP3 TRAFFIC AKA QUIC&#8221; connection-mark=no-mark \\<br />\n    dst-address-list=!LAN dst-address-type=!local dst-port=80,443 \\<br />\n    in-interface=bridge-lan new-connection-mark=ncm-ais passthrough=yes \\<br />\n    per-connection-classifier=src-address:2/0 protocol=udp src-port=&#8221;&#8221;<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark \\<br />\n    dst-address-list=!LAN dst-address-type=!local dst-port=80,443 \\<br />\n    in-interface=bridge-lan new-connection-mark=ncm-cat passthrough=yes \\<br />\n    per-connection-classifier=src-address:2/1 protocol=udp src-port=&#8221;&#8221;<br />\nadd action=mark-connection chain=prerouting comment=&#8221;NTH FOR NON HTTP/HTTPS&#8221; \\<br />\n    connection-mark=no-mark dst-address-list=!LAN dst-address-type=!local \\<br />\n    in-interface=bridge-lan new-connection-mark=ncm-ais nth=2,1 passthrough=\\<br />\n    yes<br />\nadd action=mark-connection chain=prerouting connection-mark=no-mark \\<br />\n    dst-address-list=!LAN dst-address-type=!local in-interface=bridge-lan \\<br />\n    new-connection-mark=ncm-cat nth=2,2 passthrough=yes<br />\nadd action=mark-routing chain=prerouting comment=&#8221;MARKED/SPLIT TRAFFIC&#8221; \\<br />\n    connection-mark=ncm-ais dst-address-type=&#8221;&#8221; in-interface=bridge-lan \\<br />\n    new-routing-mark=nrm-ais passthrough=no<br />\nadd action=mark-routing chain=prerouting connection-mark=ncm-cat \\<br />\n    dst-address-type=&#8221;&#8221; in-interface=bridge-lan new-routing-mark=nrm-cat \\<br />\n    passthrough=no<br />\nadd action=mark-routing chain=output comment=&#8221;INCOMING TRAFFIC FROM WAN&#8221; \\<br />\n    connection-mark=ncm-ais dst-address-type=&#8221;&#8221; new-routing-mark=nrm-ais \\<br />\n    out-interface=ether1-ais passthrough=no<br />\nadd action=mark-routing chain=output connection-mark=ncm-cat \\<br />\n    dst-address-type=&#8221;&#8221; new-routing-mark=nrm-cat out-interface=pppoe-out-cat \\<br />\n    passthrough=no<br />\n/ip firewall nat<br />\nadd action=masquerade chain=srcnat out-interface=ether1-ais<br />\nadd action=masquerade chain=srcnat out-interface=pppoe-out-cat<br />\nadd action=masquerade chain=srcnat src-address=10.0.0.0/8<br />\nadd action=dst-nat chain=dstnat dst-port=10390 protocol=tcp to-addresses=\\<br />\n    10.10.2.50 to-ports=5900<br />\nadd action=dst-nat chain=dstnat dst-port=10391 protocol=tcp to-addresses=\\<br />\n    10.10.2.31 to-ports=5900<br />\nadd action=dst-nat chain=dstnat disabled=yes dst-port=10392 protocol=tcp \\<br />\n    to-addresses=10.10.2.99 to-ports=8291<br />\n/ip firewall service-port<br />\nset ftp disabled=yes<br />\nset tftp disabled=yes<br />\nset irc disabled=yes<br />\nset h323 disabled=yes<br />\nset sip disabled=yes<br />\nset pptp disabled=yes<br />\nset udplite disabled=yes<br />\nset dccp disabled=yes<br />\nset sctp disabled=yes<br />\n/ip route<br />\nadd check-gateway=ping comment=pppoe-out-cat distance=2 gateway=8.8.8.8 \\<br />\n    routing-mark=nrm-cat<br />\nadd check-gateway=ping comment=&#8221;static ether1-ais&#8221; distance=1 gateway=1.1.1.1 \\<br />\n    routing-mark=nrm-ais<br />\nadd comment=&#8221;static ether1-ais&#8221; distance=1 dst-address=1.1.1.1/32 gateway=\\<br />\n    192.168.1.1 scope=10<br />\nadd comment=pppoe-out-cat distance=1 dst-address=8.8.8.8/32 gateway=\\<br />\n    100.70.192.1 scope=10<br />\nadd comment=pppoe-out-cat distance=1 dst-address=8.8.8.8/32 gateway=\\<br />\n    100.70.192.1 scope=10<br />\n/ip service<br />\nset telnet disabled=yes<br />\nset ftp disabled=yes<br />\nset www disabled=yes<br />\nset ssh disabled=yes<br />\nset api disabled=yes<br />\nset api-ssl disabled=yes<br />\n/ip upnp<br />\nset enabled=yes<br />\n/ip upnp interfaces<br />\nadd interface=ether1-ais type=external<br />\nadd interface=pppoe-out-cat type=external<br />\nadd interface=bridge-lan type=internal<br />\n/system clock<br />\nset time-zone-name=Asia/Bangkok<br />\n/system identity<br />\nset name=&#8221;JPAC GATEWAY&#8221;</p></blockquote>\n"
+          },
+          "date": "2021-12-16T14:05:22",
+          "id": 18,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-18",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/16"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/17",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Without seeing your configuration, I can&#8217;t tell what you did wrong.<br />\nDump the config with:<br />\n/export file myconfig</p>\n"
+          },
+          "date": "2021-12-16T13:50:09",
+          "id": 17,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-17",
+          "parent": 16,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=16"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/16",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/6f963d8f4f9c01c104f376d6ca1e862598ae024d840d76a8dc7dfbaaafd8ceb5?s=96&r=g"
+          },
+          "author_name": "ชื่อ นามสกุล",
+          "author_url": "",
+          "content": {
+            "rendered": "<p>guy I have zero knowledge of microtik. I set up configuration by your following instruction. And I still have a problem with some https: website(just some of them just like <a href=\"http://www.teenee.com\" rel=\"nofollow ugc\">http://www.teenee.com</a> Its long time loading) and some application such as LINE messenger(sometime can&#8217;t download picture and files).<br />\nplease advice if you have any solution that can fix this issue<br />\nand can I use per-connection-classifier=srt-addresses for all classifier<br />\nI read from some article and it mention that it can be solve https problem right?</p>\n"
+          },
+          "date": "2021-12-16T13:46:17",
+          "id": 16,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-16",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/14"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/15",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>Follow exactly what I did in the article. I clearly mentioned to not specify the MTU manually on the PPPoE interface.</p>\n<p>And even then your ONT needs to support jumbo frames.</p>\n"
+          },
+          "date": "2021-11-01T19:39:26",
+          "id": 15,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-15",
+          "parent": 14,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=14"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/14",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&r=g"
+          },
+          "author_name": "Ashish Wadekar",
+          "author_url": "http://gravatar.com/ashishwork",
+          "content": {
+            "rendered": "<p>Thanks for the info Daryll. Added the list. Not sure how to test. But looks good, IMHO.</p>\n<p>I have a strange observation with MTU. Whatever MTU I set 1480, 1500, 1520 it reverts to 1500 / 1480 for one ISP &amp; other ISP’s PPPOE authentication fails if MTU is changed from 1480. Is it supposed to work this way?</p>\n"
+          },
+          "date": "2021-11-01T19:37:53",
+          "id": 14,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-14",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/12"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/13",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>1. ALL the subnets from RFC6890 should be added to the list.</p>\n"
+          },
+          "date": "2021-11-01T19:00:46",
+          "id": 13,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-13",
+          "parent": 12,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=12"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/12",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&r=g"
+          },
+          "author_name": "Ashish Wadekar",
+          "author_url": "http://gravatar.com/ashishwork",
+          "content": {
+            "rendered": "<p>Thanks for the response Daryll</p>\n<p>I have to convey that for the first time I was able to understand rules &amp; their working apart from the not_in_internet list.</p>\n<p>1. I am not able to understand which addresses should be in that list. Does !not_in_internet means in_internet based on plain logic? I have configured DHCP range on 10.10.10.0/24 for LAN interface(Ether-5) &amp; rest are the IP’s assigned by ISP which are handled in PPPOE dialling interfaces.</p>\n<p>2. Will setup Hairpin NAT based on the guide</p>\n<p>3. I have opened up the WAN interface and found out that my ISP is redirecting port 80 to their Mikrotik switch login page 😐 Have dropped them an email for correction. Will update on this once it is resolved from ISP’s end. One good thing is, I will now try to set MTU as 1520 on 1 ISP for Jumbo Frame support(based on your both articles as I now know about ISP’s hardware)</p>\n"
+          },
+          "date": "2021-11-01T16:20:25",
+          "id": 12,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-12",
+          "parent": 0,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "in-reply-to": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/10"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/11",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 1,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/fa4469e1482fe3b86eacc2d2535c921931822199af987ac0e7003dca5d78a196?s=96&r=g"
+          },
+          "author_name": "Daryll Swer",
+          "author_url": "http://daryllswer.com/",
+          "content": {
+            "rendered": "<p>1. Without that list, LAN to LAN traffic would fail as the traffic would get routed to WAN instead.</p>\n<p>2. <a href=\"https://help.mikrotik.com/docs/display/ROS/NAT#NAT-HairpinNAT\" rel=\"nofollow ugc\">https://help.mikrotik.com/docs/display/ROS/NAT#NAT-HairpinNAT</a></p>\n<p>3. You can open it up for both WAN interfaces.</p>\n"
+          },
+          "date": "2021-11-01T11:18:14",
+          "id": 11,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-11",
+          "parent": 10,
+          "type": "comment"
+        },
+        {
+          "_links": {
+            "children": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?parent=10"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments"
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/comments/10",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "up": [
+              {
+                "embeddable": true,
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+                "post_type": "post"
+              }
+            ]
+          },
+          "author": 0,
+          "author_avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=24&r=g",
+            "48": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=48&r=g",
+            "96": "https://secure.gravatar.com/avatar/b4e01ab357dddfb7cbe37544cb124afab51cf722a35becb2e65670f282433bb6?s=96&r=g"
+          },
+          "author_name": "Ashish Wadekar",
+          "author_url": "http://gravatar.com/ashishwork",
+          "content": {
+            "rendered": "<p>Hi Daryll</p>\n<p>Thanks for sharing this. This is working great!</p>\n<p>I am a newbie to Mikrotik world &amp; not a networking guy.</p>\n<p>I had trouble with accessing my webserver from outside with an earlier config based on some guide. But your config solved this issue.</p>\n<p>Wanted your help on few things of you may please?</p>\n<p>1. I don’t have the not_in_internet_list setup &amp; have excluded it from Mangle rules. Still the config works. How can that be? Am I missing something here.(I can share my config with you if needed)</p>\n<p>2. What would be the hairpin NAT config so that LAN traffic can access webserver internally?</p>\n<p>3. I have set up dst-nat for port forwarding on one of the pppoe interface. Can I add the same for my other pppoe interface &amp; make it high availability for users accessing my services?</p>\n<p>Thanks in advance.</p>\n<p>Cheers,<br />\nAshish</p>\n"
+          },
+          "date": "2021-11-01T11:14:44",
+          "id": 10,
+          "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/#comment-10",
+          "parent": 0,
+          "type": "comment"
+        }
+      ]
+    ],
+    "wp:term": [
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/category"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/categories/3",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?categories=3"
+              }
+            ]
+          },
+          "id": 3,
+          "link": "https://www.daryllswer.com/category/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "category"
+        }
+      ],
+      [
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/12",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=12"
+              }
+            ]
+          },
+          "id": 12,
+          "link": "https://www.daryllswer.com/tag/bandwidth/",
+          "name": "Bandwidth",
+          "slug": "bandwidth",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/13",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=13"
+              }
+            ]
+          },
+          "id": 13,
+          "link": "https://www.daryllswer.com/tag/bandwidth-aggregation/",
+          "name": "Bandwidth Aggregation",
+          "slug": "bandwidth-aggregation",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/30",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=30"
+              }
+            ]
+          },
+          "id": 30,
+          "link": "https://www.daryllswer.com/tag/load-balancing/",
+          "name": "Load Balancing",
+          "slug": "load-balancing",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/31",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=31"
+              }
+            ]
+          },
+          "id": 31,
+          "link": "https://www.daryllswer.com/tag/mikrotik/",
+          "name": "MikroTik",
+          "slug": "mikrotik",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/32",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=32"
+              }
+            ]
+          },
+          "id": 32,
+          "link": "https://www.daryllswer.com/tag/multi-wan/",
+          "name": "Multi-WAN",
+          "slug": "multi-wan",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/34",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=34"
+              }
+            ]
+          },
+          "id": 34,
+          "link": "https://www.daryllswer.com/tag/networking/",
+          "name": "Networking",
+          "slug": "networking",
+          "taxonomy": "post_tag"
+        },
+        {
+          "_links": {
+            "about": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/taxonomies/post_tag"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags"
+              }
+            ],
+            "curies": [
+              {
+                "href": "https://api.w.org/{rel}",
+                "name": "wp",
+                "templated": true
+              }
+            ],
+            "self": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/tags/38",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "wp:post_type": [
+              {
+                "href": "https://www.daryllswer.com/wp-json/wp/v2/posts?tags=38"
+              }
+            ]
+          },
+          "id": 38,
+          "link": "https://www.daryllswer.com/tag/routeros/",
+          "name": "RouterOS",
+          "slug": "routeros",
+          "taxonomy": "post_tag"
+        }
+      ]
+    ]
+  },
+  "_links": {
+    "about": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/types/post"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts"
+      }
+    ],
+    "curies": [
+      {
+        "href": "https://api.w.org/{rel}",
+        "name": "wp",
+        "templated": true
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=115"
+      }
+    ],
+    "self": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+        "targetHints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      }
+    ],
+    "version-history": [
+      {
+        "count": 0,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115/revisions"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=115"
+      }
+    ],
+    "wp:term": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/categories?post=115",
+        "taxonomy": "category"
+      },
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/tags?post=115",
+        "taxonomy": "post_tag"
+      }
+    ]
+  },
+  "author": 1,
+  "categories": [
+    3
+  ],
+  "class_list": [
+    "post-115",
+    "post",
+    "type-post",
+    "status-publish",
+    "format-standard",
+    "hentry",
+    "category-networking",
+    "tag-bandwidth",
+    "tag-bandwidth-aggregation",
+    "tag-load-balancing",
+    "tag-mikrotik",
+    "tag-multi-wan",
+    "tag-networking",
+    "tag-routeros",
+    "ratio-natural",
+    "entry"
+  ],
+  "comment_status": "open",
+  "content": {
+    "protected": false,
+    "rendered": "<div class=\"wp-block-group is-vertical is-layout-flex wp-container-core-group-is-layout-4fc3f8e1 wp-block-group-is-layout-flex\">\n<h3 class=\"wp-block-heading\">Please note, it is very unlikely I will maintain this article piece. Even though the underlying concepts and principle are the same on RouterOS v7, if you are still facing some issues or confusion, I would recommend you watch this <a href=\"https://youtu.be/nlb7XAv57tw\" target=\"_blank\" rel=\"noreferrer noopener\">official video from MikroTik</a>.</h3>\n</div>\n\n\n\n<p class=\"wp-block-paragraph\">In <a href=\"https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/\" target=\"_blank\" rel=\"noreferrer noopener\">part one</a> of this series, I talked about the theoretical aspects, pros, and cons of a Multi-WAN setup. So now in part two, I will show how one can implement this setup in their network setup and this will be a lengthy article.</p>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-requirements\">Requirements</h2>\n\n\n\n<ul class=\"wp-block-list\">\n<li>A router that is running either enterprise or open-source network OS.\n<ul class=\"wp-block-list\">\n<li>Like RouterOS.</li>\n\n\n\n<li>Or like VyOS or pfSense for open-source.</li>\n</ul>\n</li>\n\n\n\n<li>More than one uplink to the same ISP or a different ISP.</li>\n\n\n\n<li>Minimum 1GbE on all your devices’ interfaces/ports.</li>\n\n\n\n<li>Bridging the ISP’s CPE device to ensure there is no double/triple/quadruple NAT situation.</li>\n</ul>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-implementation\">Implementation</h2>\n\n\n\n<ul class=\"wp-block-list\">\n<li>For this example, I will use RouterOS v6 stable.\n<ul class=\"wp-block-list\">\n<li>Hardware: RB450Gx4.</li>\n\n\n\n<li>Only IPv4 config will be covered due to the lack of proper IPv6 support in RouterOS v6 stable at the time of this article, but it would essentially be the same thing.</li>\n\n\n\n<li>I will be using PCC and Nth together in order to achieve bandwidth aggregation.</li>\n</ul>\n</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\">Whatever is shown here using RouterOS can be replicated more or less on any other network OS like VyOS etc. Go through the vendor’s documentation if you are not on RouterOS.</p>\n\n\n\n<h3 class=\"wp-block-heading\">Assumptions</h3>\n\n\n\n<ul class=\"wp-block-list\">\n<li>I will assume you have already taken care of the basic configuration such as securing the router, firewalling, NATting etc.\n<ul class=\"wp-block-list\">\n<li>Regarding <strong>NAT</strong>, use <strong><em>masquerade </em></strong>instead of src NAT, the reason being it <a href=\"https://help.mikrotik.com/docs/display/ROS/NAT#NAT-Masquerade\" target=\"_blank\" rel=\"noreferrer noopener\">clears</a><strong> </strong>the conn_track table if an interface goes down and hence we can achieve sub 0ms failover effect.</li>\n</ul>\n</li>\n\n\n\n<li>I will assume you have some basic idea of computer networking and basic ideas on the routing.</li>\n\n\n\n<li>I will assume you have read MikroTik’s documentation on PCC, Nth, Mangle etc.</li>\n\n\n\n<li>Only two uplinks (relevant to the example here).</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\">Let us begin</p>\n\n\n\n<div class=\"wp-block-group\"><div class=\"wp-block-group__inner-container is-layout-flow wp-block-group-is-layout-flow\">\n<p class=\"wp-block-paragraph\"><strong>Step 1</strong> we create two default routes for each uplink with distance attribute to enable the failover effect (meaning if one link goes down, the next immediate link will be used next)</p>\n\n\n\n<pre class=\"wp-block-code\"><code>/ip route\n###ISP1 has lower distance and hence is the primary link###\nadd check-gateway=ping comment=\"Default Route for ISP1\" distance=1 gateway=pppoe-out1\n\nadd check-gateway=ping comment=\"Default Route for ISP2\" distance=2 gateway=pppoe-out2\n\n###If you have more than two uplinks, you simply increase the distance as required like this:\nadd check-gateway=ping comment=\"Example Route for ISP3\" distance=3 gateway=pppoe-out3###</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>Step 2</strong>, we need to take care of <strong>MTU </strong>for the <strong>WAN </strong>interfaces, which is applicable to any networking device or OS in this world. If your uplink is using <strong>DHCP Client</strong>/<strong>Static IP address</strong>, then by default this is already taken care of with 1500 MTU.</p>\n\n\n\n<p class=\"wp-block-paragraph\"><s>However, with <strong>PPPoE</strong>, this is not the case and on RouterOS, there are what a user calls “ghost bytes”. I will discuss PPPoE MTU in a future article, but for now, all that you need to do is set the underlying Ethernet interface’s actual MTU  to 1520 meaning the interface to which your uplink is connected.</s> As of <a href=\"https://forum.mikrotik.com/viewtopic.php?p=924589#p923904\" target=\"_blank\" rel=\"noreferrer noopener\">RouterOS v7.2</a>, MikroTik <a href=\"https://web.archive.org/web/20220406203854/https://twitter.com/DaryllSwer/status/1511805609020366849\" target=\"_blank\" rel=\"noreferrer noopener\">has fixed the ghost bytes</a>, so please set it to <strong>1508</strong> instead (note I did not bother to update the diagrams below).</p>\n\n\n<div class=\"wp-block-image\">\n<figure class=\"aligncenter size-full\"><a href=\"https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png\"><img loading=\"lazy\" decoding=\"async\" width=\"1166\" height=\"232\" src=\"https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png\" alt=\"\" class=\"wp-image-843\" srcset=\"https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png 1166w, https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces-768x153.png 768w\" sizes=\"auto, (max-width: 1166px) 100vw, 1166px\"></a><figcaption class=\"wp-element-caption\">Figure-1 (In this case, ether1 and ether2 are the underlying ethernet interfaces)</figcaption></figure>\n</div>\n\n\n<p class=\"wp-block-paragraph\"><strong>Step 3</strong>, <strong>leave</strong> MTU, MRU, MRRU <strong>blank </strong>to enable auto-negotiation, RouterOS will <strong>automatically </strong>find the correct MTU value set by your ISP. Along with MRU.</p>\n\n\n<div class=\"wp-block-image\">\n<figure class=\"aligncenter size-full\"><a href=\"https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2.png\"><img loading=\"lazy\" decoding=\"async\" width=\"1092\" height=\"520\" src=\"https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2.png\" alt=\"\" class=\"wp-image-844\" srcset=\"https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2.png 1092w, https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-768x366.png 768w\" sizes=\"auto, (max-width: 1092px) 100vw, 1092px\"></a><figcaption class=\"wp-element-caption\">Figure-2 (PPPoE Client MTU Config)</figcaption></figure>\n</div>\n\n\n<p class=\"wp-block-paragraph\"><strong>Step 4</strong>, now we get started with the multi-WAN rules that will enable load-balancing and bandwidth aggregation without breaking HTTP/HTTPS connections</p>\n\n\n\n<pre class=\"wp-block-code\"><code>###Set Passthrough=no to reduce CPU usage for rules that do not need to be re-validated once they've been processed###\n###connection-mark=no-mark to prevent re-marking of already marked connections and hence waste CPU cycles###\n\n/ip firewall mangle\n###Incoming connections through ISP1 must leave through ISP1###\nadd action=mark-connection chain=prerouting connection-mark=no-mark in-interface=pppoe-out1 new-connection-mark=ISP1_conn passthrough=no\n\n###Incoming connections through ISP2 must leave through ISP2###\nadd action=mark-connection chain=prerouting connection-mark=no-mark in-interface=pppoe-out2 new-connection-mark=ISP2_conn passthrough=no\n\n###I am assuming a 50/50 split ratio between the two ISPs#\n\n###We are using dst-address-list=!not_in_internet &amp;&amp; dst-address-type=!local to prevent marking LAN-to-LAN traffic###\n\n###We can use PCC to handle HTTP/HTTPS traffic with \"both-addresses\" attribute to reduce chances of connections being marked more \"randomly\" which would break the connections as then connections would go through ISP1 and ISP2 more \"randomly\" and break. However in this case, I used \"both-addresses-and-ports\" based on my personal experience of traffic working just fine###\n\n###For old school HTTP/HTTPS traffic###\n###50% going to ISP1###\nadd action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP1_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/0 protocol=tcp\n###50% going to ISP2###\nadd action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP2_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/1 protocol=tcp\n\n###For new school HTTP3 traffic aka QUIC###\n###50% going to ISP1###\nadd action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP1_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/0 protocol=udp\n###50% going to ISP2###\nadd action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP2_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/1 protocol=udp\n\n###If you have a third uplink, then the split ratio would be 3/0, 3/1, 3/2###\n\n###Now we will use Nth for non HTTP/HTTPs traffic in order to acheieve bandwidth aggregation###\n\n###50% going to ISP1###\nadd action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local in-interface-list=LAN new-connection-mark=ISP1_conn nth=2,1 passthrough=yes\n###50% going to ISP2###\nadd action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local in-interface-list=LAN new-connection-mark=ISP2_conn nth=2,2 passthrough=yes\n\n###Now we will send the marked connections to their appropriate routing table###\n\n###For our marked/split traffic###\nadd action=mark-routing chain=prerouting connection-mark=ISP1_conn in-interface-list=LAN new-routing-mark=to_ISP1 passthrough=no\nadd action=mark-routing chain=prerouting connection-mark=ISP2_conn in-interface-list=LAN new-routing-mark=to_ISP2 passthrough=no\n\n###For the incoming traffic from WAN###\nadd action=mark-routing chain=output connection-mark=ISP1_conn new-routing-mark=to_ISP1 out-interface=pppoe-out1 passthrough=no\nadd action=mark-routing chain=output connection-mark=ISP2_conn new-routing-mark=to_ISP2 out-interface=pppoe-out2 passthrough=no\n\n###Now Finally we add the required routing tables###\n/ip route\nadd check-gateway=ping comment=\"Load Balancing Route to ISP 1\" distance=1 gateway=pppoe-out1 routing-mark=to_ISP1\nadd check-gateway=ping comment=\"Load Balancing Route to ISP 2\" distance=1 gateway=pppoe-out2 routing-mark=to_ISP2</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">That’s it, you now have aggregated bandwidth capability, load balancing capability and HTTP/HTTPS stability using RouterOS.</p>\n\n\n\n<p class=\"wp-block-paragraph\">For P2P networking (assuming all the uplinks have a public IP), you’d need to use a script like <a href=\"https://forum.mikrotik.com/viewtopic.php?f=9&amp;t=167773#p823917\" target=\"_blank\" rel=\"noreferrer noopener\">this</a> for UPnP to work correctly (enable it on only one WAN interface and let the script handle the rest).</p>\n</div></div>\n\n\n\n<h2 class=\"wp-block-heading\" id=\"h-bonus-material\">Bonus Material</h2>\n\n\n\n<ul class=\"wp-block-list\">\n<li>Use <a href=\"https://tools.ietf.org/html/rfc6890\" target=\"_blank\" rel=\"noreferrer noopener\">RFC 6890</a> to build the <strong><em>not_in_internet </em></strong>address list.</li>\n\n\n\n<li>RouterOS will automatically use the main routing table (default routes) should any uplink go down, so the “marked connections” will automatically be routed through whichever uplink is available even though for instance they are marked for ISP2, and ISP2 is down.</li>\n</ul>\n\n\n\n<h3 class=\"wp-block-heading\" id=\"h-side-note\">Side Note:</h3>\n\n\n\n<p class=\"wp-block-paragraph\" style=\"font-size:14px\">In <a href=\"https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/\" target=\"_blank\" rel=\"noreferrer noopener\">part one</a>, you may have noticed the <a href=\"https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png\" target=\"_blank\" rel=\"noreferrer noopener\">upload speed</a> is lower than what I claimed, and below is the explanation for that.</p>\n\n\n\n<ul class=\"wp-block-list\">\n<li>ISP1’s MTU = 1460, MRU = 1500</li>\n\n\n\n<li>ISP2’s MTU = 1500, MRU = 1500</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\" style=\"font-size:14px\">The upload bandwidth never reached 300Mbps due to ISP1’s MTU of 1460 which resulted in packet fragmentation and hence affected throughput performance and was able to reach only an average of 170Mbps for upload. ISP2’s MTU is a straight 1500 and was able to reach its advertised speed, which I verified by looking at the link rate on the router itself. Since MRU for both links were 1500, download bandwidth was able to reach its advertised speed on both links.</p>\n\n\n\n<p class=\"wp-block-paragraph\" style=\"font-size:14px\">This is why MTU should be taken care of to prevent issues.</p>\n"
+  },
+  "date": "2021-03-29T20:34:19",
+  "date_gmt": "2021-03-29T15:04:19",
+  "excerpt": {
+    "protected": false,
+    "rendered": "<p>An article on deploying Multi-WAN using RouterOS.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/\">Continue reading<span class=\"screen-reader-text\">Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]</span></a></div>\n"
+  },
+  "featured_media": 0,
+  "format": "standard",
+  "guid": {
+    "rendered": "http://daryllswer.com/?p=115"
+  },
+  "id": 115,
+  "jetpack-related-posts": [
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "8 June 2021",
+      "excerpt": "A best practices guide for engineers looking to improve network performance, security, and consistency using MikroTik for edge routers and BNG.",
+      "format": false,
+      "id": 269,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Edge Router &#038; BNG Optimisation Guide for ISPs",
+      "url": "https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/",
+      "url_meta": {
+        "origin": 115,
+        "position": 0
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "28 March 2021",
+      "excerpt": "An article on Multi-WAN setups using consumer-grade ISPs.",
+      "format": false,
+      "id": 66,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Multi-WAN setups with retail ISPs (Part 1 &#8211; Theory)",
+      "url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/",
+      "url_meta": {
+        "origin": 115,
+        "position": 1
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "25 March 2021",
+      "excerpt": "An article on the limitations of CGNAT and what can be done to work around them.",
+      "format": false,
+      "id": 29,
+      "img": {
+        "alt_text": "",
+        "height": 0,
+        "src": "",
+        "width": 0
+      },
+      "rel": "",
+      "title": "Shortcomings of CGNAT and Potential Workarounds",
+      "url": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
+      "url_meta": {
+        "origin": 115,
+        "position": 2
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "28 August 2023",
+      "excerpt": "Finding inconsistencies in vendor implementations of IPv6 subnet-router anycast addressing.",
+      "format": false,
+      "id": 2739,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Behavioural differences of IPv6 subnet-router anycast address implementations",
+      "url": "https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/",
+      "url_meta": {
+        "origin": 115,
+        "position": 3
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/isp-networking/",
+        "text": "ISP"
+      },
+      "classes": [],
+      "context": "In &quot;ISP&quot;",
+      "date": "16 December 2022",
+      "excerpt": "Explore an interesting observation on the Neighbour Discovery Protocol (NDP) in IPv6, in regard to Neighbour Solicitation and Advertisements.",
+      "format": false,
+      "id": 1674,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2022/12/image.png?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Interesting IPv6 observation on NDP (Neighbour Discovery Protocol)",
+      "url": "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/",
+      "url_meta": {
+        "origin": 115,
+        "position": 4
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/dc-enterprise/",
+        "text": "DC/Enterprise"
+      },
+      "classes": [],
+      "context": "In &quot;DC/Enterprise&quot;",
+      "date": "28 March 2023",
+      "excerpt": "A small article detailing an observation on BGP Zombies in Juniper platform.",
+      "format": false,
+      "id": 2053,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp?resize=1050%2C600&ssl=1 3x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Navigating a BGP Zombie Outbreak on Juniper Routers",
+      "url": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/",
+      "url_meta": {
+        "origin": 115,
+        "position": 5
+      }
+    }
+  ],
+  "jetpack_featured_media_url": "",
+  "jetpack_sharing_enabled": true,
+  "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/",
+  "meta": {
+    "_jetpack_dont_email_post_to_subs": false,
+    "_jetpack_feature_clip_id": 0,
+    "_jetpack_memberships_contains_paid_content": false,
+    "_jetpack_memberships_contains_paywalled_content": false,
+    "_jetpack_newsletter_access": "",
+    "_jetpack_newsletter_tier_id": 0,
+    "footnotes": "",
+    "jetpack_post_was_ever_published": false
+  },
+  "modified": "2025-05-21T01:47:29",
+  "modified_gmt": "2025-05-20T20:17:29",
+  "ping_status": "open",
+  "slug": "multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros",
+  "status": "publish",
+  "sticky": false,
+  "tags": [
+    12,
+    13,
+    30,
+    31,
+    32,
+    34,
+    38
+  ],
+  "template": "",
+  "title": {
+    "rendered": "Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]"
+  },
+  "type": "post"
+}
