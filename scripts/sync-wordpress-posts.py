@@ -46,6 +46,9 @@ OPERATIONAL_TEXT_MARKERS = (
 DONATION_URL_MARKERS = (
     "/donation/",
 )
+ARCHIVE_LINK_REWRITES = {
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml": "../../../data/sheets/as141253-ipv6-architecture-example/README.md",
+}
 BLOCK_TAGS = {
     "address",
     "article",
@@ -501,6 +504,34 @@ def collect_inline_images(content_html: str, base_url: str) -> list[dict]:
     return images
 
 
+def is_media_file_url(url: str) -> bool:
+    path = urllib.parse.urlsplit(url).path.lower()
+    return bool(re.search(r"\.(?:png|jpe?g|gif|webp|svg|pdf|ods|xlsx?|csv)$", path))
+
+
+def collect_linked_media(content_html: str, base_url: str) -> list[dict]:
+    try:
+        root = lxml.html.fragment_fromstring(content_html, create_parent="div")
+    except Exception:
+        return []
+    media: list[dict] = []
+    for anchor in root.xpath(".//a[@href]"):
+        href = urllib.parse.urljoin(base_url, anchor.get("href") or "")
+        parsed = urllib.parse.urlsplit(href)
+        if parsed.netloc != urllib.parse.urlsplit(SITE).netloc:
+            continue
+        if "/wp-content/uploads/" not in parsed.path:
+            continue
+        if not is_media_file_url(href):
+            continue
+        media.append({
+            "source_url": href,
+            "alt": text_of(anchor) or None,
+            "caption": None,
+        })
+    return media
+
+
 def extract_reference_links(content_html: str, base_url: str) -> dict[str, str]:
     """Map numbered in-text reference markers to the actual reference URLs."""
     try:
@@ -546,6 +577,22 @@ def is_same_post_reference_anchor(href: str | None, base_url: str) -> bool:
     )
 
 
+def rewritten_archive_href(href: str, base_url: str) -> str:
+    joined = urllib.parse.urljoin(base_url, href)
+    for source_url, archive_path in ARCHIVE_LINK_REWRITES.items():
+        if joined.rstrip("/") == source_url.rstrip("/"):
+            return archive_path
+    return urllib.parse.urljoin(base_url, href)
+
+
+def media_lookup_key(url: str | None) -> str:
+    if not url:
+        return ""
+    parsed = urllib.parse.urlsplit(url)
+    name = Path(urllib.parse.unquote(parsed.path)).name.lower()
+    return re.sub(r"-\d+x\d+(?=\.[a-z0-9]+$)", "", name)
+
+
 def text_of(el) -> str:
     return " ".join(el.text_content().split())
 
@@ -575,6 +622,11 @@ class MarkdownConverter:
         reference_links: dict[str, str] | None = None,
     ):
         self.asset_map = asset_map
+        self.asset_key_map = {
+            media_lookup_key(source_url): local_path
+            for source_url, local_path in asset_map.items()
+            if media_lookup_key(source_url)
+        }
         self.skip_first_image_url = skip_first_image_url
         self.reference_links = reference_links or {}
         self.first_image_seen = False
@@ -611,16 +663,30 @@ class MarkdownConverter:
         if tag == "code":
             return "`" + (el.text_content() or "").strip() + "`"
         if tag == "pre":
+            classes = set((el.get("class") or "").split())
+            if "wp-block-verse" in classes:
+                verse = self.children(el, base_url).strip()
+                if not verse:
+                    return ""
+                return "\n\n" + "\n".join("> " + line if line else ">" for line in verse.splitlines()) + "\n\n"
             code = el.text_content().rstrip()
             return "\n\n```\n" + code + "\n```\n\n"
         if tag == "a":
             href = el.get("href")
-            label = self.children(el, base_url).strip() or href or ""
+            child_label = self.children(el, base_url).strip()
             if href:
                 if is_same_post_reference_anchor(href, base_url):
+                    label = child_label or href
                     return f"[{label}]({self.reference_links.get(label, '#references')})"
-                return f"[{label}]({urllib.parse.urljoin(base_url, href)})"
-            return label
+                joined = urllib.parse.urljoin(base_url, href)
+                local_asset = self.asset_map.get(joined) or self.asset_key_map.get(media_lookup_key(joined))
+                if local_asset:
+                    if not child_label:
+                        return ""
+                    return f"[{child_label}]({local_asset})"
+                label = child_label or href
+                return f"[{label}]({rewritten_archive_href(href, base_url)})"
+            return child_label
         if tag == "img":
             src = urllib.parse.urljoin(base_url, el.get("src") or "")
             if not self.first_image_seen:
@@ -647,11 +713,15 @@ class MarkdownConverter:
             return "- " + self.children(el, base_url).strip() + "\n"
         if tag == "blockquote":
             body = self.children(el, base_url).strip()
-            return "\n\n" + "\n".join("> " + line for line in body.splitlines()) + "\n\n"
+            return "\n\n" + "\n".join("> " + line if line else ">" for line in body.splitlines()) + "\n\n"
         if tag == "table":
             return table_to_markdown(el)
         if tag in {"iframe", "video", "audio", "embed"}:
-            return "\n\n" + lxml.html.tostring(el, encoding="unicode").strip() + "\n\n"
+            src = el.get("src")
+            title = (el.get("title") or "Embedded media").strip()
+            if src:
+                return f"\n\n> Embedded media: [{title}]({urllib.parse.urljoin(base_url, src)})\n\n"
+            return ""
         return self.children(el, base_url)
 
 
@@ -725,6 +795,17 @@ def sync_post(post: dict, generated_at: str) -> dict:
         if src in asset_map:
             continue
         asset = download_asset(src, inline_dir, "inline", alt=item.get("alt"), caption=item.get("caption"))
+        if not asset:
+            continue
+        assets.append(asset)
+        if asset.get("local_path"):
+            asset_map[src] = os.path.relpath(ROOT / asset["local_path"], bundle).replace(os.sep, "/")
+
+    for item in collect_linked_media(rendered_article, post["link"]):
+        src = item["source_url"]
+        if src in asset_map:
+            continue
+        asset = download_asset(src, inline_dir, "linked-media", alt=item.get("alt"), caption=item.get("caption"))
         if not asset:
             continue
         assets.append(asset)

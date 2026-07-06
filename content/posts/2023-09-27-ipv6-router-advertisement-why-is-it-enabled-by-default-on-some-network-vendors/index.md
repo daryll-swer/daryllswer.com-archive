@@ -41,7 +41,7 @@ Therefore, with all the potential performance and security risks that come with 
 
 I did a quick packet capture on my port that is connected to [ExtremeIX Bangalore](https://bgp.tools/ixp/Extreme+IX+Bangalore), and as expected I found some network operators who failed to correctly configure IPv6 RA on their equipment. Here there are two members, one is using Cisco equipment and the other is using MikroTik equipment, which we derived from the MAC addresses.
 
-[![](assets/inline/image.png)](https://www.daryllswer.com/wp-content/uploads/2023/09/image.png)
+[![](assets/inline/image.png)](assets/inline/image.png)
 
 _Figure-1 IPv6 RAs on ExtremeIX Bangalore_
 
@@ -103,13 +103,13 @@ This [article](https://blog.apnic.net/2021/08/30/lets-all-suppress-router-advert
 
 > Two years ago, at JANOG 44, I presented on the following IPv6 setting that I often see incorrectly used:  
 > > *ipv6 nd ra suppress*
-> 
-> 
-> 
-> 
-> 
-> 
-> 
+>
+>
+>
+>
+>
+>
+>
 > Unfortunately, not much has changed since my presentation, so I’d like to discuss this with the wider network operator community to improve awareness of how and why this needs to be fixed.
 
 In the world of aviation, when a specific aeroplane hardware/software design or implementation is known to be a potential cause or factor for disaster, the responsible manufacturers and engineers will work to improve the design and implementation to minimise possible input errors from the human operator (pilot and co) and therefore potentially be life-saving in practice. The same kind of approach is found in automobile engineering, with a very famous example—The seatbelt.

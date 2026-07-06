@@ -129,9 +129,61 @@
       "sha256": "54254004a27f2ebc94c17928bcab6cf9e996633d8de0a0221f59bc23e9dbf134",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear-7680x2449.png",
       "width": 7680
+    },
+    {
+      "alt": null,
+      "bytes": 3872755,
+      "caption": null,
+      "detection_method": null,
+      "height": 12480,
+      "local_path": "content/posts/2024-11-12-out-of-band-network-design-for-service-provider-networks/assets/inline/Figure-6_OOB_for_ISP_Layer_1.png",
+      "mime_type": "image/png",
+      "role": "linked-media",
+      "sha256": "ec9e820ba457ca828401dd7dbd1d750096a513ca6b401a0b4f4a9ea65d92f0b2",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-6_OOB_for_ISP_Layer_1.png",
+      "width": 8880
+    },
+    {
+      "alt": null,
+      "bytes": 4009698,
+      "caption": null,
+      "detection_method": null,
+      "height": 12660,
+      "local_path": "content/posts/2024-11-12-out-of-band-network-design-for-service-provider-networks/assets/inline/Figure-7_OOB_for_ISP_Layer_2-3.png",
+      "mime_type": "image/png",
+      "role": "linked-media",
+      "sha256": "3bb366808ae979b1721ae91182b7336e555d059b4c366c283b4d2cc6d80260a4",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-7_OOB_for_ISP_Layer_2-3.png",
+      "width": 9000
+    },
+    {
+      "alt": null,
+      "bytes": 690179,
+      "caption": null,
+      "detection_method": null,
+      "height": 2520,
+      "local_path": "content/posts/2024-11-12-out-of-band-network-design-for-service-provider-networks/assets/inline/Figure-8_Inter-Site_OOB_Transport.png",
+      "mime_type": "image/png",
+      "role": "linked-media",
+      "sha256": "0dff99f91c02a7d166df994eff69d3785f17e2e187f4705727f868a589666dda",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-8_Inter-Site_OOB_Transport.png",
+      "width": 9480
+    },
+    {
+      "alt": null,
+      "bytes": 789613,
+      "caption": null,
+      "detection_method": null,
+      "height": 2640,
+      "local_path": "content/posts/2024-11-12-out-of-band-network-design-for-service-provider-networks/assets/inline/Figure-9_OOB_Access_for_Transport_Gear.png",
+      "mime_type": "image/png",
+      "role": "linked-media",
+      "sha256": "7e831badd8ba6489280ff2fe105df266b4c0b4db7d54d5c68f42d8cb511caa4a",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear.png",
+      "width": 8280
     }
   ],
-  "generated_at": "2026-07-06T09:46:49+00:00",
+  "generated_at": "2026-07-06T12:02:51+00:00",
   "post_id": 2931,
   "post_slug": "out-of-band-network-design-for-service-provider-networks"
 }

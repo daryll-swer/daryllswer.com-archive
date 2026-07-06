@@ -25,8 +25,27 @@ flowchart LR
   SheetExport --> Sheets["data/sheets/..."]
   Posts --> Manifest["archive-manifest.json"]
   Sheets --> Manifest
+  Posts --> Site["render-site.py"]
+  Sheets --> Site
+  Manifest --> Site
+  Site --> Pages["docs/ GitHub Pages site"]
   Manifest --> Validate["validate-mirror.py"]
+  Pages --> Validate
 ```
+
+## Rendered Site
+
+- `content/posts/...` and `data/sheets/...` remain the archive source of truth.
+- `scripts/render-site.py` generates the public HTML site into `docs/`, which
+  can be published by GitHub Pages from the `main` branch `/docs` folder.
+- `docs/index.html` is the public article index with title, excerpt, taxonomy,
+  date, and featured image for each mirrored post.
+- `docs/posts/<slug>/index.html` is the human-readable article page generated
+  from the preserved WordPress-rendered article HTML, with localised images,
+  internal archive links, responsive figure styling, and embed fallback links.
+- `docs/sheets/as141253-ipv6-architecture-example/` is the generated
+  human-readable landing page for the mirrored ODS, CSV, CSVW, and HTML sheet
+  artefacts.
 
 ## Invariants
 
@@ -38,4 +57,11 @@ flowchart LR
 - Every downloaded asset has a source URL and SHA-256 checksum.
 - Spreadsheet CSV files remain diffable; ODS remains the styled editable open
   artefact.
+- Spreadsheet CSV exports are normalised to LF line endings for stable Git
+  diffs; generated HTML artefacts strip trailing line whitespace; ODS remains a
+  binary artefact.
+- GitHub Pages output is generated, not hand-authored; rerun
+  `make render-site` after sync/content changes.
+- GitHub Pages output must not point article media back to
+  `www.daryllswer.com/wp-content/uploads/` when a local archive copy exists.
 - Remote destructive GitHub actions are outside normal script behaviour.

@@ -78,7 +78,7 @@ And unfortunately, the salaries of workers can be one of the first things to be 
 
 *Below is an example of very low pricing. This is not a promotion nor an advertisement for the source.*
 
-[![](assets/inline/image.png)](https://www.daryllswer.com/wp-content/uploads/2021/08/image.png)
+[![](assets/inline/image.png)](assets/inline/image.png)
 
 _Figure 1 – An advertisement offering 250Mbps at just INR 167 + GST on tachyonbroadband.com_
 

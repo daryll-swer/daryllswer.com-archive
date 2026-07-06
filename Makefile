@@ -3,7 +3,7 @@
 
 PYTHON ?= python3
 
-.PHONY: sync validate scan-secrets render-preview clean
+.PHONY: sync validate scan-secrets render-preview render-site clean
 
 sync:
 	$(PYTHON) scripts/sync-wordpress-posts.py
@@ -17,6 +17,9 @@ scan-secrets:
 
 render-preview:
 	$(PYTHON) scripts/render-preview.py
+
+render-site:
+	$(PYTHON) scripts/render-site.py
 
 clean:
 	rm -rf .preview .cache .tmp __pycache__ scripts/__pycache__

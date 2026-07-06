@@ -46,7 +46,7 @@ With the firewall rule in place, I started observing that my IPv6 BGP sessions w
 
 When I realised that disabling the rule, solved the issue with BGP sessions flapping, I decided to dig deeper with WireShark and discovered NDP NS/NA packets where the source address is GUA and the destination address is link-local.
 
-[![](assets/inline/image-3840x1873.png)](https://www.daryllswer.com/wp-content/uploads/2022/12/image.png)
+[![](assets/inline/image-3840x1873.png)](assets/featured.png)
 
 _Figure-1 (ICMPv6 packets for NDP showing source/destination addresses matching GUA<>LLA pattern)_
 

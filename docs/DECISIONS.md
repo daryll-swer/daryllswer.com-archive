@@ -56,3 +56,45 @@
 - Impact: `make sync` maps reference marker `1`, `2`, etc. to the corresponding
   numbered reference URL, and validation fails if WordPress `#h-references`
   links remain in generated Markdown.
+
+## 2026-07-06: Generate GitHub Pages Site Under docs/
+
+- Decision: Generate the human-readable HTML archive into `docs/` for GitHub
+  Pages publication from the `main` branch `/docs` folder.
+- Rationale: GitHub repository Markdown remains useful for source inspection,
+  but a static HTML site gives readers a proper article index, theme, article
+  pages, responsive figures, and spreadsheet landing pages.
+- Impact: `make render-site` writes `docs/index.html`, `docs/posts/`,
+  `docs/assets/theme.css`, `docs/sheets/`, and `docs/.nojekyll`. These outputs
+  are generated artefacts and should be changed via `scripts/render-site.py`.
+
+## 2026-07-06: Keep Archive Links Local Where Possible
+
+- Decision: Rewrite mirrored article links that target archived WordPress media
+  or the AS141253 Google Sheet to repository-hosted artefacts.
+- Rationale: The archive should remain useful if daryllswer.com or the original
+  Google Sheet disappears.
+- Impact: `make sync` downloads direct WordPress-uploaded media links and
+  rewrites Markdown to local asset/sheet paths. `make render-site` rewrites the
+  same links to local Pages assets or sheet pages.
+
+## 2026-07-06: Treat Runtime Embeds as Optional Presentation
+
+- Decision: Convert unsupported embeds to durable Markdown links, while the
+  generated Pages site may render iframe wrappers with fallback links.
+- Rationale: GitHub repository Markdown does not provide a reliable rich embed
+  surface, but Pages can render HTML while still preserving a fallback.
+- Impact: Markdown no longer contains raw podcast iframes. Pages article output
+  uses `.media-embed` wrappers and `make validate` checks the IPv6 article has
+  the expected embed treatment.
+
+## 2026-07-06: Normalise Generated Text Artefacts
+
+- Decision: Normalise generated text artefacts before writing them into the
+  repository.
+- Rationale: The repository declares `*.csv text eol=lf`; preserving source
+  CRLF from Google and trailing whitespace from generated HTML creates avoidable
+  Git churn.
+- Impact: `scripts/export-google-sheet.py` writes LF-normalised CSV files and
+  whitespace-normalised Google Sheet HTML snapshots. `scripts/render-site.py`
+  strips trailing line whitespace from generated Pages text output.

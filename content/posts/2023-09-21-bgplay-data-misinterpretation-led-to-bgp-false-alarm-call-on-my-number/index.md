@@ -35,7 +35,7 @@ In this harmless incident, the staff of the transit provider saw the BGP data fo
 
 The AS-PATH of the route showed my ASN on the left and the origin (AS132052) on the right. This shows that I learnt the route directly from AS132559, my upstream transit provider, moving from left to right in the AS-PATH.
 
-[![](assets/inline/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg)](https://www.daryllswer.com/wp-content/uploads/2023/09/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg)
+[![](assets/inline/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg)](assets/inline/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg)
 
 _Figure-1 Screenshot from RIPE BGPlay of the very specific BGP data output_
 

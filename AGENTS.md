@@ -24,6 +24,11 @@
 - Convert same-article numbered reference links away from WordPress
   `#h-references` anchors. Prefer linking each number directly to the matching
   source URL in that post's References list.
+- Convert WordPress-uploaded media links to local archived assets whenever the
+  linked file is mirrored into the repository.
+- Convert unsupported embedded media in Markdown to durable outbound links. The
+  generated GitHub Pages site may render richer embed wrappers with fallback
+  links.
 - Treat comments as out of scope unless the owner explicitly asks for them.
 
 ## Public Repository Safety
@@ -33,6 +38,8 @@
   operational state.
 - Run `make validate` and `make scan-secrets` before final reporting or any
   proposed commit/push.
+- Run `make render-site` after sync changes that affect public article
+  rendering, site navigation, copied media, or spreadsheet artefact links.
 - Remote destructive GitHub actions require explicit owner confirmation:
   deletion, force-push, replacing default branch, changing visibility, or
   creating a replacement repo.
@@ -44,3 +51,6 @@
 - Keep post assets in `assets/` and record checksums in `assets/manifest.json`.
 - Keep generated machine-readable metadata in JSON and validate it against
   `schemas/`.
+- Keep the GitHub Pages static site generated under `docs/`; do not hand-edit
+  generated `docs/index.html`, `docs/posts/`, `docs/assets/`, or
+  `docs/sheets/` outputs except through `scripts/render-site.py`.

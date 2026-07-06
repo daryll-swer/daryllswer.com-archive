@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]</title>
+  <meta name="description" content="An article on deploying Multi-WAN using RouterOS.">
+  <link rel="canonical" href="https://daryll-swer.github.io/daryllswer.com-archive/posts/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/">
+  <meta property="og:title" content="Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]">
+  <meta property="og:description" content="An article on deploying Multi-WAN using RouterOS.">
+  <meta property="og:image" content="https://daryll-swer.github.io/daryllswer.com-archive/posts/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/featured.png">
+  <link rel="stylesheet" href="../../assets/theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html" aria-label="daryllswer.com Archive home">
+    <span class="brand-mark">DS</span>
+    <span><strong>daryllswer.com</strong><small>Archive</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="../../index.html">Index</a>
+    <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
+    <a href="https://www.daryllswer.com/">Canonical site</a>
+  </nav>
+</header>
+<main class="article-shell">
+  <article class="article">
+    <header class="article-header">
+      <p class="meta">29 March 2021 / Networking</p>
+      <h1>Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]</h1>
+      <p class="article-summary">An article on deploying Multi-WAN using RouterOS.</p>
+      <img class="featured-image" src="assets/featured.png" alt="">
+    </header>
+    <div class="article-body">
+      <div class="wp-block-group is-vertical is-layout-flex wp-container-core-group-is-layout-4fc3f8e1 wp-block-group-is-layout-flex">
+<h3 class="wp-block-heading" id="please-note-it-is-very-unlikely-i-will-maintain-this-article-piece-even-though-the-underlying-concepts-and-principle-are-the-same-on-routeros-v7-if-you-are-still-facing-some-issues-or-confusion-i-would-recommend-you-watch-this-official-video-from-mikrotik">Please note, it is very unlikely I will maintain this article piece. Even though the underlying concepts and principle are the same on RouterOS v7, if you are still facing some issues or confusion, I would recommend you watch this <a href="https://youtu.be/nlb7XAv57tw" target="_blank" rel="noopener noreferrer">official video from MikroTik</a>.</h3>
+</div>
+
+
+
+<p class="wp-block-paragraph">In <a href="../multi-wan-setups-with-retail-isps-part-1-theory/">part one</a> of this series, I talked about the theoretical aspects, pros, and cons of a Multi-WAN setup. So now in part two, I will show how one can implement this setup in their network setup and this will be a lengthy article.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-requirements">Requirements</h2>
+
+
+
+<ul class="wp-block-list">
+<li>A router that is running either enterprise or open-source network OS.
+<ul class="wp-block-list">
+<li>Like RouterOS.</li>
+
+
+
+<li>Or like VyOS or pfSense for open-source.</li>
+</ul>
+</li>
+
+
+
+<li>More than one uplink to the same ISP or a different ISP.</li>
+
+
+
+<li>Minimum 1GbE on all your devices’ interfaces/ports.</li>
+
+
+
+<li>Bridging the ISP’s CPE device to ensure there is no double/triple/quadruple NAT situation.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading" id="h-implementation">Implementation</h2>
+
+
+
+<ul class="wp-block-list">
+<li>For this example, I will use RouterOS v6 stable.
+<ul class="wp-block-list">
+<li>Hardware: RB450Gx4.</li>
+
+
+
+<li>Only IPv4 config will be covered due to the lack of proper IPv6 support in RouterOS v6 stable at the time of this article, but it would essentially be the same thing.</li>
+
+
+
+<li>I will be using PCC and Nth together in order to achieve bandwidth aggregation.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Whatever is shown here using RouterOS can be replicated more or less on any other network OS like VyOS etc. Go through the vendor’s documentation if you are not on RouterOS.</p>
+
+
+
+<h3 class="wp-block-heading" id="assumptions">Assumptions</h3>
+
+
+
+<ul class="wp-block-list">
+<li>I will assume you have already taken care of the basic configuration such as securing the router, firewalling, NATting etc.
+<ul class="wp-block-list">
+<li>Regarding <strong>NAT</strong>, use <strong><em>masquerade </em></strong>instead of src NAT, the reason being it <a href="https://help.mikrotik.com/docs/display/ROS/NAT#NAT-Masquerade" target="_blank" rel="noopener noreferrer">clears</a><strong> </strong>the conn_track table if an interface goes down and hence we can achieve sub 0ms failover effect.</li>
+</ul>
+</li>
+
+
+
+<li>I will assume you have some basic idea of computer networking and basic ideas on the routing.</li>
+
+
+
+<li>I will assume you have read MikroTik’s documentation on PCC, Nth, Mangle etc.</li>
+
+
+
+<li>Only two uplinks (relevant to the example here).</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Let us begin</p>
+
+
+
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-flow wp-block-group-is-layout-flow">
+<p class="wp-block-paragraph"><strong>Step 1</strong> we create two default routes for each uplink with distance attribute to enable the failover effect (meaning if one link goes down, the next immediate link will be used next)</p>
+
+
+
+<pre class="wp-block-code"><code>/ip route
+###ISP1 has lower distance and hence is the primary link###
+add check-gateway=ping comment="Default Route for ISP1" distance=1 gateway=pppoe-out1
+
+add check-gateway=ping comment="Default Route for ISP2" distance=2 gateway=pppoe-out2
+
+###If you have more than two uplinks, you simply increase the distance as required like this:
+add check-gateway=ping comment="Example Route for ISP3" distance=3 gateway=pppoe-out3###</code></pre>
+
+
+
+<p class="wp-block-paragraph"><strong>Step 2</strong>, we need to take care of <strong>MTU </strong>for the <strong>WAN </strong>interfaces, which is applicable to any networking device or OS in this world. If your uplink is using <strong>DHCP Client</strong>/<strong>Static IP address</strong>, then by default this is already taken care of with 1500 MTU.</p>
+
+
+
+<p class="wp-block-paragraph"><s>However, with <strong>PPPoE</strong>, this is not the case and on RouterOS, there are what a user calls “ghost bytes”. I will discuss PPPoE MTU in a future article, but for now, all that you need to do is set the underlying Ethernet interface’s actual MTU  to 1520 meaning the interface to which your uplink is connected.</s> As of <a href="https://forum.mikrotik.com/viewtopic.php?p=924589#p923904" target="_blank" rel="noopener noreferrer">RouterOS v7.2</a>, MikroTik <a href="https://web.archive.org/web/20220406203854/https://twitter.com/DaryllSwer/status/1511805609020366849" target="_blank" rel="noopener noreferrer">has fixed the ghost bytes</a>, so please set it to <strong>1508</strong> instead (note I did not bother to update the diagrams below).</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="assets/featured.png"><img loading="lazy" decoding="async" width="1166" height="232" src="assets/featured.png" alt="" class="wp-image-843"></a><figcaption class="wp-element-caption">Figure-1 (In this case, ether1 and ether2 are the underlying ethernet interfaces)</figcaption></figure>
+</div>
+
+
+<p class="wp-block-paragraph"><strong>Step 3</strong>, <strong>leave</strong> MTU, MRU, MRRU <strong>blank </strong>to enable auto-negotiation, RouterOS will <strong>automatically </strong>find the correct MTU value set by your ISP. Along with MRU.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><a href="assets/inline/Figure-2.png"><img loading="lazy" decoding="async" width="1092" height="520" src="assets/inline/Figure-2.png" alt="" class="wp-image-844"></a><figcaption class="wp-element-caption">Figure-2 (PPPoE Client MTU Config)</figcaption></figure>
+</div>
+
+
+<p class="wp-block-paragraph"><strong>Step 4</strong>, now we get started with the multi-WAN rules that will enable load-balancing and bandwidth aggregation without breaking HTTP/HTTPS connections</p>
+
+
+
+<pre class="wp-block-code"><code>###Set Passthrough=no to reduce CPU usage for rules that do not need to be re-validated once they've been processed###
+###connection-mark=no-mark to prevent re-marking of already marked connections and hence waste CPU cycles###
+
+/ip firewall mangle
+###Incoming connections through ISP1 must leave through ISP1###
+add action=mark-connection chain=prerouting connection-mark=no-mark in-interface=pppoe-out1 new-connection-mark=ISP1_conn passthrough=no
+
+###Incoming connections through ISP2 must leave through ISP2###
+add action=mark-connection chain=prerouting connection-mark=no-mark in-interface=pppoe-out2 new-connection-mark=ISP2_conn passthrough=no
+
+###I am assuming a 50/50 split ratio between the two ISPs#
+
+###We are using dst-address-list=!not_in_internet &amp;&amp; dst-address-type=!local to prevent marking LAN-to-LAN traffic###
+
+###We can use PCC to handle HTTP/HTTPS traffic with "both-addresses" attribute to reduce chances of connections being marked more "randomly" which would break the connections as then connections would go through ISP1 and ISP2 more "randomly" and break. However in this case, I used "both-addresses-and-ports" based on my personal experience of traffic working just fine###
+
+###For old school HTTP/HTTPS traffic###
+###50% going to ISP1###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP1_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/0 protocol=tcp
+###50% going to ISP2###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP2_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/1 protocol=tcp
+
+###For new school HTTP3 traffic aka QUIC###
+###50% going to ISP1###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP1_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/0 protocol=udp
+###50% going to ISP2###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local dst-port=80,443 in-interface-list=LAN new-connection-mark=ISP2_conn passthrough=yes per-connection-classifier=both-addresses-and-ports:2/1 protocol=udp
+
+###If you have a third uplink, then the split ratio would be 3/0, 3/1, 3/2###
+
+###Now we will use Nth for non HTTP/HTTPs traffic in order to acheieve bandwidth aggregation###
+
+###50% going to ISP1###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local in-interface-list=LAN new-connection-mark=ISP1_conn nth=2,1 passthrough=yes
+###50% going to ISP2###
+add action=mark-connection chain=prerouting connection-mark=no-mark dst-address-list=!not_in_internet dst-address-type=!local in-interface-list=LAN new-connection-mark=ISP2_conn nth=2,2 passthrough=yes
+
+###Now we will send the marked connections to their appropriate routing table###
+
+###For our marked/split traffic###
+add action=mark-routing chain=prerouting connection-mark=ISP1_conn in-interface-list=LAN new-routing-mark=to_ISP1 passthrough=no
+add action=mark-routing chain=prerouting connection-mark=ISP2_conn in-interface-list=LAN new-routing-mark=to_ISP2 passthrough=no
+
+###For the incoming traffic from WAN###
+add action=mark-routing chain=output connection-mark=ISP1_conn new-routing-mark=to_ISP1 out-interface=pppoe-out1 passthrough=no
+add action=mark-routing chain=output connection-mark=ISP2_conn new-routing-mark=to_ISP2 out-interface=pppoe-out2 passthrough=no
+
+###Now Finally we add the required routing tables###
+/ip route
+add check-gateway=ping comment="Load Balancing Route to ISP 1" distance=1 gateway=pppoe-out1 routing-mark=to_ISP1
+add check-gateway=ping comment="Load Balancing Route to ISP 2" distance=1 gateway=pppoe-out2 routing-mark=to_ISP2</code></pre>
+
+
+
+<p class="wp-block-paragraph">That’s it, you now have aggregated bandwidth capability, load balancing capability and HTTP/HTTPS stability using RouterOS.</p>
+
+
+
+<p class="wp-block-paragraph">For P2P networking (assuming all the uplinks have a public IP), you’d need to use a script like <a href="https://forum.mikrotik.com/viewtopic.php?f=9&amp;t=167773#p823917" target="_blank" rel="noopener noreferrer">this</a> for UPnP to work correctly (enable it on only one WAN interface and let the script handle the rest).</p>
+</div></div>
+
+
+
+<h2 class="wp-block-heading" id="h-bonus-material">Bonus Material</h2>
+
+
+
+<ul class="wp-block-list">
+<li>Use <a href="https://tools.ietf.org/html/rfc6890" target="_blank" rel="noopener noreferrer">RFC 6890</a> to build the <strong><em>not_in_internet </em></strong>address list.</li>
+
+
+
+<li>RouterOS will automatically use the main routing table (default routes) should any uplink go down, so the “marked connections” will automatically be routed through whichever uplink is available even though for instance they are marked for ISP2, and ISP2 is down.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading" id="h-side-note">Side Note:</h3>
+
+
+
+<p class="wp-block-paragraph" style="font-size:14px">In <a href="../multi-wan-setups-with-retail-isps-part-1-theory/">part one</a>, you may have noticed the <a href="assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png">upload speed</a> is lower than what I claimed, and below is the explanation for that.</p>
+
+
+
+<ul class="wp-block-list">
+<li>ISP1’s MTU = 1460, MRU = 1500</li>
+
+
+
+<li>ISP2’s MTU = 1500, MRU = 1500</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph" style="font-size:14px">The upload bandwidth never reached 300Mbps due to ISP1’s MTU of 1460 which resulted in packet fragmentation and hence affected throughput performance and was able to reach only an average of 170Mbps for upload. ISP2’s MTU is a straight 1500 and was able to reach its advertised speed, which I verified by looking at the link rate on the router itself. Since MRU for both links were 1500, download bandwidth was able to reach its advertised speed on both links.</p>
+
+
+
+<p class="wp-block-paragraph" style="font-size:14px">This is why MTU should be taken care of to prevent issues.</p>
+
+    </div>
+    <footer class="article-footer">
+      <p>Canonical source: <a href="https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/">https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/</a></p>
+      <p>Archive source bundle: <a href="https://github.com/daryll-swer/daryllswer.com-archive/tree/main/content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros">content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros</a></p>
+    </footer>
+  </article>
+</main>
+</body>
+</html>

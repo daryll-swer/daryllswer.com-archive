@@ -29,6 +29,8 @@ ARCHIVE_EXCLUDED_PATTERNS = [
     re.compile(r"You can claim your free 30-day trial using this", re.I),
 ]
 REMOTE_REFERENCE_ANCHOR_PATTERN = re.compile(r"https://www\.daryllswer\.com/[^)\s]+/#(?:h-)?references", re.I)
+WORDPRESS_MEDIA_PATTERN = re.compile(r"https://www\.daryllswer\.com/wp-content/uploads/", re.I)
+GOOGLE_SHEET_PATTERN = re.compile(r"https://docs\.google\.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml", re.I)
 
 
 def now_iso() -> str:
@@ -178,6 +180,37 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
     return manifest
 
 
+def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str]) -> None:
+    site_index = ROOT / "docs" / "index.html"
+    site_css = ROOT / "docs" / "assets" / "theme.css"
+    if not site_index.exists():
+        warnings.append("GitHub Pages site missing; run make render-site")
+        return
+    if not site_css.exists():
+        errors.append("GitHub Pages theme missing at docs/assets/theme.css")
+    if not (ROOT / "docs" / ".nojekyll").exists():
+        errors.append("GitHub Pages .nojekyll marker missing")
+    index_html = site_index.read_text(encoding="utf-8", errors="replace")
+    if "posts/" not in index_html:
+        errors.append("GitHub Pages index does not link to generated post pages")
+    for post in posts:
+        page = ROOT / "docs" / "posts" / post["slug"] / "index.html"
+        if not page.exists():
+            errors.append(f"{post['slug']}: GitHub Pages article missing")
+            continue
+        html = page.read_text(encoding="utf-8", errors="replace")
+        validate_excluded_operational_ctas(page, errors)
+        if WORDPRESS_MEDIA_PATTERN.search(html):
+            errors.append(f"{post['slug']}: GitHub Pages article still links WordPress upload media")
+        if post["slug"] == "ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators":
+            if GOOGLE_SHEET_PATTERN.search(html):
+                errors.append(f"{post['slug']}: GitHub Pages article still links the Google Sheet instead of the repo sheet page")
+            if "../../sheets/as141253-ipv6-architecture-example/" not in html:
+                errors.append(f"{post['slug']}: GitHub Pages article missing repo-hosted AS141253 sheet link")
+            if "media-embed" not in html:
+                errors.append(f"{post['slug']}: GitHub Pages article missing podcast embed wrapper")
+
+
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
@@ -222,6 +255,7 @@ def main() -> int:
 
         for post in posts:
             validate_post(post, errors, warnings)
+        validate_pages_site(posts, errors, warnings)
 
     sheet_manifest = validate_spreadsheet(errors, warnings)
     if sheet_manifest:

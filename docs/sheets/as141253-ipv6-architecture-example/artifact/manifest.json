@@ -1,0 +1,279 @@
+{
+  "generated_at": "2026-07-06T12:03:24+00:00",
+  "ods": {
+    "bytes": 180747,
+    "content_type": "application/vnd.oasis.opendocument.spreadsheet",
+    "path": "data/sheets/as141253-ipv6-architecture-example/AS141253-ipv6-architecture-example.ods",
+    "sha256": "b3c390ac388fc72d8149ae8eeb73391c874fa8b8f70bc63ac201bad1534f5666"
+  },
+  "published_workbook_html": {
+    "bytes": 45358,
+    "path": "data/sheets/as141253-ipv6-architecture-example/html/published-workbook.html",
+    "sha256": "e7ac75fb8240dec4e556b49b5d175ffa46956626bce5b6816d784aed582a9fc4"
+  },
+  "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml",
+  "tabs": [
+    {
+      "csv": {
+        "bytes": 233,
+        "content_type": "text/csv",
+        "dialect": {
+          "delimiter": ",",
+          "empty_cell": "",
+          "encoding": "utf-8",
+          "line_ending": "LF",
+          "quote_char": "\""
+        },
+        "path": "data/sheets/as141253-ipv6-architecture-example/csv/2400-d960double-colon-32.csv",
+        "sha256": "edb414dc47a0676ca88a950b07e9877dd6ea3e61c452ade252ec6e97a607de6b",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pub?gid=0&single=true&output=csv"
+      },
+      "csvw": {
+        "path": "data/sheets/as141253-ipv6-architecture-example/csvw/2400-d960double-colon-32.csv-metadata.json",
+        "sha256": "b2785136ebc6c02a35988cebd72cc03fba600d023a92f98d3b865dce40675c5d"
+      },
+      "gid": "0",
+      "html": {
+        "bytes": 55223,
+        "content_type": "text/html; charset=utf-8",
+        "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960double-colon-32.html",
+        "sha256": "491c34b7569a502fe85d64a757c71b342b4d475ceff8f599f3d96c38015c73c8",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=0"
+      },
+      "name": "2400:d960::/32"
+    },
+    {
+      "csv": {
+        "bytes": 246,
+        "content_type": "text/csv",
+        "dialect": {
+          "delimiter": ",",
+          "empty_cell": "",
+          "encoding": "utf-8",
+          "line_ending": "LF",
+          "quote_char": "\""
+        },
+        "path": "data/sheets/as141253-ipv6-architecture-example/csv/2400-d960double-colon-32-34.csv",
+        "sha256": "b73b0dc2a3ad52cd18543e5edcc79a80d71db37c33d871a2260e76e3e8ff5cb1",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pub?gid=268073512&single=true&output=csv"
+      },
+      "csvw": {
+        "path": "data/sheets/as141253-ipv6-architecture-example/csvw/2400-d960double-colon-32-34.csv-metadata.json",
+        "sha256": "e81bb629ef073252cf8482b862305484e90e7e640b6756977c64d7cb0ba0bb07"
+      },
+      "gid": "268073512",
+      "html": {
+        "bytes": 44489,
+        "content_type": "text/html; charset=utf-8",
+        "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960double-colon-32-34.html",
+        "sha256": "d20e513a9a5d472c1a522029d1bee1539c5da5f74540a3233d30bd991c2f1ca2",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=268073512"
+      },
+      "name": "2400:d960::/32-34"
+    },
+    {
+      "csv": {
+        "bytes": 2993,
+        "content_type": "text/csv",
+        "dialect": {
+          "delimiter": ",",
+          "empty_cell": "",
+          "encoding": "utf-8",
+          "line_ending": "LF",
+          "quote_char": "\""
+        },
+        "path": "data/sheets/as141253-ipv6-architecture-example/csv/2400-d960double-colon-34-40.csv",
+        "sha256": "29816a28b084aebba6e81a052c8c83b99434fb556e4b3a77903fbdb6c26a010f",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pub?gid=1059737347&single=true&output=csv"
+      },
+      "csvw": {
+        "path": "data/sheets/as141253-ipv6-architecture-example/csvw/2400-d960double-colon-34-40.csv-metadata.json",
+        "sha256": "1e09f495357bdf2e721685f27583ff077514aab3af3015e72b79b64a99e8fd1f"
+      },
+      "gid": "1059737347",
+      "html": {
+        "bytes": 63396,
+        "content_type": "text/html; charset=utf-8",
+        "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960double-colon-34-40.html",
+        "sha256": "23ffcac25471235413d7636ce5bef12f4d9cc07b3d1299332f90c9678c31003e",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1059737347"
+      },
+      "name": "2400:d960::/34-40"
+    },
+    {
+      "csv": {
+        "bytes": 629,
+        "content_type": "text/csv",
+        "dialect": {
+          "delimiter": ",",
+          "empty_cell": "",
+          "encoding": "utf-8",
+          "line_ending": "LF",
+          "quote_char": "\""
+        },
+        "path": "data/sheets/as141253-ipv6-architecture-example/csv/2400-d960-800double-colon-40-44.csv",
+        "sha256": "47c957791e268396c9ab03c424ca4bdb140136de2c14a904421e4b0ff182d677",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pub?gid=1582961520&single=true&output=csv"
+      },
+      "csvw": {
+        "path": "data/sheets/as141253-ipv6-architecture-example/csvw/2400-d960-800double-colon-40-44.csv-metadata.json",
+        "sha256": "b2edaee897b02954bac0fb489d9f9846f203a487dc658be0228dd05080689f8f"
+      },
+      "gid": "1582961520",
+      "html": {
+        "bytes": 47536,
+        "content_type": "text/html; charset=utf-8",
+        "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-800double-colon-40-44.html",
+        "sha256": "bb11919a5f13975d88b3298b5620233dc07a8bba5ce03dba3c31edc9d57177b7",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1582961520"
+      },
+      "name": "2400:d960:800::/40-44"
+    },
+    {
+      "csv": {
+        "bytes": 821,
+        "content_type": "text/csv",
+        "dialect": {
+          "delimiter": ",",
+          "empty_cell": "",
+          "encoding": "utf-8",
+          "line_ending": "LF",
+          "quote_char": "\""
+        },
+        "path": "data/sheets/as141253-ipv6-architecture-example/csv/2400-d960-800double-colon-44-48.csv",
+        "sha256": "fc75edf7fea24bd76090fe78422de6e0d4140420ea7ccb639ea811d6ab04a7a2",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pub?gid=1259404302&single=true&output=csv"
+      },
+      "csvw": {
+        "path": "data/sheets/as141253-ipv6-architecture-example/csvw/2400-d960-800double-colon-44-48.csv-metadata.json",
+        "sha256": "06c9dd34b8482c6a7d480621b13d980b95f08d2096452e534301bce865d535b0"
+      },
+      "gid": "1259404302",
+      "html": {
+        "bytes": 48376,
+        "content_type": "text/html; charset=utf-8",
+        "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-800double-colon-44-48.html",
+        "sha256": "7bbb11b308957684e4c87a998f15f9988d468e9b388b627b1baad57ad3f7cbe3",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1259404302"
+      },
+      "name": "2400:d960:800::/44-48"
+    },
+    {
+      "csv": {
+        "bytes": 823,
+        "content_type": "text/csv",
+        "dialect": {
+          "delimiter": ",",
+          "empty_cell": "",
+          "encoding": "utf-8",
+          "line_ending": "LF",
+          "quote_char": "\""
+        },
+        "path": "data/sheets/as141253-ipv6-architecture-example/csv/2400-d960-800double-colon-48-64.csv",
+        "sha256": "f1ad352e889c600660a75847a932ad800a483940d3e2db165b315cf9cb1b6b39",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pub?gid=1315535264&single=true&output=csv"
+      },
+      "csvw": {
+        "path": "data/sheets/as141253-ipv6-architecture-example/csvw/2400-d960-800double-colon-48-64.csv-metadata.json",
+        "sha256": "163cceace3785654f513267526616ad3467f9ce56bf1d64b10acb38f5b0d417c"
+      },
+      "gid": "1315535264",
+      "html": {
+        "bytes": 47384,
+        "content_type": "text/html; charset=utf-8",
+        "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-800double-colon-48-64.html",
+        "sha256": "33369dc828d9c436fa21ed4d369fedd3af616621f1099a1d4d6f1cb658ac990b",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1315535264"
+      },
+      "name": "2400:d960:800::/48-64"
+    },
+    {
+      "csv": {
+        "bytes": 1070,
+        "content_type": "text/csv",
+        "dialect": {
+          "delimiter": ",",
+          "empty_cell": "",
+          "encoding": "utf-8",
+          "line_ending": "LF",
+          "quote_char": "\""
+        },
+        "path": "data/sheets/as141253-ipv6-architecture-example/csv/2400-d960-801double-colon-48-52.csv",
+        "sha256": "9cba26201129ec3d85f2ad2720bc407b84ac6338162dfded0138ae2216ef4cc9",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pub?gid=638030841&single=true&output=csv"
+      },
+      "csvw": {
+        "path": "data/sheets/as141253-ipv6-architecture-example/csvw/2400-d960-801double-colon-48-52.csv-metadata.json",
+        "sha256": "3b4853be8a3d322affb10ee045e77d4e28f488b03c12e8e3624e941c1fc058f3"
+      },
+      "gid": "638030841",
+      "html": {
+        "bytes": 48433,
+        "content_type": "text/html; charset=utf-8",
+        "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-801double-colon-48-52.html",
+        "sha256": "6eeb381dde6a7b9f8b8350a71da878883fcedff8072aa68ce26f14451000df25",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=638030841"
+      },
+      "name": "2400:d960:801::/48-52"
+    },
+    {
+      "csv": {
+        "bytes": 1315,
+        "content_type": "text/csv",
+        "dialect": {
+          "delimiter": ",",
+          "empty_cell": "",
+          "encoding": "utf-8",
+          "line_ending": "LF",
+          "quote_char": "\""
+        },
+        "path": "data/sheets/as141253-ipv6-architecture-example/csv/2400-d960-803double-colon-48-52.csv",
+        "sha256": "bac8e635b694567940fb6cb8ca58144cfe5b8261c1ac79d39593762ce53fc8d4",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pub?gid=309733296&single=true&output=csv"
+      },
+      "csvw": {
+        "path": "data/sheets/as141253-ipv6-architecture-example/csvw/2400-d960-803double-colon-48-52.csv-metadata.json",
+        "sha256": "7368700c9e85c58d789ebd6c166161cccca583a93ce5c998435c8fd742d038ec"
+      },
+      "gid": "309733296",
+      "html": {
+        "bytes": 48419,
+        "content_type": "text/html; charset=utf-8",
+        "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-803double-colon-48-52.html",
+        "sha256": "c936f67a290c517e2d2e81b39a5cab29bda8bc49ae49ab4704dc7c7cba1adc54",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=309733296"
+      },
+      "name": "2400:d960:803::/48-52"
+    },
+    {
+      "csv": {
+        "bytes": 896,
+        "content_type": "text/csv",
+        "dialect": {
+          "delimiter": ",",
+          "empty_cell": "",
+          "encoding": "utf-8",
+          "line_ending": "LF",
+          "quote_char": "\""
+        },
+        "path": "data/sheets/as141253-ipv6-architecture-example/csv/2400-d960-804double-colon-48-56.csv",
+        "sha256": "8c68c495112753faf2cdd4d9926ba19710d0797d0c5cbcd7ed7c308b1f5d9864",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pub?gid=1037809711&single=true&output=csv"
+      },
+      "csvw": {
+        "path": "data/sheets/as141253-ipv6-architecture-example/csvw/2400-d960-804double-colon-48-56.csv-metadata.json",
+        "sha256": "bbfcaabcf25f642b9343a1a7ee2cad57321f698ae6c99408705b8bbde13952c4"
+      },
+      "gid": "1037809711",
+      "html": {
+        "bytes": 46611,
+        "content_type": "text/html; charset=utf-8",
+        "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-804double-colon-48-56.html",
+        "sha256": "59a1bd07554d9ac30f4db21ee8adccd18c32e66dee6a5564e23a31f83076bc79",
+        "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1037809711"
+      },
+      "name": "2400:d960:804::/48-56"
+    }
+  ],
+  "title": "AS141253's IPv6 Architecture Example - Daryll Swer - Google Drive"
+}

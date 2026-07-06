@@ -55,7 +55,7 @@ For those who need a refresher on the IPv6 fundamentals, there are many [online 
 
 This article provides a guide to IPv6 architecture and subnetting for network operators and enterprises. It draws upon my experience as an independent consultant and as a friendly peer in various industries, including telecommunications, data centres (DC)/enterprises, and ISPs. Through conversations with other network engineers, I observed resistance to learning the basics of IPv6, or an over-reliance on archaic IPv4 processes. This guide aims to provide a comprehensive overview of IPv6 architecture and subnetting for efficiently deploying IPv6 and *avoiding* the pitfalls of an **IPv4-centric** mindset as elaborated further in the podcast below.
 
-<iframe loading="lazy" width="320" height="30" src="https://packetpushers.net/?powerpress_embed=53518-podcast&amp;powerpress_player=mediaelement-audio" title="Blubrry Podcast Player" frameborder="0" scrolling="no"></iframe>
+> Embedded media: [Blubrry Podcast Player](https://packetpushers.net/?powerpress_embed=53518-podcast&powerpress_player=mediaelement-audio)
 
 The risks associated with an inefficient deployment or management of IPv6 are readily available. From an administrative point of view, it can lead to messy and non-scalable subnetting that results in fragile and unreliable networks. Regarding engineering, it can lead to unjustified use of small subnets and force the need to use Network Address Translation (NAT66) when not required. This goes hand-in-hand with the idea of using Unique Local Addresses (ULAs) when unnecessary – all of which are serious impediments to the ultimate goal of providing an efficient, reliable and scalable network service while preserving the [end-to-end principle](https://en.wikipedia.org/wiki/End-to-end_principle) in the network layer to minimise or eliminate complexities brought about by NAT such as NAT traversal helpers and mechanisms.
 
@@ -141,7 +141,7 @@ I hope somebody (or myself) eventually submits a policy proposal for making this
 
 You can also check Packet Pusher’s podcast on this subject below for further insights.
 
-<iframe loading="lazy" width="320" height="30" src="https://packetpushers.net/?powerpress_embed=54818-podcast&amp;powerpress_player=mediaelement-audio" title="Blubrry Podcast Player" frameborder="0" scrolling="no"></iframe>
+> Embedded media: [Blubrry Podcast Player](https://packetpushers.net/?powerpress_embed=54818-podcast&powerpress_player=mediaelement-audio)
 
 ## Subnetting guideline
 
@@ -159,7 +159,7 @@ With the above in mind, the following is what I strongly believe is an optimised
   - However, sometimes we cannot avoid exceeding the nibble boundary, and it is perfectly fine as long as the ‘exceed’ stays in an administrative layer and never enters the network layer. I will highlight this with a real-life example in the architecture section.
 - Some prefer to use /126s or /127s for eBGP peering with third parties and also for PtP links between two devices, in such cases, we will reserve the entire /64 per interface (or peer) for every carved /126-/127 we use, in the event that we scale up the port/interface in the future ensuring a /64 is always available in the IPAM and therefore avoid messy subnetting/addressing records.
 
-[![](assets/inline/IPv6Chart_2015.png)](https://www.ripe.net/about-us/press-centre/IPv6Chart_2015.png)
+[![](assets/inline/IPv6Chart_2015.png)](assets/inline/IPv6Chart_2015.png)
 
 _Figure-1 IPv6 cheat sheet from RIPE (source)_
 
@@ -267,7 +267,7 @@ In short, for the customer pool in DCs/enterprises you can either opt for a /48 
 
 It should be noted that the diagram below is only for reference to give you an idea on the IPv6 subnetting. It is a smaller, simplified topology diagram compared to the production topology, which is far bigger and more complex and would not fit in a single diagram.
 
-[![](assets/inline/Figure-2-DC-Topology-Example.png)](https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-2-DC-Topology-Example.png)
+[![](assets/inline/Figure-2-DC-Topology-Example.png)](assets/inline/Figure-2-DC-Topology-Example.png)
 
 _Figure-2 DC Topology Example_
 
@@ -330,9 +330,7 @@ A /48 per function in a given site is broken down in the following manner:
 
 Ultimately this is for the backbone and not the customer pool. Hence, a single /32 can cover the whole network for India.
 
-```
-You can find an example of the above principles in this Excel sheet I made for AS141253.
-```
+> You can find an example of the above principles in this [Excel sheet](../../../data/sheets/as141253-ipv6-architecture-example/README.md) I made for AS141253.
 
 **For the customer:**
 
@@ -362,7 +360,7 @@ The topology for an ISP is fairly typical; if you are already an ISP, you likely
 
 The topology diagram below is only for reference to give you an idea on the IPv6 subnetting for ISPs.
 
-[![](assets/inline/Figure-3-ISP-Topology-Example-1-2710x4320.png)](https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1.png)
+[![](assets/inline/Figure-3-ISP-Topology-Example-1-2710x4320.png)](assets/inline/Figure-3-ISP-Topology-Example-1.png)
 
 _Figure-3 ISP Topology Example_
 
@@ -420,9 +418,7 @@ However, you should be aware that since the ‘200::/7’ block is **not offi
 
 In short, there is no perfect solution provided by the IETF presently regarding operational issues with ULA in production networks.
 
-```
-Please note that this is not an official recommendation by the IETF; you can proceed with my solution at your own discretion.
-```
+> Please note that this is not an official recommendation by the IETF; you can proceed with my solution at your own discretion.
 
 ## Example
 

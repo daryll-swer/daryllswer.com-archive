@@ -1,0 +1,17 @@
+Prefix,Function,Notes
+2400:d960:800::/48,Loopback,Sliced into /64 per row of device type
+2400:d960:801::/48,OOB,Sliced into /52 per OOB sub-function
+2400:d960:802::/48,"Peering - PNI, PtP etc.",Sliced into /64 per peer
+2400:d960:803::/48,PtP/Interconnections,Sliced into /52s per device type on row basis
+2400:d960:804::/48,For Caching Nodes,Sliced into /56 per CDN
+2400:d960:805::/48,Routed pool for Docker/Whatever - Example,Slice into /64 - Example
+2400:d960:806::/48,Reserved,Reserved
+2400:d960:807::/48,Reserved,Reserved
+2400:d960:808::/48,Reserved,Reserved
+2400:d960:809::/48,Reserved,Reserved
+2400:d960:80a::/48,Reserved,Reserved
+2400:d960:80b::/48,Reserved,Reserved
+2400:d960:80c::/48,Reserved,Reserved
+2400:d960:80d::/48,Reserved,Reserved
+2400:d960:80e::/48,Reserved,Reserved
+2400:d960:80f::/48,Reserved,Reserved

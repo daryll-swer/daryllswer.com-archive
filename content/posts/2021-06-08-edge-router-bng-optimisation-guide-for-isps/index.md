@@ -295,7 +295,7 @@ The following are basic guidelines for which lists to create and what should be 
 It is however, important to note: When you are using bridges (which is discussed later in this article), the interface placements depend on how you set up the bridge – If you’re using a single bridge with physical/bonding interfaces as bridge members without any VLAN configuration, then the bridge will be a member of “**LAN**”. But if you are using VLANs on top of the bridge, then place the VLANs into their appropriate LAN/Intra-AS/Management list based on your local network topology. For example:  
 “Management VLAN” will be in the management list, or VLAN123 will be in the “intra-AS” or “LAN” list.
 
-[![](assets/inline/Figure-1-LAN-Include-Dynamic.png)](https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-LAN-Include-Dynamic.png)
+[![](assets/inline/Figure-1-LAN-Include-Dynamic.png)](assets/inline/Figure-1-LAN-Include-Dynamic.png)
 
 _Figure-1 (LAN Include Dynamic)_
 
@@ -311,7 +311,7 @@ _Figure-1 (LAN Include Dynamic)_
 set icmp-timeout=30s tcp-close-wait-timeout=1m tcp-fin-wait-timeout=2m tcp-last-ack-timeout=30s tcp-syn-received-timeout=1m tcp-syn-sent-timeout=2m tcp-time-wait-timeout=2m udp-stream-timeout=2m udp-timeout=30s
 ```
 
-[![](assets/inline/Figure-2-Recommended-Connection-Tracking-Timeout-Values.png)](https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-Recommended-Connection-Tracking-Timeout-Values.png)
+[![](assets/inline/Figure-2-Recommended-Connection-Tracking-Timeout-Values.png)](assets/inline/Figure-2-Recommended-Connection-Tracking-Timeout-Values.png)
 
 _Figure-2 (Recommended Connection Tracking Timeout Values)_
 
@@ -368,11 +368,11 @@ The screenshots below are for references to give you an idea of what MTU mix/mat
 
 The VLANs on top of the bridge (excluding the pe01) are tagged to the VPLS circuit (also member of bridge) which are configured to 1500 MTU as these are layer 3 terminating interfaces, as my residential customers behind these VLANs, don’t have routers with jumbo frames, so 1500 makes sense. But if for example, on VLAN1501, one day, I moved all customers to jumbo frames 9k enabled routers? Then I simply change the MTU config on my VLAN interface right here, as the underlying transport network is already enabled with jumbo frames from day one.
 
-[![](assets/inline/Screenshot-2024-01-20-at-2.36.45-E2-80-AFAM.png)](https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.36.45%E2%80%AFAM.png)
+[![](assets/inline/Screenshot-2024-01-20-at-2.36.45-E2-80-AFAM.png)](assets/inline/Screenshot-2024-01-20-at-2.36.45-E2-80-AFAM.png)
 
 _Figure-3 MTU Overview_
 
-[![](assets/inline/Screenshot-2024-01-20-at-2.37.02-E2-80-AFAM.png)](https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.37.02%E2%80%AFAM.png)
+[![](assets/inline/Screenshot-2024-01-20-at-2.37.02-E2-80-AFAM.png)](assets/inline/Screenshot-2024-01-20-at-2.37.02-E2-80-AFAM.png)
 
 _Figure-4 VPLS MTU_
 
@@ -420,11 +420,9 @@ You can automate the MTU configuration using the scripts below. Please run **eac
 
 A Linux bridge is a kernel module that acts as a virtual network switch and is used to forward packets between connected interfaces (also known as bridge ports or members). Many network operators do not follow [MikroTik’s official guidelines](https://help.mikrotik.com/docs/display/ROS/Layer2+misconfiguration) to properly implement L2/3 using a bridge, which results in degraded performance as hardware offloading and/or bridge *[Fast Path/Fast Forward](https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-FastForward)* becomes unusable along with the inability to perform [L2 filtering](https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-BridgePacketFilter).
 
-```
-Linux driven hardware such as MikroTik or even Cumulus Linux devices rely heavily on Linux DSA. Linux DSA, Bridge, vlan-aware bridge is a very complex vast topic that currently doesn't have a comprehensive network engineer oriented documentation, I will try to work with a buddy of mine to write a new blog post to deep diving the Linux DSA/Bridge architecture and what it means for network engineers. Until then, just keep in mind that, for layer 3 offloading to work correctly, you need single bridge for all downstream interfaces and use the vlan-filtering to segregate them as "access ports" on a router, and ocassionally trunk port as well depending on your topology and use-case.
-
-This means if you have a box, and the box has only one ASIC, then only one bridge can exist for physical ports/interfaces/LACP etc. However, you can create a loopback bridge, no problem.
-```
+> Linux driven hardware such as MikroTik or even Cumulus Linux devices rely heavily on [Linux DSA](https://www.kernel.org/doc/Documentation/networking/dsa/dsa.txt). Linux DSA, Bridge, vlan-aware bridge is a very complex vast topic that currently doesn't have a comprehensive network engineer oriented documentation, I will try to work with a buddy of mine to write a new blog post to deep diving the Linux DSA/Bridge architecture and what it means for network engineers. Until then, just keep in mind that, for layer 3 offloading to work correctly, you need **single** bridge for all downstream interfaces and use the vlan-filtering to segregate them as "access ports" on a router, and ocassionally trunk port as well depending on your topology and use-case.
+>
+> This means if you have a box, and the box has only one ASIC, then only one bridge can exist for physical ports/interfaces/LACP etc. However, you can create a loopback bridge, no problem.
 
 To maximize performance benefits and give you L2 filtering capabilities, it is recommended by MikroTik to create a [single bridge](https://help.mikrotik.com/docs/display/ROS/L3+Hardware+Offloading#L3HardwareOffloading-Creatingmultiplebridges) per device with all **downstream** (and intra-AS) interfaces (physical, LACP bonding etc) as bridge members. Tagged/untagged VLANs and hybrid VLANs can be configured using [bridge VLAN filtering](https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-BridgeVLANFiltering). Refer to [vendor guidelines](https://help.mikrotik.com/docs/display/ROS/Basic+VLAN+switching) for model-specific configuration instructions.
 
@@ -656,7 +654,7 @@ set sfp-sfpplus2 queue=FQ_Codel
 
 Below is a screenshot of the test results from this [tool](https://www.waveform.com/tools/bufferbloat) on a **wireless** ISP network that I architected and implemented myself from the ground up. I should note that, I implemented everything from this guide + other design considerations which includes network-wide FQ_Codel config, in my case there is no LibreQoS-like device as I wanted a simpler network topology, and the end result below is a result that’s better than even some fibre networks on PON out there in the market.
 
-[![](assets/inline/image.png)](https://www.daryllswer.com/wp-content/uploads/2023/12/image.png)
+[![](assets/inline/image.png)](assets/inline/image.png)
 
 _Figure-5 (Bufferbloat test on a wireless network designed and implemented by daryllswer.com)_
 
@@ -702,7 +700,7 @@ _Figure-5 (Bufferbloat test on a wireless network designed and implemented by da
       - In order for this to work correctly you need to strictly follow the MTU section
       - If using **Wireless**APs, then it would 2290-8=**2282**bytes
 
-[![](assets/inline/Figure-9-PPPoE-Server-MTU-MRU-TCP-MSS-Clamping-config.png)](https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-9-PPPoE-Server-MTU-MRU-TCP-MSS-Clamping-config.png)
+[![](assets/inline/Figure-9-PPPoE-Server-MTU-MRU-TCP-MSS-Clamping-config.png)](assets/inline/Figure-9-PPPoE-Server-MTU-MRU-TCP-MSS-Clamping-config.png)
 
 _Figure-6 (PPPoE Server MTU/MRU & TCP MSS Clamping config)_
 
@@ -730,7 +728,7 @@ _Figure-6 (PPPoE Server MTU/MRU & TCP MSS Clamping config)_
 
 If you have properly configured MTU and MSS Clamping as per the steps above, then you should see the following results when testing from ***customer-side***using this [tool](https://www.speedguide.net/analyzer.php):
 
-[![](assets/inline/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet.png)](https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet.png)
+[![](assets/inline/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet.png)](assets/inline/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet.png)
 
 _Figure-7 (MTU and TCP MSS correctly working on the internet)_
 
@@ -781,7 +779,7 @@ add authentication=pap default-profile=profile2 disabled=no interface=vlan21 kee
 - Make use of the **100.64.0.0/10** subnet as it’s [meant](https://datatracker.ietf.org/doc/html/rfc6598) for CGNAT usage to prevent clashing on the customer site
 - Enable **all** the NAT traversal Helpers on the NAT box, as shown below.
 
-[![](assets/inline/Screenshot-2024-01-20-at-2.31.27-E2-80-AFAM.png)](https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.31.27%E2%80%AFAM.png)
+[![](assets/inline/Screenshot-2024-01-20-at-2.31.27-E2-80-AFAM.png)](assets/inline/Screenshot-2024-01-20-at-2.31.27-E2-80-AFAM.png)
 
 _Figure-8 (NAT Traversal Helpers on RouterOS)_
 
@@ -806,7 +804,7 @@ add action=masquerade chain=srcnat comment="Hairpin for CGNAT clients" dst-addre
 - **Avoid**Deterministic****NAT, the above configuration allows P2P traffic initiated from the inside to be reachable from the outside with various applications that make use of ephemeral ports/UDP NAT punching/STUN etc
 - We were able to successfully seed the official Ubuntu Torrent behind the CGNAT with the above configuration, which can mean only one thing: P2P networking from in-bound established works!
 
-[![](assets/inline/Figure-12-BitTorrent-Seeding-Behind-CGNAT.png)](https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-12-BitTorrent-Seeding-Behind-CGNAT.png)
+[![](assets/inline/Figure-12-BitTorrent-Seeding-Behind-CGNAT.png)](assets/inline/Figure-12-BitTorrent-Seeding-Behind-CGNAT.png)
 
 _Figure-9 (BitTorrent Seeding Behind CGNAT)_
 
@@ -814,7 +812,7 @@ _Figure-9 (BitTorrent Seeding Behind CGNAT)_
 
 *Below is what MikroTik support had to say about**netmap vs src nat** as action for src nat chain*
 
-[![](assets/inline/Figure-13-Src-nat-vs-Netmap.png)](https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-13-Src-nat-vs-Netmap.png)
+[![](assets/inline/Figure-13-Src-nat-vs-Netmap.png)](assets/inline/Figure-13-Src-nat-vs-Netmap.png)
 
 _Figure-10 (Src nat = breaks P2P traffic | Netmap = static mapping per client IP)_
 
@@ -833,7 +831,7 @@ So tl;dr you can use a /30 per 200 users as long as you follow the steps properl
 
 **End Result**
 
-[![](assets/inline/Screenshot-2024-01-20-at-2.27.19-E2-80-AFAM.png)](https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.27.19%E2%80%AFAM.png)
+[![](assets/inline/Screenshot-2024-01-20-at-2.27.19-E2-80-AFAM.png)](assets/inline/Screenshot-2024-01-20-at-2.27.19-E2-80-AFAM.png)
 
 _Figure-11 (Your NAT Table should look as dead simple as this one)_
 
@@ -890,7 +888,7 @@ Now I will cover a simple configuration use-case where a BNG has exactly 1000 cu
   - **Remote** IPv6 prefix is for the **WAN**side of the customer
   - **DHCPv6**PD Pool is for the **LAN**side of the customer
 
-[![](assets/inline/Figure-15-PPPoE-IPv6-configuration.png)](https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-15-PPPoE-IPv6-configuration.png)
+[![](assets/inline/Figure-15-PPPoE-IPv6-configuration.png)](assets/inline/Figure-15-PPPoE-IPv6-configuration.png)
 
 _Figure-12 (PPPoE IPv6 configuration)_
 
@@ -900,7 +898,7 @@ That’s it, now the customers will dynamically get a routed /64 and routed /56 
 
 If you have properly configured IPv6 as per the steps above, then you should see the following results when testing from ***customer-side*** using this [tool](https://test-ipv6.com/):
 
-[![](assets/inline/Figure-16-IPv6-working-correctly.jpg)](https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-16-IPv6-working-correctly.jpg)
+[![](assets/inline/Figure-16-IPv6-working-correctly.jpg)](assets/inline/Figure-16-IPv6-working-correctly.jpg)
 
 _Figure-13 (IPv6 working correctly)_
 

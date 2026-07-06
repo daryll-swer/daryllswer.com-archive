@@ -1,0 +1,17 @@
+Prefix,Site,Notes
+2400:d960:800::/44,Delhi-01,Sliced into /48 per function
+2400:d960:810::/44,Delhi-02,Reserved
+2400:d960:820::/44,Delhi-03,Reserved
+2400:d960:830::/44,Delhi-04,Reserved
+2400:d960:840::/44,Delhi-05,Reserved
+2400:d960:850::/44,Delhi-06,Reserved
+2400:d960:860::/44,Delhi-07,Reserved
+2400:d960:870::/44,Delhi-08,Reserved
+2400:d960:880::/44,Delhi-09,Reserved
+2400:d960:890::/44,Delhi-10,Reserved
+2400:d960:8a0::/44,Delhi-11,Reserved
+2400:d960:8b0::/44,Delhi-12,Reserved
+2400:d960:8c0::/44,Delhi-13,Reserved
+2400:d960:8d0::/44,Delhi-14,Reserved
+2400:d960:8e0::/44,Delhi-15,Reserved
+2400:d960:8f0::/44,Delhi-16,Reserved

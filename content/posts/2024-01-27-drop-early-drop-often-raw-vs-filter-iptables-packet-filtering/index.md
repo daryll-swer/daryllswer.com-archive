@@ -49,7 +49,7 @@ Is it more costly to do a route table lookup for the small number of packets we 
 
 We set up 3 VMs as shown below, the router’s VM had conn_track module loaded **but**NoTrack rule was configured in the raw table. They were running on Linux with QEMU, with the connections between them made with virtio devices bound to a separate hypervisor bridge device for each link:
 
-[![](assets/inline/iptables_raw_filter_setup.png)](https://www.daryllswer.com/wp-content/uploads/2024/01/iptables_raw_filter_setup.png)
+[![](assets/inline/iptables_raw_filter_setup.png)](assets/inline/iptables_raw_filter_setup.png)
 
 _Figure-1 Virtual Topology_
 
@@ -126,7 +126,7 @@ num   pkts bytes target     prot opt in     out     source               destina
 
 Figure 2 shows the CPU usage for Test 1 comparison.
 
-[![](assets/inline/test-1-cpu-usage.png)](https://www.daryllswer.com/wp-content/uploads/2024/01/test-1-cpu-usage.png)
+[![](assets/inline/test-1-cpu-usage.png)](assets/inline/test-1-cpu-usage.png)
 
 _Figure-2 Test 1 CPU usage_
 
@@ -178,7 +178,7 @@ num   pkts bytes target     prot opt in     out     source               destina
 
 Figure 3 shows the CPU usage for Test 2 comparison.
 
-[![](assets/inline/test-2-cpu-usage.png)](https://www.daryllswer.com/wp-content/uploads/2024/01/test-2-cpu-usage.png)
+[![](assets/inline/test-2-cpu-usage.png)](assets/inline/test-2-cpu-usage.png)
 
 _Figure-3 Test 2 CPU usage_
 

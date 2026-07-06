@@ -1,0 +1,2 @@
+Prefix,Remark,Notes,Source of Truth for Indian zones
+2400:d960::/32,Sliced into /34s per Zone,PAN India Backbone (No customers to be assigned from this pool),https://www.dcmsme.gov.in/publications/tender/Final%20REoI/Annexure%201.pdf

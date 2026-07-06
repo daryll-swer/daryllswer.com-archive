@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Navigating a BGP Zombie Outbreak on Juniper Routers</title>
+  <meta name="description" content="A small article detailing an observation on BGP Zombies in Juniper platform.">
+  <link rel="canonical" href="https://daryll-swer.github.io/daryllswer.com-archive/posts/navigating-a-bgp-zombie-outbreak-on-juniper-routers/">
+  <meta property="og:title" content="Navigating a BGP Zombie Outbreak on Juniper Routers">
+  <meta property="og:description" content="A small article detailing an observation on BGP Zombies in Juniper platform.">
+  <meta property="og:image" content="https://daryll-swer.github.io/daryllswer.com-archive/posts/navigating-a-bgp-zombie-outbreak-on-juniper-routers/assets/featured.webp">
+  <link rel="stylesheet" href="../../assets/theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html" aria-label="daryllswer.com Archive home">
+    <span class="brand-mark">DS</span>
+    <span><strong>daryllswer.com</strong><small>Archive</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="../../index.html">Index</a>
+    <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
+    <a href="https://www.daryllswer.com/">Canonical site</a>
+  </nav>
+</header>
+<main class="article-shell">
+  <article class="article">
+    <header class="article-header">
+      <p class="meta">28 March 2023 / DC/Enterprise, Networking</p>
+      <h1>Navigating a BGP Zombie Outbreak on Juniper Routers</h1>
+      <p class="article-summary">A small article detailing an observation on BGP Zombies in Juniper platform.</p>
+      <img class="featured-image" src="assets/featured.webp" alt="">
+    </header>
+    <div class="article-body">
+      <p class="wp-block-paragraph"><strong>This article has been published on the <a href="https://blog.apnic.net/2023/04/13/navigating-a-bgp-zombie-outbreak-on-juniper-routers/" target="_blank" rel="noopener noreferrer">APNIC blog</a> as well.</strong></p>
+
+
+
+<p class="wp-block-paragraph">Border Gateway Protocol (BGP) routing issues in general, can be a headache for network engineers. However, when those issues start exhibiting <a href="https://labs.ripe.net/author/romain_fontugne/bgp-zombies/" target="_blank" rel="noopener noreferrer">zombie-like behaviour</a>, it’s time to take a closer look. This is exactly what I have observed on some Juniper routers in production at <a href="https://bgp.tools/as/48635" target="_blank" rel="noopener noreferrer">AS48635</a> running as edge routers (responsible for IP Transit, PNIs and IXP peering). This phenomenon is not only perplexing but can also impact traffic engineering efforts or in some rare cases, cause network disruptions.</p>
+
+
+
+<p class="wp-block-paragraph">In this article, I will share my experience with BGP zombie routes on Junos OS (JunOS).</p>
+
+
+
+<p class="wp-block-paragraph">However, please note that <strong>personally</strong> I am not a big Juniper user or fan, my home base has always been FRRouting (Linux) and MikroTik (also Linux with minimal vendor abstraction), so I may not necessarily have complete knowledge of JunOS quirks.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-background">Background</h2>
+
+
+
+<p class="wp-block-paragraph">At AS48635, one of the projects I worked on was cleaning up redundant route objects on IRR and performing route aggregation, that is, exporting only aggregates wherever possible to our external peers.</p>
+
+
+
+<p class="wp-block-paragraph">In our Juniper routers, this translates to:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Automatic generation of up-to-date prefix lists for our route policies using bgpq3.</li>
+
+
+
+<li>Properly configuring the <a href="https://www.juniper.net/documentation/us/en/software/junos/static-routing/topics/topic-map/config-route-aggregation.html" target="_blank" rel="noopener noreferrer">route aggregation</a> feature.</li>
+
+
+
+<li>The BGP peer export policy should only export aggregates, even if more specifics exist in the local routing table on a given router.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Below is a real-life configuration sample from one of the affected routers in production to give the readers some context. Please note, only IPv4 config is shared in this article, as IPv6 is identically configured, with the exact same end result (Zombie routes).</p>
+
+
+
+<pre class="wp-block-code"><code>#Up-to-date aggregate-only prefix list#
+policy-options {
+    }
+    prefix-list as48635-v4 {
+        2.57.56.0/22;
+        5.157.80.0/21;
+    }
+
+#BGP Policy logic#
+policy-statement as6453-v4-out {
+    term prefixes-out {
+        from {
+            family inet;
+            prefix-list as48635-v4;
+        }
+        then accept;
+    }
+    term else-reject {
+        then reject;
+    }
+}
+
+#Route Aggregation#
+routing-options {
+    aggregate {
+        defaults {
+            as-path {
+                origin igp;
+            }
+        }
+        route 2.57.56.0/22 discard;
+        route 5.157.80.0/21 discard;
+    }
+    generate {
+        route 0.0.0.0/0 discard;
+    }
+
+#BGP Peer#
+group ebgp-6453-v4 {
+    type external;
+    import [ XYZ ];
+    export as6453-v4-out;
+    remove-private {
+        all;
+    }
+    peer-as 6453;
+    multipath multiple-as;
+    neighbor 80.231.152.77 {
+        description TATA-v4;
+    }
+}</code></pre>
+
+
+
+<h2 class="wp-block-heading" id="h-context-expectation-vs-reality">Context (Expectation vs Reality)</h2>
+
+
+
+<p class="wp-block-paragraph">Based on the configuration sample shared, we expected to only see aggregates and not more-specific routes to be advertised to our peer. However, the following is what we observed:</p>
+
+
+
+<pre class="wp-block-code"><code>daryllswer@edge-juniper-router&gt; show route advertising-protocol bgp 80.231.152.77
+
+inet.0: 909266 destinations, 3698169 routes (909000 active, 2 holddown, 317 hidden)
+  Prefix		  Nexthop	       MED     Lclpref    AS path
+* 2.57.56.0/22            Self                                    I
+* 5.157.80.0/21           Self                                    I
+* 5.157.80.0/22           Self                                    I
+* 5.157.86.0/23           Self                                    I</code></pre>
+
+
+
+<p class="wp-block-paragraph">As we can see, for reasons I could not understand, our Juniper router in this example (multiple routers showed the same behaviour) is still exporting more specifics instead of only the aggregates to our peer. I understand from the configuration example shared that the router should only explicitly advertise aggregates, even if more specifics exist in the local table.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-debugging">Debugging</h2>
+
+
+
+<p class="wp-block-paragraph">The first step I took was to verify the route aggregation was working correctly and indeed it was:</p>
+
+
+
+<pre class="wp-block-code"><code>daryllswer@edge-juniper-router&gt; show route 2.57.56.0/22
+
+inet.0: 909307 destinations, 3698305 routes (909043 active, 0 holddown, 317 hidden)
++ = Active Route, - = Last Active, * = Both
+
+2.57.56.0/22       *[Aggregate/130] 1w4d 11:15:19
+                      Discard
+
+daryllswer@edge-juniper-router&gt; show route 5.157.80.0/21
+
+inet.0: 909328 destinations, 3698589 routes (909064 active, 0 holddown, 317 hidden)
++ = Active Route, - = Last Active, * = Both
+
+5.157.80.0/21      *[Aggregate/130] 1w4d 11:19:45
+                      Discard</code></pre>
+
+
+
+<p class="wp-block-paragraph">The second step I tried was to clear the BGP session with the affected peer(s) (<code>clear bgp neighbor 80.231.152.77</code>), but that did not resolve the issue.</p>
+
+
+
+<p class="wp-block-paragraph">The third step I tried was deactivating the BGP peer completely, and then re-enabling it, but that didn’t resolve the issue either.</p>
+
+
+
+<p class="wp-block-paragraph">The fourth step I tried was to verify that no legacy config on the router could be responsible for the issue and config was clean as expected.</p>
+
+
+
+<pre class="wp-block-code"><code>daryllswer@edge-juniper-router&gt; show configuration | display set | match 5.157.*
+set routing-options aggregate route 5.157.80.0/21 discard
+set policy-options prefix-list as48635-v4 5.157.80.0/21</code></pre>
+
+
+
+<p class="wp-block-paragraph">The final step I tried was a fresh <strong>reboot</strong> on <strong>all</strong> our Juniper edge routers, and voilà! Zombie routes disappeared.</p>
+
+
+
+<pre class="wp-block-code"><code>daryllswer@edge-juniper-router&gt; show route advertising-protocol bgp 80.231.152.77
+
+inet.0: 909222 destinations, 3940003 routes (908958 active, 0 holddown, 317 hidden)
+  Prefix		  Nexthop	       MED     Lclpref    AS path
+* 2.57.56.0/22            Self                                    I
+* 5.157.80.0/21           Self                                    I</code></pre>
+
+
+
+<p class="wp-block-paragraph"><strong>JunOS versions</strong>:</p>
+
+
+
+<p class="wp-block-paragraph">Different routers ran different JunOS versions and all of them were affected by the same issue. Although of course, these versions may not be the latest recommended versions, it does show that the issue is impacting multiple versions. Versions in use at the time of this issue include:</p>
+
+
+
+<ul class="wp-block-list">
+<li>17.3R3.10</li>
+
+
+
+<li>17.3R3-S7.2</li>
+
+
+
+<li>18.4R1-S6.3</li>
+
+
+
+<li>21.4R1-S1.6</li>
+
+
+
+<li>21.4R3.15</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading" id="h-conclusion">Conclusion</h2>
+
+
+
+<p class="wp-block-paragraph">In my experience working with alternative vendors like MikroTik (RouterOS) for a few years, I have <strong>never</strong> seen a BGP zombie route issue on their platform.</p>
+
+
+
+<p class="wp-block-paragraph">Based on my understanding of the configuration logic, debugging steps taken to resolve the issue and my personal previous experience with alternative vendors, I’m inclined to believe that the issue I have observed is <em>likely</em> a Juniper-specific bug, especially based on the fact that a reboot fixed it with no further configuration changes being made.</p>
+
+
+
+<p class="wp-block-paragraph">If this is indeed a Juniper-specific bug, this <em>could</em> also mean that a large part of Zombie routes in the Default-free zone (DFZ) could be due to the bug as many Tier 1, 2 and 3 networks (where zombie routes often are propagated) in the world also use Juniper equipment and one wouldn’t expect them to just reboot a router because of Zombie routes, so hence would leave Zombie routes lingering for a long time in the DFZ.</p>
+
+
+
+<p class="wp-block-paragraph">In short, a reboot should <strong>never</strong> be required to remove (or prevent) zombie routes in production.</p>
+
+
+
+<p class="wp-block-paragraph">If someone reading this post is from Juniper or someone with extensive knowledge of JunOS knows what the reason and preventive solution could be for this issue, please feel free to <a href="https://www.daryllswer.com/contact/" target="_blank" rel="noopener noreferrer">contact me</a> or via any of my professional social media profiles (DMs are open).</p>
+
+
+
+<h3 class="wp-block-heading" id="update-30th-march-2023">Update, 30th March 2023</h3>
+
+
+
+<p class="wp-block-paragraph">Some people have suggested using the ‘from protocol aggregate’ parameter in the policies as a mitigation/workaround. While this could in theory mitigate the issue, it also creates a problem with our internal policy logic because in this case we have downstream BGP customers, and their prefixes are part of as48635-v4 / as48635-v6 prefix list and for obvious reasons, we do not ‘aggregate’ customer prefixes. The as48635-v<strong>X</strong> prefix list is generated based on our AS-SET and hence this workaround isn’t ideal for us.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>At the same time, it still doesn’t answer the question of why a reboot fixed the issue just fine.</strong></p>
+
+    </div>
+    <footer class="article-footer">
+      <p>Canonical source: <a href="https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/">https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/</a></p>
+      <p>Archive source bundle: <a href="https://github.com/daryll-swer/daryllswer.com-archive/tree/main/content/posts/2023-03-28-navigating-a-bgp-zombie-outbreak-on-juniper-routers">content/posts/2023-03-28-navigating-a-bgp-zombie-outbreak-on-juniper-routers</a></p>
+    </footer>
+  </article>
+</main>
+</body>
+</html>

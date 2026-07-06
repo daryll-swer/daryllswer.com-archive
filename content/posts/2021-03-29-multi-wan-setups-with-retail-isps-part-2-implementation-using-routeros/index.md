@@ -74,13 +74,11 @@ add check-gateway=ping comment="Example Route for ISP3" distance=3 gateway=pppoe
 
 However, with **PPPoE**, this is not the case and on RouterOS, there are what a user calls “ghost bytes”. I will discuss PPPoE MTU in a future article, but for now, all that you need to do is set the underlying Ethernet interface’s actual MTU  to 1520 meaning the interface to which your uplink is connected. As of [RouterOS v7.2](https://forum.mikrotik.com/viewtopic.php?p=924589#p923904), MikroTik [has fixed the ghost bytes](https://web.archive.org/web/20220406203854/https://twitter.com/DaryllSwer/status/1511805609020366849), so please set it to **1508** instead (note I did not bother to update the diagrams below).
 
-[https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png](https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png)
-
 _Figure-1 (In this case, ether1 and ether2 are the underlying ethernet interfaces)_
 
 **Step 3**, **leave** MTU, MRU, MRRU **blank**to enable auto-negotiation, RouterOS will **automatically**find the correct MTU value set by your ISP. Along with MRU.
 
-[![](assets/inline/Figure-2.png)](https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2.png)
+[![](assets/inline/Figure-2.png)](assets/inline/Figure-2.png)
 
 _Figure-2 (PPPoE Client MTU Config)_
 
@@ -151,7 +149,7 @@ For P2P networking (assuming all the uplinks have a public IP), you’d need to 
 
 ### Side Note:
 
-In [part one](https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/), you may have noticed the [upload speed](https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png) is lower than what I claimed, and below is the explanation for that.
+In [part one](https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/), you may have noticed the [upload speed](assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png) is lower than what I claimed, and below is the explanation for that.
 
 - ISP1’s MTU = 1460, MRU = 1500
 - ISP2’s MTU = 1500, MRU = 1500

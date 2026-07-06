@@ -51,9 +51,22 @@
       "sha256": "d46a7c7156fd2510962efd37f81162878d9df7c3cb032298bf6cb0581004ba44",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1-2710x4320.png",
       "width": 2710
+    },
+    {
+      "alt": null,
+      "bytes": 685068,
+      "caption": null,
+      "detection_method": null,
+      "height": 5044,
+      "local_path": "content/posts/2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/assets/inline/Figure-3-ISP-Topology-Example-1.png",
+      "mime_type": "image/png",
+      "role": "linked-media",
+      "sha256": "8abb9748e59376079c26d2d37aa7a5bbc0560b0f139df1108013842bf2784e64",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1.png",
+      "width": 3164
     }
   ],
-  "generated_at": "2026-07-06T09:46:49+00:00",
+  "generated_at": "2026-07-06T12:02:51+00:00",
   "post_id": 1512,
   "post_slug": "ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators"
 }

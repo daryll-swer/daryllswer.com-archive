@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shortcomings of CGNAT and Potential Workarounds</title>
+  <meta name="description" content="An article on the limitations of CGNAT and what can be done to work around them.">
+  <link rel="canonical" href="https://daryll-swer.github.io/daryllswer.com-archive/posts/shortcomings-of-cgnat-and-potential-work-arounds/">
+  <meta property="og:title" content="Shortcomings of CGNAT and Potential Workarounds">
+  <meta property="og:description" content="An article on the limitations of CGNAT and what can be done to work around them.">
+  <meta property="og:image" content="https://daryll-swer.github.io/daryllswer.com-archive/posts/shortcomings-of-cgnat-and-potential-work-arounds/assets/featured.png">
+  <link rel="stylesheet" href="../../assets/theme.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="../../index.html" aria-label="daryllswer.com Archive home">
+    <span class="brand-mark">DS</span>
+    <span><strong>daryllswer.com</strong><small>Archive</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="../../index.html">Index</a>
+    <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
+    <a href="https://www.daryllswer.com/">Canonical site</a>
+  </nav>
+</header>
+<main class="article-shell">
+  <article class="article">
+    <header class="article-header">
+      <p class="meta">25 March 2021 / Networking</p>
+      <h1>Shortcomings of CGNAT and Potential Workarounds</h1>
+      <p class="article-summary">An article on the limitations of CGNAT and what can be done to work around them.</p>
+      <img class="featured-image" src="assets/featured.png" alt="">
+    </header>
+    <div class="article-body">
+      <blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph"><strong>2025 update <a href="../lets-talk-about-cgnat-and-ipv6-yet-again/">here</a>.</strong></p>
+</blockquote>
+
+
+
+<p class="wp-block-paragraph">This article will mostly focus on the cons of deploying CGNAT and how it ultimately affects the end-user, and what are some of the methods that we can use to improve it.</p>
+
+
+
+<p class="wp-block-paragraph">A quick recap on CGNAT, CGNAT is just a fancy name for NAT whereby an ISP will NAT or map multiple internal IPs (usually the ISP will incorrectly use <a href="https://www.rfc-editor.org/rfc/rfc1918" target="_blank" rel="noopener noreferrer">RFC1918</a>, but ideally should use <a href="https://datatracker.ietf.org/doc/html/rfc6598" target="_blank" rel="noopener noreferrer">RFC6598</a>) to a single external public IP, i.e., enabling a single public IP to be shared among n number of internal IPs, where each internal IP is assigned to an end-user. Methods used can vary from ISP to ISP, some would just use single source NATs, some would use deterministic NAT etc.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-shortcomings">Shortcomings</h2>
+
+
+
+<ol class="wp-block-list">
+<li>Breaks P2P traffic.</li>
+
+
+
+<li>Increases latency (due to TURN).</li>
+
+
+
+<li>It leads to NAT-keep alive traffic (such as NAT punching, NAT traversal mechanisms etc) on end-users’ local network as well as on the CGNAT device itself.
+<ol class="wp-block-list">
+<li>Which in theory could affect battery life on end-user devices.</li>
+
+
+
+<li>Increased link utilisation/CPU cycles on the CGNAT device.</li>
+</ol>
+</li>
+
+
+
+<li>Some end-user applications will simply refuse to work or fail miserably like Xbox Networking (P2P Gaming services), Torrent clients etc.</li>
+
+
+
+<li>Lacks NAT traversal mechanisms/port forwarding (by default).</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">Now the IETF published <a href="https://tools.ietf.org/html/rfc7021" target="_blank" rel="noopener noreferrer">RFC 7021</a> in 2013 which details how CGNAT impacts networking performance and end-user experience, if you want technically backed data and testing methodologies please check that out.</p>
+
+
+
+<h2 class="wp-block-heading" id="h-workarounds">Workarounds</h2>
+
+
+
+<p class="wp-block-paragraph">There are two broad ways to workaround CGNAT cons:</p>
+
+
+
+<h3 class="wp-block-heading" id="at-isp-level">At ISP Level</h3>
+
+
+
+<ol class="wp-block-list">
+<li>Do the obvious and <a href="../ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/">deploy IPv6</a>.
+<ul class="wp-block-list">
+<li>Once IPv6 is deployed, I recommend you remove CGNAT from the network and migrate to <a href="https://www.ripe.net/participate/meetings/open-house/presentations/richard-patterson-sky-italia-and-map-t" target="_blank" rel="noopener noreferrer">MAP-T</a> in conjunction with point number 2 below.</li>
+</ul>
+</li>
+
+
+
+<li>Ensure your CGNAT vendor/configuration is complying with <a href="https://www.juniper.net/documentation/us/en/software/junos/interfaces-next-gen-services/topics/concept/app-eim-overview.html#address-pooling-and-endpoint-independent-mapping-for-port-translation__d17021e54" target="_blank" rel="noopener noreferrer">Endpoint Independent Mapping/Endpoint Independent Filtering</a> (EIM-NAT). By doing so, you are ensuring that P2P (end-to-end) IPv4 traffic for your customers behind CGNAT will still work, this is the best solution short of migrating 100% to IPv6.
+<ul class="wp-block-list">
+<li>For MikroTik follow the CGNAT section(s) <a href="../edge-router-bng-optimisation-guide-for-isps/">here</a>—Though MikroTik added support for EIM-NAT since RouterOS v7.10, in my testing, it is broken and not up to the mark, hence the original netmap method is still relevant in the article.</li>
+</ul>
+</li>
+
+
+
+<li>Ensure <a href="https://datatracker.ietf.org/doc/html/rfc4787.html#section-6" target="_blank" rel="noopener noreferrer">Hairpinning</a> is enabled on the CGNAT software.</li>
+
+
+
+<li>Deploy Port Control Protocol [PCP (<a href="https://tools.ietf.org/html/rfc6887" target="_blank" rel="noopener noreferrer">RFC 6887</a>)].
+<ul class="wp-block-list">
+<li>PCP would allow port forwarding to work for end-users behind a CGNAT and hence improve their experience and reduce the visibility of the shortcomings.</li>
+
+
+
+<li>Needs a Server/Client model, so a client would need to run on end-user’s router/CPE.
+<ul class="wp-block-list">
+<li>Can use OpenWRT with <a href="https://github.com/fingon/minimalist-pcproxy" target="_blank" rel="noopener noreferrer">minimalist-pcproxy</a> to enable PCP client and PCP connectivity from end-users’ side for a cheap solution.</li>
+</ul>
+</li>
+
+
+
+<li>Many vendors like MikroTik (most widely used as a CGNAT device among Indian ISPs) do not support PCP.</li>
+
+
+
+<li>Lack of awareness among ISPs and network engineers.</li>
+
+
+
+<li>You can also have a <a href="https://danosproject.atlassian.net/wiki/spaces/DAN/pages/421101573/CGNAT+and+PCP#Introduction" target="_blank" rel="noopener noreferrer">web dashboard</a> for PCP to permit users to assign their own ports.</li>
+</ul>
+</li>
+</ol>
+
+
+
+<h3 class="wp-block-heading" id="at-end-user-level">At End User Level</h3>
+
+
+
+<ol class="wp-block-list">
+<li>Ask your ISP to read this article, tell them to deploy Full-Cone NAT and EIM-NAT configuration on their CGNAT box.</li>
+
+
+
+<li>Get a public IP from your ISP (most optimal solution).</li>
+
+
+
+<li>VPN based solution where you route all traffic over the tunnel, including multicast traffic (UPnP).
+<ul class="wp-block-list">
+<li>Many third party platforms exist such as Tailscale, ZeroTier etc.</li>
+
+
+
+<li>Set up your own VPN/VPS on a Cloud instance with public IP, and then run a VPN client on your home router/client device.</li>
+</ul>
+</li>
+</ol>
+
+
+
+<h2 class="wp-block-heading" id="conclusion">Conclusion</h2>
+
+
+
+<p class="wp-block-paragraph">Even if you properly configured CGNAT with full cone + EIM-NAT, it is still only a plaster solution. The proper solution is to migrate 100% to IPv6, and ensure IPv6 best practices are followed to the letter.</p>
+
+
+
+<p class="wp-block-paragraph">Additionally, for both ISPs and end-users, you can test the quality of your NAT44 (NAT) or NAT444 (CGNAT) configuration using this <a href="https://github.com/HMBSbige/NatTypeTester" target="_blank" rel="noopener noreferrer">tool</a>. If you see EIM-NAT and Full-Cone, then your IPv4 P2P networking will work fine, until you migrate fully to IPv6.</p>
+
+    </div>
+    <footer class="article-footer">
+      <p>Canonical source: <a href="https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/">https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/</a></p>
+      <p>Archive source bundle: <a href="https://github.com/daryll-swer/daryllswer.com-archive/tree/main/content/posts/2021-03-25-shortcomings-of-cgnat-and-potential-work-arounds">content/posts/2021-03-25-shortcomings-of-cgnat-and-potential-work-arounds</a></p>
+    </footer>
+  </article>
+</main>
+</body>
+</html>

@@ -41,6 +41,10 @@ def write_json(path: Path, data) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def sheet_readme_link(path: str) -> str:
+    return (ROOT / path).relative_to(OUT).as_posix()
+
+
 def slug(value: str) -> str:
     value = value.replace("::", "double-colon")
     value = re.sub(r"[/:]+", "-", value)
@@ -71,10 +75,24 @@ def write_blob(path: Path, body: bytes) -> dict:
     }
 
 
+def normalise_csv_bytes(body: bytes) -> bytes:
+    text = body.decode("utf-8-sig", errors="replace")
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+    return text.encode("utf-8")
+
+
+def normalise_html_bytes(body: bytes) -> bytes:
+    text = body.decode("utf-8-sig", errors="replace")
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+    text = "\n".join(line.rstrip() for line in text.split("\n"))
+    return text.encode("utf-8")
+
+
 def main() -> int:
     generated_at = now_iso()
     OUT.mkdir(parents=True, exist_ok=True)
     pubhtml_body, _ = request(PUBHTML)
+    pubhtml_body = normalise_html_bytes(pubhtml_body)
     pubhtml_text = pubhtml_body.decode("utf-8", errors="replace")
     title, tabs = parse_tabs(pubhtml_text)
 
@@ -92,6 +110,7 @@ def main() -> int:
 
         csv_url = f"{PUB}?gid={urllib.parse.quote(gid)}&single=true&output=csv"
         csv_body, csv_type = request(csv_url)
+        csv_body = normalise_csv_bytes(csv_body)
         csv_info = write_blob(OUT / "csv" / f"{base}.csv", csv_body)
         csv_info.update({
             "source_url": csv_url,
@@ -100,13 +119,14 @@ def main() -> int:
                 "delimiter": ",",
                 "quote_char": "\"",
                 "encoding": "utf-8",
-                "line_ending": "source export; normalised by validation when parsed",
+                "line_ending": "LF",
                 "empty_cell": "",
             },
         })
 
         sheet_html_url = f"{PUBHTML}/sheet?headers=false&gid={urllib.parse.quote(gid)}"
         sheet_html_body, sheet_html_type = request(sheet_html_url)
+        sheet_html_body = normalise_html_bytes(sheet_html_body)
         html_info = write_blob(OUT / "html" / f"{base}.html", sheet_html_body)
         html_info.update({"source_url": sheet_html_url, "content_type": sheet_html_type})
 
@@ -159,16 +179,22 @@ def main() -> int:
         "",
         "This directory stores the public Google Sheet linked from the IPv6 architecture post.",
         "",
-        "- `AS141253-ipv6-architecture-example.ods` is the styled open spreadsheet export.",
-        "- `csv/` contains one diffable CSV export per published tab.",
-        "- `csvw/` contains lightweight CSVW-style metadata.",
-        "- `html/` stores published HTML snapshots for visual/style reference.",
+        f"- [AS141253-ipv6-architecture-example.ods]({sheet_readme_link(ods_info['path'])}) is the styled open spreadsheet export.",
+        f"- [published-workbook.html]({sheet_readme_link(html_root['path'])}) is the full published workbook HTML snapshot.",
+        "- [csv/](csv/) contains one diffable CSV export per published tab.",
+        "- [csvw/](csvw/) contains lightweight CSVW-style metadata.",
+        "- [html/](html/) stores published HTML snapshots for visual/style reference.",
         "",
         "## Tabs",
         "",
     ]
     for tab in manifest_tabs:
-        readme_lines.append(f"- `{tab['name']}` (`gid={tab['gid']}`): `{tab['csv']['path']}`")
+        readme_lines.append(
+            f"- `{tab['name']}` (`gid={tab['gid']}`): "
+            f"[CSV]({sheet_readme_link(tab['csv']['path'])}), "
+            f"[HTML]({sheet_readme_link(tab['html']['path'])}), "
+            f"[CSVW metadata]({sheet_readme_link(tab['csvw']['path'])})"
+        )
     (OUT / "README.md").write_text("\n".join(readme_lines) + "\n", encoding="utf-8")
     print(f"exported {len(manifest_tabs)} sheet tabs")
     return 0
