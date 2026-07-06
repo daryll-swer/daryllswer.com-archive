@@ -7,7 +7,7 @@
 - Architecture reference: pending `ARCHITECTURE.md`
 - Current sprint / workstream: initial public mirror scaffold and sync
 - Status: complete; published to GitHub and old repo deleted
-- Last updated: 2026-07-06 09:37 UTC
+- Last updated: 2026-07-06 09:42 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -89,11 +89,15 @@
   - Result: in progress
 - 2026-07-06 09:37 UTC:
   - Action: Created and pushed `daryll-swer/daryllswer.com-archive`.
-  - Evidence: GitHub URL `https://github.com/daryll-swer/daryllswer.com-archive`, remote `main` at `517dca873eaabb649d5cf93651eb485f7b9d5270` before this status commit.
+  - Evidence: GitHub URL `https://github.com/daryll-swer/daryllswer.com-archive`; default branch `main`.
   - Result: pass
 - 2026-07-06 09:37 UTC:
   - Action: Deleted `daryll-swer/daryllswer.com-neteng-blog`.
   - Evidence: `gh repo view daryll-swer/daryllswer.com-neteng-blog` returned repository-not-found after deletion.
+  - Result: pass
+- 2026-07-06 09:42 UTC:
+  - Action: Rewrote the new archive repo's initial commit history to use GitHub no-reply commit identity.
+  - Evidence: Commits now use `Daryll Swer <80836254+daryll-swer@users.noreply.github.com>`.
   - Result: pass
 
 ## Tests and Verification
