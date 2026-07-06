@@ -8,7 +8,7 @@
 - Execution surface: macOS Codex Desktop
 - Status: complete; targeted article refresh, drift automation, and IPv6 hierarchy PoC pushed and live verified
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-06 18:09 UTC
+- Last updated: 2026-07-06 18:15 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -39,9 +39,10 @@
   - Complete locally: drift automation uses a `healthy` -> `degraded` -> `canonical_unavailable` -> `frozen_archive` state model; `frozen_archive` no-ops before canonical network requests.
   - Complete locally: AS141253 now has a CSV-derived IPv6 prefix containment tree proof of concept with HTML, JSON, and Graphviz DOT artefacts.
   - Complete: validation and browser QA passed for refreshed article featured images, workbook link, and CIDR hierarchy page.
-  - Complete: commit `6b00f09` pushed to `main`; GitHub Pages deployed successfully and live routes were verified.
+  - Complete: implementation and follow-up commits pushed to `main`; GitHub Pages deployed successfully and live routes were verified.
+  - Complete: the manual `Canonical drift check` workflow passed on final commit `d20085f` after switching the drift checker to a browser-compatible archive User-Agent.
 - Last material update:
-  - 2026-07-06 18:09 UTC Pushed commit `6b00f09`, verified GitHub Pages deployment succeeded, and live-checked refreshed article images plus AS141253 hierarchy routes.
+  - 2026-07-06 18:15 UTC Pushed final commit `d20085f`, verified Pages remained built, live-checked refreshed image/hierarchy routes, and confirmed the manual canonical drift workflow passed without creating another state commit.
 - Next pickup action:
   - Optional: decide whether to mirror the non-target A10 PDF drift reported for `lets-talk-about-cgnat-and-ipv6-yet-again`.
 - Open blockers or risks:
@@ -124,6 +125,7 @@
 - [x] 2026-07-06 18:01 UTC Regenerated sheet artefacts and GitHub Pages output.
 - [x] 2026-07-06 18:04 UTC Validation, public-safety scan, script compile, whitespace check, and local browser QA passed.
 - [x] 2026-07-06 18:09 UTC Committed `6b00f09`, pushed to `main`, verified Pages deployment success, and live-checked updated routes/assets.
+- [x] 2026-07-06 18:15 UTC Hardened the drift checker User-Agent after GitHub Actions saw HTTP 403, reset drift state to healthy, pushed `d20085f`, and verified the manual workflow passed.
 
 ## Decision Log
 
@@ -255,6 +257,9 @@
   - Local browser QA against `http://127.0.0.1:4173/`: passed at 2026-07-06 18:04 UTC; homepage had 19 cards, refreshed target articles had updated featured images, lazy inline images loaded after scroll, workbook linked the CIDR hierarchy, hierarchy page had 153 nodes, and desktop/mobile checks had no page overflow.
   - GitHub Pages deployment for `6b00f09`: passed at 2026-07-06 18:08 UTC; pages-build-deployment completed successfully.
   - Live Pages check: passed at 2026-07-06 18:09 UTC; root showed `Shortcomings_CGNAT_FT-scaled.jpg` and `Multi_WAN_FT-scaled.jpg`, target article/image URLs returned HTTP 200, AS141253 workbook/hierarchy/JSON/DOT routes returned HTTP 200, and hierarchy HTML included the clean `./` workbook link.
+  - GitHub Pages deployment for `d20085f`: passed at 2026-07-06 18:14 UTC.
+  - Manual `Canonical drift check` workflow for `d20085f`: passed at 2026-07-06 18:15 UTC and did not advance `origin/main`.
+  - Final live route check: passed at 2026-07-06 18:15 UTC for the refreshed featured-image assets and AS141253 hierarchy page.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`

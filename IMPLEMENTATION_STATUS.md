@@ -7,7 +7,7 @@
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: targeted post refresh, canonical drift automation, and IPv6 hierarchy PoC
 - Status: complete; pushed to `main` and live GitHub Pages output verified
-- Last updated: 2026-07-06 18:09 UTC
+- Last updated: 2026-07-06 18:15 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -94,6 +94,9 @@
 - Drift report:
   - Status: generated and pushed
   - Notes: Current state is `healthy` / `frozen=false`; report flags one non-target drift item for the CGNAT article's linked A10 PDF.
+- Drift workflow hardening:
+  - Status: complete and pushed
+  - Notes: Manual GitHub Actions dispatch initially received HTTP 403 from canonical REST. `scripts/check-canonical-drift.py` now uses a browser-compatible archive User-Agent; the final manual workflow run passed on commit `d20085f` without creating another state commit.
 
 ## Execution Log
 
@@ -225,6 +228,10 @@
   - Action: Committed and pushed `6b00f09`, then verified live GitHub Pages output.
   - Evidence: pages-build-deployment completed successfully. Live root showed updated featured image filenames; target article pages, image assets, AS141253 workbook, hierarchy HTML, JSON, and DOT routes returned HTTP 200.
   - Result: pass
+- 2026-07-06 18:15 UTC:
+  - Action: Hardened the canonical drift checker User-Agent, reset drift state to healthy, pushed `d20085f`, and reran the manual GitHub Actions workflow.
+  - Evidence: Manual `Canonical drift check` run `28813242318` completed successfully on `d20085f`; `git fetch origin main` showed local `main` still synced with `origin/main`, so the workflow did not create another state commit.
+  - Result: pass
 
 ## Tests and Verification
 
@@ -259,6 +266,9 @@
   - Local browser QA against `http://127.0.0.1:4173/`: pass at 2026-07-06 18:04 UTC for desktop/default and 390x844 mobile viewport.
   - GitHub Pages deployment for `6b00f09`: pass at 2026-07-06 18:08 UTC.
   - Live route checks: pass at 2026-07-06 18:09 UTC for refreshed articles/images and AS141253 workbook/hierarchy artefacts.
+  - GitHub Pages deployment for `d20085f`: pass at 2026-07-06 18:14 UTC.
+  - Manual `Canonical drift check` workflow for `d20085f`: pass at 2026-07-06 18:15 UTC.
+  - Final live route checks: pass at 2026-07-06 18:15 UTC for refreshed featured-image assets and AS141253 hierarchy page.
 - Not run:
   - None for the current update.
 
