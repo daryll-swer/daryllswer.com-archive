@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: publishing to GitHub; old repo deletion explicitly approved by owner
+- Status: complete; published to GitHub and old repo deleted
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-06 09:35 UTC
+- Last updated: 2026-07-06 09:37 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -22,13 +22,12 @@
 ## Current Status / Next Pickup
 
 - Current state:
-  - Complete locally: scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, and local preview generation finished.
+  - Complete: archive published to `daryll-swer/daryllswer.com-archive`; old `daryll-swer/daryllswer.com-neteng-blog` repo deleted.
 - Last material update:
-  - 2026-07-06 09:35 UTC Owner selected `daryllswer.com-archive` and approved creation/push plus deletion of old repo.
+  - 2026-07-06 09:37 UTC Created/pushed new public GitHub repo and deleted old repo.
 - Next pickup action:
-  - Commit locally, create/push `daryll-swer/daryllswer.com-archive`, then delete `daryll-swer/daryllswer.com-neteng-blog`.
+  - Review public repo and decide whether to add repository topics/description tweaks or future automation.
 - Open blockers or risks:
-  - Remote GitHub destructive deletion has explicit user confirmation for `daryll-swer/daryllswer.com-neteng-blog` only.
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
   - Browser visual QA was not performed beyond generated preview creation.
@@ -77,6 +76,8 @@
 - [x] 2026-07-06 09:30 UTC Added donation/support CTA archive filter, regenerated, and validated.
 - [x] 2026-07-06 09:32 UTC Applied MIT to scripts/tooling and updated licensing docs.
 - [x] 2026-07-06 09:35 UTC Owner selected repo name `daryllswer.com-archive`.
+- [x] 2026-07-06 09:37 UTC Created and pushed `daryll-swer/daryllswer.com-archive`.
+- [x] 2026-07-06 09:37 UTC Deleted old repo `daryll-swer/daryllswer.com-neteng-blog`.
 
 ## Decision Log
 
@@ -105,6 +106,11 @@
   - Date/Author: 2026-07-06, user
   - Status: final
   - Impact: Local docs and remote publishing target use `daryll-swer/daryllswer.com-archive`.
+- Decision: Delete old GitHub repo `daryllswer.com-neteng-blog`.
+  - Rationale: Owner explicitly requested complete deletion after creating/pushing the new archive repo.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final
+  - Impact: Old repo no longer resolves via GitHub API.
 
 ## Validation and Acceptance
 
@@ -142,6 +148,6 @@
 - Achieved:
   - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, and preview generation completed.
 - Remaining:
-  - Owner review and remote GitHub repo decision.
+  - Optional public repo metadata polish and future sync automation.
 - Retrospective timestamp:
   - 2026-07-06 09:20 UTC
