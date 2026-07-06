@@ -1,0 +1,37 @@
+{
+  "canonical_site": "https://www.daryllswer.com",
+  "created_at": "2026-07-06T17:52:37Z",
+  "failure": {
+    "consecutive_failures": 0,
+    "first_failure_at": null,
+    "last_failure_at": null,
+    "last_failure_detail": null,
+    "last_failure_kind": null
+  },
+  "frozen": false,
+  "http_cache": {
+    "https://www.daryllswer.com/wp-json/wp/v2/posts?per_page=100&_embed=1": {}
+  },
+  "last_drift_detected_at": "2026-07-06T17:53:07Z",
+  "last_drift_hash": "dbb5a9068216ceb23f727314912fb9e0096d0cdbb6d63fd39b3856b6b2ca4ff6",
+  "last_live_post_count": 19,
+  "last_success_at": "2026-07-06T17:53:07Z",
+  "manual_recovery": {
+    "unfreeze_steps": [
+      "Confirm the canonical site is again under the owner's control.",
+      "Change state from frozen_archive to healthy and frozen from true to false.",
+      "Reset failure.consecutive_failures to 0 and clear failure timestamps/details.",
+      "Run scripts/check-canonical-drift.py --force, then validate before resuming scheduled mirroring."
+    ]
+  },
+  "policy": {
+    "canonical_unavailable_after_consecutive_failures": 3,
+    "degraded_after_consecutive_failures": 1,
+    "frozen_archive_after_consecutive_failures": 8,
+    "frozen_archive_minimum_failure_window_days": 30,
+    "frozen_archive_noops_without_network": true
+  },
+  "state": "healthy",
+  "updated_at": "2026-07-06T17:53:07Z",
+  "version": 1
+}

@@ -1,15 +1,31 @@
 {
   "assets": [
     {
+      "alt": "",
+      "bytes": 174866,
+      "caption": "",
+      "detection_method": "rest_embedded_wp_featuredmedia",
+      "filename_preserved": true,
+      "height": 1707,
+      "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/Multi_WAN_FT-scaled.jpg",
+      "mime_type": "image/jpeg",
+      "role": "featured",
+      "sha256": "846feb197eec47c031e1dabd693f745deda48da074f35004acfc1c61aac471ea",
+      "source_filename": "Multi_WAN_FT-scaled.jpg",
+      "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
+      "stored_filename": "Multi_WAN_FT-scaled.jpg",
+      "width": 2560
+    },
+    {
       "alt": null,
       "bytes": 9954,
-      "caption": null,
-      "detection_method": "open_graph_og_image",
+      "caption": "Figure-1 (In this case, ether1 and ether2 are the underlying ethernet interfaces)",
+      "detection_method": null,
       "filename_preserved": true,
       "height": 232,
-      "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
+      "local_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/assets/inline/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
       "mime_type": "image/png",
-      "role": "featured",
+      "role": "inline",
       "sha256": "cdd891df066ab38344c777c3ef0f30daa34123f34299c0a5f448a057a026f43a",
       "source_filename": "Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
       "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
@@ -49,7 +65,7 @@
       "width": 1920
     }
   ],
-  "generated_at": "2026-07-06T12:46:54+00:00",
+  "generated_at": "2026-07-06T17:49:36+00:00",
   "post_id": 115,
   "post_slug": "multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros"
 }

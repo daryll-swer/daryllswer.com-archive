@@ -57,6 +57,7 @@ make sync
 make render-site
 make validate
 make scan-secrets
+make check-drift
 make render-preview
 ```
 
@@ -64,6 +65,59 @@ The scripts use public WordPress/API/sitemap/RSS/export surfaces only. If a
 future task needs authentication, private WordPress export, database access, SSH
 backend access, or destructive GitHub actions, stop for explicit owner approval
 first.
+
+## Canonical Drift Automation
+
+`.github/workflows/canonical-drift.yml` runs the public canonical drift check
+weekly and can be started manually with `workflow_dispatch`.
+
+The workflow calls `scripts/check-canonical-drift.py`, which compares public
+WordPress REST data with `archive-manifest.json` and per-post metadata. It
+checks for:
+
+- new published posts;
+- missing or unlisted archived posts;
+- changed slugs, titles, modified timestamps, and featured image URLs;
+- changed WordPress-uploaded body media links.
+
+This automation is detection-first. It writes durable state to
+`archive-status.json` and a human-readable report to
+`docs/CANONICAL_DRIFT.md`; it does not automatically refresh article bundles.
+
+The workflow is intentionally low-cost:
+
+- weekly schedule plus manual dispatch;
+- no private credentials;
+- public unauthenticated WordPress REST only;
+- 10 minute job timeout;
+- concurrency group with `cancel-in-progress`;
+- commit only durable drift state/report changes.
+
+Design references:
+
+- GitHub Actions workflow syntax:
+  <https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions>
+- GitHub Actions events and scheduled workflow behaviour:
+  <https://docs.github.com/actions/using-workflows/events-that-trigger-workflows>
+- Disabling and enabling workflows:
+  <https://docs.github.com/actions/managing-workflow-runs/disabling-and-enabling-a-workflow>
+- REST endpoint for disabling workflows, which requires Actions write
+  permission:
+  <https://docs.github.com/en/rest/actions/workflows>
+
+If `archive-status.json` reaches `frozen_archive`, future scheduled runs exit
+before making canonical network requests. This preserves the last known good
+archive if daryllswer.com becomes unavailable permanently.
+
+To unfreeze manually, a future maintainer must verify that the canonical site
+is healthy and owner-controlled, edit `archive-status.json` back to `healthy`,
+clear the failure counters, then run:
+
+```sh
+python3 scripts/check-canonical-drift.py --force
+make validate
+make scan-secrets
+```
 
 ## Archive Filters
 
@@ -125,6 +179,12 @@ The AS141253 Google Sheet is archived as a CSV-backed HTML workbook:
   standalone repository copy with clickable sheet tabs.
 - `docs/sheets/as141253-ipv6-architecture-example/index.html` is the generated
   GitHub Pages copy of the same workbook.
+- `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html` is the
+  static IPv6 CIDR containment tree proof of concept generated from CSV.
+- `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.json` is the
+  machine-readable hierarchy model.
+- `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.dot` is the
+  Graphviz DOT export for external layout experiments.
 - `data/sheets/as141253-ipv6-architecture-example/csv/` remains the editable
   text source for each tab.
 - `AS141253-ipv6-architecture-example.ods` and `html/` snapshots preserve
@@ -134,3 +194,8 @@ Google's CSV exports are normalised to LF line endings when written to the
 repository so tabular diffs remain stable under `.gitattributes`. Generated HTML
 artefacts also strip trailing line whitespace; binary ODS/media artefacts are
 left as binary files.
+
+The CIDR hierarchy uses a rooted IPv6 prefix containment tree. Prefixes are
+parsed from CSV `Prefix` columns with Python `ipaddress`; parent selection is
+the most-specific existing supernet containing a child prefix. The graph output
+is a proof of concept and does not replace the workbook view yet.

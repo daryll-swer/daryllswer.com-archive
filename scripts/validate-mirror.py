@@ -183,6 +183,29 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
             errors.append("spreadsheet tabbed workbook HTML missing sheet tabs")
         if workbook_html.count('class="sheet-tab-label"') != expected_tabs:
             errors.append("spreadsheet tabbed workbook HTML tab count does not match manifest")
+    hierarchy = manifest.get("cidr_hierarchy", {})
+    if hierarchy:
+        for key in ["json", "html", "dot"]:
+            item = hierarchy.get(key, {})
+            path_value = item.get("path")
+            if not path_value or not (ROOT / path_value).exists():
+                errors.append(f"spreadsheet CIDR hierarchy {key} artefact missing")
+                continue
+            if item.get("sha256") and sha256_file(ROOT / path_value) != item["sha256"]:
+                errors.append(f"spreadsheet CIDR hierarchy {key} checksum mismatch")
+        json_path = ROOT / hierarchy.get("json", {}).get("path", "")
+        html_path = ROOT / hierarchy.get("html", {}).get("path", "")
+        if json_path.exists():
+            try:
+                tree = load_json(json_path)
+                if not tree.get("prefix") or not tree.get("children"):
+                    errors.append("spreadsheet CIDR hierarchy JSON does not contain a prefix tree")
+            except Exception as exc:
+                errors.append(f"spreadsheet CIDR hierarchy JSON parse failed: {exc}")
+        if html_path.exists():
+            hierarchy_html = html_path.read_text(encoding="utf-8", errors="replace")
+            if "prefix-tree" not in hierarchy_html or "AS141253 IPv6 CIDR Hierarchy" not in hierarchy_html:
+                errors.append("spreadsheet CIDR hierarchy HTML missing expected tree UI")
     for tab in manifest.get("tabs", []):
         csv_info = tab.get("csv", {})
         csv_path = ROOT / csv_info.get("path", "")
@@ -229,6 +252,15 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
             errors.append("GitHub Pages AS141253 workbook tab count does not match manifest")
         if 'href="../../index.html"' in sheet_html:
             errors.append("GitHub Pages AS141253 workbook navigation should use ../../ instead of ../../index.html")
+        hierarchy_page = sheet_page.parent / "cidr-hierarchy.html"
+        if not hierarchy_page.exists():
+            errors.append("GitHub Pages AS141253 CIDR hierarchy page missing")
+        else:
+            hierarchy_html = hierarchy_page.read_text(encoding="utf-8", errors="replace")
+            if "prefix-tree" not in hierarchy_html:
+                errors.append("GitHub Pages AS141253 CIDR hierarchy page missing prefix tree UI")
+            if 'href="index.html"' in hierarchy_html:
+                errors.append("GitHub Pages AS141253 CIDR hierarchy should link back to ./ instead of index.html")
     index_html = site_index.read_text(encoding="utf-8", errors="replace")
     if "posts/" not in index_html:
         errors.append("GitHub Pages index does not link to generated post pages")
@@ -254,6 +286,40 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
                 errors.append(f"{post['slug']}: GitHub Pages article missing repo-hosted AS141253 sheet link")
             if "media-embed" not in html:
                 errors.append(f"{post['slug']}: GitHub Pages article missing podcast embed wrapper")
+
+
+def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | None:
+    workflow = ROOT / ".github" / "workflows" / "canonical-drift.yml"
+    status_path = ROOT / "archive-status.json"
+    report_path = ROOT / "docs" / "CANONICAL_DRIFT.md"
+    if not workflow.exists():
+        errors.append("canonical drift GitHub Actions workflow missing")
+    else:
+        text = workflow.read_text(encoding="utf-8", errors="replace")
+        for marker in ["schedule:", "workflow_dispatch:", "concurrency:", "timeout-minutes:", "scripts/check-canonical-drift.py"]:
+            if marker not in text:
+                errors.append(f"canonical drift workflow missing `{marker}`")
+    if not report_path.exists():
+        errors.append("canonical drift report missing")
+    if not status_path.exists():
+        errors.append("archive-status.json missing")
+        return None
+    try:
+        status = load_json(status_path)
+    except Exception as exc:
+        errors.append(f"archive-status.json parse failed: {exc}")
+        return None
+    allowed = {"healthy", "degraded", "canonical_unavailable", "frozen_archive"}
+    if status.get("state") not in allowed:
+        errors.append(f"archive-status.json has invalid state `{status.get('state')}`")
+    if status.get("state") == "frozen_archive" and status.get("frozen") is not True:
+        errors.append("archive-status.json frozen_archive state must set frozen=true")
+    if status.get("state") != "frozen_archive" and status.get("frozen") is True:
+        warnings.append("archive-status.json frozen=true outside frozen_archive state")
+    policy = status.get("policy", {})
+    if policy.get("frozen_archive_noops_without_network") is not True:
+        errors.append("archive-status.json must declare frozen_archive no-op policy")
+    return status
 
 
 def main() -> int:
@@ -305,6 +371,17 @@ def main() -> int:
     sheet_manifest = validate_spreadsheet(errors, warnings)
     if sheet_manifest:
         report.extend(["## Spreadsheet", "", f"- Tabs: {len(sheet_manifest.get('tabs', []))}", f"- ODS: `{sheet_manifest.get('ods', {}).get('path')}`", ""])
+        hierarchy = sheet_manifest.get("cidr_hierarchy", {})
+        if hierarchy:
+            report.extend([
+                f"- CIDR hierarchy nodes: {hierarchy.get('node_count')}",
+                f"- CIDR hierarchy max depth: {hierarchy.get('max_depth')}",
+                "",
+            ])
+
+    drift_status = validate_drift_automation(errors, warnings)
+    if drift_status:
+        report.extend(["## Canonical Drift Automation", "", f"- State: `{drift_status.get('state')}`", f"- Frozen: `{str(drift_status.get('frozen')).lower()}`", ""])
 
     report.extend(["## Result", ""])
     report.append(f"- Errors: {len(errors)}")

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T12:46:54+00:00",
+  "generated_at": "2026-07-06T17:49:36+00:00",
   "post_count": 19,
   "posts": [
     {
@@ -181,9 +181,9 @@
     {
       "bundle_path": "content/posts/2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros",
       "canonical_url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/",
-      "featured_image": "assets/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
+      "featured_image": "assets/Multi_WAN_FT-scaled.jpg",
       "id": 115,
-      "modified": "2025-05-21T01:47:29",
+      "modified": "2026-07-06T21:24:21",
       "published": "2021-03-29T20:34:19",
       "slug": "multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros",
       "title": "Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]",
@@ -192,9 +192,9 @@
     {
       "bundle_path": "content/posts/2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory",
       "canonical_url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/",
-      "featured_image": "assets/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+      "featured_image": "assets/Multi_WAN_FT-scaled.jpg",
       "id": 66,
-      "modified": "2025-06-23T20:40:50",
+      "modified": "2026-07-06T21:25:28",
       "published": "2021-03-28T13:44:36",
       "slug": "multi-wan-setups-with-retail-isps-part-1-theory",
       "title": "Multi-WAN setups with retail ISPs (Part 1 – Theory)",
@@ -203,9 +203,9 @@
     {
       "bundle_path": "content/posts/2021-03-25-shortcomings-of-cgnat-and-potential-work-arounds",
       "canonical_url": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
-      "featured_image": "assets/13_DS_Logo_Dark_Mode_SEO-scaled.png",
+      "featured_image": "assets/Shortcomings_CGNAT_FT-scaled.jpg",
       "id": 29,
-      "modified": "2025-09-28T03:24:17",
+      "modified": "2026-07-06T19:06:12",
       "published": "2021-03-25T11:15:43",
       "slug": "shortcomings-of-cgnat-and-potential-work-arounds",
       "title": "Shortcomings of CGNAT and Potential Workarounds",

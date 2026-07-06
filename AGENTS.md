@@ -51,6 +51,7 @@ make sync
 make render-site
 make validate
 make scan-secrets
+make check-drift
 make render-preview
 ```
 

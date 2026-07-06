@@ -59,38 +59,54 @@
               "href": "https://www.daryllswer.com/wp-json/wp/v2/media"
             }
           ],
+          "curies": [
+            {
+              "href": "https://api.w.org/{rel}",
+              "name": "wp",
+              "templated": true
+            }
+          ],
           "replies": [
             {
               "embeddable": true,
-              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=836"
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=5595"
             }
           ],
           "self": [
             {
-              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/836",
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5595",
               "targetHints": {
                 "allow": [
                   "GET"
                 ]
               }
             }
+          ],
+          "wp:attached-to": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+              "id": 115,
+              "post_type": "post"
+            }
           ]
         },
         "alt_text": "",
         "author": 1,
         "caption": {
-          "rendered": "<p>IP Address is intentionally left visible as it poses no security risk (Dynamic IP Address)</p>\n"
+          "rendered": ""
         },
-        "date": "2021-09-05T16:55:59",
+        "date": "2026-07-06T21:18:30",
         "featured_media": 0,
-        "id": 836,
+        "id": 5595,
         "jetpack_sharing_enabled": true,
-        "link": "https://www.daryllswer.com/figure-2-ip-address-is-intentionally-left-visible-as-it-poses-no-security-risk-dynamic-ip-address/",
+        "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/multi_wan_ft/",
         "media_details": {
-          "file": "2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-          "filesize": 71656,
-          "height": 947,
+          "file": "2021/03/Multi_WAN_FT-scaled.jpg",
+          "filesize": 174866,
+          "height": 1707,
           "image_meta": {
+            "alt": "",
             "aperture": "0",
             "camera": "",
             "caption": "",
@@ -104,47 +120,64 @@
             "shutter_speed": "0",
             "title": ""
           },
+          "original_image": "Multi_WAN_FT.jpg",
           "sizes": {
             "1536x1536": {
-              "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1536x758.png",
-              "filesize": 115595,
-              "height": 758,
-              "mime_type": "image/png",
-              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1536x758.png",
+              "file": "Multi_WAN_FT-1536x1024.jpg",
+              "filesize": 76494,
+              "height": 1024,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-1536x1024.jpg",
               "width": 1536
             },
+            "2048x2048": {
+              "file": "Multi_WAN_FT-2048x1365.jpg",
+              "filesize": 120902,
+              "height": 1365,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-2048x1365.jpg",
+              "width": 2048
+            },
             "full": {
-              "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-              "height": 947,
-              "mime_type": "image/png",
-              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
-              "width": 1920
+              "file": "Multi_WAN_FT-scaled.jpg",
+              "height": 1707,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
+              "width": 2560
+            },
+            "medium": {
+              "file": "Multi_WAN_FT-3240x2160.jpg",
+              "filesize": 264397,
+              "height": 2160,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-3240x2160.jpg",
+              "width": 3240
             },
             "medium_large": {
-              "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-768x379.png",
-              "filesize": 44690,
-              "height": 379,
-              "mime_type": "image/png",
-              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-768x379.png",
+              "file": "Multi_WAN_FT-768x512.jpg",
+              "filesize": 27543,
+              "height": 512,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-768x512.jpg",
               "width": 768
             },
             "thumbnail": {
-              "file": "Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1280x720.png",
-              "filesize": 106734,
-              "height": 720,
-              "mime_type": "image/png",
-              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address-1280x720.png",
-              "width": 1280
+              "file": "Multi_WAN_FT-1620x1080.jpg",
+              "filesize": 83245,
+              "height": 1080,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-1620x1080.jpg",
+              "width": 1620
             }
           },
-          "width": 1920
+          "width": 2560
         },
         "media_type": "image",
-        "mime_type": "image/png",
-        "slug": "figure-2-ip-address-is-intentionally-left-visible-as-it-poses-no-security-risk-dynamic-ip-address",
-        "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+        "mime_type": "image/jpeg",
+        "slug": "multi_wan_ft",
+        "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
         "title": {
-          "rendered": "Figure-2 [Multi-WAN setups with retail ISPs (Part 1 – Theory)]"
+          "rendered": "Multi_WAN_FT"
         },
         "type": "attachment"
       }
@@ -426,6 +459,12 @@
         "templated": true
       }
     ],
+    "predecessor-version": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/66/revisions/5597",
+        "id": 5597
+      }
+    ],
     "replies": [
       {
         "embeddable": true,
@@ -444,7 +483,7 @@
     ],
     "version-history": [
       {
-        "count": 0,
+        "count": 1,
         "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/66/revisions"
       }
     ],
@@ -456,7 +495,7 @@
     "wp:featuredmedia": [
       {
         "embeddable": true,
-        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/836"
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5595"
       }
     ],
     "wp:term": [
@@ -490,7 +529,7 @@
     "tag-load-balancing",
     "tag-multi-wan",
     "tag-networking",
-    "ratio-natural",
+    "ratio-2-1",
     "entry"
   ],
   "comment_status": "open",
@@ -504,7 +543,7 @@
     "protected": false,
     "rendered": "<p>An article on Multi-WAN setups using consumer-grade ISPs.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/\">Continue reading<span class=\"screen-reader-text\">Multi-WAN setups with retail ISPs (Part 1 &#8211; Theory)</span></a></div>\n"
   },
-  "featured_media": 836,
+  "featured_media": 5595,
   "format": "standard",
   "guid": {
     "rendered": "http://daryllswer.com/?p=66"
@@ -526,8 +565,8 @@
       "img": {
         "alt_text": "",
         "height": 200,
-        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=350%2C200&ssl=1",
-        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=1050%2C600&ssl=1 3x",
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
         "width": 350
       },
       "rel": "",
@@ -536,6 +575,33 @@
       "url_meta": {
         "origin": 66,
         "position": 0
+      }
+    },
+    {
+      "author": "Daryll Swer",
+      "block_context": {
+        "link": "https://www.daryllswer.com/category/networking/",
+        "text": "Networking"
+      },
+      "classes": [],
+      "context": "In &quot;Networking&quot;",
+      "date": "25 March 2021",
+      "excerpt": "An article on the limitations of CGNAT and what can be done to work around them.",
+      "format": false,
+      "id": 29,
+      "img": {
+        "alt_text": "",
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
+      },
+      "rel": "",
+      "title": "Shortcomings of CGNAT and Potential Workarounds",
+      "url": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
+      "url_meta": {
+        "origin": 66,
+        "position": 1
       }
     },
     {
@@ -560,32 +626,6 @@
       "rel": "",
       "title": "The Human Side of ISPs",
       "url": "https://www.daryllswer.com/the-human-side-of-isps/",
-      "url_meta": {
-        "origin": 66,
-        "position": 1
-      }
-    },
-    {
-      "author": "Daryll Swer",
-      "block_context": {
-        "link": "https://www.daryllswer.com/category/networking/",
-        "text": "Networking"
-      },
-      "classes": [],
-      "context": "In &quot;Networking&quot;",
-      "date": "25 March 2021",
-      "excerpt": "An article on the limitations of CGNAT and what can be done to work around them.",
-      "format": false,
-      "id": 29,
-      "img": {
-        "alt_text": "",
-        "height": 0,
-        "src": "",
-        "width": 0
-      },
-      "rel": "",
-      "title": "Shortcomings of CGNAT and Potential Workarounds",
-      "url": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
       "url_meta": {
         "origin": 66,
         "position": 2
@@ -673,7 +713,7 @@
       }
     }
   ],
-  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
   "jetpack_sharing_enabled": true,
   "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/",
   "meta": {
@@ -686,8 +726,8 @@
     "footnotes": "",
     "jetpack_post_was_ever_published": false
   },
-  "modified": "2025-06-23T20:40:50",
-  "modified_gmt": "2025-06-23T15:10:50",
+  "modified": "2026-07-06T21:25:28",
+  "modified_gmt": "2026-07-06T15:55:28",
   "ping_status": "open",
   "slug": "multi-wan-setups-with-retail-isps-part-1-theory",
   "status": "publish",

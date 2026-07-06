@@ -14,6 +14,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from ipv6_hierarchy import build_ipv6_hierarchy_artefacts
 from sheet_workbook import render_workbook_page
 
 
@@ -172,6 +173,7 @@ def main() -> int:
         "published_workbook_html": html_root,
         "tabs": manifest_tabs,
     }
+    manifest["cidr_hierarchy"] = build_ipv6_hierarchy_artefacts(ROOT, OUT, manifest)
     workbook_html = render_workbook_page(
         root=ROOT,
         manifest=manifest,
@@ -192,6 +194,9 @@ def main() -> int:
         "",
         f"- [AS141253-ipv6-architecture-example.ods]({sheet_readme_link(ods_info['path'])}) is the styled open spreadsheet export.",
         f"- [workbook.html]({sheet_readme_link(workbook_info['path'])}) is the standalone CSV-backed HTML workbook with clickable sheet tabs.",
+        f"- [cidr-hierarchy.html]({sheet_readme_link(manifest['cidr_hierarchy']['html']['path'])}) is the static IPv6 CIDR containment tree proof of concept.",
+        f"- [cidr-hierarchy.json]({sheet_readme_link(manifest['cidr_hierarchy']['json']['path'])}) is the machine-readable hierarchy model.",
+        f"- [cidr-hierarchy.dot]({sheet_readme_link(manifest['cidr_hierarchy']['dot']['path'])}) is a Graphviz DOT export.",
         f"- [published-workbook.html]({sheet_readme_link(html_root['path'])}) is the full published workbook HTML snapshot.",
         "- [csv/](csv/) contains one diffable CSV export per published tab.",
         "- [csvw/](csvw/) contains lightweight CSVW-style metadata.",

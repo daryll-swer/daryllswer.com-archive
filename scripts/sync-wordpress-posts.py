@@ -5,6 +5,8 @@
 
 from __future__ import annotations
 
+import argparse
+import copy
 import datetime as dt
 import email.message
 import hashlib
@@ -18,7 +20,6 @@ import sys
 import textwrap
 import urllib.parse
 import urllib.request
-import copy
 from pathlib import Path
 
 try:
@@ -103,6 +104,10 @@ def write_text(path: Path, text: str) -> None:
 
 def write_json(path: Path, data) -> None:
     write_text(path, json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
+
+
+def load_json(path: Path):
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -918,10 +923,45 @@ def fetch_all_posts() -> tuple[list[dict], dict[str, str]]:
     return all_posts, {"x_wp_total": str(total), "x_wp_totalpages": str(pages)}
 
 
-def main() -> int:
-    generated_at = now_iso()
-    posts, rest_headers = fetch_all_posts()
-    manifest_posts = [sync_post(post, generated_at) for post in posts]
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--slug",
+        action="append",
+        default=[],
+        help="Refresh only this WordPress post slug. May be supplied more than once.",
+    )
+    parser.add_argument(
+        "--slugs",
+        default="",
+        help="Comma-separated WordPress post slugs to refresh.",
+    )
+    return parser.parse_args()
+
+
+def selected_slugs(args: argparse.Namespace) -> set[str]:
+    slugs = set(args.slug)
+    if args.slugs:
+        slugs.update(item.strip() for item in args.slugs.split(",") if item.strip())
+    return slugs
+
+
+def default_sheets() -> list[dict]:
+    return [
+        {
+            "name": "AS141253 IPv6 Architecture Example",
+            "path": "data/sheets/as141253-ipv6-architecture-example/manifest.json",
+        }
+    ]
+
+
+def write_archive_manifest(
+    *,
+    generated_at: str,
+    rest_headers: dict[str, str],
+    manifest_posts: list[dict],
+    sheets: list[dict] | None = None,
+) -> None:
     manifest = {
         "generated_at": generated_at,
         "source_site": SITE,
@@ -929,14 +969,66 @@ def main() -> int:
         "rest_headers": rest_headers,
         "post_count": len(manifest_posts),
         "posts": manifest_posts,
-        "sheets": [
-            {
-                "name": "AS141253 IPv6 Architecture Example",
-                "path": "data/sheets/as141253-ipv6-architecture-example/manifest.json",
-            }
-        ],
+        "sheets": sheets or default_sheets(),
     }
     write_json(ROOT / "archive-manifest.json", manifest)
+
+
+def sync_selected_posts(posts: list[dict], rest_headers: dict[str, str], generated_at: str, slugs: set[str]) -> int:
+    archive_path = ROOT / "archive-manifest.json"
+    if not archive_path.exists():
+        print("error: archive-manifest.json missing; run a full sync before targeted refresh", file=sys.stderr)
+        return 1
+
+    posts_by_slug = {post["slug"]: post for post in posts}
+    missing = sorted(slug for slug in slugs if slug not in posts_by_slug)
+    if missing:
+        print(f"error: requested slug(s) not found in WordPress REST: {', '.join(missing)}", file=sys.stderr)
+        return 1
+
+    archive = load_json(archive_path)
+    refreshed = {
+        slug: sync_post(posts_by_slug[slug], generated_at)
+        for slug in sorted(slugs)
+    }
+
+    manifest_posts = []
+    seen: set[str] = set()
+    for item in archive.get("posts", []):
+        slug = item.get("slug")
+        if slug in refreshed:
+            manifest_posts.append(refreshed[slug])
+            seen.add(slug)
+        else:
+            manifest_posts.append(item)
+    for slug, item in refreshed.items():
+        if slug not in seen:
+            manifest_posts.append(item)
+
+    write_archive_manifest(
+        generated_at=generated_at,
+        rest_headers=rest_headers,
+        manifest_posts=manifest_posts,
+        sheets=archive.get("sheets") or default_sheets(),
+    )
+    print(f"synced {len(refreshed)} selected posts")
+    return 0
+
+
+def main() -> int:
+    args = parse_args()
+    generated_at = now_iso()
+    posts, rest_headers = fetch_all_posts()
+    slugs = selected_slugs(args)
+    if slugs:
+        return sync_selected_posts(posts, rest_headers, generated_at, slugs)
+
+    manifest_posts = [sync_post(post, generated_at) for post in posts]
+    write_archive_manifest(
+        generated_at=generated_at,
+        rest_headers=rest_headers,
+        manifest_posts=manifest_posts,
+    )
     print(f"synced {len(manifest_posts)} posts")
     return 0
 

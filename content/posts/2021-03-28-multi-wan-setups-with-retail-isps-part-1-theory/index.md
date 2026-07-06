@@ -2,10 +2,10 @@
 title: "Multi-WAN setups with retail ISPs (Part 1 – Theory)"
 slug: "multi-wan-setups-with-retail-isps-part-1-theory"
 date: "2021-03-28T13:44:36"
-last_modified: "2025-06-23T20:40:50"
+last_modified: "2026-07-06T21:25:28"
 canonical_url: "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/"
 wordpress_id: 66
-featured_image: "assets/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png"
+featured_image: "assets/Multi_WAN_FT-scaled.jpg"
 categories:
   - "Networking"
 tags:
@@ -15,7 +15,7 @@ tags:
   - "Multi-WAN"
   - "Networking"
 ---
-![Multi-WAN setups with retail ISPs (Part 1 – Theory)](assets/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png)
+![Multi-WAN setups with retail ISPs (Part 1 – Theory)](assets/Multi_WAN_FT-scaled.jpg)
 
 This will be a series with a [Part Two](https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/).
 
@@ -80,6 +80,6 @@ I have deployed a Multi-WAN environment in my own home using RB450Gx4 as the rou
 
 The end result of my setup is demonstrated below:
 
-[![](assets/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png)](assets/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png)
+[![](assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png)](assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png)
 
 _Figure-2 [IP Address is intentionally left visible as it poses no security risk (Dynamic IP Address)]_

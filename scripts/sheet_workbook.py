@@ -286,6 +286,12 @@ def render_workbook_page(
         f'<a href="{html_escape(workbook_rel)}">Original workbook snapshot</a>',
         f'<a href="{html_escape(manifest["source_url"])}">Original Google Sheet</a>',
     ]
+    cidr_hierarchy = manifest.get("cidr_hierarchy", {})
+    if cidr_hierarchy.get("html", {}).get("path"):
+        actions.insert(
+            0,
+            f'<a href="{html_escape(artifact_rel(cidr_hierarchy["html"]["path"], sheet_slug))}">CIDR hierarchy</a>',
+        )
     if home_href:
         actions.insert(0, f'<a href="{html_escape(home_href)}">Archive index</a>')
     if repo_href:

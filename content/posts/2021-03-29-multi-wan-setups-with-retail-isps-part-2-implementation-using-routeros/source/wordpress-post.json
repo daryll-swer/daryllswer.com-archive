@@ -2330,6 +2330,148 @@
         }
       ]
     ],
+    "wp:featuredmedia": [
+      {
+        "_links": {
+          "about": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/types/attachment"
+            }
+          ],
+          "author": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+            }
+          ],
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media"
+            }
+          ],
+          "curies": [
+            {
+              "href": "https://api.w.org/{rel}",
+              "name": "wp",
+              "templated": true
+            }
+          ],
+          "replies": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=5595"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5595",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ],
+          "wp:attached-to": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115",
+              "id": 115,
+              "post_type": "post"
+            }
+          ]
+        },
+        "alt_text": "",
+        "author": 1,
+        "caption": {
+          "rendered": ""
+        },
+        "date": "2026-07-06T21:18:30",
+        "featured_media": 0,
+        "id": 5595,
+        "jetpack_sharing_enabled": true,
+        "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/multi_wan_ft/",
+        "media_details": {
+          "file": "2021/03/Multi_WAN_FT-scaled.jpg",
+          "filesize": 174866,
+          "height": 1707,
+          "image_meta": {
+            "alt": "",
+            "aperture": "0",
+            "camera": "",
+            "caption": "",
+            "copyright": "",
+            "created_timestamp": "0",
+            "credit": "",
+            "focal_length": "0",
+            "iso": "0",
+            "keywords": [],
+            "orientation": "0",
+            "shutter_speed": "0",
+            "title": ""
+          },
+          "original_image": "Multi_WAN_FT.jpg",
+          "sizes": {
+            "1536x1536": {
+              "file": "Multi_WAN_FT-1536x1024.jpg",
+              "filesize": 76494,
+              "height": 1024,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-1536x1024.jpg",
+              "width": 1536
+            },
+            "2048x2048": {
+              "file": "Multi_WAN_FT-2048x1365.jpg",
+              "filesize": 120902,
+              "height": 1365,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-2048x1365.jpg",
+              "width": 2048
+            },
+            "full": {
+              "file": "Multi_WAN_FT-scaled.jpg",
+              "height": 1707,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
+              "width": 2560
+            },
+            "medium": {
+              "file": "Multi_WAN_FT-3240x2160.jpg",
+              "filesize": 264397,
+              "height": 2160,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-3240x2160.jpg",
+              "width": 3240
+            },
+            "medium_large": {
+              "file": "Multi_WAN_FT-768x512.jpg",
+              "filesize": 27543,
+              "height": 512,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-768x512.jpg",
+              "width": 768
+            },
+            "thumbnail": {
+              "file": "Multi_WAN_FT-1620x1080.jpg",
+              "filesize": 83245,
+              "height": 1080,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-1620x1080.jpg",
+              "width": 1620
+            }
+          },
+          "width": 2560
+        },
+        "media_type": "image",
+        "mime_type": "image/jpeg",
+        "slug": "multi_wan_ft",
+        "source_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
+        "title": {
+          "rendered": "Multi_WAN_FT"
+        },
+        "type": "attachment"
+      }
+    ],
     "wp:term": [
       [
         {
@@ -2689,6 +2831,12 @@
         "templated": true
       }
     ],
+    "predecessor-version": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115/revisions/5596",
+        "id": 5596
+      }
+    ],
     "replies": [
       {
         "embeddable": true,
@@ -2707,13 +2855,19 @@
     ],
     "version-history": [
       {
-        "count": 0,
+        "count": 1,
         "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/115/revisions"
       }
     ],
     "wp:attachment": [
       {
         "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=115"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5595"
       }
     ],
     "wp:term": [
@@ -2739,6 +2893,7 @@
     "type-post",
     "status-publish",
     "format-standard",
+    "has-post-thumbnail",
     "hentry",
     "category-networking",
     "tag-bandwidth",
@@ -2748,7 +2903,7 @@
     "tag-multi-wan",
     "tag-networking",
     "tag-routeros",
-    "ratio-natural",
+    "ratio-2-1",
     "entry"
   ],
   "comment_status": "open",
@@ -2762,7 +2917,7 @@
     "protected": false,
     "rendered": "<p>An article on deploying Multi-WAN using RouterOS.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/\">Continue reading<span class=\"screen-reader-text\">Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]</span></a></div>\n"
   },
-  "featured_media": 0,
+  "featured_media": 5595,
   "format": "standard",
   "guid": {
     "rendered": "http://daryllswer.com/?p=115"
@@ -2811,8 +2966,8 @@
       "img": {
         "alt_text": "",
         "height": 200,
-        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1",
-        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1400%2C800&ssl=1 4x",
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
         "width": 350
       },
       "rel": "",
@@ -2837,9 +2992,10 @@
       "id": 29,
       "img": {
         "alt_text": "",
-        "height": 0,
-        "src": "",
-        "width": 0
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
       },
       "rel": "",
       "title": "Shortcomings of CGNAT and Potential Workarounds",
@@ -2931,7 +3087,7 @@
       }
     }
   ],
-  "jetpack_featured_media_url": "",
+  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
   "jetpack_sharing_enabled": true,
   "link": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/",
   "meta": {
@@ -2944,8 +3100,8 @@
     "footnotes": "",
     "jetpack_post_was_ever_published": false
   },
-  "modified": "2025-05-21T01:47:29",
-  "modified_gmt": "2025-05-20T20:17:29",
+  "modified": "2026-07-06T21:24:21",
+  "modified_gmt": "2026-07-06T15:54:21",
   "ping_status": "open",
   "slug": "multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros",
   "status": "publish",

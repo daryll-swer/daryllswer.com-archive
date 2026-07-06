@@ -31,6 +31,10 @@ flowchart LR
   Site --> Pages["docs/ GitHub Pages site"]
   Manifest --> Validate["validate-mirror.py"]
   Pages --> Validate
+  Manifest --> Drift["check-canonical-drift.py"]
+  WP --> Drift
+  Drift --> Status["archive-status.json"]
+  Drift --> DriftReport["docs/CANONICAL_DRIFT.md"]
 ```
 
 ## Rendered Site
@@ -47,10 +51,48 @@ flowchart LR
   tabbed HTML workbook for the AS141253 sheet. It is rendered from repository
   CSV files and keeps adjacent ODS, CSV, CSVW, and Google HTML snapshots for
   editing/provenance.
+- `docs/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html` is a
+  generated proof-of-concept IPv6 prefix containment tree. It is derived from
+  the same CSV `Prefix` columns with Python `ipaddress` containment checks, and
+  has adjacent JSON and Graphviz DOT artefacts for future visualisation work.
 - Human-facing navigation and canonical URLs use clean directory URLs such as
   `https://daryll-swer.github.io/daryllswer.com-archive/`. The physical
   `docs/index.html` file remains the GitHub Pages entry point and generated
   artefact, not the preferred public link.
+
+## Canonical Drift Automation
+
+- `.github/workflows/canonical-drift.yml` runs a low-frequency weekly check and
+  supports manual `workflow_dispatch`.
+- `scripts/check-canonical-drift.py` uses only the public WordPress REST index
+  and local archive manifests. It checks for new, missing/unlisted, modified,
+  featured-image, and WordPress-uploaded-media drift.
+- The automation is detection-first. It records drift in
+  `docs/CANONICAL_DRIFT.md` and durable state in `archive-status.json`; it does
+  not silently rewrite article bundles.
+- The workflow has a 10 minute timeout and a concurrency group so overlapping
+  scheduled/manual runs cannot pile up.
+- The workflow commits only `archive-status.json` and `docs/CANONICAL_DRIFT.md`
+  when those durable drift-state files change. Timestamped validation reports
+  are not committed by scheduled checks.
+- Official GitHub Actions documentation supports scheduled and manual triggers,
+  workflow concurrency, timeout controls, and workflow disabling. This repo
+  still uses a sentinel/no-op pattern instead of self-disabling because it
+  avoids extra API credentials and keeps the archive state visible in Git.
+
+### Failure State Model
+
+- `healthy`: canonical REST is reachable and checked.
+- `degraded`: one or two consecutive canonical failures occurred. Existing
+  archive content remains untouched.
+- `canonical_unavailable`: three or more consecutive canonical failures
+  occurred.
+- `frozen_archive`: eight consecutive failures across at least 30 days occurred.
+  Future scheduled checks no-op before making any canonical network request.
+
+The frozen state is intended for owner-unavailable futures: DNS expiry, TLS
+failure, WordPress death, hosting loss, or a possibly hijacked canonical
+surface must not cause repeated workflow failures or archive deletion.
 
 ## Invariants
 
@@ -68,6 +110,9 @@ flowchart LR
 - Spreadsheet CSV files remain diffable; `workbook.html`/Pages sheet output is
   generated from those CSV files; ODS remains the styled editable open
   artefact.
+- The AS141253 CIDR hierarchy is derived from CSV, not manually maintained.
+  Parent/child edges must be calculated using IPv6 prefix containment. The
+  generated JSON, DOT, and HTML checksums are recorded in the sheet manifest.
 - Spreadsheet CSV exports are normalised to LF line endings for stable Git
   diffs; generated HTML artefacts strip trailing line whitespace; ODS remains a
   binary artefact.

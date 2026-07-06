@@ -470,6 +470,133 @@
         }
       ]
     ],
+    "wp:featuredmedia": [
+      {
+        "_links": {
+          "about": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/types/attachment"
+            }
+          ],
+          "author": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/users/1"
+            }
+          ],
+          "collection": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media"
+            }
+          ],
+          "replies": [
+            {
+              "embeddable": true,
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/comments?post=5593"
+            }
+          ],
+          "self": [
+            {
+              "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5593",
+              "targetHints": {
+                "allow": [
+                  "GET"
+                ]
+              }
+            }
+          ]
+        },
+        "alt_text": "",
+        "author": 1,
+        "caption": {
+          "rendered": ""
+        },
+        "date": "2026-07-06T19:04:45",
+        "featured_media": 0,
+        "id": 5593,
+        "jetpack_sharing_enabled": true,
+        "link": "https://www.daryllswer.com/shortcomings_cgnat_ft/",
+        "media_details": {
+          "file": "2026/07/Shortcomings_CGNAT_FT-scaled.jpg",
+          "filesize": 270456,
+          "height": 1659,
+          "image_meta": {
+            "alt": "",
+            "aperture": "0",
+            "camera": "",
+            "caption": "",
+            "copyright": "",
+            "created_timestamp": "0",
+            "credit": "",
+            "focal_length": "0",
+            "iso": "0",
+            "keywords": [],
+            "orientation": "0",
+            "shutter_speed": "0",
+            "title": ""
+          },
+          "original_image": "Shortcomings_CGNAT_FT.jpg",
+          "sizes": {
+            "1536x1536": {
+              "file": "Shortcomings_CGNAT_FT-1536x996.jpg",
+              "filesize": 131402,
+              "height": 996,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-1536x996.jpg",
+              "width": 1536
+            },
+            "2048x2048": {
+              "file": "Shortcomings_CGNAT_FT-2048x1328.jpg",
+              "filesize": 197333,
+              "height": 1328,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-2048x1328.jpg",
+              "width": 2048
+            },
+            "full": {
+              "file": "Shortcomings_CGNAT_FT-scaled.jpg",
+              "height": 1659,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg",
+              "width": 2560
+            },
+            "medium": {
+              "file": "Shortcomings_CGNAT_FT-3332x2160.jpg",
+              "filesize": 394329,
+              "height": 2160,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-3332x2160.jpg",
+              "width": 3332
+            },
+            "medium_large": {
+              "file": "Shortcomings_CGNAT_FT-768x498.jpg",
+              "filesize": 47946,
+              "height": 498,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-768x498.jpg",
+              "width": 768
+            },
+            "thumbnail": {
+              "file": "Shortcomings_CGNAT_FT-1666x1080.jpg",
+              "filesize": 147569,
+              "height": 1080,
+              "mime_type": "image/jpeg",
+              "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-1666x1080.jpg",
+              "width": 1666
+            }
+          },
+          "width": 2560
+        },
+        "media_type": "image",
+        "mime_type": "image/jpeg",
+        "slug": "shortcomings_cgnat_ft",
+        "source_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg",
+        "title": {
+          "rendered": "Shortcomings_CGNAT_FT"
+        },
+        "type": "attachment"
+      }
+    ],
     "wp:term": [
       [
         {
@@ -788,6 +915,12 @@
         "templated": true
       }
     ],
+    "predecessor-version": [
+      {
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29/revisions/5594",
+        "id": 5594
+      }
+    ],
     "replies": [
       {
         "embeddable": true,
@@ -806,13 +939,19 @@
     ],
     "version-history": [
       {
-        "count": 0,
+        "count": 1,
         "href": "https://www.daryllswer.com/wp-json/wp/v2/posts/29/revisions"
       }
     ],
     "wp:attachment": [
       {
         "href": "https://www.daryllswer.com/wp-json/wp/v2/media?parent=29"
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "embeddable": true,
+        "href": "https://www.daryllswer.com/wp-json/wp/v2/media/5593"
       }
     ],
     "wp:term": [
@@ -838,6 +977,7 @@
     "type-post",
     "status-publish",
     "format-standard",
+    "has-post-thumbnail",
     "hentry",
     "category-networking",
     "tag-cgnat",
@@ -846,7 +986,7 @@
     "tag-isps",
     "tag-nat",
     "tag-networking",
-    "ratio-natural",
+    "ratio-2-1",
     "entry"
   ],
   "comment_status": "open",
@@ -860,7 +1000,7 @@
     "protected": false,
     "rendered": "<p>An article on the limitations of CGNAT and what can be done to work around them.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/\">Continue reading<span class=\"screen-reader-text\">Shortcomings of CGNAT and Potential Workarounds</span></a></div>\n"
   },
-  "featured_media": 0,
+  "featured_media": 5593,
   "format": "standard",
   "guid": {
     "rendered": "http://daryllswer.com/?p=29"
@@ -909,8 +1049,8 @@
       "img": {
         "alt_text": "",
         "height": 200,
-        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1",
-        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1400%2C800&ssl=1 4x",
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
         "width": 350
       },
       "rel": "",
@@ -990,8 +1130,8 @@
       "img": {
         "alt_text": "",
         "height": 200,
-        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=350%2C200&ssl=1",
-        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png?resize=1050%2C600&ssl=1 3x",
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
         "width": 350
       },
       "rel": "",
@@ -1005,32 +1145,32 @@
     {
       "author": "Daryll Swer",
       "block_context": {
-        "link": "https://www.daryllswer.com/category/networking/architecture/",
-        "text": "Architecture"
+        "link": "https://www.daryllswer.com/category/networking/linux/",
+        "text": "Linux"
       },
       "classes": [],
-      "context": "In &quot;Architecture&quot;",
-      "date": "12 November 2024",
-      "excerpt": "How to design OOB networks for ISPs, inspired by data centre networking.",
+      "context": "In &quot;Linux&quot;",
+      "date": "19 May 2025",
+      "excerpt": "How to set up native routed IPv6 in Docker with routed mode.",
       "format": false,
-      "id": 2931,
+      "id": 5136,
       "img": {
         "alt_text": "",
         "height": 200,
-        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=350%2C200&ssl=1",
-        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png?resize=1400%2C800&ssl=1 4x",
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png?resize=1050%2C600&ssl=1 3x",
         "width": 350
       },
       "rel": "",
-      "title": "Out-of-Band Network Design for Service Provider Networks",
-      "url": "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/",
+      "title": "How to configure routed IPv6 in Docker",
+      "url": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/",
       "url_meta": {
         "origin": 29,
         "position": 5
       }
     }
   ],
-  "jetpack_featured_media_url": "",
+  "jetpack_featured_media_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg",
   "jetpack_sharing_enabled": true,
   "link": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
   "meta": {
@@ -1043,8 +1183,8 @@
     "footnotes": "",
     "jetpack_post_was_ever_published": false
   },
-  "modified": "2025-09-28T03:24:17",
-  "modified_gmt": "2025-09-27T21:54:17",
+  "modified": "2026-07-06T19:06:12",
+  "modified_gmt": "2026-07-06T13:36:12",
   "ping_status": "open",
   "slug": "shortcomings-of-cgnat-and-potential-work-arounds",
   "status": "publish",

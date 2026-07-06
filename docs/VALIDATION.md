@@ -1,6 +1,6 @@
 # Validation
 
-Generated: 2026-07-06T13:49:00+00:00
+Generated: 2026-07-06T18:07:04+00:00
 
 ## WordPress REST
 
@@ -16,6 +16,14 @@ Generated: 2026-07-06T13:49:00+00:00
 
 - Tabs: 9
 - ODS: `data/sheets/as141253-ipv6-architecture-example/AS141253-ipv6-architecture-example.ods`
+
+- CIDR hierarchy nodes: 153
+- CIDR hierarchy max depth: 5
+
+## Canonical Drift Automation
+
+- State: `healthy`
+- Frozen: `false`
 
 ## Result
 

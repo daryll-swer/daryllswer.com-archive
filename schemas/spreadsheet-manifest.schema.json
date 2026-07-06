@@ -28,6 +28,9 @@
     "published_workbook_html": {
       "type": "object"
     },
+    "cidr_hierarchy": {
+      "type": "object"
+    },
     "tabs": {
       "type": "array",
       "items": {
