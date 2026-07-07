@@ -1,0 +1,136 @@
+{
+  "files": [
+    {
+      "bytes": 39416,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-Light-devanagari.woff2",
+      "sha256": "f019bf8fa642981b9f12647688e825ccad3522d51f2f2859b1af372d5dc1ac31",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLDz8Z11lFd2JQEl8qw.woff2",
+      "subset": "devanagari",
+      "weight": "300"
+    },
+    {
+      "bytes": 5540,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-Light-latin-ext.woff2",
+      "sha256": "c2857fb5c3f971df45e8c2764709acbcc5c6d60b9e47d945ae2e7bc51415afeb",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLDz8Z1JlFd2JQEl8qw.woff2",
+      "subset": "latin-ext",
+      "weight": "300"
+    },
+    {
+      "bytes": 7844,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-Light-latin.woff2",
+      "sha256": "643e38d8c288a1da34a14a68a5012441929108d50054414ce8cc33fad36a2354",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLDz8Z1xlFd2JQEk.woff2",
+      "subset": "latin",
+      "weight": "300"
+    },
+    {
+      "bytes": 39504,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-Regular-devanagari.woff2",
+      "sha256": "23617a1bf667dd6a29e2724ac6595e75924549d1c25e8672e2346ef38bc9984a",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJbecnFHGPezSQ.woff2",
+      "subset": "devanagari",
+      "weight": "400"
+    },
+    {
+      "bytes": 5640,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-Regular-latin-ext.woff2",
+      "sha256": "1fae5e73d2788ee1dea1d76eca3a9f157a0386de6be8c280d076a53a64c358a1",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJnecnFHGPezSQ.woff2",
+      "subset": "latin-ext",
+      "weight": "400"
+    },
+    {
+      "bytes": 7900,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-Regular-latin.woff2",
+      "sha256": "3dc5d0c52428fe1696264907a1054ebbaac07f8cbe45832c105f819c2ae397c0",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecnFHGPc.woff2",
+      "subset": "latin",
+      "weight": "400"
+    },
+    {
+      "bytes": 39384,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-SemiBold-devanagari.woff2",
+      "sha256": "6d8ef422be4d827037f6f2d5766a0808018876fa5e9aa9a92787fad9d1f17938",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z11lFd2JQEl8qw.woff2",
+      "subset": "devanagari",
+      "weight": "600"
+    },
+    {
+      "bytes": 5552,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-SemiBold-latin-ext.woff2",
+      "sha256": "72efc6a32cfd37c557108628cffa01153c480c3d4cde556744406e50b9d8e9f7",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1JlFd2JQEl8qw.woff2",
+      "subset": "latin-ext",
+      "weight": "600"
+    },
+    {
+      "bytes": 7992,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-SemiBold-latin.woff2",
+      "sha256": "872e862918591a9e824dc03ed92f05729435ffbb8ebbb10eff7eda26592b1798",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFd2JQEk.woff2",
+      "subset": "latin",
+      "weight": "600"
+    },
+    {
+      "bytes": 39204,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-Bold-devanagari.woff2",
+      "sha256": "6eb8802d7319fcd48850eb38e41ed6ea12d917faafdfac7dae5614a517dc2b54",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z11lFd2JQEl8qw.woff2",
+      "subset": "devanagari",
+      "weight": "700"
+    },
+    {
+      "bytes": 5448,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-Bold-latin-ext.woff2",
+      "sha256": "2477683a4b1200680780a759cc1b93b816410362dc5f4c74ebfeafa212bcb74d",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1JlFd2JQEl8qw.woff2",
+      "subset": "latin-ext",
+      "weight": "700"
+    },
+    {
+      "bytes": 7848,
+      "family": "Poppins",
+      "file": "assets/fonts/Poppins-Bold-latin.woff2",
+      "sha256": "197a3cbd7290c242c5c765268cdd69a9a39867fdc80cd13071f243a81c56fb76",
+      "source_url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2",
+      "subset": "latin",
+      "weight": "700"
+    },
+    {
+      "bytes": 26520,
+      "family": "Raleway",
+      "file": "assets/fonts/Raleway-variable-latin-ext.woff2",
+      "sha256": "5730d3e0b43947bf35e7816fdbc1564a3017ba4f9f3e185e91f4095ed6af8838",
+      "source_url": "https://fonts.gstatic.com/s/raleway/v37/1Ptug8zYS_SKggPNyCMIT4ttDfCmxA.woff2",
+      "subset": "latin-ext",
+      "weight": "300 800"
+    },
+    {
+      "bytes": 43120,
+      "family": "Raleway",
+      "file": "assets/fonts/Raleway-variable-latin.woff2",
+      "sha256": "10f1a0ef3f3497901c1c3e9987d0cb97d092a6ce1ff45669a1aed503cf67e6ef",
+      "source_url": "https://fonts.gstatic.com/s/raleway/v37/1Ptug8zYS_SKggPNyC0IT4ttDfA.woff2",
+      "subset": "latin",
+      "weight": "300 800"
+    }
+  ],
+  "licence": "SIL Open Font License 1.1",
+  "licence_files": [
+    "assets/fonts/OFL-Poppins.txt",
+    "assets/fonts/OFL-Raleway.txt"
+  ],
+  "source_css": "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Raleway:wght@300;600;700;800&display=swap"
+}

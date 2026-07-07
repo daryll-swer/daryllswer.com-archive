@@ -26,7 +26,7 @@ tags:
 
 **This article has been published on the [APNIC blog](https://blog.apnic.net/2024/11/12/out-of-band-network-design-for-service-provider-networks/) as well as discussed on [The Hedge Podcast](https://rule11.tech/hedge-265/). It was also selected for APNIC’s 2024 “[Three of the best: How to](https://blog.apnic.net/2025/01/03/three-of-the-best-how-to-7/)”.**
 
-Firstly, I recommend you read my [IPv6 Architecture and Subnetting Guide](https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/) before proceeding with this article, as the implementations described here, are heavily dependent on global routing with IPv6.
+Firstly, I recommend you read my [IPv6 Architecture and Subnetting Guide](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md) before proceeding with this article, as the implementations described here, are heavily dependent on global routing with IPv6.
 
 A quick primer on Out-of-Band (OOB) networking — it is basically a network segment that is isolated from the production network or what I would call the ‘transit path’. Transit path, here, means the path used by customers to reach an endpoint on the public Internet and vice versa, the same way roads are public, but maintenance tunnels are not.
 
@@ -89,7 +89,7 @@ For the OOB L2 distribution and access switches, we used some Juniper EX switch 
 
 ### Edge
 
-The OOB edge router peers with third-party IP transit providers using its unique public ASN. In some sites, it also has an additional direct eBGP uplink to the production network’s edge router, serving as a secondary transit provider. From here, a **/48 IPv6 prefix** is originated for each OOB backbone site, following the guidance in my [IPv6 Architecture guide](https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/). The OOB edge router uses single-area OSPF with the Layer 3 distribution router to handle routing for both IPv6 subnets and legacy RFC1918/RFC6598 address ranges.
+The OOB edge router peers with third-party IP transit providers using its unique public ASN. In some sites, it also has an additional direct eBGP uplink to the production network’s edge router, serving as a secondary transit provider. From here, a **/48 IPv6 prefix** is originated for each OOB backbone site, following the guidance in my [IPv6 Architecture guide](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md). The OOB edge router uses single-area OSPF with the Layer 3 distribution router to handle routing for both IPv6 subnets and legacy RFC1918/RFC6598 address ranges.
 
 The RFC1918/RFC6598 ranges are then NATted on the OOB edge on egress towards WAN. The OOB edge has at least one public IPv4 address, often from a Provider-Independent Address (PIA) space that the company owns, assigned to the loopback interface or using the Provider-Assigned (PA) address configured by the third-party transit provider.
 
@@ -182,7 +182,7 @@ In these examples, AMS is the IATA airport code for Amsterdam, and ‘edge’ is
 
 ## Adapting to the service provider environment
 
-When tasked with designing an out-of-band (OOB) network from scratch for an ISP use case, I took a couple of weeks to step back, reflect, and analyse ways to adapt data centre-specific OOB designs for an ISP network. My goal was to incorporate a geographical denomination model similar to the one I’ve used in my [IPv6 Architecture](https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/). Unlike data centres, which are typically uniform at the physical layer, ISP networking is shaped by geography and has unique constraints.
+When tasked with designing an out-of-band (OOB) network from scratch for an ISP use case, I took a couple of weeks to step back, reflect, and analyse ways to adapt data centre-specific OOB designs for an ISP network. My goal was to incorporate a geographical denomination model similar to the one I’ve used in my [IPv6 Architecture](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md). Unlike data centres, which are typically uniform at the physical layer, ISP networking is shaped by geography and has unique constraints.
 
 For example, in mountainous regions, it’s impractical and costly to dedicate separate fibre cores for OOB and transit traffic due to high CapEx, OpEx, and labour costs. Therefore, the geographical denomination model becomes essential, allowing the OOB network design to adapt to the unique demands and constraints of each physical environment.
 
@@ -277,13 +277,13 @@ Generally speaking, most commercial networks have various PoPs, and these PoPs i
 This guide cannot cover every possible inter-site transport architecture and implementation, so I will share a few generalised guidelines that you can modify to your specific needs:
 
 1. Any downstream-facing inter-site OOB transport generally, is just stretching (yes stretching, not transport via L2VPN or other encapsulations) of the L2 OOB access VLANs to their intended remote sites or devices. We stretch the VLANs using simple VLAN tagging/untagging instead of any fancy SR/MPLS transport, because we want the OOB to function for these remote sites, even if the SR/MPLS network is offline. If there are no layer 1 failures or other single points of failure (LTE augmentation for example), we should be able to reach any, and every device in the network, irrelevant of the status of the SR/MPLS network.
-  
-  
+
+
   - As mentioned earlier, the 1310 nm expansion port of a DWDM unit can be used for (downstream) inter-site transport of OOB connectivity as highlighted in **Figure 6-7**.
 2. For DCI inter-site OOB transport, typically, this will be used to establish iBGP adjacency between OOB edge routers in each data centre (site). So, if your DCI is SR-MPLS/EVPN, you can absolutely create a pseudowire (EVPN-VPWS) to allow a point-to-point interconnect between both OOB edge routers.
 3. If you have **N**number of sites, at some point it may not be feasible for every OOB Edge router to peer with every other OOB edge router in N number of sites, using iBGP full mesh. For such cases, you can do any of the following:
-  
-  
+
+
   - Completely avoid iBGP adjacency between OOB edge routers, because OOB edges can still talk to each other over regular WAN routing via their IP transits. Because we are using globally reachable IPv6, with dedicated prefixes in each site, everything is just **routing**.
   - Establish iBGP adjacency only between directly connected data centres that do not have another data centre in between. For example, there can be iBGP adjacency between DC1 and DC2, but DC1 and DC3 would not have iBGP adjacency if the path is DC1<>DC2<>DC3.
   - Create your own rules and implementations as you see fit, for your specific use case and situation.
@@ -312,8 +312,8 @@ _Figure-9 OOB Access for Transport Gear_
 There are **N** number of possible combinations for network architecture, including OOB setups. While I cannot cover every possible scenario, here are some possible augmentations:
 
 1. **LTE connectivity:** You can enhance your design with LTE connectivity in several ways. Here are a couple of examples:
-  
-  
+
+
   - You have an OOB site that does not have IP Transit, just regular residential broadband with additional LTE failover. In such a case, you can use WireGuard to establish a tunnel between the broadband circuit and the LTE circuit back to the OOB backbone in a data centre. In this setup, you could run BGP+BFD over the tunnels to route the IPv6 /48 prefix, your BGP route filters will have a lower local-preference for the LTE circuit on both ends of the tunnel, allowing simple failover and a higher preference for wired broadband.
   - Another option is to further enhance the overall design by installing an additional serial console server at every site, point of presence (PoP), and rack. Each device’s serial console port would connect to the console server, which would then uplink to the OOB edge or an LTE router via USB at a remote site. This provides an additional access path in case the core IP side of the OOB network fails.
 2. **Tunnelling solutions:** If you choose to implement tunnelling solutions, I recommend keeping it simple with L3 and IPv6 routing. BGP and BFD work well over tunnels, but you should avoid any form of L2 tunnelling, as it increases complexity and overhead, which we want to minimise in OOB networks.

@@ -1,6 +1,6 @@
 # Validation
 
-Generated: 2026-07-06T18:07:04+00:00
+Generated: 2026-07-07T11:19:31+00:00
 
 ## WordPress REST
 
@@ -11,6 +11,13 @@ Generated: 2026-07-06T18:07:04+00:00
 
 - Sitemap post URLs: 18
 - Archive URLs: 19
+
+## Typography
+
+- Body/content font: `Poppins`
+- Heading/title font: `Raleway`
+- Self-hosted font files: 14
+- Self-hosted font bytes: 280912
 
 ## Spreadsheet
 

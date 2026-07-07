@@ -35,3 +35,15 @@ services, spreadsheets, or externally hosted artefacts.
 Do not assume third-party media or external artefacts are covered by either MIT
 or `CC-BY-NC-SA-4.0`. Preserve provenance where practical and flag unclear
 cases before redistribution.
+
+## Self-Hosted Fonts
+
+The archive self-hosts `Poppins` and `Raleway` WOFF2 font files under
+`assets/fonts/` and generated `docs/assets/fonts/`.
+
+- Licence: SIL Open Font License 1.1, per the family-specific files
+  `assets/fonts/OFL-Poppins.txt` and `assets/fonts/OFL-Raleway.txt`.
+- Provenance/checksums: `assets/fonts/manifest.json`.
+- Applies to: the font files only.
+- Does not apply to: repository scripts/tooling, mirrored article content,
+  mirrored media, spreadsheet content, or other third-party artefacts.

@@ -56,206 +56,206 @@ This guide is also available on the [APNIC Blog](https://blog.apnic.net/2021/06/
 ## Basic Router Terminology and overview
 
 - An **edge**or **border**router is an inter-AS router that is used for connecting different networks, such as transit, IXP, or PNIs.
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   - It is important to keep an edge router stateless i.e. without connection tracking (stateful firewall filter rules or NAT), to avoid performance issues and vulnerability to DDoS attacks.
   - Do not use an edge router for customer delegation, as it will become stateful.
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
   - Do not confuse an edge router with a *Provider Edge* router, which is an [MPLS-specific](https://www.rfc-editor.org/rfc/rfc4364#section-1.2) terminology.
 - A **core**router is **not**typically present in modern networks that follow a [collapsed core topology](https://study-ccna.com/collapsed-core-and-three-tier-architectures/).
-  
-  
-  - However, some people may incorrectly refer to an edge router as a core router due to [linguistic, cultural reasons, or misinformation](https://www.daryllswer.com/the-human-side-of-isps/).
+
+
+  - However, some people may incorrectly refer to an edge router as a core router due to [linguistic, cultural reasons, or misinformation](../2021-08-28-the-human-side-of-isps/index.md).
 - BNGs, also known as access layer routers, are used for customer delegation tasks such as PPPoE, DHCP, and CGNAT. They are stateful in nature. Some people may also refer to them as BRAS or NAS (Network Access Servers), all of which are synonyms in my opinion.
 
 ## General Configuration Changes
@@ -264,18 +264,18 @@ Below are the general guidelines that should be applied on all MikroTik devices 
 
 - Upgrade RouterOS **and** the [RouterBOARD firmware](https://help.mikrotik.com/docs/display/ROS/Upgrading+and+installation#Upgradingandinstallation-Suggestions) to the latest stable (or long-term if available) v7 releases, Use this command to enable firmware auto upgrade: “***/system routerboard settings set auto-upgrade=yes***”. Remember to reboot the router twice after the RouterOS upgrade to ensure firmware gets automatically upgraded.
 - Implement [basic security measures](https://help.mikrotik.com/docs/display/ROS/Securing+your+router), including [reverse path filtering](https://www.theurbanpenguin.com/rp_filter-and-lpic-3-linux-security/) and enabling TCP SYN cookies, for which the latter two are found in [IP>Settings](https://help.mikrotik.com/docs/display/ROS/IP+Settings#IPSettings-IPv4Settings).
-  
-  
+
+
   - For rp-filter use loose mode when a device is behind asymmetric routing or when in doubt, use strict mode when a device is behind symmetric routing.
 
 ### IPv6
 
-[IPv6 Router Advertisements (RA)](https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/) are used for SLAAC and/or DHCPv6 and in MikroTik it is called Neighbor Discovery (ND) which is a bit confusing as ND is an umbrella encompassing various protocols and behaviours and not only RAs.
+[IPv6 Router Advertisements (RA)](../2023-09-27-ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/index.md) are used for SLAAC and/or DHCPv6 and in MikroTik it is called Neighbor Discovery (ND) which is a bit confusing as ND is an umbrella encompassing various protocols and behaviours and not only RAs.
 
-IPv6 RA (ND) is enabled by default for *all* interfaces on RouterOS. This should be disabled to prevent sending RAs randomly out of interfaces that you do not use SLAAC on and for security reasons such as preventing someone from receiving an IPv6 address by connecting a host to a specific port or VLAN along with reducing unnecessary [BUM traffic](https://en.wikipedia.org/wiki/Broadcast,_unknown-unicast_and_multicast_traffic) in your network. We disable it using this command:  
+IPv6 RA (ND) is enabled by default for *all* interfaces on RouterOS. This should be disabled to prevent sending RAs randomly out of interfaces that you do not use SLAAC on and for security reasons such as preventing someone from receiving an IPv6 address by connecting a host to a specific port or VLAN along with reducing unnecessary [BUM traffic](https://en.wikipedia.org/wiki/Broadcast,_unknown-unicast_and_multicast_traffic) in your network. We disable it using this command:
 “***/ipv6 nd set [ find default=yes ] disabled=yes***”
 
-You can enable IPv6 RA on a per-interface basis as and when required, i.e. if you set “advertise=yes” for an interface via IPv6>Address, then you need to configure RA/ND for that interface like the example below:  
+You can enable IPv6 RA on a per-interface basis as and when required, i.e. if you set “advertise=yes” for an interface via IPv6>Address, then you need to configure RA/ND for that interface like the example below:
 “***/ipv6 nd add interface=Management_VLAN***”
 
 ### Interface Lists
@@ -292,7 +292,7 @@ The following are basic guidelines for which lists to create and what should be 
 - “**Management**” interface list should contain those interfaces used exclusively for management.
 - Do **not** add bridge members individually into any list as they are purely Layer 2 (L2) interfaces.
 
-It is however, important to note: When you are using bridges (which is discussed later in this article), the interface placements depend on how you set up the bridge – If you’re using a single bridge with physical/bonding interfaces as bridge members without any VLAN configuration, then the bridge will be a member of “**LAN**”. But if you are using VLANs on top of the bridge, then place the VLANs into their appropriate LAN/Intra-AS/Management list based on your local network topology. For example:  
+It is however, important to note: When you are using bridges (which is discussed later in this article), the interface placements depend on how you set up the bridge – If you’re using a single bridge with physical/bonding interfaces as bridge members without any VLAN configuration, then the bridge will be a member of “**LAN**”. But if you are using VLANs on top of the bridge, then place the VLANs into their appropriate LAN/Intra-AS/Management list based on your local network topology. For example:
 “Management VLAN” will be in the management list, or VLAN123 will be in the “intra-AS” or “LAN” list.
 
 [![](assets/inline/Figure-1-LAN-Include-Dynamic.png)](assets/inline/Figure-1-LAN-Include-Dynamic.png)
@@ -301,8 +301,8 @@ _Figure-1 (LAN Include Dynamic)_
 
 ### Connection Tracking
 
-- Disable connection tracking on the **edge**router and enable loose TCP tracking on **all** routers using the following commands:  
-  ***“/ip firewall connection tracking set enabled=no”  
+- Disable connection tracking on the **edge**router and enable loose TCP tracking on **all** routers using the following commands:
+  ***“/ip firewall connection tracking set enabled=no”
   “/ip firewall connection tracking set loose-tcp-tracking=yes”***
 - Use the recommended connection tracking timeout values to improve stability and performance, especially for UDP traffic like VoIP and gaming. If necessary, upgrade the router’s RAM to accommodate these values.
 
@@ -317,7 +317,7 @@ _Figure-2 (Recommended Connection Tracking Timeout Values)_
 
 ### Miscellaneous
 
-- Give the router an accurate system clock by enabling the Network Time Protocol (NTP) client and specifying a reliable NTP server such as this example:  
+- Give the router an accurate system clock by enabling the Network Time Protocol (NTP) client and specifying a reliable NTP server such as this example:
   ***“/system ntp client set enabled=yes server-dns-names=time.cloudflare.com”***
 
 ## MTU
@@ -336,7 +336,7 @@ L2 MTU, also known as the “media MTU” should be configured to the ***maximum
 
 However, it is important to note that, you must ensure the interfaces ***all have*** consistently maximum values to minimise the number of MTU profiles on the device – The switch chip or ASIC has limited support for *n* number of MTU profiles which if exceeded could hurt performance or lead to undefined behaviours.
 
-By properly configuring the L2 MTU, you can run any protocol you want (such as VXLAN, MPLS, VPLS, or WireGuard) and still have an MTU far greater than 1500 for layer 3 packets, thereby avoiding fragmentation **completely** on the overlay, intra-as.  
+By properly configuring the L2 MTU, you can run any protocol you want (such as VXLAN, MPLS, VPLS, or WireGuard) and still have an MTU far greater than 1500 for layer 3 packets, thereby avoiding fragmentation **completely** on the overlay, intra-as.
 Example:
 
 - Edge router (L2 MTU 9216) > BNG (L2 MTU 9216) > PE router (L2 MTU 9216) > Wireless AP (Bridged mode, often carries 9216 or similar L2 MTU) > Customer edge router (L2 MTU for WAN 9216)
@@ -494,7 +494,7 @@ I have noticed a lot of operators talking about how short they are on IPv4 addre
 
 However, RouterOS v6+v7 does not support /31 natively, the following is how we do it.
 
-Example below:  
+Example below:
 Prefix: 103.176.189.0/31
 
 ```
@@ -524,11 +524,11 @@ add address=103.176.189.1 interface=ether1 network=103.176.189.0 comment="/31 Ex
 
 As per [RFC6164](https://datatracker.ietf.org/doc/html/rfc6164#section-5), it is advised to use **/127s** on PTP links to avoid various forms of network attacks described in the RFC.
 
-However, for ease of management and subnetting, I would advise not to subnet longer (smaller) than a /64. Please [click here](https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/) to learn more about IPv6 architecture and subnetting plan.
+However, for ease of management and subnetting, I would advise not to subnet longer (smaller) than a /64. Please [click here](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md) to learn more about IPv6 architecture and subnetting plan.
 
 Note that on MikroTik, /127s do not work with BGP for unknown reasons and hence the longest prefix size we can use would be a /126.
 
-Example below:  
+Example below:
 Prefix: 2400:7060::/126
 
 ```
@@ -537,7 +537,7 @@ Prefix: 2400:7060::/126
 add address=2400:7060::1/126 advertise=no comment="Peering with Transit" interface=ether1
 ```
 
-However, if you look closely, you might’ve noticed that I avoided using the initial zeroes leading interface ID “2400:7060**::**/126″ and instead used “2400:7060**::1**/126″. The reason for this is, that in some routers, using the “::” (all leading zeroes) interface ID (address) on a link could cause [strange behaviours](https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/).
+However, if you look closely, you might’ve noticed that I avoided using the initial zeroes leading interface ID “2400:7060**::**/126″ and instead used “2400:7060**::1**/126″. The reason for this is, that in some routers, using the “::” (all leading zeroes) interface ID (address) on a link could cause [strange behaviours](../2023-08-28-behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/index.md).
 
 ## Routing loops with RFC6890 space
 
@@ -665,38 +665,38 @@ _Figure-5 (Bufferbloat test on a wireless network designed and implemented by da
 **Issues**
 
 - Packet fragmentation due to non-standard 1500 MTU/MRU
-  
+
   - Typically, ISPs use 1492 or 1480 or some other strange MTU size
   - Both BNG device and customer router need to make use of hacks like TCP MSS Clamping to work around this
-  
-  
-  
-  
+
+
+
+
   - PMTUD is simply unreliable as per [RFC 8900](https://datatracker.ietf.org/doc/html/rfc8900)
-    
-    
+
+
     - Gets worse with CGNAT because remote end-points cannot determine the MTU of your PPPoE customer behind it
 - Lack of proper routing for PPPoE Clients (Interfaces or Inter-VLANs)
-  
-  
+
+
   - Most assume that using a single profile for different PPPoE Servers running on different interfaces will work fine
 
 **Solutions**
 
 - The real long term solution is to migrate to DHCP to completely avoid all performance and MTU issues that are exclusively only an issue on PPPoE and similar encapsulation protocols.
 - Deploy [RFC 4638](https://datatracker.ietf.org/doc/html/rfc4638)
-  
+
   - Keep in mind that in a network, MTU**affects** the **whole path**of L2/L3 devices whether **physical** or **virtual**, as long as you follow the MTU section above, you should be good
-  
-  
-  
-  
+
+
+
+
   - Simply set MTU and MRU to 1500 **inside PPPoE Server** on the BNG
-    
-    
+
+
     - However, if you are interested in the whole jumbo frames to your peers/PNI/IXP etc – You can configure MTU/MRU to fixed **9000 bytes**, the reason for 9000 nytes for inter-AS traffic is explained [here](https://www.ietf.org/proceedings/82/slides/grow-2.pdf)
-      
-      
+
+
       - In order for this to work correctly you need to strictly follow the MTU section
       - If using **Wireless**APs, then it would 2290-8=**2282**bytes
 
@@ -705,21 +705,21 @@ _Figure-5 (Bufferbloat test on a wireless network designed and implemented by da
 _Figure-6 (PPPoE Server MTU/MRU & TCP MSS Clamping config)_
 
 - Disable (and **delete**!) TCP MSS Clamping rules inside **IP>Firewall>Mangle**
-  
+
   - Why set some arbitrary value when you can let the engine determine automatically to ensure optimal performance?
-    
+
     - MikroTik has long since [allowed](https://forum.mikrotik.com/viewtopic.php?t=124717#p615828) automatic TCP MSS ClampingMake use of **PPP**>**Profile**>Default* to enable TCP MSS Clamping directly on the **PPPoE engine**. This will do the work for any customer whose MTU/MRU is less than 1500.
-  
-  
-  
-  
+
+
+
+
   - On the customer side, not all routers can take advantage of RFC4638, such as TP-Link, Tenda etc. For them, **MTU**will remain capped at **1492**.
-    
+
     - The 1492 limitation on their end won’t cause issues with packet fragmentation as packets would fragment at the source (their routers) before it exits the interface and hits the BNG and TCP Clamping on PPPoE engine takes care of anything coming in from the outside world toward the customer
-    
-    
-    
-    
+
+
+
+
     - I have observed 1500 **MRU**when pinging from the outside world. Suggesting some of these consumer routers support 1500 **MRU**
     - If they are using MikroTik, pfSense, VyOS etc, they can take advantage of RFC4638 aka 1500 MTU/MRU for their PPPoE Client
     - Some ONT/ONU devices have strange behaviour for MTU negotiation where they simply do not allow RFC4638 to work (even in bridge mode), only a few brands like GX, TP-Link, and Huawei have been found to be flawless in my personal testing.
@@ -734,21 +734,21 @@ _Figure-7 (MTU and TCP MSS correctly working on the internet)_
 
 **Extra Note on PPPoE**
 
-- Create a single CGNAT pool on a per BNG basis and you can use it for n Number of PPPoE Servers on n number of interfaces  
+- Create a single CGNAT pool on a per BNG basis and you can use it for n Number of PPPoE Servers on n number of interfaces
   `/ip pooladd name=CGNAT_Pool comment="100.64.0.0-9 is reserved for each PPPoE Server Gateway/Profile" ranges=100.64.0.10-100.127.255.255`
-  
-  
+
+
   - Here we are reserving 100.64.0.0-9 for gateway IPs on a per-interface/PPPoE server basis, assuming we only have 10 VLANs/Interfaces
-    
-    
+
+
     - Reserve as per your local requirements
 - Local Address in PPP Profile = Gateway IP address
-  
-  
+
+
   - One common mistake is using the router’s public IP from the WAN interface as the local address, which I’ve seen could lead to issues like traceroute failures or some strange packet loss, you should be using an address that does **not** exist in **IP>Address**
   - Each PPPoE Server needs unique profile/gateway in order to allow inter-VLAN communication between CPEs (which is needed to allow two customers behind a NATted IP to play a P2P Xbox game with each other on different VLANs) and will also ensure a clean network approach
-    
-    
+
+
     - If you have **100 PPPoE Servers**, there should be **100 unique PPP Profiles** with **unique local addresses** for each
   - Something like this for two servers:
 
@@ -827,7 +827,7 @@ add blackhole comment="Blackhole-CGNAT pool" dst-address=103.176.189.0/30
 
 In my extensive testing and observations, when using the above parameters and steps, I was able to have 200 users behind a /30 without any known complaints from them. BitTorrent worked as expected too, this is likely due to the obvious fact that not all users out of 200 will max out 65k connections and hence use up all the IP:Port combination. Where will you find a CPE that can handle 65k NAT entries anyways?
 
-So tl;dr you can use a /30 per 200 users as long as you follow the steps properly and also to be future-proof and safe, ensure you provide [IPv6](https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/) as well.
+So tl;dr you can use a /30 per 200 users as long as you follow the steps properly and also to be future-proof and safe, ensure you provide [IPv6](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md) as well.
 
 **End Result**
 
@@ -847,8 +847,8 @@ For CGNAT logging for compliances purpose, you can use [Traffic Flow](https://he
 - ISP may only have something like a single /48 with 5000 customers downstream which exceeds possible /56s out of the /48
 - Not following the proper [guidelines](https://www.ripe.net/publications/docs/ripe-690) for IPv6 deployment
 - Lack of [persistent assignment](https://www.ripe.net/publications/docs/ripe-690#5-2--why-non-persistent-assignments-are-considered-harmful) feature on MikroTik
-  
-  
+
+
   - This applies to the majority of ISPs even though they may use Cisco, Juniper etc which supports persistent assignment configuration
 - Not properly ensuring that the customer’s WAN side gets a proper single /64
 - Forcing the customer to have only a single /64 on the LAN side instead of /56
@@ -856,35 +856,35 @@ For CGNAT logging for compliances purpose, you can use [Traffic Flow](https://he
 
 **Solutions**
 
-- A proper [IPv6 architecture and subnetting](https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/) plan should be implemented
-  
-  
-  - However, the logic is simple  
-    Ensure customers get **/64 WAN side** and **/56 LAN side** for **home users**  
+- A proper [IPv6 architecture and subnetting](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md) plan should be implemented
+
+
+  - However, the logic is simple
+    Ensure customers get **/64 WAN side** and **/56 LAN side** for **home users**
     Ensure customers  get **/64 WAN side** and **/48 LAN side** for **enterprise/SMEs/DC etc**
 - Ensure you request for appropriate prefix allocation based on your customer base from your Regional Internet registry/Local Internet registry
 - Follow the proper guidelines and BCOPs
-- I came across [a solution](https://forum.mikrotik.com/viewtopic.php?t=163276#p926992) for the lack of **persistent assignment** on MikroTik, simply use the following script and schedule it to run every five minutes:  
-  **`#Please don't be stupid enough to set owner=Daryll#`**`/system scriptadd dont-require-permissions=no name=PPPoE-IPv6-Persistent owner=Daryll policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=\"/ipv6 dhcp-server binding;\r\\n:foreach i in=[find server~\"pppoe\"] do={\r\\n make-static \$i;\r\\n set \$i comment=[get \$i server];\r\\n set \$i server=all;\r\\n}"`  
-  Use the scheduler for automating it:  
-  `/system scheduler`  
+- I came across [a solution](https://forum.mikrotik.com/viewtopic.php?t=163276#p926992) for the lack of **persistent assignment** on MikroTik, simply use the following script and schedule it to run every five minutes:
+  **`#Please don't be stupid enough to set owner=Daryll#`**`/system scriptadd dont-require-permissions=no name=PPPoE-IPv6-Persistent owner=Daryll policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=\"/ipv6 dhcp-server binding;\r\\n:foreach i in=[find server~\"pppoe\"] do={\r\\n make-static \$i;\r\\n set \$i comment=[get \$i server];\r\\n set \$i server=all;\r\\n}"`
+  Use the scheduler for automating it:
+  `/system scheduler`
   `add interval=5m name=PPPoE-IPv6-Persistent-AutoUpdate on-event=PPPoE-IPv6-Persistent policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon start-time=startup`
 
 Now I will cover a simple configuration use-case where a BNG has exactly 1000 customers. The goal here is to ensure that the **WAN side** of each customer gets a **/64**and the**LAN side** gets a **/56**.
 
-- Disable redirects  
+- Disable redirects
   `/ipv6 settings set accept-redirects=no`
 - Next need to create two separate pools, one for WAN and one for the LAN side of the customer
-  
-  
+
+
   - `/ipv6 pooladd name=Customer-CPE-LAN prefix=2405:a140:8::/46 prefix-length=56add name=Customer-CPE-WAN prefix=2405:a140:f:d400::/54 prefix-length=64`
-    
-    
+
+
     - Here, prefix-length specifies what prefix length the customer gets, which in this case as per standards, we are giving the WAN side a /64 and the LAN side a /56
-- And finally, configure the pools to each PPPoE Profile as below  
+- And finally, configure the pools to each PPPoE Profile as below
   `/ppp profileset *0 dhcpv6-pd-pool=Customer-CPE-LAN remote-ipv6-prefix-pool=Customer-CPE-WANadd name=profile2 dhcpv6-pd-pool=Customer-CPE-LAN remote-ipv6-prefix-pool=Customer-CPE-WAN`
-  
-  
+
+
   - **Remote** IPv6 prefix is for the **WAN**side of the customer
   - **DHCPv6**PD Pool is for the **LAN**side of the customer
 
@@ -932,13 +932,13 @@ add type=blackhole comment="Blackhole route for Customer public pool" disabled=n
 **Issues**
 
 - Blocks inbound ports based on the false logic of “protecting” the customer
-  
-  
+
+
   - Port blocking does nothing to improve security, it only breaks legitimate traffic such as apps or games that use various methods for VoIP
   - Malware can make use of port 443 and that is the reality of modern-day malware anyway
 - **Net Neutrality Violations**
-  
-  
+
+
   - Such as blocking TCP/UDP traffic destined towards Cloudflare or Google Anycast DNS
 - Lacks [basic DDoS protection](https://forum.mikrotik.com/viewtopic.php?f=2&t=54607)
 - Lacks simple bogon filtering
@@ -950,16 +950,16 @@ add type=blackhole comment="Blackhole route for Customer public pool" disabled=n
 **Solutions**
 
 - Remove **most** “port blocking” rules
-  
-  
+
+
   - Customer Site security should be handled on the customer site such as having proper basic firewalling on their Edge Routers
   - I’ve dropped some ports on the RAW table directly
 - Avoid Net Neutrality Violation unless otherwise enforced by your local state or central government
 - I’ve shared the rule for FastTracking NATted pools
 - I’ve shared the rule for reducing connection tracking impact on customers having public IPv4 address
 - I have crafted ICMPv4/ICMPv6 manually to drop all deperecated ICMP types while accepting all valid ICMP types
-  
-  
+
+
   - Source of truth for [ICMPv4 deprecated types](https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml)
   - Source of truth for [ICMPv6 deprecated types](https://www.iana.org/assignments/icmpv6-parameters/icmpv6-parameters.xhtml#icmpv6-parameters-4)
 
@@ -1249,12 +1249,12 @@ The **purpose**of the **Edge**router is to **route as fast as possible**. So, wi
 
 1. No NAT
 2. **No connection tracking** aka stateful firewalling (**filter table** on the firewall section)
-  
-  
+
+
   - If you enable stateful firewalling on the edge, the router will die in case of DDoS attacks or even just heavy traffic in general
 3. No fancy “features” (like Hotspot, PPPoE)
-  
-  
+
+
   - Use your BNG routers for any customer delegation that is required
 
 ### BGP Optimisation
@@ -1274,33 +1274,33 @@ Preferably convince your peers to do the same config on their end as well at lea
 #### Traffic Engineering and loop prevention
 
 - Always route your aggregated prefixes [Like say you have a  /24 or /22 (IPv4) or /32 or /36 (IPv6)] to blackhole for IPv4+IPv6 to prevent layer 3 looping and stop disabling synchronisation on RouterOS v6, it is anyways mandatory on RouterOS v7 to either route to blackhole or have the prefix assigned to an interface
-  
-  
+
+
   - This will also reduce CPU usage whenever downstream routers/users/switches go offline and incomplete traffic from remote hosts/networks keeps trying to establish a connection and since it gets routed to blackhole it will immediately timeout and save resources.
-    
-    
+
+
     - In other words, there’s no sense in doing things that increase CPU usage (not routing to blackhole)
     - And there is no sense in avoiding loop prevention mechanisms
-  - Example config on my own network (AS149794) on RouterOS v7  
-    `/ip routeadd blackhole comment="Blackhole route" disabled=no dst-address=103.176.189.0/24`  
-      
+  - Example config on my own network (AS149794) on RouterOS v7
+    `/ip routeadd blackhole comment="Blackhole route" disabled=no dst-address=103.176.189.0/24`
+
     `/ipv6 routeadd blackhole comment="Blackhole Route" disabled=no dst-address=2400:7060::/32add blackhole comment="Blackhole Route" disabled=no dst-address=2400:7060::/48`
 
 - If you have multi-homing transit
-  
-  
+
+
   - Always at the very least, request for partial routing table from **all** the upstream providers you’re connected to. If the router can handle full tables from the upstreams, go for it!
-    
-    
+
+
     - This will ensure your router has the best paths to choose from
     - Stop going with the strange concept of taking only default routes from the upstreams and creating asymmetric routing conditions where outgoing traffic is going via Transit A and incoming traffic is coming in via Transit B.
   - Always advertise **all** your IP pools to **all** transit providers to help minimise asymmetric routing which in turn leads to high latency and possibly packet loss in rare cases
-    
-    
+
+
     - If you need traffic engineering, you can consider BGP based load balancing or local preferences with some automation like [Pathvector](https://pathvector.io/)
 - If you have a single homing setup
-  
-  
+
+
   - Still request for partial table/full table whichever fits your router’s specs in order to futureproof in case you plan to go multi-home
 
 ### Filtering & Security
@@ -1309,12 +1309,12 @@ We only need to do broadly **two**things for filtering and security:
 
 1. Implement [MANRS throughout your network](https://github.com/manrs-tools/MANRS-Implementation-Guide/blob/main/MANRS-Network_Implementation_Guide.docx) (and business)
 2. Use the RAW table to drop remaining bogon/rubbish traffic similar to the one used on the BNG and you can also use it for ACL if you need that
-  
-  
+
+
   - CPU usage stays minimal when using the RAW table
   - Absolutely **nothing** on the**filter table** i.e. no stateful firewalling
-    
-    
+
+
     - The only exception here is we can use FastTrack for untracked traffic i.e. stateless traffic to improve IPv4 routing performance
 
 #### IPv4 Firewall
@@ -1511,18 +1511,18 @@ add action=drop chain=icmpv6 comment="Drop FMIPv6 HI + FMIPv6 HAck - Deprecated 
 I will keep this concise as stated earlier I suggest you study and understand how iptables function in general and study the packet flow to know what rule does what: With that being said, I will break it down into simpler points
 
 - I used [this](https://help.mikrotik.com/docs/display/ROS/Building+Your+First+Firewall) and [this](https://help.mikrotik.com/docs/display/ROS/Building+Advanced+Firewall) as the source for building the base for the firewall
-  
-  
+
+
   - MikroTik has ensured to conform to various RFCs and taken the efforts to not break any legitimate protocol/traffic
 - IPv6 firewall rules are trickier and more complex, but rest assured that the rules in this article do not break any protocol/standard nor do they impact customer’s end-to-end reachability
 - We are dropping spoofed traffic
-  
+
   - The RAW rules drop anything coming from WAN that’s spoofed (RFC 6890 addresses)
   - The RAW rules drop anything coming from LAN that does not match your public prefixes/internal subnets (aka lan_subnets address list), meaning any spoofing traffic is dropped from exiting your network
-  
-  
-  
-  
+
+
+
+
   - [Here’s](https://blog.apnic.net/2021/04/29/spoofing-packets-what-is-it-and-why-do-people-do-it/) an APNIC blog post detailing more on this subject
 - Next, we are dropping bad traffic such as TCP/UDP port 0 or bad TCP flags
 - The filter rules are pretty self-explanatory
@@ -1532,22 +1532,22 @@ I will keep this concise as stated earlier I suggest you study and understand ho
 These are some strange behaviours that I could not explain. If you have further information, please reach out to me.
 
 1. NAT Leak
-  
-  
+
+
   - For example, let’s say we CGNAT 100.64.0.0/24 to customers with 103.176.189.0/25. Now, it’s common sense that anything WAN bound will have a source IP belonging to the /25 on the other end of the NAT. But nope, this isn’t always the case. What I have observed is, sometimes (meaning all the time if you have thousands of customers), the source IP would be the CGNAT subnet and the destination IP would be public, hence it “escapes” from the NAT engine.
   - This behaviour is **NOT** exclusive to MikroTik. I have observed the same thing on Ubuntu 20.04/Debian based distros, where the source IP is the NAT subnet and it escapes to the WAN interface with the destination IP being real-live public IPs
-    
-    
+
+
     - Solution: We just drop anything coming from the BNG that’s not public using the Edge Router, this is already taken care of in my configuration above, you just need to follow the instructions
   - I have been unable to find documentation or bug reports on this behaviour
 2. Netmap vs Src Nat
-  
-  
-  - Publicly available documentation suggests simple definitions for both  
-    Src NAT = 1:Many binding  
+
+
+  - Publicly available documentation suggests simple definitions for both
+    Src NAT = 1:Many binding
     Netmap = 1:1 binding
-    
-    
+
+
     - But for whatever reason, when using src NAT as the action for a public prefix, it keeps on changing the “NATted” public IP and hence the source IP on the WAN for the customers. This results in traffic breaking or triggering DDoS protection on sites like Cloudflare protected ones
     - And for whatever reason, even though Netmap is meant for 1:1, it works for 1:Many bindings and it does not result in the constant changing of source IP for the customers
   - I have not found any technical information on why these behaviours occur or why netmap even works in the first place for 1:Many bindings

@@ -10,6 +10,8 @@ import html
 import re
 from pathlib import Path
 
+from font_assets import FONT_BODY_STACK, FONT_HEADING_STACK, font_face_css
+
 
 def html_escape(value: object) -> str:
     return html.escape(str(value), quote=True)
@@ -71,7 +73,7 @@ def render_grid(rows: list[list[str]]) -> str:
     )
 
 
-def workbook_css(tab_count: int) -> str:
+def workbook_css(tab_count: int, font_asset_prefix: str | None = None) -> str:
     dynamic = []
     for index in range(tab_count):
         dynamic.append(
@@ -83,7 +85,8 @@ def workbook_css(tab_count: int) -> str:
             "{ background: var(--tab-active); border-color: var(--accent); color: var(--text); }"
         )
 
-    return """* { box-sizing: border-box; }
+    fonts = font_face_css(font_asset_prefix) + "\n" if font_asset_prefix else ""
+    css = """* { box-sizing: border-box; }
 :root {
   color-scheme: light dark;
   --bg: #f6f7f9;
@@ -96,6 +99,8 @@ def workbook_css(tab_count: int) -> str:
   --accent: #188038;
   --tab-active: #e6f4ea;
   --code: #0f172a;
+  --font-body: __FONT_BODY__;
+  --font-heading: __FONT_HEADING__;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -115,7 +120,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-body);
   line-height: 1.5;
 }
 a { color: var(--accent); text-underline-offset: .18em; }
@@ -139,7 +144,7 @@ a { color: var(--accent); text-underline-offset: .18em; }
   letter-spacing: 0;
   text-transform: uppercase;
 }
-h1 { margin: 0; font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.12; letter-spacing: 0; }
+h1 { margin: 0; font-family: var(--font-heading); font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.12; letter-spacing: 0; }
 .summary { max-width: 760px; color: var(--muted); }
 .workbook-actions { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: flex-end; }
 .workbook-actions a {
@@ -177,7 +182,7 @@ h1 { margin: 0; font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.12; letter
   border-bottom: 1px solid var(--grid);
   background: var(--surface-alt);
 }
-.sheet-title h2 { margin: 0; font-size: 1rem; letter-spacing: 0; }
+.sheet-title h2 { margin: 0; font-family: var(--font-heading); font-size: 1rem; letter-spacing: 0; }
 .sheet-links { display: flex; gap: .7rem; flex-wrap: wrap; font-size: .9rem; }
 .sheet-viewport {
   max-height: 70vh;
@@ -237,7 +242,10 @@ h1 { margin: 0; font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.12; letter
   .workbook-actions { justify-content: flex-start; }
   .sheet-grid th, .sheet-grid td { min-width: 7rem; }
 }
-""" + "\n".join(dynamic)
+"""
+    css = css.replace("__FONT_BODY__", FONT_BODY_STACK)
+    css = css.replace("__FONT_HEADING__", FONT_HEADING_STACK)
+    return fonts + css + "\n".join(dynamic)
 
 
 def render_workbook_page(
@@ -247,6 +255,7 @@ def render_workbook_page(
     sheet_slug: str,
     home_href: str | None = None,
     repo_href: str | None = None,
+    font_asset_prefix: str | None = None,
 ) -> str:
     tabs = manifest.get("tabs", [])
     inputs = []
@@ -304,7 +313,7 @@ def render_workbook_page(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{html_escape(title)}</title>
-  <style>{workbook_css(len(tabs))}</style>
+  <style>{workbook_css(len(tabs), font_asset_prefix)}</style>
 </head>
 <body>
   <header class="workbook-header">

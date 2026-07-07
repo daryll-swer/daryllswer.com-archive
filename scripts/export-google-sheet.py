@@ -179,6 +179,7 @@ def main() -> int:
         manifest=manifest,
         sheet_slug=OUT.name,
         repo_href="https://github.com/daryll-swer/daryllswer.com-archive",
+        font_asset_prefix="../../../assets/fonts",
     ).encode("utf-8")
     workbook_info = write_blob(OUT / "workbook.html", workbook_html)
     workbook_info["content_type"] = "text/html; charset=utf-8"

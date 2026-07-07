@@ -6,9 +6,10 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; targeted article refresh, drift automation, and IPv6 hierarchy PoC pushed and live verified
+- Status: in progress; canonical typography, internal post-link localisation,
+  section-anchor preservation, and local browser/static QA complete
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-06 18:15 UTC
+- Last updated: 2026-07-07 11:18 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -41,15 +42,35 @@
   - Complete: validation and browser QA passed for refreshed article featured images, workbook link, and CIDR hierarchy page.
   - Complete: implementation and follow-up commits pushed to `main`; GitHub Pages deployed successfully and live routes were verified.
   - Complete: the manual `Canonical drift check` workflow passed on final commit `d20085f` after switching the drift checker to a browser-compatible archive User-Agent.
+  - Complete locally: canonical CSS was verified from public HTML/CSS; the
+    generated archive now self-hosts `Poppins` for body/content text and
+    `Raleway` for headings/titles from `assets/fonts/`.
+  - Complete locally: internal article-body links to mirrored daryllswer.com
+    posts are rewritten to archive-local targets in both repository Markdown
+    and generated Pages output, while non-archived canonical pages remain
+    external.
+  - Complete locally: generated Pages preserves WordPress `h-...` heading IDs
+    and emits non-`h-` alias anchors where needed, including the BGP Router ID
+    link to the OOB `#dns-and-loopback-addressing` section.
+  - Complete locally: validation now checks self-hosted font assets, generated
+    CSS font markers, localisable canonical post links, and generated local
+    fragment targets.
+  - Complete locally: responsive generator CSS was tightened after mobile QA
+    exposed a misleading cropped Chrome screenshot; CDP mobile emulation
+    verified a 390 px viewport with no page-level overflow.
 - Last material update:
-  - 2026-07-06 18:15 UTC Pushed final commit `d20085f`, verified Pages remained built, live-checked refreshed image/hierarchy routes, and confirmed the manual canonical drift workflow passed without creating another state commit.
+  - 2026-07-07 11:18 UTC Final local gates passed after regeneration:
+    `git diff --check`, `python3 -m py_compile scripts/*.py`,
+    `make validate scan-secrets PYTHON=<bundled-python>`, and focused
+    post-regeneration static/CDP QA.
 - Next pickup action:
-  - Optional: decide whether to mirror the non-target A10 PDF drift reported for `lets-talk-about-cgnat-and-ipv6-yet-again`.
+  - Commit, push, wait for Pages, and live-verify.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
   - Current drift report flags one non-target article drift: `lets-talk-about-cgnat-and-ipv6-yet-again` links a WordPress-hosted A10 PDF that is not yet mirrored.
 - Verification gap:
-  - None for the current update.
+  - Live GitHub Pages verification is pending for the current
+    typography/link-anchor update.
 
 ## Purpose / Big Picture
 
@@ -126,6 +147,13 @@
 - [x] 2026-07-06 18:04 UTC Validation, public-safety scan, script compile, whitespace check, and local browser QA passed.
 - [x] 2026-07-06 18:09 UTC Committed `6b00f09`, pushed to `main`, verified Pages deployment success, and live-checked updated routes/assets.
 - [x] 2026-07-06 18:15 UTC Hardened the drift checker User-Agent after GitHub Actions saw HTTP 403, reset drift state to healthy, pushed `d20085f`, and verified the manual workflow passed.
+- [x] 2026-07-07 10:57 UTC Verified canonical typography from public CSS and added self-hosted `Poppins`/`Raleway` WOFF2 assets with OFL provenance.
+- [x] 2026-07-07 10:57 UTC Added Markdown and Pages internal post-link rewrites that preserve fragments and keep non-archived canonical pages external.
+- [x] 2026-07-07 10:57 UTC Added WordPress heading alias anchors and validation for generated local fragment targets.
+- [x] 2026-07-07 10:57 UTC Regenerated 19 posts, 9 sheet tabs, and generated Pages output; validation/public-safety passed locally.
+- [x] 2026-07-07 11:15 UTC Browser/static QA passed for typography, BGP/OOB anchor navigation, AS141253 workbook/hierarchy pages, and 390 px mobile viewport.
+- [x] 2026-07-07 11:18 UTC Final local gates passed after regeneration.
+- [ ] Commit, push to `main`, wait for GitHub Pages deployment, and verify live URLs.
 
 ## Decision Log
 
@@ -214,6 +242,24 @@
   - Date/Author: 2026-07-06, user/Codex
   - Status: proof of concept locally
   - Impact: `scripts/ipv6_hierarchy.py` generates `cidr-hierarchy.html`, `cidr-hierarchy.json`, and `cidr-hierarchy.dot`.
+- Decision: Self-host canonical typography for the archive.
+  - Rationale: Public canonical CSS uses `Poppins` for body/form text and
+    `Raleway` for headings; self-hosting keeps GitHub Pages readable without
+    depending on WordPress or runtime Google Fonts requests.
+  - Date/Author: 2026-07-07, user/Codex
+  - Status: implemented locally
+  - Impact: `assets/fonts/` stores WOFF2 files, OFL files, and checksums;
+    generated Pages copies live under `docs/assets/fonts/`.
+- Decision: Rewrite mirrored internal post links locally while preserving
+  section fragments.
+  - Rationale: Archive readers should not leave the archive for content already
+    mirrored in the repository, and canonical section links should still land
+    on the intended local heading.
+  - Date/Author: 2026-07-07, user/Codex
+  - Status: implemented locally
+  - Impact: Markdown links target local `content/posts/.../index.md`; Pages
+    links target local `../<slug>/` routes; generated Pages emits alias anchors
+    for WordPress `h-...` heading IDs where needed.
 
 ## Validation and Acceptance
 

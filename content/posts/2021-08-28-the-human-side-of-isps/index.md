@@ -59,20 +59,20 @@ An ISP can only pay its employees according to the revenue it brings in, and thi
 And unfortunately, the salaries of workers can be one of the first things to be cut. Below are some contributing factors that were raised in my discussions with network operators:
 
 - Predatory pricing from big telcos
-  
-  
+
+
   - For example, an operator may offer 1GB of data at INR 0.21 (USD 0.0028) where 1GB data is offered to mobile subscriber at INR 5 to 7 (USD 0.067 to 0.094) per GB by the same operator
 - Continuous pricing pressure compels small players to opt for cheap and unreliable hardware
 - A strange obsession with providing a voice bundle to home users where 99% don’t use it, as we live in the age of VoIP such as WhatsApp or simply VoWiFi
 - The inaction of small players on policy issues
 - The need to compete with extremely cheap plans such as INR 167 monthly for 200Mbps
-  
-  
+
+
   - When the package is too cheap, which is the case here, there will be a lot of compromise in end-to-end delivery
   - This in turn drives the owner/management of the ISP to make hard decisions on paying less to the employees
 - Government Policies are of course of the leading core reasons for pricing/pay scale issues
-  
-  
+
+
   - Whether we like it or not, forcing ISPs to block sites/services puts a lot of overhead on them such as having to pay for the time spent implementing deep packet inspection (DPI) solutions to perform Server Name Indication (SNI) blocking or something along those lines
   - A good friend of mine highlighted how there have been inconsistent government approaches on the [Adjusted Gross Revenue](https://www.business-standard.com/article/companies/agr-dues-cannot-be-recomputed-supreme-court-reserves-order-121071901407_1.html) issue and that the government often requires a lot of effort in order to meet licensing and compliance requirements
 
@@ -138,12 +138,12 @@ There are also some operators who do not understand how the software development
 Combining all the factors and reasons laid out, the following is typically the result:
 
 - There is a lack of qualified personnel or engineers who have a clear understanding of core network fundamentals (CCNA 200-301 level)
-  
-  
+
+
   - For example, some may have engineering degrees yet still tell the customer that their choice of Optical Network Terminal (ONT) model on the customer site affects routing to external networks. This has happened to me once with a big telco.
 - It is common to see poorly designed networks (bad topology) with bad configuration. There are often no network security measures in place (all the layers of the OSI model).
-  
-  
+
+
   - They may even run on OS/firmware versions released years or months ago with security holes/unpatched bugs.
 - Equipment may be poorly chosen, often from a random vendor, possibly with a reputation for [controversy](https://securityboulevard.com/2020/03/huawei-backdoors-explanation-explained/), and who has time to pentest and investigate these potential security problems while also running an ISP?
 - For last-mile delivery, again due to cost factors, ISPs would typically go for rebrands/reskinned variants of Optical Line Terminals (OLTs) or ONTs, which can often have bad firmware or MTU-related problems among other things
@@ -154,18 +154,18 @@ Combining all the factors and reasons laid out, the following is typically the r
 ****From my research and investigation, I have a few suggestions for ISPs:****
 
 - Look at how you can give your employees a reasonable salary with a work-life balance:
-  
-  
+
+
   - Mental Health Matters!
 - We need better and sustainable pricing of mobile/broadband plans
 - Invest in staff training and education in the technical side of things:
-  
-  
+
+
   - Working hours is [not](https://hbr.org/2015/08/the-research-is-clear-long-hours-backfire-for-people-and-for-companies)****equal to work output
   - Networking concepts are not sufficient; they must understand computer science fundamentals as a whole. At the end of the day, all these things run on programming and software.
 - Do a background check of any franchisee/local cable operator/local operator before leasing out connectivity to people who have never even touched a computer in their lives
-  
-  
+
+
   - The end-user suffers, and security goes out the window, among other things
 - Consider hiring a certified network engineer at least for the initial architectural design and deployment, instead of randomly taking advice from AAA/RADIUS providers or someone else who simply is not cut out for the job
 - Have a ticketing system in place for internal use

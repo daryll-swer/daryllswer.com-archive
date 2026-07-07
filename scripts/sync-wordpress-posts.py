@@ -51,6 +51,9 @@ DONATION_URL_MARKERS = (
 ARCHIVE_LINK_REWRITES = {
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml": "../../../data/sheets/as141253-ipv6-architecture-example/workbook.html",
 }
+LOCALISABLE_HOSTS = {"www.daryllswer.com", "daryllswer.com"}
+TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
+TEXT_FRAGMENT_PREFIX = ":~:text="
 BLOCK_TAGS = {
     "address",
     "article",
@@ -100,6 +103,11 @@ def fetch_json(url: str):
 def write_text(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
+
+
+def write_markdown(path: Path, text: str) -> None:
+    normalised = "\n".join(line.rstrip() for line in text.split("\n"))
+    write_text(path, normalised)
 
 
 def write_json(path: Path, data) -> None:
@@ -285,6 +293,47 @@ def date_slug(post: dict) -> str:
 
 def relpath(path: Path, start: Path = ROOT) -> str:
     return path.relative_to(start).as_posix()
+
+
+def canonical_url_key(url: str) -> str | None:
+    parsed = urllib.parse.urlsplit(url)
+    host = parsed.netloc.lower()
+    if host not in LOCALISABLE_HOSTS:
+        return None
+    path = parsed.path.rstrip("/") or "/"
+    return urllib.parse.urlunsplit(("https", "www.daryllswer.com", path, "", "")).rstrip("/")
+
+
+def clean_query(query: str) -> str:
+    if not query:
+        return ""
+    kept = []
+    for key, value in urllib.parse.parse_qsl(query, keep_blank_values=True):
+        if key.lower().startswith("utm_") or key.lower() in TRACKING_QUERY_KEYS:
+            continue
+        kept.append((key, value))
+    return urllib.parse.urlencode(kept, doseq=True)
+
+
+def markdown_fragment(fragment: str) -> str:
+    if fragment.startswith(TEXT_FRAGMENT_PREFIX):
+        return fragment
+    if fragment.startswith("h-"):
+        return fragment[2:]
+    return fragment
+
+
+def markdown_post_href(current_bundle: Path, target_bundle_path: str, query: str = "", fragment: str = "") -> str:
+    target_index = ROOT / target_bundle_path / "index.md"
+    if target_index.parent == current_bundle and fragment:
+        href = ""
+    else:
+        href = os.path.relpath(target_index, current_bundle).replace(os.sep, "/")
+    if query:
+        href += f"?{query}"
+    if fragment:
+        href += f"#{markdown_fragment(fragment)}"
+    return href or f"#{markdown_fragment(fragment)}"
 
 
 def yaml_scalar(value) -> str:
@@ -597,11 +646,26 @@ def is_same_post_reference_anchor(href: str | None, base_url: str) -> bool:
     )
 
 
-def rewritten_archive_href(href: str, base_url: str) -> str:
+def rewritten_archive_href(
+    href: str,
+    base_url: str,
+    canonical_to_bundle: dict[str, str] | None = None,
+    current_bundle: Path | None = None,
+) -> str:
     joined = urllib.parse.urljoin(base_url, href)
     for source_url, archive_path in ARCHIVE_LINK_REWRITES.items():
         if joined.rstrip("/") == source_url.rstrip("/"):
             return archive_path
+    if canonical_to_bundle and current_bundle:
+        parsed = urllib.parse.urlsplit(joined)
+        target_key = canonical_url_key(joined)
+        if target_key and target_key in canonical_to_bundle:
+            return markdown_post_href(
+                current_bundle,
+                canonical_to_bundle[target_key],
+                clean_query(parsed.query),
+                parsed.fragment,
+            )
     return urllib.parse.urljoin(base_url, href)
 
 
@@ -640,6 +704,8 @@ class MarkdownConverter:
         asset_map: dict[str, str],
         skip_first_image_url: str | None,
         reference_links: dict[str, str] | None = None,
+        canonical_to_bundle: dict[str, str] | None = None,
+        current_bundle: Path | None = None,
     ):
         self.asset_map = asset_map
         self.asset_key_map = {
@@ -649,6 +715,8 @@ class MarkdownConverter:
         }
         self.skip_first_image_url = skip_first_image_url
         self.reference_links = reference_links or {}
+        self.canonical_to_bundle = canonical_to_bundle or {}
+        self.current_bundle = current_bundle
         self.first_image_seen = False
 
     def convert_fragment(self, content_html: str, base_url: str) -> str:
@@ -705,7 +773,7 @@ class MarkdownConverter:
                         return ""
                     return f"[{child_label}]({local_asset})"
                 label = child_label or href
-                return f"[{label}]({rewritten_archive_href(href, base_url)})"
+                return f"[{label}]({rewritten_archive_href(href, base_url, self.canonical_to_bundle, self.current_bundle)})"
             return child_label
         if tag == "img":
             src = urllib.parse.urljoin(base_url, el.get("src") or "")
@@ -764,7 +832,7 @@ def frontmatter(post: dict, categories: list[dict], tags: list[dict], featured_l
     return "\n".join(lines)
 
 
-def sync_post(post: dict, generated_at: str) -> dict:
+def sync_post(post: dict, generated_at: str, canonical_to_bundle: dict[str, str] | None = None) -> dict:
     bundle = ROOT / "content" / "posts" / date_slug(post)
     source_dir = bundle / "source"
     assets_dir = bundle / "assets"
@@ -834,7 +902,13 @@ def sync_post(post: dict, generated_at: str) -> dict:
 
     skip_featured = featured_url if featured_url in asset_map else None
     reference_links = extract_reference_links(rendered_article, post["link"])
-    converter = MarkdownConverter(asset_map, skip_featured, reference_links)
+    converter = MarkdownConverter(
+        asset_map,
+        skip_featured,
+        reference_links,
+        canonical_to_bundle=canonical_to_bundle,
+        current_bundle=bundle,
+    )
     body_md = converter.convert_fragment(rendered_article, post["link"])
     featured_local = None
     if featured_asset and featured_asset.get("local_path"):
@@ -846,7 +920,7 @@ def sync_post(post: dict, generated_at: str) -> dict:
         alt = (featured_asset or {}).get("alt") or title
         md += f"![{alt}]({featured_local})\n\n"
     md += body_md
-    write_text(bundle / "index.md", md)
+    write_markdown(bundle / "index.md", md)
 
     asset_manifest = {
         "generated_at": generated_at,
@@ -923,6 +997,14 @@ def fetch_all_posts() -> tuple[list[dict], dict[str, str]]:
     return all_posts, {"x_wp_total": str(total), "x_wp_totalpages": str(pages)}
 
 
+def canonical_bundle_map(posts: list[dict]) -> dict[str, str]:
+    return {
+        key: relpath(ROOT / "content" / "posts" / date_slug(post))
+        for post in posts
+        if (key := canonical_url_key(post.get("link") or ""))
+    }
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -987,8 +1069,9 @@ def sync_selected_posts(posts: list[dict], rest_headers: dict[str, str], generat
         return 1
 
     archive = load_json(archive_path)
+    canonical_to_bundle = canonical_bundle_map(posts)
     refreshed = {
-        slug: sync_post(posts_by_slug[slug], generated_at)
+        slug: sync_post(posts_by_slug[slug], generated_at, canonical_to_bundle)
         for slug in sorted(slugs)
     }
 
@@ -1019,11 +1102,12 @@ def main() -> int:
     args = parse_args()
     generated_at = now_iso()
     posts, rest_headers = fetch_all_posts()
+    canonical_to_bundle = canonical_bundle_map(posts)
     slugs = selected_slugs(args)
     if slugs:
         return sync_selected_posts(posts, rest_headers, generated_at, slugs)
 
-    manifest_posts = [sync_post(post, generated_at) for post in posts]
+    manifest_posts = [sync_post(post, generated_at, canonical_to_bundle) for post in posts]
     write_archive_manifest(
         generated_at=generated_at,
         rest_headers=rest_headers,

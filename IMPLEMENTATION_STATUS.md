@@ -5,9 +5,11 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: targeted post refresh, canonical drift automation, and IPv6 hierarchy PoC
-- Status: complete; pushed to `main` and live GitHub Pages output verified
-- Last updated: 2026-07-06 18:15 UTC
+- Current sprint / workstream: canonical typography, internal post-link
+  localisation, and section-anchor preservation
+- Status: locally implemented; final local validation/public-safety/static/CDP
+  QA pass; commit/push and live Pages verification pending
+- Last updated: 2026-07-07 11:18 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -97,6 +99,35 @@
 - Drift workflow hardening:
   - Status: complete and pushed
   - Notes: Manual GitHub Actions dispatch initially received HTTP 403 from canonical REST. `scripts/check-canonical-drift.py` now uses a browser-compatible archive User-Agent; the final manual workflow run passed on commit `d20085f` without creating another state commit.
+- Canonical typography:
+  - Status: implemented locally
+  - Notes: Public canonical CSS was verified to use `Poppins` for body/form
+    text and `Raleway` for headings. Self-hosted WOFF2 assets and per-family
+    OFL provenance live in `assets/fonts/`; `render-site.py` copies them to
+    `docs/assets/fonts/`.
+- Internal post-link localisation:
+  - Status: implemented locally
+  - Notes: `scripts/sync-wordpress-posts.py` rewrites Markdown body links to
+    mirrored posts as local `content/posts/.../index.md` targets;
+    `scripts/render-site.py` rewrites generated Pages article links as local
+    `../<slug>/` routes while preserving fragments and dropping tracking query
+    parameters.
+- Section anchor preservation:
+  - Status: implemented locally
+  - Notes: Generated Pages keeps WordPress heading IDs such as `h-dns-and-loopback-addressing`
+    and emits alias anchors such as `dns-and-loopback-addressing` when needed.
+    `scripts/validate-mirror.py` verifies generated local fragment links.
+- Typography/link validation:
+  - Status: implemented locally
+  - Notes: Validation now checks self-hosted font files/checksums, generated
+    CSS font markers, localisable canonical post links in Markdown and Pages
+    article bodies, and generated local fragment targets.
+- Responsive Pages QA:
+  - Status: passed locally
+  - Notes: `scripts/render-site.py` now emits mobile-safe grid/flex sizing and
+    fixed responsive heading steps. Chrome DevTools Protocol mobile emulation
+    verified the homepage at 390 px with `scrollWidth=390` and
+    `clientWidth=390`.
 
 ## Execution Log
 
@@ -232,6 +263,41 @@
   - Action: Hardened the canonical drift checker User-Agent, reset drift state to healthy, pushed `d20085f`, and reran the manual GitHub Actions workflow.
   - Evidence: Manual `Canonical drift check` run `28813242318` completed successfully on `d20085f`; `git fetch origin main` showed local `main` still synced with `origin/main`, so the workflow did not create another state commit.
   - Result: pass
+- 2026-07-07 10:57 UTC:
+  - Action: Implemented canonical typography, self-hosted font assets, internal
+    post-link localisation, WordPress section-anchor aliases, and validation
+    guards.
+  - Evidence: `make sync render-site PYTHON=<bundled-python>` regenerated 19
+    posts and 9 sheet tabs; the BGP Router ID article now links to the local
+    OOB article with `#dns-and-loopback-addressing`; the OOB generated article
+    contains both `h-dns-and-loopback-addressing` and
+    `dns-and-loopback-addressing`.
+  - Result: pass locally; browser QA and live verification pending.
+- 2026-07-07 10:57 UTC:
+  - Action: Ran validation and public-safety scan after regeneration.
+  - Evidence: `make validate scan-secrets PYTHON=<bundled-python>` reported 0
+    validation errors, 1 known sitemap warning, and 0 public-safety findings.
+  - Result: pass locally.
+- 2026-07-07 11:15 UTC:
+  - Action: Ran local browser/static QA for the typography/link-anchor update.
+  - Evidence: Chrome DevTools Protocol mobile emulation reported
+    `innerWidth=390`, `clientWidth=390`, `scrollWidth=390`,
+    `bodyFontFamily=Poppins`, and `h1FontFamily=Raleway`; static QA confirmed
+    19 home cards, 14 copied theme font files, the BGP OOB link as
+    `../out-of-band-network-design-for-service-provider-networks/#dns-and-loopback-addressing`,
+    both OOB target anchors, 9 workbook tabs, CIDR hierarchy markup, and
+    non-blank screenshots.
+  - Result: pass locally; final validation gates, push, and live verification
+    pending.
+- 2026-07-07 11:18 UTC:
+  - Action: Reran sync/render after Markdown trailing-whitespace
+    normalisation, then ran final local gates and post-regeneration sanity QA.
+  - Evidence: `git diff --check`, `python3 -m py_compile scripts/*.py`, and
+    `make validate scan-secrets PYTHON=<bundled-python>` passed. Focused QA
+    reconfirmed the theme font files, 19 home cards, BGP -> OOB local anchor,
+    OOB alias anchors, 9 workbook tabs, CIDR hierarchy markup, and 390 px CDP
+    mobile overflow metrics.
+  - Result: pass locally; push and live verification pending.
 
 ## Tests and Verification
 
@@ -269,19 +335,28 @@
   - GitHub Pages deployment for `d20085f`: pass at 2026-07-06 18:14 UTC.
   - Manual `Canonical drift check` workflow for `d20085f`: pass at 2026-07-06 18:15 UTC.
   - Final live route checks: pass at 2026-07-06 18:15 UTC for refreshed featured-image assets and AS141253 hierarchy page.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-07 10:57 UTC with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
+  - Local browser/static QA against `http://127.0.0.1:4173/`: pass at 2026-07-07 11:15 UTC for typography, BGP/OOB local anchor link, workbook tabs, CIDR hierarchy, non-blank screenshots, and 390 px mobile overflow.
+  - `git diff --check`: pass at 2026-07-07 11:18 UTC.
+  - `python3 -m py_compile scripts/*.py`: pass at 2026-07-07 11:18 UTC.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-07 11:18 UTC with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
+  - Post-regeneration static/CDP QA: pass at 2026-07-07 11:18 UTC.
 - Not run:
-  - None for the current update.
+  - Live GitHub Pages verification for the current typography/link-anchor
+    update is pending until after push.
 
 ## Next Pickup
 
 - Next action:
-  - Optional: decide whether to mirror the non-target A10 PDF drift reported for `lets-talk-about-cgnat-and-ipv6-yet-again`.
+  - Commit, push to `main`, wait for GitHub Pages, and verify the live
+    routes/assets.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for the current update.
+  - Live GitHub Pages verification for the current typography/link-anchor
+    update.
 
 ## Completion Criteria
 

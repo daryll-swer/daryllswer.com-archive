@@ -590,9 +590,10 @@
       "id": 29,
       "img": {
         "alt_text": "",
-        "height": 0,
-        "src": "",
-        "width": 0
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
       },
       "rel": "",
       "title": "Shortcomings of CGNAT and Potential Workarounds",
@@ -617,8 +618,8 @@
       "img": {
         "alt_text": "",
         "height": 200,
-        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1",
-        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png?resize=1400%2C800&ssl=1 4x",
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
         "width": 350
       },
       "rel": "",

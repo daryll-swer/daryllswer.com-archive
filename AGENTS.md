@@ -24,6 +24,11 @@
 - Convert same-article numbered reference links away from WordPress
   `#h-references` anchors. Prefer linking each number directly to the matching
   source URL in that post's References list.
+- Convert article-body links to mirrored daryllswer.com posts to archive-local
+  links. Preserve section fragments and keep non-archived canonical pages
+  external unless a deliberate archive-local replacement exists.
+- Preserve WordPress heading IDs and generated alias anchors so local section
+  links work in GitHub Pages.
 - Convert WordPress-uploaded media links to local archived assets whenever the
   linked file is mirrored into the repository.
 - Convert unsupported embedded media in Markdown to durable outbound links. The
@@ -71,6 +76,8 @@ first.
   any such exception in the asset manifest.
 - Keep generated machine-readable metadata in JSON and validate it against
   `schemas/`.
+- Keep self-hosted third-party font source files and provenance under
+  `assets/fonts/`; generated Pages copies belong under `docs/assets/fonts/`.
 - Keep the GitHub Pages static site generated under `docs/`; do not hand-edit
   generated `docs/index.html`, `docs/posts/`, `docs/assets/`, or
   `docs/sheets/` outputs except through `scripts/render-site.py`.

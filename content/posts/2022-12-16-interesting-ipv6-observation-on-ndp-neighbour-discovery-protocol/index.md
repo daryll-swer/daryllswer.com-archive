@@ -85,7 +85,7 @@ This does not cause any issues with our observations and this can be considered 
 
 However, the underlying question remains — why does this behavioural difference exist? While we have not observed inter-vendor issues, that it may occur in certain environments or use cases cannot be entirely ruled out. I believe that this should be documented in the IPv6 Working Group(s) at IETF and the relevant RFCs, which would give solid instructions to vendors about what to do regarding the documented behaviour and prevent possible inter-vendor incompatibility in the future.
 
-I have since modified my firewall rules to permit this behaviour while not compromising the original reason for the firewall rule itself. I have also ensured this firewall rule is reflected in my “Edge Router & BNG Optimisation Guide for ISPs” [article](https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/) as well, which contains the technical configuration aspects if you are interested.
+I have since modified my firewall rules to permit this behaviour while not compromising the original reason for the firewall rule itself. I have also ensured this firewall rule is reflected in my “Edge Router & BNG Optimisation Guide for ISPs” [article](../2021-06-08-edge-router-bng-optimisation-guide-for-isps/index.md) as well, which contains the technical configuration aspects if you are interested.
 
 Here is the snippet:
 

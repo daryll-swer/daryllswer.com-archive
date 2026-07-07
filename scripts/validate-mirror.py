@@ -16,11 +16,19 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+try:
+    import lxml.html
+except Exception as exc:  # pragma: no cover - environment guard
+    raise SystemExit("Missing dependency: lxml. Install requirements.txt first.") from exc
+
 
 ROOT = Path(__file__).resolve().parents[1]
 UA = "daryllswer-com-archive-validator/1.0 (+https://www.daryllswer.com/)"
 POSTS_ENDPOINT = "https://www.daryllswer.com/wp-json/wp/v2/posts?per_page=100&_embed=1"
 POST_SITEMAP = "https://www.daryllswer.com/post-sitemap.xml"
+PAGES_BASE_URL = "https://daryll-swer.github.io/daryllswer.com-archive/"
+LOCALISABLE_HOSTS = {"www.daryllswer.com", "daryllswer.com"}
+TEXT_FRAGMENT_PREFIX = ":~:text="
 ARCHIVE_EXCLUDED_PATTERNS = [
     re.compile(r"It would be appreciated if you could help me continue", re.I),
     re.compile(r"Click here</a>\s*to donate now", re.I),
@@ -66,6 +74,32 @@ def source_filename_from_url(url: str) -> str:
     return name.replace("/", "-").replace("\\", "-").strip()
 
 
+def canonical_url_key(url: str) -> str | None:
+    parsed = urllib.parse.urlsplit(url)
+    host = parsed.netloc.lower()
+    if host not in LOCALISABLE_HOSTS:
+        return None
+    path = parsed.path.rstrip("/") or "/"
+    return urllib.parse.urlunsplit(("https", "www.daryllswer.com", path, "", "")).rstrip("/")
+
+
+def markdown_body(markdown: str) -> str:
+    return re.sub(r"\A---\s*\n.*?\n---\s*\n", "", markdown, flags=re.S)
+
+
+def hrefs_from_markdown(markdown: str) -> list[str]:
+    return re.findall(r"\[[^\]]+\]\(([^)]+)\)", markdown)
+
+
+def validate_localisable_markdown_links(post_item: dict, markdown: str, archived_keys: set[str], errors: list[str]) -> None:
+    for href in hrefs_from_markdown(markdown_body(markdown)):
+        if not re.match(r"https?://", href):
+            continue
+        key = canonical_url_key(href)
+        if key and key in archived_keys:
+            errors.append(f"{post_item['slug']}: Markdown body still links archived canonical post externally: {href}")
+
+
 def check_required(data, schema, path: str, errors: list[str]) -> None:
     if not isinstance(data, dict):
         errors.append(f"{path}: expected object")
@@ -89,7 +123,7 @@ def validate_excluded_operational_ctas(path: Path, errors: list[str]) -> None:
             return
 
 
-def validate_post(post_item: dict, errors: list[str], warnings: list[str]) -> None:
+def validate_post(post_item: dict, errors: list[str], warnings: list[str], archived_keys: set[str]) -> None:
     bundle = ROOT / post_item["bundle_path"]
     index = bundle / "index.md"
     metadata_path = bundle / "metadata.json"
@@ -113,6 +147,7 @@ def validate_post(post_item: dict, errors: list[str], warnings: list[str]) -> No
         errors.append(f"{post_item['slug']}: featured image missing at {featured['local_path']}")
     if index.exists():
         md = index.read_text(encoding="utf-8")
+        validate_localisable_markdown_links(post_item, md, archived_keys, errors)
         if REMOTE_REFERENCE_ANCHOR_PATTERN.search(md):
             errors.append(f"{post_item['slug']}: generated Markdown still links reference markers to WordPress #h-references")
         for img_path in markdown_image_paths(md):
@@ -230,14 +265,115 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
     return manifest
 
 
-def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str]) -> None:
+def parse_html_file(path: Path):
+    return lxml.html.fromstring(path.read_text(encoding="utf-8", errors="replace"))
+
+
+def article_body_links(page: Path):
+    try:
+        doc = parse_html_file(page)
+    except Exception:
+        return []
+    links = []
+    for body in doc.xpath("//*[contains(concat(' ', normalize-space(@class), ' '), ' article-body ')]"):
+        links.extend(body.xpath(".//a[@href]"))
+    return links
+
+
+def docs_target_for_href(current_page: Path, href: str) -> Path | None:
+    parsed = urllib.parse.urlsplit(href)
+    if parsed.scheme in {"http", "https"}:
+        if not href.startswith(PAGES_BASE_URL):
+            return None
+        rel_href = href[len(PAGES_BASE_URL):]
+        parsed = urllib.parse.urlsplit(rel_href)
+        target = ROOT / "docs" / urllib.parse.unquote(parsed.path.lstrip("/"))
+    else:
+        target = (current_page.parent / urllib.parse.unquote(parsed.path)).resolve()
+    try:
+        target.relative_to((ROOT / "docs").resolve())
+    except ValueError:
+        return None
+    if target.is_dir() or href.endswith("/"):
+        target = target / "index.html"
+    if target.name == "":
+        target = target / "index.html"
+    return target
+
+
+def validate_pages_article_links(posts: list[dict], archived_keys: set[str], errors: list[str]) -> None:
+    ids_by_page: dict[Path, set[str]] = {}
+    pages = [ROOT / "docs" / "posts" / post["slug"] / "index.html" for post in posts]
+    for page in pages:
+        if not page.exists():
+            continue
+        try:
+            doc = parse_html_file(page)
+        except Exception as exc:
+            errors.append(f"{rel(page)}: generated article HTML parse failed: {exc}")
+            continue
+        ids_by_page[page.resolve()] = {item for item in doc.xpath("//*[@id]/@id") if item}
+
+    for post, page in zip(posts, pages):
+        if not page.exists():
+            continue
+        for anchor in article_body_links(page):
+            href = anchor.get("href") or ""
+            key = canonical_url_key(href)
+            if key and key in archived_keys:
+                errors.append(f"{post['slug']}: GitHub Pages article body still links archived canonical post externally: {href}")
+
+            parsed = urllib.parse.urlsplit(href)
+            fragment = parsed.fragment
+            if not fragment or fragment.startswith(TEXT_FRAGMENT_PREFIX):
+                continue
+            target = docs_target_for_href(page, href)
+            if not target or not target.exists():
+                continue
+            target_ids = ids_by_page.get(target.resolve())
+            if target_ids is None:
+                try:
+                    target_ids = {item for item in parse_html_file(target).xpath("//*[@id]/@id") if item}
+                    ids_by_page[target.resolve()] = target_ids
+                except Exception:
+                    continue
+            if fragment not in target_ids:
+                errors.append(f"{post['slug']}: local fragment link `{href}` has no matching `{fragment}` ID in {rel(target)}")
+
+
+def validate_font_assets(errors: list[str]) -> dict | None:
+    manifest_path = ROOT / "assets" / "fonts" / "manifest.json"
+    if not manifest_path.exists():
+        errors.append("self-hosted font manifest missing at assets/fonts/manifest.json")
+        return None
+    manifest = load_json(manifest_path)
+    for item in manifest.get("files", []):
+        source_path = ROOT / item.get("file", "")
+        generated_path = ROOT / "docs" / item.get("file", "")
+        for path in [source_path, generated_path]:
+            if not path.exists():
+                errors.append(f"font asset missing: {rel(path)}")
+            elif item.get("sha256") and sha256_file(path) != item["sha256"]:
+                errors.append(f"font asset checksum mismatch: {rel(path)}")
+    css_path = ROOT / "docs" / "assets" / "theme.css"
+    if css_path.exists():
+        css = css_path.read_text(encoding="utf-8", errors="replace")
+        for marker in ["font-family: 'Poppins'", "font-family: 'Raleway'", "font-display: swap", "var(--font-body)", "var(--font-heading)"]:
+            if marker not in css:
+                errors.append(f"GitHub Pages theme CSS missing font marker `{marker}`")
+    return manifest
+
+
+def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str], archived_keys: set[str]) -> dict | None:
     site_index = ROOT / "docs" / "index.html"
     site_css = ROOT / "docs" / "assets" / "theme.css"
     if not site_index.exists():
         warnings.append("GitHub Pages site missing; run make render-site")
-        return
+        return None
+    font_manifest = None
     if not site_css.exists():
         errors.append("GitHub Pages theme missing at docs/assets/theme.css")
+    font_manifest = validate_font_assets(errors)
     if not (ROOT / "docs" / ".nojekyll").exists():
         errors.append("GitHub Pages .nojekyll marker missing")
     sheet_page = ROOT / "docs" / "sheets" / "as141253-ipv6-architecture-example" / "index.html"
@@ -286,6 +422,8 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
                 errors.append(f"{post['slug']}: GitHub Pages article missing repo-hosted AS141253 sheet link")
             if "media-embed" not in html:
                 errors.append(f"{post['slug']}: GitHub Pages article missing podcast embed wrapper")
+    validate_pages_article_links(posts, archived_keys, errors)
+    return font_manifest
 
 
 def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | None:
@@ -339,6 +477,11 @@ def main() -> int:
     if archive:
         post_count = archive.get("post_count")
         posts = archive.get("posts", [])
+        archived_keys = {
+            key
+            for post in posts
+            if (key := canonical_url_key(post.get("canonical_url") or ""))
+        }
         if post_count != len(posts):
             errors.append(f"archive post_count {post_count} does not match posts length {len(posts)}")
         try:
@@ -365,8 +508,20 @@ def main() -> int:
             warnings.append(f"could not verify sitemap: {exc}")
 
         for post in posts:
-            validate_post(post, errors, warnings)
-        validate_pages_site(posts, errors, warnings)
+            validate_post(post, errors, warnings, archived_keys)
+        font_manifest = validate_pages_site(posts, errors, warnings, archived_keys)
+        if font_manifest:
+            font_files = font_manifest.get("files", [])
+            font_bytes = sum(int(item.get("bytes") or 0) for item in font_files)
+            report.extend([
+                "## Typography",
+                "",
+                "- Body/content font: `Poppins`",
+                "- Heading/title font: `Raleway`",
+                f"- Self-hosted font files: {len(font_files)}",
+                f"- Self-hosted font bytes: {font_bytes}",
+                "",
+            ])
 
     sheet_manifest = validate_spreadsheet(errors, warnings)
     if sheet_manifest:
