@@ -554,10 +554,12 @@ def render_sheet_page() -> None:
         ),
     )
     shutil.copytree(source_dir, out_dir, dirs_exist_ok=True, ignore=shutil.ignore_patterns("workbook.html"))
-    hierarchy_page = out_dir / "cidr-hierarchy.html"
-    if hierarchy_page.exists():
-        text = hierarchy_page.read_text(encoding="utf-8", errors="replace")
-        write_text(hierarchy_page, text.replace("../../../assets/fonts/", "../../assets/fonts/"))
+    font_rewrite_pages = [out_dir / "cidr-hierarchy.html", out_dir / "visual-options.html"]
+    font_rewrite_pages.extend(sorted(out_dir.glob("visual-option-*.html")))
+    for page in font_rewrite_pages:
+        if page.exists():
+            text = page.read_text(encoding="utf-8", errors="replace")
+            write_text(page, text.replace("../../../assets/fonts/", "../../assets/fonts/"))
 
 
 def render_css() -> None:

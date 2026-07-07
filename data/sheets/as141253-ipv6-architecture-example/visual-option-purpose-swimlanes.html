@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Purpose swimlanes - AS141253 IPv6 Visual Option</title>
+  <style>
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-Light-devanagari.woff2') format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-Light-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-Light-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-Regular-devanagari.woff2') format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-Regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-Regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-SemiBold-devanagari.woff2') format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-SemiBold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-SemiBold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-Bold-devanagari.woff2') format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-Bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../../assets/fonts/Poppins-Bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('../../../assets/fonts/Raleway-variable-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('../../../assets/fonts/Raleway-variable-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+* { box-sizing: border-box; }
+:root {
+  color-scheme: light dark;
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-alt: #edf2f7;
+  --surface-strong: #e3ebf2;
+  --text: #17202a;
+  --muted: #5f6c78;
+  --border: #d5dde6;
+  --grid: #c7d1dc;
+  --accent: #0b6f8a;
+  --loopback: #1d6f42;
+  --oob: #315ea8;
+  --interconnect: #8a5a00;
+  --cdn: #7c4d9e;
+  --service: #b84b5a;
+  --role: #0b6f8a;
+  --geo: #626d1f;
+  --reserved: #7b8290;
+  --other: #50616f;
+  --font-body: "Poppins", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: "Raleway", "Poppins", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101418;
+    --surface: #171d23;
+    --surface-alt: #222b35;
+    --surface-strong: #2a3440;
+    --text: #edf2f7;
+    --muted: #aab5c1;
+    --border: #34404d;
+    --grid: #445363;
+    --accent: #6cc7df;
+    --loopback: #87d19a;
+    --oob: #9bbcff;
+    --interconnect: #e4bd65;
+    --cdn: #cfaae6;
+    --service: #f39aa6;
+    --role: #6cc7df;
+    --geo: #c9d36c;
+    --reserved: #b1bac5;
+    --other: #b8c6d3;
+  }
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.55;
+}
+a { color: var(--accent); text-underline-offset: .18em; }
+.page-header, main, footer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+}
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border);
+}
+.eyebrow {
+  margin: 0 0 .45rem;
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+h1 {
+  margin: 0;
+  max-width: 900px;
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 3.1rem);
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+h2, h3 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+.summary { max-width: 780px; color: var(--muted); }
+.actions, .option-nav {
+  display: flex;
+  gap: .55rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.actions a, .option-nav a, .open-option {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: .4rem .7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  text-decoration: none;
+  font-weight: 700;
+}
+.option-nav {
+  justify-content: flex-start;
+  margin: 1rem 0;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: .75rem;
+  margin: 1rem 0;
+}
+.metric {
+  padding: .8rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.metric strong { display: block; font-size: 1.35rem; }
+.option-section {
+  margin: 1.25rem 0 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  min-width: 0;
+}
+.visual-frame {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: auto;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.prefix-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  min-height: 1.75rem;
+  max-width: 100%;
+  padding: .22rem .5rem;
+  border: 1px solid var(--border);
+  border-left: .32rem solid var(--other);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  white-space: nowrap;
+}
+.prefix-chip code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .86rem;
+}
+.chip-small { min-height: 1.45rem; padding: .12rem .36rem; font-size: .82rem; }
+.chip-label, .chip-count { color: var(--muted); font-size: .82rem; }
+.reserved { border-left-color: var(--reserved); opacity: .78; }
+.loopback { border-left-color: var(--loopback); }
+.oob-management { border-left-color: var(--oob); }
+.interconnect { border-left-color: var(--interconnect); }
+.content-cdn { border-left-color: var(--cdn); }
+.service-routed-pools { border-left-color: var(--service); }
+.network-device-roles { border-left-color: var(--role); }
+.geography-sites { border-left-color: var(--geo); }
+.other-planning { border-left-color: var(--other); }
+.path-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+footer { color: var(--muted); font-size: .92rem; }
+@media (max-width: 760px) {
+  .page-header { flex-direction: column; }
+  .actions { justify-content: flex-start; }
+}
+
+
+.block-map {
+  width: max-content;
+  min-width: 100%;
+}
+.allocation-block {
+  margin: .55rem 0;
+  padding: .7rem;
+  border: 1px solid var(--border);
+  border-left-width: .38rem;
+  border-radius: 8px;
+  background: var(--surface);
+}
+.depth-0 { background: var(--surface-strong); }
+.depth-1 { margin-left: .4rem; }
+.depth-2 { margin-left: .8rem; }
+.depth-3 { margin-left: 1.2rem; }
+.depth-4 { margin-left: 1.6rem; }
+.block-title {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  min-width: 0;
+}
+.block-title code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 800; }
+.block-title span { color: var(--muted); overflow-wrap: anywhere; }
+.block-title b { margin-left: auto; color: var(--muted); font-size: .85rem; }
+.block-children {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: .55rem;
+  margin-top: .65rem;
+}
+.lane-board {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(16rem, 1fr));
+  gap: .75rem;
+  width: max-content;
+  min-width: 132rem;
+  align-items: start;
+}
+.level-lane {
+  min-width: 0;
+  padding: .7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.level-lane h3 { margin: 0 0 .6rem; }
+.lane-items { display: grid; gap: .5rem; }
+.lane-card {
+  display: grid;
+  gap: .35rem;
+  padding: .5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.lane-card p { margin: 0; color: var(--text); }
+.lane-card small { color: var(--muted); overflow-wrap: anywhere; }
+.ladder-frame { max-height: 72vh; }
+.ladder-table {
+  width: 100%;
+  min-width: 96rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: .9rem;
+}
+.ladder-table th, .ladder-table td {
+  padding: .42rem;
+  border-right: 1px solid var(--grid);
+  border-bottom: 1px solid var(--grid);
+  vertical-align: top;
+}
+.ladder-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface-alt);
+  text-align: left;
+}
+.ladder-label, .ladder-category { min-width: 12rem; color: var(--muted); }
+.branch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  gap: .85rem;
+}
+.branch-card {
+  display: grid;
+  gap: .65rem;
+  padding: .85rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.branch-card h3 { margin: 0; font-size: 1.05rem; }
+.branch-card p { margin: 0; color: var(--muted); }
+.child-preview, .purpose-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+.more-count {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.45rem;
+  padding: .12rem .45rem;
+  border: 1px dashed var(--grid);
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: .82rem;
+}
+.purpose-board {
+  display: grid;
+  gap: .85rem;
+}
+.purpose-lane {
+  display: grid;
+  grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+  gap: .8rem;
+  padding: .75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.purpose-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .6rem;
+}
+.purpose-heading h3 { margin: 0; font-size: 1rem; }
+.purpose-heading strong { color: var(--muted); }
+.option-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: .85rem;
+  margin: 1rem 0 1.5rem;
+}
+.option-card {
+  display: grid;
+  gap: .65rem;
+  padding: .9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.option-card h2 { margin: 0; font-size: 1.15rem; }
+.option-card p { margin: 0; color: var(--muted); }
+@media (max-width: 760px) {
+  .branch-grid { grid-template-columns: 1fr; }
+  .purpose-lane { grid-template-columns: 1fr; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">AS141253 IPv6 visual prototype</p>
+      <h1>Purpose swimlanes - AS141253 IPv6 Visual Option</h1>
+      <p class="summary">Prefixes grouped by network purpose such as loopback, OOB, interconnect, CDN, reserved, and services.</p>
+    </div>
+    <nav class="actions" aria-label="Visualisation actions">
+      <a href="./">Workbook</a><a href="cidr-hierarchy.html">Tree model</a><a href="visual-options.html">All options</a><a href="visual-option-spatial-blocks.html">Spatial block map</a><a href="visual-option-level-lanes.html">Prefix length lanes</a><a href="visual-option-nibble-ladder.html">Nibble ladder</a><a href="visual-option-branch-cards.html">Branch cards</a>
+    </nav>
+  </header>
+  <main>
+    
+<section class="metrics" aria-label="Model metrics">
+  <div class="metric"><strong>153</strong><span>prefix nodes</span></div>
+  <div class="metric"><strong>5</strong><span>containment levels</span></div>
+  <div class="metric"><strong>145</strong><span>terminal prefixes</span></div>
+  <div class="metric"><strong>2400:d960::/32</strong><span>root prefix</span></div>
+</section>
+
+<section class="option-section" id="purpose-swimlanes">
+  <h2>Option 5: Purpose swimlanes</h2>
+  <p class="summary">This ignores pure hierarchy first and groups allocations by how an operator thinks about the prefix during design or troubleshooting.</p>
+  <div class="visual-frame"><div class="purpose-board"><section class="purpose-lane"><div class="purpose-heading"><h3>Loopback</h3><strong>2</strong></div><div class="purpose-items"><span class="prefix-chip loopback chip-small"><code>2400:d960:800::/48</code><span class="chip-label">Loopback</span><span class="chip-count">11 children</span></span><span class="prefix-chip loopback chip-small"><code>2400:d960:801::/52</code><span class="chip-label">Loopback</span></span></div></section><section class="purpose-lane"><div class="purpose-heading"><h3>OOB and management</h3><strong>4</strong></div><div class="purpose-items"><span class="prefix-chip oob-management chip-small"><code>2400:d960:801::/48</code><span class="chip-label">OOB</span><span class="chip-count">16 children</span></span><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:2000::/52</code><span class="chip-label">Per-Rack OOB Access for MGMT</span></span><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:3000::/52</code><span class="chip-label">VPN/Employee Access directly via OOB-Edge</span></span><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:4000::/52</code><span class="chip-label">Cloud interconnect via VPN for MGMT services</span></span></div></section><section class="purpose-lane"><div class="purpose-heading"><h3>Interconnect</h3><strong>10</strong></div><div class="purpose-items"><span class="prefix-chip interconnect chip-small"><code>2400:d960:801:1000::/52</code><span class="chip-label">PtP/Interconnects</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:802::/48</code><span class="chip-label">Peering - PNI, PtP etc.</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:803::/48</code><span class="chip-label">PtP/Interconnections</span><span class="chip-count">16 children</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804::/56</code><span class="chip-label">Akamai</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:100::/56</code><span class="chip-label">Amazon</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:200::/56</code><span class="chip-label">Cloudflare</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:300::/56</code><span class="chip-label">Edgio</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:400::/56</code><span class="chip-label">Google</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:500::/56</code><span class="chip-label">Meta</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:600::/56</code><span class="chip-label">Netflix</span></span></div></section><section class="purpose-lane"><div class="purpose-heading"><h3>Content and CDN</h3><strong>1</strong></div><div class="purpose-items"><span class="prefix-chip content-cdn chip-small"><code>2400:d960:804::/48</code><span class="chip-label">For Caching Nodes</span><span class="chip-count">9 children</span></span></div></section><section class="purpose-lane"><div class="purpose-heading"><h3>Service and routed pools</h3><strong>2</strong></div><div class="purpose-items"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span><span class="chip-count">4 children</span></span><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960:805::/48</code><span class="chip-label">Routed pool for Docker/Whatever - Example</span></span></div></section><section class="purpose-lane"><div class="purpose-heading"><h3>Network device roles</h3><strong>12</strong></div><div class="purpose-items"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800::/64</code><span class="chip-label">For Edge devices</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:1::/64</code><span class="chip-label">For L3 Dist switches</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:2::/64</code><span class="chip-label">For Transport Switches</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:4::/64</code><span class="chip-label">For BNGs</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:5::/64</code><span class="chip-label">For Future dedicated P routers</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:6::/64</code><span class="chip-label">For Future dedicated PE routers</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803::/52</code><span class="chip-label">For Edge devices</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:1000::/52</code><span class="chip-label">For L3 Dist switches</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:2000::/52</code><span class="chip-label">For Transport Switches</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:4000::/52</code><span class="chip-label">For BNGs</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:5000::/52</code><span class="chip-label">For Future dedicated P routers</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:6000::/52</code><span class="chip-label">For Future dedicated PE routers</span></span></div></section><section class="purpose-lane"><div class="purpose-heading"><h3>Geography and sites</h3><strong>13</strong></div><div class="purpose-items"><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span><span class="chip-count">64 children</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/40</code><span class="chip-label">Chandigarh</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span><span class="chip-count">16 children</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span><span class="chip-count">16 children</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:1000::/40</code><span class="chip-label">Haryana</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:1800::/40</code><span class="chip-label">Himachal Pradesh</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:2000::/40</code><span class="chip-label">Jammu &amp; Kashmir</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:2800::/40</code><span class="chip-label">Punjab</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:3000::/40</code><span class="chip-label">Uttar Pradesh</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:3800::/40</code><span class="chip-label">Uttarakhand</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:4000::/34</code><span class="chip-label">East India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:8000::/34</code><span class="chip-label">South India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:c000::/34</code><span class="chip-label">West India</span></span></div></section><section class="purpose-lane"><div class="purpose-heading"><h3>Reserved</h3><strong>103</strong></div><div class="purpose-items"><span class="prefix-chip reserved chip-small"><code>2400:d960:100::/40</code><span class="chip-label">Reserved for Chandigarh</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:200::/40</code><span class="chip-label">Reserved for Chandigarh</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:300::/40</code><span class="chip-label">Reserved for Chandigarh</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:400::/40</code><span class="chip-label">Reserved for Chandigarh</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:500::/40</code><span class="chip-label">Reserved for Chandigarh</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:600::/40</code><span class="chip-label">Reserved for Chandigarh</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:700::/40</code><span class="chip-label">Reserved for Chandigarh</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:800:9::/64</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:800:a::/64</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:5000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:6000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:7000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:8000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:9000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:a000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:b000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:c000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:d000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:e000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:f000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:803:9000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:803:a000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:803:b000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:803:c000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:803:d000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:803:e000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:803:f000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:804:700::/56</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:804:800::/56</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:806::/48</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:807::/48</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:808::/48</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:809::/48</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:80a::/48</code><span class="chip-label">Reserved</span></span><span class="more-count">+69 more</span></div></section><section class="purpose-lane"><div class="purpose-heading"><h3>Other planning</h3><strong>6</strong></div><div class="purpose-items"><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:3::/64</code><span class="chip-label">For Future NAT/QoE (three tier architecture) devices</span></span><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:7::/64</code><span class="chip-label">For OLTs</span></span><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:8::/64</code><span class="chip-label">For Wireless AP/Radio</span></span><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:3000::/52</code><span class="chip-label">For Future NAT/QoE (three tier architecture) devices</span></span><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:7000::/52</code><span class="chip-label">For OLTs</span></span><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:8000::/52</code><span class="chip-label">For Wireless AP/Radio</span></span></div></section></div></div>
+</section>
+
+  </main>
+  <footer>
+    <p>Generated from repository CSV files. These are selection prototypes, not the final chosen model.</p>
+  </footer>
+</body>
+</html>

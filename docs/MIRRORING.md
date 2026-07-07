@@ -240,6 +240,11 @@ The AS141253 Google Sheet is archived as a CSV-backed HTML workbook:
   GitHub Pages copy of the same workbook.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html` is the
   static IPv6 CIDR containment tree proof of concept generated from CSV.
+- `data/sheets/as141253-ipv6-architecture-example/visual-options.html` is a
+  generated comparison gallery of alternate static HTML/CSS visual prototypes
+  for choosing a more readable IPv6 subnetting representation.
+- `data/sheets/as141253-ipv6-architecture-example/visual-option-*.html` stores
+  standalone pages for each generated prototype.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.json` is the
   machine-readable hierarchy model.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.dot` is the
@@ -258,3 +263,8 @@ The CIDR hierarchy uses a rooted IPv6 prefix containment tree. Prefixes are
 parsed from CSV `Prefix` columns with Python `ipaddress`; parent selection is
 the most-specific existing supernet containing a child prefix. The graph output
 is a proof of concept and does not replace the workbook view yet.
+
+The visual-options pages use the same CSV-derived hierarchy model but present
+it in multiple HTML/CSS layouts for owner selection. They are deliberately
+generated prototypes; once a preferred model is chosen, the final visualisation
+should be made explicit in this document and in `ARCHITECTURE.md`.

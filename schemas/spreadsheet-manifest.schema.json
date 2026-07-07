@@ -31,6 +31,9 @@
     "cidr_hierarchy": {
       "type": "object"
     },
+    "visual_options": {
+      "type": "object"
+    },
     "tabs": {
       "type": "array",
       "items": {

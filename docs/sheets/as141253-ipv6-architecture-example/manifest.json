@@ -23,7 +23,7 @@
     "node_count": 153,
     "source": "CSV Prefix columns"
   },
-  "generated_at": "2026-07-07T11:17:26+00:00",
+  "generated_at": "2026-07-07T16:46:44+00:00",
   "ods": {
     "bytes": 180746,
     "content_type": "application/vnd.oasis.opendocument.spreadsheet",
@@ -300,10 +300,68 @@
     }
   ],
   "title": "AS141253's IPv6 Architecture Example - Daryll Swer - Google Drive",
+  "visual_options": {
+    "index": {
+      "bytes": 213460,
+      "content_type": "text/html; charset=utf-8",
+      "path": "data/sheets/as141253-ipv6-architecture-example/visual-options.html",
+      "sha256": "42564f6296aecadfb05732f71335a0732c6ccfa75898e51c72b25bd662dffd20"
+    },
+    "model": "generated_html_css_visual_options",
+    "option_count": 5,
+    "options": [
+      {
+        "bytes": 39208,
+        "content_type": "text/html; charset=utf-8",
+        "id": "spatial-blocks",
+        "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-spatial-blocks.html",
+        "sha256": "b1c7284abcbb5d908fe2c3769403808474e751b31f093fb932be077126b7fae1",
+        "summary": "Nested allocation blocks for quick visual containment checks.",
+        "title": "Spatial block map"
+      },
+      {
+        "bytes": 50704,
+        "content_type": "text/html; charset=utf-8",
+        "id": "level-lanes",
+        "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-level-lanes.html",
+        "sha256": "9ffd9056db96e570207d6c3fa9a811a08e627dc96d55dc1b0a44a345daff98c2",
+        "summary": "One horizontal lane per prefix length so hierarchy depth is visible at a glance.",
+        "title": "Prefix length lanes"
+      },
+      {
+        "bytes": 125538,
+        "content_type": "text/html; charset=utf-8",
+        "id": "nibble-ladder",
+        "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-nibble-ladder.html",
+        "sha256": "dd7830eb745c3a0a622049f9731c87c5cfa6c95c2726fc977bad3df8f01d3a76",
+        "summary": "Terminal prefixes as rows with ancestor columns for /32, /34, /40, /44, /48, /52, /56, and /64.",
+        "title": "Nibble ladder"
+      },
+      {
+        "bytes": 27291,
+        "content_type": "text/html; charset=utf-8",
+        "id": "branch-cards",
+        "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-branch-cards.html",
+        "sha256": "76ef57b8450ccfd6211e79248cf21cc5ed7cece02aa053a0f7dd915a986a65fd",
+        "summary": "Operational branches with ancestry, child allocations, and notes grouped together.",
+        "title": "Branch cards"
+      },
+      {
+        "bytes": 28490,
+        "content_type": "text/html; charset=utf-8",
+        "id": "purpose-swimlanes",
+        "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-purpose-swimlanes.html",
+        "sha256": "2e5556fe6c8a01fa17f7f46a639fb872c5bab18da429c3412bb0dd54a5b7d36a",
+        "summary": "Prefixes grouped by network purpose such as loopback, OOB, interconnect, CDN, reserved, and services.",
+        "title": "Purpose swimlanes"
+      }
+    ],
+    "source": "CSV Prefix columns and rooted IPv6 prefix containment tree"
+  },
   "workbook_html": {
-    "bytes": 49197,
+    "bytes": 49245,
     "content_type": "text/html; charset=utf-8",
     "path": "data/sheets/as141253-ipv6-architecture-example/workbook.html",
-    "sha256": "dee63873e067a370c6944f2fb72614c996b7d85000e2d8c070def5a6dd506b1e"
+    "sha256": "67710eeea411496b964256e27ce2f56542ae5df1d214db00724f0f1b692439ff"
   }
 }

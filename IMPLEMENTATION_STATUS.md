@@ -5,10 +5,10 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: WordPress inline colour palette preservation
-- Status: complete; local validation/browser QA, commit/push, GitHub Pages
-  deployment, and live public verification passed
-- Last updated: 2026-07-07 15:43 UTC
+- Current sprint / workstream: AS141253 IPv6 visual representation options
+- Status: local complete; generated prototype pages are ready for owner
+  selection
+- Last updated: 2026-07-07 16:49 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -146,6 +146,12 @@
     `scripts/wordpress_palette.py`, and `scripts/validate-mirror.py` checks
     that source WordPress colour classes survive into generated Pages output
     and have generated CSS rules.
+- AS141253 visual representation options:
+  - Status: complete locally
+  - Notes: `scripts/ipv6_visual_options.py` generates a comparison gallery and
+    five standalone HTML/CSS options from the CSV-derived prefix model:
+    spatial blocks, prefix-length lanes, nibble ladder, branch cards, and
+    purpose swimlanes.
 
 ## Execution Log
 
@@ -371,6 +377,32 @@
     Live browser computed styles confirmed A `rgb(252, 185, 0)`, B
     `rgb(207, 46, 46)`, C/D `rgb(255, 105, 0)`, and transparent backgrounds.
   - Result: pass.
+- 2026-07-07 15:55 UTC:
+  - Action: Started AS141253 visual-options workstream and inspected existing
+    CSV/hierarchy inputs.
+  - Evidence: Existing sheet artefacts contain 9 CSV tabs and the hierarchy
+    manifest reports 153 prefix nodes and max depth 5.
+  - Result: prototype generation pending.
+- 2026-07-07 16:49 UTC:
+  - Action: Added generated AS141253 visual-option pages and responsive
+    containment for wide diagrams.
+  - Evidence: `scripts/ipv6_visual_options.py` generates
+    `visual-options.html` plus five standalone `visual-option-*.html` pages;
+    `scripts/export-google-sheet.py`, `scripts/sheet_workbook.py`,
+    `scripts/render-site.py`, and `scripts/validate-mirror.py` integrate and
+    validate the artefacts.
+  - Result: pass locally.
+- 2026-07-07 16:49 UTC:
+  - Action: Regenerated sheet and Pages artefacts, validated, scanned, and
+    browser-checked the prototype gallery.
+  - Evidence: `python3 -m py_compile scripts/*.py`, `git diff --check`,
+    `make render-site PYTHON=<bundled-python>`,
+    `make validate PYTHON=<bundled-python>`, and
+    `make scan-secrets PYTHON=<bundled-python>` passed. Local browser QA
+    checked the gallery and five standalone pages at desktop/default and
+    390 px mobile widths with page-level `scrollWidth` equal to viewport
+    width; wide diagrams scroll within `.visual-frame` containers.
+  - Result: pass locally.
 
 ## Tests and Verification
 
@@ -445,25 +477,27 @@
   - Live browser computed-style QA: pass at 2026-07-07 15:43 UTC for BGP
     Router ID WordPress colour marks.
 - Not run:
-  - None for the current colour-palette update.
+  - Live GitHub Pages verification for the AS141253 visual-option pages is
+    pending until the commit is pushed and Pages finishes rebuilding.
 
 ## Next Pickup
 
 - Next action:
-  - Optional manual edit follow-up: decide how to handle the remaining
-    non-archived canonical links to `/contact/`, `/as149794/`, and `/geofeed/`.
+  - Push the AS141253 visual-option pages and verify the live Pages routes.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for the current colour-palette update.
+  - Live Pages deployment for AS141253 visual-option pages has not yet been
+    observed.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
+  - Owner selection of the preferred AS141253 IPv6 visual representation.
   - Optional follow-up: decide whether the remaining non-archived canonical
     links to `/contact/`, `/as149794/`, and `/geofeed/` should stay outbound,
     be manually edited, or be represented by archive landing pages.
