@@ -269,6 +269,18 @@ def parse_html_file(path: Path):
     return lxml.html.fromstring(path.read_text(encoding="utf-8", errors="replace"))
 
 
+def class_predicate(class_name: str) -> str:
+    return f"contains(concat(' ', normalize-space(@class), ' '), ' {class_name} ')"
+
+
+def heading_target_id(heading_id: str) -> str:
+    return heading_id[2:] if heading_id.startswith("h-") else heading_id
+
+
+def fragment_href(target_id: str) -> str:
+    return "#" + urllib.parse.quote(target_id, safe="-._~")
+
+
 def article_body_links(page: Path):
     try:
         doc = parse_html_file(page)
@@ -278,6 +290,41 @@ def article_body_links(page: Path):
     for body in doc.xpath("//*[contains(concat(' ', normalize-space(@class), ' '), ' article-body ')]"):
         links.extend(body.xpath(".//a[@href]"))
     return links
+
+
+def validate_pages_heading_controls(page: Path, post: dict, errors: list[str]) -> None:
+    try:
+        doc = parse_html_file(page)
+    except Exception as exc:
+        errors.append(f"{rel(page)}: generated article HTML parse failed: {exc}")
+        return
+    headings = doc.xpath(
+        f"//*[ {class_predicate('article-body')} ]"
+        "//*[self::h2 or self::h3 or self::h4 or self::h5 or self::h6][@id]"
+    )
+    for heading in headings:
+        heading_id = heading.get("id")
+        target_id = heading_target_id(heading_id)
+        href = fragment_href(target_id)
+        title_links = heading.xpath(
+            f".//a[not({class_predicate('heading-permalink')}) and @href=$href]",
+            href=href,
+        )
+        non_control_links = heading.xpath(f".//a[not({class_predicate('heading-permalink')})]")
+        permalinks = heading.xpath(
+            f"./a[{class_predicate('heading-permalink')} and @href=$href and @aria-label]",
+            href=href,
+        )
+        copy_buttons = heading.xpath(
+            f"./button[{class_predicate('heading-copy')} and @data-anchor=$target and @aria-label]",
+            target=target_id,
+        )
+        if not title_links and not non_control_links:
+            errors.append(f"{post['slug']}: heading `{heading_id}` is missing a clickable title permalink")
+        if not permalinks:
+            errors.append(f"{post['slug']}: heading `{heading_id}` is missing visible permalink control")
+        if not copy_buttons:
+            errors.append(f"{post['slug']}: heading `{heading_id}` is missing copy-link button")
 
 
 def docs_target_for_href(current_page: Path, href: str) -> Path | None:
@@ -367,12 +414,20 @@ def validate_font_assets(errors: list[str]) -> dict | None:
 def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str], archived_keys: set[str]) -> dict | None:
     site_index = ROOT / "docs" / "index.html"
     site_css = ROOT / "docs" / "assets" / "theme.css"
+    site_js = ROOT / "docs" / "assets" / "archive.js"
     if not site_index.exists():
         warnings.append("GitHub Pages site missing; run make render-site")
         return None
     font_manifest = None
     if not site_css.exists():
         errors.append("GitHub Pages theme missing at docs/assets/theme.css")
+    if not site_js.exists():
+        errors.append("GitHub Pages heading interaction script missing at docs/assets/archive.js")
+    else:
+        script = site_js.read_text(encoding="utf-8", errors="replace")
+        for marker in ["heading-copy", "navigator.clipboard.writeText", "window.location.hash"]:
+            if marker not in script:
+                errors.append(f"GitHub Pages heading interaction script missing `{marker}`")
     font_manifest = validate_font_assets(errors)
     if not (ROOT / "docs" / ".nojekyll").exists():
         errors.append("GitHub Pages .nojekyll marker missing")
@@ -413,6 +468,8 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
         validate_excluded_operational_ctas(page, errors)
         if 'href="../../index.html"' in html:
             errors.append(f"{post['slug']}: GitHub Pages article navigation should use ../../ instead of ../../index.html")
+        if 'src="../../assets/archive.js"' not in html:
+            errors.append(f"{post['slug']}: GitHub Pages article missing heading interaction script")
         if WORDPRESS_MEDIA_PATTERN.search(html):
             errors.append(f"{post['slug']}: GitHub Pages article still links WordPress upload media")
         if post["slug"] == "ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators":
@@ -422,6 +479,7 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
                 errors.append(f"{post['slug']}: GitHub Pages article missing repo-hosted AS141253 sheet link")
             if "media-embed" not in html:
                 errors.append(f"{post['slug']}: GitHub Pages article missing podcast embed wrapper")
+        validate_pages_heading_controls(page, post, errors)
     validate_pages_article_links(posts, archived_keys, errors)
     return font_manifest
 

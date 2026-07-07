@@ -12,10 +12,10 @@
   "http_cache": {
     "https://www.daryllswer.com/wp-json/wp/v2/posts?per_page=100&_embed=1": {}
   },
-  "last_drift_detected_at": "2026-07-06T18:13:19Z",
-  "last_drift_hash": "dbb5a9068216ceb23f727314912fb9e0096d0cdbb6d63fd39b3856b6b2ca4ff6",
+  "last_drift_detected_at": null,
+  "last_drift_hash": null,
   "last_live_post_count": 19,
-  "last_success_at": "2026-07-06T18:13:19Z",
+  "last_success_at": "2026-07-07T15:22:58Z",
   "manual_recovery": {
     "unfreeze_steps": [
       "Confirm the canonical site is again under the owner's control.",
@@ -32,6 +32,6 @@
     "frozen_archive_noops_without_network": true
   },
   "state": "healthy",
-  "updated_at": "2026-07-06T18:13:19Z",
+  "updated_at": "2026-07-07T15:22:58Z",
   "version": 1
 }

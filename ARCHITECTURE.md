@@ -76,7 +76,10 @@ flowchart LR
   supports manual `workflow_dispatch`.
 - `scripts/check-canonical-drift.py` uses only the public WordPress REST index
   and local archive manifests. It checks for new, missing/unlisted, modified,
-  featured-image, and WordPress-uploaded-media drift.
+  featured-image, and WordPress-uploaded image-media drift.
+- Third-party documents, PDFs, downloads, and external artefacts are not
+  mirror-required drift. They remain outbound links unless the owner explicitly
+  approves mirroring a specific artefact.
 - The automation is detection-first. It records drift in
   `docs/CANONICAL_DRIFT.md` and durable state in `archive-status.json`; it does
   not silently rewrite article bundles.
@@ -118,10 +121,17 @@ surface must not cause repeated workflow failures or archive deletion.
   `h-dns-and-loopback-addressing` are preserved on headings, and matching
   non-`h-` alias anchors such as `dns-and-loopback-addressing` are emitted when
   needed so canonical section links still land correctly.
+- Generated article headings with IDs expose human-shareable controls: the
+  heading text links to its own fragment, a visible permalink link updates the
+  browser address bar, and a progressive-enhancement copy button copies the
+  full section URL when the Clipboard API is available.
 - Every downloaded WordPress media asset preserves the WordPress URL basename
   and direct response bytes wherever possible. This preserves embedded image
   metadata/EXIF because the archive does not re-encode media files. Any
   filename collision exception must be recorded in the asset manifest.
+- Third-party documents, PDFs, downloads, and external artefacts are preserved
+  as outbound hyperlinks with provenance; they are not assumed to be covered by
+  the archive content licence and are not mirrored by default.
 - Every downloaded asset has a source URL, source filename, stored filename,
   filename-preserved flag, and SHA-256 checksum.
 - Spreadsheet CSV files remain diffable; `workbook.html`/Pages sheet output is
