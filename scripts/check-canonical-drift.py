@@ -35,6 +35,15 @@ WP_UPLOAD_RE = re.compile(
     r"""(?:src|href)=["']([^"']*?/wp-content/uploads/[^"']+)["']""",
     re.I,
 )
+MIRRORED_WORDPRESS_MEDIA_EXTENSIONS = {
+    ".avif",
+    ".gif",
+    ".jpeg",
+    ".jpg",
+    ".png",
+    ".svg",
+    ".webp",
+}
 
 
 def now_utc() -> dt.datetime:
@@ -90,6 +99,13 @@ def media_identity(url: str) -> str:
     path = unicodedata.normalize("NFC", urllib.parse.unquote(parsed.path)).lower()
     path = re.sub(r"-\d+x\d+(?=\.[a-z0-9]+$)", "", path)
     return f"{parsed.netloc.lower()}{path}"
+
+
+def is_mirror_required_wordpress_media(url: str) -> bool:
+    parsed = urllib.parse.urlsplit(url)
+    if "/wp-content/uploads/" not in parsed.path:
+        return False
+    return Path(urllib.parse.unquote(parsed.path)).suffix.lower() in MIRRORED_WORDPRESS_MEDIA_EXTENSIONS
 
 
 def default_status(generated_at: str) -> dict:
@@ -182,8 +198,9 @@ def embedded_featured_url(post: dict) -> str | None:
 def live_post_summary(post: dict) -> dict:
     content_html = post.get("content", {}).get("rendered", "") or ""
     media = sorted({
-        urllib.parse.urljoin(post.get("link") or SITE, match)
+        url
         for match in WP_UPLOAD_RE.findall(content_html)
+        if is_mirror_required_wordpress_media(url := urllib.parse.urljoin(post.get("link") or SITE, match))
     })
     return {
         "id": post.get("id"),
@@ -207,7 +224,7 @@ def archived_post_summary(post_item: dict) -> dict:
         for asset in asset_manifest.get("assets", [])
         if asset.get("role") != "featured"
         and asset.get("source_url")
-        and "/wp-content/uploads/" in asset.get("source_url")
+        and is_mirror_required_wordpress_media(asset.get("source_url"))
     })
     featured = metadata.get("featured_image") or {}
     return {

@@ -29,8 +29,14 @@
   external unless a deliberate archive-local replacement exists.
 - Preserve WordPress heading IDs and generated alias anchors so local section
   links work in GitHub Pages.
-- Convert WordPress-uploaded media links to local archived assets whenever the
-  linked file is mirrored into the repository.
+- Generated article headings must expose shareable section links: heading text
+  should link to its own fragment, and generated Pages should provide visible
+  permalink/copy-link controls with accessible names.
+- Convert WordPress-uploaded image media links to local archived assets
+  whenever the linked image is mirrored into the repository.
+- Do not mirror third-party documents, PDFs, downloads, or external artefacts
+  by default. Keep them as outbound hyperlinks with provenance unless the owner
+  explicitly approves mirroring that exact artefact.
 - Convert unsupported embedded media in Markdown to durable outbound links. The
   generated GitHub Pages site may render richer embed wrappers with fallback
   links.

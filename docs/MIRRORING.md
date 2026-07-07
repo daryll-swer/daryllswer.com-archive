@@ -89,7 +89,11 @@ checks for:
 - new published posts;
 - missing or unlisted archived posts;
 - changed slugs, titles, modified timestamps, and featured image URLs;
-- changed WordPress-uploaded body media links.
+- changed WordPress-uploaded body image-media links.
+
+Linked third-party documents, PDFs, downloads, and external artefacts are not
+mirror-required drift. They remain outbound links unless the owner explicitly
+approves mirroring a specific artefact.
 
 This automation is detection-first. It writes durable state to
 `archive-status.json` and a human-readable report to
@@ -175,6 +179,12 @@ such as `h-dns-and-loopback-addressing`, the generated Pages article also emits
 a hidden alias anchor `dns-and-loopback-addressing` so both canonical and
 archive-local fragment forms can land on the intended section.
 
+Generated article headings also expose shareable section controls. The heading
+text links to its own fragment, the visible `#` permalink updates the browser
+address bar, and the `Copy` button copies the full section URL when the browser
+Clipboard API is available. If JavaScript is unavailable, the permalink remains
+a normal fragment link.
+
 Links to non-archived canonical pages, such as `/contact/`, `/geofeed/`, and
 `/as149794/`, intentionally remain external until a deliberate archive-local
 replacement exists. Canonical source footers also intentionally remain external.
@@ -185,9 +195,10 @@ text-fragment links that begin with `#:~:text=`.
 
 ## Media and Embeds
 
-Inline images and WordPress-uploaded media links are downloaded where possible
-and rewritten to local archive paths. This applies to image figures and to text
-links that point directly at files under `www.daryllswer.com/wp-content/uploads/`.
+Inline images and WordPress-uploaded image media links are downloaded where
+possible and rewritten to local archive paths. This applies to image figures
+and to text links that point directly at image files under
+`www.daryllswer.com/wp-content/uploads/`.
 
 Downloaded media files are stored as direct response bytes with no image
 re-encoding, resizing, or metadata stripping. This keeps embedded image
@@ -196,6 +207,11 @@ preserves the WordPress URL basename for featured, inline, and linked media
 wherever possible, and the asset manifest records the source filename, stored
 filename, SHA-256 checksum, and whether the filename was preserved. The only
 allowed exception is a same-directory filename collision.
+
+Third-party documents, PDFs, downloads, and external artefacts remain outbound
+links by default. Do not download or commit them unless the owner explicitly
+approves mirroring that exact artefact and its provenance/licensing status is
+recorded.
 
 Unsupported embeds such as podcast iframes are converted to durable Markdown
 links in `content/posts/.../index.md`. The generated GitHub Pages site keeps a

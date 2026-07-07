@@ -6,11 +6,10 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; canonical typography, internal post-link localisation,
-  section-anchor preservation, validation, push, Pages deployment, and live
-  verification complete
+- Status: in progress; heading permalink controls, explicit home typography,
+  and third-party artefact drift policy implemented and verified locally
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-07 11:21 UTC
+- Last updated: 2026-07-07 15:25 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -62,19 +61,29 @@
   - Complete: commit `44a2a8c` was pushed to `main`; GitHub Pages deployment
     run `28862244073` completed successfully; live routes/assets were verified
     with HTTP 200 responses.
+  - Complete locally: generated article headings now expose human-shareable
+    section controls. Plain headings have clickable title text, all headings
+    get visible `#` permalinks, and all headings get `Copy` buttons backed by
+    generated `docs/assets/archive.js`.
+  - Complete locally: archive home typography is explicitly bound to the
+    self-hosted `Poppins` body font and `Raleway` heading/card-title font.
+  - Complete locally: canonical drift now treats third-party documents, PDFs,
+    downloads, and external artefacts as outbound links rather than
+    mirror-required media. The A10 PDF drift item is cleared.
 - Last material update:
-  - 2026-07-07 11:21 UTC Commit `44a2a8c` was pushed and live Pages checks
-    passed for the home index, theme CSS, `Poppins` font asset, BGP -> OOB
-    local anchor link, OOB alias anchors, AS141253 workbook tabs, and CIDR
-    hierarchy page.
+  - 2026-07-07 15:25 UTC Regenerated Pages output and drift report. Local
+    validation/public-safety passed with 0 errors and 1 known sitemap warning.
+    Browser CDP QA confirmed archive home fonts, no 390 px overflow, BGP
+    `Introduction` heading click updates `#introduction`, and the copy button
+    writes the full section URL.
 - Next pickup action:
-  - Optional follow-up: decide whether to mirror the non-target A10 PDF drift
-    reported for `lets-talk-about-cgnat-and-ipv6-yet-again`.
+  - Commit, push, wait for GitHub Pages, and live-verify the updated home
+    fonts, heading controls, and clean drift report.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
-  - Current drift report flags one non-target article drift: `lets-talk-about-cgnat-and-ipv6-yet-again` links a WordPress-hosted A10 PDF that is not yet mirrored.
 - Verification gap:
-  - None for the current typography/link-anchor update.
+  - Live GitHub Pages verification is pending for the current heading/drift
+    update.
 
 ## Purpose / Big Picture
 
@@ -158,6 +167,9 @@
 - [x] 2026-07-07 11:15 UTC Browser/static QA passed for typography, BGP/OOB anchor navigation, AS141253 workbook/hierarchy pages, and 390 px mobile viewport.
 - [x] 2026-07-07 11:18 UTC Final local gates passed after regeneration.
 - [x] 2026-07-07 11:21 UTC Pushed `44a2a8c`, Pages deployment `28862244073` succeeded, and live URLs/assets verified.
+- [x] 2026-07-07 15:25 UTC Implemented generated heading permalink/copy controls, explicit home font selectors, and third-party document drift exclusion.
+- [x] 2026-07-07 15:25 UTC Regenerated Pages and drift report; local validation/public-safety and CDP browser QA passed.
+- [ ] Commit, push to `main`, wait for GitHub Pages deployment, and verify live URLs.
 
 ## Decision Log
 

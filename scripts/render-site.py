@@ -144,6 +144,10 @@ def heading_slug(value: str) -> str:
     return slug or "section"
 
 
+def heading_xpath() -> str:
+    return ".//*[self::h2 or self::h3 or self::h4 or self::h5 or self::h6]"
+
+
 def ensure_heading_ids(root) -> None:
     seen: set[str] = {
         element_id
@@ -151,7 +155,7 @@ def ensure_heading_ids(root) -> None:
         if element_id
     }
     used_heading_ids: set[str] = set()
-    for heading in root.xpath(".//*[self::h2 or self::h3 or self::h4 or self::h5 or self::h6]"):
+    for heading in root.xpath(heading_xpath()):
         current = (heading.get("id") or "").strip()
         base = current or heading_slug(heading.text_content())
         slug = base
@@ -164,6 +168,69 @@ def ensure_heading_ids(root) -> None:
         used_heading_ids.add(slug)
         if slug.startswith("h-"):
             add_anchor_alias(heading, slug[2:], seen)
+
+
+def heading_target_id(heading_id: str) -> str:
+    return heading_id[2:] if heading_id.startswith("h-") else heading_id
+
+
+def heading_label(heading) -> str:
+    label = re.sub(r"\s+", " ", heading.text_content()).strip()
+    return label[:120] or "this section"
+
+
+def fragment_href(target_id: str) -> str:
+    return "#" + urllib.parse.quote(target_id, safe="-._~")
+
+
+def add_heading_permalink_controls(root) -> None:
+    for heading in root.xpath(heading_xpath()):
+        heading_id = (heading.get("id") or "").strip()
+        if not heading_id:
+            continue
+        target_id = heading_target_id(heading_id)
+        label = heading_label(heading)
+        href = fragment_href(target_id)
+
+        if not heading.xpath(".//a"):
+            title_link = lxml.html.Element(
+                "a",
+                {
+                    "class": "heading-title-link",
+                    "href": href,
+                    "aria-label": f"Permalink to {label} section",
+                },
+            )
+            title_link.text = heading.text
+            heading.text = None
+            for child in list(heading):
+                heading.remove(child)
+                title_link.append(child)
+            heading.append(title_link)
+
+        permalink = lxml.html.Element(
+            "a",
+            {
+                "class": "heading-permalink",
+                "href": href,
+                "aria-label": f"Permalink to {label} section",
+                "title": "Permalink",
+            },
+        )
+        permalink.text = "#"
+        copy_button = lxml.html.Element(
+            "button",
+            {
+                "class": "heading-copy",
+                "type": "button",
+                "data-anchor": target_id,
+                "aria-label": f"Copy link to {label} section",
+                "title": "Copy link",
+            },
+        )
+        copy_button.text = "Copy"
+        heading.append(permalink)
+        heading.append(copy_button)
 
 
 def add_anchor_alias(heading, alias: str, seen: set[str]) -> None:
@@ -320,11 +387,21 @@ def article_body_html(post: dict, canonical_to_slug: dict[str, str]) -> str:
     rewrite_links(root, post, canonical_to_slug, exact_assets, keyed_assets)
     wrap_iframes(root)
     ensure_heading_ids(root)
+    add_heading_permalink_controls(root)
     return "".join(lxml.html.tostring(child, encoding="unicode") for child in root)
 
 
-def page_shell(title: str, description: str, body: str, css_href: str, canonical_path: str, image_href: str | None = None) -> str:
+def page_shell(
+    title: str,
+    description: str,
+    body: str,
+    css_href: str,
+    canonical_path: str,
+    image_href: str | None = None,
+    js_href: str | None = None,
+) -> str:
     image_meta = f'\n  <meta property="og:image" content="{html_escape(image_href)}">' if image_href else ""
+    script = f'\n  <script src="{html_escape(js_href)}" defer></script>' if js_href else ""
     return f"""<!doctype html>
 <html lang="en-IN">
 <head>
@@ -335,7 +412,7 @@ def page_shell(title: str, description: str, body: str, css_href: str, canonical
   <link rel="canonical" href="{html_escape(PAGES_BASE_URL + canonical_path.lstrip('/'))}">
   <meta property="og:title" content="{html_escape(title)}">
   <meta property="og:description" content="{html_escape(description)}">{image_meta}
-  <link rel="stylesheet" href="{html_escape(css_href)}">
+  <link rel="stylesheet" href="{html_escape(css_href)}">{script}
 </head>
 <body>
 {body}
@@ -455,6 +532,7 @@ def render_post(post: dict, metadata: dict, canonical_to_slug: dict[str, str]) -
             "../../assets/theme.css",
             f"posts/{post['slug']}/",
             image_meta,
+            "../../assets/archive.js",
         ),
     )
 
@@ -526,6 +604,12 @@ body {
 }
 a { color: var(--accent); text-decoration-thickness: .08em; text-underline-offset: .18em; }
 a:hover { color: var(--accent-2); }
+.site-header, .home, .post-card, .site-footer {
+  font-family: var(--font-body);
+}
+.home h1, .post-card h2 {
+  font-family: var(--font-heading);
+}
 .site-header {
   display: flex;
   align-items: center;
@@ -618,8 +702,58 @@ h1 { margin: 0 0 1rem; max-width: 900px; font-size: 3.4rem; }
   min-width: 0;
   overflow-wrap: break-word;
 }
+.article-body h2,
+.article-body h3,
+.article-body h4,
+.article-body h5,
+.article-body h6 {
+  scroll-margin-top: 1.25rem;
+}
 .article-body h2 { margin-top: 2.2rem; padding-top: .3rem; }
 .article-body h3 { margin-top: 1.8rem; }
+.heading-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+.heading-title-link:hover,
+.heading-title-link:focus {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.heading-permalink,
+.heading-copy {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.35rem;
+  margin-left: .45rem;
+  vertical-align: .08em;
+  font-family: var(--font-body);
+  font-size: .72rem;
+  line-height: 1;
+}
+.heading-permalink {
+  color: var(--muted);
+  text-decoration: none;
+}
+.heading-copy {
+  padding: .16rem .35rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-alt);
+  color: var(--muted);
+  cursor: pointer;
+}
+.heading-permalink:hover,
+.heading-permalink:focus,
+.heading-copy:hover,
+.heading-copy:focus {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.heading-copy.copied {
+  color: var(--accent-2);
+  border-color: var(--accent-2);
+}
 .anchor-alias {
   display: block;
   position: relative;
@@ -722,6 +856,43 @@ th { color: var(--muted); font-size: .85rem; text-transform: uppercase; }
     )
 
 
+def render_js() -> None:
+    write_text(
+        OUT / "assets" / "archive.js",
+        """(() => {
+  function sectionUrl(anchor) {
+    const url = new URL(window.location.href);
+    url.hash = anchor;
+    return url.toString();
+  }
+
+  document.addEventListener("click", async (event) => {
+    const button = event.target.closest(".heading-copy");
+    if (!button) {
+      return;
+    }
+    const anchor = button.getAttribute("data-anchor");
+    if (!anchor) {
+      return;
+    }
+    const text = sectionUrl(anchor);
+    try {
+      await navigator.clipboard.writeText(text);
+      button.classList.add("copied");
+      button.textContent = "Copied";
+      window.setTimeout(() => {
+        button.classList.remove("copied");
+        button.textContent = "Copy";
+      }, 1600);
+    } catch (_) {
+      window.location.hash = anchor;
+    }
+  });
+})();
+""",
+    )
+
+
 def main() -> int:
     archive = load_json(ROOT / "archive-manifest.json")
     posts = archive.get("posts", [])
@@ -737,6 +908,7 @@ def main() -> int:
 
     clean_generated_site()
     render_css()
+    render_js()
     copy_font_assets(ROOT, OUT / "assets" / "fonts")
     render_home(posts, metadata_by_slug)
     render_sheet_page()

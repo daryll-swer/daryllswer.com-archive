@@ -233,3 +233,31 @@
   alias anchors. `scripts/validate-mirror.py` checks generated local fragment
   links resolve to a target ID, excluding browser text-fragment links beginning
   with `#:~:text=`.
+
+## 2026-07-07: Expose Human-Clickable Section Permalinks
+
+- Decision: Generated article headings expose shareable controls: heading text
+  links to its own fragment, a visible `#` permalink updates the address bar,
+  and a progressive-enhancement `Copy` button copies the full section URL.
+- Rationale: HTML fragments are the standard durable mechanism for linking to
+  specific document sections, but hidden IDs alone are not discoverable to
+  human readers.
+- Evidence: The HTML standard defines `id` values as unique identifiers usable
+  for document fragments; MDN documents `a href="#section-id"` links to a
+  heading with a matching ID; WCAG technique ARIA8 documents descriptive
+  accessible names for short/repeated link text.
+- Impact: `scripts/render-site.py` emits heading title links, visible permalink
+  anchors, and copy buttons. `scripts/validate-mirror.py` validates these
+  controls in generated article pages.
+
+## 2026-07-07: Keep Third-Party Documents External By Default
+
+- Decision: Do not mirror third-party documents, PDFs, downloads, or external
+  artefacts by default. Keep them as outbound links unless the owner explicitly
+  approves mirroring a specific artefact.
+- Rationale: Third-party artefacts are not assumed covered by the repository
+  content licence and should not be silently copied into the public archive.
+- Impact: `scripts/check-canonical-drift.py` tracks WordPress-uploaded image
+  media drift, but ignores linked document/download artefacts such as PDFs.
+  `docs/CANONICAL_DRIFT.md` no longer reports the linked A10 PDF as
+  mirror-required drift.

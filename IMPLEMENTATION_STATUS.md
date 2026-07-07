@@ -5,11 +5,11 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: canonical typography, internal post-link
-  localisation, and section-anchor preservation
-- Status: complete; final local validation/public-safety/static/CDP QA,
-  commit/push, Pages deployment, and live route verification passed
-- Last updated: 2026-07-07 11:21 UTC
+- Current sprint / workstream: heading permalink controls, explicit archive
+  home typography, and third-party artefact drift policy
+- Status: local implementation and validation/browser QA passed; commit/push
+  and live Pages verification pending
+- Last updated: 2026-07-07 15:25 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -128,6 +128,17 @@
     fixed responsive heading steps. Chrome DevTools Protocol mobile emulation
     verified the homepage at 390 px with `scrollWidth=390` and
     `clientWidth=390`.
+- Heading permalink controls:
+  - Status: implemented locally
+  - Notes: Generated article headings now have visible `#` permalinks and
+    `Copy` buttons. Plain headings also wrap heading text in a same-section
+    link; headings that already contain inline links avoid invalid nested
+    anchors and keep the explicit permalink/copy controls.
+- Third-party artefact drift policy:
+  - Status: implemented locally
+  - Notes: `scripts/check-canonical-drift.py` now tracks WordPress-uploaded
+    image-media drift only. Linked third-party PDFs/documents/downloads remain
+    outbound links and do not produce mirror-required drift.
 
 ## Execution Log
 
@@ -309,6 +320,17 @@
     HTML checks confirmed 19 home cards, local BGP -> OOB anchor, OOB
     WordPress and alias anchors, 9 workbook tabs, and hierarchy markup.
   - Result: pass.
+- 2026-07-07 15:25 UTC:
+  - Action: Implemented heading permalink/copy controls, explicit home font
+    selectors, and third-party document drift exclusion; regenerated Pages and
+    drift report.
+  - Evidence: BGP generated article has `Introduction` as
+    `href="#introduction"` plus visible `#` and `Copy` controls; drift report
+    now reports `Changed archived posts: 0`; CDP browser QA confirmed home
+    `Poppins`/`Raleway` computed fonts, no 390 px overflow, heading click
+    updated `location.hash` to `#introduction`, and the copy button wrote the
+    full section URL.
+  - Result: pass locally; push/live verification pending.
 
 ## Tests and Verification
 
@@ -356,20 +378,29 @@
   - Live route/asset checks: pass at 2026-07-07 11:21 UTC for homepage,
     theme CSS, Poppins WOFF2, BGP/OOB anchor link, AS141253 workbook, and CIDR
     hierarchy page.
+  - `git diff --check`: pass at 2026-07-07 15:23 UTC.
+  - `python3 -m py_compile scripts/*.py`: pass at 2026-07-07 15:23 UTC.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-07
+    15:23 UTC with 0 validation errors, 1 known sitemap warning, and 0
+    public-safety findings.
+  - Local CDP browser QA against `http://127.0.0.1:4173/`: pass at
+    2026-07-07 15:25 UTC for home fonts, heading permalink click, copy button,
+    and 390 px mobile overflow.
 - Not run:
-  - None for the current typography/link-anchor update.
+  - Live GitHub Pages verification for the current heading/drift update is
+    pending until after push.
 
 ## Next Pickup
 
 - Next action:
-  - Optional: decide whether to mirror the non-target A10 PDF drift reported
-    for `lets-talk-about-cgnat-and-ipv6-yet-again`.
+  - Commit, push to `main`, wait for GitHub Pages, and verify live home fonts,
+    heading controls, and clean drift report.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for the current typography/link-anchor update.
+  - Live GitHub Pages verification for the current heading/drift update.
 
 ## Completion Criteria
 
