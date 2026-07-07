@@ -254,7 +254,19 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
             errors.append("spreadsheet visual options index checksum mismatch")
         else:
             index_html = index_path.read_text(encoding="utf-8", errors="replace")
-            for marker in ["Spatial block map", "Prefix length lanes", "Nibble ladder", "Branch cards", "Purpose swimlanes"]:
+            for marker in [
+                "Spatial block map",
+                "Prefix length lanes",
+                "Nibble ladder",
+                "Branch cards",
+                "Purpose swimlanes",
+                "Radial prefix graph",
+                "Collapsible dendrogram",
+                "Sunburst allocation map",
+                "Animated allocation walkthrough",
+                "Purpose cluster graph",
+                "Searchable focus graph",
+            ]:
                 if marker not in index_html:
                     errors.append(f"spreadsheet visual options index missing `{marker}`")
         options = visual_options.get("options", [])
@@ -516,12 +528,36 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
             errors.append("GitHub Pages AS141253 visual options page missing")
         else:
             visual_html = visual_index.read_text(encoding="utf-8", errors="replace")
-            for marker in ["Spatial block map", "Prefix length lanes", "Nibble ladder", "Branch cards", "Purpose swimlanes"]:
+            for marker in [
+                "Spatial block map",
+                "Prefix length lanes",
+                "Nibble ladder",
+                "Branch cards",
+                "Purpose swimlanes",
+                "Radial prefix graph",
+                "Collapsible dendrogram",
+                "Sunburst allocation map",
+                "Animated allocation walkthrough",
+                "Purpose cluster graph",
+                "Searchable focus graph",
+            ]:
                 if marker not in visual_html:
                     errors.append(f"GitHub Pages AS141253 visual options page missing `{marker}`")
             if "../../../assets/fonts/" in visual_html:
                 errors.append("GitHub Pages AS141253 visual options page has unrewritten source font path")
-        for option_name in ["spatial-blocks", "level-lanes", "nibble-ladder", "branch-cards", "purpose-swimlanes"]:
+        for option_name in [
+            "spatial-blocks",
+            "level-lanes",
+            "nibble-ladder",
+            "branch-cards",
+            "purpose-swimlanes",
+            "radial-prefix-graph",
+            "collapsible-dendrogram",
+            "sunburst-map",
+            "animated-walkthrough",
+            "purpose-cluster-graph",
+            "searchable-focus-graph",
+        ]:
             option_page = sheet_page.parent / f"visual-option-{option_name}.html"
             if not option_page.exists():
                 errors.append(f"GitHub Pages AS141253 visual option missing: {option_name}")

@@ -6,10 +6,11 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; AS141253 IPv6 visual representation options are generated
-  from CSV/hierarchy data, pushed, deployed, and ready for owner selection
+- Status: local complete; AS141253 IPv6 visual representation options now
+  include six additional interactive candidates generated from CSV/hierarchy
+  data
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-07 16:53 UTC
+- Last updated: 2026-07-07 21:39 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -91,17 +92,22 @@
   - Complete: commit `43ce2ac` was pushed to `main`; GitHub Pages deployment
     run `28883547390` completed successfully; live static and browser checks
     passed for the visual-options gallery and five standalone pages.
+  - Complete locally: AS141253 visual options now include eleven generated
+    prototypes. The six new interactive candidates are radial prefix graph,
+    collapsible dendrogram, sunburst allocation map, animated allocation
+    walkthrough, purpose cluster graph, and searchable focus graph.
 - Last material update:
-  - 2026-07-07 16:53 UTC Pushed AS141253 visual-option pages, verified Pages
-    deployment `28883547390`, and live-checked the gallery plus all five
-    standalone option pages.
+  - 2026-07-07 21:39 UTC Generated six additional AS141253 interactive visual
+    candidates, regenerated source/Pages artefacts, validated, scanned, and
+    browser-checked desktop plus 390 px mobile layouts and representative
+    interactions.
 - Next pickup action:
-  - Owner selects the preferred AS141253 IPv6 visual representation direction.
+  - Push the expanded eleven-option gallery and verify live GitHub Pages routes.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - None for the generated selection prototypes; final model choice remains an
-    owner decision.
+  - Live GitHub Pages deployment verification for the expanded eleven-option
+    gallery is pending.
 
 ## Purpose / Big Picture
 
@@ -193,6 +199,7 @@
 - [x] 2026-07-07 15:55 UTC Started AS141253 visual-options workstream and inspected CSV/hierarchy generator inputs.
 - [x] 2026-07-07 16:49 UTC Generated visual-options HTML/CSS prototypes from CSV hierarchy data and locally browser-checked desktop plus 390 px mobile layouts.
 - [x] 2026-07-07 16:53 UTC Pushed `43ce2ac`, Pages deployment `28883547390` succeeded, and live visual-option routes were verified.
+- [x] 2026-07-07 21:39 UTC Added six interactive AS141253 visual candidates and locally browser-checked the expanded eleven-option gallery.
 
 ## Decision Log
 
@@ -308,8 +315,8 @@
   - Date/Author: 2026-07-07, user/Codex
   - Status: implemented locally
   - Impact: `scripts/ipv6_visual_options.py` generates a comparison gallery
-    and five standalone HTML/CSS option pages from the CSV-derived prefix
-    hierarchy.
+    and eleven standalone static/interactive HTML/CSS/JS option pages from the
+    CSV-derived prefix hierarchy.
 
 ## Validation and Acceptance
 
@@ -377,6 +384,21 @@
     gallery at desktop/default and 390 px mobile widths; page-level
     `scrollWidth` equalled viewport width and all five option sections
     rendered.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-07 21:39 UTC.
+  - `git diff --check`: passed at 2026-07-07 21:39 UTC.
+  - `make render-site PYTHON=<bundled-python>`: passed at
+    2026-07-07 21:39 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-07
+    21:39 UTC with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at
+    2026-07-07 21:39 UTC with 0 public-safety findings.
+  - Local browser QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-07 21:39 UTC for the expanded visual-options gallery and eleven
+    standalone pages at desktop/default and 390 px mobile widths. Page-level
+    `scrollWidth` equalled viewport width, no console errors were reported,
+    and representative interactions passed for graph node clicks, sunburst
+    arc clicks, purpose-cluster node clicks, dendrogram expand/collapse,
+    walkthrough next-step, and searchable focus.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`

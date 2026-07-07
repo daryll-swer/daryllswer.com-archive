@@ -444,7 +444,315 @@ footer { color: var(--muted); font-size: .92rem; }
 }
 .option-card h2 { margin: 0; font-size: 1.15rem; }
 .option-card p { margin: 0; color: var(--muted); }
+.interactive-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+  gap: 1rem;
+  align-items: start;
+}
+.graph-canvas {
+  min-width: 48rem;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--grid) 28%, transparent) 1px, transparent 1px),
+    linear-gradient(0deg, color-mix(in srgb, var(--grid) 28%, transparent) 1px, transparent 1px),
+    var(--surface-alt);
+  background-size: 4rem 4rem;
+}
+.graph-canvas text {
+  fill: var(--text);
+  font-family: var(--font-body);
+  font-size: .74rem;
+  pointer-events: none;
+}
+.graph-edge {
+  stroke: color-mix(in srgb, var(--grid) 72%, transparent);
+  stroke-width: 1.2;
+}
+.graph-mark {
+  cursor: pointer;
+  outline: none;
+}
+.graph-mark circle,
+.graph-mark path,
+.graph-mark rect {
+  transition: opacity .18s ease, stroke-width .18s ease, transform .18s ease;
+}
+.graph-mark circle {
+  fill: var(--other);
+  stroke: var(--surface);
+  stroke-width: 1.4;
+}
+.graph-mark path,
+.graph-mark rect {
+  fill: var(--other);
+  stroke: var(--surface);
+  stroke-width: .7;
+}
+.graph-mark.loopback circle,
+.graph-mark.loopback path,
+.graph-mark.loopback rect { fill: var(--loopback); }
+.graph-mark.oob-management circle,
+.graph-mark.oob-management path,
+.graph-mark.oob-management rect { fill: var(--oob); }
+.graph-mark.interconnect circle,
+.graph-mark.interconnect path,
+.graph-mark.interconnect rect { fill: var(--interconnect); }
+.graph-mark.content-cdn circle,
+.graph-mark.content-cdn path,
+.graph-mark.content-cdn rect { fill: var(--cdn); }
+.graph-mark.service-routed-pools circle,
+.graph-mark.service-routed-pools path,
+.graph-mark.service-routed-pools rect { fill: var(--service); }
+.graph-mark.network-device-roles circle,
+.graph-mark.network-device-roles path,
+.graph-mark.network-device-roles rect { fill: var(--role); }
+.graph-mark.geography-sites circle,
+.graph-mark.geography-sites path,
+.graph-mark.geography-sites rect { fill: var(--geo); }
+.graph-mark.reserved circle,
+.graph-mark.reserved path,
+.graph-mark.reserved rect { fill: var(--reserved); }
+.graph-canvas.has-selection .graph-mark:not(.is-selected):not(.is-path):not(.is-child),
+.graph-canvas.has-selection .graph-edge:not(.is-path) {
+  opacity: .18;
+}
+.graph-mark.is-selected circle,
+.graph-mark.is-selected path,
+.graph-mark.is-selected rect {
+  stroke: var(--text);
+  stroke-width: 3;
+}
+.graph-mark.is-path circle,
+.graph-mark.is-path path,
+.graph-mark.is-path rect {
+  stroke: var(--accent);
+  stroke-width: 2.4;
+}
+.graph-mark.is-child circle,
+.graph-mark.is-child path,
+.graph-mark.is-child rect {
+  stroke: var(--text);
+  stroke-width: 2;
+}
+.graph-edge.is-path {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  opacity: 1;
+}
+.node-detail,
+.interaction-panel {
+  display: grid;
+  gap: .6rem;
+  padding: .9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.node-detail h3,
+.interaction-panel h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.node-detail p,
+.interaction-panel p { margin: 0; color: var(--muted); }
+.detail-grid {
+  display: grid;
+  gap: .35rem;
+  font-size: .9rem;
+}
+.detail-grid div {
+  display: flex;
+  justify-content: space-between;
+  gap: .8rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: .25rem;
+}
+.detail-grid dt { color: var(--muted); }
+.detail-grid dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+.tree-toolbar,
+.walk-controls,
+.focus-controls {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  flex-wrap: wrap;
+  margin: 0 0 .85rem;
+}
+.tree-toolbar button,
+.walk-controls button,
+.focus-controls button,
+.focus-results button {
+  min-height: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.dendrogram-tree {
+  min-width: 42rem;
+  display: grid;
+  gap: .35rem;
+}
+.tree-node {
+  margin-left: 1rem;
+  padding-left: .75rem;
+  border-left: 1px solid var(--grid);
+}
+.tree-node summary {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: 2rem;
+  cursor: pointer;
+  list-style: none;
+}
+.tree-node summary::-webkit-details-marker { display: none; }
+.tree-node summary::before {
+  content: "+";
+  display: inline-grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  flex: 0 0 auto;
+}
+.tree-node[open] > summary::before { content: "-"; }
+.tree-node.leaf summary::before { content: ""; border-style: dashed; }
+.sunburst-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 18rem);
+  gap: 1rem;
+  align-items: start;
+}
+.legend-list {
+  display: grid;
+  gap: .45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.legend-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: .8rem;
+  padding: .45rem .55rem;
+  border: 1px solid var(--border);
+  border-left: .4rem solid var(--other);
+  border-radius: 6px;
+  background: var(--surface);
+}
+.legend-list .loopback { border-left-color: var(--loopback); }
+.legend-list .oob-management { border-left-color: var(--oob); }
+.legend-list .interconnect { border-left-color: var(--interconnect); }
+.legend-list .content-cdn { border-left-color: var(--cdn); }
+.legend-list .service-routed-pools { border-left-color: var(--service); }
+.legend-list .network-device-roles { border-left-color: var(--role); }
+.legend-list .geography-sites { border-left-color: var(--geo); }
+.legend-list .reserved { border-left-color: var(--reserved); }
+.walk-stage {
+  display: grid;
+  gap: .8rem;
+}
+.walk-track {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(8rem, 1fr));
+  min-width: 72rem;
+  gap: .5rem;
+}
+.walk-step {
+  padding: .65rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-alt);
+  opacity: .5;
+  transition: opacity .2s ease, transform .2s ease, border-color .2s ease;
+}
+.walk-step.is-active {
+  opacity: 1;
+  transform: translateY(-.18rem);
+  border-color: var(--accent);
+}
+.walk-step h3 { margin: 0 0 .55rem; font-size: 1rem; }
+.walk-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  max-height: 18rem;
+  overflow: auto;
+}
+.walk-progress {
+  height: .45rem;
+  border-radius: 999px;
+  background: var(--surface-alt);
+  overflow: hidden;
+}
+.walk-progress span {
+  display: block;
+  height: 100%;
+  width: 12.5%;
+  background: var(--accent);
+  transition: width .2s ease;
+}
+.focus-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
+  gap: 1rem;
+}
+.focus-controls input {
+  flex: 1 1 18rem;
+  min-height: 2.35rem;
+  min-width: 0;
+  padding: .45rem .65rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+.focus-results {
+  display: grid;
+  gap: .4rem;
+  max-height: 22rem;
+  overflow: auto;
+}
+.focus-results button {
+  display: grid;
+  gap: .15rem;
+  padding: .45rem .55rem;
+  text-align: left;
+}
+.focus-results small { color: var(--muted); }
+.focus-canvas {
+  min-width: 44rem;
+}
+.focus-canvas svg {
+  width: 100%;
+  min-width: 44rem;
+  height: auto;
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.focus-node rect {
+  fill: var(--surface);
+  stroke: var(--border);
+  stroke-width: 1.4;
+}
+.focus-node.is-selected rect {
+  stroke: var(--accent);
+  stroke-width: 2.6;
+}
 @media (max-width: 760px) {
+  .interactive-grid,
+  .sunburst-wrap,
+  .focus-shell { grid-template-columns: 1fr; }
   .branch-grid { grid-template-columns: 1fr; }
   .purpose-lane { grid-template-columns: 1fr; }
 }
@@ -459,7 +767,7 @@ footer { color: var(--muted); font-size: .92rem; }
       <p class="summary">Prefixes grouped by network purpose such as loopback, OOB, interconnect, CDN, reserved, and services.</p>
     </div>
     <nav class="actions" aria-label="Visualisation actions">
-      <a href="./">Workbook</a><a href="cidr-hierarchy.html">Tree model</a><a href="visual-options.html">All options</a><a href="visual-option-spatial-blocks.html">Spatial block map</a><a href="visual-option-level-lanes.html">Prefix length lanes</a><a href="visual-option-nibble-ladder.html">Nibble ladder</a><a href="visual-option-branch-cards.html">Branch cards</a>
+      <a href="./">Workbook</a><a href="cidr-hierarchy.html">Tree model</a><a href="visual-options.html">All options</a><a href="visual-option-spatial-blocks.html">Spatial block map</a><a href="visual-option-level-lanes.html">Prefix length lanes</a><a href="visual-option-nibble-ladder.html">Nibble ladder</a><a href="visual-option-branch-cards.html">Branch cards</a><a href="visual-option-radial-prefix-graph.html">Radial prefix graph</a><a href="visual-option-collapsible-dendrogram.html">Collapsible dendrogram</a><a href="visual-option-sunburst-map.html">Sunburst allocation map</a><a href="visual-option-animated-walkthrough.html">Animated allocation walkthrough</a><a href="visual-option-purpose-cluster-graph.html">Purpose cluster graph</a><a href="visual-option-searchable-focus-graph.html">Searchable focus graph</a>
     </nav>
   </header>
   <main>
@@ -481,5 +789,195 @@ footer { color: var(--muted); font-size: .92rem; }
   <footer>
     <p>Generated from repository CSV files. These are selection prototypes, not the final chosen model.</p>
   </footer>
+  <script>
+
+(() => {
+  const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (ch) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[ch]));
+
+  const dataFor = (section) => {
+    const script = section.querySelector("script[type='application/json'][data-graph-data]");
+    if (!script) return { nodes: [] };
+    try { return JSON.parse(script.textContent); }
+    catch { return { nodes: [] }; }
+  };
+
+  const detailHtml = (node) => `
+    <h3>${esc(node.shortPrefix || node.prefix)}</h3>
+    <p>${esc(node.label || node.category || "No label")}</p>
+    <dl class="detail-grid">
+      <div><dt>Prefix</dt><dd><code>${esc(node.prefix)}</code></dd></div>
+      <div><dt>Prefix length</dt><dd>/${esc(node.prefixLength)}</dd></div>
+      <div><dt>Purpose</dt><dd>${esc(node.category)}</dd></div>
+      <div><dt>Children</dt><dd>${esc(node.childCount)}</dd></div>
+      <div><dt>Parent</dt><dd>${node.parent ? `<code>${esc(node.parent)}</code>` : "root"}</dd></div>
+    </dl>
+  `;
+
+  const initGraphSection = (section) => {
+    const data = dataFor(section);
+    const byId = new Map(data.nodes.map((node) => [node.id, node]));
+    const canvas = section.querySelector(".graph-canvas");
+    const panel = section.querySelector("[data-node-detail]");
+    if (!canvas || !panel || byId.size === 0) return;
+    const marks = Array.from(section.querySelectorAll(".graph-mark[data-id]"));
+    const edges = Array.from(section.querySelectorAll(".graph-edge[data-parent][data-child]"));
+    const select = (id) => {
+      const node = byId.get(id);
+      if (!node) return;
+      const path = new Set(node.path || []);
+      const children = new Set(data.nodes.filter((item) => item.parent === id).map((item) => item.id));
+      canvas.classList.add("has-selection");
+      marks.forEach((mark) => {
+        const markId = mark.dataset.id;
+        mark.classList.toggle("is-selected", markId === id);
+        mark.classList.toggle("is-path", path.has(markId) && markId !== id);
+        mark.classList.toggle("is-child", children.has(markId));
+      });
+      edges.forEach((edge) => {
+        edge.classList.toggle("is-path", path.has(edge.dataset.parent) && path.has(edge.dataset.child));
+      });
+      panel.innerHTML = detailHtml(node);
+    };
+    marks.forEach((mark) => {
+      mark.addEventListener("click", () => select(mark.dataset.id));
+      mark.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          select(mark.dataset.id);
+        }
+      });
+    });
+    const initial = marks.find((mark) => mark.dataset.initial === "true") || marks[0];
+    if (initial) select(initial.dataset.id);
+  };
+
+  const initDendrogram = (section) => {
+    const expand = section.querySelector("[data-tree-expand]");
+    const collapse = section.querySelector("[data-tree-collapse]");
+    const details = Array.from(section.querySelectorAll("details.tree-node"));
+    if (expand) expand.addEventListener("click", () => details.forEach((item) => { item.open = true; }));
+    if (collapse) collapse.addEventListener("click", () => details.forEach((item) => { item.open = false; }));
+  };
+
+  const initWalkthrough = (section) => {
+    const steps = Array.from(section.querySelectorAll(".walk-step[data-level]"));
+    const label = section.querySelector("[data-walk-label]");
+    const progress = section.querySelector("[data-walk-progress]");
+    const prev = section.querySelector("[data-walk-prev]");
+    const next = section.querySelector("[data-walk-next]");
+    const play = section.querySelector("[data-walk-play]");
+    if (!steps.length) return;
+    let index = 0;
+    let timer = null;
+    const setStep = (nextIndex) => {
+      index = (nextIndex + steps.length) % steps.length;
+      steps.forEach((step, stepIndex) => step.classList.toggle("is-active", stepIndex === index));
+      if (label) label.textContent = `Active prefix length: ${steps[index].dataset.level}`;
+      if (progress) progress.style.width = `${((index + 1) / steps.length) * 100}%`;
+    };
+    const stop = () => {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+      if (play) play.textContent = "Play";
+    };
+    const toggle = () => {
+      if (timer) {
+        stop();
+        return;
+      }
+      if (play) play.textContent = "Pause";
+      timer = window.setInterval(() => setStep(index + 1), 1200);
+    };
+    if (prev) prev.addEventListener("click", () => { stop(); setStep(index - 1); });
+    if (next) next.addEventListener("click", () => { stop(); setStep(index + 1); });
+    if (play) play.addEventListener("click", toggle);
+    steps.forEach((step, stepIndex) => step.addEventListener("click", () => { stop(); setStep(stepIndex); }));
+    setStep(0);
+  };
+
+  const initFocus = (section) => {
+    const data = dataFor(section);
+    const byId = new Map(data.nodes.map((node) => [node.id, node]));
+    const input = section.querySelector("[data-focus-search]");
+    const results = section.querySelector("[data-focus-results]");
+    const canvas = section.querySelector("[data-focus-canvas]");
+    const panel = section.querySelector("[data-node-detail]");
+    if (!input || !results || !canvas || !panel || byId.size === 0) return;
+
+    const nodeButton = (node) => `
+      <button type="button" data-focus-id="${esc(node.id)}">
+        <code>${esc(node.shortPrefix || node.prefix)}</code>
+        <small>${esc(node.label || node.category)}</small>
+      </button>
+    `;
+
+    const renderResults = () => {
+      const term = input.value.trim().toLowerCase();
+      const matches = data.nodes
+        .filter((node) => !term || `${node.prefix} ${node.label} ${node.category}`.toLowerCase().includes(term))
+        .slice(0, 18);
+      results.innerHTML = matches.map(nodeButton).join("") || "<p>No matching prefix.</p>";
+    };
+
+    const renderFocus = (id) => {
+      const node = byId.get(id) || data.nodes[0];
+      const path = (node.path || []).map((pathId) => byId.get(pathId)).filter(Boolean);
+      const children = data.nodes.filter((item) => item.parent === node.id).slice(0, 10);
+      const siblings = node.parent ? data.nodes.filter((item) => item.parent === node.parent && item.id !== node.id).slice(0, 8) : [];
+      const row = (items, y, className) => items.map((item, index) => {
+        const x = 30 + index * 165;
+        return `
+          <g class="focus-node ${className} ${item.id === node.id ? "is-selected" : ""}" data-focus-id="${esc(item.id)}" transform="translate(${x},${y})" tabindex="0" role="button">
+            <rect width="145" height="58" rx="7"></rect>
+            <text x="10" y="23">${esc(item.shortPrefix || item.prefix)}</text>
+            <text x="10" y="43">${esc(item.category)}</text>
+          </g>
+        `;
+      }).join("");
+      const width = Math.max(760, Math.max(path.length, children.length, siblings.length) * 165 + 80);
+      canvas.innerHTML = `
+        <svg viewBox="0 0 ${width} 310" aria-label="Focused prefix graph">
+          <text x="30" y="24">Ancestry path</text>
+          ${row(path, 42, "path")}
+          <text x="30" y="135">Immediate children</text>
+          ${row(children, 153, "child")}
+          <text x="30" y="246">Nearby siblings</text>
+          ${row(siblings, 264, "sibling")}
+        </svg>
+      `;
+      panel.innerHTML = detailHtml(node);
+      canvas.querySelectorAll("[data-focus-id]").forEach((mark) => {
+        mark.addEventListener("click", () => renderFocus(mark.dataset.focusId));
+        mark.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            renderFocus(mark.dataset.focusId);
+          }
+        });
+      });
+    };
+
+    results.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-focus-id]");
+      if (button) renderFocus(button.dataset.focusId);
+    });
+    input.addEventListener("input", renderResults);
+    renderResults();
+    renderFocus(data.nodes[0].id);
+  };
+
+  document.querySelectorAll("[data-graph-section]").forEach(initGraphSection);
+  document.querySelectorAll("[data-dendrogram-section]").forEach(initDendrogram);
+  document.querySelectorAll("[data-walkthrough-section]").forEach(initWalkthrough);
+  document.querySelectorAll("[data-focus-section]").forEach(initFocus);
+})();
+
+  </script>
 </body>
 </html>
