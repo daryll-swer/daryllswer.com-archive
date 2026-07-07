@@ -23,7 +23,7 @@
     "node_count": 153,
     "source": "CSV Prefix columns"
   },
-  "generated_at": "2026-07-07T16:46:44+00:00",
+  "generated_at": "2026-07-07T21:33:24+00:00",
   "ods": {
     "bytes": 180746,
     "content_type": "application/vnd.oasis.opendocument.spreadsheet",
@@ -302,58 +302,112 @@
   "title": "AS141253's IPv6 Architecture Example - Daryll Swer - Google Drive",
   "visual_options": {
     "index": {
-      "bytes": 213460,
+      "bytes": 712876,
       "content_type": "text/html; charset=utf-8",
       "path": "data/sheets/as141253-ipv6-architecture-example/visual-options.html",
-      "sha256": "42564f6296aecadfb05732f71335a0732c6ccfa75898e51c72b25bd662dffd20"
+      "sha256": "69954fc104e1fccc600e96e02cb769805f45ec76e6fe989ca33d1d9af941b7ce"
     },
     "model": "generated_html_css_visual_options",
-    "option_count": 5,
+    "option_count": 11,
     "options": [
       {
-        "bytes": 39208,
+        "bytes": 55489,
         "content_type": "text/html; charset=utf-8",
         "id": "spatial-blocks",
         "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-spatial-blocks.html",
-        "sha256": "b1c7284abcbb5d908fe2c3769403808474e751b31f093fb932be077126b7fae1",
+        "sha256": "2a665d683dba485fd61c0437ab2649188cf43b17ec8628437c0d5fd530894995",
         "summary": "Nested allocation blocks for quick visual containment checks.",
         "title": "Spatial block map"
       },
       {
-        "bytes": 50704,
+        "bytes": 66985,
         "content_type": "text/html; charset=utf-8",
         "id": "level-lanes",
         "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-level-lanes.html",
-        "sha256": "9ffd9056db96e570207d6c3fa9a811a08e627dc96d55dc1b0a44a345daff98c2",
+        "sha256": "4fdab10a839424899d87fcbca736da9cddd3d6c99ef3fe9aa92b98d865e9919f",
         "summary": "One horizontal lane per prefix length so hierarchy depth is visible at a glance.",
         "title": "Prefix length lanes"
       },
       {
-        "bytes": 125538,
+        "bytes": 141819,
         "content_type": "text/html; charset=utf-8",
         "id": "nibble-ladder",
         "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-nibble-ladder.html",
-        "sha256": "dd7830eb745c3a0a622049f9731c87c5cfa6c95c2726fc977bad3df8f01d3a76",
+        "sha256": "7ef111f6a59b1448e26b9de47e088d83216002b718c49b975dbc6688ae14b616",
         "summary": "Terminal prefixes as rows with ancestor columns for /32, /34, /40, /44, /48, /52, /56, and /64.",
         "title": "Nibble ladder"
       },
       {
-        "bytes": 27291,
+        "bytes": 43572,
         "content_type": "text/html; charset=utf-8",
         "id": "branch-cards",
         "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-branch-cards.html",
-        "sha256": "76ef57b8450ccfd6211e79248cf21cc5ed7cece02aa053a0f7dd915a986a65fd",
+        "sha256": "a9627166dd4e2c9f7d3bd992969c95b9b7ebba4d7d230062407b6c1cd2a8bc9c",
         "summary": "Operational branches with ancestry, child allocations, and notes grouped together.",
         "title": "Branch cards"
       },
       {
-        "bytes": 28490,
+        "bytes": 44771,
         "content_type": "text/html; charset=utf-8",
         "id": "purpose-swimlanes",
         "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-purpose-swimlanes.html",
-        "sha256": "2e5556fe6c8a01fa17f7f46a639fb872c5bab18da429c3412bb0dd54a5b7d36a",
+        "sha256": "d18d638fd2ad5afeaceedaded34085d890a5c7224d2823b31b977390634b46f8",
         "summary": "Prefixes grouped by network purpose such as loopback, OOB, interconnect, CDN, reserved, and services.",
         "title": "Purpose swimlanes"
+      },
+      {
+        "bytes": 158751,
+        "content_type": "text/html; charset=utf-8",
+        "id": "radial-prefix-graph",
+        "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-radial-prefix-graph.html",
+        "sha256": "bd858962d33f312b089361fff308c2798ef4cccfb4d0f462c062bda95b867ea5",
+        "summary": "Interactive graph-theory style rings where each ring is a hierarchy depth and clicks highlight ancestry.",
+        "title": "Radial prefix graph"
+      },
+      {
+        "bytes": 63993,
+        "content_type": "text/html; charset=utf-8",
+        "id": "collapsible-dendrogram",
+        "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-collapsible-dendrogram.html",
+        "sha256": "3d6e432e5608ba98027fb1b6c12c15dea08180f3e29d3b9104f54ee6383d34bf",
+        "summary": "Expandable left-to-right hierarchy so readers can reveal only the branch they are inspecting.",
+        "title": "Collapsible dendrogram"
+      },
+      {
+        "bytes": 147340,
+        "content_type": "text/html; charset=utf-8",
+        "id": "sunburst-map",
+        "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-sunburst-map.html",
+        "sha256": "b160bc024e49af39eb8428e51eb1f522fe4676209bd39ec1495ba1583c34a7aa",
+        "summary": "Interactive radial allocation map using arc spans to show relative branch density across hierarchy levels.",
+        "title": "Sunburst allocation map"
+      },
+      {
+        "bytes": 54012,
+        "content_type": "text/html; charset=utf-8",
+        "id": "animated-walkthrough",
+        "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-animated-walkthrough.html",
+        "sha256": "31a2651d6140059956eebe676432a0182a797f0b0ae15f8c705ebfb434bc6b53",
+        "summary": "Step-through walkthrough from the root allocation to terminal prefixes, with one active prefix length at a time.",
+        "title": "Animated allocation walkthrough"
+      },
+      {
+        "bytes": 159234,
+        "content_type": "text/html; charset=utf-8",
+        "id": "purpose-cluster-graph",
+        "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-purpose-cluster-graph.html",
+        "sha256": "f20b632562441e27fa86371080c9a8e68433bcd1706092382efe7eac309df445",
+        "summary": "Interactive node-link graph clustered by operational purpose rather than pure prefix depth.",
+        "title": "Purpose cluster graph"
+      },
+      {
+        "bytes": 84633,
+        "content_type": "text/html; charset=utf-8",
+        "id": "searchable-focus-graph",
+        "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-searchable-focus-graph.html",
+        "sha256": "d96532629417f5efd1e65fac371bc98129cd132aa83fcca7c04d2d04b9576d0c",
+        "summary": "Search-first graph that expands only the selected prefix, its ancestry, siblings, and immediate children.",
+        "title": "Searchable focus graph"
       }
     ],
     "source": "CSV Prefix columns and rooted IPv6 prefix containment tree"

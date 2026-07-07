@@ -241,8 +241,9 @@ The AS141253 Google Sheet is archived as a CSV-backed HTML workbook:
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html` is the
   static IPv6 CIDR containment tree proof of concept generated from CSV.
 - `data/sheets/as141253-ipv6-architecture-example/visual-options.html` is a
-  generated comparison gallery of alternate static HTML/CSS visual prototypes
-  for choosing a more readable IPv6 subnetting representation.
+  generated comparison gallery of alternate static and interactive HTML/CSS/JS
+  visual prototypes for choosing a more readable IPv6 subnetting
+  representation.
 - `data/sheets/as141253-ipv6-architecture-example/visual-option-*.html` stores
   standalone pages for each generated prototype.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.json` is the
@@ -265,6 +266,10 @@ the most-specific existing supernet containing a child prefix. The graph output
 is a proof of concept and does not replace the workbook view yet.
 
 The visual-options pages use the same CSV-derived hierarchy model but present
-it in multiple HTML/CSS layouts for owner selection. They are deliberately
-generated prototypes; once a preferred model is chosen, the final visualisation
-should be made explicit in this document and in `ARCHITECTURE.md`.
+it in multiple HTML/CSS/JS layouts for owner selection. Current prototypes
+include five static views plus six interactive graph/focus views: radial
+prefix graph, collapsible dendrogram, sunburst allocation map, animated
+allocation walkthrough, purpose cluster graph, and searchable focus graph.
+They are deliberately generated prototypes; once a preferred model is chosen,
+the final visualisation should be made explicit in this document and in
+`ARCHITECTURE.md`.
