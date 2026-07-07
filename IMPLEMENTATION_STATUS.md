@@ -6,9 +6,9 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 IPv6 visual representation options
-- Status: local complete; expanded eleven-option gallery awaits push/live
-  verification
-- Last updated: 2026-07-07 21:39 UTC
+- Status: complete; expanded eleven-option gallery is deployed and ready for
+  owner selection
+- Last updated: 2026-07-07 21:43 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -147,13 +147,14 @@
     that source WordPress colour classes survive into generated Pages output
     and have generated CSS rules.
 - AS141253 visual representation options:
-  - Status: complete locally
+  - Status: complete and pushed
   - Notes: `scripts/ipv6_visual_options.py` generates a comparison gallery and
     eleven standalone static/interactive HTML/CSS/JS options from the
     CSV-derived prefix model. The first five static options remain in place;
     the six new interactive candidates are radial prefix graph, collapsible
     dendrogram, sunburst allocation map, animated allocation walkthrough,
-    purpose cluster graph, and searchable focus graph.
+    purpose cluster graph, and searchable focus graph. Commit `bce0d98` is
+    deployed via GitHub Pages run `28900695345`.
 
 ## Execution Log
 
@@ -434,6 +435,16 @@
     node clicks, sunburst arc clicks, purpose-cluster node clicks, dendrogram
     expand/collapse, walkthrough next-step, and searchable focus.
   - Result: pass locally.
+- 2026-07-07 21:43 UTC:
+  - Action: Pushed the expanded AS141253 visual-option gallery and verified
+    live GitHub Pages output.
+  - Evidence: Commit `bce0d98` pushed to `main`; Pages deployment run
+    `28900695345` completed successfully. Live HTTP checks returned 200 for
+    `visual-options.html` and all six new `visual-option-*.html` pages. Live
+    browser QA confirmed eleven option cards/sections, graph nodes, active
+    walkthrough state, searchable focus results, and page-level `scrollWidth`
+    equal to viewport width at desktop/default and 390 px mobile widths.
+  - Result: pass.
 
 ## Tests and Verification
 
@@ -508,20 +519,18 @@
   - Live browser computed-style QA: pass at 2026-07-07 15:43 UTC for BGP
     Router ID WordPress colour marks.
 - Not run:
-  - Live GitHub Pages verification for the expanded eleven-option gallery is
-    pending until the commit is pushed and Pages finishes rebuilding.
+  - None for the generated selection prototypes.
 
 ## Next Pickup
 
 - Next action:
-  - Push the expanded eleven-option gallery and verify live GitHub Pages routes.
+  - Owner selects the preferred AS141253 IPv6 visual representation direction.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Live Pages deployment for the expanded eleven-option gallery has not yet
-    been observed.
+  - None for this prototype-generation step.
 
 ## Completion Criteria
 

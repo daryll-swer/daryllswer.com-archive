@@ -6,11 +6,11 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: local complete; AS141253 IPv6 visual representation options now
-  include six additional interactive candidates generated from CSV/hierarchy
-  data
+- Status: complete; AS141253 IPv6 visual representation options now include
+  six additional interactive candidates generated from CSV/hierarchy data,
+  pushed, deployed, and ready for owner selection
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-07 21:39 UTC
+- Last updated: 2026-07-07 21:43 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -96,18 +96,20 @@
     prototypes. The six new interactive candidates are radial prefix graph,
     collapsible dendrogram, sunburst allocation map, animated allocation
     walkthrough, purpose cluster graph, and searchable focus graph.
+  - Complete: commit `bce0d98` was pushed to `main`; GitHub Pages deployment
+    run `28900695345` completed successfully; live static and browser checks
+    passed for the expanded eleven-option gallery.
 - Last material update:
-  - 2026-07-07 21:39 UTC Generated six additional AS141253 interactive visual
-    candidates, regenerated source/Pages artefacts, validated, scanned, and
-    browser-checked desktop plus 390 px mobile layouts and representative
-    interactions.
+  - 2026-07-07 21:43 UTC Pushed the expanded eleven-option gallery, verified
+    Pages deployment `28900695345`, and live-checked the gallery plus the six
+    new standalone option pages.
 - Next pickup action:
-  - Push the expanded eleven-option gallery and verify live GitHub Pages routes.
+  - Owner selects the preferred AS141253 IPv6 visual representation direction.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - Live GitHub Pages deployment verification for the expanded eleven-option
-    gallery is pending.
+  - None for the generated selection prototypes; final model choice remains an
+    owner decision.
 
 ## Purpose / Big Picture
 
@@ -200,6 +202,7 @@
 - [x] 2026-07-07 16:49 UTC Generated visual-options HTML/CSS prototypes from CSV hierarchy data and locally browser-checked desktop plus 390 px mobile layouts.
 - [x] 2026-07-07 16:53 UTC Pushed `43ce2ac`, Pages deployment `28883547390` succeeded, and live visual-option routes were verified.
 - [x] 2026-07-07 21:39 UTC Added six interactive AS141253 visual candidates and locally browser-checked the expanded eleven-option gallery.
+- [x] 2026-07-07 21:43 UTC Pushed `bce0d98`, Pages deployment `28900695345` succeeded, and live expanded-gallery routes were verified.
 
 ## Decision Log
 
@@ -399,6 +402,14 @@
     and representative interactions passed for graph node clicks, sunburst
     arc clicks, purpose-cluster node clicks, dendrogram expand/collapse,
     walkthrough next-step, and searchable focus.
+  - Live route checks: passed at 2026-07-07 21:43 UTC for
+    `visual-options.html` and the six new `visual-option-*.html` pages; all
+    returned HTTP 200, included expected markers, and had no unrewritten source
+    font paths.
+  - Live browser QA: passed at 2026-07-07 21:43 UTC for the expanded gallery
+    at desktop/default and 390 px mobile widths; page-level `scrollWidth`
+    equalled viewport width, eleven option cards/sections rendered, and
+    searchable focus returned loopback matches on the deployed page.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`
