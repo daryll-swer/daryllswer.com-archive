@@ -6,11 +6,11 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; heading permalink controls, explicit home typography,
-  third-party artefact drift policy, validation, push, Pages deployment, and
-  live verification complete
+- Status: in progress; WordPress inline colour palette preservation is
+  implemented and locally verified, with push and live Pages verification
+  pending
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-07 15:28 UTC
+- Last updated: 2026-07-07 15:40 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -75,19 +75,26 @@
     run `28878086332` completed successfully; live static and browser checks
     verified home fonts, BGP heading controls, copy-link behaviour, and clean
     drift output.
+  - Complete locally: WordPress inline colour classes from canonical source
+    HTML are preserved into generated Pages article HTML and styled through
+    generated WordPress preset palette CSS.
+  - Complete locally: canonical/public REST audit found only one current
+    coloured article, `bgp-router-id-structuring-in-ipv6-native-networks`,
+    using `has-inline-color`, `has-luminous-vivid-amber-color`,
+    `has-vivid-red-color`, and `has-luminous-vivid-orange-color`.
 - Last material update:
-  - 2026-07-07 15:28 UTC Live GitHub Pages checks passed on commit `62cdc70`.
-    Static checks verified the generated CSS/JS, BGP heading controls, and
-    clean drift report. CDP browser checks verified the live home page uses
-    `Poppins`/`Raleway`, has no 390 px overflow, clicking `Introduction`
-    updates `#introduction`, and the copy button writes the live section URL.
+  - 2026-07-07 15:40 UTC Local browser computed-style QA verified BGP Router
+    ID colour marks: A amber `rgb(252, 185, 0)`, B red
+    `rgb(207, 46, 46)`, and C/D orange `rgb(255, 105, 0)`, all with
+    transparent backgrounds.
 - Next pickup action:
-  - Optional manual edit follow-up: decide how to handle the remaining
-    non-archived canonical links to `/contact/`, `/as149794/`, and `/geofeed/`.
+  - Commit, push, wait for GitHub Pages, and live-verify the BGP Router ID
+    colour marks.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - None for the current heading/drift update.
+  - Live GitHub Pages verification is pending for the current colour-palette
+    update.
 
 ## Purpose / Big Picture
 
@@ -174,6 +181,8 @@
 - [x] 2026-07-07 15:25 UTC Implemented generated heading permalink/copy controls, explicit home font selectors, and third-party document drift exclusion.
 - [x] 2026-07-07 15:25 UTC Regenerated Pages and drift report; local validation/public-safety and CDP browser QA passed.
 - [x] 2026-07-07 15:28 UTC Pushed `62cdc70`, Pages deployment `28878086332` succeeded, and live static/CDP browser checks passed.
+- [x] 2026-07-07 15:40 UTC Added WordPress preset colour CSS/validation, regenerated Pages output, and locally verified BGP Router ID computed colours.
+- [ ] Commit, push to `main`, wait for GitHub Pages deployment, and verify live colour output.
 
 ## Decision Log
 

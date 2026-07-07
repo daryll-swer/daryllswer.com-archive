@@ -21,6 +21,8 @@ try:
 except Exception as exc:  # pragma: no cover - environment guard
     raise SystemExit("Missing dependency: lxml. Install requirements.txt first.") from exc
 
+from wordpress_palette import WORDPRESS_COLOR_PRESETS
+
 
 ROOT = Path(__file__).resolve().parents[1]
 UA = "daryllswer-com-archive-validator/1.0 (+https://www.daryllswer.com/)"
@@ -40,6 +42,7 @@ ARCHIVE_EXCLUDED_PATTERNS = [
 REMOTE_REFERENCE_ANCHOR_PATTERN = re.compile(r"https://www\.daryllswer\.com/[^)\s]+/#(?:h-)?references", re.I)
 WORDPRESS_MEDIA_PATTERN = re.compile(r"https://www\.daryllswer\.com/wp-content/uploads/", re.I)
 GOOGLE_SHEET_PATTERN = re.compile(r"https://docs\.google\.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml", re.I)
+WORDPRESS_COLOUR_CLASS_RE = re.compile(r"^has-[a-z0-9-]+(?:color|background-color|border-color)$")
 
 
 def now_iso() -> str:
@@ -273,6 +276,30 @@ def class_predicate(class_name: str) -> str:
     return f"contains(concat(' ', normalize-space(@class), ' '), ' {class_name} ')"
 
 
+def wordpress_colour_classes(doc) -> set[str]:
+    classes: set[str] = set()
+    for el in doc.xpath("//*[@class]"):
+        for class_name in (el.get("class") or "").split():
+            if class_name == "has-inline-color" or WORDPRESS_COLOUR_CLASS_RE.match(class_name):
+                classes.add(class_name)
+    return classes
+
+
+def validate_wordpress_palette_css(css: str, used_classes: set[str], errors: list[str]) -> None:
+    for name, value in WORDPRESS_COLOR_PRESETS.items():
+        marker = f"--wp--preset--color--{name}: {value};"
+        if marker not in css:
+            errors.append(f"GitHub Pages theme CSS missing WordPress colour preset `{marker}`")
+    for class_name in sorted(used_classes):
+        if class_name == "has-inline-color":
+            for marker in ["mark.has-inline-color", "background: transparent", "padding: 0"]:
+                if marker not in css:
+                    errors.append(f"GitHub Pages theme CSS missing WordPress inline colour marker `{marker}`")
+            continue
+        if f".{class_name}" not in css:
+            errors.append(f"GitHub Pages theme CSS missing WordPress colour class `.{class_name}`")
+
+
 def heading_target_id(heading_id: str) -> str:
     return heading_id[2:] if heading_id.startswith("h-") else heading_id
 
@@ -421,6 +448,9 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
     font_manifest = None
     if not site_css.exists():
         errors.append("GitHub Pages theme missing at docs/assets/theme.css")
+        css_text = ""
+    else:
+        css_text = site_css.read_text(encoding="utf-8", errors="replace")
     if not site_js.exists():
         errors.append("GitHub Pages heading interaction script missing at docs/assets/archive.js")
     else:
@@ -465,6 +495,18 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
             errors.append(f"{post['slug']}: GitHub Pages article missing")
             continue
         html = page.read_text(encoding="utf-8", errors="replace")
+        try:
+            source_doc = parse_html_file(ROOT / post["bundle_path"] / "source" / "rendered-article.html")
+            page_doc = parse_html_file(page)
+            source_colour_classes = wordpress_colour_classes(source_doc)
+            if source_colour_classes:
+                page_colour_classes = wordpress_colour_classes(page_doc)
+                missing = sorted(source_colour_classes - page_colour_classes)
+                if missing:
+                    errors.append(f"{post['slug']}: GitHub Pages article dropped WordPress colour classes: {missing}")
+                validate_wordpress_palette_css(css_text, source_colour_classes, errors)
+        except Exception as exc:
+            errors.append(f"{post['slug']}: WordPress colour class validation failed: {exc}")
         validate_excluded_operational_ctas(page, errors)
         if 'href="../../index.html"' in html:
             errors.append(f"{post['slug']}: GitHub Pages article navigation should use ../../ instead of ../../index.html")

@@ -5,11 +5,10 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: heading permalink controls, explicit archive
-  home typography, and third-party artefact drift policy
-- Status: complete; local validation/browser QA, commit/push, GitHub Pages
-  deployment, and live public verification passed
-- Last updated: 2026-07-07 15:28 UTC
+- Current sprint / workstream: WordPress inline colour palette preservation
+- Status: local implementation and validation/browser QA passed; commit/push
+  and live Pages verification pending
+- Last updated: 2026-07-07 15:40 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -141,6 +140,12 @@
   - Notes: `scripts/check-canonical-drift.py` now tracks WordPress-uploaded
     image-media drift only. Linked third-party PDFs/documents/downloads remain
     outbound links and do not produce mirror-required drift.
+- WordPress inline colour palette:
+  - Status: implemented locally
+  - Notes: `scripts/render-site.py` now emits WordPress preset colour CSS via
+    `scripts/wordpress_palette.py`, and `scripts/validate-mirror.py` checks
+    that source WordPress colour classes survive into generated Pages output
+    and have generated CSS rules.
 
 ## Execution Log
 
@@ -344,6 +349,18 @@
     computed fonts, no 390 px overflow, `Introduction` click updating
     `#introduction`, and the `Copy` button writing the live section URL.
   - Result: pass.
+- 2026-07-07 15:40 UTC:
+  - Action: Audited canonical/local WordPress inline colour classes, added
+    WordPress preset palette CSS, regenerated Pages output, and ran local
+    rendered-style QA.
+  - Evidence: Fresh WordPress REST audit found only
+    `bgp-router-id-structuring-in-ipv6-native-networks` currently uses inline
+    colour classes: `has-inline-color`, `has-luminous-vivid-amber-color`,
+    `has-vivid-red-color`, and `has-luminous-vivid-orange-color`. Canonical
+    CSS maps those presets to `#fcb900`, `#cf2e2e`, and `#ff6900`. Local
+    browser computed styles confirmed A `rgb(252, 185, 0)`, B
+    `rgb(207, 46, 46)`, C/D `rgb(255, 105, 0)`, and transparent backgrounds.
+  - Result: pass locally; push/live verification pending.
 
 ## Tests and Verification
 
@@ -404,26 +421,36 @@
     CSS/JS, BGP article, and clean drift report.
   - Live CDP browser QA: pass at 2026-07-07 15:28 UTC for home fonts, BGP
     heading click/copy behaviour, and 390 px mobile overflow.
+  - Fresh WordPress REST inline-colour audit: pass at 2026-07-07 15:35 UTC;
+    only BGP Router ID currently uses WordPress inline colour classes.
+  - `make render-site PYTHON=<bundled-python>`: pass at 2026-07-07 15:38 UTC.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: pass at
+    2026-07-07 15:39 UTC with 0 validation errors, 1 known sitemap warning,
+    and 0 public-safety findings.
+  - Local browser computed-style QA against `http://127.0.0.1:4173/`: pass at
+    2026-07-07 15:40 UTC for BGP Router ID WordPress colour marks.
 - Not run:
-  - None for the current heading/drift update.
+  - Live GitHub Pages verification for the current colour-palette update is
+    pending until after push.
 
 ## Next Pickup
 
 - Next action:
-  - Optional manual edit follow-up: decide how to handle the remaining
-    non-archived canonical links to `/contact/`, `/as149794/`, and `/geofeed/`.
+  - Commit, push to `main`, wait for GitHub Pages, and verify live BGP Router
+    ID colour rendering.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for the current heading/drift update.
+  - Live GitHub Pages verification for the current colour-palette update.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
+  - Push and live-verify the current colour-palette update.
   - Optional follow-up: decide whether the remaining non-archived canonical
     links to `/contact/`, `/as149794/`, and `/geofeed/` should stay outbound,
     be manually edited, or be represented by archive landing pages.

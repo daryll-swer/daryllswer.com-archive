@@ -29,6 +29,9 @@
   external unless a deliberate archive-local replacement exists.
 - Preserve WordPress heading IDs and generated alias anchors so local section
   links work in GitHub Pages.
+- Preserve WordPress inline colour markup and generated Pages colour styling
+  for article-body text/characters, including `has-inline-color` and
+  WordPress preset classes such as `has-vivid-red-color`.
 - Generated article headings must expose shareable section links: heading text
   should link to its own fragment, and generated Pages should provide visible
   permalink/copy-link controls with accessible names.
