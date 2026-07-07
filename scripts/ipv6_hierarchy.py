@@ -13,6 +13,8 @@ import json
 import re
 from pathlib import Path
 
+from font_assets import FONT_BODY_STACK, FONT_HEADING_STACK, font_face_css
+
 
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -159,9 +161,11 @@ def render_tree(node: dict, depth: int = 0) -> str:
     )
 
 
-def render_html(tree: dict, source_url: str) -> str:
+def render_html(tree: dict, source_url: str, font_asset_prefix: str = "../../../assets/fonts") -> str:
     total = count_nodes(tree)
     depth = max_depth(tree)
+    body_font = FONT_BODY_STACK
+    heading_font = FONT_HEADING_STACK
     return f"""<!doctype html>
 <html lang="en-IN">
 <head>
@@ -169,6 +173,7 @@ def render_html(tree: dict, source_url: str) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AS141253 IPv6 CIDR Hierarchy</title>
   <style>
+{font_face_css(font_asset_prefix)}
 * {{ box-sizing: border-box; }}
 :root {{
   color-scheme: light dark;
@@ -180,6 +185,8 @@ def render_html(tree: dict, source_url: str) -> str:
   --border: #d6dde5;
   --accent: #0b6f8a;
   --reserved: #7a5c00;
+  --font-body: {body_font};
+  --font-heading: {heading_font};
 }}
 @media (prefers-color-scheme: dark) {{
   :root {{
@@ -197,7 +204,7 @@ body {{
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-body);
   line-height: 1.55;
 }}
 a {{ color: var(--accent); text-underline-offset: .18em; }}
@@ -233,7 +240,7 @@ a {{ color: var(--accent); text-underline-offset: .18em; }}
   letter-spacing: 0;
   text-transform: uppercase;
 }}
-h1 {{ margin: 0; font-size: clamp(1.8rem, 4vw, 3.2rem); line-height: 1.12; letter-spacing: 0; }}
+h1 {{ margin: 0; font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 3.2rem); line-height: 1.12; letter-spacing: 0; }}
 .summary {{ max-width: 780px; color: var(--muted); }}
 .metrics {{
   display: grid;

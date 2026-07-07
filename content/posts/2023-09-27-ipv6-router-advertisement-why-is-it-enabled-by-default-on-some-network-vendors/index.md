@@ -67,7 +67,7 @@ As we can see in Table-1, different vendors have different behaviours. For docum
 - [Cumulus Linux](https://docs.nvidia.com/networking-ethernet-software/cumulus-linux-56/Layer-3/Neighbor-Discovery-ND/#router-advertisement).
 - [Huawei](https://support.huawei.com/enterprise/en/doc/EDOC1000041693/50c824ca/ipv6-nd-ra-halt-disable).
 - [Juniper](https://www.juniper.net/documentation/us/en/software/junos/neighbor-discovery/topics/topic-map/ipv6-neighbor-discovery.html#:~:text=Router%20advertisement%20messages%20are%20disabled%20by%20default%2C%20and%20you%20must%20enable%20them%20to%20take%20advantage%20of%20SLAAC).
-- MikroTik does not explicitly state it, but you can find the configuration details and some explanation on my [Edge/BNG guide](https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/).
+- MikroTik does not explicitly state it, but you can find the configuration details and some explanation on my [Edge/BNG guide](../2021-06-08-edge-router-bng-optimisation-guide-for-isps/index.md).
 
 I think the Huawei, Juniper and Cumulus Linux approach makes the most sense, instead of flooding RAs 24/7 on IPv6 enabled interfaces by default, they disabled RA globally by default allowing the user to enable RA on a per-interface basis as and when needed, therefore the end-result is minimal to zero misconfigurations.
 
@@ -101,7 +101,7 @@ The problem with varying implementations, documentations and in some cases stand
 
 This [article](https://blog.apnic.net/2021/08/30/lets-all-suppress-router-advertisements/) in the past has touched upon this specific subject of IPv6 RA, where the author emphasised nothing has changed much from their previous presentation work, quote from the article.
 
-> Two years ago, at JANOG 44, I presented on the following IPv6 setting that I often see incorrectly used:  
+> Two years ago, at JANOG 44, I presented on the following IPv6 setting that I often see incorrectly used:
 > > *ipv6 nd ra suppress*
 >
 >

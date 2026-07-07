@@ -38,7 +38,7 @@ There’s a saying: *“Route when you can, bridge when you must.”* It’s sol
 
 In fact, maybe we need a new one: *“Route when you can. Bridge when you must. But if you’re thinking NAT… just route IPv6 and walk away with dignity.*”
 
-Because here’s the thing—with IPv6, you don’t need NAT. If you just **routed** everything end-to-end, things would be simpler, cleaner, and far more scalable. Now I am well aware of issues with IPv6 multi-homing and PA space, that’s already covered in my [IPv6 Architecture guide](https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/), which is why *‘routed’* is **bolded** 😉 – PA multi-homing issue is no excuse to avoid IPv6, because it’s the same problem in IPv4[[5](https://blog.ipspace.net/kb/Internet/MH_Redundancy/)].
+Because here’s the thing—with IPv6, you don’t need NAT. If you just **routed** everything end-to-end, things would be simpler, cleaner, and far more scalable. Now I am well aware of issues with IPv6 multi-homing and PA space, that’s already covered in my [IPv6 Architecture guide](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md), which is why *‘routed’* is **bolded** 😉 – PA multi-homing issue is no excuse to avoid IPv6, because it’s the same problem in IPv4[[5](https://blog.ipspace.net/kb/Internet/MH_Redundancy/)].
 
 ## What ugly hacks?
 

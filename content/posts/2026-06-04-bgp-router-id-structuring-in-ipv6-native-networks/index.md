@@ -15,7 +15,7 @@ tags:
 ---
 ![BGP Router ID Structuring in IPv6 Native Networks](assets/BGP_RouterID_FT-scaled.jpg)
 
-At [Swer Networks](https://swernetworks.com), we design and implement scalable, future-ready IPv6 architectures for our clients. This includes everything from tailoring [geographical addressing models](https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/) to the structuring of Border Gateway Protocol (BGP) Router IDs in modern networks. In this post, we focus specifically on the design and structuring of BGP Router IDs within IPv6-native environments.
+At [Swer Networks](https://swernetworks.com), we design and implement scalable, future-ready IPv6 architectures for our clients. This includes everything from tailoring [geographical addressing models](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md) to the structuring of Border Gateway Protocol (BGP) Router IDs in modern networks. In this post, we focus specifically on the design and structuring of BGP Router IDs within IPv6-native environments.
 
 ## Introduction
 
@@ -59,7 +59,7 @@ With RFC 6286, however, the situation becomes more like: ‘It looks like a du
 
 In fact, the RFC explicitly states that the shift was driven by the needs of IPv6‑only networks, where relying on an IPv4 address for an identifier was no longer viable:
 
-> To accommodate situations where the current requirements for the BGP Identifier are not met (such as in the case of an **IPv6-only network**), this document relaxes the definition of the BGP Identifier to be a 4-octet, unsigned, non-zero integer and relaxes the “uniqueness” requirement so that only AS-wide uniqueness of the BGP Identifiers is required. These revisions to the base BGP specification do not  
+> To accommodate situations where the current requirements for the BGP Identifier are not met (such as in the case of an **IPv6-only network**), this document relaxes the definition of the BGP Identifier to be a 4-octet, unsigned, non-zero integer and relaxes the “uniqueness” requirement so that only AS-wide uniqueness of the BGP Identifiers is required. These revisions to the base BGP specification do not
 > introduce any backward compatibility issues.
 >
 >
@@ -116,7 +116,7 @@ As a side bonus of the structured BGP Router ID numbering schema, the same schem
 
 Assuming your network vendor’s software implementation is 100% compliant with RFC 6286 and has no bugs impacting BGP with the **not**-IPv4 router ID, you may be used to relying on ping/traceroute towards the /32 IPv4 loopback IP, but since we are discussing IPv6 native networks, the answer is you ping/traceroute towards the /128 IPv6 loopback IP for troubleshooting, as IPv6, anyway, will be responsible for next-hop routing of IPv4.
 
-**Quick tip**: As with [OOB network design](https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/#dns-and-loopback-addressing), we recommend you use structured DNS schemas for easy memory of IPv6 loopback endpoints.
+**Quick tip**: As with [OOB network design](../2024-11-12-out-of-band-network-design-for-service-provider-networks/index.md#dns-and-loopback-addressing), we recommend you use structured DNS schemas for easy memory of IPv6 loopback endpoints.
 
 With IGP, as long as your OSPFv3 implementation is compliant with [RFC7503](https://www.rfc-editor.org/rfc/rfc7503#section-5), it should work as intended. As for IS-IS, it works using Connectionless-mode Network Service (CLNS), so it does not matter either way.
 

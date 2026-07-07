@@ -192,3 +192,44 @@
   `cidr-hierarchy.html`, `cidr-hierarchy.json`, and `cidr-hierarchy.dot` from
   CSV. The workbook remains the default sheet page until the graph view is
   validated further.
+
+## 2026-07-07: Self-Host Canonical Typography
+
+- Decision: Use self-hosted Google Fonts WOFF2 files for the generated archive:
+  `Poppins` for body/content text and `Raleway` for headings/titles.
+- Rationale: The canonical WordPress CSS uses these families, and self-hosting
+  keeps the archive readable if daryllswer.com or external runtime font loading
+  disappears.
+- Evidence: Public canonical CSS declares `Poppins` for body/form text and
+  `Raleway` for headings. Google Fonts' public repository states that family
+  directories carry their own licence files and that fonts can be self-hosted
+  subject to those terms.
+- Impact: Font source files, family OFL files, checksums, and provenance live in
+  `assets/fonts/`; `make render-site` copies them to `docs/assets/fonts/`.
+  `scripts/font_assets.py` centralises `@font-face` generation for the Pages
+  theme, workbook, and IPv6 hierarchy views.
+
+## 2026-07-07: Rewrite Archived Internal Post Links Locally
+
+- Decision: Rewrite article-body links from canonical daryllswer.com post URLs
+  to archive-local Markdown and Pages targets when the target post is mirrored.
+- Rationale: The archive should remain navigable without sending readers back
+  to WordPress for content that already exists in the repository.
+- Impact: `scripts/sync-wordpress-posts.py` rewrites repository Markdown links
+  to local `content/posts/.../index.md` targets; `scripts/render-site.py`
+  rewrites generated Pages links to local `../<slug>/` routes. URL fragments are
+  preserved, tracking query parameters are dropped, and non-archived canonical
+  pages remain external.
+
+## 2026-07-07: Preserve WordPress Section Anchor Compatibility
+
+- Decision: Preserve WordPress heading IDs and emit non-`h-` alias anchors in
+  generated Pages where needed.
+- Rationale: WordPress commonly exposes both forms around headings, for example
+  a heading ID `h-dns-and-loopback-addressing` plus a section link
+  `#dns-and-loopback-addressing`. The archive must support links copied from
+  canonical posts.
+- Impact: `scripts/render-site.py` keeps stable heading IDs and inserts hidden
+  alias anchors. `scripts/validate-mirror.py` checks generated local fragment
+  links resolve to a target ID, excluding browser text-fragment links beginning
+  with `#:~:text=`.

@@ -27,12 +27,12 @@ tags:
 ### Changelog
 
 - 20th November 2023
-  
-  
+
+
   - Updated the OOB subnetting logic in the Telco/ISP section, backbone sub-section. Also updated the Excel sheet in the same section.
 - 18th August 2024
-  
-  
+
+
   - Updated grammar inconsistencies.
   - Updated my advice on PtP link assignments.
   - OOB subnetting logic is unified across the board for consistency.
@@ -40,13 +40,13 @@ tags:
   - Updated diagrams to reflect updated PtP links assignments.
   - All updates were made based on my real-life continous improvement work results, in production.
 - 23rd August 2024
-  
-  
+
+
   - Deleted some remnant of “/127” references.
   - Minor grammar fixes.
 - 4th October 2024
-  
-  
+
+
   - Deleted previously missed, obsolete text on “/127” references, again.
 
 As networks continue to expand, the need for effective management of the Internet Protocol version 6 (IPv6) is becoming increasingly important. This guide is designed for network engineers and operators who are already familiar with the fundamentals and concepts of IPv6 and are looking for a practical guide on implementing an IPv6 architecture and subnetting system. I take an in-depth look at the most efficient ways to ensure a sufficient and future-proofed IPv6 subnetting model on a per-site and per-network segment basis.
@@ -66,8 +66,8 @@ Below are some examples of what happens when an organisation tries to deploy IPv
 - A dynamic LAN prefix that changes every time the user reconnects and [breaks connectivity](https://www.6connect.com/blog/is-your-isp-constantly-changing-the-delegated-ipv6-prefix-on-your-cpe-router/).
 - The strange idea that IPv6 is IPv4, and you should use NAT66 to ‘save’ IPv6 addresses. A public example of this is DigitalOcean’s idea of a /124 per VM, and from a shared /64 per DC/rack/network segment.
 - The even stranger idea of using [ULAs](https://blogs.infoblox.com/ipv6-coe/ula-is-broken-in-dual-stack-networks/) in *certain* cases where it is not required.
-  
-  
+
+
   - With the exception of [banking](https://twitter.com/stubarea51/status/1511083163921092609) or similar organisations, where compliances mandate NAT66 or you need it because of Provider-Aggregatable address space (PA) for load balancing and failover.
 
 While the pre-NAT era version of the end-to-end principle, in general, no longer exists in today’s era of the Internet due to the obsession with IPv4, it is still important to avoid NAT66 to prevent the requirement for Layer 5 – 7 helpers (Application Layer Gateways) and Traversal Using Relays around NAT (TURN) which just adds complexities and overhead to the network when you build networks for large scale use. Such ‘helper’ traffic consumes unnecessary resources that could be avoided completely.
@@ -83,9 +83,9 @@ When deploying IPv6, bear in mind:
 1. The link-prefix (or WAN prefix) is used for inter-device connectivity.
 2. The routed prefix (or LAN prefix) refers to the prefix that is routed to the ‘LAN’ side of a device where the next-hop IP of that route equals the link-prefix address that is used on the device the prefix is being routed to.
 3. You should always strive to enable **auto link-local config** network wide, we should never burden ourselves with manually configuring link-local addressing.
-4. Avoid using the initial ‘leading zero’ address in an IPv6 subnet on an interface or network segment, that is, an address where the least significant [address segment](https://web.archive.org/web/20230214115432/https://www.ibm.com/docs/en/ts4500-tape-library?topic=functionality-ipv4-ipv6-address-formats) (right-most group of four digits) are zeroes. This is known to cause [unexpected behaviours](https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/). For example, instead of 2001:db8**::**, use 2001:db8**::1** instead.
-  
-  
+4. Avoid using the initial ‘leading zero’ address in an IPv6 subnet on an interface or network segment, that is, an address where the least significant [address segment](https://web.archive.org/web/20230214115432/https://www.ibm.com/docs/en/ts4500-tape-library?topic=functionality-ipv4-ipv6-address-formats) (right-most group of four digits) are zeroes. This is known to cause [unexpected behaviours](../2023-08-28-behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/index.md). For example, instead of 2001:db8**::**, use 2001:db8**::1** instead.
+
+
   - However, it should be fine to use leading zero addresses **only** for loopback on network devices (Routers, L3 switches) if you want to. I would still avoid using leading zero addresses on hosts.
 
 Below is an example of the principles described above:
@@ -154,8 +154,8 @@ With the above in mind, the following is what I strongly believe is an optimised
 - The bare minimum for every eBGP speaker (public ASN) is to have a /32 prefix as discussed in the previous section.
 - Perform the planning based on the **geographical distribution model** of your network with a top-to-bottom approach. For example, per continent, then per economy, then per state, then per city, then per town or district, then per site, and per network segment.
 - Ensure the prefix length is always a multiple of 4 where the lowest possible denomination is a /64, not anything smaller, with the reason being that we would want to [avoid exceeding](https://blog.apnic.net/2018/08/10/how-to-calculating-ipv6-subnets-outside-the-nibble-boundary/) the [nibble bit boundary](https://web.archive.org/web/20250425113018/https://afrinic.net/support/ipv6/nibble).
-  
-  
+
+
   - However, sometimes we cannot avoid exceeding the nibble boundary, and it is perfectly fine as long as the ‘exceed’ stays in an administrative layer and never enters the network layer. I will highlight this with a real-life example in the architecture section.
 - Some prefer to use /126s or /127s for eBGP peering with third parties and also for PtP links between two devices, in such cases, we will reserve the entire /64 per interface (or peer) for every carved /126-/127 we use, in the event that we scale up the port/interface in the future ensuring a /64 is always available in the IPAM and therefore avoid messy subnetting/addressing records.
 
@@ -167,7 +167,7 @@ _Figure-1 IPv6 cheat sheet from RIPE (source)_
 
 Let us assume we have 2001:db8::/32 as our assigned prefix from the RIR. We can slice 2001:db8::/32 into /36s. Out of the resulting /36s, we can use the first four of them for the north, east, west, and south parts of an economy/state/city and so on where each geographical denomination receives a /36.
 
-From the /36 we can slice it into /40 per Point of Presence (PoP) (site), out of which we slice it further into /44s, then into /48s. We can then use a /48 per function, for example, [Out of Band](https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/) (OOB), management, internal servers, switches, PtP, and so on. We can then slice the /48 into /52s or /56s to ensure we get a sufficient amount of /64s per device. We can use a /64 per VLAN/VXLAN segment where we take a /127 for PtP links and reserve the entire /64 for it, in case the links grows in the future into a multipoint link. Where a /127 would no longer suffice we can then just use the entire reserved /64 without ever having to change the subnetting plan/IP Address Management (IPAM).
+From the /36 we can slice it into /40 per Point of Presence (PoP) (site), out of which we slice it further into /44s, then into /48s. We can then use a /48 per function, for example, [Out of Band](../2024-11-12-out-of-band-network-design-for-service-provider-networks/index.md) (OOB), management, internal servers, switches, PtP, and so on. We can then slice the /48 into /52s or /56s to ensure we get a sufficient amount of /64s per device. We can use a /64 per VLAN/VXLAN segment where we take a /127 for PtP links and reserve the entire /64 for it, in case the links grows in the future into a multipoint link. Where a /127 would no longer suffice we can then just use the entire reserved /64 without ever having to change the subnetting plan/IP Address Management (IPAM).
 
 **Please note**, the above is **just an example**. IPv6 is flexible, and you can subnet it in a way to match your network’s geographical distribution, which can vary. As long as you follow the general guidelines, you should be able to scale it up/down without much of an issue.
 
@@ -194,8 +194,8 @@ This is how I decided to break the single /32 for ‘global’ substructure/back
 - Slice the /32 into /36s – where we use the first /36 and reserve the rest for future use.
 - Then slice the first /36 into /40s – where we use the first /40 and reserve the rest for future use.
 - Then slice the first /40 into /44s – where we use a /44 per site.
-  
-  
+
+
   - Here you can reserve the first /44 for future experiments/testing if ever required.
 - Then slice a /44 into /48s – here we use a /48 per function per site.
 
@@ -203,33 +203,33 @@ A /48 per function in each site is broken down in the following manner:
 
 - Loopback IP function – one /48 sliced into /64s. Use a /64 per ‘row’ of devices type in a given topology, this simplifies readability and routing filters for OSPF/IS-IS on each row of devices you simply filter import/export to match a /64. Ultimately, we will assign a /128 per device for loopback. For example, a /64 for edge devices, another /64 for core or distribution devices, and so on, where each device type gets a /128 from the respective /64.
 - OOB function – one /48 sliced into /52 per sub-function, example:
-  
-  
+
+
   - /52 for Loopback sub-function.
-    
-    
+
+
     - The /52 is sliced into /56 per ‘row’ of devices type. For example, a /56 for OOB edge devices, another /52 for OOB layer 3 distribution, and so on, where each device type gets a /128 from the respective /64.
   - /52 for PtP sub-function.
-    
-    
+
+
     - The /52 is sliced into /56 per ‘row’ of devices type. For example, a /56 for OOB edge devices, another /56 for OOB layer 3 distribution, and so on.
     - We then slice each /56 into /64s for use on each corresponding device “row”, for example a /56 is assigned to the oob edge, out of which it is then sliced into /64s per Interface/VLAN.
   - /52 for OOB Rack Access sub-function.
-    
-    
+
+
     - The /52 is sliced into /64s, use a /64 per OOB VLAN on a given rack (single rack; has single OOB VLAN for all devices).
   - /52 for employee access sub-function.
-    
-    
+
+
     - The /52 is sliced into /64s, where we can use a /64 per VPN instance for VPN clients or employees to access the infrastructure. Each employee or user will get a /128 GUA assigned to them on the VPN’s client interface from the /64 pool.
 - PtP function intra/inter-AS – one /48 sliced into /52s per ‘row’ of devices in a given topology. For example, a /52 for edge, a /52 for Layer 3 distribution, a /52 for BNGs and so on.
-  
-  
+
+
   - We then slice each /52 into /64s for use on each corresponding device “row”, for example a /52 is assigned to the edge, out of which it is then sliced into /64s per Interface/VLAN.
 - Peering function (transit, PNIs, and so on) – one /48 sliced into /64 per peer.
 - Top-of-Rack (ToR) switches – one /48 for all ToRs in a site, /55 per rack, then /56 per ToR device. Finally, from a /56 for each ToR device, slice it into /64s for use per port basis (or VLAN segments) for end-hosts such as SLAAC or DHCPv6, capable up to 256 ports/VLAN per ToR device.
-  
-  
+
+
   - This is an example of ‘**exceeding**‘ the nibble bit boundary in the **administrative layer** (/55) **without** percolating it down to the **network layer**, and hence this does not present any technical issues.
 
 **For the customer:**
@@ -242,13 +242,13 @@ For the /56 logic:
 
 - We slice the /32 into /40s, this gives you 256 /40s. Take the first /40, and slice it into /48s, this gives you 256 /48s.
 - This pool of /48s will be used as /48 per rack for the PtP link between a hypervisor and the customer’s VM WAN interface. So, this means each rack gets a /48, and each /48 is sliced into /64s.
-  
-  
+
+
   - Therefore, we now have 65k /64s. Each rack can now support 65k VMs where each VM’s WAN interface gets a /64.
   - However, you may also want to use a /64 for a single L2 domain across multiple VMs, whereby a customer’s VLAN or “VPC” has a single /64 for the VMs’ WAN interface, whereby each VM receives a /128.
 - Next, we will use the remaining /40s for providing routed prefixes to each customer’s VM. Each rack will get a dedicated /40 out of the original pool of /40s sliced from the /32.
-  
-  
+
+
   - Now that each rack has a dedicated /40, this gives us 65k /56s.
   - We now simply route a /56 to each customer’s VM, therefore all customers will have their own dedicated /56 pool for their own uses on each VM which is by far larger than what most mainstream cloud providers do and hence is a future-proofed approach in the long run.
 
@@ -289,12 +289,12 @@ This is how I decided to break the single /32 for ‘global’ India-wide substr
 
 - Slice the /32 into /34s – where we use each /34 (another example of outside nibble-bit boundary prefix length, but only on an administrative layer) for each geographical zone (North, East, South, West).
 - Then slice each /34 into /40s – where we use a /40 per state/Union Territory in each respective zone mapping. This gives us 64 /40s.
-  
-  
+
+
   - Although this additional delegation is not mandatory, I prefer to reserve an “even” number of /40s for each state. This means, for example, the “North India” zone has a total of eight states—now we divide 64 by eight (the number of states in a zone), we get eight as the quotient. This means each state has a total of eight /40s allocated, which helps with administrative overhead and keeping the prefixes aligned geographically in an alphabetical/serial order.
 - Then slice the first /40 into /44s – where we use a /44 per site.
-  
-  
+
+
   - Here you can reserve the first /44 for future experiments/testing if ever required.
 - Then slice a /44 into /48s – here we use a /48 per function in a given site.
 
@@ -302,28 +302,28 @@ A /48 per function in a given site is broken down in the following manner:
 
 - Loopback IP function – one /48 sliced into /64s. Use a /64 per ‘row’ of devices type in a given topology, this simplifies readability and routing filters for OSPF/IS-IS on each row of devices you simply filter import/export to match a /64. Ultimately, we will assign a /128 per device for loopback. For example, a /64 for edge devices, another /64 for core or distribution devices, and so on, where each device type gets a /128 from the respective /64.
 - OOB function – one /48 sliced into /52 per sub-function, example:
-  
-  
+
+
   - /52 for Loopback sub-function.
-    
-    
+
+
     - The /52 is sliced into /56 per ‘row’ of devices type. For example, a /56 for OOB edge devices, another /52 for OOB layer 3 distribution, and so on, where each device type gets a /128 from the respective /64.
   - /52 for PtP sub-function.
-    
-    
+
+
     - The /52 is sliced into /56 per ‘row’ of devices type. For example, a /56 for OOB edge devices, another /56 for OOB layer 3 distribution, and so on.
     - We then slice each /56 into /64s for use on each corresponding device “row”, for example a /56 is assigned to the oob edge, out of which it is then sliced into /64s per Interface/VLAN.
   - /52 for OOB Rack Access sub-function.
-    
-    
+
+
     - The /52 is sliced into /64s, use a /64 per OOB VLAN on a given rack (single rack; has single OOB VLAN for all devices).
   - /52 for employee access sub-function.
-    
-    
+
+
     - The /52 is sliced into /64s, where we can use a /64 per VPN instance for VPN clients or employees to access the infrastructure. Each employee or user will get a /128 GUA assigned to them on the VPN’s client interface from the /64 pool.
 - PtP function intra/inter-AS – one /48 sliced into /52s per ‘row’ of devices in a given topology. For example, a /52 for edge, a /52 for Layer 3 distribution, a /52 for BNGs and so on.
-  
-  
+
+
   - We then slice each /52 into /64s for use on each corresponding device “row”, for example a /52 is assigned to the edge, out of which it is then sliced into /64s per Interface/VLAN.
 - Peering function (transit, PNIs, and so on) – one /48 sliced into /64 per peer.
 - CDN Caching node – one /48 sliced into /56s per CDN. For example, a /56 for Google, sliced into /64s for use on PtP links or for routed prefixes, ensures each CDN’s caching nodes/equipment has up to 256 /64s available for use in a site.
@@ -453,15 +453,15 @@ Although IPv6 security is a subject on its own, and therefore is not the focus o
 
 - Do not blindly block ICMPv6. ICMPv6 is already rate-limited by default on all major networking vendors and OSes and therefore does not represent some additional security concern. You can, however, block invalid or deprecated ICMPv6 subtypes as per [IANA](https://www.iana.org/assignments/icmpv6-parameters/icmpv6-parameters.xhtml#icmpv6-parameters-4) guidelines. The same principles also apply to IPv4.
 - There are some concerns about Neighbour Discovery Cache exhaustion attacks. However, as long as your OS is already rate limiting ICMPv6 out of the box, and you religiously ensure to route your prefixes to blackhole on your edge routers, access routers, L3 switches, and so on (which also prevents L3 loops), this should not pose an issue in practice.
-  
-  
+
+
   - You can limit your Neighbour Cache table to 8k/16k hosts, and then it really would not matter if someone is scanning your /64 VLAN segment, as the old entries that are unreachable will simply expire and those that are valid will remain cached. My own personal R&D network (AS149794) was once a ‘victim’ of this type of attack, but even on an ancient MikroTik RB3011, **no performance** impact was visible on the network even though the neighbour cache table was flooded to the 16k limit I configured.
-- [This](https://theinternetprotocolblog.wordpress.com/2020/11/28/ipv6-security-best-practices/) is also a good source for IPv6 best security practices. Production-grade [IPv6 security practices for MikroTik](https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/) is also available.
+- [This](https://theinternetprotocolblog.wordpress.com/2020/11/28/ipv6-security-best-practices/) is also a good source for IPv6 best security practices. Production-grade [IPv6 security practices for MikroTik](../2021-06-08-edge-router-bng-optimisation-guide-for-isps/index.md) is also available.
 - NAT is not and never was a [security tool](https://www.f5.com/services/resources/white-papers/the-myth-of-network-address-translation-as-security).
 - For insecure network segments such as guest VLANs, or IoT VLANs in enterprise, simply follow the same model as VPN clients, firewall in-bound on the forward chain using iptables (or nftables) to accept established, related, untracked and ICMPv6, and drop the rest. This ensures there is no possibility of external actors being able to reach your hosts from the outside directly, unless of course, your host is infected with malware or a botnet.
 - I recommend keeping the network layer simple. Handle stateful firewalling directly on the host and implement OS policy control to prevent employees or guests from executing random files that are possibly malware or installing unauthorized software. You could always have a third-party firewall appliance as well that does the security, but I personally prefer a vendor-agnostic approach. On-host firewalling using iptables/nftables or even Windows’ built-in firewall combined with OS policy control would therefore be my personal preference.
-  
-  
+
+
   - You can also implement advanced filtering on Linux hosts using eBPF or XDP if you want fine-grained control in large-scale companies with the right skill set in their employees.
 
 ## Conclusion

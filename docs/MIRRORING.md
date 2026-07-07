@@ -34,6 +34,8 @@ where Markdown cannot represent the original formatting safely.
 - `docs/index.html` is the public archive index.
 - `docs/posts/<slug>/index.html` is the rendered article page.
 - `docs/assets/theme.css` is the shared minimal visual theme.
+- `assets/fonts/` is the source store for self-hosted `Poppins` and `Raleway`
+  WOFF2 font files. `make render-site` copies these to `docs/assets/fonts/`.
 - `docs/sheets/as141253-ipv6-architecture-example/index.html` is the tabbed
   AS141253 workbook generated from repository CSV files. The ODS, CSV, CSVW,
   and Google HTML snapshots are copied next to it for editing/provenance.
@@ -47,6 +49,15 @@ serves that entry file for the project site. Human-facing navigation and
 canonical metadata should use clean directory URLs, for example
 `https://daryll-swer.github.io/daryllswer.com-archive/` and relative `./` or
 `../../` links, instead of redundant `index.html` links.
+
+The generated theme uses the canonical site typography:
+
+- `Poppins` for body/content text.
+- `Raleway` for headings, titles, card titles, and brand text.
+
+Fonts are self-hosted for archive durability and loaded with `font-display:
+swap`. Font provenance, source URLs, checksums, and OFL licence files live under
+`assets/fonts/`.
 
 ## Maintainer Workflow
 
@@ -147,6 +158,30 @@ anchor `#references`.
 
 `make validate` fails if generated Markdown still links citation markers to a
 WordPress `#h-references` URL.
+
+## Internal Canonical Links and Anchors
+
+Links inside mirrored article bodies that target another mirrored
+`daryllswer.com` post are rewritten to archive-local links.
+
+- Repository Markdown links use local `content/posts/.../index.md` paths.
+- Generated Pages links use local `../<slug>/` article routes.
+- URL fragments are preserved so section links continue to work.
+- Tracking query parameters such as `utm_*`, `fbclid`, `gclid`, `mc_cid`, and
+  `mc_eid` are dropped during local rewrites.
+
+WordPress heading IDs are preserved where present. When a heading uses an ID
+such as `h-dns-and-loopback-addressing`, the generated Pages article also emits
+a hidden alias anchor `dns-and-loopback-addressing` so both canonical and
+archive-local fragment forms can land on the intended section.
+
+Links to non-archived canonical pages, such as `/contact/`, `/geofeed/`, and
+`/as149794/`, intentionally remain external until a deliberate archive-local
+replacement exists. Canonical source footers also intentionally remain external.
+
+`make validate` checks article bodies for localisable canonical post links and
+checks generated local fragment links for matching target IDs, excluding browser
+text-fragment links that begin with `#:~:text=`.
 
 ## Media and Embeds
 

@@ -28,7 +28,7 @@ First, I would like to give [Civo](https://www.civo.com/) a shout out for [spons
 
 This AS is my own personal network. I use it for conducting experiments, research, and just [eyeballing](https://en.wikipedia.org/wiki/Eyeball_network) in my free time.
 
-In this post I’ll share the procedures I followed, serially, to have my prefix advertised to the world and get the network up and running. Anything of operational/ISP value that arose from this project has been entered into my [guide](https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/). Everything else is research, observation, and some minor operationally useful content such as IRR/GeoIP practices.
+In this post I’ll share the procedures I followed, serially, to have my prefix advertised to the world and get the network up and running. Anything of operational/ISP value that arose from this project has been entered into my [guide](../2021-06-08-edge-router-bng-optimisation-guide-for-isps/index.md). Everything else is research, observation, and some minor operationally useful content such as IRR/GeoIP practices.
 
 ## Step 1: Applying for the resources from a RIR
 
@@ -72,8 +72,8 @@ Any network operator who has just received a fresh allocation or transfer would 
 
 - First, create a [Geoloc object](https://www.ripe.net/manage-ips-and-asns/db/tools/geolocation-in-the-ripe-database) for your prefix using IRR via the RIR concerned
 - The second and highly recommended step is to make use of Geofeeds ([RFC 8805](https://datatracker.ietf.org/doc/html/rfc8805)) because it basically automates the process of GeoIP updates. Make use of your own domain and ensure that when a bot or someone clicks on the link, it should redirect to a .csv file, for example: [http://daryllswer.com/geofeed/](https://www.daryllswer.com/geofeed/)
-  
-  
+
+
   - Submit your URL to the GeoIP providers that accept it (even Google will accept it via the [ISP Portal](https://isp.google.com/geo_feed/)). You can attach your Geofeed link in the email template below (Form 1) to save yourself round-trip time!
   - Add the URL to your Geofeed directly under your prefix’s IRR info, as shown in Figure 2 per [RFC9092](https://datatracker.ietf.org/doc/html/rfc9092) via a remarks object. At the time of writing, the “geofeed” object for IRR is not supported on APNIC, but it should be used once it is available.
 
@@ -82,16 +82,16 @@ Any network operator who has just received a fresh allocation or transfer would 
 _Figure-2 (The geoloc object and geofeed URL on IRR.)_
 
 - Thirdly, manually fill up the correction forms on a per provider basis for those that offer it. Below is a list of some of the forms that I could find on the web:
-  
-  
+
+
   - Maxmind’s [Correct a GeoIP Location form](https://www.maxmind.com/en/geoip-location-correction)
   - iapi’s [IP Address Location Update Request](https://ipapi.co/update-location/) (note: they also accept RFC 8805 geofeeds)
   - IPWHOIS.IO’s [contact form](https://ipwhois.io/contact)
 
 - The fourth and final step is to mass email the remaining GeoIP data providers with a single email. Be sure to use the email address or abuse email address associated with your prefix on the IRR to ensure the providers view it as a valid email. Below is a sample template of what I used for myself:
 
-> Hi  
->   
+> Hi
+>
 > We have an IPv4 Prefix allocated to us, whose location has just been recently updated/finalised on the APNIC Database. We would like to have the same changes reflected on your database.
 >
 >
@@ -100,21 +100,21 @@ _Figure-2 (The geoloc object and geofeed URL on IRR.)_
 >
 >
 >
-> Prefix: 103.176.189.0/24  
-> You can also add our Geofeed (RFC8805) to your system: http://daryllswer.com/geofeed/  
->   
+> Prefix: 103.176.189.0/24
+> You can also add our Geofeed (RFC8805) to your system: http://daryllswer.com/geofeed/
+>
 > You can verify the location of the prefix by checking the geoloc object for the prefix [here](https://wq.apnic.net/static/search.html) *[hyperlink the WHOIS link for your prefix(es)]*
 >
 >
 > Daryll Swer
 
 - Attach a screenshot like Figure 2 to make it easier for the providers to parse quickly and BCC the following:
-  
+
   - team@abstractapi.com
-  
-  
-  
-  
+
+
+
+
   - support@ip2location.com
   - support@ipdata.co
   - support@getfastah.com
@@ -154,7 +154,7 @@ _Figure-3 (Network Topology)_
 
 ## BGP Configuration
 
-Since I am single-homed and only have a default route from the upstream, I did not implement route filters/RPKI validation (however, both of these are covered in my [ISP guide](https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/)), so the configuration below is simple and straight-forward.
+Since I am single-homed and only have a default route from the upstream, I did not implement route filters/RPKI validation (however, both of these are covered in my [ISP guide](../2021-06-08-edge-router-bng-optimisation-guide-for-isps/index.md)), so the configuration below is simple and straight-forward.
 
 Below is my configuration using RouterOS v7:
 
@@ -209,7 +209,7 @@ Since each host on the network had a public IPv4 address and no NAT, we would e
 No performance difference was discerned when a host was in the following environments:
 
 - **Behind NAT** — P2P works via STUN and similar mechanisms.
-- **Behind CGNAT** — P2P works via STUN and similar mechanisms. Do note, that I used [best practices for CGNAT](https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/) and not typically broken CGNAT implementations used in the wild
+- **Behind CGNAT** — P2P works via STUN and similar mechanisms. Do note, that I used [best practices for CGNAT](../2021-06-08-edge-router-bng-optimisation-guide-for-isps/index.md) and not typically broken CGNAT implementations used in the wild
 - **Public IP on the host**— P2P works via both STUN and natively depending on the application(s)
 
 **IPv6**
@@ -237,11 +237,11 @@ Most of us already know of the classic transport protocols, TCP and UDP. However
 There are a few factors that I believe are responsible for the lack of usage in the wild:
 
 1. From the network engineering perspective, CGNAT is ugly, can break a lot of things, and forces the requirement for Application Layer Gateway (ALG) for various protocols including these Layer 4 protocols. So, it is only natural for TCP/UDP to remain in popular use due to well-known NAT traversal mechanisms for both. However, if you did deploy your CGNAT boxes with best practices from A to Z shown in my guide, all these protocols should, in theory, work just fine as the ALG will handle it out of the box.
-2. Another reason for the lack of usage is simply a lack of awareness or lack of [competency](https://www.daryllswer.com/the-human-side-of-isps/). I have spoken with folk who have been in the field for 10-22 years, and none of them had heard of TCP/UDP successors — Which is odd.
+2. Another reason for the lack of usage is simply a lack of awareness or lack of [competency](../2021-08-28-the-human-side-of-isps/index.md). I have spoken with folk who have been in the field for 10-22 years, and none of them had heard of TCP/UDP successors — Which is odd.
 3. Also, it’s possible that networks blanket drop non-TCP/UDP on the routers/firewalls.
 4. From the software development perspective, I suspect the issue is [Layer 7-centric](https://web.archive.org/web/20220503221044/https://twitter.com/rothgar/status/1521613185962311680) software development. There doesn’t appear to be much focus on the lower layers, and an over-reliance on pre-existing libraries and functions for any over-the-network data transmission, namely TCP/UDP.
-  
-  
+
+
   1. This has arguably contributed to the development of QUIC, which is over UDP — Sadly. But I hope to see mainstream usage of these non-TCP/UDP protocols grow over time.
 
 ### Interesting observations

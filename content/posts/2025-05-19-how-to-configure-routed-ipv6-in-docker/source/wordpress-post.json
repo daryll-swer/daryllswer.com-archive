@@ -821,19 +821,20 @@
       },
       "classes": [],
       "context": "In &quot;Networking&quot;",
-      "date": "25 March 2021",
-      "excerpt": "An article on the limitations of CGNAT and what can be done to work around them.",
+      "date": "28 March 2021",
+      "excerpt": "An article on Multi-WAN setups using consumer-grade ISPs.",
       "format": false,
-      "id": 29,
+      "id": 66,
       "img": {
         "alt_text": "",
-        "height": 0,
-        "src": "",
-        "width": 0
+        "height": 200,
+        "src": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1",
+        "srcset": "https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=350%2C200&ssl=1 1x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=525%2C300&ssl=1 1.5x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=700%2C400&ssl=1 2x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1050%2C600&ssl=1 3x, https://i0.wp.com/www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg?resize=1400%2C800&ssl=1 4x",
+        "width": 350
       },
       "rel": "",
-      "title": "Shortcomings of CGNAT and Potential Workarounds",
-      "url": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
+      "title": "Multi-WAN setups with retail ISPs (Part 1 &#8211; Theory)",
+      "url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/",
       "url_meta": {
         "origin": 5136,
         "position": 5

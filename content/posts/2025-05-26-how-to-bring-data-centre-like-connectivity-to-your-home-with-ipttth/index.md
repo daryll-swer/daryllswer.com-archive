@@ -21,25 +21,25 @@ tags:
 
 **This article has been published on the [APNIC blog](https://blog.apnic.net/2025/05/26/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/) as well.**
 
-Most people get their Internet through a standard fibre or broadband service,  
-supplied by a residential ISP. What if you could bring enterprise-grade, carrier-level  
-connectivity direct to your home, bypassing the usual ISP setups and having your  
+Most people get their Internet through a standard fibre or broadband service,
+supplied by a residential ISP. What if you could bring enterprise-grade, carrier-level
+connectivity direct to your home, bypassing the usual ISP setups and having your
 own dedicated MPLS-delivered IP transit?
 
-This post details my personal experience with this kind of set up in India. I’ll share  
-how I built the network ([AS149794](https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/)), what it took to maintain, and whether the dream of true enterprise-grade Internet at home is worth it. It is a bit different from my usual focus.  
-Instead of diving into network engineering, I’ll be looking at the costs and the Layer 8  
+This post details my personal experience with this kind of set up in India. I’ll share
+how I built the network ([AS149794](../2022-07-01-how-did-i-set-up-my-own-autonomous-system/index.md)), what it took to maintain, and whether the dream of true enterprise-grade Internet at home is worth it. It is a bit different from my usual focus.
+Instead of diving into network engineering, I’ll be looking at the costs and the Layer 8
 challenges of managing a unique home network.
 
-I’m not the first or only person on to have had this type of setup. I’ve heard of people  
-from the USA, and at least of one other person in India, having similar  
+I’m not the first or only person on to have had this type of setup. I’ve heard of people
+from the USA, and at least of one other person in India, having similar
 setups in their personal homes, but I believe you could probably count the total on one hand.
 
 # IPTTTH
 
-What exactly do I mean by IP Transit-To-The-Home (IPTTTH) in the  
-context of this post? Put simply, it’s having **physical** IP transit — delivered over  
-MPLS — directly to your home. Not your typical Fibre-to-the-Home (FTTH), but  
+What exactly do I mean by IP Transit-To-The-Home (IPTTTH) in the
+context of this post? Put simply, it’s having **physical** IP transit — delivered over
+MPLS — directly to your home. Not your typical Fibre-to-the-Home (FTTH), but
 actual IP Transit-To-The-Home.
 
 IP Transit isn’t to be conflated with DIA, [there is a difference](https://www.zayo.com/resources/ip-transit-or-dedicated-internet-access-dia-which-is-right-for-me/).

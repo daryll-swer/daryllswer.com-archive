@@ -31,17 +31,17 @@ I maintained it was always preferable to have the rules to drop such traffic in 
 
 It made perfect sense to my friend that it was more efficient to drop packets before doing the route lookup, however he wondered — in the case where the vast majority of packets coming in get **forwarded** through the router,  does it still make sense to evaluate all of them against the DROP rule in the prerouting chain, given the vast majority will pass on to the route lookup anyway?
 
-The question ultimately condenses into:  
+The question ultimately condenses into:
 Is it more costly to do a route table lookup for the small number of packets we eventually drop, or do a rule evaluation for the large number of packets we end up forwarding? Consider the two situation:
 
 1. Rule in **raw**/prerouting
-  
-  
+
+
   - All packets get evaluated on ingress by the DROP rule
   - Dropped packets do not go through route lookup
 2. Rule in **filter**/input
-  
-  
+
+
   - All packets go through the route lookup stage
   - Only those for the local system get evaluated by the DROP rule
 
@@ -101,7 +101,7 @@ num   pkts bytes target     prot opt in     out     source               destina
 The iptables filter table test variant were configured as follows, this shows the state after the test including packet counters, the counters look similar in terms of total packets and drops:
 
 ```
-root@iptrules:~# iptables -L -v --line -n -t raw 
+root@iptrules:~# iptables -L -v --line -n -t raw
 Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)
 num   pkts bytes target     prot opt in     out     source               destination
 1     165M   26G CT         all  --  *      *       0.0.0.0/0            0.0.0.0/0            NOTRACK
@@ -112,7 +112,7 @@ num   pkts bytes target     prot opt in     out     source               destina
 ```
 
 ```
-root@iptrules:~# iptables -L -v --line -n -t filter 
+root@iptrules:~# iptables -L -v --line -n -t filter
 Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
 num   pkts bytes target     prot opt in     out     source               destination
 1     165M   26G DROP       udp  --  *      *       198.51.100.1         0.0.0.0/0            udp dpt:5001
@@ -153,7 +153,7 @@ num   pkts bytes target     prot opt in     out     source               destina
 The iptables filter table test variant were configured as follows, this shows the state after the test including packet counters:
 
 ```
-root@iptrules:~# iptables -L -v --line -n -t raw 
+root@iptrules:~# iptables -L -v --line -n -t raw
 Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)
 num   pkts bytes target     prot opt in     out     source               destination
 1     155M   83G CT         all  --  *      *       0.0.0.0/0            0.0.0.0/0            NOTRACK
@@ -164,7 +164,7 @@ num   pkts bytes target     prot opt in     out     source               destina
 ```
 
 ```
-root@iptrules:~# iptables -L -v --line -n -t filter 
+root@iptrules:~# iptables -L -v --line -n -t filter
 Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
 num   pkts bytes target     prot opt in     out     source               destination
 1    58603 9142K DROP       udp  --  *      *       198.51.100.1         0.0.0.0/0            udp dpt:5001

@@ -46,15 +46,25 @@ flowchart LR
   date, and featured image for each mirrored post.
 - `docs/posts/<slug>/index.html` is the human-readable article page generated
   from the preserved WordPress-rendered article HTML, with localised images,
-  internal archive links, responsive figure styling, and embed fallback links.
+  internal archive links, responsive figure styling, stable section anchors,
+  and embed fallback links.
+- The generated Pages theme self-hosts `Poppins` for body/content text and
+  `Raleway` for headings/titles from `assets/fonts/`, with generated copies
+  under `docs/assets/fonts/`. The font files are third-party OFL artefacts with
+  family-specific provenance and checksums.
+- The generated Pages theme must remain mobile-safe: page-level horizontal
+  overflow is avoided with mobile viewport metadata, `min-width: 0` grid/flex
+  children, bounded media, and explicit scroll containers for wide code/table
+  content.
 - `docs/sheets/as141253-ipv6-architecture-example/index.html` is the generated
   tabbed HTML workbook for the AS141253 sheet. It is rendered from repository
-  CSV files and keeps adjacent ODS, CSV, CSVW, and Google HTML snapshots for
-  editing/provenance.
+  CSV files, uses the same archive typography, and keeps adjacent ODS, CSV,
+  CSVW, and Google HTML snapshots for editing/provenance.
 - `docs/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html` is a
   generated proof-of-concept IPv6 prefix containment tree. It is derived from
-  the same CSV `Prefix` columns with Python `ipaddress` containment checks, and
-  has adjacent JSON and Graphviz DOT artefacts for future visualisation work.
+  the same CSV `Prefix` columns with Python `ipaddress` containment checks,
+  uses the same archive typography, and has adjacent JSON and Graphviz DOT
+  artefacts for future visualisation work.
 - Human-facing navigation and canonical URLs use clean directory URLs such as
   `https://daryll-swer.github.io/daryllswer.com-archive/`. The physical
   `docs/index.html` file remains the GitHub Pages entry point and generated
@@ -101,6 +111,13 @@ surface must not cause repeated workflow failures or archive deletion.
 - Generated article bodies exclude donation/support CTAs and `/donation/`
   links as site-operational content.
 - Every local image reference in Markdown points to an existing local file.
+- Mirrored article body links to archived daryllswer.com posts are rewritten to
+  archive-local targets. Generated Pages links use local post routes and
+  Markdown links use local `content/posts/.../index.md` targets.
+- Cross-post fragments are preserved. WordPress heading IDs such as
+  `h-dns-and-loopback-addressing` are preserved on headings, and matching
+  non-`h-` alias anchors such as `dns-and-loopback-addressing` are emitted when
+  needed so canonical section links still land correctly.
 - Every downloaded WordPress media asset preserves the WordPress URL basename
   and direct response bytes wherever possible. This preserves embedded image
   metadata/EXIF because the archive does not re-encode media files. Any
@@ -123,4 +140,13 @@ surface must not cause repeated workflow failures or archive deletion.
   exists.
 - GitHub Pages output must not point article media back to
   `www.daryllswer.com/wp-content/uploads/` when a local archive copy exists.
+- GitHub Pages article bodies must not retain external
+  `https://www.daryllswer.com/<archived-post-slug>/` links when the target post
+  is mirrored locally. Intentional canonical source footers and the canonical
+  site navigation link remain external by design.
+- Every generated local `#fragment` article-body link must resolve to a target
+  element ID, except browser text-fragment links beginning with `#:~:text=`.
+- Generated public pages must not introduce page-level horizontal overflow at
+  common mobile widths. Wide article code/table/sheet content may scroll inside
+  its own explicit container instead of widening the page.
 - Remote destructive GitHub actions are outside normal script behaviour.

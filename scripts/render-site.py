@@ -14,6 +14,7 @@ import shutil
 import urllib.parse
 from pathlib import Path
 
+from font_assets import FONT_BODY_STACK, FONT_HEADING_STACK, copy_font_assets, font_face_css
 from sheet_workbook import render_workbook_page
 
 try:
@@ -27,6 +28,9 @@ OUT = ROOT / "docs"
 PAGES_BASE_URL = "https://daryll-swer.github.io/daryllswer.com-archive/"
 SHEET_SLUG = "as141253-ipv6-architecture-example"
 SHEET_SOURCE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml"
+LOCALISABLE_HOSTS = {"www.daryllswer.com", "daryllswer.com"}
+TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
+TEXT_FRAGMENT_PREFIX = ":~:text="
 
 
 def write_text(path: Path, text: str) -> None:
@@ -141,17 +145,65 @@ def heading_slug(value: str) -> str:
 
 
 def ensure_heading_ids(root) -> None:
-    seen: set[str] = set()
+    seen: set[str] = {
+        element_id
+        for element_id in root.xpath(".//*[@id]/@id")
+        if element_id
+    }
+    used_heading_ids: set[str] = set()
     for heading in root.xpath(".//*[self::h2 or self::h3 or self::h4 or self::h5 or self::h6]"):
         current = (heading.get("id") or "").strip()
         base = current or heading_slug(heading.text_content())
         slug = base
         counter = 2
-        while slug in seen:
+        while slug in used_heading_ids:
             slug = f"{base}-{counter}"
             counter += 1
         heading.set("id", slug)
         seen.add(slug)
+        used_heading_ids.add(slug)
+        if slug.startswith("h-"):
+            add_anchor_alias(heading, slug[2:], seen)
+
+
+def add_anchor_alias(heading, alias: str, seen: set[str]) -> None:
+    if not alias or alias in seen:
+        return
+    parent = heading.getparent()
+    if parent is None:
+        return
+    marker = lxml.html.Element("span", {"id": alias, "class": "anchor-alias", "aria-hidden": "true"})
+    parent.insert(parent.index(heading), marker)
+    seen.add(alias)
+
+
+def canonical_url_key(url: str) -> str | None:
+    parsed = urllib.parse.urlsplit(url)
+    host = parsed.netloc.lower()
+    if host not in LOCALISABLE_HOSTS:
+        return None
+    path = parsed.path.rstrip("/") or "/"
+    return urllib.parse.urlunsplit(("https", "www.daryllswer.com", path, "", "")).rstrip("/")
+
+
+def clean_query(query: str) -> str:
+    if not query:
+        return ""
+    kept = []
+    for key, value in urllib.parse.parse_qsl(query, keep_blank_values=True):
+        if key.lower().startswith("utm_") or key.lower() in TRACKING_QUERY_KEYS:
+            continue
+        kept.append((key, value))
+    return urllib.parse.urlencode(kept, doseq=True)
+
+
+def local_post_href(current_slug: str, target_slug: str, query: str = "", fragment: str = "") -> str:
+    base = "./" if target_slug == current_slug else f"../{target_slug}/"
+    if query:
+        base += f"?{query}"
+    if fragment:
+        base += f"#{fragment}"
+    return base
 
 
 def replace_verse_blocks(root) -> None:
@@ -212,9 +264,19 @@ def rewrite_links(root, current_post: dict, canonical_to_slug: dict[str, str], e
             anchor.attrib.pop("target", None)
             anchor.attrib.pop("rel", None)
             continue
-        target_slug = canonical_to_slug.get(joined_key)
+        parsed = urllib.parse.urlsplit(joined)
+        target_key = canonical_url_key(joined)
+        target_slug = canonical_to_slug.get(target_key or joined_key)
         if target_slug:
-            anchor.set("href", f"../{target_slug}/")
+            anchor.set(
+                "href",
+                local_post_href(
+                    current_post["slug"],
+                    target_slug,
+                    clean_query(parsed.query),
+                    parsed.fragment,
+                ),
+            )
             anchor.attrib.pop("target", None)
             anchor.attrib.pop("rel", None)
             continue
@@ -409,15 +471,18 @@ def render_sheet_page() -> None:
             sheet_slug=SHEET_SLUG,
             home_href="../../",
             repo_href="https://github.com/daryll-swer/daryllswer.com-archive",
+            font_asset_prefix="../../assets/fonts",
         ),
     )
     shutil.copytree(source_dir, out_dir, dirs_exist_ok=True, ignore=shutil.ignore_patterns("workbook.html"))
+    hierarchy_page = out_dir / "cidr-hierarchy.html"
+    if hierarchy_page.exists():
+        text = hierarchy_page.read_text(encoding="utf-8", errors="replace")
+        write_text(hierarchy_page, text.replace("../../../assets/fonts/", "../../assets/fonts/"))
 
 
 def render_css() -> None:
-    write_text(
-        OUT / "assets" / "theme.css",
-        """* { box-sizing: border-box; }
+    theme_css = """* { box-sizing: border-box; }
 :root {
   color-scheme: light dark;
   --bg: #f7f8fa;
@@ -430,6 +495,8 @@ def render_css() -> None:
   --accent-2: #2f7d32;
   --code-bg: #111827;
   --code-text: #f4f7fb;
+  --font-body: __FONT_BODY__;
+  --font-heading: __FONT_HEADING__;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -445,12 +512,17 @@ def render_css() -> None:
     --code-text: #f7fafc;
   }
 }
+html {
+  overflow-x: hidden;
+}
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-body);
+  font-weight: 400;
   line-height: 1.65;
+  overflow-x: hidden;
 }
 a { color: var(--accent); text-decoration-thickness: .08em; text-underline-offset: .18em; }
 a:hover { color: var(--accent-2); }
@@ -469,6 +541,7 @@ a:hover { color: var(--accent-2); }
   gap: .65rem;
   color: var(--text);
   text-decoration: none;
+  min-width: 0;
 }
 .brand-mark {
   display: grid;
@@ -479,10 +552,12 @@ a:hover { color: var(--accent-2); }
   border-radius: 8px;
   background: var(--surface);
   color: var(--accent);
+  font-family: var(--font-heading);
   font-weight: 800;
 }
+.brand strong { font-family: var(--font-heading); font-weight: 700; }
 .brand small { display: block; color: var(--muted); font-size: .8rem; line-height: 1.1; }
-.site-nav { display: flex; gap: .9rem; flex-wrap: wrap; font-size: .95rem; }
+.site-nav { display: flex; gap: .9rem; flex-wrap: wrap; font-size: .95rem; min-width: 0; }
 .site-nav a { color: var(--muted); text-decoration: none; }
 .home, .article-shell, .sheet-page { max-width: 1180px; margin: 0 auto; padding: 1rem 1.25rem 4rem; }
 .home-hero, .sheet-hero {
@@ -497,28 +572,32 @@ a:hover { color: var(--accent-2); }
   letter-spacing: 0;
   text-transform: uppercase;
 }
-h1, h2, h3, h4, h5, h6 { line-height: 1.2; letter-spacing: 0; }
-h1 { margin: 0 0 1rem; max-width: 900px; font-size: clamp(2rem, 5vw, 4.8rem); }
+h1, h2, h3, h4, h5, h6 { line-height: 1.2; letter-spacing: 0; overflow-wrap: break-word; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; }
+h1 { margin: 0 0 1rem; max-width: 900px; font-size: 3.4rem; }
 .home-hero p:not(.eyebrow), .sheet-hero p:not(.eyebrow), .article-summary {
   max-width: 760px;
   color: var(--muted);
   font-size: 1.1rem;
+  overflow-wrap: break-word;
 }
 .post-list { display: grid; gap: 1rem; }
 .post-card {
   display: grid;
-  grid-template-columns: minmax(180px, 280px) 1fr;
+  grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
   gap: 1rem;
   padding: .9rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
+  min-width: 0;
 }
 .post-card-image { display: block; min-height: 160px; border-radius: 6px; overflow: hidden; background: var(--surface-alt); }
 .post-card-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.post-card h2 { margin: .15rem 0 .55rem; font-size: clamp(1.25rem, 2.5vw, 1.8rem); }
+.post-card-body { min-width: 0; }
+.post-card h2 { margin: .15rem 0 .55rem; font-size: 1.55rem; }
 .post-card h2 a { color: var(--text); text-decoration: none; }
-.post-card p { margin: 0; color: var(--muted); }
+.post-card p { margin: 0; color: var(--muted); overflow-wrap: break-word; }
 .article { max-width: 860px; margin: 0 auto; }
 .article-header { padding: 2rem 0 1.5rem; border-top: 1px solid var(--border); }
 .featured-image {
@@ -536,9 +615,19 @@ h1 { margin: 0 0 1rem; max-width: 900px; font-size: clamp(2rem, 5vw, 4.8rem); }
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: clamp(1rem, 4vw, 2rem);
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 .article-body h2 { margin-top: 2.2rem; padding-top: .3rem; }
 .article-body h3 { margin-top: 1.8rem; }
+.anchor-alias {
+  display: block;
+  position: relative;
+  top: -1rem;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
 .article-body img {
   display: block;
   max-width: 100% !important;
@@ -614,8 +703,22 @@ th { color: var(--muted); font-size: .85rem; text-transform: uppercase; }
   .post-card { grid-template-columns: 1fr; }
   .post-card-image { aspect-ratio: 16 / 9; }
   h1 { font-size: 2.2rem; }
+  .post-card h2 { font-size: 1.3rem; }
 }
-""",
+@media (max-width: 420px) {
+  .site-header, .home, .article-shell, .sheet-page, .article-footer, .site-footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .home-hero, .sheet-hero { padding-top: 2rem; }
+  h1 { font-size: 2rem; }
+}
+"""
+    theme_css = theme_css.replace("__FONT_BODY__", FONT_BODY_STACK)
+    theme_css = theme_css.replace("__FONT_HEADING__", FONT_HEADING_STACK)
+    write_text(
+        OUT / "assets" / "theme.css",
+        font_face_css("fonts") + "\n" + theme_css,
     )
 
 
@@ -627,13 +730,14 @@ def main() -> int:
         for post in posts
     }
     canonical_to_slug = {
-        post["canonical_url"].rstrip("/"): post["slug"]
+        key: post["slug"]
         for post in posts
-        if post.get("canonical_url")
+        if (key := canonical_url_key(post.get("canonical_url") or ""))
     }
 
     clean_generated_site()
     render_css()
+    copy_font_assets(ROOT, OUT / "assets" / "fonts")
     render_home(posts, metadata_by_slug)
     render_sheet_page()
     for post in posts:

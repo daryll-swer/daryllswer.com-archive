@@ -21,13 +21,13 @@ tags:
 
 ### Please note, it is very unlikely I will maintain this article piece. Even though the underlying concepts and principle are the same on RouterOS v7, if you are still facing some issues or confusion, I would recommend you watch this official video from MikroTik.
 
-In [part one](https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/) of this series, I talked about the theoretical aspects, pros, and cons of a Multi-WAN setup. So now in part two, I will show how one can implement this setup in their network setup and this will be a lengthy article.
+In [part one](../2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory/index.md) of this series, I talked about the theoretical aspects, pros, and cons of a Multi-WAN setup. So now in part two, I will show how one can implement this setup in their network setup and this will be a lengthy article.
 
 ## Requirements
 
 - A router that is running either enterprise or open-source network OS.
-  
-  
+
+
   - Like RouterOS.
   - Or like VyOS or pfSense for open-source.
 - More than one uplink to the same ISP or a different ISP.
@@ -37,8 +37,8 @@ In [part one](https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-
 ## Implementation
 
 - For this example, I will use RouterOS v6 stable.
-  
-  
+
+
   - Hardware: RB450Gx4.
   - Only IPv4 config will be covered due to the lack of proper IPv6 support in RouterOS v6 stable at the time of this article, but it would essentially be the same thing.
   - I will be using PCC and Nth together in order to achieve bandwidth aggregation.
@@ -48,8 +48,8 @@ Whatever is shown here using RouterOS can be replicated more or less on any othe
 ### Assumptions
 
 - I will assume you have already taken care of the basic configuration such as securing the router, firewalling, NATting etc.
-  
-  
+
+
   - Regarding **NAT**, use ***masquerade***instead of src NAT, the reason being it [clears](https://help.mikrotik.com/docs/display/ROS/NAT#NAT-Masquerade)****the conn_track table if an interface goes down and hence we can achieve sub 0ms failover effect.
 - I will assume you have some basic idea of computer networking and basic ideas on the routing.
 - I will assume you have read MikroTik’s documentation on PCC, Nth, Mangle etc.
@@ -151,7 +151,7 @@ For P2P networking (assuming all the uplinks have a public IP), you’d need to 
 
 ### Side Note:
 
-In [part one](https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/), you may have noticed the [upload speed](assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png) is lower than what I claimed, and below is the explanation for that.
+In [part one](../2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory/index.md), you may have noticed the [upload speed](assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png) is lower than what I claimed, and below is the explanation for that.
 
 - ISP1’s MTU = 1460, MRU = 1500
 - ISP2’s MTU = 1500, MRU = 1500

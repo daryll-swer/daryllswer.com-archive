@@ -95,7 +95,7 @@ group ebgp-6453-v4 {
 Based on the configuration sample shared, we expected to only see aggregates and not more-specific routes to be advertised to our peer. However, the following is what we observed:
 
 ```
-daryllswer@edge-juniper-router> show route advertising-protocol bgp 80.231.152.77   
+daryllswer@edge-juniper-router> show route advertising-protocol bgp 80.231.152.77
 
 inet.0: 909266 destinations, 3698169 routes (909000 active, 2 holddown, 317 hidden)
   Prefix		  Nexthop	       MED     Lclpref    AS path
@@ -112,7 +112,7 @@ As we can see, for reasons I could not understand, our Juniper router in this ex
 The first step I took was to verify the route aggregation was working correctly and indeed it was:
 
 ```
-daryllswer@edge-juniper-router> show route 2.57.56.0/22 
+daryllswer@edge-juniper-router> show route 2.57.56.0/22
 
 inet.0: 909307 destinations, 3698305 routes (909043 active, 0 holddown, 317 hidden)
 + = Active Route, - = Last Active, * = Both
@@ -120,7 +120,7 @@ inet.0: 909307 destinations, 3698305 routes (909043 active, 0 holddown, 317 hidd
 2.57.56.0/22       *[Aggregate/130] 1w4d 11:15:19
                       Discard
 
-daryllswer@edge-juniper-router> show route 5.157.80.0/21 
+daryllswer@edge-juniper-router> show route 5.157.80.0/21
 
 inet.0: 909328 destinations, 3698589 routes (909064 active, 0 holddown, 317 hidden)
 + = Active Route, - = Last Active, * = Both
@@ -144,7 +144,7 @@ set policy-options prefix-list as48635-v4 5.157.80.0/21
 The final step I tried was a fresh **reboot** on **all** our Juniper edge routers, and voilà! Zombie routes disappeared.
 
 ```
-daryllswer@edge-juniper-router> show route advertising-protocol bgp 80.231.152.77    
+daryllswer@edge-juniper-router> show route advertising-protocol bgp 80.231.152.77
 
 inet.0: 909222 destinations, 3940003 routes (908958 active, 0 holddown, 317 hidden)
   Prefix		  Nexthop	       MED     Lclpref    AS path

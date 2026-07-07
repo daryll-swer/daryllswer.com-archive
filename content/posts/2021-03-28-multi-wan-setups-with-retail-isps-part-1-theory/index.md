@@ -17,7 +17,7 @@ tags:
 ---
 ![Multi-WAN setups with retail ISPs (Part 1 – Theory)](assets/Multi_WAN_FT-scaled.jpg)
 
-This will be a series with a [Part Two](https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/).
+This will be a series with a [Part Two](../2021-03-29-multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/index.md).
 
 In **part one**, I would like to talk about a particular networking environment where a site (home, office etc) has more than one uplink either to the same or a different ISP, where the ISP(s) are **retail**meaning “home grade” ISPs or “consumer” ISPs instead of dedicated leased circuits/business-grade ISPs.
 
@@ -30,21 +30,21 @@ My****definition of Multi-WAN is fairly straightforward, i.e. A router/network/s
 ## Pros
 
 - Significantly cheaper than dedicated leased circuits.
-  
-  
+
+
   - Can be deployed for SOHO, Small Businesses and perhaps even enterprise (private firms that do not require their own ASN).
 - Redundancy/Failover/High Reliability.
-  
-  
+
+
   - If one uplink goes down, traffic is routed over the next available uplink.
 - Load Balancing.
-  
-  
+
+
   - Where traffic is split/balanced between the available uplinks.
   - **Bandwidth aggregation** is also possible without any bonding or routing protocols like ECMP i.e. in other words, you can achieve increased bandwidth throughput in downloads/uploads by using the available bandwidth from the uplinks simultaneously.
 - You can route specific destination IPv4/IPv6 addresses/prefixes via a specific WAN interface that happens to have better routing to the said subnets (example: ISP2 has lower latency to Cloudflare’s DNS resolvers when compared to ISP1).
-  
-  
+
+
   - I have done exactly just this [here](https://twitter.com/DaryllSwer/status/1350443020949155840).
 
 ## Cons
@@ -53,12 +53,12 @@ My****definition of Multi-WAN is fairly straightforward, i.e. A router/network/s
 - You will not have SLAs like dedicated lines, but this is somewhat mitigated by having multiple uplinks.
 - If a proper configuration is not done, HTTPS traffic will break (for example banking sites) since the source IPs would change frequently.
 - The monthly cost of the ISPs combined may or may not be higher, depending on the available tariffs in that particular area.
-  
-  
+
+
   - For example, if ISP1 had a ₹500 tariff and the other had ₹300, then the total monthly cost is pretty cheap in my opinion.
-- Likely behind an [ugly](https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/) CGNAT deployment.
-  
-  
+- Likely behind an [ugly](../2021-03-25-shortcomings-of-cgnat-and-potential-work-arounds/index.md) CGNAT deployment.
+
+
   - And likely that they will not provide a public IP as their IPv4 pools are again likely to be exhausted.
   - Also, likely that they will only give a single /64 IPv6 prefix, which makes subnetting impossible without breaking SLAAC (Read [Android](https://www.techrepublic.com/article/androids-lack-of-dhcpv6-support-frustrates-enterprise-network-admins/)).
 
@@ -73,8 +73,8 @@ I have deployed a Multi-WAN environment in my own home using RB450Gx4 as the rou
 - ISP1 ([AS9829](https://bgp.tools/as/9829)) has a 200Mbps symmetrical bandwidth (at the time of deployment/testing).
 - ISP2 ([AS135756](https://bgp.tools/as/135756)) has a 100Mbps symmetrical bandwidth (at the time of deployment/testing).
 - Monthly Tariffs (at the time of deployment/testing).
-  
-  
+
+
   - ISP1 – ₹1277
   - ISP2 – ₹1375
 

@@ -22,7 +22,7 @@ I felt the need to write this short blog post, as I still receive DMs and emails
 
 I have been using routed IPv6 on Docker for years before the ‘[routed mode](https://github.com/moby/moby/pull/47871)‘ configuration was officially added in 2024. However, even with the updates added in [Docker v27](https://docs.docker.com/engine/release-notes/27/#ipv6), I still see users online struggling to get IPv6 working properly.
 
-A lot of the confusion seems to stem from misinformation across the web and the lack of network engineering knowledge amongst the public in general. The concept of **routing** is alien-enough even in the [network engineering world](https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/). This creates confusion for people with terms like ‘NAT’, ‘Bridge’, ‘Host Driver’, and ‘NDP Proxy’ in the context of Docker.
+A lot of the confusion seems to stem from misinformation across the web and the lack of network engineering knowledge amongst the public in general. The concept of **routing** is alien-enough even in the [network engineering world](../2025-04-22-lets-talk-about-cgnat-and-ipv6-yet-again/index.md). This creates confusion for people with terms like ‘NAT’, ‘Bridge’, ‘Host Driver’, and ‘NDP Proxy’ in the context of Docker.
 
 I had planned to write a more detailed article on how to do IPv6 with Docker in collaboration with Docker Inc. and publish it [here](https://docs.docker.com/guides/). But life got in the way. I still plan to make it happen one day, so keep an eye on this [GitHub issue](https://github.com/docker/docs/issues/19556) for updates.
 
@@ -36,7 +36,7 @@ In other words, routing means **no** bridging, **no** NAT-ting, **no** shari
 
 1. We will use [Docker Compose](https://docs.docker.com/compose/).
 2. You know how routing works.
-3. You know [how to route an IPv6 prefix](https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/) (preferably a /64) from the underlay network to the Docker host.
+3. You know [how to route an IPv6 prefix](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md) (preferably a /64) from the underlay network to the Docker host.
 4. The Docker host can be a Pi, a laptop running Debian, a server box running a hypervisor or a regular Debian OS, or a Virtual Machine (VM) behind a hypervisor or possibly behind a KubeVirt.
 5. The Docker host’s iptables/nftables is clean; there’s no user-defined configuration that could break Docker and/or IPv6 networking.
 6. Let’s assume our Docker public IPv6 Prefix is `2001:db8::/64`, and it is routed to the Docker host from the underlying network.
