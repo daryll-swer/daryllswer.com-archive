@@ -52,6 +52,11 @@ flowchart LR
   `Raleway` for headings/titles from `assets/fonts/`, with generated copies
   under `docs/assets/fonts/`. The font files are third-party OFL artefacts with
   family-specific provenance and checksums.
+- The generated Pages theme includes the WordPress preset colour variables and
+  class mappings needed by preserved article-body inline colour markup, such as
+  `has-inline-color`, `has-vivid-red-color`,
+  `has-luminous-vivid-orange-color`, and
+  `has-luminous-vivid-amber-color`.
 - The generated Pages theme must remain mobile-safe: page-level horizontal
   overflow is avoided with mobile viewport metadata, `min-width: 0` grid/flex
   children, bounded media, and explicit scroll containers for wide code/table
@@ -121,6 +126,9 @@ surface must not cause repeated workflow failures or archive deletion.
   `h-dns-and-loopback-addressing` are preserved on headings, and matching
   non-`h-` alias anchors such as `dns-and-loopback-addressing` are emitted when
   needed so canonical section links still land correctly.
+- WordPress inline colour classes in article source HTML must survive into
+  generated Pages article HTML, and `docs/assets/theme.css` must style the
+  corresponding WordPress preset colour classes.
 - Generated article headings with IDs expose human-shareable controls: the
   heading text links to its own fragment, a visible permalink link updates the
   browser address bar, and a progressive-enhancement copy button copies the

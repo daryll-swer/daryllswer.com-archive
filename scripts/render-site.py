@@ -16,6 +16,7 @@ from pathlib import Path
 
 from font_assets import FONT_BODY_STACK, FONT_HEADING_STACK, copy_font_assets, font_face_css
 from sheet_workbook import render_workbook_page
+from wordpress_palette import wordpress_palette_css
 
 try:
     import lxml.html
@@ -852,7 +853,7 @@ th { color: var(--muted); font-size: .85rem; text-transform: uppercase; }
     theme_css = theme_css.replace("__FONT_HEADING__", FONT_HEADING_STACK)
     write_text(
         OUT / "assets" / "theme.css",
-        font_face_css("fonts") + "\n" + theme_css,
+        font_face_css("fonts") + "\n" + wordpress_palette_css() + "\n" + theme_css,
     )
 
 

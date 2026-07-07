@@ -59,6 +59,14 @@ Fonts are self-hosted for archive durability and loaded with `font-display:
 swap`. Font provenance, source URLs, checksums, and OFL licence files live under
 `assets/fonts/`.
 
+The generated theme also maps WordPress preset colour classes used inside
+article bodies. WordPress-rendered source HTML preserves inline colour markup
+such as `has-inline-color`, `has-vivid-red-color`,
+`has-luminous-vivid-orange-color`, and `has-luminous-vivid-amber-color`; the
+generated Pages CSS supplies the matching preset colour values so coloured
+text/characters render like canonical. Markdown remains a best-effort text view
+where portable visual colour is not guaranteed.
+
 ## Maintainer Workflow
 
 Use these commands when refreshing or validating the archive:
