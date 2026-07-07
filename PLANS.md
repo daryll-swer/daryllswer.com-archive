@@ -6,10 +6,10 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: local complete; AS141253 IPv6 visual representation options are
-  generated from CSV/hierarchy data and ready for owner selection
+- Status: complete; AS141253 IPv6 visual representation options are generated
+  from CSV/hierarchy data, pushed, deployed, and ready for owner selection
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-07 16:49 UTC
+- Last updated: 2026-07-07 16:53 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -84,22 +84,24 @@
   - Complete: commit `eb06a74` was pushed to `main`; GitHub Pages deployment
     run `28879142430` completed successfully; live static and browser checks
     verified the WordPress palette CSS and BGP Router ID colour rendering.
-  - Complete locally: AS141253 IPv6 visual representation alternatives are
+  - Complete: AS141253 IPv6 visual representation alternatives are
     rendered as generated static HTML/CSS examples from the existing CSV
     prefix model. The gallery includes spatial blocks, prefix-length lanes,
     nibble ladder, branch cards, and purpose swimlanes.
+  - Complete: commit `43ce2ac` was pushed to `main`; GitHub Pages deployment
+    run `28883547390` completed successfully; live static and browser checks
+    passed for the visual-options gallery and five standalone pages.
 - Last material update:
-  - 2026-07-07 16:49 UTC Generated five AS141253 visual-option pages,
-    validated the repo, ran public-safety scan, and browser-checked desktop
-    plus 390 px mobile widths with no page-level horizontal overflow.
+  - 2026-07-07 16:53 UTC Pushed AS141253 visual-option pages, verified Pages
+    deployment `28883547390`, and live-checked the gallery plus all five
+    standalone option pages.
 - Next pickup action:
-  - Push the generated visual-option pages and share the Pages URL for owner
-    selection.
+  - Owner selects the preferred AS141253 IPv6 visual representation direction.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - Live GitHub Pages deployment verification is pending until the commit is
-    pushed and Pages finishes rebuilding.
+  - None for the generated selection prototypes; final model choice remains an
+    owner decision.
 
 ## Purpose / Big Picture
 
@@ -190,6 +192,7 @@
 - [x] 2026-07-07 15:43 UTC Pushed `eb06a74`, Pages deployment `28879142430` succeeded, and live colour output was verified.
 - [x] 2026-07-07 15:55 UTC Started AS141253 visual-options workstream and inspected CSV/hierarchy generator inputs.
 - [x] 2026-07-07 16:49 UTC Generated visual-options HTML/CSS prototypes from CSV hierarchy data and locally browser-checked desktop plus 390 px mobile layouts.
+- [x] 2026-07-07 16:53 UTC Pushed `43ce2ac`, Pages deployment `28883547390` succeeded, and live visual-option routes were verified.
 
 ## Decision Log
 
@@ -366,6 +369,14 @@
     pages at desktop/default and 390 px mobile widths. Page-level
     `scrollWidth` equalled viewport width; wide diagrams scroll inside
     `.visual-frame` containers.
+  - Live route checks: passed at 2026-07-07 16:53 UTC for
+    `visual-options.html` and all five `visual-option-*.html` pages; all
+    returned HTTP 200, included expected markers, and had no unrewritten source
+    font paths.
+  - Live browser QA: passed at 2026-07-07 16:53 UTC for the visual-options
+    gallery at desktop/default and 390 px mobile widths; page-level
+    `scrollWidth` equalled viewport width and all five option sections
+    rendered.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`
