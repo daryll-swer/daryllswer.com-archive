@@ -7,9 +7,9 @@
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: heading permalink controls, explicit archive
   home typography, and third-party artefact drift policy
-- Status: local implementation and validation/browser QA passed; commit/push
-  and live Pages verification pending
-- Last updated: 2026-07-07 15:25 UTC
+- Status: complete; local validation/browser QA, commit/push, GitHub Pages
+  deployment, and live public verification passed
+- Last updated: 2026-07-07 15:28 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -95,7 +95,9 @@
   - Notes: `scripts/ipv6_hierarchy.py` derives a rooted IPv6 prefix containment tree from CSV, producing HTML, JSON, and Graphviz DOT artefacts. Current graph has 153 nodes and max depth 5.
 - Drift report:
   - Status: generated and pushed
-  - Notes: Current state is `healthy` / `frozen=false`; report flags one non-target drift item for the CGNAT article's linked A10 PDF.
+  - Notes: Current state is `healthy` / `frozen=false`; report now shows 0
+    changed archived posts. Third-party documents/PDFs/downloads such as the
+    A10 PDF stay as outbound links and are not mirror-required drift.
 - Drift workflow hardening:
   - Status: complete and pushed
   - Notes: Manual GitHub Actions dispatch initially received HTTP 403 from canonical REST. `scripts/check-canonical-drift.py` now uses a browser-compatible archive User-Agent; the final manual workflow run passed on commit `d20085f` without creating another state commit.
@@ -129,13 +131,13 @@
     verified the homepage at 390 px with `scrollWidth=390` and
     `clientWidth=390`.
 - Heading permalink controls:
-  - Status: implemented locally
+  - Status: complete and pushed
   - Notes: Generated article headings now have visible `#` permalinks and
     `Copy` buttons. Plain headings also wrap heading text in a same-section
     link; headings that already contain inline links avoid invalid nested
     anchors and keep the explicit permalink/copy controls.
 - Third-party artefact drift policy:
-  - Status: implemented locally
+  - Status: complete and pushed
   - Notes: `scripts/check-canonical-drift.py` now tracks WordPress-uploaded
     image-media drift only. Linked third-party PDFs/documents/downloads remain
     outbound links and do not produce mirror-required drift.
@@ -331,6 +333,17 @@
     updated `location.hash` to `#introduction`, and the copy button wrote the
     full section URL.
   - Result: pass locally; push/live verification pending.
+- 2026-07-07 15:28 UTC:
+  - Action: Pushed heading permalink/drift update, waited for GitHub Pages, and
+    verified live public output.
+  - Evidence: Commit `62cdc70` pushed to `main`; Pages deployment run
+    `28878086332` completed successfully for head SHA
+    `62cdc700230230b7b50f9acf5f4335102e8d9e8f`. Live static checks returned
+    HTTP 200 for the home page, theme CSS, generated `archive.js`, BGP article,
+    and drift report. Live CDP browser QA confirmed home `Poppins`/`Raleway`
+    computed fonts, no 390 px overflow, `Introduction` click updating
+    `#introduction`, and the `Copy` button writing the live section URL.
+  - Result: pass.
 
 ## Tests and Verification
 
@@ -386,25 +399,31 @@
   - Local CDP browser QA against `http://127.0.0.1:4173/`: pass at
     2026-07-07 15:25 UTC for home fonts, heading permalink click, copy button,
     and 390 px mobile overflow.
+  - GitHub Pages deployment for `62cdc70`: pass at 2026-07-07 15:27 UTC.
+  - Live static checks: pass at 2026-07-07 15:27 UTC for home page, generated
+    CSS/JS, BGP article, and clean drift report.
+  - Live CDP browser QA: pass at 2026-07-07 15:28 UTC for home fonts, BGP
+    heading click/copy behaviour, and 390 px mobile overflow.
 - Not run:
-  - Live GitHub Pages verification for the current heading/drift update is
-    pending until after push.
+  - None for the current heading/drift update.
 
 ## Next Pickup
 
 - Next action:
-  - Commit, push to `main`, wait for GitHub Pages, and verify live home fonts,
-    heading controls, and clean drift report.
+  - Optional manual edit follow-up: decide how to handle the remaining
+    non-archived canonical links to `/contact/`, `/as149794/`, and `/geofeed/`.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Live GitHub Pages verification for the current heading/drift update.
+  - None for the current heading/drift update.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
-  - Optional follow-up: resolve the non-target A10 PDF drift currently reported by `docs/CANONICAL_DRIFT.md`.
+  - Optional follow-up: decide whether the remaining non-archived canonical
+    links to `/contact/`, `/as149794/`, and `/geofeed/` should stay outbound,
+    be manually edited, or be represented by archive landing pages.
