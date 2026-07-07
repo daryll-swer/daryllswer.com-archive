@@ -6,9 +6,9 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: WordPress inline colour palette preservation
-- Status: local implementation and validation/browser QA passed; commit/push
-  and live Pages verification pending
-- Last updated: 2026-07-07 15:40 UTC
+- Status: complete; local validation/browser QA, commit/push, GitHub Pages
+  deployment, and live public verification passed
+- Last updated: 2026-07-07 15:43 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -141,7 +141,7 @@
     image-media drift only. Linked third-party PDFs/documents/downloads remain
     outbound links and do not produce mirror-required drift.
 - WordPress inline colour palette:
-  - Status: implemented locally
+  - Status: complete and pushed
   - Notes: `scripts/render-site.py` now emits WordPress preset colour CSS via
     `scripts/wordpress_palette.py`, and `scripts/validate-mirror.py` checks
     that source WordPress colour classes survive into generated Pages output
@@ -361,6 +361,16 @@
     browser computed styles confirmed A `rgb(252, 185, 0)`, B
     `rgb(207, 46, 46)`, C/D `rgb(255, 105, 0)`, and transparent backgrounds.
   - Result: pass locally; push/live verification pending.
+- 2026-07-07 15:43 UTC:
+  - Action: Pushed WordPress inline-colour update, waited for GitHub Pages, and
+    verified live public rendering.
+  - Evidence: Commit `eb06a74` pushed to `main`; Pages deployment run
+    `28879142430` completed successfully for head SHA
+    `eb06a741ee74386d09da3d07cf9d2d9039526834`. Live static checks returned
+    HTTP 200 and found WordPress palette CSS plus BGP article colour classes.
+    Live browser computed styles confirmed A `rgb(252, 185, 0)`, B
+    `rgb(207, 46, 46)`, C/D `rgb(255, 105, 0)`, and transparent backgrounds.
+  - Result: pass.
 
 ## Tests and Verification
 
@@ -429,28 +439,31 @@
     and 0 public-safety findings.
   - Local browser computed-style QA against `http://127.0.0.1:4173/`: pass at
     2026-07-07 15:40 UTC for BGP Router ID WordPress colour marks.
+  - GitHub Pages deployment for `eb06a74`: pass at 2026-07-07 15:43 UTC.
+  - Live static checks: pass at 2026-07-07 15:43 UTC for generated theme CSS
+    WordPress palette markers and BGP article colour classes.
+  - Live browser computed-style QA: pass at 2026-07-07 15:43 UTC for BGP
+    Router ID WordPress colour marks.
 - Not run:
-  - Live GitHub Pages verification for the current colour-palette update is
-    pending until after push.
+  - None for the current colour-palette update.
 
 ## Next Pickup
 
 - Next action:
-  - Commit, push to `main`, wait for GitHub Pages, and verify live BGP Router
-    ID colour rendering.
+  - Optional manual edit follow-up: decide how to handle the remaining
+    non-archived canonical links to `/contact/`, `/as149794/`, and `/geofeed/`.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Live GitHub Pages verification for the current colour-palette update.
+  - None for the current colour-palette update.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
-  - Push and live-verify the current colour-palette update.
   - Optional follow-up: decide whether the remaining non-archived canonical
     links to `/contact/`, `/as149794/`, and `/geofeed/` should stay outbound,
     be manually edited, or be represented by archive landing pages.
