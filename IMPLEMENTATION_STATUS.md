@@ -7,9 +7,9 @@
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: canonical typography, internal post-link
   localisation, and section-anchor preservation
-- Status: locally implemented; final local validation/public-safety/static/CDP
-  QA pass; commit/push and live Pages verification pending
-- Last updated: 2026-07-07 11:18 UTC
+- Status: complete; final local validation/public-safety/static/CDP QA,
+  commit/push, Pages deployment, and live route verification passed
+- Last updated: 2026-07-07 11:21 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -123,7 +123,7 @@
     CSS font markers, localisable canonical post links in Markdown and Pages
     article bodies, and generated local fragment targets.
 - Responsive Pages QA:
-  - Status: passed locally
+  - Status: complete and pushed
   - Notes: `scripts/render-site.py` now emits mobile-safe grid/flex sizing and
     fixed responsive heading steps. Chrome DevTools Protocol mobile emulation
     verified the homepage at 390 px with `scrollWidth=390` and
@@ -298,6 +298,17 @@
     OOB alias anchors, 9 workbook tabs, CIDR hierarchy markup, and 390 px CDP
     mobile overflow metrics.
   - Result: pass locally; push and live verification pending.
+- 2026-07-07 11:21 UTC:
+  - Action: Committed, pushed, waited for GitHub Pages, and verified live
+    public routes/assets.
+  - Evidence: Commit `44a2a8c` pushed to `main`; Pages deployment run
+    `28862244073` completed successfully for head SHA
+    `44a2a8cfe77ef3ec987e058ecbaf4e1fe283df44`. Live checks returned HTTP
+    200 for the home page, theme CSS, `Poppins-Regular-latin.woff2`, BGP
+    article, OOB article, AS141253 workbook, and CIDR hierarchy page; live
+    HTML checks confirmed 19 home cards, local BGP -> OOB anchor, OOB
+    WordPress and alias anchors, 9 workbook tabs, and hierarchy markup.
+  - Result: pass.
 
 ## Tests and Verification
 
@@ -341,22 +352,24 @@
   - `python3 -m py_compile scripts/*.py`: pass at 2026-07-07 11:18 UTC.
   - `make validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-07 11:18 UTC with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.
   - Post-regeneration static/CDP QA: pass at 2026-07-07 11:18 UTC.
+  - GitHub Pages deployment for `44a2a8c`: pass at 2026-07-07 11:20 UTC.
+  - Live route/asset checks: pass at 2026-07-07 11:21 UTC for homepage,
+    theme CSS, Poppins WOFF2, BGP/OOB anchor link, AS141253 workbook, and CIDR
+    hierarchy page.
 - Not run:
-  - Live GitHub Pages verification for the current typography/link-anchor
-    update is pending until after push.
+  - None for the current typography/link-anchor update.
 
 ## Next Pickup
 
 - Next action:
-  - Commit, push to `main`, wait for GitHub Pages, and verify the live
-    routes/assets.
+  - Optional: decide whether to mirror the non-target A10 PDF drift reported
+    for `lets-talk-about-cgnat-and-ipv6-yet-again`.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Live GitHub Pages verification for the current typography/link-anchor
-    update.
+  - None for the current typography/link-anchor update.
 
 ## Completion Criteria
 

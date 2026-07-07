@@ -6,10 +6,11 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: in progress; canonical typography, internal post-link localisation,
-  section-anchor preservation, and local browser/static QA complete
+- Status: complete; canonical typography, internal post-link localisation,
+  section-anchor preservation, validation, push, Pages deployment, and live
+  verification complete
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-07 11:18 UTC
+- Last updated: 2026-07-07 11:21 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -55,22 +56,25 @@
   - Complete locally: validation now checks self-hosted font assets, generated
     CSS font markers, localisable canonical post links, and generated local
     fragment targets.
-  - Complete locally: responsive generator CSS was tightened after mobile QA
+  - Complete: responsive generator CSS was tightened after mobile QA
     exposed a misleading cropped Chrome screenshot; CDP mobile emulation
     verified a 390 px viewport with no page-level overflow.
+  - Complete: commit `44a2a8c` was pushed to `main`; GitHub Pages deployment
+    run `28862244073` completed successfully; live routes/assets were verified
+    with HTTP 200 responses.
 - Last material update:
-  - 2026-07-07 11:18 UTC Final local gates passed after regeneration:
-    `git diff --check`, `python3 -m py_compile scripts/*.py`,
-    `make validate scan-secrets PYTHON=<bundled-python>`, and focused
-    post-regeneration static/CDP QA.
+  - 2026-07-07 11:21 UTC Commit `44a2a8c` was pushed and live Pages checks
+    passed for the home index, theme CSS, `Poppins` font asset, BGP -> OOB
+    local anchor link, OOB alias anchors, AS141253 workbook tabs, and CIDR
+    hierarchy page.
 - Next pickup action:
-  - Commit, push, wait for Pages, and live-verify.
+  - Optional follow-up: decide whether to mirror the non-target A10 PDF drift
+    reported for `lets-talk-about-cgnat-and-ipv6-yet-again`.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
   - Current drift report flags one non-target article drift: `lets-talk-about-cgnat-and-ipv6-yet-again` links a WordPress-hosted A10 PDF that is not yet mirrored.
 - Verification gap:
-  - Live GitHub Pages verification is pending for the current
-    typography/link-anchor update.
+  - None for the current typography/link-anchor update.
 
 ## Purpose / Big Picture
 
@@ -153,7 +157,7 @@
 - [x] 2026-07-07 10:57 UTC Regenerated 19 posts, 9 sheet tabs, and generated Pages output; validation/public-safety passed locally.
 - [x] 2026-07-07 11:15 UTC Browser/static QA passed for typography, BGP/OOB anchor navigation, AS141253 workbook/hierarchy pages, and 390 px mobile viewport.
 - [x] 2026-07-07 11:18 UTC Final local gates passed after regeneration.
-- [ ] Commit, push to `main`, wait for GitHub Pages deployment, and verify live URLs.
+- [x] 2026-07-07 11:21 UTC Pushed `44a2a8c`, Pages deployment `28862244073` succeeded, and live URLs/assets verified.
 
 ## Decision Log
 
