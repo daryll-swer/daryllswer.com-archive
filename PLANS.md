@@ -6,10 +6,10 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; WordPress inline colour palette preservation, validation,
-  push, Pages deployment, and live verification complete
+- Status: local complete; AS141253 IPv6 visual representation options are
+  generated from CSV/hierarchy data and ready for owner selection
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-07 15:43 UTC
+- Last updated: 2026-07-07 16:49 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -84,18 +84,22 @@
   - Complete: commit `eb06a74` was pushed to `main`; GitHub Pages deployment
     run `28879142430` completed successfully; live static and browser checks
     verified the WordPress palette CSS and BGP Router ID colour rendering.
+  - Complete locally: AS141253 IPv6 visual representation alternatives are
+    rendered as generated static HTML/CSS examples from the existing CSV
+    prefix model. The gallery includes spatial blocks, prefix-length lanes,
+    nibble ladder, branch cards, and purpose swimlanes.
 - Last material update:
-  - 2026-07-07 15:43 UTC Live browser computed-style QA verified BGP Router
-    ID colour marks: A amber `rgb(252, 185, 0)`, B red
-    `rgb(207, 46, 46)`, and C/D orange `rgb(255, 105, 0)`, all with
-    transparent backgrounds.
+  - 2026-07-07 16:49 UTC Generated five AS141253 visual-option pages,
+    validated the repo, ran public-safety scan, and browser-checked desktop
+    plus 390 px mobile widths with no page-level horizontal overflow.
 - Next pickup action:
-  - Optional manual edit follow-up: decide how to handle the remaining
-    non-archived canonical links to `/contact/`, `/as149794/`, and `/geofeed/`.
+  - Push the generated visual-option pages and share the Pages URL for owner
+    selection.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - None for the current colour-palette update.
+  - Live GitHub Pages deployment verification is pending until the commit is
+    pushed and Pages finishes rebuilding.
 
 ## Purpose / Big Picture
 
@@ -184,6 +188,8 @@
 - [x] 2026-07-07 15:28 UTC Pushed `62cdc70`, Pages deployment `28878086332` succeeded, and live static/CDP browser checks passed.
 - [x] 2026-07-07 15:40 UTC Added WordPress preset colour CSS/validation, regenerated Pages output, and locally verified BGP Router ID computed colours.
 - [x] 2026-07-07 15:43 UTC Pushed `eb06a74`, Pages deployment `28879142430` succeeded, and live colour output was verified.
+- [x] 2026-07-07 15:55 UTC Started AS141253 visual-options workstream and inspected CSV/hierarchy generator inputs.
+- [x] 2026-07-07 16:49 UTC Generated visual-options HTML/CSS prototypes from CSV hierarchy data and locally browser-checked desktop plus 390 px mobile layouts.
 
 ## Decision Log
 
@@ -290,6 +296,17 @@
   - Impact: Markdown links target local `content/posts/.../index.md`; Pages
     links target local `../<slug>/` routes; generated Pages emits alias anchors
     for WordPress `h-...` heading IDs where needed.
+- Decision: Treat AS141253 visual-option pages as generated selection
+  prototypes.
+  - Rationale: The original tree model is structurally correct but not
+    readable enough for human selection; multiple generated static views let
+    the owner choose the representation before making one the canonical
+    artefact.
+  - Date/Author: 2026-07-07, user/Codex
+  - Status: implemented locally
+  - Impact: `scripts/ipv6_visual_options.py` generates a comparison gallery
+    and five standalone HTML/CSS option pages from the CSV-derived prefix
+    hierarchy.
 
 ## Validation and Acceptance
 
@@ -336,6 +353,19 @@
   - GitHub Pages deployment for `d20085f`: passed at 2026-07-06 18:14 UTC.
   - Manual `Canonical drift check` workflow for `d20085f`: passed at 2026-07-06 18:15 UTC and did not advance `origin/main`.
   - Final live route check: passed at 2026-07-06 18:15 UTC for the refreshed featured-image assets and AS141253 hierarchy page.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-07 16:48 UTC.
+  - `git diff --check`: passed at 2026-07-07 16:48 UTC.
+  - `make render-site PYTHON=<bundled-python>`: passed at
+    2026-07-07 16:47 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-07
+    16:48 UTC with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-07
+    16:48 UTC with 0 public-safety findings.
+  - Local browser QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-07 16:48 UTC for the visual-options gallery and five standalone
+    pages at desktop/default and 390 px mobile widths. Page-level
+    `scrollWidth` equalled viewport width; wide diagrams scroll inside
+    `.visual-frame` containers.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`
@@ -365,6 +395,6 @@
 - Achieved:
   - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, preview generation, and generated GitHub Pages site completed.
 - Remaining:
-  - Optional follow-up: resolve the non-target A10 PDF drift currently reported by `docs/CANONICAL_DRIFT.md`.
+  - Owner selection of the preferred AS141253 IPv6 visual representation.
 - Retrospective timestamp:
   - 2026-07-06 09:20 UTC
