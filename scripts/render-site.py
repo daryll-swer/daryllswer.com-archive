@@ -322,7 +322,7 @@ def rewrite_links(root, current_post: dict, canonical_to_slug: dict[str, str], e
         joined = urllib.parse.urljoin(current_base, href)
         joined_key = joined.rstrip("/")
         if joined_key == SHEET_SOURCE_URL.rstrip("/"):
-            anchor.set("href", f"../../sheets/{SHEET_SLUG}/")
+            anchor.set("href", f"../../sheets/{SHEET_SLUG}/visual.html")
             anchor.attrib.pop("target", None)
             anchor.attrib.pop("rel", None)
             continue
@@ -554,7 +554,7 @@ def render_sheet_page() -> None:
         ),
     )
     shutil.copytree(source_dir, out_dir, dirs_exist_ok=True, ignore=shutil.ignore_patterns("workbook.html"))
-    font_rewrite_pages = [out_dir / "cidr-hierarchy.html", out_dir / "visual-options.html"]
+    font_rewrite_pages = [out_dir / "cidr-hierarchy.html", out_dir / "visual.html", out_dir / "visual-options.html"]
     font_rewrite_pages.extend(sorted(out_dir.glob("visual-option-*.html")))
     for page in font_rewrite_pages:
         if page.exists():

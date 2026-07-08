@@ -532,6 +532,8 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
         expected_tabs = len(load_json(ROOT / "data" / "sheets" / "as141253-ipv6-architecture-example" / "manifest.json").get("tabs", []))
         if sheet_html.count('class="sheet-tab-label"') != expected_tabs:
             errors.append("GitHub Pages AS141253 workbook tab count does not match manifest")
+        if "visual.html" not in sheet_html or "Visual model" not in sheet_html:
+            errors.append("GitHub Pages AS141253 workbook page missing visual model link")
         if "visual-options.html" not in sheet_html:
             errors.append("GitHub Pages AS141253 workbook page missing visual options link")
         if 'href="../../index.html"' in sheet_html:
@@ -545,6 +547,27 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
                 errors.append("GitHub Pages AS141253 CIDR hierarchy page missing prefix tree UI")
             if 'href="index.html"' in hierarchy_html:
                 errors.append("GitHub Pages AS141253 CIDR hierarchy should link back to ./ instead of index.html")
+        sheet_manifest = load_json(ROOT / "data" / "sheets" / "as141253-ipv6-architecture-example" / "manifest.json")
+        visual_model_meta = sheet_manifest.get("visual_model", {})
+        if not visual_model_meta.get("path") or not visual_model_meta.get("sha256"):
+            errors.append("AS141253 sheet manifest missing visual_model artefact metadata")
+        visual_model = sheet_page.parent / "visual.html"
+        if not visual_model.exists():
+            errors.append("GitHub Pages AS141253 visual model page missing")
+        else:
+            visual_model_html = visual_model.read_text(encoding="utf-8", errors="replace")
+            for marker in [
+                "AS141253 IPv6 Visual Model",
+                "At-a-glance allocation",
+                "Operational branches",
+                "Purpose map",
+                "Full hierarchy",
+                "data-reserved-group",
+            ]:
+                if marker not in visual_model_html:
+                    errors.append(f"GitHub Pages AS141253 visual model page missing `{marker}`")
+            if "../../../assets/fonts/" in visual_model_html:
+                errors.append("GitHub Pages AS141253 visual model page has unrewritten source font path")
         visual_index = sheet_page.parent / "visual-options.html"
         if not visual_index.exists():
             errors.append("GitHub Pages AS141253 visual options page missing")
@@ -627,8 +650,8 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
         if post["slug"] == "ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators":
             if GOOGLE_SHEET_PATTERN.search(html):
                 errors.append(f"{post['slug']}: GitHub Pages article still links the Google Sheet instead of the repo sheet page")
-            if "../../sheets/as141253-ipv6-architecture-example/" not in html:
-                errors.append(f"{post['slug']}: GitHub Pages article missing repo-hosted AS141253 sheet link")
+            if "../../sheets/as141253-ipv6-architecture-example/visual.html" not in html:
+                errors.append(f"{post['slug']}: GitHub Pages article missing repo-hosted AS141253 visual model link")
             if "media-embed" not in html:
                 errors.append(f"{post['slug']}: GitHub Pages article missing podcast embed wrapper")
         validate_pages_heading_controls(page, post, errors)

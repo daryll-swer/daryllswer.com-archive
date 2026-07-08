@@ -6,11 +6,11 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete and deployed; AS141253 visual foundations now pass the
-  expanded industry-aligned responsive QA matrix after fixing a 360 px
-  metrics-grid overflow
+- Status: implementation in progress locally; primary AS141253 `visual.html`
+  model generated from the selected foundations, pending validation, browser
+  QA, commit, push, and live Pages verification
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-08 17:29 UTC
+- Last updated: 2026-07-08 18:03 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -144,16 +144,24 @@
   - Complete: commit `d7bade5` was pushed to `main`; GitHub Pages deployment
     run `28962375073` completed successfully; live static checks and
     Chrome/Playwright browser checks passed for the four selected visual pages.
+  - Complete locally: `scripts/ipv6_visual_options.py` now generates
+    `visual.html` as the primary AS141253 IPv6 visual model, combining
+    branch-card readability, native disclosures, collapsed reserved-prefix
+    summaries, a static purpose minimap, and a full disclosure hierarchy.
+  - Complete locally: workbook navigation, sheet README, repository Markdown,
+    and generated article Pages output now prefer `visual.html` for the
+    AS141253 Google Sheet replacement path.
 - Last material update:
-  - 2026-07-08 17:29 UTC Pushed and live-verified the expanded responsive
-    matrix fix on GitHub Pages.
+  - 2026-07-08 18:03 UTC Generated the primary `visual.html` model locally and
+    rewired AS141253 sheet/article links to prefer it.
 - Next pickup action:
-  - Design the next-generation AS141253 IPv6 visual representation from the
-    three selected foundations.
+  - Run validation, public-safety scan, local browser QA, commit, push, wait
+    for GitHub Pages, and live-check `visual.html`.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - None for the expanded responsive-matrix fix.
+  - Local browser QA and live GitHub Pages verification are pending for
+    `visual.html`.
 
 ## Purpose / Big Picture
 
@@ -256,6 +264,8 @@
 - [x] 2026-07-08 07:49 UTC Pushed `32fad32`, Pages deployment `28926454066` succeeded, and live static/browser checks passed for branch-card disclosures plus responsive behaviour.
 - [x] 2026-07-08 17:21 UTC Ran the expanded responsive matrix, found and fixed the 360 px metrics-grid overflow, and verified 160 local page/viewport combinations with zero failures.
 - [x] 2026-07-08 17:29 UTC Pushed `d7bade5`, Pages deployment `28962375073` succeeded, and live static/browser checks passed for the expanded responsive-matrix fix.
+- [x] 2026-07-08 18:03 UTC Implemented and generated primary AS141253 `visual.html` from the three selected foundations.
+- [x] 2026-07-08 18:13 UTC Local validation, public-safety scan, and Chrome/Playwright QA passed for `visual.html`, the workbook, and visual-foundation navigation.
 
 ## Decision Log
 
@@ -409,6 +419,16 @@
   - Status: implemented locally
   - Impact: Visual pages use viewport metadata, CSS Grid/Flex wrapping, media
     queries, `min-width: 0` containment, and `.visual-frame` overflow handling.
+- Decision: Make `visual.html` the primary AS141253 visual model.
+  - Rationale: The selected foundations have complementary strengths; the
+    durable public page should combine branch-card readability, native
+    disclosure navigation, reserved-capacity summaries, and a static purpose
+    minimap rather than exposing only separate prototypes.
+  - Date/Author: 2026-07-08, user/Codex
+  - Status: implemented locally
+  - Impact: `scripts/ipv6_visual_options.py` generates `visual.html`;
+    workbook, sheet README, Markdown, and Pages article links now prefer it;
+    `visual-options.html` remains a secondary foundations gallery.
 
 ## Validation and Acceptance
 
@@ -612,6 +632,22 @@
     with 0 validation errors and 1 known sitemap warning.
   - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
     17:22 UTC with 0 public-safety findings.
+  - `make sync PYTHON=<bundled-python>`: passed at 2026-07-08 18:01 UTC;
+    synced 19 posts and exported 9 sheet tabs.
+  - `make render-site PYTHON=<bundled-python>`: passed at 2026-07-08
+    18:02 UTC; generated 19 posts and refreshed generated Pages output.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 18:05 UTC.
+  - `git diff --check`: passed at 2026-07-08 18:05 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08 18:05 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
+    18:05 UTC with 0 public-safety findings.
+  - Local Chrome/Playwright QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-08 18:13 UTC for `visual.html` at 320, 360, 390, 430, 768, 1024,
+    1440, 1920, and 2560 px widths. Failures: 0. Checks covered page-level
+    overflow, expected sections, absence of JS on `visual.html`, reserved
+    disclosure open/close, SVG minimap anchor targets/clicks, and 390 px smoke
+    checks for `visual-options.html` and the workbook.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`

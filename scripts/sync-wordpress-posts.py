@@ -49,7 +49,7 @@ DONATION_URL_MARKERS = (
     "/donation/",
 )
 ARCHIVE_LINK_REWRITES = {
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml": "../../../data/sheets/as141253-ipv6-architecture-example/workbook.html",
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml": "../../../data/sheets/as141253-ipv6-architecture-example/visual.html",
 }
 LOCALISABLE_HOSTS = {"www.daryllswer.com", "daryllswer.com"}
 TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}

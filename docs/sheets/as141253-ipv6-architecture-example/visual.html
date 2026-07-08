@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AS141253 IPv6 Visual Model</title>
+  <style>
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-Light-devanagari.woff2') format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-Light-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-Light-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-Regular-devanagari.woff2') format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-Regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-Regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-SemiBold-devanagari.woff2') format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-SemiBold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-SemiBold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-Bold-devanagari.woff2') format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-Bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../assets/fonts/Poppins-Bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('../../assets/fonts/Raleway-variable-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('../../assets/fonts/Raleway-variable-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+* { box-sizing: border-box; }
+:root {
+  color-scheme: light dark;
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-alt: #edf2f7;
+  --surface-strong: #e3ebf2;
+  --text: #17202a;
+  --muted: #5f6c78;
+  --border: #d5dde6;
+  --grid: #c7d1dc;
+  --accent: #0b6f8a;
+  --loopback: #1d6f42;
+  --oob: #315ea8;
+  --interconnect: #8a5a00;
+  --cdn: #7c4d9e;
+  --service: #b84b5a;
+  --role: #0b6f8a;
+  --geo: #626d1f;
+  --reserved: #7b8290;
+  --other: #50616f;
+  --font-body: "Poppins", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: "Raleway", "Poppins", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101418;
+    --surface: #171d23;
+    --surface-alt: #222b35;
+    --surface-strong: #2a3440;
+    --text: #edf2f7;
+    --muted: #aab5c1;
+    --border: #34404d;
+    --grid: #445363;
+    --accent: #6cc7df;
+    --loopback: #87d19a;
+    --oob: #9bbcff;
+    --interconnect: #e4bd65;
+    --cdn: #cfaae6;
+    --service: #f39aa6;
+    --role: #6cc7df;
+    --geo: #c9d36c;
+    --reserved: #b1bac5;
+    --other: #b8c6d3;
+  }
+}
+body {
+  margin: 0;
+  min-width: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.55;
+}
+a { color: var(--accent); text-underline-offset: .18em; }
+.page-header, main, footer {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: clamp(.85rem, 1.8vw, 1.35rem);
+}
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border);
+}
+.eyebrow {
+  margin: 0 0 .45rem;
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+h1 {
+  margin: 0;
+  max-width: 900px;
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 3.1rem);
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+h2, h3 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+.summary { max-width: 780px; color: var(--muted); }
+.actions, .option-nav {
+  display: flex;
+  gap: .55rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.actions a, .option-nav a, .open-option {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: .4rem .7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  text-decoration: none;
+  font-weight: 700;
+}
+.option-nav {
+  justify-content: flex-start;
+  margin: 1rem 0;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: .75rem;
+  margin: 1rem 0;
+  min-width: 0;
+}
+.metric {
+  min-width: 0;
+  padding: .8rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.metric strong {
+  display: block;
+  min-width: 0;
+  font-size: 1.35rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.option-section {
+  margin: 1.25rem 0 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  min-width: 0;
+}
+.visual-frame {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.prefix-chip {
+  display: inline-flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: .35rem;
+  min-height: 1.75rem;
+  min-width: 0;
+  max-width: 100%;
+  padding: .22rem .5rem;
+  border: 1px solid var(--border);
+  border-left: .32rem solid var(--other);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+.prefix-chip code {
+  min-width: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .86rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.chip-small { min-height: 1.45rem; padding: .12rem .36rem; font-size: .82rem; }
+.chip-label, .chip-count {
+  min-width: 0;
+  color: var(--muted);
+  font-size: .82rem;
+  overflow-wrap: anywhere;
+}
+.reserved { border-left-color: var(--reserved); opacity: .78; }
+.loopback { border-left-color: var(--loopback); }
+.oob-management { border-left-color: var(--oob); }
+.interconnect { border-left-color: var(--interconnect); }
+.content-cdn { border-left-color: var(--cdn); }
+.service-routed-pools { border-left-color: var(--service); }
+.network-device-roles { border-left-color: var(--role); }
+.geography-sites { border-left-color: var(--geo); }
+.other-planning { border-left-color: var(--other); }
+.path-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  min-width: 0;
+}
+footer { color: var(--muted); font-size: .92rem; }
+@media (max-width: 760px) {
+  .page-header { flex-direction: column; }
+  .actions { justify-content: flex-start; }
+  .visual-frame { padding: .75rem; }
+}
+
+
+.visual-section {
+  margin: 1.25rem 0 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  min-width: 0;
+}
+.allocation-path {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: .85rem;
+  margin: 1rem 0;
+}
+.allocation-step,
+.function-overview {
+  display: grid;
+  gap: .65rem;
+  min-width: 0;
+  padding: .9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.allocation-step a {
+  text-decoration: none;
+}
+.step-number {
+  display: inline-grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 800;
+}
+.allocation-step h3,
+.function-overview h3 {
+  margin: 0;
+  font-size: 1.02rem;
+}
+.branch-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .45rem;
+  margin: 0;
+  font-size: .82rem;
+}
+.branch-stats div {
+  min-width: 0;
+  padding: .45rem;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+.branch-stats dt {
+  color: var(--muted);
+}
+.branch-stats dd {
+  margin: 0;
+  font-weight: 800;
+}
+.final-branch-grid {
+  align-items: start;
+}
+.final-branch-card {
+  scroll-margin-top: 1rem;
+}
+.branch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: .85rem;
+}
+.branch-card {
+  display: grid;
+  gap: .65rem;
+  align-content: start;
+  min-width: 0;
+  overflow: hidden;
+  padding: .85rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.branch-card h3 { margin: 0; font-size: 1.05rem; }
+.branch-card p { margin: 0; color: var(--muted); overflow-wrap: anywhere; }
+.branch-children {
+  display: grid;
+  gap: .55rem;
+  min-width: 0;
+}
+.child-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: .5rem;
+  min-width: 0;
+  align-items: start;
+}
+.child-item {
+  display: grid;
+  gap: .28rem;
+  min-width: 0;
+  padding: .42rem;
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+.child-item .prefix-chip {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: start;
+  width: 100%;
+}
+.branch-note,
+.child-note,
+.tree-note {
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+}
+.child-note {
+  padding-left: .2rem;
+}
+.branch-more {
+  min-width: 0;
+}
+.reserved-group {
+  min-width: 0;
+}
+.reserved-group summary {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  gap: .2rem .55rem;
+  align-items: start;
+  max-width: 100%;
+  padding: .45rem;
+  border: 1px dashed var(--grid);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 65%, transparent);
+  cursor: pointer;
+  list-style: none;
+}
+.reserved-group summary::-webkit-details-marker {
+  display: none;
+}
+.reserved-group summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.reserved-count {
+  font-weight: 800;
+}
+.reserved-label,
+.reserved-range {
+  min-width: 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.reserved-range {
+  grid-column: 1 / -1;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .82rem;
+}
+.reserved-items {
+  margin-top: .55rem;
+}
+.branch-more summary {
+  display: inline-flex;
+  max-width: 100%;
+  cursor: pointer;
+  list-style: none;
+}
+.branch-more summary::-webkit-details-marker {
+  display: none;
+}
+.branch-more summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.branch-more-items {
+  margin-top: .55rem;
+}
+.more-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.45rem;
+  padding: .12rem .45rem;
+  border: 1px dashed var(--grid);
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.branch-more[open] .more-count {
+  border-style: solid;
+  color: var(--text);
+  background: var(--surface);
+}
+.more-close-label {
+  display: none;
+}
+.branch-more[open] .more-open-label {
+  display: none;
+}
+.branch-more[open] .more-close-label {
+  display: inline;
+}
+.option-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: .85rem;
+  margin: 1rem 0 1.5rem;
+}
+.option-card {
+  display: grid;
+  gap: .65rem;
+  padding: .9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.option-card h2 { margin: 0; font-size: 1.15rem; }
+.option-card p { margin: 0; color: var(--muted); }
+.interactive-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(min(100%, 18rem), 24rem);
+  gap: 1rem;
+  align-items: start;
+  min-width: 0;
+}
+.graph-canvas {
+  display: block;
+  min-width: 48rem;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--grid) 28%, transparent) 1px, transparent 1px),
+    linear-gradient(0deg, color-mix(in srgb, var(--grid) 28%, transparent) 1px, transparent 1px),
+    var(--surface-alt);
+  background-size: 4rem 4rem;
+}
+.graph-canvas text {
+  fill: var(--text);
+  font-family: var(--font-body);
+  font-size: .74rem;
+  pointer-events: none;
+}
+.graph-category-label {
+  font-weight: 800;
+  paint-order: stroke;
+  stroke: var(--surface-alt);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.graph-edge {
+  stroke: color-mix(in srgb, var(--grid) 72%, transparent);
+  stroke-width: 1.2;
+}
+.graph-mark {
+  cursor: pointer;
+  outline: none;
+}
+.graph-link {
+  outline: none;
+}
+.graph-link:focus-visible .graph-mark circle,
+.graph-link:focus-visible .graph-mark path,
+.graph-link:focus-visible .graph-mark rect {
+  stroke: var(--text);
+  stroke-width: 3;
+}
+.purpose-minimap .graph-mark:hover circle {
+  stroke: var(--text);
+  stroke-width: 2.8;
+}
+.graph-mark circle,
+.graph-mark path,
+.graph-mark rect {
+  transition: opacity .18s ease, stroke-width .18s ease, transform .18s ease;
+}
+.graph-mark circle {
+  fill: var(--other);
+  stroke: var(--surface);
+  stroke-width: 1.4;
+}
+.graph-mark path,
+.graph-mark rect {
+  fill: var(--other);
+  stroke: var(--surface);
+  stroke-width: .7;
+}
+.graph-mark.loopback circle,
+.graph-mark.loopback path,
+.graph-mark.loopback rect { fill: var(--loopback); }
+.graph-mark.oob-management circle,
+.graph-mark.oob-management path,
+.graph-mark.oob-management rect { fill: var(--oob); }
+.graph-mark.interconnect circle,
+.graph-mark.interconnect path,
+.graph-mark.interconnect rect { fill: var(--interconnect); }
+.graph-mark.content-cdn circle,
+.graph-mark.content-cdn path,
+.graph-mark.content-cdn rect { fill: var(--cdn); }
+.graph-mark.service-routed-pools circle,
+.graph-mark.service-routed-pools path,
+.graph-mark.service-routed-pools rect { fill: var(--service); }
+.graph-mark.network-device-roles circle,
+.graph-mark.network-device-roles path,
+.graph-mark.network-device-roles rect { fill: var(--role); }
+.graph-mark.geography-sites circle,
+.graph-mark.geography-sites path,
+.graph-mark.geography-sites rect { fill: var(--geo); }
+.graph-mark.reserved circle,
+.graph-mark.reserved path,
+.graph-mark.reserved rect { fill: var(--reserved); }
+.graph-canvas.has-selection .graph-mark:not(.is-selected):not(.is-path):not(.is-child),
+.graph-canvas.has-selection .graph-edge:not(.is-path) {
+  opacity: .18;
+}
+.graph-mark.is-selected circle,
+.graph-mark.is-selected path,
+.graph-mark.is-selected rect {
+  stroke: var(--text);
+  stroke-width: 3;
+}
+.graph-mark.is-path circle,
+.graph-mark.is-path path,
+.graph-mark.is-path rect {
+  stroke: var(--accent);
+  stroke-width: 2.4;
+}
+.graph-mark.is-child circle,
+.graph-mark.is-child path,
+.graph-mark.is-child rect {
+  stroke: var(--text);
+  stroke-width: 2;
+}
+.graph-edge.is-path {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  opacity: 1;
+}
+.node-detail,
+.interaction-panel {
+  display: grid;
+  gap: .6rem;
+  padding: .9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.node-detail h3,
+.interaction-panel h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.node-detail p,
+.interaction-panel p { margin: 0; color: var(--muted); }
+.detail-grid {
+  display: grid;
+  gap: .35rem;
+  font-size: .9rem;
+}
+.detail-grid div {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, max-content) minmax(0, 1fr);
+  gap: .8rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: .25rem;
+}
+.detail-grid dt { color: var(--muted); }
+.detail-grid dd { min-width: 0; margin: 0; text-align: right; overflow-wrap: anywhere; }
+.detail-grid code { overflow-wrap: anywhere; word-break: break-word; }
+.detail-grid .detail-notes {
+  grid-template-columns: 1fr;
+}
+.detail-grid .detail-notes dd {
+  text-align: left;
+}
+.tree-toolbar {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  flex-wrap: wrap;
+  margin: 0 0 .85rem;
+}
+.tree-toolbar button {
+  min-height: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.dendrogram-tree {
+  min-width: min(42rem, 100%);
+  display: grid;
+  gap: .35rem;
+}
+.tree-node {
+  margin-left: 1rem;
+  padding-left: .75rem;
+  border-left: 1px solid var(--grid);
+  scroll-margin-top: 1rem;
+}
+.tree-node summary {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  min-height: 2rem;
+  cursor: pointer;
+  list-style: none;
+  flex-wrap: wrap;
+}
+.tree-node summary::-webkit-details-marker { display: none; }
+.tree-node summary::before {
+  content: "+";
+  display: inline-grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  flex: 0 0 auto;
+  margin-top: .08rem;
+}
+.tree-node[open] > summary::before { content: "-"; }
+.tree-node.leaf summary::before { content: ""; border-style: dashed; }
+.tree-note {
+  flex: 1 1 18rem;
+  margin: .12rem 0 0;
+}
+.empty-children {
+  margin: 0;
+  color: var(--muted);
+}
+@media (max-width: 980px) {
+  .interactive-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .branch-grid { grid-template-columns: 1fr; }
+  .child-preview { grid-template-columns: 1fr; }
+  .branch-stats { grid-template-columns: 1fr; }
+}
+@media (min-width: 1600px) {
+  .branch-grid {
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .branch-card,
+  .node-detail,
+  .interaction-panel {
+    padding: .7rem;
+  }
+  .tree-node {
+    margin-left: .45rem;
+    padding-left: .45rem;
+  }
+  .graph-canvas {
+    min-width: 42rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">AS141253 IPv6 visual model</p>
+      <h1>AS141253 IPv6 Visual Model</h1>
+      <p class="summary">A mostly static, CSV-derived hybrid dashboard for reading the IPv6 allocation model at a glance while preserving the complete hierarchy.</p>
+    </div>
+    <nav class="actions" aria-label="Visualisation actions">
+      <a href="./">Workbook</a><a href="cidr-hierarchy.html">Tree model</a><a href="visual-options.html">Visual foundations</a><a href="visual-option-branch-cards.html">Branch cards</a><a href="visual-option-collapsible-dendrogram.html">Collapsible dendrogram</a><a href="visual-option-purpose-cluster-graph.html">Purpose cluster graph</a>
+    </nav>
+  </header>
+  <main>
+
+<section class="metrics" aria-label="Model metrics">
+  <div class="metric"><strong>153</strong><span>prefix nodes</span></div>
+  <div class="metric"><strong>5</strong><span>containment levels</span></div>
+  <div class="metric"><strong>145</strong><span>terminal prefixes</span></div>
+  <div class="metric"><strong>2400:d960::/32</strong><span>root prefix</span></div>
+</section>
+
+<section class="visual-section" id="at-a-glance">
+  <h2>At-a-glance allocation</h2>
+  <p class="summary">The default operator view follows the model from the root prefix down to the Delhi-01 branch, then shows the major function slices at that branch.</p>
+  <div class="allocation-path"><article class="allocation-step"><span class="step-number">1</span><h3>Sliced into /34s per Zone</h3><a href="#prefix-2400-d960-32"><span class="prefix-chip service-routed-pools"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span><span class="chip-count">4 children</span></span></a><p class="branch-note">PAN India Backbone (No customers to be assigned from this pool)</p><dl class="branch-stats"><div><dt>Length</dt><dd>/32</dd></div><div><dt>Active children</dt><dd>4</dd></div><div><dt>Reserved children</dt><dd>0</dd></div></dl></article><article class="allocation-step"><span class="step-number">2</span><h3>North India</h3><a href="#prefix-2400-d960-34"><span class="prefix-chip geography-sites"><code>2400:d960::/34</code><span class="chip-label">North India</span><span class="chip-count">64 children</span></span></a><p class="branch-note">Sliced into /40 per state</p><dl class="branch-stats"><div><dt>Length</dt><dd>/34</dd></div><div><dt>Active children</dt><dd>8</dd></div><div><dt>Reserved children</dt><dd>56</dd></div></dl></article><article class="allocation-step"><span class="step-number">3</span><h3>Delhi</h3><a href="#prefix-2400-d960-800-40"><span class="prefix-chip geography-sites"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span><span class="chip-count">16 children</span></span></a><p class="branch-note">Sliced into /44 per site</p><dl class="branch-stats"><div><dt>Length</dt><dd>/40</dd></div><div><dt>Active children</dt><dd>1</dd></div><div><dt>Reserved children</dt><dd>15</dd></div></dl></article><article class="allocation-step"><span class="step-number">4</span><h3>Delhi-01</h3><a href="#prefix-2400-d960-800-44"><span class="prefix-chip geography-sites"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span><span class="chip-count">16 children</span></span></a><p class="branch-note">Sliced into /48 per function</p><dl class="branch-stats"><div><dt>Length</dt><dd>/44</dd></div><div><dt>Active children</dt><dd>6</dd></div><div><dt>Reserved children</dt><dd>10</dd></div></dl></article></div>
+  <article class="function-overview">
+    <h3>Delhi-01 function branches</h3>
+    <div class="branch-children"><div class="child-preview"><div class="child-item"><span class="prefix-chip loopback chip-small"><code>2400:d960:800::/48</code><span class="chip-label">Loopback</span><span class="chip-count">11 children</span></span><p class="child-note">Sliced into /64 per row of device type</p></div><div class="child-item"><span class="prefix-chip oob-management chip-small"><code>2400:d960:801::/48</code><span class="chip-label">OOB</span><span class="chip-count">16 children</span></span><p class="child-note">Sliced into /52 per OOB sub-function</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:802::/48</code><span class="chip-label">Peering - PNI, PtP etc.</span></span><p class="child-note">Sliced into /64 per peer</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:803::/48</code><span class="chip-label">PtP/Interconnections</span><span class="chip-count">16 children</span></span><p class="child-note">Sliced into /52s per device type on row basis</p></div><div class="child-item"><span class="prefix-chip content-cdn chip-small"><code>2400:d960:804::/48</code><span class="chip-label">For Caching Nodes</span><span class="chip-count">9 children</span></span><p class="child-note">Sliced into /56 per CDN</p></div><div class="child-item"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960:805::/48</code><span class="chip-label">Routed pool for Docker/Whatever - Example</span></span><p class="child-note">Slice into /64 - Example</p></div></div><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">10 reserved /48 prefixes</span><span class="reserved-label">Reserved</span><span class="reserved-range">2400:d960:806::/48 to 2400:d960:80f::/48</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:806::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:807::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:808::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:809::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80a::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80b::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80c::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80d::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80e::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80f::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div></div></details></div>
+  </article>
+</section>
+
+<section class="visual-section" id="operational-branches">
+  <h2>Operational branches</h2>
+  <p class="summary">Readable branch cards keep prefix, role, notes, active child allocations, and reserved capacity together.</p>
+  <div class="visual-frame"><div class="branch-grid final-branch-grid"><article class="branch-card final-branch-card" id="prefix-2400-d960-32"><h3>Sliced into /34s per Zone</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span></div><p class="branch-note">PAN India Backbone (No customers to be assigned from this pool)</p><dl class="branch-stats"><div><dt>Length</dt><dd>/32</dd></div><div><dt>Active children</dt><dd>4</dd></div><div><dt>Reserved children</dt><dd>0</dd></div></dl><div class="branch-children"><div class="child-preview"><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span><span class="chip-count">64 children</span></span><p class="child-note">Sliced into /40 per state</p></div><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960:4000::/34</code><span class="chip-label">East India</span></span><p class="child-note">Sliced into /40 per state</p></div><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960:8000::/34</code><span class="chip-label">South India</span></span><p class="child-note">Sliced into /40 per state</p></div><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960:c000::/34</code><span class="chip-label">West India</span></span><p class="child-note">Sliced into /40 per state</p></div></div></div></article><article class="branch-card final-branch-card" id="prefix-2400-d960-34"><h3>North India</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span></div><p class="branch-note">Sliced into /40 per state</p><dl class="branch-stats"><div><dt>Length</dt><dd>/34</dd></div><div><dt>Active children</dt><dd>8</dd></div><div><dt>Reserved children</dt><dd>56</dd></div></dl><div class="branch-children"><div class="child-preview"><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/40</code><span class="chip-label">Chandigarh</span></span><p class="child-note">Sliced into /44 per site</p></div><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span><span class="chip-count">16 children</span></span><p class="child-note">Sliced into /44 per site</p></div><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960:1000::/40</code><span class="chip-label">Haryana</span></span><p class="child-note">Sliced into /44 per site</p></div><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960:1800::/40</code><span class="chip-label">Himachal Pradesh</span></span><p class="child-note">Sliced into /44 per site</p></div><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960:2000::/40</code><span class="chip-label">Jammu &amp; Kashmir</span></span><p class="child-note">Sliced into /44 per site</p></div><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960:2800::/40</code><span class="chip-label">Punjab</span></span><p class="child-note">Sliced into /44 per site</p></div><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960:3000::/40</code><span class="chip-label">Uttar Pradesh</span></span><p class="child-note">Sliced into /44 per site</p></div><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960:3800::/40</code><span class="chip-label">Uttarakhand</span></span><p class="child-note">Sliced into /44 per site</p></div></div><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Chandigarh</span><span class="reserved-range">2400:d960:100::/40 to 2400:d960:700::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:100::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:200::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:300::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:400::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:500::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:600::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:700::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Delhi</span><span class="reserved-range">2400:d960:900::/40 to 2400:d960:f00::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:900::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:a00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:b00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:c00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:d00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:e00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:f00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Haryana</span><span class="reserved-range">2400:d960:1100::/40 to 2400:d960:1700::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1100::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1200::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1300::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1400::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1500::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1600::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1700::/40</code><span class="chip-label">Reserved for Haryana</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Himachal Pradesh</span><span class="reserved-range">2400:d960:1900::/40 to 2400:d960:1f00::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1900::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1a00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1b00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1c00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1d00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1e00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1f00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Jammu &amp; Kashmir</span><span class="reserved-range">2400:d960:2100::/40 to 2400:d960:2700::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2100::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2200::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2300::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2400::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2500::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2600::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2700::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Punjab</span><span class="reserved-range">2400:d960:2900::/40 to 2400:d960:2f00::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2900::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2a00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2b00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2c00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2d00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2e00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2f00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Uttar Pradesh</span><span class="reserved-range">2400:d960:3100::/40 to 2400:d960:3700::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3100::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3200::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3300::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3400::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3500::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3600::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3700::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Uttarakhand</span><span class="reserved-range">2400:d960:3900::/40 to 2400:d960:3f00::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3900::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3a00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3b00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3c00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3d00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3e00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3f00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div></div></details></div></article><article class="branch-card final-branch-card" id="prefix-2400-d960-800-40"><h3>Delhi</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span></div><p class="branch-note">Sliced into /44 per site</p><dl class="branch-stats"><div><dt>Length</dt><dd>/40</dd></div><div><dt>Active children</dt><dd>1</dd></div><div><dt>Reserved children</dt><dd>15</dd></div></dl><div class="branch-children"><div class="child-preview"><div class="child-item"><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span><span class="chip-count">16 children</span></span><p class="child-note">Sliced into /48 per function</p></div></div><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-02</span><span class="reserved-range">2400:d960:810::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:810::/44</code><span class="chip-label">Delhi-02</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-03</span><span class="reserved-range">2400:d960:820::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:820::/44</code><span class="chip-label">Delhi-03</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-04</span><span class="reserved-range">2400:d960:830::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:830::/44</code><span class="chip-label">Delhi-04</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-05</span><span class="reserved-range">2400:d960:840::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:840::/44</code><span class="chip-label">Delhi-05</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-06</span><span class="reserved-range">2400:d960:850::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:850::/44</code><span class="chip-label">Delhi-06</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-07</span><span class="reserved-range">2400:d960:860::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:860::/44</code><span class="chip-label">Delhi-07</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-08</span><span class="reserved-range">2400:d960:870::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:870::/44</code><span class="chip-label">Delhi-08</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-09</span><span class="reserved-range">2400:d960:880::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:880::/44</code><span class="chip-label">Delhi-09</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-10</span><span class="reserved-range">2400:d960:890::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:890::/44</code><span class="chip-label">Delhi-10</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-11</span><span class="reserved-range">2400:d960:8a0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8a0::/44</code><span class="chip-label">Delhi-11</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-12</span><span class="reserved-range">2400:d960:8b0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8b0::/44</code><span class="chip-label">Delhi-12</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-13</span><span class="reserved-range">2400:d960:8c0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8c0::/44</code><span class="chip-label">Delhi-13</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-14</span><span class="reserved-range">2400:d960:8d0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8d0::/44</code><span class="chip-label">Delhi-14</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-15</span><span class="reserved-range">2400:d960:8e0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8e0::/44</code><span class="chip-label">Delhi-15</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-16</span><span class="reserved-range">2400:d960:8f0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8f0::/44</code><span class="chip-label">Delhi-16</span></span><p class="child-note">Reserved</p></div></div></details></div></article><article class="branch-card final-branch-card" id="prefix-2400-d960-800-44"><h3>Delhi-01</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span></div><p class="branch-note">Sliced into /48 per function</p><dl class="branch-stats"><div><dt>Length</dt><dd>/44</dd></div><div><dt>Active children</dt><dd>6</dd></div><div><dt>Reserved children</dt><dd>10</dd></div></dl><div class="branch-children"><div class="child-preview"><div class="child-item"><span class="prefix-chip loopback chip-small"><code>2400:d960:800::/48</code><span class="chip-label">Loopback</span><span class="chip-count">11 children</span></span><p class="child-note">Sliced into /64 per row of device type</p></div><div class="child-item"><span class="prefix-chip oob-management chip-small"><code>2400:d960:801::/48</code><span class="chip-label">OOB</span><span class="chip-count">16 children</span></span><p class="child-note">Sliced into /52 per OOB sub-function</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:802::/48</code><span class="chip-label">Peering - PNI, PtP etc.</span></span><p class="child-note">Sliced into /64 per peer</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:803::/48</code><span class="chip-label">PtP/Interconnections</span><span class="chip-count">16 children</span></span><p class="child-note">Sliced into /52s per device type on row basis</p></div><div class="child-item"><span class="prefix-chip content-cdn chip-small"><code>2400:d960:804::/48</code><span class="chip-label">For Caching Nodes</span><span class="chip-count">9 children</span></span><p class="child-note">Sliced into /56 per CDN</p></div><div class="child-item"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960:805::/48</code><span class="chip-label">Routed pool for Docker/Whatever - Example</span></span><p class="child-note">Slice into /64 - Example</p></div></div><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">10 reserved /48 prefixes</span><span class="reserved-label">Reserved</span><span class="reserved-range">2400:d960:806::/48 to 2400:d960:80f::/48</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:806::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:807::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:808::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:809::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80a::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80b::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80c::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80d::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80e::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80f::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div></div></details></div></article><article class="branch-card final-branch-card" id="prefix-2400-d960-800-48"><h3>Loopback</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip loopback chip-small"><code>2400:d960:800::/48</code><span class="chip-label">Loopback</span></span></div><p class="branch-note">Sliced into /64 per row of device type</p><dl class="branch-stats"><div><dt>Length</dt><dd>/48</dd></div><div><dt>Active children</dt><dd>9</dd></div><div><dt>Reserved children</dt><dd>2</dd></div></dl><div class="branch-children"><div class="child-preview"><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800::/64</code><span class="chip-label">For Edge devices</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:1::/64</code><span class="chip-label">For L3 Dist switches</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:2::/64</code><span class="chip-label">For Transport Switches</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:3::/64</code><span class="chip-label">For Future NAT/QoE (three tier architecture) devices</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:4::/64</code><span class="chip-label">For BNGs</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:5::/64</code><span class="chip-label">For Future dedicated P routers</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:6::/64</code><span class="chip-label">For Future dedicated PE routers</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:7::/64</code><span class="chip-label">For OLTs</span></span><p class="child-note">Sliced into /128s per device</p></div></div><details class="branch-more"><summary><span class="more-count"><span class="more-open-label">+1 more active prefixes</span><span class="more-close-label">Show fewer</span></span></summary><div class="child-preview branch-more-items"><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:8::/64</code><span class="chip-label">For Wireless AP/Radio</span></span><p class="child-note">Sliced into /128s per device</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">2 reserved /64 prefixes</span><span class="reserved-label">Reserved</span><span class="reserved-range">2400:d960:800:9::/64 to 2400:d960:800:a::/64</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:800:9::/64</code><span class="chip-label">Reserved</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:800:a::/64</code><span class="chip-label">Reserved</span></span><p class="child-note">Sliced into /128s per device</p></div></div></details></div></article><article class="branch-card final-branch-card" id="prefix-2400-d960-801-48"><h3>OOB</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip oob-management chip-small"><code>2400:d960:801::/48</code><span class="chip-label">OOB</span></span></div><p class="branch-note">Sliced into /52 per OOB sub-function</p><dl class="branch-stats"><div><dt>Length</dt><dd>/48</dd></div><div><dt>Active children</dt><dd>5</dd></div><div><dt>Reserved children</dt><dd>11</dd></div></dl><div class="branch-children"><div class="child-preview"><div class="child-item"><span class="prefix-chip loopback chip-small"><code>2400:d960:801::/52</code><span class="chip-label">Loopback</span></span><p class="child-note">/56 per row of device type</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:801:1000::/52</code><span class="chip-label">PtP/Interconnects</span></span><p class="child-note">/56 per row of device type</p></div><div class="child-item"><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:2000::/52</code><span class="chip-label">Per-Rack OOB Access for MGMT</span></span><p class="child-note">Sliced into /56 per L3 distribution box, /64 per rack-VLAN</p></div><div class="child-item"><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:3000::/52</code><span class="chip-label">VPN/Employee Access directly via OOB-Edge</span></span><p class="child-note">Sliced into /64 per VPN instance</p></div><div class="child-item"><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:4000::/52</code><span class="chip-label">Cloud interconnect via VPN for MGMT services</span></span><p class="child-note">Sliced into /64 per VPN instance</p></div></div><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">11 reserved /52 prefixes</span><span class="reserved-label">Reserved</span><span class="reserved-range">2400:d960:801:5000::/52 to 2400:d960:801:f000::/52</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:5000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:6000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:7000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:8000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:9000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:a000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:b000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:c000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:d000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:e000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:f000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div></div></details></div></article><article class="branch-card final-branch-card" id="prefix-2400-d960-803-48"><h3>PtP/Interconnections</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:803::/48</code><span class="chip-label">PtP/Interconnections</span></span></div><p class="branch-note">Sliced into /52s per device type on row basis</p><dl class="branch-stats"><div><dt>Length</dt><dd>/48</dd></div><div><dt>Active children</dt><dd>9</dd></div><div><dt>Reserved children</dt><dd>7</dd></div></dl><div class="branch-children"><div class="child-preview"><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803::/52</code><span class="chip-label">For Edge devices</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:1000::/52</code><span class="chip-label">For L3 Dist switches</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:2000::/52</code><span class="chip-label">For Transport Switches</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:3000::/52</code><span class="chip-label">For Future NAT/QoE (three tier architecture) devices</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:4000::/52</code><span class="chip-label">For BNGs</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:5000::/52</code><span class="chip-label">For Future dedicated P routers</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:6000::/52</code><span class="chip-label">For Future dedicated PE routers</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:7000::/52</code><span class="chip-label">For OLTs</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div></div><details class="branch-more"><summary><span class="more-count"><span class="more-open-label">+1 more active prefixes</span><span class="more-close-label">Show fewer</span></span></summary><div class="child-preview branch-more-items"><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:8000::/52</code><span class="chip-label">For Wireless AP/Radio</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /52 prefixes</span><span class="reserved-label">Reserved</span><span class="reserved-range">2400:d960:803:9000::/52 to 2400:d960:803:f000::/52</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:9000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:a000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:b000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:c000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:d000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:e000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:f000::/52</code><span class="chip-label">Reserved</span></span></div></div></details></div></article><article class="branch-card final-branch-card" id="prefix-2400-d960-804-48"><h3>For Caching Nodes</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip content-cdn chip-small"><code>2400:d960:804::/48</code><span class="chip-label">For Caching Nodes</span></span></div><p class="branch-note">Sliced into /56 per CDN</p><dl class="branch-stats"><div><dt>Length</dt><dd>/48</dd></div><div><dt>Active children</dt><dd>7</dd></div><div><dt>Reserved children</dt><dd>2</dd></div></dl><div class="branch-children"><div class="child-preview"><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804::/56</code><span class="chip-label">Akamai</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:100::/56</code><span class="chip-label">Amazon</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:200::/56</code><span class="chip-label">Cloudflare</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:300::/56</code><span class="chip-label">Edgio</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:400::/56</code><span class="chip-label">Google</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:500::/56</code><span class="chip-label">Meta</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:600::/56</code><span class="chip-label">Netflix</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div></div><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">2 reserved /56 prefixes</span><span class="reserved-label">Reserved</span><span class="reserved-range">2400:d960:804:700::/56 to 2400:d960:804:800::/56</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:804:700::/56</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:804:800::/56</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div></div></details></div></article></div></div>
+</section>
+
+<section class="visual-section" id="purpose-map">
+  <h2>Purpose map</h2>
+  <p class="summary">A static SVG minimap clusters the meaningful branch cards by operational purpose. Each node links to the corresponding readable card below.</p>
+  <div class="visual-frame"><svg class="graph-canvas purpose-minimap" viewBox="0 0 1060 820" role="img" aria-label="AS141253 IPv6 purpose minimap"><line class="graph-edge" x1="530.0" y1="395.0" x2="180.0" y2="640.0"></line><line class="graph-edge" x1="180.0" y1="640.0" x2="159.4" y2="658.9"></line><line class="graph-edge" x1="159.4" y1="658.9" x2="182.9" y2="606.7"></line><line class="graph-edge" x1="182.9" y1="606.7" x2="180.0" y2="150.0"></line><line class="graph-edge" x1="182.9" y1="606.7" x2="530.0" y2="150.0"></line><line class="graph-edge" x1="182.9" y1="606.7" x2="880.0" y2="150.0"></line><line class="graph-edge" x1="182.9" y1="606.7" x2="180.0" y2="395.0"></line><a class="graph-link" href="#prefix-2400-d960-32"><g class="graph-mark service-routed-pools"><title>2400:d960::/32 - Sliced into /34s per Zone</title><circle cx="530.0" cy="395.0" r="12.5"></circle></g></a><a class="graph-link" href="#prefix-2400-d960-34"><g class="graph-mark geography-sites"><title>2400:d960::/34 - North India</title><circle cx="180.0" cy="640.0" r="13.5"></circle></g></a><a class="graph-link" href="#prefix-2400-d960-800-40"><g class="graph-mark geography-sites"><title>2400:d960:800::/40 - Delhi</title><circle cx="159.4" cy="658.9" r="12.5"></circle></g></a><a class="graph-link" href="#prefix-2400-d960-800-44"><g class="graph-mark geography-sites"><title>2400:d960:800::/44 - Delhi-01</title><circle cx="182.9" cy="606.7" r="11.5"></circle></g></a><a class="graph-link" href="#prefix-2400-d960-800-48"><g class="graph-mark loopback"><title>2400:d960:800::/48 - Loopback</title><circle cx="180.0" cy="150.0" r="9.8"></circle></g></a><a class="graph-link" href="#prefix-2400-d960-801-48"><g class="graph-mark oob-management"><title>2400:d960:801::/48 - OOB</title><circle cx="530.0" cy="150.0" r="10.5"></circle></g></a><a class="graph-link" href="#prefix-2400-d960-803-48"><g class="graph-mark interconnect"><title>2400:d960:803::/48 - PtP/Interconnections</title><circle cx="880.0" cy="150.0" r="10.5"></circle></g></a><a class="graph-link" href="#prefix-2400-d960-804-48"><g class="graph-mark content-cdn"><title>2400:d960:804::/48 - For Caching Nodes</title><circle cx="180.0" cy="395.0" r="9.5"></circle></g></a><text class="graph-category-label" x="180.0" y="116.0" text-anchor="middle">Loopback</text><text class="graph-category-label" x="530.0" y="116.0" text-anchor="middle">OOB and management</text><text class="graph-category-label" x="880.0" y="116.0" text-anchor="middle">Interconnect</text><text class="graph-category-label" x="180.0" y="361.0" text-anchor="middle">Content and CDN</text><text class="graph-category-label" x="530.0" y="361.0" text-anchor="middle">Service and routed pools</text><text class="graph-category-label" x="174.1" y="572.7" text-anchor="middle">Geography and sites</text></svg></div>
+</section>
+
+<section class="visual-section" id="full-hierarchy">
+  <h2>Full hierarchy</h2>
+  <p class="summary">The complete CSV-derived containment tree remains available for audit, with reserved siblings grouped to keep the hierarchy readable.</p>
+  <div class="visual-frame"><div class="dendrogram-tree final-tree"><details class="tree-node final-tree-node service-routed-pools" id="prefix-2400-d960-32-tree" open><summary><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span><span class="chip-count">4 children</span></span><p class="tree-note">PAN India Backbone (No customers to be assigned from this pool)</p></summary><details class="tree-node final-tree-node geography-sites" id="prefix-2400-d960-34-tree" open><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span><span class="chip-count">64 children</span></span><p class="tree-note">Sliced into /40 per state</p></summary><details class="tree-node final-tree-node geography-sites leaf" id="prefix-2400-d960-40-tree"><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/40</code><span class="chip-label">Chandigarh</span></span><p class="tree-note">Sliced into /44 per site</p></summary></details><details class="tree-node final-tree-node geography-sites" id="prefix-2400-d960-800-40-tree"><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span><span class="chip-count">16 children</span></span><p class="tree-note">Sliced into /44 per site</p></summary><details class="tree-node final-tree-node geography-sites" id="prefix-2400-d960-800-44-tree"><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span><span class="chip-count">16 children</span></span><p class="tree-note">Sliced into /48 per function</p></summary><details class="tree-node final-tree-node loopback" id="prefix-2400-d960-800-48-tree"><summary><span class="prefix-chip loopback chip-small"><code>2400:d960:800::/48</code><span class="chip-label">Loopback</span><span class="chip-count">11 children</span></span><p class="tree-note">Sliced into /64 per row of device type</p></summary><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-800-64-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800::/64</code><span class="chip-label">For Edge devices</span></span><p class="tree-note">Sliced into /128s per device</p></summary></details><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-800-1-64-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:1::/64</code><span class="chip-label">For L3 Dist switches</span></span><p class="tree-note">Sliced into /128s per device</p></summary></details><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-800-2-64-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:2::/64</code><span class="chip-label">For Transport Switches</span></span><p class="tree-note">Sliced into /128s per device</p></summary></details><details class="tree-node final-tree-node other-planning leaf" id="prefix-2400-d960-800-3-64-tree"><summary><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:3::/64</code><span class="chip-label">For Future NAT/QoE (three tier architecture) devices</span></span><p class="tree-note">Sliced into /128s per device</p></summary></details><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-800-4-64-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:4::/64</code><span class="chip-label">For BNGs</span></span><p class="tree-note">Sliced into /128s per device</p></summary></details><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-800-5-64-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:5::/64</code><span class="chip-label">For Future dedicated P routers</span></span><p class="tree-note">Sliced into /128s per device</p></summary></details><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-800-6-64-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:6::/64</code><span class="chip-label">For Future dedicated PE routers</span></span><p class="tree-note">Sliced into /128s per device</p></summary></details><details class="tree-node final-tree-node other-planning leaf" id="prefix-2400-d960-800-7-64-tree"><summary><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:7::/64</code><span class="chip-label">For OLTs</span></span><p class="tree-note">Sliced into /128s per device</p></summary></details><details class="tree-node final-tree-node other-planning leaf" id="prefix-2400-d960-800-8-64-tree"><summary><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:8::/64</code><span class="chip-label">For Wireless AP/Radio</span></span><p class="tree-note">Sliced into /128s per device</p></summary></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">2 reserved /64 prefixes</span><span class="reserved-label">Reserved</span><span class="reserved-range">2400:d960:800:9::/64 to 2400:d960:800:a::/64</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:800:9::/64</code><span class="chip-label">Reserved</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:800:a::/64</code><span class="chip-label">Reserved</span></span><p class="child-note">Sliced into /128s per device</p></div></div></details></details><details class="tree-node final-tree-node oob-management" id="prefix-2400-d960-801-48-tree"><summary><span class="prefix-chip oob-management chip-small"><code>2400:d960:801::/48</code><span class="chip-label">OOB</span><span class="chip-count">16 children</span></span><p class="tree-note">Sliced into /52 per OOB sub-function</p></summary><details class="tree-node final-tree-node loopback leaf" id="prefix-2400-d960-801-52-tree"><summary><span class="prefix-chip loopback chip-small"><code>2400:d960:801::/52</code><span class="chip-label">Loopback</span></span><p class="tree-note">/56 per row of device type</p></summary></details><details class="tree-node final-tree-node interconnect leaf" id="prefix-2400-d960-801-1000-52-tree"><summary><span class="prefix-chip interconnect chip-small"><code>2400:d960:801:1000::/52</code><span class="chip-label">PtP/Interconnects</span></span><p class="tree-note">/56 per row of device type</p></summary></details><details class="tree-node final-tree-node oob-management leaf" id="prefix-2400-d960-801-2000-52-tree"><summary><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:2000::/52</code><span class="chip-label">Per-Rack OOB Access for MGMT</span></span><p class="tree-note">Sliced into /56 per L3 distribution box, /64 per rack-VLAN</p></summary></details><details class="tree-node final-tree-node oob-management leaf" id="prefix-2400-d960-801-3000-52-tree"><summary><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:3000::/52</code><span class="chip-label">VPN/Employee Access directly via OOB-Edge</span></span><p class="tree-note">Sliced into /64 per VPN instance</p></summary></details><details class="tree-node final-tree-node oob-management leaf" id="prefix-2400-d960-801-4000-52-tree"><summary><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:4000::/52</code><span class="chip-label">Cloud interconnect via VPN for MGMT services</span></span><p class="tree-note">Sliced into /64 per VPN instance</p></summary></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">11 reserved /52 prefixes</span><span class="reserved-label">Reserved</span><span class="reserved-range">2400:d960:801:5000::/52 to 2400:d960:801:f000::/52</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:5000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:6000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:7000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:8000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:9000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:a000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:b000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:c000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:d000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:e000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:f000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div></div></details></details><details class="tree-node final-tree-node interconnect leaf" id="prefix-2400-d960-802-48-tree"><summary><span class="prefix-chip interconnect chip-small"><code>2400:d960:802::/48</code><span class="chip-label">Peering - PNI, PtP etc.</span></span><p class="tree-note">Sliced into /64 per peer</p></summary></details><details class="tree-node final-tree-node interconnect" id="prefix-2400-d960-803-48-tree"><summary><span class="prefix-chip interconnect chip-small"><code>2400:d960:803::/48</code><span class="chip-label">PtP/Interconnections</span><span class="chip-count">16 children</span></span><p class="tree-note">Sliced into /52s per device type on row basis</p></summary><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-803-52-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803::/52</code><span class="chip-label">For Edge devices</span></span><p class="tree-note">Sliced directly into /64s, use in any order for each row of device</p></summary></details><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-803-1000-52-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:1000::/52</code><span class="chip-label">For L3 Dist switches</span></span><p class="tree-note">Sliced directly into /64s, use in any order for each row of device</p></summary></details><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-803-2000-52-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:2000::/52</code><span class="chip-label">For Transport Switches</span></span><p class="tree-note">Sliced directly into /64s, use in any order for each row of device</p></summary></details><details class="tree-node final-tree-node other-planning leaf" id="prefix-2400-d960-803-3000-52-tree"><summary><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:3000::/52</code><span class="chip-label">For Future NAT/QoE (three tier architecture) devices</span></span><p class="tree-note">Sliced directly into /64s, use in any order for each row of device</p></summary></details><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-803-4000-52-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:4000::/52</code><span class="chip-label">For BNGs</span></span><p class="tree-note">Sliced directly into /64s, use in any order for each row of device</p></summary></details><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-803-5000-52-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:5000::/52</code><span class="chip-label">For Future dedicated P routers</span></span><p class="tree-note">Sliced directly into /64s, use in any order for each row of device</p></summary></details><details class="tree-node final-tree-node network-device-roles leaf" id="prefix-2400-d960-803-6000-52-tree"><summary><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:6000::/52</code><span class="chip-label">For Future dedicated PE routers</span></span><p class="tree-note">Sliced directly into /64s, use in any order for each row of device</p></summary></details><details class="tree-node final-tree-node other-planning leaf" id="prefix-2400-d960-803-7000-52-tree"><summary><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:7000::/52</code><span class="chip-label">For OLTs</span></span><p class="tree-note">Sliced directly into /64s, use in any order for each row of device</p></summary></details><details class="tree-node final-tree-node other-planning leaf" id="prefix-2400-d960-803-8000-52-tree"><summary><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:8000::/52</code><span class="chip-label">For Wireless AP/Radio</span></span><p class="tree-note">Sliced directly into /64s, use in any order for each row of device</p></summary></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /52 prefixes</span><span class="reserved-label">Reserved</span><span class="reserved-range">2400:d960:803:9000::/52 to 2400:d960:803:f000::/52</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:9000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:a000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:b000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:c000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:d000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:e000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:f000::/52</code><span class="chip-label">Reserved</span></span></div></div></details></details><details class="tree-node final-tree-node content-cdn" id="prefix-2400-d960-804-48-tree"><summary><span class="prefix-chip content-cdn chip-small"><code>2400:d960:804::/48</code><span class="chip-label">For Caching Nodes</span><span class="chip-count">9 children</span></span><p class="tree-note">Sliced into /56 per CDN</p></summary><details class="tree-node final-tree-node interconnect leaf" id="prefix-2400-d960-804-56-tree"><summary><span class="prefix-chip interconnect chip-small"><code>2400:d960:804::/56</code><span class="chip-label">Akamai</span></span><p class="tree-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></summary></details><details class="tree-node final-tree-node interconnect leaf" id="prefix-2400-d960-804-100-56-tree"><summary><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:100::/56</code><span class="chip-label">Amazon</span></span><p class="tree-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></summary></details><details class="tree-node final-tree-node interconnect leaf" id="prefix-2400-d960-804-200-56-tree"><summary><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:200::/56</code><span class="chip-label">Cloudflare</span></span><p class="tree-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></summary></details><details class="tree-node final-tree-node interconnect leaf" id="prefix-2400-d960-804-300-56-tree"><summary><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:300::/56</code><span class="chip-label">Edgio</span></span><p class="tree-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></summary></details><details class="tree-node final-tree-node interconnect leaf" id="prefix-2400-d960-804-400-56-tree"><summary><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:400::/56</code><span class="chip-label">Google</span></span><p class="tree-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></summary></details><details class="tree-node final-tree-node interconnect leaf" id="prefix-2400-d960-804-500-56-tree"><summary><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:500::/56</code><span class="chip-label">Meta</span></span><p class="tree-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></summary></details><details class="tree-node final-tree-node interconnect leaf" id="prefix-2400-d960-804-600-56-tree"><summary><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:600::/56</code><span class="chip-label">Netflix</span></span><p class="tree-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></summary></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">2 reserved /56 prefixes</span><span class="reserved-label">Reserved</span><span class="reserved-range">2400:d960:804:700::/56 to 2400:d960:804:800::/56</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:804:700::/56</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:804:800::/56</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div></div></details></details><details class="tree-node final-tree-node service-routed-pools leaf" id="prefix-2400-d960-805-48-tree"><summary><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960:805::/48</code><span class="chip-label">Routed pool for Docker/Whatever - Example</span></span><p class="tree-note">Slice into /64 - Example</p></summary></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">10 reserved /48 prefixes</span><span class="reserved-label">Reserved</span><span class="reserved-range">2400:d960:806::/48 to 2400:d960:80f::/48</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:806::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:807::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:808::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:809::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80a::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80b::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80c::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80d::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80e::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80f::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div></div></details></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-02</span><span class="reserved-range">2400:d960:810::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:810::/44</code><span class="chip-label">Delhi-02</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-03</span><span class="reserved-range">2400:d960:820::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:820::/44</code><span class="chip-label">Delhi-03</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-04</span><span class="reserved-range">2400:d960:830::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:830::/44</code><span class="chip-label">Delhi-04</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-05</span><span class="reserved-range">2400:d960:840::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:840::/44</code><span class="chip-label">Delhi-05</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-06</span><span class="reserved-range">2400:d960:850::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:850::/44</code><span class="chip-label">Delhi-06</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-07</span><span class="reserved-range">2400:d960:860::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:860::/44</code><span class="chip-label">Delhi-07</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-08</span><span class="reserved-range">2400:d960:870::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:870::/44</code><span class="chip-label">Delhi-08</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-09</span><span class="reserved-range">2400:d960:880::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:880::/44</code><span class="chip-label">Delhi-09</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-10</span><span class="reserved-range">2400:d960:890::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:890::/44</code><span class="chip-label">Delhi-10</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-11</span><span class="reserved-range">2400:d960:8a0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8a0::/44</code><span class="chip-label">Delhi-11</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-12</span><span class="reserved-range">2400:d960:8b0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8b0::/44</code><span class="chip-label">Delhi-12</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-13</span><span class="reserved-range">2400:d960:8c0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8c0::/44</code><span class="chip-label">Delhi-13</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-14</span><span class="reserved-range">2400:d960:8d0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8d0::/44</code><span class="chip-label">Delhi-14</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-15</span><span class="reserved-range">2400:d960:8e0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8e0::/44</code><span class="chip-label">Delhi-15</span></span><p class="child-note">Reserved</p></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">1 reserved /44 prefixes</span><span class="reserved-label">Delhi-16</span><span class="reserved-range">2400:d960:8f0::/44</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:8f0::/44</code><span class="chip-label">Delhi-16</span></span><p class="child-note">Reserved</p></div></div></details></details><details class="tree-node final-tree-node geography-sites leaf" id="prefix-2400-d960-1000-40-tree"><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960:1000::/40</code><span class="chip-label">Haryana</span></span><p class="tree-note">Sliced into /44 per site</p></summary></details><details class="tree-node final-tree-node geography-sites leaf" id="prefix-2400-d960-1800-40-tree"><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960:1800::/40</code><span class="chip-label">Himachal Pradesh</span></span><p class="tree-note">Sliced into /44 per site</p></summary></details><details class="tree-node final-tree-node geography-sites leaf" id="prefix-2400-d960-2000-40-tree"><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960:2000::/40</code><span class="chip-label">Jammu &amp; Kashmir</span></span><p class="tree-note">Sliced into /44 per site</p></summary></details><details class="tree-node final-tree-node geography-sites leaf" id="prefix-2400-d960-2800-40-tree"><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960:2800::/40</code><span class="chip-label">Punjab</span></span><p class="tree-note">Sliced into /44 per site</p></summary></details><details class="tree-node final-tree-node geography-sites leaf" id="prefix-2400-d960-3000-40-tree"><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960:3000::/40</code><span class="chip-label">Uttar Pradesh</span></span><p class="tree-note">Sliced into /44 per site</p></summary></details><details class="tree-node final-tree-node geography-sites leaf" id="prefix-2400-d960-3800-40-tree"><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960:3800::/40</code><span class="chip-label">Uttarakhand</span></span><p class="tree-note">Sliced into /44 per site</p></summary></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Chandigarh</span><span class="reserved-range">2400:d960:100::/40 to 2400:d960:700::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:100::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:200::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:300::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:400::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:500::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:600::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:700::/40</code><span class="chip-label">Reserved for Chandigarh</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Delhi</span><span class="reserved-range">2400:d960:900::/40 to 2400:d960:f00::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:900::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:a00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:b00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:c00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:d00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:e00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:f00::/40</code><span class="chip-label">Reserved for Delhi</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Haryana</span><span class="reserved-range">2400:d960:1100::/40 to 2400:d960:1700::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1100::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1200::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1300::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1400::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1500::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1600::/40</code><span class="chip-label">Reserved for Haryana</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1700::/40</code><span class="chip-label">Reserved for Haryana</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Himachal Pradesh</span><span class="reserved-range">2400:d960:1900::/40 to 2400:d960:1f00::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1900::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1a00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1b00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1c00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1d00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1e00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:1f00::/40</code><span class="chip-label">Reserved for Himachal Pradesh</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Jammu &amp; Kashmir</span><span class="reserved-range">2400:d960:2100::/40 to 2400:d960:2700::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2100::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2200::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2300::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2400::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2500::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2600::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2700::/40</code><span class="chip-label">Reserved for Jammu &amp; Kashmir</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Punjab</span><span class="reserved-range">2400:d960:2900::/40 to 2400:d960:2f00::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2900::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2a00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2b00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2c00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2d00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2e00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:2f00::/40</code><span class="chip-label">Reserved for Punjab</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Uttar Pradesh</span><span class="reserved-range">2400:d960:3100::/40 to 2400:d960:3700::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3100::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3200::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3300::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3400::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3500::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3600::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3700::/40</code><span class="chip-label">Reserved for Uttar Pradesh</span></span></div></div></details><details class="reserved-group" data-reserved-group><summary><span class="reserved-count">7 reserved /40 prefixes</span><span class="reserved-label">Reserved for Uttarakhand</span><span class="reserved-range">2400:d960:3900::/40 to 2400:d960:3f00::/40</span></summary><div class="child-preview reserved-items"><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3900::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3a00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3b00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3c00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3d00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3e00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:3f00::/40</code><span class="chip-label">Reserved for Uttarakhand</span></span></div></div></details></details><details class="tree-node final-tree-node geography-sites leaf" id="prefix-2400-d960-4000-34-tree" open><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960:4000::/34</code><span class="chip-label">East India</span></span><p class="tree-note">Sliced into /40 per state</p></summary></details><details class="tree-node final-tree-node geography-sites leaf" id="prefix-2400-d960-8000-34-tree" open><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960:8000::/34</code><span class="chip-label">South India</span></span><p class="tree-note">Sliced into /40 per state</p></summary></details><details class="tree-node final-tree-node geography-sites leaf" id="prefix-2400-d960-c000-34-tree" open><summary><span class="prefix-chip geography-sites chip-small"><code>2400:d960:c000::/34</code><span class="chip-label">West India</span></span><p class="tree-note">Sliced into /40 per state</p></summary></details></details></div></div>
+</section>
+
+  </main>
+  <footer>
+    <p>Generated from repository CSV files. Raw workbook, CSV, ODS, hierarchy, and visual-foundation artefacts remain available for audit.</p>
+  </footer>
+
+</body>
+</html>

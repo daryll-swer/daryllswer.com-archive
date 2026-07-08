@@ -176,6 +176,7 @@ def main() -> int:
     }
     manifest["cidr_hierarchy"] = build_ipv6_hierarchy_artefacts(ROOT, OUT, manifest)
     manifest["visual_options"] = build_ipv6_visual_options_artefacts(ROOT, OUT, manifest)
+    manifest["visual_model"] = manifest["visual_options"]["visual_model"]
     workbook_html = render_workbook_page(
         root=ROOT,
         manifest=manifest,
@@ -197,6 +198,7 @@ def main() -> int:
         "",
         f"- [AS141253-ipv6-architecture-example.ods]({sheet_readme_link(ods_info['path'])}) is the styled open spreadsheet export.",
         f"- [workbook.html]({sheet_readme_link(workbook_info['path'])}) is the standalone CSV-backed HTML workbook with clickable sheet tabs.",
+        f"- [visual.html]({sheet_readme_link(manifest['visual_model']['path'])}) is the primary mostly static IPv6 visual model.",
         f"- [cidr-hierarchy.html]({sheet_readme_link(manifest['cidr_hierarchy']['html']['path'])}) is the static IPv6 CIDR containment tree proof of concept.",
         f"- [visual-options.html]({sheet_readme_link(manifest['visual_options']['index']['path'])}) contains the selected HTML/CSS/JS foundations for the IPv6 subnetting visual model.",
         f"- [cidr-hierarchy.json]({sheet_readme_link(manifest['cidr_hierarchy']['json']['path'])}) is the machine-readable hierarchy model.",

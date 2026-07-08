@@ -227,8 +227,10 @@ styled embed wrapper with a fallback outbound link, so readers do not see raw
 HTML in the repository view.
 
 The AS141253 Google Sheet link in the IPv6 architecture article is rewritten to
-the repository-hosted `data/sheets/as141253-ipv6-architecture-example/workbook.html`
-in Markdown and to the generated Pages workbook in HTML.
+the repository-hosted `data/sheets/as141253-ipv6-architecture-example/visual.html`
+in Markdown and to the generated Pages visual model in HTML. Workbook, CSV,
+ODS, and source snapshots remain linked from the sheet area for audit and
+editing.
 
 ## Spreadsheet Workbook
 
@@ -238,6 +240,10 @@ The AS141253 Google Sheet is archived as a CSV-backed HTML workbook:
   standalone repository copy with clickable sheet tabs.
 - `docs/sheets/as141253-ipv6-architecture-example/index.html` is the generated
   GitHub Pages copy of the same workbook.
+- `data/sheets/as141253-ipv6-architecture-example/visual.html` is the primary
+  mostly static visual model for human readers.
+- `docs/sheets/as141253-ipv6-architecture-example/visual.html` is the generated
+  GitHub Pages copy of that primary visual model.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html` is the
   static IPv6 CIDR containment tree proof of concept generated from CSV.
 - `data/sheets/as141253-ipv6-architecture-example/visual-options.html` is a
@@ -265,10 +271,16 @@ parsed from CSV `Prefix` columns with Python `ipaddress`; parent selection is
 the most-specific existing supernet containing a child prefix. The graph output
 is a proof of concept and does not replace the workbook view yet.
 
-The visual-options pages use the same CSV-derived hierarchy model but now keep
-only the three owner-selected foundations: branch cards for at-a-glance
-operator readability, collapsible dendrogram for controlled expand/collapse
-navigation, and purpose cluster graph for the graph-theory visual direction.
+The primary `visual.html` page uses the same CSV-derived hierarchy model and
+combines the owner-selected foundations into one mostly static hybrid
+dashboard. Branch-card readability is the default experience, native HTML
+`details`/`summary` controls handle expansion, reserved prefixes collapse into
+count/range summaries by default, and a static purpose-cluster SVG minimap
+links to readable branch-card anchors. The visual-options pages remain as
+secondary design references for the three foundations: branch cards for
+at-a-glance operator readability, collapsible dendrogram for controlled
+expand/collapse navigation, and purpose cluster graph for the graph-theory
+visual direction.
 CSV `Notes` values are rendered as first-class operational metadata: branch
 cards show parent/child notes, collapsible dendrogram summaries show node
 notes, and the purpose cluster graph shows notes in the selected-node detail

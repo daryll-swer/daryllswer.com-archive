@@ -70,12 +70,18 @@ flowchart LR
   the same CSV `Prefix` columns with Python `ipaddress` containment checks,
   uses the same archive typography, and has adjacent JSON and Graphviz DOT
   artefacts for future visualisation work.
+- `docs/sheets/as141253-ipv6-architecture-example/visual.html` is the primary
+  human-facing AS141253 IPv6 visual model. It is a mostly static hybrid
+  dashboard generated from the CSV-derived hierarchy: branch-card readability
+  is the default, native `details`/`summary` disclosures provide expansion,
+  reserved prefixes are collapsed into count/range summaries by default, and a
+  static SVG purpose minimap links to readable branch-card anchors.
 - `docs/sheets/as141253-ipv6-architecture-example/visual-options.html` is a
   generated selected-foundations gallery for the AS141253 IPv6 subnetting
   visualisation. It intentionally keeps only branch cards, collapsible
-  dendrogram, and purpose cluster graph as the basis for the next final model.
-  Earlier exploratory options were deleted from source and generated Pages
-  output.
+  dendrogram, and purpose cluster graph as secondary design references for
+  `visual.html`. Earlier exploratory options were deleted from source and
+  generated Pages output.
 - The selected AS141253 visual foundations preserve operational intent from
   CSV `Notes`: branch cards render notes on parent/child prefix cards,
   collapsible dendrogram summaries render node notes, and purpose cluster graph
@@ -176,22 +182,18 @@ surface must not cause repeated workflow failures or archive deletion.
 - The AS141253 CIDR hierarchy is derived from CSV, not manually maintained.
   Parent/child edges must be calculated using IPv6 prefix containment. The
   generated JSON, DOT, and HTML checksums are recorded in the sheet manifest.
-- The AS141253 visual-options pages are generated selected foundations for the
-  next visualisation iteration. They must be derived from the CSV/hierarchy
-  data, not hand-authored as independent examples. Interactive behaviour must
-  remain static GitHub Pages-compatible HTML/CSS/JS with no backend or external
-  runtime dependency. The final visual model should combine the at-a-glance
-  readability of branch cards, the expand/collapse navigation of the
-  collapsible dendrogram, and the visual/aesthetic graph-theory direction of
-  the purpose cluster graph. CSV `Notes` values are first-class visual
-  metadata and must remain visible somewhere in each selected foundation. The
-  purpose cluster graph must keep dense node metadata out of overlapping SVG
-  labels and expose it through the detail panel instead. Branch cards must use
-  native HTML disclosure controls for hidden child prefixes instead of inert
-  count-only labels. Generated visual pages must keep page-level width bounded
-  at common phone, tablet, desktop, and wide-display viewports. Metrics cards
-  and prefix values must shrink/wrap with `min-width: 0` and
-  `overflow-wrap: anywhere` so they do not create small-width root overflow.
+- The AS141253 final visual model and foundation pages are generated from the
+  CSV/hierarchy data, not hand-authored as independent examples. `visual.html`
+  is the primary reader path and must combine the at-a-glance readability of
+  branch cards, the expand/collapse navigation of the collapsible dendrogram,
+  and the visual/aesthetic graph-theory direction of the purpose cluster graph.
+  CSV `Notes` values are first-class visual metadata. Reserved prefixes must
+  not disappear; they are collapsed into native disclosure summaries by
+  default, with exact prefix details still available. Generated visual pages
+  must keep page-level width bounded at common phone, tablet, desktop, and
+  wide-display viewports. Metrics cards and prefix values must shrink/wrap
+  with `min-width: 0` and `overflow-wrap: anywhere` so they do not create
+  small-width root overflow.
 - Spreadsheet CSV exports are normalised to LF line endings for stable Git
   diffs; generated HTML artefacts strip trailing line whitespace; ODS remains a
   binary artefact.

@@ -5,11 +5,11 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: AS141253 IPv6 visual representation options
-- Status: complete and deployed; AS141253 visual foundations pass the expanded
-  industry-aligned responsive QA matrix after a 360 px metrics-grid overflow
-  fix
-- Last updated: 2026-07-08 17:29 UTC
+- Current sprint / workstream: AS141253 final IPv6 visual model
+- Status: implementation in progress locally; primary `visual.html` generated
+  and linked, pending validation, browser QA, commit, push, and live Pages
+  verification
+- Last updated: 2026-07-08 18:03 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -181,6 +181,14 @@
     `overflow-wrap: anywhere` for metrics layout/value wrapping. The full
     40-width, 4-page local matrix passes, and commit `d7bade5` is deployed via
     GitHub Pages run `28962375073`.
+- AS141253 final visual model:
+  - Status: implemented locally
+  - Notes: `scripts/ipv6_visual_options.py` now generates primary `visual.html`
+    source and Pages artefacts. The page combines branch-card readability,
+    native disclosures, collapsed reserved-prefix summaries, a static
+    purpose-cluster SVG minimap, and a complete disclosure hierarchy. Workbook,
+    README, Markdown, and generated Pages links now prefer `visual.html` for
+    the AS141253 sheet replacement.
 
 ## Execution Log
 
@@ -280,6 +288,10 @@
   - Action: Pushed and live-verified the expanded responsive-matrix fix.
   - Evidence: Commit `d7bade5` was pushed to `main`; Pages deployment run `28962375073` succeeded; live static checks found the deployed metrics CSS fix, branch disclosures, and no graph node labels; live Chrome/Playwright checks passed 20 page/viewport combinations at 360, 390, 768, 1440, and 1920 px with 0 failures.
   - Result: pass; deployed GitHub Pages output now matches the local expanded responsive fix.
+- 2026-07-08 18:13 UTC:
+  - Action: Implemented and locally verified the primary AS141253 `visual.html` model.
+  - Evidence: `make sync`, `make render-site`, `python3 -m py_compile scripts/*.py`, `git diff --check`, `make validate`, and `make scan-secrets` passed. Local Chrome/Playwright QA passed for `visual.html` at 320, 360, 390, 430, 768, 1024, 1440, 1920, and 2560 px widths; workbook and `visual-options.html` smoke checks passed at 390 px.
+  - Result: pass locally; commit/push/live Pages verification pending.
 - 2026-07-06 12:45 UTC:
   - Action: Implemented README command move, WordPress media filename/byte preservation, and CSV-backed AS141253 workbook generation.
   - Evidence: `README.md`, `AGENTS.md`, `docs/MIRRORING.md`, `scripts/sync-wordpress-posts.py`, `scripts/sheet_workbook.py`, `scripts/export-google-sheet.py`, `scripts/render-site.py`, `scripts/validate-mirror.py`, schemas, regenerated content/docs output.
@@ -690,29 +702,43 @@
     with 0 validation errors and 1 known sitemap warning.
   - `make scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-08
     17:22 UTC with 0 public-safety findings.
+  - `make sync PYTHON=<bundled-python>`: pass at 2026-07-08 18:01 UTC;
+    synced 19 posts and exported 9 sheet tabs.
+  - `make render-site PYTHON=<bundled-python>`: pass at 2026-07-08 18:02 UTC;
+    generated 19 posts and refreshed generated Pages output.
+  - `python3 -m py_compile scripts/*.py`: pass at 2026-07-08 18:05 UTC.
+  - `git diff --check`: pass at 2026-07-08 18:05 UTC.
+  - `make validate PYTHON=<bundled-python>`: pass at 2026-07-08 18:05 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-08 18:05 UTC
+    with 0 public-safety findings.
+  - Local Chrome/Playwright QA against `http://127.0.0.1:4173/`: pass at
+    2026-07-08 18:13 UTC for `visual.html` at 320, 360, 390, 430, 768, 1024,
+    1440, 1920, and 2560 px widths. Failures: 0. Checks covered page-level
+    overflow, expected sections, absence of JS on `visual.html`, reserved
+    disclosure open/close, SVG minimap anchor targets/clicks, and 390 px smoke
+    checks for `visual-options.html` and the workbook.
 - Not run:
-  - No remaining deployment check is pending for the expanded
-    responsive-matrix fix.
+  - GitHub Pages deployment and live verification are pending for
+    `visual.html`.
 
 ## Next Pickup
 
 - Next action:
-  - Design the next-generation AS141253 IPv6 visual representation from the
-    three selected foundations.
+  - Commit, push, wait for GitHub Pages, and live-check `visual.html`.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for the expanded responsive-matrix fix.
+  - Live GitHub Pages verification is pending for `visual.html`.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
-  - Design the next-generation AS141253 IPv6 visual representation from the
-    three selected foundations.
+  - Commit, push, wait for GitHub Pages, and live-check `visual.html`.
   - Optional follow-up: decide whether the remaining non-archived canonical
     links to `/contact/`, `/as149794/`, and `/geofeed/` should stay outbound,
     be manually edited, or be represented by archive landing pages.
