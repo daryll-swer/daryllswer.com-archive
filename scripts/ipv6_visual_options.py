@@ -738,7 +738,7 @@ def allocation_path_section(nodes: list[dict]) -> str:
     ]
     functions = reserved_aware_child_disclosure(function_children, visible_limit=16)
     return f"""
-<section class="visual-section" id="at-a-glance">
+<section class="visual-section" id="at-a-glance-allocation">
   <h2>At-a-glance allocation</h2>
   <p class="summary">The default operator view follows the model from the root prefix down to the Delhi-01 branch, then shows the major function slices at that branch.</p>
   <div class="allocation-path">{''.join(cards)}</div>
