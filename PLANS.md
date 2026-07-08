@@ -6,11 +6,11 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; AS141253 branch cards now expose hidden children through
-  native disclosure controls, and all three selected visual foundations have
-  passed local and live responsive QA
+- Status: complete locally; AS141253 visual foundations now pass the expanded
+  industry-aligned responsive QA matrix after fixing a 360 px metrics-grid
+  overflow
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-08 07:49 UTC
+- Last updated: 2026-07-08 17:21 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -131,17 +131,25 @@
   - Complete: commit `32fad32` was pushed to `main`; GitHub Pages deployment
     run `28926454066` completed successfully; live static and browser checks
     verified branch disclosures and responsive behaviour.
+  - Complete locally: expanded responsive QA initially found a `360px`
+    page-level overflow caused by the shared metrics grid, not by the visual
+    sections. `scripts/ipv6_visual_options.py` now lets metrics cards and
+    metric values shrink/wrap with `min-width: 0`, `minmax(min(100%, 10rem),
+    1fr)`, and `overflow-wrap: anywhere`.
+  - Complete locally: the expanded matrix now passes for 40 CSS-pixel widths
+    across all four visual pages: 320, 360, 390, 430, 479/480, 575/576,
+    599/600, 639/640, 759/760, 767/768, 899/900, 979/980, 991/992,
+    1023/1024, 1199/1200, 1279/1280, 1366, 1399/1400, 1439/1440, 1535/1536,
+    1599/1600, 1919/1920, and 2560.
 - Last material update:
-  - 2026-07-08 07:49 UTC Pushed `32fad32`, verified Pages deployment
-    `28926454066`, and live-checked branch disclosures plus responsive
-    behaviour.
+  - 2026-07-08 17:21 UTC Fixed the 360 px metrics-grid overflow and verified
+    160 local page/viewport combinations with zero failures.
 - Next pickup action:
-  - Design the next-generation AS141253 IPv6 visual representation from the
-    three selected foundations.
+  - Commit, push, deploy, and live-check the expanded responsive-matrix fix.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - None for the branch-card disclosure and responsive-hardening step.
+  - Live GitHub Pages verification is pending until after push/deploy.
 
 ## Purpose / Big Picture
 
@@ -242,6 +250,7 @@
 - [x] 2026-07-08 07:30 UTC Pushed `5f8699e`, Pages deployment `28925442002` succeeded, and live static/browser checks passed for the branch-card notes/wrapping, dendrogram notes, and purpose-cluster graph overlap fix.
 - [x] 2026-07-08 07:44 UTC Replaced inert branch-card `+N more` labels with native `details`/`summary` disclosures and locally verified all selected visual foundations across phone, tablet, desktop, and wide-display viewport classes.
 - [x] 2026-07-08 07:49 UTC Pushed `32fad32`, Pages deployment `28926454066` succeeded, and live static/browser checks passed for branch-card disclosures plus responsive behaviour.
+- [x] 2026-07-08 17:21 UTC Ran the expanded responsive matrix, found and fixed the 360 px metrics-grid overflow, and verified 160 local page/viewport combinations with zero failures.
 
 ## Decision Log
 
@@ -571,6 +580,20 @@
     2026-07-08 07:49 UTC at 390 px and 1440 px widths. All four visual pages
     had no page-level horizontal overflow, graph text overlaps were 0, and the
     branch-card disclosure opened with the `Show fewer` state.
+  - Local expanded Chrome/Playwright responsive QA against
+    `http://127.0.0.1:4173/`: first run at 2026-07-08 17:16 UTC failed only
+    at 360 px with page overflow `364/360` on all four visual pages. Root
+    cause was the shared metrics grid root-prefix card. After the metrics CSS
+    fix, the rerun passed at 2026-07-08 17:20 UTC across 160 combinations:
+    four visual pages by 40 CSS-pixel widths. Failures: 0.
+  - `make render-site PYTHON=<bundled-python>`: passed at 2026-07-08 17:22 UTC;
+    generated 19 posts and refreshed generated Pages output.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 17:22 UTC.
+  - `git diff --check`: passed at 2026-07-08 17:22 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08 17:23 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
+    17:22 UTC with 0 public-safety findings.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`

@@ -6,9 +6,10 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 IPv6 visual representation options
-- Status: complete; AS141253 branch cards use native disclosures for hidden
-  children and selected visual foundations passed local/live responsive QA
-- Last updated: 2026-07-08 07:49 UTC
+- Status: complete locally; AS141253 visual foundations pass the expanded
+  industry-aligned responsive QA matrix after a 360 px metrics-grid overflow
+  fix
+- Last updated: 2026-07-08 17:21 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -172,6 +173,13 @@
     `min-width: 0` containment, tablet graph stacking, narrow-phone padding,
     and bounded `.visual-frame` panning for dense graph/tree content. Commit
     `32fad32` is deployed via GitHub Pages run `28926454066`.
+- AS141253 expanded responsive matrix:
+  - Status: implemented locally
+  - Notes: Expanded QA found a `360px` page-level overflow caused by the shared
+    metrics grid/root-prefix card. `scripts/ipv6_visual_options.py` now uses
+    `minmax(min(100%, 10rem), 1fr)`, `min-width: 0`, and
+    `overflow-wrap: anywhere` for metrics layout/value wrapping. The full
+    40-width, 4-page local matrix now passes.
 
 ## Execution Log
 
@@ -263,6 +271,10 @@
   - Action: Replaced inert branch-card `+N more` labels with native expandable disclosures and hardened responsive CSS for all selected AS141253 visual foundations.
   - Evidence: Generated branch-card pages contain `details.branch-more` controls; local Chrome/Playwright responsive QA passed 28 page/viewport combinations at 320, 390, 768, 1024, 1440, 1920, and 2560 px widths with 0 failures.
   - Result: pass; local responsive QA, `make render-site`, `python3 -m py_compile scripts/*.py`, `git diff --check`, `make validate`, and `make scan-secrets` passed.
+- 2026-07-08 17:21 UTC:
+  - Action: Checked the visual foundations against the expanded industry-aligned responsive matrix and fixed the only failure.
+  - Evidence: First expanded run failed only at 360 px with `364/360` page overflow on all four visual pages; layout inspection traced this to the metrics grid. After the metrics CSS fix, the rerun passed 160 page/viewport combinations with 0 failures.
+  - Result: pass; expanded responsive QA, `make render-site`, `python3 -m py_compile scripts/*.py`, `git diff --check`, `make validate`, and `make scan-secrets` passed.
 - 2026-07-06 12:45 UTC:
   - Action: Implemented README command move, WordPress media filename/byte preservation, and CSV-backed AS141253 workbook generation.
   - Evidence: `README.md`, `AGENTS.md`, `docs/MIRRORING.md`, `scripts/sync-wordpress-posts.py`, `scripts/sheet_workbook.py`, `scripts/export-google-sheet.py`, `scripts/render-site.py`, `scripts/validate-mirror.py`, schemas, regenerated content/docs output.
@@ -646,28 +658,43 @@
     2026-07-08 07:49 UTC at 390 px and 1440 px widths. All four visual pages
     had no page-level horizontal overflow, graph text overlaps were 0, and the
     branch-card disclosure opened with the `Show fewer` state.
+  - Local expanded Chrome/Playwright responsive QA against
+    `http://127.0.0.1:4173/`: first run at 2026-07-08 17:16 UTC failed only
+    at 360 px with page overflow `364/360` on all four visual pages. Root
+    cause was the shared metrics grid root-prefix card. After the metrics CSS
+    fix, the rerun passed at 2026-07-08 17:20 UTC across 160 combinations:
+    four visual pages by 40 CSS-pixel widths. Failures: 0.
+  - `make render-site PYTHON=<bundled-python>`: pass at 2026-07-08 17:22 UTC;
+    generated 19 posts and refreshed generated Pages output.
+  - `python3 -m py_compile scripts/*.py`: pass at 2026-07-08 17:22 UTC.
+  - `git diff --check`: pass at 2026-07-08 17:22 UTC.
+  - `make validate PYTHON=<bundled-python>`: pass at 2026-07-08 17:23 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-08
+    17:22 UTC with 0 public-safety findings.
 - Not run:
-  - None for the branch-card disclosure and responsive-hardening step.
+  - Final validation/deployment checks are pending for the expanded
+    responsive-matrix fix.
 
 ## Next Pickup
 
 - Next action:
-  - Design the next-generation AS141253 IPv6 visual representation from the
-    three selected foundations.
+  - Commit, push, deploy, and live-check the expanded responsive-matrix fix.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for the branch-card disclosure and responsive-hardening step.
+  - Live GitHub Pages verification is pending until after push/deploy.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
-  - Design the next-generation AS141253 IPv6 visual representation from the
-    three selected foundations.
+  - Deploy and live-verify the expanded responsive-matrix fix; then design the
+    next-generation AS141253 IPv6 visual representation from the three
+    selected foundations.
   - Optional follow-up: decide whether the remaining non-archived canonical
     links to `/contact/`, `/as149794/`, and `/geofeed/` should stay outbound,
     be manually edited, or be represented by archive landing pages.
