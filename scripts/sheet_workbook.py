@@ -301,10 +301,16 @@ def render_workbook_page(
             0,
             f'<a href="{html_escape(artifact_rel(cidr_hierarchy["html"]["path"], sheet_slug))}">CIDR hierarchy</a>',
         )
+    visual_model = manifest.get("visual_model", {})
+    if visual_model.get("path"):
+        actions.insert(
+            0,
+            f'<a href="{html_escape(artifact_rel(visual_model["path"], sheet_slug))}">Visual model</a>',
+        )
     visual_options = manifest.get("visual_options", {})
     if visual_options.get("index", {}).get("path"):
         actions.insert(
-            0,
+            1 if visual_model.get("path") else 0,
             f'<a href="{html_escape(artifact_rel(visual_options["index"]["path"], sheet_slug))}">Visual foundations</a>',
         )
     if home_href:

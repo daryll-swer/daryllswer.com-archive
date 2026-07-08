@@ -321,6 +321,75 @@ footer { color: var(--muted); font-size: .92rem; }
 }
 
 
+.visual-section {
+  margin: 1.25rem 0 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  min-width: 0;
+}
+.allocation-path {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: .85rem;
+  margin: 1rem 0;
+}
+.allocation-step,
+.function-overview {
+  display: grid;
+  gap: .65rem;
+  min-width: 0;
+  padding: .9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.allocation-step a {
+  text-decoration: none;
+}
+.step-number {
+  display: inline-grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 800;
+}
+.allocation-step h3,
+.function-overview h3 {
+  margin: 0;
+  font-size: 1.02rem;
+}
+.branch-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .45rem;
+  margin: 0;
+  font-size: .82rem;
+}
+.branch-stats div {
+  min-width: 0;
+  padding: .45rem;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+.branch-stats dt {
+  color: var(--muted);
+}
+.branch-stats dd {
+  margin: 0;
+  font-weight: 800;
+}
+.final-branch-grid {
+  align-items: start;
+}
+.final-branch-card {
+  scroll-margin-top: 1rem;
+}
 .branch-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
@@ -379,6 +448,46 @@ footer { color: var(--muted); font-size: .92rem; }
 }
 .branch-more {
   min-width: 0;
+}
+.reserved-group {
+  min-width: 0;
+}
+.reserved-group summary {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  gap: .2rem .55rem;
+  align-items: start;
+  max-width: 100%;
+  padding: .45rem;
+  border: 1px dashed var(--grid);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 65%, transparent);
+  cursor: pointer;
+  list-style: none;
+}
+.reserved-group summary::-webkit-details-marker {
+  display: none;
+}
+.reserved-group summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.reserved-count {
+  font-weight: 800;
+}
+.reserved-label,
+.reserved-range {
+  min-width: 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.reserved-range {
+  grid-column: 1 / -1;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .82rem;
+}
+.reserved-items {
+  margin-top: .55rem;
 }
 .branch-more summary {
   display: inline-flex;
@@ -479,6 +588,19 @@ footer { color: var(--muted); font-size: .92rem; }
 .graph-mark {
   cursor: pointer;
   outline: none;
+}
+.graph-link {
+  outline: none;
+}
+.graph-link:focus-visible .graph-mark circle,
+.graph-link:focus-visible .graph-mark path,
+.graph-link:focus-visible .graph-mark rect {
+  stroke: var(--text);
+  stroke-width: 3;
+}
+.purpose-minimap .graph-mark:hover circle {
+  stroke: var(--text);
+  stroke-width: 2.8;
 }
 .graph-mark circle,
 .graph-mark path,
@@ -610,6 +732,7 @@ footer { color: var(--muted); font-size: .92rem; }
   margin-left: 1rem;
   padding-left: .75rem;
   border-left: 1px solid var(--grid);
+  scroll-margin-top: 1rem;
 }
 .tree-node summary {
   display: flex;
@@ -639,12 +762,17 @@ footer { color: var(--muted); font-size: .92rem; }
   flex: 1 1 18rem;
   margin: .12rem 0 0;
 }
+.empty-children {
+  margin: 0;
+  color: var(--muted);
+}
 @media (max-width: 980px) {
   .interactive-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
   .branch-grid { grid-template-columns: 1fr; }
   .child-preview { grid-template-columns: 1fr; }
+  .branch-stats { grid-template-columns: 1fr; }
 }
 @media (min-width: 1600px) {
   .branch-grid {
@@ -676,7 +804,7 @@ footer { color: var(--muted); font-size: .92rem; }
       <p class="summary">Expandable left-to-right hierarchy so readers can reveal only the branch they are inspecting.</p>
     </div>
     <nav class="actions" aria-label="Visualisation actions">
-      <a href="./">Workbook</a><a href="cidr-hierarchy.html">Tree model</a><a href="visual-options.html">Visual foundations</a><a href="visual-option-branch-cards.html">Branch cards</a><a href="visual-option-purpose-cluster-graph.html">Purpose cluster graph</a>
+      <a href="./">Workbook</a><a href="visual.html">Visual model</a><a href="cidr-hierarchy.html">Tree model</a><a href="visual-options.html">Visual foundations</a><a href="visual-option-branch-cards.html">Branch cards</a><a href="visual-option-purpose-cluster-graph.html">Purpose cluster graph</a>
     </nav>
   </header>
   <main>
@@ -704,6 +832,7 @@ footer { color: var(--muted); font-size: .92rem; }
   <footer>
     <p>Generated from repository CSV files. These are the selected foundation models for the next IPv6 visualisation iteration.</p>
   </footer>
+
   <script>
 
 (() => {

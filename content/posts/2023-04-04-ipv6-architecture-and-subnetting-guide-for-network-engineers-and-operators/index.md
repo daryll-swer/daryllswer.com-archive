@@ -330,7 +330,7 @@ A /48 per function in a given site is broken down in the following manner:
 
 Ultimately this is for the backbone and not the customer pool. Hence, a single /32 can cover the whole network for India.
 
-> You can find an example of the above principles in this [Excel sheet](../../../data/sheets/as141253-ipv6-architecture-example/workbook.html) I made for AS141253.
+> You can find an example of the above principles in this [Excel sheet](../../../data/sheets/as141253-ipv6-architecture-example/visual.html) I made for AS141253.
 
 **For the customer:**
 

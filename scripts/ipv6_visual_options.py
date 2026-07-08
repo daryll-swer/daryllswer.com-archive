@@ -8,6 +8,7 @@ from __future__ import annotations
 import html
 import json
 import math
+import re
 from collections import defaultdict
 from pathlib import Path
 
@@ -41,6 +42,7 @@ OPTION_SUMMARIES = {
 }
 
 BRANCH_VISIBLE_CHILDREN = 12
+FINAL_BRANCH_VISIBLE_CHILDREN = 8
 
 CATEGORY_ORDER = [
     "Loopback",
@@ -115,6 +117,16 @@ def category_slug(category: str) -> str:
     return category.lower().replace(" and ", "-").replace(" ", "-")
 
 
+def prefix_anchor_id(node_or_prefix: dict | object) -> str:
+    prefix = node_key(node_or_prefix) if isinstance(node_or_prefix, dict) else str(node_or_prefix or "")
+    slug = re.sub(r"[^a-z0-9]+", "-", prefix.lower()).strip("-")
+    return f"prefix-{slug or 'root'}"
+
+
+def is_reserved_node(node: dict) -> bool:
+    return category_for(node) == "Reserved"
+
+
 def prefix_chip(node: dict, *, small: bool = False) -> str:
     label = label_for(node)
     cat = category_slug(category_for(node))
@@ -166,6 +178,71 @@ def child_disclosure(children: list[dict]) -> str:
             '</details>'
         )
     return f'<div class="branch-children"><div class="child-preview">{visible}</div>{more}</div>'
+
+
+def grouped_reserved_children(children: list[dict]) -> tuple[list[dict], list[list[dict]]]:
+    visible_children: list[dict] = []
+    groups: list[list[dict]] = []
+    group_index: dict[tuple[int, str, str], int] = {}
+    for child in children:
+        if not is_reserved_node(child):
+            visible_children.append(child)
+            continue
+        key = (int(child.get("prefix_length") or 0), label_for(child), notes_for(child))
+        if key not in group_index:
+            group_index[key] = len(groups)
+            groups.append([])
+        groups[group_index[key]].append(child)
+    return visible_children, groups
+
+
+def reserved_group_details(group: list[dict]) -> str:
+    if not group:
+        return ""
+    first = group[0]
+    last = group[-1]
+    length = int(first.get("prefix_length") or 0)
+    label = label_for(first) or "Reserved"
+    count = len(group)
+    range_text = str(first.get("prefix", ""))
+    if count > 1:
+        range_text = f'{first.get("prefix", "")} to {last.get("prefix", "")}'
+    exact = "".join(child_summary(child) for child in group)
+    return (
+        '<details class="reserved-group" data-reserved-group>'
+        '<summary>'
+        f'<span class="reserved-count">{count} reserved /{length} prefixes</span>'
+        f'<span class="reserved-label">{html_escape(label)}</span>'
+        f'<span class="reserved-range">{html_escape(range_text)}</span>'
+        '</summary>'
+        f'<div class="child-preview reserved-items">{exact}</div>'
+        '</details>'
+    )
+
+
+def reserved_aware_child_disclosure(children: list[dict], *, visible_limit: int = FINAL_BRANCH_VISIBLE_CHILDREN) -> str:
+    visible_children, reserved_groups = grouped_reserved_children(children)
+    visible = "".join(child_summary(child) for child in visible_children[:visible_limit])
+    hidden_children = visible_children[visible_limit:]
+    more = ""
+    if hidden_children:
+        hidden = "".join(child_summary(child) for child in hidden_children)
+        more = (
+            '<details class="branch-more">'
+            '<summary>'
+            '<span class="more-count">'
+            f'<span class="more-open-label">+{len(hidden_children)} more active prefixes</span>'
+            '<span class="more-close-label">Show fewer</span>'
+            '</span>'
+            '</summary>'
+            f'<div class="child-preview branch-more-items">{hidden}</div>'
+            '</details>'
+        )
+    reserved = "".join(reserved_group_details(group) for group in reserved_groups)
+    if not visible and not more and not reserved:
+        return '<p class="empty-children">No immediate child prefixes.</p>'
+    visible_block = f'<div class="child-preview">{visible}</div>' if visible else ""
+    return f'<div class="branch-children">{visible_block}{more}{reserved}</div>'
 
 
 def terminal_nodes(nodes: list[dict]) -> list[dict]:
@@ -611,8 +688,268 @@ def purpose_cluster_graph(nodes: list[dict]) -> str:
 """
 
 
+def final_branch_nodes(nodes: list[dict]) -> list[dict]:
+    return [
+        node for node in sort_nodes(nodes)
+        if int(node.get("child_count") or 0) > 0
+        and int(node.get("prefix_length") or 0) in {32, 34, 40, 44, 48, 52, 56}
+        and not is_reserved_node(node)
+    ]
+
+
+def final_target_path(nodes: list[dict]) -> list[dict]:
+    lookup = node_lookup(nodes)
+    target = next((node for node in nodes if label_for(node).lower() == "delhi-01"), None)
+    if target is None:
+        target = max(nodes, key=lambda node: int(node.get("child_count") or 0))
+    return [lookup[node_key(item)] for item in target.get("path", []) if node_key(item) in lookup]
+
+
+def branch_stats(node: dict, children: list[dict]) -> str:
+    active = sum(1 for child in children if not is_reserved_node(child))
+    reserved = len(children) - active
+    return (
+        '<dl class="branch-stats">'
+        f'<div><dt>Length</dt><dd>/{int(node.get("prefix_length") or 0)}</dd></div>'
+        f'<div><dt>Active children</dt><dd>{active}</dd></div>'
+        f'<div><dt>Reserved children</dt><dd>{reserved}</dd></div>'
+        '</dl>'
+    )
+
+
+def allocation_path_section(nodes: list[dict]) -> str:
+    path_nodes = final_target_path(nodes)
+    cards = []
+    for index, node in enumerate(path_nodes, start=1):
+        children = direct_children(node, nodes)
+        cards.append(
+            '<article class="allocation-step">'
+            f'<span class="step-number">{index}</span>'
+            f'<h3>{html_escape(label_for(node) or node.get("prefix", ""))}</h3>'
+            f'<a href="#{prefix_anchor_id(node)}">{prefix_chip(node)}</a>'
+            f'{notes_html(node, "branch-note")}'
+            f'{branch_stats(node, children)}'
+            '</article>'
+        )
+    target = path_nodes[-1] if path_nodes else {}
+    function_children = [
+        child for child in direct_children(target, nodes)
+        if int(child.get("prefix_length") or 0) == 48
+    ]
+    functions = reserved_aware_child_disclosure(function_children, visible_limit=16)
+    return f"""
+<section class="visual-section" id="at-a-glance">
+  <h2>At-a-glance allocation</h2>
+  <p class="summary">The default operator view follows the model from the root prefix down to the Delhi-01 branch, then shows the major function slices at that branch.</p>
+  <div class="allocation-path">{''.join(cards)}</div>
+  <article class="function-overview">
+    <h3>Delhi-01 function branches</h3>
+    {functions}
+  </article>
+</section>
+"""
+
+
+def operational_branches_section(nodes: list[dict]) -> str:
+    cards = []
+    for node in final_branch_nodes(nodes):
+        children = direct_children(node, nodes)
+        cards.append(
+            f'<article class="branch-card final-branch-card" id="{prefix_anchor_id(node)}">'
+            f'<h3>{html_escape(label_for(node) or node.get("prefix", ""))}</h3>'
+            f'{path_summary(node)}'
+            f'{notes_html(node, "branch-note")}'
+            f'{branch_stats(node, children)}'
+            f'{reserved_aware_child_disclosure(children)}'
+            '</article>'
+        )
+    return f"""
+<section class="visual-section" id="operational-branches">
+  <h2>Operational branches</h2>
+  <p class="summary">Readable branch cards keep prefix, role, notes, active child allocations, and reserved capacity together.</p>
+  <div class="visual-frame"><div class="branch-grid final-branch-grid">{''.join(cards)}</div></div>
+</section>
+"""
+
+
+def purpose_minimap_svg(nodes: list[dict]) -> str:
+    map_nodes = final_branch_nodes(nodes)
+    positions, width, height = purpose_cluster_positions(map_nodes)
+    edges = []
+    marks = []
+    for node in sort_nodes(map_nodes):
+        prefix = node_key(node)
+        parent = node.get("parent") or ""
+        if parent in positions and prefix in positions:
+            x1, y1 = positions[parent]
+            x2, y2 = positions[prefix]
+            edges.append(
+                f'<line class="graph-edge" x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}"></line>'
+            )
+    for node in sort_nodes(map_nodes):
+        prefix = node_key(node)
+        if prefix not in positions:
+            continue
+        x, y = positions[prefix]
+        depth = int(node.get("depth") or 0)
+        child_count = int(node.get("child_count") or 0)
+        radius = max(5.5, min(13.5, 10 - depth + math.sqrt(child_count + 1) * 1.1))
+        cat = category_slug(category_for(node))
+        title = f'{prefix} - {label_for(node) or category_for(node)}'
+        marks.append(
+            f'<a class="graph-link" href="#{prefix_anchor_id(node)}">'
+            f'<g class="graph-mark {cat}">'
+            f'<title>{html_escape(title)}</title>'
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{radius:.1f}"></circle>'
+            '</g>'
+            '</a>'
+        )
+    labels = []
+    for category in CATEGORY_ORDER:
+        grouped_nodes = [node for node in map_nodes if category_for(node) == category and node_key(node) in positions]
+        if not grouped_nodes:
+            continue
+        xs = [positions[node_key(node)][0] for node in grouped_nodes]
+        ys = [positions[node_key(node)][1] for node in grouped_nodes]
+        labels.append(
+            f'<text class="graph-category-label" x="{sum(xs) / len(xs):.1f}" y="{min(ys) - 34:.1f}" text-anchor="middle">{html_escape(category)}</text>'
+        )
+    return (
+        f'<svg class="graph-canvas purpose-minimap" viewBox="0 0 {width} {height}" role="img" aria-label="AS141253 IPv6 purpose minimap">'
+        f'{"".join(edges)}{"".join(marks)}{"".join(labels)}</svg>'
+    )
+
+
+def purpose_map_section(nodes: list[dict]) -> str:
+    return f"""
+<section class="visual-section" id="purpose-map">
+  <h2>Purpose map</h2>
+  <p class="summary">A static SVG minimap clusters the meaningful branch cards by operational purpose. Each node links to the corresponding readable card below.</p>
+  <div class="visual-frame">{purpose_minimap_svg(nodes)}</div>
+</section>
+"""
+
+
+def full_hierarchy_section(tree: dict) -> str:
+    def render_children(children: list[dict], depth: int) -> str:
+        active_children, reserved_groups = grouped_reserved_children(children)
+        rendered = [render_node(child, depth) for child in active_children]
+        rendered.extend(reserved_group_details(group) for group in reserved_groups)
+        return "".join(rendered)
+
+    def render_node(node: dict, depth: int) -> str:
+        children = node.get("children", [])
+        cat = category_slug(category_for(node))
+        node_with_count = {**node, "child_count": len(children)}
+        open_attr = " open" if depth <= 1 else ""
+        leaf_class = " leaf" if not children else ""
+        return (
+            f'<details class="tree-node final-tree-node {cat}{leaf_class}" id="{prefix_anchor_id(node)}-tree"{open_attr}>'
+            f'<summary>{prefix_chip(node_with_count, small=True)}{notes_html(node, "tree-note")}</summary>'
+            f'{render_children(children, depth + 1)}'
+            '</details>'
+        )
+
+    return f"""
+<section class="visual-section" id="full-hierarchy">
+  <h2>Full hierarchy</h2>
+  <p class="summary">The complete CSV-derived containment tree remains available for audit, with reserved siblings grouped to keep the hierarchy readable.</p>
+  <div class="visual-frame"><div class="dendrogram-tree final-tree">{render_node(tree, 0)}</div></div>
+</section>
+"""
+
+
+def final_visual_page(tree: dict, nodes: list[dict], font_asset_prefix: str) -> str:
+    body = (
+        metric_html(tree, nodes)
+        + allocation_path_section(nodes)
+        + operational_branches_section(nodes)
+        + purpose_map_section(nodes)
+        + full_hierarchy_section(tree)
+    )
+    return page_shell(
+        "AS141253 IPv6 Visual Model",
+        "A mostly static, CSV-derived hybrid dashboard for reading the IPv6 allocation model at a glance while preserving the complete hierarchy.",
+        body,
+        font_asset_prefix=font_asset_prefix,
+        current="visual-model",
+        eyebrow="AS141253 IPv6 visual model",
+        footer_text="Generated from repository CSV files. Raw workbook, CSV, ODS, hierarchy, and visual-foundation artefacts remain available for audit.",
+        include_script=False,
+    )
+
+
 def option_css() -> str:
     return """
+.visual-section {
+  margin: 1.25rem 0 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  min-width: 0;
+}
+.allocation-path {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: .85rem;
+  margin: 1rem 0;
+}
+.allocation-step,
+.function-overview {
+  display: grid;
+  gap: .65rem;
+  min-width: 0;
+  padding: .9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.allocation-step a {
+  text-decoration: none;
+}
+.step-number {
+  display: inline-grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 800;
+}
+.allocation-step h3,
+.function-overview h3 {
+  margin: 0;
+  font-size: 1.02rem;
+}
+.branch-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .45rem;
+  margin: 0;
+  font-size: .82rem;
+}
+.branch-stats div {
+  min-width: 0;
+  padding: .45rem;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+.branch-stats dt {
+  color: var(--muted);
+}
+.branch-stats dd {
+  margin: 0;
+  font-weight: 800;
+}
+.final-branch-grid {
+  align-items: start;
+}
+.final-branch-card {
+  scroll-margin-top: 1rem;
+}
 .branch-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
@@ -671,6 +1008,46 @@ def option_css() -> str:
 }
 .branch-more {
   min-width: 0;
+}
+.reserved-group {
+  min-width: 0;
+}
+.reserved-group summary {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  gap: .2rem .55rem;
+  align-items: start;
+  max-width: 100%;
+  padding: .45rem;
+  border: 1px dashed var(--grid);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 65%, transparent);
+  cursor: pointer;
+  list-style: none;
+}
+.reserved-group summary::-webkit-details-marker {
+  display: none;
+}
+.reserved-group summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.reserved-count {
+  font-weight: 800;
+}
+.reserved-label,
+.reserved-range {
+  min-width: 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.reserved-range {
+  grid-column: 1 / -1;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .82rem;
+}
+.reserved-items {
+  margin-top: .55rem;
 }
 .branch-more summary {
   display: inline-flex;
@@ -771,6 +1148,19 @@ def option_css() -> str:
 .graph-mark {
   cursor: pointer;
   outline: none;
+}
+.graph-link {
+  outline: none;
+}
+.graph-link:focus-visible .graph-mark circle,
+.graph-link:focus-visible .graph-mark path,
+.graph-link:focus-visible .graph-mark rect {
+  stroke: var(--text);
+  stroke-width: 3;
+}
+.purpose-minimap .graph-mark:hover circle {
+  stroke: var(--text);
+  stroke-width: 2.8;
 }
 .graph-mark circle,
 .graph-mark path,
@@ -902,6 +1292,7 @@ def option_css() -> str:
   margin-left: 1rem;
   padding-left: .75rem;
   border-left: 1px solid var(--grid);
+  scroll-margin-top: 1rem;
 }
 .tree-node summary {
   display: flex;
@@ -931,12 +1322,17 @@ def option_css() -> str:
   flex: 1 1 18rem;
   margin: .12rem 0 0;
 }
+.empty-children {
+  margin: 0;
+  color: var(--muted);
+}
 @media (max-width: 980px) {
   .interactive-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
   .branch-grid { grid-template-columns: 1fr; }
   .child-preview { grid-template-columns: 1fr; }
+  .branch-stats { grid-template-columns: 1fr; }
 }
 @media (min-width: 1600px) {
   .branch-grid {
@@ -1044,7 +1440,10 @@ def interactive_js() -> str:
 
 
 def nav_links(current: str | None = None) -> str:
-    links = ['<a href="./">Workbook</a>', '<a href="cidr-hierarchy.html">Tree model</a>', '<a href="visual-options.html">Visual foundations</a>']
+    links = ['<a href="./">Workbook</a>']
+    if current != "visual-model":
+        links.append('<a href="visual.html">Visual model</a>')
+    links.extend(['<a href="cidr-hierarchy.html">Tree model</a>', '<a href="visual-options.html">Visual foundations</a>'])
     for option_id in OPTION_IDS:
         if current == option_id:
             continue
@@ -1064,7 +1463,21 @@ def metric_html(tree: dict, nodes: list[dict]) -> str:
 """
 
 
-def page_shell(title: str, intro: str, body: str, *, font_asset_prefix: str, current: str | None = None) -> str:
+def page_shell(
+    title: str,
+    intro: str,
+    body: str,
+    *,
+    font_asset_prefix: str,
+    current: str | None = None,
+    eyebrow: str = "AS141253 IPv6 visual foundation",
+    footer_text: str = "Generated from repository CSV files. These are the selected foundation models for the next IPv6 visualisation iteration.",
+    include_script: bool = True,
+) -> str:
+    script = f"""
+  <script>
+{interactive_js()}
+  </script>""" if include_script else ""
     return f"""<!doctype html>
 <html lang="en-IN">
 <head>
@@ -1079,7 +1492,7 @@ def page_shell(title: str, intro: str, body: str, *, font_asset_prefix: str, cur
 <body>
   <header class="page-header">
     <div>
-      <p class="eyebrow">AS141253 IPv6 visual foundation</p>
+      <p class="eyebrow">{html_escape(eyebrow)}</p>
       <h1>{html_escape(title)}</h1>
       <p class="summary">{html_escape(intro)}</p>
     </div>
@@ -1091,11 +1504,9 @@ def page_shell(title: str, intro: str, body: str, *, font_asset_prefix: str, cur
     {body}
   </main>
   <footer>
-    <p>Generated from repository CSV files. These are the selected foundation models for the next IPv6 visualisation iteration.</p>
+    <p>{html_escape(footer_text)}</p>
   </footer>
-  <script>
-{interactive_js()}
-  </script>
+{script}
 </body>
 </html>
 """
@@ -1142,6 +1553,14 @@ def build_ipv6_visual_options_artefacts(root: Path, out: Path, manifest: dict) -
     sections = all_sections(tree, nodes)
     font_prefix = "../../../assets/fonts"
 
+    visual_model_body = final_visual_page(tree, nodes, font_prefix).encode("utf-8")
+    visual_model_info = artefact_info(root, out / "visual.html", visual_model_body, "text/html; charset=utf-8")
+    visual_model_info.update({
+        "id": "visual-model",
+        "title": "AS141253 IPv6 Visual Model",
+        "summary": "Primary mostly static hybrid dashboard for the AS141253 IPv6 allocation model.",
+    })
+
     index_body = render_index(tree, nodes, sections, font_prefix).encode("utf-8")
     index_info = artefact_info(root, out / "visual-options.html", index_body, "text/html; charset=utf-8")
     option_infos = []
@@ -1165,6 +1584,7 @@ def build_ipv6_visual_options_artefacts(root: Path, out: Path, manifest: dict) -
     return {
         "model": "generated_html_css_visual_options",
         "source": "CSV Prefix columns and rooted IPv6 prefix containment tree",
+        "visual_model": visual_model_info,
         "option_count": len(option_infos),
         "index": index_info,
         "options": option_infos,
