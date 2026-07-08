@@ -6,11 +6,10 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: implementation in progress locally; primary AS141253 `visual.html`
-  model generated from the selected foundations, pending validation, browser
-  QA, commit, push, and live Pages verification
+- Status: complete; primary AS141253 `visual.html` model is generated,
+  deployed, and live-verified on GitHub Pages
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-08 18:03 UTC
+- Last updated: 2026-07-08 18:26 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -151,17 +150,25 @@
   - Complete locally: workbook navigation, sheet README, repository Markdown,
     and generated article Pages output now prefer `visual.html` for the
     AS141253 Google Sheet replacement path.
+  - Complete: commits `b11b84a` and `5152975` were pushed to `main`.
+    GitHub Pages deployment run `28965936383` completed successfully for
+    final commit `5152975`.
+  - Complete: live GitHub Pages checks passed for `visual.html`, the
+    AS141253 workbook route, and the IPv6 article route. Chrome DevTools
+    Protocol live QA passed for `visual.html` at 320, 390, 768, 1440, and
+    2560 px widths with no page-level horizontal overflow, working reserved
+    disclosures, and working SVG minimap anchors.
 - Last material update:
-  - 2026-07-08 18:03 UTC Generated the primary `visual.html` model locally and
-    rewired AS141253 sheet/article links to prefer it.
+  - 2026-07-08 18:26 UTC Deployed the primary AS141253 `visual.html` model and
+    live-verified the final GitHub Pages route.
 - Next pickup action:
-  - Run validation, public-safety scan, local browser QA, commit, push, wait
-    for GitHub Pages, and live-check `visual.html`.
+  - Owner review of the final `visual.html`; no implementation pickup is
+    pending for the accepted plan.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - Local browser QA and live GitHub Pages verification are pending for
-    `visual.html`.
+  - None for `visual.html`. The known non-blocking warning remains: WordPress
+    REST has one post not listed in `post-sitemap.xml`.
 
 ## Purpose / Big Picture
 
@@ -648,6 +655,31 @@
     overflow, expected sections, absence of JS on `visual.html`, reserved
     disclosure open/close, SVG minimap anchor targets/clicks, and 390 px smoke
     checks for `visual-options.html` and the workbook.
+  - Anchor-fix local Chrome QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-08 18:23 UTC for `visual.html` at 320, 360, 390, 430, 768, 1024,
+    1440, 1920, and 2560 px widths. Failures: 0. This rerun verified stable
+    `#at-a-glance-allocation`, `#operational-branches`, `#purpose-map`, and
+    `#full-hierarchy` section anchors plus reserved disclosure and SVG minimap
+    behaviour.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 18:23 UTC.
+  - `git diff --check`: passed at 2026-07-08 18:23 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08 18:23 UTC
+    with 0 validation errors and 1 known sitemap warning. Validation now
+    requires the final `visual.html` section anchors.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
+    18:23 UTC with 0 public-safety findings.
+  - GitHub Pages deployment for `5152975`: passed at 2026-07-08 18:24 UTC;
+    pages-build-deployment run `28965936383` completed successfully.
+  - Live static checks: passed at 2026-07-08 18:25 UTC for `visual.html`, the
+    AS141253 workbook route, and the IPv6 article route. All returned HTTP
+    200; `visual.html` had required final-section markers and no script tag or
+    source font path leakage; the article route linked to
+    `../../sheets/as141253-ipv6-architecture-example/visual.html`.
+  - Live Chrome DevTools Protocol QA against GitHub Pages: passed at
+    2026-07-08 18:25 UTC for `visual.html` at 320, 390, 768, 1440, and 2560
+    px widths. Failures: 0. Checks covered page-level overflow, final section
+    anchors, 57 reserved disclosure groups, reserved disclosure opening, and
+    SVG minimap anchor targets/clicks.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`
@@ -677,6 +709,8 @@
 - Achieved:
   - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, preview generation, and generated GitHub Pages site completed.
 - Remaining:
-  - Owner selection of the preferred AS141253 IPv6 visual representation.
+  - None for the final AS141253 IPv6 visual-model implementation. Optional
+    future work is owner review before replacing the canonical Google Sheet
+    link on daryllswer.com.
 - Retrospective timestamp:
   - 2026-07-06 09:20 UTC

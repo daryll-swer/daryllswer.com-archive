@@ -6,10 +6,9 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 final IPv6 visual model
-- Status: implementation in progress locally; primary `visual.html` generated
-  and linked, pending validation, browser QA, commit, push, and live Pages
-  verification
-- Last updated: 2026-07-08 18:03 UTC
+- Status: complete; primary `visual.html` generated, deployed, and
+  live-verified on GitHub Pages
+- Last updated: 2026-07-08 18:26 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -182,13 +181,15 @@
     40-width, 4-page local matrix passes, and commit `d7bade5` is deployed via
     GitHub Pages run `28962375073`.
 - AS141253 final visual model:
-  - Status: implemented locally
+  - Status: complete and pushed
   - Notes: `scripts/ipv6_visual_options.py` now generates primary `visual.html`
     source and Pages artefacts. The page combines branch-card readability,
     native disclosures, collapsed reserved-prefix summaries, a static
     purpose-cluster SVG minimap, and a complete disclosure hierarchy. Workbook,
     README, Markdown, and generated Pages links now prefer `visual.html` for
-    the AS141253 sheet replacement.
+    the AS141253 sheet replacement. Commits `b11b84a` and `5152975` are pushed
+    to `main`; GitHub Pages run `28965936383` deployed final commit
+    `5152975`.
 
 ## Execution Log
 
@@ -718,27 +719,52 @@
     overflow, expected sections, absence of JS on `visual.html`, reserved
     disclosure open/close, SVG minimap anchor targets/clicks, and 390 px smoke
     checks for `visual-options.html` and the workbook.
+  - Anchor-fix local Chrome DevTools Protocol QA against
+    `http://127.0.0.1:4173/`: pass at 2026-07-08 18:23 UTC for `visual.html`
+    at 320, 360, 390, 430, 768, 1024, 1440, 1920, and 2560 px widths.
+    Failures: 0. This rerun verified stable final section anchors, reserved
+    disclosure opening, and SVG minimap anchor clicks.
+  - `python3 -m py_compile scripts/*.py`: pass at 2026-07-08 18:23 UTC.
+  - `git diff --check`: pass at 2026-07-08 18:23 UTC.
+  - `make validate PYTHON=<bundled-python>`: pass at 2026-07-08 18:23 UTC
+    with 0 validation errors and 1 known sitemap warning. Validation now
+    requires final `visual.html` section anchors.
+  - `make scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-08 18:23 UTC
+    with 0 public-safety findings.
+  - GitHub Pages deployment for `5152975`: pass at 2026-07-08 18:24 UTC;
+    pages-build-deployment run `28965936383` completed successfully.
+  - Live static checks: pass at 2026-07-08 18:25 UTC for `visual.html`, the
+    AS141253 workbook route, and the IPv6 article route. All returned HTTP
+    200; `visual.html` had the expected section markers and no script tag or
+    source font path leakage.
+  - Live Chrome DevTools Protocol QA against GitHub Pages: pass at
+    2026-07-08 18:25 UTC for `visual.html` at 320, 390, 768, 1440, and 2560
+    px widths. Failures: 0. Checks covered page-level overflow, final section
+    anchors, 57 reserved disclosure groups, reserved disclosure opening, and
+    SVG minimap anchor targets/clicks.
 - Not run:
-  - GitHub Pages deployment and live verification are pending for
-    `visual.html`.
+  - None for the final AS141253 `visual.html` implementation.
 
 ## Next Pickup
 
 - Next action:
-  - Commit, push, wait for GitHub Pages, and live-check `visual.html`.
+  - Owner review of the final `visual.html`; no implementation pickup is
+    pending for the accepted plan.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Live GitHub Pages verification is pending for `visual.html`.
+  - None for `visual.html`. The known non-blocking sitemap warning remains.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
-  - Commit, push, wait for GitHub Pages, and live-check `visual.html`.
+  - None for the final AS141253 `visual.html` implementation.
+  - Optional follow-up: decide whether to replace the old canonical Google
+    Sheet link on daryllswer.com with the new GitHub Pages `visual.html`.
   - Optional follow-up: decide whether the remaining non-archived canonical
     links to `/contact/`, `/as149794/`, and `/geofeed/` should stay outbound,
     be manually edited, or be represented by archive landing pages.
