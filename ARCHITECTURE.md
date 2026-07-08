@@ -92,6 +92,12 @@ flowchart LR
   introduce horizontal overflow. Dense graph/tree content may pan inside a
   bounded `.visual-frame` scroll container when shrinking it further would make
   the network model unreadable.
+- The responsive support matrix for the AS141253 visual foundations includes
+  the WCAG 320 CSS px reflow floor, common phone widths, common framework
+  breakpoints, boundary-adjacent widths, desktop widths, and wide displays:
+  320, 360, 390, 430, 479/480, 575/576, 599/600, 639/640, 759/760, 767/768,
+  899/900, 979/980, 991/992, 1023/1024, 1199/1200, 1279/1280, 1366,
+  1399/1400, 1439/1440, 1535/1536, 1599/1600, 1919/1920, and 2560 CSS px.
 - Human-facing navigation and canonical URLs use clean directory URLs such as
   `https://daryll-swer.github.io/daryllswer.com-archive/`. The physical
   `docs/index.html` file remains the GitHub Pages entry point and generated
@@ -183,7 +189,9 @@ surface must not cause repeated workflow failures or archive deletion.
   labels and expose it through the detail panel instead. Branch cards must use
   native HTML disclosure controls for hidden child prefixes instead of inert
   count-only labels. Generated visual pages must keep page-level width bounded
-  at common phone, tablet, desktop, and wide-display viewports.
+  at common phone, tablet, desktop, and wide-display viewports. Metrics cards
+  and prefix values must shrink/wrap with `min-width: 0` and
+  `overflow-wrap: anywhere` so they do not create small-width root overflow.
 - Spreadsheet CSV exports are normalised to LF line endings for stable Git
   diffs; generated HTML artefacts strip trailing line whitespace; ODS remains a
   binary artefact.
