@@ -165,6 +165,7 @@
 }
 body {
   margin: 0;
+  min-width: 0;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
@@ -172,9 +173,10 @@ body {
 }
 a { color: var(--accent); text-underline-offset: .18em; }
 .page-header, main, footer {
-  max-width: 1280px;
+  width: 100%;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 1rem 1.25rem;
+  padding: clamp(.85rem, 1.8vw, 1.35rem);
 }
 .page-header {
   display: flex;
@@ -250,6 +252,8 @@ h2, h3 {
   max-width: 100%;
   min-width: 0;
   overflow: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
   padding: 1rem;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -305,12 +309,13 @@ footer { color: var(--muted); font-size: .92rem; }
 @media (max-width: 760px) {
   .page-header { flex-direction: column; }
   .actions { justify-content: flex-start; }
+  .visual-frame { padding: .75rem; }
 }
 
 
 .branch-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
   gap: .85rem;
 }
 .branch-card {
@@ -326,6 +331,11 @@ footer { color: var(--muted); font-size: .92rem; }
 }
 .branch-card h3 { margin: 0; font-size: 1.05rem; }
 .branch-card p { margin: 0; color: var(--muted); overflow-wrap: anywhere; }
+.branch-children {
+  display: grid;
+  gap: .55rem;
+  min-width: 0;
+}
 .child-preview {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
@@ -359,15 +369,52 @@ footer { color: var(--muted); font-size: .92rem; }
 .child-note {
   padding-left: .2rem;
 }
+.branch-more {
+  min-width: 0;
+}
+.branch-more summary {
+  display: inline-flex;
+  max-width: 100%;
+  cursor: pointer;
+  list-style: none;
+}
+.branch-more summary::-webkit-details-marker {
+  display: none;
+}
+.branch-more summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.branch-more-items {
+  margin-top: .55rem;
+}
 .more-count {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 1.45rem;
   padding: .12rem .45rem;
   border: 1px dashed var(--grid);
   border-radius: 6px;
   color: var(--muted);
   font-size: .82rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.branch-more[open] .more-count {
+  border-style: solid;
+  color: var(--text);
+  background: var(--surface);
+}
+.more-close-label {
+  display: none;
+}
+.branch-more[open] .more-open-label {
+  display: none;
+}
+.branch-more[open] .more-close-label {
+  display: inline;
 }
 .option-picker {
   display: grid;
@@ -387,11 +434,13 @@ footer { color: var(--muted); font-size: .92rem; }
 .option-card p { margin: 0; color: var(--muted); }
 .interactive-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+  grid-template-columns: minmax(0, 1fr) minmax(min(100%, 18rem), 24rem);
   gap: 1rem;
   align-items: start;
+  min-width: 0;
 }
 .graph-canvas {
+  display: block;
   min-width: 48rem;
   width: 100%;
   height: auto;
@@ -545,7 +594,7 @@ footer { color: var(--muted); font-size: .92rem; }
   cursor: pointer;
 }
 .dendrogram-tree {
-  min-width: 42rem;
+  min-width: min(42rem, 100%);
   display: grid;
   gap: .35rem;
 }
@@ -582,9 +631,31 @@ footer { color: var(--muted); font-size: .92rem; }
   flex: 1 1 18rem;
   margin: .12rem 0 0;
 }
-@media (max-width: 760px) {
+@media (max-width: 980px) {
   .interactive-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
   .branch-grid { grid-template-columns: 1fr; }
+  .child-preview { grid-template-columns: 1fr; }
+}
+@media (min-width: 1600px) {
+  .branch-grid {
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .branch-card,
+  .node-detail,
+  .interaction-panel {
+    padding: .7rem;
+  }
+  .tree-node {
+    margin-left: .45rem;
+    padding-left: .45rem;
+  }
+  .graph-canvas {
+    min-width: 42rem;
+  }
 }
 
   </style>

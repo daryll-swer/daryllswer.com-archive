@@ -272,9 +272,18 @@ navigation, and purpose cluster graph for the graph-theory visual direction.
 CSV `Notes` values are rendered as first-class operational metadata: branch
 cards show parent/child notes, collapsible dendrogram summaries show node
 notes, and the purpose cluster graph shows notes in the selected-node detail
-panel. The purpose graph intentionally avoids dense per-node SVG labels because
-they overlap during selected-path interaction; purpose labels plus the detail
-panel carry the readable context instead. Discarded exploratory models are
-deleted from source and Pages output. The final visualisation should combine
-these selected strengths and be recorded in this document and in
-`ARCHITECTURE.md`.
+panel. Branch cards use native HTML `details`/`summary` disclosures for hidden
+children, so `+N more` is an actual expand/collapse control rather than a
+static count label. The purpose graph intentionally avoids dense per-node SVG
+labels because they overlap during selected-path interaction; purpose labels
+plus the detail panel carry the readable context instead.
+
+The generated visual foundations use standard responsive CSS patterns:
+viewport metadata, CSS Grid/Flex wrapping, `min-width: 0` containment, bounded
+scroll containers, and media-query breakpoints. The page must not have
+horizontal overflow at common phone, tablet, desktop, or wide-display widths.
+Dense tree/graph canvases may use internal `.visual-frame` panning when that is
+more readable than compressing the model into a tiny viewport. Discarded
+exploratory models are deleted from source and Pages output. The final
+visualisation should combine these selected strengths and be recorded in this
+document and in `ARCHITECTURE.md`.

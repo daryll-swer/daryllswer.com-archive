@@ -83,6 +83,15 @@ flowchart LR
   intentionally omitted from the purpose graph plot area to prevent overlap;
   persistent purpose labels plus click-to-inspect detail carry the readable
   metadata.
+- Branch cards show the first twelve immediate children directly and place
+  additional children behind native HTML `details`/`summary` disclosure
+  controls. The `+N more` affordance must be expandable/collapsible without
+  custom JavaScript.
+- All selected AS141253 visual foundations must remain responsive across phone,
+  tablet, desktop, and wide-display viewport classes. The page itself must not
+  introduce horizontal overflow. Dense graph/tree content may pan inside a
+  bounded `.visual-frame` scroll container when shrinking it further would make
+  the network model unreadable.
 - Human-facing navigation and canonical URLs use clean directory URLs such as
   `https://daryll-swer.github.io/daryllswer.com-archive/`. The physical
   `docs/index.html` file remains the GitHub Pages entry point and generated
@@ -171,7 +180,10 @@ surface must not cause repeated workflow failures or archive deletion.
   the purpose cluster graph. CSV `Notes` values are first-class visual
   metadata and must remain visible somewhere in each selected foundation. The
   purpose cluster graph must keep dense node metadata out of overlapping SVG
-  labels and expose it through the detail panel instead.
+  labels and expose it through the detail panel instead. Branch cards must use
+  native HTML disclosure controls for hidden child prefixes instead of inert
+  count-only labels. Generated visual pages must keep page-level width bounded
+  at common phone, tablet, desktop, and wide-display viewports.
 - Spreadsheet CSV exports are normalised to LF line endings for stable Git
   diffs; generated HTML artefacts strip trailing line whitespace; ODS remains a
   binary artefact.
