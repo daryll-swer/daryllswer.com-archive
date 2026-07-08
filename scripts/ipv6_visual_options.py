@@ -23,48 +23,23 @@ from ipv6_hierarchy import (
 
 
 OPTION_IDS = [
-    "spatial-blocks",
-    "level-lanes",
-    "nibble-ladder",
     "branch-cards",
-    "purpose-swimlanes",
-    "radial-prefix-graph",
     "collapsible-dendrogram",
-    "sunburst-map",
-    "animated-walkthrough",
     "purpose-cluster-graph",
-    "searchable-focus-graph",
 ]
 
 OPTION_TITLES = {
-    "spatial-blocks": "Spatial block map",
-    "level-lanes": "Prefix length lanes",
-    "nibble-ladder": "Nibble ladder",
     "branch-cards": "Branch cards",
-    "purpose-swimlanes": "Purpose swimlanes",
-    "radial-prefix-graph": "Radial prefix graph",
     "collapsible-dendrogram": "Collapsible dendrogram",
-    "sunburst-map": "Sunburst allocation map",
-    "animated-walkthrough": "Animated allocation walkthrough",
     "purpose-cluster-graph": "Purpose cluster graph",
-    "searchable-focus-graph": "Searchable focus graph",
 }
 
 OPTION_SUMMARIES = {
-    "spatial-blocks": "Nested allocation blocks for quick visual containment checks.",
-    "level-lanes": "One horizontal lane per prefix length so hierarchy depth is visible at a glance.",
-    "nibble-ladder": "Terminal prefixes as rows with ancestor columns for /32, /34, /40, /44, /48, /52, /56, and /64.",
     "branch-cards": "Operational branches with ancestry, child allocations, and notes grouped together.",
-    "purpose-swimlanes": "Prefixes grouped by network purpose such as loopback, OOB, interconnect, CDN, reserved, and services.",
-    "radial-prefix-graph": "Interactive graph-theory style rings where each ring is a hierarchy depth and clicks highlight ancestry.",
     "collapsible-dendrogram": "Expandable left-to-right hierarchy so readers can reveal only the branch they are inspecting.",
-    "sunburst-map": "Interactive radial allocation map using arc spans to show relative branch density across hierarchy levels.",
-    "animated-walkthrough": "Step-through walkthrough from the root allocation to terminal prefixes, with one active prefix length at a time.",
     "purpose-cluster-graph": "Interactive node-link graph clustered by operational purpose rather than pure prefix depth.",
-    "searchable-focus-graph": "Search-first graph that expands only the selected prefix, its ancestry, siblings, and immediate children.",
 }
 
-PREFIX_LEVELS = [32, 34, 40, 44, 48, 52, 56, 64]
 CATEGORY_ORDER = [
     "Loopback",
     "OOB and management",
@@ -76,14 +51,6 @@ CATEGORY_ORDER = [
     "Reserved",
     "Other planning",
 ]
-INTERACTIVE_OPTION_IDS = {
-    "radial-prefix-graph",
-    "collapsible-dendrogram",
-    "sunburst-map",
-    "animated-walkthrough",
-    "purpose-cluster-graph",
-    "searchable-focus-graph",
-}
 
 
 def html_escape(value: object) -> str:
@@ -422,99 +389,6 @@ footer {{ color: var(--muted); font-size: .92rem; }}
 """
 
 
-def spatial_blocks(tree: dict) -> str:
-    def render_node(node: dict, depth: int) -> str:
-        children = node.get("children", [])
-        label = label_for(node)
-        cat = category_slug(category_for(node))
-        child_count = len(children)
-        if depth >= 5:
-            return prefix_chip({**node, "child_count": child_count}, small=True)
-        child_html = ""
-        if children:
-            child_html = '<div class="block-children">' + "".join(render_node(child, depth + 1) for child in children) + "</div>"
-        label_html = f'<span>{html_escape(label)}</span>' if label else ""
-        return (
-            f'<section class="allocation-block depth-{depth} {cat}">'
-            '<div class="block-title">'
-            f'<code>{html_escape(node.get("prefix", ""))}</code>{label_html}'
-            f'<b>{child_count}</b>'
-            "</div>"
-            f"{child_html}"
-            "</section>"
-        )
-
-    return f"""
-<section class="option-section" id="spatial-blocks">
-  <h2>Option 1: Spatial block map</h2>
-  <p class="summary">This makes containment physically visible. Larger parent allocations frame smaller child allocations, while reserved space is deliberately subdued.</p>
-  <div class="visual-frame"><div class="block-map">{render_node(tree, 0)}</div></div>
-</section>
-"""
-
-
-def level_lanes(nodes: list[dict]) -> str:
-    by_level: dict[int, list[dict]] = defaultdict(list)
-    for node in nodes:
-        if node.get("prefix_length") in PREFIX_LEVELS:
-            by_level[int(node["prefix_length"])].append(node)
-    lanes = []
-    for level in PREFIX_LEVELS:
-        items = by_level.get(level, [])
-        cards = []
-        for node in items:
-            label = label_for(node)
-            cards.append(
-                '<article class="lane-card">'
-                f'{prefix_chip(node)}'
-                f'<p>{html_escape(label or "No label")}</p>'
-                f'<small>Parent: {html_escape(node.get("parent") or "root")}</small>'
-                "</article>"
-            )
-        lanes.append(
-            f'<section class="level-lane"><h3>/{level}</h3><div class="lane-items">{"".join(cards)}</div></section>'
-        )
-    return f"""
-<section class="option-section" id="level-lanes">
-  <h2>Option 2: Prefix length lanes</h2>
-  <p class="summary">This layout answers the operational question: which prefixes exist at each allocation length, and how dense is each level?</p>
-  <div class="visual-frame"><div class="lane-board">{"".join(lanes)}</div></div>
-</section>
-"""
-
-
-def nibble_ladder(nodes: list[dict]) -> str:
-    leaves = terminal_nodes(nodes)
-    rows = []
-    for leaf in leaves:
-        by_len = {item.get("prefix_length"): item for item in leaf.get("path", []) if item.get("prefix_length") in PREFIX_LEVELS}
-        cells = []
-        for level in PREFIX_LEVELS:
-            item = by_len.get(level)
-            cells.append(f"<td>{prefix_chip(item, small=True) if item else ''}</td>")
-        leaf_label = label_for(leaf)
-        rows.append(
-            "<tr>"
-            + "".join(cells)
-            + f'<td class="ladder-label">{html_escape(leaf_label or "No label")}</td>'
-            + f'<td class="ladder-category">{html_escape(category_for(leaf))}</td>'
-            + "</tr>"
-        )
-    headers = "".join(f"<th>/{level}</th>" for level in PREFIX_LEVELS)
-    return f"""
-<section class="option-section" id="nibble-ladder">
-  <h2>Option 3: Nibble ladder</h2>
-  <p class="summary">This is a compact audit view: every terminal prefix row shows its ancestry across nibble-aligned allocation boundaries.</p>
-  <div class="visual-frame ladder-frame">
-    <table class="ladder-table">
-      <thead><tr>{headers}<th>Label</th><th>Purpose</th></tr></thead>
-      <tbody>{"".join(rows)}</tbody>
-    </table>
-  </div>
-</section>
-"""
-
-
 def branch_cards(nodes: list[dict]) -> str:
     candidates = [
         node for node in nodes
@@ -541,76 +415,11 @@ def branch_cards(nodes: list[dict]) -> str:
         )
     return f"""
 <section class="option-section" id="branch-cards">
-  <h2>Option 4: Branch cards</h2>
+  <h2>Option 1: Branch cards</h2>
   <p class="summary">This favours operator readability over total density: each meaningful branch keeps its lineage, intent, notes, and immediate children together.</p>
   <div class="visual-frame"><div class="branch-grid">{"".join(cards)}</div></div>
 </section>
 """
-
-
-def purpose_swimlanes(nodes: list[dict]) -> str:
-    groups: dict[str, list[dict]] = defaultdict(list)
-    for node in nodes:
-        if node.get("prefix_length"):
-            groups[category_for(node)].append(node)
-    ordered = [
-        "Loopback",
-        "OOB and management",
-        "Interconnect",
-        "Content and CDN",
-        "Service and routed pools",
-        "Network device roles",
-        "Geography and sites",
-        "Reserved",
-        "Other planning",
-    ]
-    lanes = []
-    for category in ordered:
-        items = groups.get(category, [])
-        if not items:
-            continue
-        chips = "".join(prefix_chip(node, small=True) for node in items[:34])
-        more = f'<span class="more-count">+{len(items) - 34} more</span>' if len(items) > 34 else ""
-        lanes.append(
-            '<section class="purpose-lane">'
-            f'<div class="purpose-heading"><h3>{html_escape(category)}</h3><strong>{len(items)}</strong></div>'
-            f'<div class="purpose-items">{chips}{more}</div>'
-            "</section>"
-        )
-    return f"""
-<section class="option-section" id="purpose-swimlanes">
-  <h2>Option 5: Purpose swimlanes</h2>
-  <p class="summary">This ignores pure hierarchy first and groups allocations by how an operator thinks about the prefix during design or troubleshooting.</p>
-  <div class="visual-frame"><div class="purpose-board">{"".join(lanes)}</div></div>
-</section>
-"""
-
-
-def radial_positions(nodes: list[dict]) -> tuple[dict[str, tuple[float, float]], int, int]:
-    width = 980
-    height = 820
-    center_x = width / 2
-    center_y = height / 2
-    positions: dict[str, tuple[float, float]] = {}
-    by_depth: dict[int, list[dict]] = defaultdict(list)
-    for node in nodes:
-        by_depth[int(node.get("depth") or 0)].append(node)
-    max_seen_depth = max(by_depth) if by_depth else 0
-    step = min(width, height) * 0.42 / max(max_seen_depth, 1)
-    for depth, depth_nodes in by_depth.items():
-        ordered = sorted(depth_nodes, key=node_key)
-        if depth == 0:
-            for node in ordered:
-                positions[node_key(node)] = (center_x, center_y)
-            continue
-        radius = step * depth
-        for index, node in enumerate(ordered):
-            angle = (-math.pi / 2) + (2 * math.pi * index / max(len(ordered), 1))
-            positions[node_key(node)] = (
-                center_x + math.cos(angle) * radius,
-                center_y + math.sin(angle) * radius,
-            )
-    return positions, width, height
 
 
 def purpose_cluster_positions(nodes: list[dict]) -> tuple[dict[str, tuple[float, float]], int, int]:
@@ -681,24 +490,6 @@ def graph_svg(nodes: list[dict], positions: dict[str, tuple[float, float]], widt
     )
 
 
-def radial_prefix_graph(nodes: list[dict]) -> str:
-    positions, width, height = radial_positions(nodes)
-    section_id = "radial-prefix-graph"
-    return f"""
-<section class="option-section" id="{section_id}" data-graph-section>
-  <h2>Option 6: Radial prefix graph</h2>
-  <p class="summary">This keeps graph-theory node links but constrains them into readable hierarchy rings. Click any node to highlight ancestry and immediate children.</p>
-  <div class="visual-frame">
-    <div class="interactive-grid">
-      {graph_svg(nodes, positions, width, height)}
-      {graph_detail_panel()}
-    </div>
-  </div>
-  {graph_json_script(section_id, nodes)}
-</section>
-"""
-
-
 def collapsible_dendrogram(tree: dict) -> str:
     def render_node(node: dict, depth: int) -> str:
         children = node.get("children", [])
@@ -715,7 +506,7 @@ def collapsible_dendrogram(tree: dict) -> str:
 
     return f"""
 <section class="option-section" id="collapsible-dendrogram" data-dendrogram-section>
-  <h2>Option 7: Collapsible dendrogram</h2>
+  <h2>Option 2: Collapsible dendrogram</h2>
   <p class="summary">This is still a tree, but the reader controls complexity by expanding only the branch they care about.</p>
   <div class="visual-frame">
     <div class="tree-toolbar">
@@ -723,131 +514,6 @@ def collapsible_dendrogram(tree: dict) -> str:
       <button type="button" data-tree-collapse>Collapse all</button>
     </div>
     <div class="dendrogram-tree">{render_node(tree, 0)}</div>
-  </div>
-</section>
-"""
-
-
-def subtree_weight(node: dict) -> int:
-    children = node.get("children", [])
-    if not children:
-        return 1
-    return max(1, sum(subtree_weight(child) for child in children))
-
-
-def polar_point(cx: float, cy: float, radius: float, angle: float) -> tuple[float, float]:
-    adjusted = angle - math.pi / 2
-    return cx + math.cos(adjusted) * radius, cy + math.sin(adjusted) * radius
-
-
-def arc_path(cx: float, cy: float, inner: float, outer: float, start: float, end: float) -> str:
-    if end - start >= 2 * math.pi:
-        end = start + 2 * math.pi - 0.001
-    large = 1 if end - start > math.pi else 0
-    x1, y1 = polar_point(cx, cy, outer, start)
-    x2, y2 = polar_point(cx, cy, outer, end)
-    x3, y3 = polar_point(cx, cy, inner, end)
-    x4, y4 = polar_point(cx, cy, inner, start)
-    return (
-        f"M{x1:.2f},{y1:.2f} A{outer:.2f},{outer:.2f} 0 {large} 1 {x2:.2f},{y2:.2f} "
-        f"L{x3:.2f},{y3:.2f} A{inner:.2f},{inner:.2f} 0 {large} 0 {x4:.2f},{y4:.2f} Z"
-    )
-
-
-def sunburst_map(tree: dict, nodes: list[dict]) -> str:
-    node_map = node_lookup(nodes)
-    width = 860
-    height = 860
-    cx = width / 2
-    cy = height / 2
-    max_seen_depth = max((int(node.get("depth") or 0) for node in nodes), default=1)
-    ring = (min(width, height) / 2 - 58) / max(max_seen_depth, 1)
-    segments: list[str] = []
-
-    def assign(node: dict, start: float, end: float, depth: int) -> None:
-        prefix = node_key(node)
-        if depth > 0 and prefix in node_map:
-            inner = 42 + (depth - 1) * ring
-            outer = inner + ring - 4
-            mapped = node_map[prefix]
-            cat = category_slug(category_for(mapped))
-            segments.append(
-                f'<path class="graph-mark {cat}" {graph_mark_attrs(mapped)} tabindex="0" role="button" '
-                f'd="{arc_path(cx, cy, inner, outer, start, end)}">'
-                f'<title>{html_escape(prefix)} - {html_escape(label_for(mapped) or category_for(mapped))}</title>'
-                "</path>"
-            )
-        children = node.get("children", [])
-        total = sum(subtree_weight(child) for child in children)
-        cursor = start
-        for child in children:
-            span = (end - start) * subtree_weight(child) / max(total, 1)
-            assign(child, cursor, cursor + span, depth + 1)
-            cursor += span
-
-    assign(tree, 0, 2 * math.pi, 0)
-    counts = defaultdict(int)
-    for node in nodes:
-        counts[category_for(node)] += 1
-    legend = "".join(
-        f'<li class="{category_slug(category)}"><span>{html_escape(category)}</span><strong>{counts[category]}</strong></li>'
-        for category in CATEGORY_ORDER
-        if counts.get(category)
-    )
-    section_id = "sunburst-map"
-    return f"""
-<section class="option-section" id="{section_id}" data-graph-section>
-  <h2>Option 8: Sunburst allocation map</h2>
-  <p class="summary">This compresses hierarchy into radial allocation bands. Wider arcs mean denser branches; click an arc to see the exact prefix path.</p>
-  <div class="visual-frame">
-    <div class="sunburst-wrap">
-      <svg class="graph-canvas" viewBox="0 0 {width} {height}" role="img" aria-label="IPv6 sunburst allocation map">
-        <circle cx="{cx:.1f}" cy="{cy:.1f}" r="34" fill="var(--surface)" stroke="var(--border)"></circle>
-        <text x="{cx - 28:.1f}" y="{cy + 4:.1f}">root</text>
-        {"".join(segments)}
-      </svg>
-      <div class="interaction-panel">
-        <h3>Purpose legend</h3>
-        <ul class="legend-list">{legend}</ul>
-        {graph_detail_panel()}
-      </div>
-    </div>
-  </div>
-  {graph_json_script(section_id, nodes)}
-</section>
-"""
-
-
-def animated_walkthrough(nodes: list[dict]) -> str:
-    by_level: dict[int, list[dict]] = defaultdict(list)
-    for node in nodes:
-        if node.get("prefix_length") in PREFIX_LEVELS:
-            by_level[int(node["prefix_length"])].append(node)
-    steps = []
-    for level in PREFIX_LEVELS:
-        items = sorted(by_level.get(level, []), key=node_key)
-        chips = "".join(prefix_chip(node, small=True) for node in items)
-        steps.append(
-            f'<section class="walk-step" data-level="/{level}">'
-            f"<h3>/{level}</h3>"
-            f'<div class="walk-items">{chips}</div>'
-            "</section>"
-        )
-    return f"""
-<section class="option-section" id="animated-walkthrough" data-walkthrough-section>
-  <h2>Option 9: Animated allocation walkthrough</h2>
-  <p class="summary">This turns the subnetting model into a controlled sequence. Step through prefix lengths to explain how the plan descends from aggregate to usable allocations.</p>
-  <div class="visual-frame">
-    <div class="walk-controls">
-      <button type="button" data-walk-prev>Previous</button>
-      <button type="button" data-walk-play>Play</button>
-      <button type="button" data-walk-next>Next</button>
-      <strong data-walk-label>Active prefix length: /32</strong>
-    </div>
-    <div class="walk-progress"><span data-walk-progress></span></div>
-    <div class="walk-stage">
-      <div class="walk-track">{"".join(steps)}</div>
-    </div>
   </div>
 </section>
 """
@@ -870,7 +536,7 @@ def purpose_cluster_graph(nodes: list[dict]) -> str:
     section_id = "purpose-cluster-graph"
     return f"""
 <section class="option-section" id="{section_id}" data-graph-section>
-  <h2>Option 10: Purpose cluster graph</h2>
+  <h2>Option 3: Purpose cluster graph</h2>
   <p class="summary">This keeps node links, but clusters prefixes by operational purpose so the design intent is visible before the exact hierarchy.</p>
   <div class="visual-frame">
     <div class="interactive-grid">
@@ -885,115 +551,8 @@ def purpose_cluster_graph(nodes: list[dict]) -> str:
 """
 
 
-def searchable_focus_graph(nodes: list[dict]) -> str:
-    section_id = "searchable-focus-graph"
-    return f"""
-<section class="option-section" id="{section_id}" data-focus-section>
-  <h2>Option 11: Searchable focus graph</h2>
-  <p class="summary">This avoids showing everything at once. Search for a prefix, site, or purpose, then inspect only that node's path, siblings, and children.</p>
-  <div class="visual-frame">
-    <div class="focus-controls">
-      <input data-focus-search type="search" placeholder="Search prefix, purpose, label, or site" aria-label="Search prefixes">
-    </div>
-    <div class="focus-shell">
-      <div>
-        <div class="focus-canvas" data-focus-canvas></div>
-      </div>
-      <div class="interaction-panel">
-        <h3>Matches</h3>
-        <div class="focus-results" data-focus-results></div>
-        {graph_detail_panel()}
-      </div>
-    </div>
-  </div>
-  {graph_json_script(section_id, nodes)}
-</section>
-"""
-
-
 def option_css() -> str:
     return """
-.block-map {
-  width: max-content;
-  min-width: 100%;
-}
-.allocation-block {
-  margin: .55rem 0;
-  padding: .7rem;
-  border: 1px solid var(--border);
-  border-left-width: .38rem;
-  border-radius: 8px;
-  background: var(--surface);
-}
-.depth-0 { background: var(--surface-strong); }
-.depth-1 { margin-left: .4rem; }
-.depth-2 { margin-left: .8rem; }
-.depth-3 { margin-left: 1.2rem; }
-.depth-4 { margin-left: 1.6rem; }
-.block-title {
-  display: flex;
-  align-items: center;
-  gap: .55rem;
-  min-width: 0;
-}
-.block-title code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 800; }
-.block-title span { color: var(--muted); overflow-wrap: anywhere; }
-.block-title b { margin-left: auto; color: var(--muted); font-size: .85rem; }
-.block-children {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: .55rem;
-  margin-top: .65rem;
-}
-.lane-board {
-  display: grid;
-  grid-template-columns: repeat(8, minmax(16rem, 1fr));
-  gap: .75rem;
-  width: max-content;
-  min-width: 132rem;
-  align-items: start;
-}
-.level-lane {
-  min-width: 0;
-  padding: .7rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface-alt);
-}
-.level-lane h3 { margin: 0 0 .6rem; }
-.lane-items { display: grid; gap: .5rem; }
-.lane-card {
-  display: grid;
-  gap: .35rem;
-  padding: .5rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-}
-.lane-card p { margin: 0; color: var(--text); }
-.lane-card small { color: var(--muted); overflow-wrap: anywhere; }
-.ladder-frame { max-height: 72vh; }
-.ladder-table {
-  width: 100%;
-  min-width: 96rem;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: .9rem;
-}
-.ladder-table th, .ladder-table td {
-  padding: .42rem;
-  border-right: 1px solid var(--grid);
-  border-bottom: 1px solid var(--grid);
-  vertical-align: top;
-}
-.ladder-table th {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  background: var(--surface-alt);
-  text-align: left;
-}
-.ladder-label, .ladder-category { min-width: 12rem; color: var(--muted); }
 .branch-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
@@ -1009,7 +568,7 @@ def option_css() -> str:
 }
 .branch-card h3 { margin: 0; font-size: 1.05rem; }
 .branch-card p { margin: 0; color: var(--muted); }
-.child-preview, .purpose-items {
+.child-preview {
   display: flex;
   flex-wrap: wrap;
   gap: .35rem;
@@ -1024,27 +583,6 @@ def option_css() -> str:
   color: var(--muted);
   font-size: .82rem;
 }
-.purpose-board {
-  display: grid;
-  gap: .85rem;
-}
-.purpose-lane {
-  display: grid;
-  grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
-  gap: .8rem;
-  padding: .75rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface-alt);
-}
-.purpose-heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: .6rem;
-}
-.purpose-heading h3 { margin: 0; font-size: 1rem; }
-.purpose-heading strong { color: var(--muted); }
 .option-picker {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
@@ -1189,19 +727,14 @@ def option_css() -> str:
 }
 .detail-grid dt { color: var(--muted); }
 .detail-grid dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
-.tree-toolbar,
-.walk-controls,
-.focus-controls {
+.tree-toolbar {
   display: flex;
   align-items: center;
   gap: .55rem;
   flex-wrap: wrap;
   margin: 0 0 .85rem;
 }
-.tree-toolbar button,
-.walk-controls button,
-.focus-controls button,
-.focus-results button {
+.tree-toolbar button {
   min-height: 2rem;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -1243,135 +776,9 @@ def option_css() -> str:
 }
 .tree-node[open] > summary::before { content: "-"; }
 .tree-node.leaf summary::before { content: ""; border-style: dashed; }
-.sunburst-wrap {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(14rem, 18rem);
-  gap: 1rem;
-  align-items: start;
-}
-.legend-list {
-  display: grid;
-  gap: .45rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.legend-list li {
-  display: flex;
-  justify-content: space-between;
-  gap: .8rem;
-  padding: .45rem .55rem;
-  border: 1px solid var(--border);
-  border-left: .4rem solid var(--other);
-  border-radius: 6px;
-  background: var(--surface);
-}
-.legend-list .loopback { border-left-color: var(--loopback); }
-.legend-list .oob-management { border-left-color: var(--oob); }
-.legend-list .interconnect { border-left-color: var(--interconnect); }
-.legend-list .content-cdn { border-left-color: var(--cdn); }
-.legend-list .service-routed-pools { border-left-color: var(--service); }
-.legend-list .network-device-roles { border-left-color: var(--role); }
-.legend-list .geography-sites { border-left-color: var(--geo); }
-.legend-list .reserved { border-left-color: var(--reserved); }
-.walk-stage {
-  display: grid;
-  gap: .8rem;
-}
-.walk-track {
-  display: grid;
-  grid-template-columns: repeat(8, minmax(8rem, 1fr));
-  min-width: 72rem;
-  gap: .5rem;
-}
-.walk-step {
-  padding: .65rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface-alt);
-  opacity: .5;
-  transition: opacity .2s ease, transform .2s ease, border-color .2s ease;
-}
-.walk-step.is-active {
-  opacity: 1;
-  transform: translateY(-.18rem);
-  border-color: var(--accent);
-}
-.walk-step h3 { margin: 0 0 .55rem; font-size: 1rem; }
-.walk-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .35rem;
-  max-height: 18rem;
-  overflow: auto;
-}
-.walk-progress {
-  height: .45rem;
-  border-radius: 999px;
-  background: var(--surface-alt);
-  overflow: hidden;
-}
-.walk-progress span {
-  display: block;
-  height: 100%;
-  width: 12.5%;
-  background: var(--accent);
-  transition: width .2s ease;
-}
-.focus-shell {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
-  gap: 1rem;
-}
-.focus-controls input {
-  flex: 1 1 18rem;
-  min-height: 2.35rem;
-  min-width: 0;
-  padding: .45rem .65rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--text);
-  font: inherit;
-}
-.focus-results {
-  display: grid;
-  gap: .4rem;
-  max-height: 22rem;
-  overflow: auto;
-}
-.focus-results button {
-  display: grid;
-  gap: .15rem;
-  padding: .45rem .55rem;
-  text-align: left;
-}
-.focus-results small { color: var(--muted); }
-.focus-canvas {
-  min-width: 44rem;
-}
-.focus-canvas svg {
-  width: 100%;
-  min-width: 44rem;
-  height: auto;
-  border-radius: 8px;
-  background: var(--surface-alt);
-}
-.focus-node rect {
-  fill: var(--surface);
-  stroke: var(--border);
-  stroke-width: 1.4;
-}
-.focus-node.is-selected rect {
-  stroke: var(--accent);
-  stroke-width: 2.6;
-}
 @media (max-width: 760px) {
-  .interactive-grid,
-  .sunburst-wrap,
-  .focus-shell { grid-template-columns: 1fr; }
+  .interactive-grid { grid-template-columns: 1fr; }
   .branch-grid { grid-template-columns: 1fr; }
-  .purpose-lane { grid-template-columns: 1fr; }
 }
 """
 
@@ -1452,123 +859,14 @@ def interactive_js() -> str:
     if (collapse) collapse.addEventListener("click", () => details.forEach((item) => { item.open = false; }));
   };
 
-  const initWalkthrough = (section) => {
-    const steps = Array.from(section.querySelectorAll(".walk-step[data-level]"));
-    const label = section.querySelector("[data-walk-label]");
-    const progress = section.querySelector("[data-walk-progress]");
-    const prev = section.querySelector("[data-walk-prev]");
-    const next = section.querySelector("[data-walk-next]");
-    const play = section.querySelector("[data-walk-play]");
-    if (!steps.length) return;
-    let index = 0;
-    let timer = null;
-    const setStep = (nextIndex) => {
-      index = (nextIndex + steps.length) % steps.length;
-      steps.forEach((step, stepIndex) => step.classList.toggle("is-active", stepIndex === index));
-      if (label) label.textContent = `Active prefix length: ${steps[index].dataset.level}`;
-      if (progress) progress.style.width = `${((index + 1) / steps.length) * 100}%`;
-    };
-    const stop = () => {
-      if (timer) window.clearInterval(timer);
-      timer = null;
-      if (play) play.textContent = "Play";
-    };
-    const toggle = () => {
-      if (timer) {
-        stop();
-        return;
-      }
-      if (play) play.textContent = "Pause";
-      timer = window.setInterval(() => setStep(index + 1), 1200);
-    };
-    if (prev) prev.addEventListener("click", () => { stop(); setStep(index - 1); });
-    if (next) next.addEventListener("click", () => { stop(); setStep(index + 1); });
-    if (play) play.addEventListener("click", toggle);
-    steps.forEach((step, stepIndex) => step.addEventListener("click", () => { stop(); setStep(stepIndex); }));
-    setStep(0);
-  };
-
-  const initFocus = (section) => {
-    const data = dataFor(section);
-    const byId = new Map(data.nodes.map((node) => [node.id, node]));
-    const input = section.querySelector("[data-focus-search]");
-    const results = section.querySelector("[data-focus-results]");
-    const canvas = section.querySelector("[data-focus-canvas]");
-    const panel = section.querySelector("[data-node-detail]");
-    if (!input || !results || !canvas || !panel || byId.size === 0) return;
-
-    const nodeButton = (node) => `
-      <button type="button" data-focus-id="${esc(node.id)}">
-        <code>${esc(node.shortPrefix || node.prefix)}</code>
-        <small>${esc(node.label || node.category)}</small>
-      </button>
-    `;
-
-    const renderResults = () => {
-      const term = input.value.trim().toLowerCase();
-      const matches = data.nodes
-        .filter((node) => !term || `${node.prefix} ${node.label} ${node.category}`.toLowerCase().includes(term))
-        .slice(0, 18);
-      results.innerHTML = matches.map(nodeButton).join("") || "<p>No matching prefix.</p>";
-    };
-
-    const renderFocus = (id) => {
-      const node = byId.get(id) || data.nodes[0];
-      const path = (node.path || []).map((pathId) => byId.get(pathId)).filter(Boolean);
-      const children = data.nodes.filter((item) => item.parent === node.id).slice(0, 10);
-      const siblings = node.parent ? data.nodes.filter((item) => item.parent === node.parent && item.id !== node.id).slice(0, 8) : [];
-      const row = (items, y, className) => items.map((item, index) => {
-        const x = 30 + index * 165;
-        return `
-          <g class="focus-node ${className} ${item.id === node.id ? "is-selected" : ""}" data-focus-id="${esc(item.id)}" transform="translate(${x},${y})" tabindex="0" role="button">
-            <rect width="145" height="58" rx="7"></rect>
-            <text x="10" y="23">${esc(item.shortPrefix || item.prefix)}</text>
-            <text x="10" y="43">${esc(item.category)}</text>
-          </g>
-        `;
-      }).join("");
-      const width = Math.max(760, Math.max(path.length, children.length, siblings.length) * 165 + 80);
-      canvas.innerHTML = `
-        <svg viewBox="0 0 ${width} 310" aria-label="Focused prefix graph">
-          <text x="30" y="24">Ancestry path</text>
-          ${row(path, 42, "path")}
-          <text x="30" y="135">Immediate children</text>
-          ${row(children, 153, "child")}
-          <text x="30" y="246">Nearby siblings</text>
-          ${row(siblings, 264, "sibling")}
-        </svg>
-      `;
-      panel.innerHTML = detailHtml(node);
-      canvas.querySelectorAll("[data-focus-id]").forEach((mark) => {
-        mark.addEventListener("click", () => renderFocus(mark.dataset.focusId));
-        mark.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            renderFocus(mark.dataset.focusId);
-          }
-        });
-      });
-    };
-
-    results.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-focus-id]");
-      if (button) renderFocus(button.dataset.focusId);
-    });
-    input.addEventListener("input", renderResults);
-    renderResults();
-    renderFocus(data.nodes[0].id);
-  };
-
   document.querySelectorAll("[data-graph-section]").forEach(initGraphSection);
   document.querySelectorAll("[data-dendrogram-section]").forEach(initDendrogram);
-  document.querySelectorAll("[data-walkthrough-section]").forEach(initWalkthrough);
-  document.querySelectorAll("[data-focus-section]").forEach(initFocus);
 })();
 """
 
 
 def nav_links(current: str | None = None) -> str:
-    links = ['<a href="./">Workbook</a>', '<a href="cidr-hierarchy.html">Tree model</a>', '<a href="visual-options.html">All options</a>']
+    links = ['<a href="./">Workbook</a>', '<a href="cidr-hierarchy.html">Tree model</a>', '<a href="visual-options.html">Visual foundations</a>']
     for option_id in OPTION_IDS:
         if current == option_id:
             continue
@@ -1603,7 +901,7 @@ def page_shell(title: str, intro: str, body: str, *, font_asset_prefix: str, cur
 <body>
   <header class="page-header">
     <div>
-      <p class="eyebrow">AS141253 IPv6 visual prototype</p>
+      <p class="eyebrow">AS141253 IPv6 visual foundation</p>
       <h1>{html_escape(title)}</h1>
       <p class="summary">{html_escape(intro)}</p>
     </div>
@@ -1615,7 +913,7 @@ def page_shell(title: str, intro: str, body: str, *, font_asset_prefix: str, cur
     {body}
   </main>
   <footer>
-    <p>Generated from repository CSV files. These are selection prototypes, not the final chosen model.</p>
+    <p>Generated from repository CSV files. These are the selected foundation models for the next IPv6 visualisation iteration.</p>
   </footer>
   <script>
 {interactive_js()}
@@ -1627,17 +925,9 @@ def page_shell(title: str, intro: str, body: str, *, font_asset_prefix: str, cur
 
 def all_sections(tree: dict, nodes: list[dict]) -> dict[str, str]:
     return {
-        "spatial-blocks": spatial_blocks(tree),
-        "level-lanes": level_lanes(nodes),
-        "nibble-ladder": nibble_ladder(nodes),
         "branch-cards": branch_cards(nodes),
-        "purpose-swimlanes": purpose_swimlanes(nodes),
-        "radial-prefix-graph": radial_prefix_graph(nodes),
         "collapsible-dendrogram": collapsible_dendrogram(tree),
-        "sunburst-map": sunburst_map(tree, nodes),
-        "animated-walkthrough": animated_walkthrough(nodes),
         "purpose-cluster-graph": purpose_cluster_graph(nodes),
-        "searchable-focus-graph": searchable_focus_graph(nodes),
     }
 
 
@@ -1660,8 +950,8 @@ def render_index(tree: dict, nodes: list[dict], sections: dict[str, str], font_a
         + "".join(sections[option_id] for option_id in OPTION_IDS)
     )
     return page_shell(
-        "AS141253 IPv6 Visual Options",
-        "Static and interactive HTML/CSS/JS alternatives generated from the same CSV-derived IPv6 prefix model.",
+        "AS141253 IPv6 Visual Foundations",
+        "The three selected HTML/CSS/JS foundations for a final readable IPv6 subnetting model: branch cards, collapsible dendrogram, and purpose-cluster graph.",
         body,
         font_asset_prefix=font_asset_prefix,
     )

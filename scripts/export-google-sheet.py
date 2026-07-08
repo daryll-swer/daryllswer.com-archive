@@ -198,7 +198,7 @@ def main() -> int:
         f"- [AS141253-ipv6-architecture-example.ods]({sheet_readme_link(ods_info['path'])}) is the styled open spreadsheet export.",
         f"- [workbook.html]({sheet_readme_link(workbook_info['path'])}) is the standalone CSV-backed HTML workbook with clickable sheet tabs.",
         f"- [cidr-hierarchy.html]({sheet_readme_link(manifest['cidr_hierarchy']['html']['path'])}) is the static IPv6 CIDR containment tree proof of concept.",
-        f"- [visual-options.html]({sheet_readme_link(manifest['visual_options']['index']['path'])}) compares multiple generated HTML/CSS alternatives for the IPv6 subnetting visual model.",
+        f"- [visual-options.html]({sheet_readme_link(manifest['visual_options']['index']['path'])}) contains the selected HTML/CSS/JS foundations for the IPv6 subnetting visual model.",
         f"- [cidr-hierarchy.json]({sheet_readme_link(manifest['cidr_hierarchy']['json']['path'])}) is the machine-readable hierarchy model.",
         f"- [cidr-hierarchy.dot]({sheet_readme_link(manifest['cidr_hierarchy']['dot']['path'])}) is a Graphviz DOT export.",
         f"- [published-workbook.html]({sheet_readme_link(html_root['path'])}) is the full published workbook HTML snapshot.",

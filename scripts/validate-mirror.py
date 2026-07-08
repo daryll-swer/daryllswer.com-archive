@@ -255,20 +255,24 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
         else:
             index_html = index_path.read_text(encoding="utf-8", errors="replace")
             for marker in [
-                "Spatial block map",
-                "Prefix length lanes",
-                "Nibble ladder",
                 "Branch cards",
-                "Purpose swimlanes",
-                "Radial prefix graph",
                 "Collapsible dendrogram",
-                "Sunburst allocation map",
-                "Animated allocation walkthrough",
                 "Purpose cluster graph",
-                "Searchable focus graph",
             ]:
                 if marker not in index_html:
                     errors.append(f"spreadsheet visual options index missing `{marker}`")
+            for marker in [
+                "Spatial block map",
+                "Prefix length lanes",
+                "Nibble ladder",
+                "Purpose swimlanes",
+                "Radial prefix graph",
+                "Sunburst allocation map",
+                "Animated allocation walkthrough",
+                "Searchable focus graph",
+            ]:
+                if marker in index_html:
+                    errors.append(f"spreadsheet visual options index still contains removed model `{marker}`")
         options = visual_options.get("options", [])
         if visual_options.get("option_count") != len(options):
             errors.append("spreadsheet visual options option_count does not match options length")
@@ -283,6 +287,24 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
             option_html = option_path.read_text(encoding="utf-8", errors="replace")
             if option_title not in option_html:
                 errors.append(f"spreadsheet visual option page missing title: {option_title}")
+        expected_ids = {"branch-cards", "collapsible-dendrogram", "purpose-cluster-graph"}
+        actual_ids = {str(option.get("id") or "") for option in options}
+        if actual_ids != expected_ids:
+            errors.append(f"spreadsheet visual options ids do not match selected foundations: {sorted(actual_ids)}")
+        source_visual_dir = index_path.parent
+        for removed_option_name in [
+            "spatial-blocks",
+            "level-lanes",
+            "nibble-ladder",
+            "purpose-swimlanes",
+            "radial-prefix-graph",
+            "sunburst-map",
+            "animated-walkthrough",
+            "searchable-focus-graph",
+        ]:
+            option_path = source_visual_dir / f"visual-option-{removed_option_name}.html"
+            if option_path.exists():
+                errors.append(f"spreadsheet removed visual option still exists: {removed_option_name}")
     for tab in manifest.get("tabs", []):
         csv_info = tab.get("csv", {})
         csv_path = ROOT / csv_info.get("path", "")
@@ -529,38 +551,47 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
         else:
             visual_html = visual_index.read_text(encoding="utf-8", errors="replace")
             for marker in [
-                "Spatial block map",
-                "Prefix length lanes",
-                "Nibble ladder",
                 "Branch cards",
-                "Purpose swimlanes",
-                "Radial prefix graph",
                 "Collapsible dendrogram",
-                "Sunburst allocation map",
-                "Animated allocation walkthrough",
                 "Purpose cluster graph",
-                "Searchable focus graph",
             ]:
                 if marker not in visual_html:
                     errors.append(f"GitHub Pages AS141253 visual options page missing `{marker}`")
+            for marker in [
+                "Spatial block map",
+                "Prefix length lanes",
+                "Nibble ladder",
+                "Purpose swimlanes",
+                "Radial prefix graph",
+                "Sunburst allocation map",
+                "Animated allocation walkthrough",
+                "Searchable focus graph",
+            ]:
+                if marker in visual_html:
+                    errors.append(f"GitHub Pages AS141253 visual options page still contains removed model `{marker}`")
             if "../../../assets/fonts/" in visual_html:
                 errors.append("GitHub Pages AS141253 visual options page has unrewritten source font path")
         for option_name in [
-            "spatial-blocks",
-            "level-lanes",
-            "nibble-ladder",
             "branch-cards",
-            "purpose-swimlanes",
-            "radial-prefix-graph",
             "collapsible-dendrogram",
-            "sunburst-map",
-            "animated-walkthrough",
             "purpose-cluster-graph",
-            "searchable-focus-graph",
         ]:
             option_page = sheet_page.parent / f"visual-option-{option_name}.html"
             if not option_page.exists():
                 errors.append(f"GitHub Pages AS141253 visual option missing: {option_name}")
+        for removed_option_name in [
+            "spatial-blocks",
+            "level-lanes",
+            "nibble-ladder",
+            "purpose-swimlanes",
+            "radial-prefix-graph",
+            "sunburst-map",
+            "animated-walkthrough",
+            "searchable-focus-graph",
+        ]:
+            option_page = sheet_page.parent / f"visual-option-{removed_option_name}.html"
+            if option_page.exists():
+                errors.append(f"GitHub Pages AS141253 removed visual option still exists: {removed_option_name}")
     index_html = site_index.read_text(encoding="utf-8", errors="replace")
     if "posts/" not in index_html:
         errors.append("GitHub Pages index does not link to generated post pages")

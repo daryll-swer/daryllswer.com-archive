@@ -305,7 +305,7 @@ def render_workbook_page(
     if visual_options.get("index", {}).get("path"):
         actions.insert(
             0,
-            f'<a href="{html_escape(artifact_rel(visual_options["index"]["path"], sheet_slug))}">Visual options</a>',
+            f'<a href="{html_escape(artifact_rel(visual_options["index"]["path"], sheet_slug))}">Visual foundations</a>',
         )
     if home_href:
         actions.insert(0, f'<a href="{html_escape(home_href)}">Archive index</a>')
