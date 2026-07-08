@@ -6,9 +6,10 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 IPv6 visual representation options
-- Status: complete; AS141253 visual foundations preserve CSV notes and avoid
-  the reported branch-card and purpose-graph readability failures
-- Last updated: 2026-07-08 07:30 UTC
+- Status: complete locally; AS141253 branch cards now use native disclosures
+  for hidden children and selected visual foundations passed local responsive
+  QA across phone, tablet, desktop, and wide viewport classes
+- Last updated: 2026-07-08 07:44 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -164,6 +165,13 @@
     labels and keeps category labels plus click-to-inspect detail to avoid
     selected-path label overlap. Commit `5f8699e` is deployed via GitHub Pages
     run `28925442002`.
+- AS141253 branch disclosure and responsive hardening:
+  - Status: implemented locally
+  - Notes: `scripts/ipv6_visual_options.py` now renders hidden branch-card
+    children with native `details`/`summary` controls. Shared visual CSS was
+    hardened with wider responsive page bounds, Grid/Flex wrapping,
+    `min-width: 0` containment, tablet graph stacking, narrow-phone padding,
+    and bounded `.visual-frame` panning for dense graph/tree content.
 
 ## Execution Log
 
@@ -251,6 +259,10 @@
   - Action: Fixed readability failures in the three selected AS141253 visual foundations.
   - Evidence: Branch cards and collapsible dendrogram now render CSV notes; purpose cluster graph carries notes in graph data/detail panel and emits no per-node SVG labels.
   - Result: pass; local Chrome/Playwright DOM QA, `make render-site`, `python3 -m py_compile scripts/*.py`, `git diff --check`, `make validate`, and `make scan-secrets` passed.
+- 2026-07-08 07:44 UTC:
+  - Action: Replaced inert branch-card `+N more` labels with native expandable disclosures and hardened responsive CSS for all selected AS141253 visual foundations.
+  - Evidence: Generated branch-card pages contain `details.branch-more` controls; local Chrome/Playwright responsive QA passed 28 page/viewport combinations at 320, 390, 768, 1024, 1440, 1920, and 2560 px widths with 0 failures.
+  - Result: pass; local responsive QA, `make render-site`, `python3 -m py_compile scripts/*.py`, `git diff --check`, `make validate`, and `make scan-secrets` passed.
 - 2026-07-06 12:45 UTC:
   - Action: Implemented README command move, WordPress media filename/byte preservation, and CSV-backed AS141253 workbook generation.
   - Evidence: `README.md`, `AGENTS.md`, `docs/MIRRORING.md`, `scripts/sync-wordpress-posts.py`, `scripts/sheet_workbook.py`, `scripts/export-google-sheet.py`, `scripts/render-site.py`, `scripts/validate-mirror.py`, schemas, regenerated content/docs output.
@@ -602,28 +614,48 @@
     overflow. Purpose cluster graph at 1280 px had 0 graph node labels, 9
     purpose labels, no detected graph text overlaps, and notes appeared in
     the detail panel after selecting `2400:d960:804::/56`.
+  - AS141253 branch disclosure and responsive hardening: local implementation
+    at 2026-07-08 07:44 UTC replaced inert `+N more` labels with native
+    `details`/`summary` disclosures and added responsive CSS hardening for all
+    selected foundations.
+  - Local Chrome/Playwright responsive QA against `http://127.0.0.1:4173/`:
+    pass at 2026-07-08 07:42 UTC across 28 page/viewport combinations:
+    standalone branch cards, collapsible dendrogram, purpose cluster graph,
+    and gallery pages at 320, 390, 768, 1024, 1440, 1920, and 2560 px widths.
+    Failures: 0. All combinations had no page-level horizontal overflow,
+    graph node labels remained 0, graph text overlaps were 0, and branch-card
+    disclosures toggled open/closed in every viewport.
+  - `make render-site PYTHON=<bundled-python>`: pass at 2026-07-08 07:46 UTC;
+    generated 19 posts and refreshed generated Pages output.
+  - `python3 -m py_compile scripts/*.py`: pass at 2026-07-08 07:46 UTC.
+  - `git diff --check`: pass at 2026-07-08 07:46 UTC.
+  - `make validate PYTHON=<bundled-python>`: pass at 2026-07-08 07:47 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-08
+    07:46 UTC with 0 public-safety findings.
 - Not run:
-  - None for this visual-foundation polish step.
+  - Live GitHub Pages verification is pending until after push/deploy.
 
 ## Next Pickup
 
 - Next action:
-  - Design the next-generation AS141253 IPv6 visual representation from the
-    three selected foundations.
+  - Commit, push, deploy, and live-check the branch-card disclosure and
+    responsive-foundation changes.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for this visual-foundation polish step.
+  - Live GitHub Pages verification is pending until after push/deploy.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
-  - Design the next-generation AS141253 IPv6 visual representation from the
-    three selected foundations after this pruning commit is validated and live.
+  - Deploy and live-verify the disclosure/responsive-hardening commit; then
+    design the next-generation AS141253 IPv6 visual representation from the
+    three selected foundations.
   - Optional follow-up: decide whether the remaining non-archived canonical
     links to `/contact/`, `/as149794/`, and `/geofeed/` should stay outbound,
     be manually edited, or be represented by archive landing pages.

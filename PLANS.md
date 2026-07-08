@@ -6,12 +6,12 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; AS141253 selected visual foundations preserve CSV notes,
-  avoid branch-card text bleed, and avoid purpose-graph label overlap while
-  keeping branch cards, collapsible dendrogram, and purpose cluster graph as
-  the next-model foundations
+- Status: complete locally; AS141253 branch cards now expose hidden children
+  through native disclosure controls, and all three selected visual foundations
+  have passed local responsive QA across phone, tablet, desktop, and wide
+  viewport classes
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-08 07:30 UTC
+- Last updated: 2026-07-08 07:44 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -120,18 +120,26 @@
     run `28925442002` completed successfully; live static and browser checks
     verified branch notes, dendrogram notes, no page overflow, and
     overlap-safe purpose graph selection.
+  - Complete locally: branch-card `+N more` affordances are native
+    `details`/`summary` disclosures, not inert count labels. The first twelve
+    children remain visible, and remaining children expand/collapse without
+    custom JavaScript.
+  - Complete locally: selected visual foundations use a responsive contract
+    based on viewport metadata, CSS Grid/Flex wrapping, media queries,
+    `min-width: 0` containment, and bounded `.visual-frame` panning for dense
+    graph/tree content. Local browser QA passed at 320, 390, 768, 1024, 1440,
+    1920, and 2560 px viewport widths with no page-level horizontal overflow.
 - Last material update:
-  - 2026-07-08 07:30 UTC Pushed `5f8699e`, verified Pages deployment
-    `28925442002`, and live-checked the visual-foundation polish.
+  - 2026-07-08 07:44 UTC Implemented local branch-card disclosure controls and
+    responsive CSS hardening for the three selected AS141253 visual
+    foundations.
 - Next pickup action:
-  - Design the next-generation AS141253 IPv6 visual representation from the
-    three selected foundations: branch-card at-a-glance readability,
-    dendrogram expand/collapse navigation, and purpose-cluster graph
-    aesthetics.
+  - Commit, push, deploy, and live-check the branch-card disclosure and
+    responsive-foundation changes.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - None for the pruning/deployment step.
+  - Live GitHub Pages verification is pending until after push/deploy.
 
 ## Purpose / Big Picture
 
@@ -230,6 +238,7 @@
 - [x] 2026-07-08 06:41 UTC Pushed `67e3ae5`, Pages deployment `28922937285` succeeded, and live static/browser checks passed for selected and discarded visual-option routes.
 - [x] 2026-07-08 07:23 UTC Added CSV note rendering to branch cards and collapsible dendrogram, tightened branch-card chip/card wrapping, and removed per-node SVG labels from the purpose cluster graph in favour of notes-aware detail-panel inspection.
 - [x] 2026-07-08 07:30 UTC Pushed `5f8699e`, Pages deployment `28925442002` succeeded, and live static/browser checks passed for the branch-card notes/wrapping, dendrogram notes, and purpose-cluster graph overlap fix.
+- [x] 2026-07-08 07:44 UTC Replaced inert branch-card `+N more` labels with native `details`/`summary` disclosures and locally verified all selected visual foundations across phone, tablet, desktop, and wide-display viewport classes.
 
 ## Decision Log
 
@@ -364,6 +373,25 @@
   - Status: implemented locally
   - Impact: `scripts/ipv6_visual_options.py` emits category labels in the graph
     and moves selected node prefix/label/notes into the side detail panel.
+- Decision: Use native disclosures for branch-card hidden children.
+  - Rationale: `+N more` represents hidden additional content, which matches
+    the HTML disclosure-widget model. A styled count-only span communicates
+    existence but cannot expand/collapse or expose state to the browser.
+  - Date/Author: 2026-07-08, user/Codex
+  - Status: implemented locally
+  - Impact: Branch cards keep twelve children visible and render remaining
+    children inside `details.branch-more > summary`, without requiring custom
+    JavaScript.
+- Decision: Define visual-foundation responsiveness as page-bounded layout plus
+  frame-bounded diagram panning.
+  - Rationale: Branch cards can fully reflow, but dense tree/graph models lose
+    readability if compressed indefinitely. Standard responsive CSS should
+    prevent page-level overflow while allowing wide diagram content to pan
+    inside its explicit visual frame.
+  - Date/Author: 2026-07-08, user/Codex
+  - Status: implemented locally
+  - Impact: Visual pages use viewport metadata, CSS Grid/Flex wrapping, media
+    queries, `min-width: 0` containment, and `.visual-frame` overflow handling.
 
 ## Validation and Acceptance
 
@@ -512,6 +540,21 @@
     90 tree notes; purpose cluster graph at 1280 px had 0 graph node labels, 9
     purpose labels, no detected graph text overlaps, and notes appeared in the
     detail panel after selecting `2400:d960:804::/56`.
+  - Local Chrome/Playwright responsive QA against `http://127.0.0.1:4173/`:
+    passed at 2026-07-08 07:42 UTC across 28 page/viewport combinations:
+    standalone branch cards, collapsible dendrogram, purpose cluster graph,
+    and gallery pages at 320, 390, 768, 1024, 1440, 1920, and 2560 px widths.
+    Failures: 0. All combinations had no page-level horizontal overflow,
+    graph node labels remained 0, graph text overlaps were 0, and branch-card
+    disclosures toggled open/closed in every viewport.
+  - `make render-site PYTHON=<bundled-python>`: passed at 2026-07-08 07:46 UTC;
+    generated 19 posts and refreshed generated Pages output.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 07:46 UTC.
+  - `git diff --check`: passed at 2026-07-08 07:46 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08 07:47 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
+    07:46 UTC with 0 public-safety findings.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`

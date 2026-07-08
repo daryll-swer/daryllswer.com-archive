@@ -40,6 +40,8 @@ OPTION_SUMMARIES = {
     "purpose-cluster-graph": "Interactive node-link graph clustered by operational purpose rather than pure prefix depth.",
 }
 
+BRANCH_VISIBLE_CHILDREN = 12
+
 CATEGORY_ORDER = [
     "Loopback",
     "OOB and management",
@@ -144,6 +146,26 @@ def child_summary(node: dict) -> str:
         f"{notes_html(node, 'child-note')}"
         "</div>"
     )
+
+
+def child_disclosure(children: list[dict]) -> str:
+    visible = "".join(child_summary(child) for child in children[:BRANCH_VISIBLE_CHILDREN])
+    hidden_children = children[BRANCH_VISIBLE_CHILDREN:]
+    more = ""
+    if hidden_children:
+        hidden = "".join(child_summary(child) for child in hidden_children)
+        more = (
+            '<details class="branch-more">'
+            '<summary>'
+            '<span class="more-count">'
+            f'<span class="more-open-label">+{len(hidden_children)} more</span>'
+            '<span class="more-close-label">Show fewer</span>'
+            '</span>'
+            '</summary>'
+            f'<div class="child-preview branch-more-items">{hidden}</div>'
+            '</details>'
+        )
+    return f'<div class="branch-children"><div class="child-preview">{visible}</div>{more}</div>'
 
 
 def terminal_nodes(nodes: list[dict]) -> list[dict]:
@@ -276,6 +298,7 @@ def base_css(font_asset_prefix: str) -> str:
 }}
 body {{
   margin: 0;
+  min-width: 0;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
@@ -283,9 +306,10 @@ body {{
 }}
 a {{ color: var(--accent); text-underline-offset: .18em; }}
 .page-header, main, footer {{
-  max-width: 1280px;
+  width: 100%;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 1rem 1.25rem;
+  padding: clamp(.85rem, 1.8vw, 1.35rem);
 }}
 .page-header {{
   display: flex;
@@ -361,6 +385,8 @@ h2, h3 {{
   max-width: 100%;
   min-width: 0;
   overflow: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
   padding: 1rem;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -416,6 +442,7 @@ footer {{ color: var(--muted); font-size: .92rem; }}
 @media (max-width: 760px) {{
   .page-header {{ flex-direction: column; }}
   .actions {{ justify-content: flex-start; }}
+  .visual-frame {{ padding: .75rem; }}
 }}
 """
 
@@ -430,16 +457,12 @@ def branch_cards(nodes: list[dict]) -> str:
     cards = []
     for node in candidates[:36]:
         children = direct_children(node, nodes)
-        child_preview = "".join(child_summary(child) for child in children[:12])
-        more = ""
-        if len(children) > 12:
-            more = f'<span class="more-count">+{len(children) - 12} more</span>'
         cards.append(
             '<article class="branch-card">'
             f'<h3>{html_escape(label_for(node) or node.get("prefix", ""))}</h3>'
             f'{path_summary(node)}'
             f"{notes_html(node, 'branch-note')}"
-            f'<div class="child-preview">{child_preview}{more}</div>'
+            f"{child_disclosure(children)}"
             "</article>"
         )
     return f"""
@@ -584,7 +607,7 @@ def option_css() -> str:
     return """
 .branch-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
   gap: .85rem;
 }
 .branch-card {
@@ -600,6 +623,11 @@ def option_css() -> str:
 }
 .branch-card h3 { margin: 0; font-size: 1.05rem; }
 .branch-card p { margin: 0; color: var(--muted); overflow-wrap: anywhere; }
+.branch-children {
+  display: grid;
+  gap: .55rem;
+  min-width: 0;
+}
 .child-preview {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
@@ -633,15 +661,52 @@ def option_css() -> str:
 .child-note {
   padding-left: .2rem;
 }
+.branch-more {
+  min-width: 0;
+}
+.branch-more summary {
+  display: inline-flex;
+  max-width: 100%;
+  cursor: pointer;
+  list-style: none;
+}
+.branch-more summary::-webkit-details-marker {
+  display: none;
+}
+.branch-more summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.branch-more-items {
+  margin-top: .55rem;
+}
 .more-count {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 1.45rem;
   padding: .12rem .45rem;
   border: 1px dashed var(--grid);
   border-radius: 6px;
   color: var(--muted);
   font-size: .82rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.branch-more[open] .more-count {
+  border-style: solid;
+  color: var(--text);
+  background: var(--surface);
+}
+.more-close-label {
+  display: none;
+}
+.branch-more[open] .more-open-label {
+  display: none;
+}
+.branch-more[open] .more-close-label {
+  display: inline;
 }
 .option-picker {
   display: grid;
@@ -661,11 +726,13 @@ def option_css() -> str:
 .option-card p { margin: 0; color: var(--muted); }
 .interactive-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+  grid-template-columns: minmax(0, 1fr) minmax(min(100%, 18rem), 24rem);
   gap: 1rem;
   align-items: start;
+  min-width: 0;
 }
 .graph-canvas {
+  display: block;
   min-width: 48rem;
   width: 100%;
   height: auto;
@@ -819,7 +886,7 @@ def option_css() -> str:
   cursor: pointer;
 }
 .dendrogram-tree {
-  min-width: 42rem;
+  min-width: min(42rem, 100%);
   display: grid;
   gap: .35rem;
 }
@@ -856,9 +923,31 @@ def option_css() -> str:
   flex: 1 1 18rem;
   margin: .12rem 0 0;
 }
-@media (max-width: 760px) {
+@media (max-width: 980px) {
   .interactive-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
   .branch-grid { grid-template-columns: 1fr; }
+  .child-preview { grid-template-columns: 1fr; }
+}
+@media (min-width: 1600px) {
+  .branch-grid {
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .branch-card,
+  .node-detail,
+  .interaction-panel {
+    padding: .7rem;
+  }
+  .tree-node {
+    margin-left: .45rem;
+    padding-left: .45rem;
+  }
+  .graph-canvas {
+    min-width: 42rem;
+  }
 }
 """
 
