@@ -269,6 +269,12 @@ The visual-options pages use the same CSV-derived hierarchy model but now keep
 only the three owner-selected foundations: branch cards for at-a-glance
 operator readability, collapsible dendrogram for controlled expand/collapse
 navigation, and purpose cluster graph for the graph-theory visual direction.
-Discarded exploratory models are deleted from source and Pages output. The
-final visualisation should combine these selected strengths and be recorded in
-this document and in `ARCHITECTURE.md`.
+CSV `Notes` values are rendered as first-class operational metadata: branch
+cards show parent/child notes, collapsible dendrogram summaries show node
+notes, and the purpose cluster graph shows notes in the selected-node detail
+panel. The purpose graph intentionally avoids dense per-node SVG labels because
+they overlap during selected-path interaction; purpose labels plus the detail
+panel carry the readable context instead. Discarded exploratory models are
+deleted from source and Pages output. The final visualisation should combine
+these selected strengths and be recorded in this document and in
+`ARCHITECTURE.md`.

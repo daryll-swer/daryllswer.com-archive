@@ -84,6 +84,10 @@ def label_for(node: dict) -> str:
     return str(node.get("label") or node.get("source_sheet") or node.get("notes") or "").strip()
 
 
+def notes_for(node: dict) -> str:
+    return str(node.get("notes") or "").strip()
+
+
 def category_for(node: dict) -> str:
     text = " ".join(str(node.get(key) or "") for key in ["label", "notes", "source_sheet"]).lower()
     if "reserved" in text:
@@ -128,6 +132,20 @@ def path_summary(node: dict) -> str:
     return '<div class="path-summary">' + "".join(prefix_chip(item, small=True) for item in parts) + "</div>"
 
 
+def notes_html(node: dict, class_name: str) -> str:
+    notes = notes_for(node)
+    return f'<p class="{class_name}">{html_escape(notes)}</p>' if notes else ""
+
+
+def child_summary(node: dict) -> str:
+    return (
+        '<div class="child-item">'
+        f"{prefix_chip(node, small=True)}"
+        f"{notes_html(node, 'child-note')}"
+        "</div>"
+    )
+
+
 def terminal_nodes(nodes: list[dict]) -> list[dict]:
     return [node for node in nodes if int(node.get("child_count") or 0) == 0]
 
@@ -165,6 +183,7 @@ def graph_data(nodes: list[dict]) -> dict:
                 "prefix": prefix,
                 "shortPrefix": short_prefix(prefix),
                 "label": label_for(node),
+                "notes": notes_for(node),
                 "category": category_for(node),
                 "categorySlug": category_slug(category_for(node)),
                 "depth": int(node.get("depth") or 0),
@@ -192,7 +211,7 @@ def graph_detail_panel() -> str:
     return (
         '<aside class="node-detail" data-node-detail>'
         "<h3>Select a prefix</h3>"
-        "<p>Click a node, arc, or result to highlight its ancestry, immediate children, and metadata.</p>"
+        "<p>Click a node to highlight its ancestry, immediate children, and metadata.</p>"
         "</aside>"
     )
 
@@ -349,9 +368,11 @@ h2, h3 {{
 }}
 .prefix-chip {{
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
   gap: .35rem;
   min-height: 1.75rem;
+  min-width: 0;
   max-width: 100%;
   padding: .22rem .5rem;
   border: 1px solid var(--border);
@@ -359,14 +380,23 @@ h2, h3 {{
   border-radius: 6px;
   background: var(--surface);
   color: var(--text);
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }}
 .prefix-chip code {{
+  min-width: 0;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: .86rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }}
 .chip-small {{ min-height: 1.45rem; padding: .12rem .36rem; font-size: .82rem; }}
-.chip-label, .chip-count {{ color: var(--muted); font-size: .82rem; }}
+.chip-label, .chip-count {{
+  min-width: 0;
+  color: var(--muted);
+  font-size: .82rem;
+  overflow-wrap: anywhere;
+}}
 .reserved {{ border-left-color: var(--reserved); opacity: .78; }}
 .loopback {{ border-left-color: var(--loopback); }}
 .oob-management {{ border-left-color: var(--oob); }}
@@ -380,6 +410,7 @@ h2, h3 {{
   display: flex;
   flex-wrap: wrap;
   gap: .35rem;
+  min-width: 0;
 }}
 footer {{ color: var(--muted); font-size: .92rem; }}
 @media (max-width: 760px) {{
@@ -399,17 +430,15 @@ def branch_cards(nodes: list[dict]) -> str:
     cards = []
     for node in candidates[:36]:
         children = direct_children(node, nodes)
-        child_preview = "".join(prefix_chip(child, small=True) for child in children[:12])
+        child_preview = "".join(child_summary(child) for child in children[:12])
         more = ""
         if len(children) > 12:
             more = f'<span class="more-count">+{len(children) - 12} more</span>'
-        notes = node.get("notes") or ""
-        notes_html = f'<p>{html_escape(notes)}</p>' if notes else ""
         cards.append(
             '<article class="branch-card">'
             f'<h3>{html_escape(label_for(node) or node.get("prefix", ""))}</h3>'
             f'{path_summary(node)}'
-            f'{notes_html}'
+            f"{notes_html(node, 'branch-note')}"
             f'<div class="child-preview">{child_preview}{more}</div>'
             "</article>"
         )
@@ -451,7 +480,7 @@ def purpose_cluster_positions(nodes: list[dict]) -> tuple[dict[str, tuple[float,
     return positions, width, height
 
 
-def graph_svg(nodes: list[dict], positions: dict[str, tuple[float, float]], width: int, height: int, *, label_depth: int = 1) -> str:
+def graph_svg(nodes: list[dict], positions: dict[str, tuple[float, float]], width: int, height: int, *, show_node_labels: bool = False, label_depth: int = 1) -> str:
     node_map = node_lookup(nodes)
     edges = []
     marks = []
@@ -475,8 +504,8 @@ def graph_svg(nodes: list[dict], positions: dict[str, tuple[float, float]], widt
         radius = max(4.6, min(12.5, 10 - depth + math.sqrt(child_count + 1) * 0.9))
         cat = category_slug(category_for(node))
         label = ""
-        if depth <= label_depth or child_count >= 8:
-            label = f'<text x="{x + radius + 4:.1f}" y="{y + 4:.1f}">{html_escape(short_prefix(prefix))}</text>'
+        if show_node_labels and (depth <= label_depth or child_count >= 8):
+            label = f'<text class="graph-node-label" x="{x + radius + 4:.1f}" y="{y + 4:.1f}">{html_escape(short_prefix(prefix))}</text>'
         initial = ' data-initial="true"' if depth == 0 else ""
         marks.append(
             f'<g class="graph-mark {cat}" {graph_mark_attrs(node_map[prefix])}{initial} tabindex="0" role="button">'
@@ -500,7 +529,7 @@ def collapsible_dendrogram(tree: dict) -> str:
         children_html = "".join(render_node(child, depth + 1) for child in children)
         return (
             f'<details class="tree-node {cat}{leaf_class}"{open_attr}>'
-            f'<summary>{prefix_chip(node_with_count, small=True)}</summary>'
+            f'<summary>{prefix_chip(node_with_count, small=True)}{notes_html(node, "tree-note")}</summary>'
             f"{children_html}</details>"
         )
 
@@ -531,7 +560,7 @@ def purpose_cluster_graph(nodes: list[dict]) -> str:
         if not xs or not ys:
             continue
         labels.append(
-            f'<text x="{sum(xs) / len(xs):.1f}" y="{min(ys) - 34:.1f}" text-anchor="middle">{html_escape(category)}</text>'
+            f'<text class="graph-category-label" x="{sum(xs) / len(xs):.1f}" y="{min(ys) - 34:.1f}" text-anchor="middle">{html_escape(category)}</text>'
         )
     section_id = "purpose-cluster-graph"
     return f"""
@@ -541,7 +570,7 @@ def purpose_cluster_graph(nodes: list[dict]) -> str:
   <div class="visual-frame">
     <div class="interactive-grid">
       <div>
-        {graph_svg(nodes, positions, width, height, label_depth=0).replace("</svg>", "".join(labels) + "</svg>")}
+        {graph_svg(nodes, positions, width, height, show_node_labels=False).replace("</svg>", "".join(labels) + "</svg>")}
       </div>
       {graph_detail_panel()}
     </div>
@@ -555,23 +584,54 @@ def option_css() -> str:
     return """
 .branch-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
   gap: .85rem;
 }
 .branch-card {
   display: grid;
   gap: .65rem;
+  align-content: start;
+  min-width: 0;
+  overflow: hidden;
   padding: .85rem;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface-alt);
 }
 .branch-card h3 { margin: 0; font-size: 1.05rem; }
-.branch-card p { margin: 0; color: var(--muted); }
+.branch-card p { margin: 0; color: var(--muted); overflow-wrap: anywhere; }
 .child-preview {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .35rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: .5rem;
+  min-width: 0;
+  align-items: start;
+}
+.child-item {
+  display: grid;
+  gap: .28rem;
+  min-width: 0;
+  padding: .42rem;
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+.child-item .prefix-chip {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: start;
+  width: 100%;
+}
+.branch-note,
+.child-note,
+.tree-note {
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+}
+.child-note {
+  padding-left: .2rem;
 }
 .more-count {
   display: inline-flex;
@@ -621,6 +681,13 @@ def option_css() -> str:
   font-family: var(--font-body);
   font-size: .74rem;
   pointer-events: none;
+}
+.graph-category-label {
+  font-weight: 800;
+  paint-order: stroke;
+  stroke: var(--surface-alt);
+  stroke-width: 5px;
+  stroke-linejoin: round;
 }
 .graph-edge {
   stroke: color-mix(in srgb, var(--grid) 72%, transparent);
@@ -719,14 +786,21 @@ def option_css() -> str:
   font-size: .9rem;
 }
 .detail-grid div {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(6.5rem, max-content) minmax(0, 1fr);
   gap: .8rem;
   border-bottom: 1px solid var(--border);
   padding-bottom: .25rem;
 }
 .detail-grid dt { color: var(--muted); }
-.detail-grid dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+.detail-grid dd { min-width: 0; margin: 0; text-align: right; overflow-wrap: anywhere; }
+.detail-grid code { overflow-wrap: anywhere; word-break: break-word; }
+.detail-grid .detail-notes {
+  grid-template-columns: 1fr;
+}
+.detail-grid .detail-notes dd {
+  text-align: left;
+}
 .tree-toolbar {
   display: flex;
   align-items: center;
@@ -756,11 +830,12 @@ def option_css() -> str:
 }
 .tree-node summary {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: .5rem;
   min-height: 2rem;
   cursor: pointer;
   list-style: none;
+  flex-wrap: wrap;
 }
 .tree-node summary::-webkit-details-marker { display: none; }
 .tree-node summary::before {
@@ -773,9 +848,14 @@ def option_css() -> str:
   border-radius: 999px;
   color: var(--muted);
   flex: 0 0 auto;
+  margin-top: .08rem;
 }
 .tree-node[open] > summary::before { content: "-"; }
 .tree-node.leaf summary::before { content: ""; border-style: dashed; }
+.tree-note {
+  flex: 1 1 18rem;
+  margin: .12rem 0 0;
+}
 @media (max-width: 760px) {
   .interactive-grid { grid-template-columns: 1fr; }
   .branch-grid { grid-template-columns: 1fr; }
@@ -810,6 +890,7 @@ def interactive_js() -> str:
       <div><dt>Purpose</dt><dd>${esc(node.category)}</dd></div>
       <div><dt>Children</dt><dd>${esc(node.childCount)}</dd></div>
       <div><dt>Parent</dt><dd>${node.parent ? `<code>${esc(node.parent)}</code>` : "root"}</dd></div>
+      ${node.notes ? `<div class="detail-notes"><dt>Notes</dt><dd>${esc(node.notes)}</dd></div>` : ""}
     </dl>
   `;
 
