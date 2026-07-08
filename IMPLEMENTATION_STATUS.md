@@ -6,10 +6,9 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 IPv6 visual representation options
-- Status: complete locally; AS141253 branch cards now use native disclosures
-  for hidden children and selected visual foundations passed local responsive
-  QA across phone, tablet, desktop, and wide viewport classes
-- Last updated: 2026-07-08 07:44 UTC
+- Status: complete; AS141253 branch cards use native disclosures for hidden
+  children and selected visual foundations passed local/live responsive QA
+- Last updated: 2026-07-08 07:49 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -166,12 +165,13 @@
     selected-path label overlap. Commit `5f8699e` is deployed via GitHub Pages
     run `28925442002`.
 - AS141253 branch disclosure and responsive hardening:
-  - Status: implemented locally
+  - Status: complete and pushed
   - Notes: `scripts/ipv6_visual_options.py` now renders hidden branch-card
     children with native `details`/`summary` controls. Shared visual CSS was
     hardened with wider responsive page bounds, Grid/Flex wrapping,
     `min-width: 0` containment, tablet graph stacking, narrow-phone padding,
-    and bounded `.visual-frame` panning for dense graph/tree content.
+    and bounded `.visual-frame` panning for dense graph/tree content. Commit
+    `32fad32` is deployed via GitHub Pages run `28926454066`.
 
 ## Execution Log
 
@@ -633,28 +633,40 @@
     with 0 validation errors and 1 known sitemap warning.
   - `make scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-08
     07:46 UTC with 0 public-safety findings.
+  - GitHub Pages deployment for `32fad32`: pass at 2026-07-08 07:48 UTC;
+    pages-build-deployment run `28926454066` completed successfully.
+  - Live static checks: pass at 2026-07-08 07:48 UTC for
+    `visual-option-branch-cards.html`,
+    `visual-option-collapsible-dendrogram.html`,
+    `visual-option-purpose-cluster-graph.html`, and `visual-options.html`.
+    Required branch disclosure/responsive markers were present, branch-card
+    pages had 3 `details.branch-more` controls, and graph node labels remained
+    0.
+  - Live Chrome/Playwright DOM QA against GitHub Pages: pass at
+    2026-07-08 07:49 UTC at 390 px and 1440 px widths. All four visual pages
+    had no page-level horizontal overflow, graph text overlaps were 0, and the
+    branch-card disclosure opened with the `Show fewer` state.
 - Not run:
-  - Live GitHub Pages verification is pending until after push/deploy.
+  - None for the branch-card disclosure and responsive-hardening step.
 
 ## Next Pickup
 
 - Next action:
-  - Commit, push, deploy, and live-check the branch-card disclosure and
-    responsive-foundation changes.
+  - Design the next-generation AS141253 IPv6 visual representation from the
+    three selected foundations.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Live GitHub Pages verification is pending until after push/deploy.
+  - None for the branch-card disclosure and responsive-hardening step.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
-  - Deploy and live-verify the disclosure/responsive-hardening commit; then
-    design the next-generation AS141253 IPv6 visual representation from the
+  - Design the next-generation AS141253 IPv6 visual representation from the
     three selected foundations.
   - Optional follow-up: decide whether the remaining non-archived canonical
     links to `/contact/`, `/as149794/`, and `/geofeed/` should stay outbound,

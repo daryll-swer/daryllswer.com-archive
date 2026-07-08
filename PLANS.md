@@ -6,12 +6,11 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete locally; AS141253 branch cards now expose hidden children
-  through native disclosure controls, and all three selected visual foundations
-  have passed local responsive QA across phone, tablet, desktop, and wide
-  viewport classes
+- Status: complete; AS141253 branch cards now expose hidden children through
+  native disclosure controls, and all three selected visual foundations have
+  passed local and live responsive QA
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-08 07:44 UTC
+- Last updated: 2026-07-08 07:49 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -129,17 +128,20 @@
     `min-width: 0` containment, and bounded `.visual-frame` panning for dense
     graph/tree content. Local browser QA passed at 320, 390, 768, 1024, 1440,
     1920, and 2560 px viewport widths with no page-level horizontal overflow.
+  - Complete: commit `32fad32` was pushed to `main`; GitHub Pages deployment
+    run `28926454066` completed successfully; live static and browser checks
+    verified branch disclosures and responsive behaviour.
 - Last material update:
-  - 2026-07-08 07:44 UTC Implemented local branch-card disclosure controls and
-    responsive CSS hardening for the three selected AS141253 visual
-    foundations.
+  - 2026-07-08 07:49 UTC Pushed `32fad32`, verified Pages deployment
+    `28926454066`, and live-checked branch disclosures plus responsive
+    behaviour.
 - Next pickup action:
-  - Commit, push, deploy, and live-check the branch-card disclosure and
-    responsive-foundation changes.
+  - Design the next-generation AS141253 IPv6 visual representation from the
+    three selected foundations.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - Live GitHub Pages verification is pending until after push/deploy.
+  - None for the branch-card disclosure and responsive-hardening step.
 
 ## Purpose / Big Picture
 
@@ -239,6 +241,7 @@
 - [x] 2026-07-08 07:23 UTC Added CSV note rendering to branch cards and collapsible dendrogram, tightened branch-card chip/card wrapping, and removed per-node SVG labels from the purpose cluster graph in favour of notes-aware detail-panel inspection.
 - [x] 2026-07-08 07:30 UTC Pushed `5f8699e`, Pages deployment `28925442002` succeeded, and live static/browser checks passed for the branch-card notes/wrapping, dendrogram notes, and purpose-cluster graph overlap fix.
 - [x] 2026-07-08 07:44 UTC Replaced inert branch-card `+N more` labels with native `details`/`summary` disclosures and locally verified all selected visual foundations across phone, tablet, desktop, and wide-display viewport classes.
+- [x] 2026-07-08 07:49 UTC Pushed `32fad32`, Pages deployment `28926454066` succeeded, and live static/browser checks passed for branch-card disclosures plus responsive behaviour.
 
 ## Decision Log
 
@@ -555,6 +558,19 @@
     with 0 validation errors and 1 known sitemap warning.
   - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
     07:46 UTC with 0 public-safety findings.
+  - GitHub Pages deployment for `32fad32`: passed at 2026-07-08 07:48 UTC;
+    pages-build-deployment run `28926454066` completed successfully.
+  - Live static checks: passed at 2026-07-08 07:48 UTC for
+    `visual-option-branch-cards.html`,
+    `visual-option-collapsible-dendrogram.html`,
+    `visual-option-purpose-cluster-graph.html`, and `visual-options.html`.
+    Required branch disclosure/responsive markers were present, branch-card
+    pages had 3 `details.branch-more` controls, and graph node labels remained
+    0.
+  - Live Chrome/Playwright DOM QA against GitHub Pages: passed at
+    2026-07-08 07:49 UTC at 390 px and 1440 px widths. All four visual pages
+    had no page-level horizontal overflow, graph text overlaps were 0, and the
+    branch-card disclosure opened with the `Show fewer` state.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`
