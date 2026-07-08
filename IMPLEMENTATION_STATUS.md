@@ -6,9 +6,9 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 IPv6 visual representation options
-- Status: in progress; AS141253 visual gallery has been pruned locally to
-  three selected foundations pending validation, push, and live Pages checks
-- Last updated: 2026-07-08 06:37 UTC
+- Status: complete; AS141253 visual gallery has been pruned and deployed with
+  three selected foundations
+- Last updated: 2026-07-08 06:41 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -147,13 +147,14 @@
     that source WordPress colour classes survive into generated Pages output
     and have generated CSS rules.
 - AS141253 visual representation foundations:
-  - Status: implemented locally, pending validation/push/live verification
+  - Status: complete and pushed
   - Notes: `scripts/ipv6_visual_options.py` now generates only the three
     owner-selected foundations from the CSV-derived prefix model: branch cards,
     collapsible dendrogram, and purpose cluster graph. Discarded exploratory
     standalone pages were deleted from `data/` and generated `docs/`, and
     `scripts/validate-mirror.py` now fails if removed model titles/files
-    reappear.
+    reappear. Commit `67e3ae5` is deployed via GitHub Pages run
+    `28922937285`.
 
 ## Execution Log
 
@@ -544,21 +545,30 @@
   - Local removed-page check: pass at 2026-07-08 06:37 UTC; all eight
     discarded standalone visual-option routes returned HTTP 404 from the local
     `docs/` server.
+  - GitHub Pages deployment for `67e3ae5`: pass at 2026-07-08 06:40 UTC;
+    pages-build-deployment run `28922937285` completed successfully.
+  - Live route checks: pass at 2026-07-08 06:41 UTC for `visual-options.html`,
+    the three selected standalone option pages, and the eight discarded
+    standalone option routes. The selected routes returned HTTP 200 with
+    expected markers; discarded routes returned HTTP 404.
+  - Live browser QA: pass at 2026-07-08 06:41 UTC for the visual-foundations
+    gallery at desktop/default width; three option cards/sections rendered,
+    discarded model titles were absent, page-level `scrollWidth` equalled
+    viewport width, and browser console errors were empty.
 - Not run:
-  - Push and live Pages verification for the pruned three-foundation gallery.
+  - None for this pruning/deployment step.
 
 ## Next Pickup
 
 - Next action:
-  - Commit/push and verify live Pages deployment for the pruned
-    three-foundation gallery.
+  - Design the next-generation AS141253 IPv6 visual representation from the
+    three selected foundations.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Live GitHub Pages verification is pending for the pruned three-foundation
-    output.
+  - None for this pruning/deployment step.
 
 ## Completion Criteria
 

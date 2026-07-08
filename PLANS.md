@@ -6,11 +6,11 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: in progress; AS141253 IPv6 visual representation has been narrowed
-  to three selected CSV-derived foundations: branch cards, collapsible
-  dendrogram, and purpose cluster graph
+- Status: complete; AS141253 IPv6 visual representation gallery has been
+  narrowed and deployed with three selected CSV-derived foundations: branch
+  cards, collapsible dendrogram, and purpose cluster graph
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-08 06:37 UTC
+- Last updated: 2026-07-08 06:41 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -103,19 +103,22 @@
     regenerated from existing CSV data after the public Google Sheet HTML fetch
     timed out. No canonical sheet content update was required for this visual
     pruning step.
+  - Complete: commit `67e3ae5` was pushed to `main`; GitHub Pages deployment
+    run `28922937285` completed successfully; live static and browser checks
+    passed for the pruned three-foundation gallery.
 - Last material update:
-  - 2026-07-08 06:37 UTC Pruned AS141253 visual-options output to branch
-    cards, collapsible dendrogram, and purpose cluster graph; regenerated
-    source and Pages artefacts locally from existing CSV data; local
-    validation, public-safety scan, and browser QA passed.
+  - 2026-07-08 06:41 UTC Pushed `67e3ae5`, verified Pages deployment
+    `28922937285`, and live-checked the pruned three-foundation gallery plus
+    selected/discarded standalone routes.
 - Next pickup action:
-  - Commit/push the pruned three-foundation gallery and verify the deployed
-    GitHub Pages routes.
+  - Design the next-generation AS141253 IPv6 visual representation from the
+    three selected foundations: branch-card at-a-glance readability,
+    dendrogram expand/collapse navigation, and purpose-cluster graph
+    aesthetics.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - Live GitHub Pages verification is still pending for the pruned
-    three-foundation output.
+  - None for the pruning/deployment step.
 
 ## Purpose / Big Picture
 
@@ -211,7 +214,7 @@
 - [x] 2026-07-07 21:43 UTC Pushed `bce0d98`, Pages deployment `28900695345` succeeded, and live expanded-gallery routes were verified.
 - [x] 2026-07-08 06:32 UTC Pruned AS141253 visual-options source and Pages artefacts to the three selected foundations: branch cards, collapsible dendrogram, and purpose cluster graph.
 - [x] 2026-07-08 06:37 UTC Local validation, public-safety scan, browser QA, and removed-page 404 checks passed for the pruned three-foundation gallery.
-- [ ] 2026-07-08 06:37 UTC Commit/push and verify live Pages deployment for the pruned three-foundation gallery.
+- [x] 2026-07-08 06:41 UTC Pushed `67e3ae5`, Pages deployment `28922937285` succeeded, and live static/browser checks passed for selected and discarded visual-option routes.
 
 ## Decision Log
 
@@ -437,6 +440,16 @@
   - Local removed-page check: passed at 2026-07-08 06:37 UTC; all eight
     discarded standalone visual-option routes returned HTTP 404 from the local
     `docs/` server.
+  - GitHub Pages deployment for `67e3ae5`: passed at 2026-07-08 06:40 UTC;
+    pages-build-deployment run `28922937285` completed successfully.
+  - Live route checks: passed at 2026-07-08 06:41 UTC for
+    `visual-options.html`, the three selected standalone option pages, and the
+    eight discarded standalone option routes. The selected routes returned HTTP
+    200 with expected markers; discarded routes returned HTTP 404.
+  - Live browser QA: passed at 2026-07-08 06:41 UTC for the visual-foundations
+    gallery at desktop/default width; three option cards/sections rendered,
+    discarded model titles were absent, page-level `scrollWidth` equalled
+    viewport width, and browser console errors were empty.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`
