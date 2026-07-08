@@ -6,9 +6,9 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 IPv6 visual representation options
-- Status: complete locally; AS141253 visual foundations now preserve CSV notes
-  and avoid the reported branch-card and purpose-graph readability failures
-- Last updated: 2026-07-08 07:23 UTC
+- Status: complete; AS141253 visual foundations preserve CSV notes and avoid
+  the reported branch-card and purpose-graph readability failures
+- Last updated: 2026-07-08 07:30 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -156,13 +156,14 @@
     reappear. Commit `67e3ae5` is deployed via GitHub Pages run
     `28922937285`.
 - AS141253 visual foundation polish:
-  - Status: implemented locally
+  - Status: complete and pushed
   - Notes: `scripts/ipv6_visual_options.py` now renders CSV `Notes` in branch
     cards, child cards, collapsible dendrogram summaries, and the purpose graph
     detail panel. Branch-card chips/cards use bounded wrapping to avoid text
     bleed on narrow screens. Purpose cluster graph suppresses per-node SVG
     labels and keeps category labels plus click-to-inspect detail to avoid
-    selected-path label overlap.
+    selected-path label overlap. Commit `5f8699e` is deployed via GitHub Pages
+    run `28925442002`.
 
 ## Execution Log
 
@@ -586,22 +587,35 @@
     with 0 validation errors and 1 known sitemap warning.
   - `make scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-08
     07:26 UTC with 0 public-safety findings.
+  - GitHub Pages deployment for `5f8699e`: pass at 2026-07-08 07:29 UTC;
+    pages-build-deployment run `28925442002` completed successfully.
+  - Live static checks: pass at 2026-07-08 07:30 UTC for
+    `visual-option-branch-cards.html`,
+    `visual-option-collapsible-dendrogram.html`,
+    `visual-option-purpose-cluster-graph.html`, and `visual-options.html`.
+    All returned HTTP 200 with required note markers and 0
+    `graph-node-label` occurrences.
+  - Live Chrome/Playwright DOM QA against GitHub Pages: pass at
+    2026-07-08 07:30 UTC. Branch cards at 390 px had `scrollWidth=390`, 53
+    rendered child notes, and no page overflow. Collapsible dendrogram at
+    390 px had `scrollWidth=390`, 90 rendered tree notes, and no page
+    overflow. Purpose cluster graph at 1280 px had 0 graph node labels, 9
+    purpose labels, no detected graph text overlaps, and notes appeared in
+    the detail panel after selecting `2400:d960:804::/56`.
 - Not run:
-  - No live GitHub Pages verification yet for this visual-foundation polish;
-    commit/push/deploy is the next step.
+  - None for this visual-foundation polish step.
 
 ## Next Pickup
 
 - Next action:
-  - Commit, push, and verify the visual-foundation polish on GitHub Pages; then
-    design the next-generation AS141253 IPv6 visual representation from the
+  - Design the next-generation AS141253 IPv6 visual representation from the
     three selected foundations.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - Live GitHub Pages verification is pending until after push/deploy.
+  - None for this visual-foundation polish step.
 
 ## Completion Criteria
 

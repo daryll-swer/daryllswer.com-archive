@@ -6,12 +6,12 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete locally; AS141253 selected visual foundations now preserve
-  CSV notes, avoid branch-card text bleed, and avoid purpose-graph label
-  overlap while keeping branch cards, collapsible dendrogram, and purpose
-  cluster graph as the next-model foundations
+- Status: complete; AS141253 selected visual foundations preserve CSV notes,
+  avoid branch-card text bleed, and avoid purpose-graph label overlap while
+  keeping branch cards, collapsible dendrogram, and purpose cluster graph as
+  the next-model foundations
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-08 07:23 UTC
+- Last updated: 2026-07-08 07:30 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -116,13 +116,15 @@
     the detail panel, while per-node SVG labels are suppressed in favour of
     persistent purpose labels plus click-to-inspect detail. This removes the
     observed label-overlap failure mode.
+  - Complete: commit `5f8699e` was pushed to `main`; GitHub Pages deployment
+    run `28925442002` completed successfully; live static and browser checks
+    verified branch notes, dendrogram notes, no page overflow, and
+    overlap-safe purpose graph selection.
 - Last material update:
-  - 2026-07-08 07:23 UTC Implemented local visual-foundation polish for
-    branch-card notes/wrapping, dendrogram notes, and purpose-cluster
-    overlap-safe selection details.
+  - 2026-07-08 07:30 UTC Pushed `5f8699e`, verified Pages deployment
+    `28925442002`, and live-checked the visual-foundation polish.
 - Next pickup action:
-  - Commit, push, and deploy the visual-foundation polish; then design the
-    next-generation AS141253 IPv6 visual representation from the
+  - Design the next-generation AS141253 IPv6 visual representation from the
     three selected foundations: branch-card at-a-glance readability,
     dendrogram expand/collapse navigation, and purpose-cluster graph
     aesthetics.
@@ -227,6 +229,7 @@
 - [x] 2026-07-08 06:37 UTC Local validation, public-safety scan, browser QA, and removed-page 404 checks passed for the pruned three-foundation gallery.
 - [x] 2026-07-08 06:41 UTC Pushed `67e3ae5`, Pages deployment `28922937285` succeeded, and live static/browser checks passed for selected and discarded visual-option routes.
 - [x] 2026-07-08 07:23 UTC Added CSV note rendering to branch cards and collapsible dendrogram, tightened branch-card chip/card wrapping, and removed per-node SVG labels from the purpose cluster graph in favour of notes-aware detail-panel inspection.
+- [x] 2026-07-08 07:30 UTC Pushed `5f8699e`, Pages deployment `28925442002` succeeded, and live static/browser checks passed for the branch-card notes/wrapping, dendrogram notes, and purpose-cluster graph overlap fix.
 
 ## Decision Log
 
@@ -495,6 +498,20 @@
     with 0 validation errors and 1 known sitemap warning.
   - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
     07:26 UTC with 0 public-safety findings.
+  - GitHub Pages deployment for `5f8699e`: passed at 2026-07-08 07:29 UTC;
+    pages-build-deployment run `28925442002` completed successfully.
+  - Live static checks: passed at 2026-07-08 07:30 UTC for
+    `visual-option-branch-cards.html`,
+    `visual-option-collapsible-dendrogram.html`,
+    `visual-option-purpose-cluster-graph.html`, and `visual-options.html`.
+    All returned HTTP 200 with required note markers and 0
+    `graph-node-label` occurrences.
+  - Live Chrome/Playwright DOM QA against GitHub Pages: passed at
+    2026-07-08 07:30 UTC. Branch cards at 390 px had `scrollWidth=390` and 53
+    child notes; collapsible dendrogram at 390 px had `scrollWidth=390` and
+    90 tree notes; purpose cluster graph at 1280 px had 0 graph node labels, 9
+    purpose labels, no detected graph text overlaps, and notes appeared in the
+    detail panel after selecting `2400:d960:804::/56`.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`
