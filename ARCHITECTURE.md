@@ -76,6 +76,13 @@ flowchart LR
   dendrogram, and purpose cluster graph as the basis for the next final model.
   Earlier exploratory options were deleted from source and generated Pages
   output.
+- The selected AS141253 visual foundations preserve operational intent from
+  CSV `Notes`: branch cards render notes on parent/child prefix cards,
+  collapsible dendrogram summaries render node notes, and purpose cluster graph
+  exposes notes in the selected-node detail panel. Dense per-node labels are
+  intentionally omitted from the purpose graph plot area to prevent overlap;
+  persistent purpose labels plus click-to-inspect detail carry the readable
+  metadata.
 - Human-facing navigation and canonical URLs use clean directory URLs such as
   `https://daryll-swer.github.io/daryllswer.com-archive/`. The physical
   `docs/index.html` file remains the GitHub Pages entry point and generated
@@ -161,7 +168,10 @@ surface must not cause repeated workflow failures or archive deletion.
   runtime dependency. The final visual model should combine the at-a-glance
   readability of branch cards, the expand/collapse navigation of the
   collapsible dendrogram, and the visual/aesthetic graph-theory direction of
-  the purpose cluster graph.
+  the purpose cluster graph. CSV `Notes` values are first-class visual
+  metadata and must remain visible somewhere in each selected foundation. The
+  purpose cluster graph must keep dense node metadata out of overlapping SVG
+  labels and expose it through the detail panel instead.
 - Spreadsheet CSV exports are normalised to LF line endings for stable Git
   diffs; generated HTML artefacts strip trailing line whitespace; ODS remains a
   binary artefact.

@@ -6,9 +6,9 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 IPv6 visual representation options
-- Status: complete; AS141253 visual gallery has been pruned and deployed with
-  three selected foundations
-- Last updated: 2026-07-08 06:41 UTC
+- Status: complete locally; AS141253 visual foundations now preserve CSV notes
+  and avoid the reported branch-card and purpose-graph readability failures
+- Last updated: 2026-07-08 07:23 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -155,6 +155,14 @@
     `scripts/validate-mirror.py` now fails if removed model titles/files
     reappear. Commit `67e3ae5` is deployed via GitHub Pages run
     `28922937285`.
+- AS141253 visual foundation polish:
+  - Status: implemented locally
+  - Notes: `scripts/ipv6_visual_options.py` now renders CSV `Notes` in branch
+    cards, child cards, collapsible dendrogram summaries, and the purpose graph
+    detail panel. Branch-card chips/cards use bounded wrapping to avoid text
+    bleed on narrow screens. Purpose cluster graph suppresses per-node SVG
+    labels and keeps category labels plus click-to-inspect detail to avoid
+    selected-path label overlap.
 
 ## Execution Log
 
@@ -238,6 +246,10 @@
   - Action: Pushed generated Pages site and enabled GitHub Pages from `main` `/docs`.
   - Evidence: GitHub Pages API reported `status: built`, source `main` `/docs`, and `curl -I https://daryll-swer.github.io/daryllswer.com-archive/` returned HTTP 200.
   - Result: pass
+- 2026-07-08 07:23 UTC:
+  - Action: Fixed readability failures in the three selected AS141253 visual foundations.
+  - Evidence: Branch cards and collapsible dendrogram now render CSV notes; purpose cluster graph carries notes in graph data/detail panel and emits no per-node SVG labels.
+  - Result: pass; local Chrome/Playwright DOM QA, `make render-site`, `python3 -m py_compile scripts/*.py`, `git diff --check`, `make validate`, and `make scan-secrets` passed.
 - 2026-07-06 12:45 UTC:
   - Action: Implemented README command move, WordPress media filename/byte preservation, and CSV-backed AS141253 workbook generation.
   - Evidence: `README.md`, `AGENTS.md`, `docs/MIRRORING.md`, `scripts/sync-wordpress-posts.py`, `scripts/sheet_workbook.py`, `scripts/export-google-sheet.py`, `scripts/render-site.py`, `scripts/validate-mirror.py`, schemas, regenerated content/docs output.
@@ -555,20 +567,41 @@
     gallery at desktop/default width; three option cards/sections rendered,
     discarded model titles were absent, page-level `scrollWidth` equalled
     viewport width, and browser console errors were empty.
+  - AS141253 visual-foundation polish: local implementation at 2026-07-08
+    07:23 UTC added CSV note rendering to branch cards and collapsible
+    dendrogram, bounded branch-card chip/card wrapping, and overlap-safe
+    purpose-cluster detail-panel selection.
+  - Local Chrome/Playwright DOM QA against `http://127.0.0.1:4173/`: pass at
+    2026-07-08 07:22 UTC. Branch cards at 390 px had `scrollWidth=390`, 53
+    rendered child notes, and no page overflow. Collapsible dendrogram at
+    390 px had `scrollWidth=390`, 90 rendered tree notes, and no page
+    overflow. Purpose cluster graph at 1280 px had 0 graph node labels, 9
+    purpose labels, no detected graph text overlaps, and notes appeared in
+    the detail panel after selecting `2400:d960:804::/56`.
+  - `make render-site PYTHON=<bundled-python>`: pass at 2026-07-08 07:26 UTC;
+    generated 19 posts and refreshed sheet/Pages output.
+  - `python3 -m py_compile scripts/*.py`: pass at 2026-07-08 07:24 UTC.
+  - `git diff --check`: pass at 2026-07-08 07:26 UTC.
+  - `make validate PYTHON=<bundled-python>`: pass at 2026-07-08 07:26 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-08
+    07:26 UTC with 0 public-safety findings.
 - Not run:
-  - None for this pruning/deployment step.
+  - No live GitHub Pages verification yet for this visual-foundation polish;
+    commit/push/deploy is the next step.
 
 ## Next Pickup
 
 - Next action:
-  - Design the next-generation AS141253 IPv6 visual representation from the
+  - Commit, push, and verify the visual-foundation polish on GitHub Pages; then
+    design the next-generation AS141253 IPv6 visual representation from the
     three selected foundations.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for this pruning/deployment step.
+  - Live GitHub Pages verification is pending until after push/deploy.
 
 ## Completion Criteria
 

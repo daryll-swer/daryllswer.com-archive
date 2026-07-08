@@ -257,9 +257,11 @@ h2, h3 {
 }
 .prefix-chip {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
   gap: .35rem;
   min-height: 1.75rem;
+  min-width: 0;
   max-width: 100%;
   padding: .22rem .5rem;
   border: 1px solid var(--border);
@@ -267,14 +269,23 @@ h2, h3 {
   border-radius: 6px;
   background: var(--surface);
   color: var(--text);
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 .prefix-chip code {
+  min-width: 0;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: .86rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .chip-small { min-height: 1.45rem; padding: .12rem .36rem; font-size: .82rem; }
-.chip-label, .chip-count { color: var(--muted); font-size: .82rem; }
+.chip-label, .chip-count {
+  min-width: 0;
+  color: var(--muted);
+  font-size: .82rem;
+  overflow-wrap: anywhere;
+}
 .reserved { border-left-color: var(--reserved); opacity: .78; }
 .loopback { border-left-color: var(--loopback); }
 .oob-management { border-left-color: var(--oob); }
@@ -288,6 +299,7 @@ h2, h3 {
   display: flex;
   flex-wrap: wrap;
   gap: .35rem;
+  min-width: 0;
 }
 footer { color: var(--muted); font-size: .92rem; }
 @media (max-width: 760px) {
@@ -298,23 +310,54 @@ footer { color: var(--muted); font-size: .92rem; }
 
 .branch-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
   gap: .85rem;
 }
 .branch-card {
   display: grid;
   gap: .65rem;
+  align-content: start;
+  min-width: 0;
+  overflow: hidden;
   padding: .85rem;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface-alt);
 }
 .branch-card h3 { margin: 0; font-size: 1.05rem; }
-.branch-card p { margin: 0; color: var(--muted); }
+.branch-card p { margin: 0; color: var(--muted); overflow-wrap: anywhere; }
 .child-preview {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .35rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: .5rem;
+  min-width: 0;
+  align-items: start;
+}
+.child-item {
+  display: grid;
+  gap: .28rem;
+  min-width: 0;
+  padding: .42rem;
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+.child-item .prefix-chip {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: start;
+  width: 100%;
+}
+.branch-note,
+.child-note,
+.tree-note {
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+}
+.child-note {
+  padding-left: .2rem;
 }
 .more-count {
   display: inline-flex;
@@ -364,6 +407,13 @@ footer { color: var(--muted); font-size: .92rem; }
   font-family: var(--font-body);
   font-size: .74rem;
   pointer-events: none;
+}
+.graph-category-label {
+  font-weight: 800;
+  paint-order: stroke;
+  stroke: var(--surface-alt);
+  stroke-width: 5px;
+  stroke-linejoin: round;
 }
 .graph-edge {
   stroke: color-mix(in srgb, var(--grid) 72%, transparent);
@@ -462,14 +512,21 @@ footer { color: var(--muted); font-size: .92rem; }
   font-size: .9rem;
 }
 .detail-grid div {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(6.5rem, max-content) minmax(0, 1fr);
   gap: .8rem;
   border-bottom: 1px solid var(--border);
   padding-bottom: .25rem;
 }
 .detail-grid dt { color: var(--muted); }
-.detail-grid dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+.detail-grid dd { min-width: 0; margin: 0; text-align: right; overflow-wrap: anywhere; }
+.detail-grid code { overflow-wrap: anywhere; word-break: break-word; }
+.detail-grid .detail-notes {
+  grid-template-columns: 1fr;
+}
+.detail-grid .detail-notes dd {
+  text-align: left;
+}
 .tree-toolbar {
   display: flex;
   align-items: center;
@@ -499,11 +556,12 @@ footer { color: var(--muted); font-size: .92rem; }
 }
 .tree-node summary {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: .5rem;
   min-height: 2rem;
   cursor: pointer;
   list-style: none;
+  flex-wrap: wrap;
 }
 .tree-node summary::-webkit-details-marker { display: none; }
 .tree-node summary::before {
@@ -516,9 +574,14 @@ footer { color: var(--muted); font-size: .92rem; }
   border-radius: 999px;
   color: var(--muted);
   flex: 0 0 auto;
+  margin-top: .08rem;
 }
 .tree-node[open] > summary::before { content: "-"; }
 .tree-node.leaf summary::before { content: ""; border-style: dashed; }
+.tree-note {
+  flex: 1 1 18rem;
+  margin: .12rem 0 0;
+}
 @media (max-width: 760px) {
   .interactive-grid { grid-template-columns: 1fr; }
   .branch-grid { grid-template-columns: 1fr; }
@@ -549,7 +612,7 @@ footer { color: var(--muted); font-size: .92rem; }
 <section class="option-section" id="branch-cards">
   <h2>Option 1: Branch cards</h2>
   <p class="summary">This favours operator readability over total density: each meaningful branch keeps its lineage, intent, notes, and immediate children together.</p>
-  <div class="visual-frame"><div class="branch-grid"><article class="branch-card"><h3>Delhi-01</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span></div><p>Sliced into /48 per function</p><div class="child-preview"><span class="prefix-chip loopback chip-small"><code>2400:d960:800::/48</code><span class="chip-label">Loopback</span><span class="chip-count">11 children</span></span><span class="prefix-chip oob-management chip-small"><code>2400:d960:801::/48</code><span class="chip-label">OOB</span><span class="chip-count">16 children</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:802::/48</code><span class="chip-label">Peering - PNI, PtP etc.</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:803::/48</code><span class="chip-label">PtP/Interconnections</span><span class="chip-count">16 children</span></span><span class="prefix-chip content-cdn chip-small"><code>2400:d960:804::/48</code><span class="chip-label">For Caching Nodes</span><span class="chip-count">9 children</span></span><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960:805::/48</code><span class="chip-label">Routed pool for Docker/Whatever - Example</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:806::/48</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:807::/48</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:808::/48</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:809::/48</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:80a::/48</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:80b::/48</code><span class="chip-label">Reserved</span></span><span class="more-count">+4 more</span></div></article><article class="branch-card"><h3>Loopback</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip loopback chip-small"><code>2400:d960:800::/48</code><span class="chip-label">Loopback</span></span></div><p>Sliced into /64 per row of device type</p><div class="child-preview"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800::/64</code><span class="chip-label">For Edge devices</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:1::/64</code><span class="chip-label">For L3 Dist switches</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:2::/64</code><span class="chip-label">For Transport Switches</span></span><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:3::/64</code><span class="chip-label">For Future NAT/QoE (three tier architecture) devices</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:4::/64</code><span class="chip-label">For BNGs</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:5::/64</code><span class="chip-label">For Future dedicated P routers</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:6::/64</code><span class="chip-label">For Future dedicated PE routers</span></span><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:7::/64</code><span class="chip-label">For OLTs</span></span><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:8::/64</code><span class="chip-label">For Wireless AP/Radio</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:800:9::/64</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:800:a::/64</code><span class="chip-label">Reserved</span></span></div></article><article class="branch-card"><h3>OOB</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip oob-management chip-small"><code>2400:d960:801::/48</code><span class="chip-label">OOB</span></span></div><p>Sliced into /52 per OOB sub-function</p><div class="child-preview"><span class="prefix-chip loopback chip-small"><code>2400:d960:801::/52</code><span class="chip-label">Loopback</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:801:1000::/52</code><span class="chip-label">PtP/Interconnects</span></span><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:2000::/52</code><span class="chip-label">Per-Rack OOB Access for MGMT</span></span><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:3000::/52</code><span class="chip-label">VPN/Employee Access directly via OOB-Edge</span></span><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:4000::/52</code><span class="chip-label">Cloud interconnect via VPN for MGMT services</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:5000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:6000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:7000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:8000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:9000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:a000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:801:b000::/52</code><span class="chip-label">Reserved</span></span><span class="more-count">+4 more</span></div></article><article class="branch-card"><h3>PtP/Interconnections</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:803::/48</code><span class="chip-label">PtP/Interconnections</span></span></div><p>Sliced into /52s per device type on row basis</p><div class="child-preview"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803::/52</code><span class="chip-label">For Edge devices</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:1000::/52</code><span class="chip-label">For L3 Dist switches</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:2000::/52</code><span class="chip-label">For Transport Switches</span></span><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:3000::/52</code><span class="chip-label">For Future NAT/QoE (three tier architecture) devices</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:4000::/52</code><span class="chip-label">For BNGs</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:5000::/52</code><span class="chip-label">For Future dedicated P routers</span></span><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:6000::/52</code><span class="chip-label">For Future dedicated PE routers</span></span><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:7000::/52</code><span class="chip-label">For OLTs</span></span><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:8000::/52</code><span class="chip-label">For Wireless AP/Radio</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:803:9000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:803:a000::/52</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:803:b000::/52</code><span class="chip-label">Reserved</span></span><span class="more-count">+4 more</span></div></article><article class="branch-card"><h3>For Caching Nodes</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip content-cdn chip-small"><code>2400:d960:804::/48</code><span class="chip-label">For Caching Nodes</span></span></div><p>Sliced into /56 per CDN</p><div class="child-preview"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804::/56</code><span class="chip-label">Akamai</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:100::/56</code><span class="chip-label">Amazon</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:200::/56</code><span class="chip-label">Cloudflare</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:300::/56</code><span class="chip-label">Edgio</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:400::/56</code><span class="chip-label">Google</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:500::/56</code><span class="chip-label">Meta</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:600::/56</code><span class="chip-label">Netflix</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:804:700::/56</code><span class="chip-label">Reserved</span></span><span class="prefix-chip reserved chip-small"><code>2400:d960:804:800::/56</code><span class="chip-label">Reserved</span></span></div></article></div></div>
+  <div class="visual-frame"><div class="branch-grid"><article class="branch-card"><h3>Delhi-01</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span></div><p class="branch-note">Sliced into /48 per function</p><div class="child-preview"><div class="child-item"><span class="prefix-chip loopback chip-small"><code>2400:d960:800::/48</code><span class="chip-label">Loopback</span><span class="chip-count">11 children</span></span><p class="child-note">Sliced into /64 per row of device type</p></div><div class="child-item"><span class="prefix-chip oob-management chip-small"><code>2400:d960:801::/48</code><span class="chip-label">OOB</span><span class="chip-count">16 children</span></span><p class="child-note">Sliced into /52 per OOB sub-function</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:802::/48</code><span class="chip-label">Peering - PNI, PtP etc.</span></span><p class="child-note">Sliced into /64 per peer</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:803::/48</code><span class="chip-label">PtP/Interconnections</span><span class="chip-count">16 children</span></span><p class="child-note">Sliced into /52s per device type on row basis</p></div><div class="child-item"><span class="prefix-chip content-cdn chip-small"><code>2400:d960:804::/48</code><span class="chip-label">For Caching Nodes</span><span class="chip-count">9 children</span></span><p class="child-note">Sliced into /56 per CDN</p></div><div class="child-item"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960:805::/48</code><span class="chip-label">Routed pool for Docker/Whatever - Example</span></span><p class="child-note">Slice into /64 - Example</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:806::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:807::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:808::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:809::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80a::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:80b::/48</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><span class="more-count">+4 more</span></div></article><article class="branch-card"><h3>Loopback</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip loopback chip-small"><code>2400:d960:800::/48</code><span class="chip-label">Loopback</span></span></div><p class="branch-note">Sliced into /64 per row of device type</p><div class="child-preview"><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800::/64</code><span class="chip-label">For Edge devices</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:1::/64</code><span class="chip-label">For L3 Dist switches</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:2::/64</code><span class="chip-label">For Transport Switches</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:3::/64</code><span class="chip-label">For Future NAT/QoE (three tier architecture) devices</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:4::/64</code><span class="chip-label">For BNGs</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:5::/64</code><span class="chip-label">For Future dedicated P routers</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:800:6::/64</code><span class="chip-label">For Future dedicated PE routers</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:7::/64</code><span class="chip-label">For OLTs</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:800:8::/64</code><span class="chip-label">For Wireless AP/Radio</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:800:9::/64</code><span class="chip-label">Reserved</span></span><p class="child-note">Sliced into /128s per device</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:800:a::/64</code><span class="chip-label">Reserved</span></span><p class="child-note">Sliced into /128s per device</p></div></div></article><article class="branch-card"><h3>OOB</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip oob-management chip-small"><code>2400:d960:801::/48</code><span class="chip-label">OOB</span></span></div><p class="branch-note">Sliced into /52 per OOB sub-function</p><div class="child-preview"><div class="child-item"><span class="prefix-chip loopback chip-small"><code>2400:d960:801::/52</code><span class="chip-label">Loopback</span></span><p class="child-note">/56 per row of device type</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:801:1000::/52</code><span class="chip-label">PtP/Interconnects</span></span><p class="child-note">/56 per row of device type</p></div><div class="child-item"><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:2000::/52</code><span class="chip-label">Per-Rack OOB Access for MGMT</span></span><p class="child-note">Sliced into /56 per L3 distribution box, /64 per rack-VLAN</p></div><div class="child-item"><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:3000::/52</code><span class="chip-label">VPN/Employee Access directly via OOB-Edge</span></span><p class="child-note">Sliced into /64 per VPN instance</p></div><div class="child-item"><span class="prefix-chip oob-management chip-small"><code>2400:d960:801:4000::/52</code><span class="chip-label">Cloud interconnect via VPN for MGMT services</span></span><p class="child-note">Sliced into /64 per VPN instance</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:5000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:6000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:7000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:8000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:9000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:a000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:801:b000::/52</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><span class="more-count">+4 more</span></div></article><article class="branch-card"><h3>PtP/Interconnections</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip interconnect chip-small"><code>2400:d960:803::/48</code><span class="chip-label">PtP/Interconnections</span></span></div><p class="branch-note">Sliced into /52s per device type on row basis</p><div class="child-preview"><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803::/52</code><span class="chip-label">For Edge devices</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:1000::/52</code><span class="chip-label">For L3 Dist switches</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:2000::/52</code><span class="chip-label">For Transport Switches</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:3000::/52</code><span class="chip-label">For Future NAT/QoE (three tier architecture) devices</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:4000::/52</code><span class="chip-label">For BNGs</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:5000::/52</code><span class="chip-label">For Future dedicated P routers</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip network-device-roles chip-small"><code>2400:d960:803:6000::/52</code><span class="chip-label">For Future dedicated PE routers</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:7000::/52</code><span class="chip-label">For OLTs</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip other-planning chip-small"><code>2400:d960:803:8000::/52</code><span class="chip-label">For Wireless AP/Radio</span></span><p class="child-note">Sliced directly into /64s, use in any order for each row of device</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:9000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:a000::/52</code><span class="chip-label">Reserved</span></span></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:803:b000::/52</code><span class="chip-label">Reserved</span></span></div><span class="more-count">+4 more</span></div></article><article class="branch-card"><h3>For Caching Nodes</h3><div class="path-summary"><span class="prefix-chip service-routed-pools chip-small"><code>2400:d960::/32</code><span class="chip-label">Sliced into /34s per Zone</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960::/34</code><span class="chip-label">North India</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/40</code><span class="chip-label">Delhi</span></span><span class="prefix-chip geography-sites chip-small"><code>2400:d960:800::/44</code><span class="chip-label">Delhi-01</span></span><span class="prefix-chip content-cdn chip-small"><code>2400:d960:804::/48</code><span class="chip-label">For Caching Nodes</span></span></div><p class="branch-note">Sliced into /56 per CDN</p><div class="child-preview"><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804::/56</code><span class="chip-label">Akamai</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:100::/56</code><span class="chip-label">Amazon</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:200::/56</code><span class="chip-label">Cloudflare</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:300::/56</code><span class="chip-label">Edgio</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:400::/56</code><span class="chip-label">Google</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:500::/56</code><span class="chip-label">Meta</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip interconnect chip-small"><code>2400:d960:804:600::/56</code><span class="chip-label">Netflix</span></span><p class="child-note">Slice into /64 and use as required for both PtP/Interconnect and for routed pool</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:804:700::/56</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div><div class="child-item"><span class="prefix-chip reserved chip-small"><code>2400:d960:804:800::/56</code><span class="chip-label">Reserved</span></span><p class="child-note">Reserved</p></div></div></article></div></div>
 </section>
 
   </main>
@@ -583,6 +646,7 @@ footer { color: var(--muted); font-size: .92rem; }
       <div><dt>Purpose</dt><dd>${esc(node.category)}</dd></div>
       <div><dt>Children</dt><dd>${esc(node.childCount)}</dd></div>
       <div><dt>Parent</dt><dd>${node.parent ? `<code>${esc(node.parent)}</code>` : "root"}</dd></div>
+      ${node.notes ? `<div class="detail-notes"><dt>Notes</dt><dd>${esc(node.notes)}</dd></div>` : ""}
     </dl>
   `;
 

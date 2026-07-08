@@ -6,11 +6,12 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; AS141253 IPv6 visual representation gallery has been
-  narrowed and deployed with three selected CSV-derived foundations: branch
-  cards, collapsible dendrogram, and purpose cluster graph
+- Status: complete locally; AS141253 selected visual foundations now preserve
+  CSV notes, avoid branch-card text bleed, and avoid purpose-graph label
+  overlap while keeping branch cards, collapsible dendrogram, and purpose
+  cluster graph as the next-model foundations
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-08 06:41 UTC
+- Last updated: 2026-07-08 07:23 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -106,12 +107,22 @@
   - Complete: commit `67e3ae5` was pushed to `main`; GitHub Pages deployment
     run `28922937285` completed successfully; live static and browser checks
     passed for the pruned three-foundation gallery.
+  - Complete locally: branch-card visual foundations now render CSV `Notes`
+    values for parent and child prefixes, use bounded child cards, and wrap
+    prefix chips so mobile/narrow views do not bleed text to the card edge.
+  - Complete locally: collapsible dendrogram summaries now render CSV `Notes`
+    values beside the matching prefix node.
+  - Complete locally: purpose cluster graph data now carries CSV `notes` into
+    the detail panel, while per-node SVG labels are suppressed in favour of
+    persistent purpose labels plus click-to-inspect detail. This removes the
+    observed label-overlap failure mode.
 - Last material update:
-  - 2026-07-08 06:41 UTC Pushed `67e3ae5`, verified Pages deployment
-    `28922937285`, and live-checked the pruned three-foundation gallery plus
-    selected/discarded standalone routes.
+  - 2026-07-08 07:23 UTC Implemented local visual-foundation polish for
+    branch-card notes/wrapping, dendrogram notes, and purpose-cluster
+    overlap-safe selection details.
 - Next pickup action:
-  - Design the next-generation AS141253 IPv6 visual representation from the
+  - Commit, push, and deploy the visual-foundation polish; then design the
+    next-generation AS141253 IPv6 visual representation from the
     three selected foundations: branch-card at-a-glance readability,
     dendrogram expand/collapse navigation, and purpose-cluster graph
     aesthetics.
@@ -215,6 +226,7 @@
 - [x] 2026-07-08 06:32 UTC Pruned AS141253 visual-options source and Pages artefacts to the three selected foundations: branch cards, collapsible dendrogram, and purpose cluster graph.
 - [x] 2026-07-08 06:37 UTC Local validation, public-safety scan, browser QA, and removed-page 404 checks passed for the pruned three-foundation gallery.
 - [x] 2026-07-08 06:41 UTC Pushed `67e3ae5`, Pages deployment `28922937285` succeeded, and live static/browser checks passed for selected and discarded visual-option routes.
+- [x] 2026-07-08 07:23 UTC Added CSV note rendering to branch cards and collapsible dendrogram, tightened branch-card chip/card wrapping, and removed per-node SVG labels from the purpose cluster graph in favour of notes-aware detail-panel inspection.
 
 ## Decision Log
 
@@ -332,6 +344,23 @@
   - Impact: `scripts/ipv6_visual_options.py` generates a comparison gallery
     and eleven standalone static/interactive HTML/CSS/JS option pages from the
     CSV-derived prefix hierarchy.
+- Decision: Render CSV notes in selected AS141253 visual foundations.
+  - Rationale: The `Notes` column contains operational intent such as slicing
+    rules, so a visual model that hides it is less readable than the source
+    workbook.
+  - Date/Author: 2026-07-08, user/Codex
+  - Status: implemented locally
+  - Impact: Branch cards render parent and child notes; collapsible dendrogram
+    summaries render node notes; purpose cluster graph shows notes in the
+    selected-node detail panel.
+- Decision: Keep purpose-cluster graph node text out of the SVG plot area.
+  - Rationale: Per-node labels overlap when selected paths are highlighted in
+    a dense graph; persistent purpose labels plus click-to-inspect details keep
+    the artwork readable without losing node metadata.
+  - Date/Author: 2026-07-08, user/Codex
+  - Status: implemented locally
+  - Impact: `scripts/ipv6_visual_options.py` emits category labels in the graph
+    and moves selected node prefix/label/notes into the side detail panel.
 
 ## Validation and Acceptance
 
@@ -450,6 +479,22 @@
     gallery at desktop/default width; three option cards/sections rendered,
     discarded model titles were absent, page-level `scrollWidth` equalled
     viewport width, and browser console errors were empty.
+  - Local Chrome/Playwright DOM QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-08 07:22 UTC for the three selected visual foundations and gallery.
+    Branch cards at 390 px had `scrollWidth=390`, 53 rendered child notes, and
+    no page overflow. Collapsible dendrogram at 390 px had `scrollWidth=390`,
+    90 rendered tree notes, and no page overflow. Purpose cluster graph at
+    1280 px had 0 graph node labels, 9 purpose labels, no detected graph text
+    overlaps, and notes appeared in the detail panel after clicking
+    `2400:d960:804::/56`.
+  - `make render-site PYTHON=<bundled-python>`: passed at 2026-07-08 07:26 UTC;
+    generated 19 posts and refreshed sheet/Pages output.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 07:24 UTC.
+  - `git diff --check`: passed at 2026-07-08 07:26 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08 07:26 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
+    07:26 UTC with 0 public-safety findings.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`

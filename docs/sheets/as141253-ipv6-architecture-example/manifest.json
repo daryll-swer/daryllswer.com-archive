@@ -302,38 +302,38 @@
   "title": "AS141253's IPv6 Architecture Example - Daryll Swer - Google Drive",
   "visual_options": {
     "index": {
-      "bytes": 194582,
+      "bytes": 209993,
       "content_type": "text/html; charset=utf-8",
       "path": "data/sheets/as141253-ipv6-architecture-example/visual-options.html",
-      "sha256": "4c74f8329beaa66ac08d82c20980a3d766e00c13f3685e6bf158aa5e3728e415"
+      "sha256": "96c6cce9448020547006f9437cee42fd4d001562262582b6c2c16f5357d732a2"
     },
     "model": "generated_html_css_visual_options",
     "option_count": 3,
     "options": [
       {
-        "bytes": 32486,
+        "bytes": 39093,
         "content_type": "text/html; charset=utf-8",
         "id": "branch-cards",
         "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-branch-cards.html",
-        "sha256": "2615c5a10ed9af135064dc8746d9de78ee60c90db8e189cf10dfb22d15b7d2a9",
+        "sha256": "6aeec7e49b96c2560809aa37020986b617c619d287cb975f0ac48803b5e79b9d",
         "summary": "Operational branches with ancestry, child allocations, and notes grouped together.",
         "title": "Branch cards"
       },
       {
-        "bytes": 52907,
+        "bytes": 59173,
         "content_type": "text/html; charset=utf-8",
         "id": "collapsible-dendrogram",
         "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-collapsible-dendrogram.html",
-        "sha256": "014291b502085db3bbd0a56e9e0153ea86538186d7dfac0b181e53dadf198ff6",
+        "sha256": "f297b5a10ae075e876bf876c146f5765c97988a014933336c8053abe3f35f9a2",
         "summary": "Expandable left-to-right hierarchy so readers can reveal only the branch they are inspecting.",
         "title": "Collapsible dendrogram"
       },
       {
-        "bytes": 148147,
+        "bytes": 153691,
         "content_type": "text/html; charset=utf-8",
         "id": "purpose-cluster-graph",
         "path": "data/sheets/as141253-ipv6-architecture-example/visual-option-purpose-cluster-graph.html",
-        "sha256": "b5da59b9f2e557de68c490e7cdc5ae0271755cfeab7a9a062c705a2998bd7efb",
+        "sha256": "c5264373ed7576ee892677707bf53042576ff13c40e9df9ee2f96c2969fcac57",
         "summary": "Interactive node-link graph clustered by operational purpose rather than pure prefix depth.",
         "title": "Purpose cluster graph"
       }
