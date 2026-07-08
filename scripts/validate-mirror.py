@@ -566,6 +566,14 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
             ]:
                 if marker not in visual_model_html:
                     errors.append(f"GitHub Pages AS141253 visual model page missing `{marker}`")
+            for marker in [
+                'id="at-a-glance-allocation"',
+                'id="operational-branches"',
+                'id="purpose-map"',
+                'id="full-hierarchy"',
+            ]:
+                if marker not in visual_model_html:
+                    errors.append(f"GitHub Pages AS141253 visual model page missing section anchor `{marker}`")
             if "../../../assets/fonts/" in visual_model_html:
                 errors.append("GitHub Pages AS141253 visual model page has unrewritten source font path")
         visual_index = sheet_page.parent / "visual-options.html"

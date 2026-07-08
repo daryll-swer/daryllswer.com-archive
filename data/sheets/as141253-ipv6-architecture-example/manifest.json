@@ -23,17 +23,17 @@
     "node_count": 153,
     "source": "CSV Prefix columns"
   },
-  "generated_at": "2026-07-08T18:02:02+00:00",
+  "generated_at": "2026-07-08T18:21:35+00:00",
   "ods": {
     "bytes": 180747,
     "content_type": "application/vnd.oasis.opendocument.spreadsheet",
     "path": "data/sheets/as141253-ipv6-architecture-example/AS141253-ipv6-architecture-example.ods",
-    "sha256": "769fa602fe580caf614e791cea961b8c12fd416ab385b8f4ea4c5c5515b19247"
+    "sha256": "eb57a714e3e33b620a770ebdd6885ee6ca32da772276c7382a34b536937a0810"
   },
   "published_workbook_html": {
-    "bytes": 45827,
+    "bytes": 45805,
     "path": "data/sheets/as141253-ipv6-architecture-example/html/published-workbook.html",
-    "sha256": "9eefac921439fa1835a2a4e17547ca33640db0526d062ef4961a65c8e8be9ab5"
+    "sha256": "14328ac0a5d2829e087bae9bf05b082ee8a48ac26cf5bdeac33665cc83ebe7b7"
   },
   "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml",
   "tabs": [
@@ -58,10 +58,10 @@
       },
       "gid": "0",
       "html": {
-        "bytes": 55584,
+        "bytes": 55729,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960double-colon-32.html",
-        "sha256": "e1e8d2c5300ef5163851c9a5110aa8b308fdddc816bc0b0e825bc1e5cbe8838e",
+        "sha256": "8dbd13c1611945769d903e45687dd3d605ef74be5e374761c9ddb30762ad22b9",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=0"
       },
       "name": "2400:d960::/32"
@@ -87,10 +87,10 @@
       },
       "gid": "268073512",
       "html": {
-        "bytes": 44975,
+        "bytes": 44986,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960double-colon-32-34.html",
-        "sha256": "ced9039499afdf33969e73ede37158647a8b9a0932382152bd20680b576615b7",
+        "sha256": "206315d0cf34eaa31c660bca629dd7167c89d4658d324ce58804b8ca18b8ac76",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=268073512"
       },
       "name": "2400:d960::/32-34"
@@ -116,10 +116,10 @@
       },
       "gid": "1059737347",
       "html": {
-        "bytes": 63732,
+        "bytes": 63784,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960double-colon-34-40.html",
-        "sha256": "c1ffcbb4c17ebefac029b83baa5b37099348812faf38b94cf9cdac1ff46704df",
+        "sha256": "9008976fad4d9c60de767751e19320cdf8dcaa45d71707303dc3ad723af7f167",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1059737347"
       },
       "name": "2400:d960::/34-40"
@@ -145,10 +145,10 @@
       },
       "gid": "1582961520",
       "html": {
-        "bytes": 47921,
+        "bytes": 47945,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-800double-colon-40-44.html",
-        "sha256": "d9235ddf0a5d4c8e47cf0a96321c60d243a86186151d9780642f5b2d0bb9d0db",
+        "sha256": "9823483705f36d91f806e4a9063c298beb36cc0da0375862de4280b2fbb9d94c",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1582961520"
       },
       "name": "2400:d960:800::/40-44"
@@ -174,10 +174,10 @@
       },
       "gid": "1259404302",
       "html": {
-        "bytes": 48734,
+        "bytes": 48764,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-800double-colon-44-48.html",
-        "sha256": "4155b03d2427323220feaec2e06c26233d28d4055cb5a5eadd92bf2b620808ed",
+        "sha256": "1b2f479a577f6e3b59ce8482c6b26a8c051830ecdb004bea880def6aa66023f2",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1259404302"
       },
       "name": "2400:d960:800::/44-48"
@@ -203,10 +203,10 @@
       },
       "gid": "1315535264",
       "html": {
-        "bytes": 47912,
+        "bytes": 47749,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-800double-colon-48-64.html",
-        "sha256": "9bace9a33d9cf11ec83109c93067179b57bc215912c15559bd8414bc62433942",
+        "sha256": "40fc354a554da5d91b09a6daf3c927bb63dbba0879c151190eeebc664bb622af",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1315535264"
       },
       "name": "2400:d960:800::/48-64"
@@ -232,10 +232,10 @@
       },
       "gid": "638030841",
       "html": {
-        "bytes": 48784,
+        "bytes": 48702,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-801double-colon-48-52.html",
-        "sha256": "8269ef50856badedd4dcf07f68933fb1592a3b33b3a5b572dfea2f25390673a4",
+        "sha256": "5673133a27849fc5c8b7f77e77d997fc70b570e04f510dd798c1889d5a23b005",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=638030841"
       },
       "name": "2400:d960:801::/48-52"
@@ -261,10 +261,10 @@
       },
       "gid": "309733296",
       "html": {
-        "bytes": 48858,
+        "bytes": 48814,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-803double-colon-48-52.html",
-        "sha256": "efd331b6404c9769cfdc86a06d0f813b078464571685d6c383c7bd1dcb3b49c9",
+        "sha256": "9663a500f06cc529115e484d7f2473b706d5962ee786d03da44d55038ff95673",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=309733296"
       },
       "name": "2400:d960:803::/48-52"
@@ -290,10 +290,10 @@
       },
       "gid": "1037809711",
       "html": {
-        "bytes": 47022,
+        "bytes": 47002,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-804double-colon-48-56.html",
-        "sha256": "3571321dda09661cfbfe7d4fc68680dd823952fe54576b613a4d30c4832575f0",
+        "sha256": "27d5533e427046fede0e12718ec034625219f19e5c8686d4e34dbabb8b1231bc",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1037809711"
       },
       "name": "2400:d960:804::/48-56"
@@ -301,11 +301,11 @@
   ],
   "title": "AS141253's IPv6 Architecture Example - Daryll Swer - Google Drive",
   "visual_model": {
-    "bytes": 123330,
+    "bytes": 123341,
     "content_type": "text/html; charset=utf-8",
     "id": "visual-model",
     "path": "data/sheets/as141253-ipv6-architecture-example/visual.html",
-    "sha256": "becf8f67f371e61c88205ad7702a1d706f22e6a2f9e415b47a86b9f11fd01bfc",
+    "sha256": "81aa63fbe63d14b4cbd9b65b3b10fa54105c364edc69f73dfc202857ae70c65c",
     "summary": "Primary mostly static hybrid dashboard for the AS141253 IPv6 allocation model.",
     "title": "AS141253 IPv6 Visual Model"
   },
@@ -349,11 +349,11 @@
     ],
     "source": "CSV Prefix columns and rooted IPv6 prefix containment tree",
     "visual_model": {
-      "bytes": 123330,
+      "bytes": 123341,
       "content_type": "text/html; charset=utf-8",
       "id": "visual-model",
       "path": "data/sheets/as141253-ipv6-architecture-example/visual.html",
-      "sha256": "becf8f67f371e61c88205ad7702a1d706f22e6a2f9e415b47a86b9f11fd01bfc",
+      "sha256": "81aa63fbe63d14b4cbd9b65b3b10fa54105c364edc69f73dfc202857ae70c65c",
       "summary": "Primary mostly static hybrid dashboard for the AS141253 IPv6 allocation model.",
       "title": "AS141253 IPv6 Visual Model"
     }
