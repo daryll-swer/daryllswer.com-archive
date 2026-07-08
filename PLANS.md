@@ -6,11 +6,11 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete locally; AS141253 visual foundations now pass the expanded
-  industry-aligned responsive QA matrix after fixing a 360 px metrics-grid
-  overflow
+- Status: complete and deployed; AS141253 visual foundations now pass the
+  expanded industry-aligned responsive QA matrix after fixing a 360 px
+  metrics-grid overflow
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-08 17:21 UTC
+- Last updated: 2026-07-08 17:29 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -131,25 +131,29 @@
   - Complete: commit `32fad32` was pushed to `main`; GitHub Pages deployment
     run `28926454066` completed successfully; live static and browser checks
     verified branch disclosures and responsive behaviour.
-  - Complete locally: expanded responsive QA initially found a `360px`
+  - Complete: expanded responsive QA initially found a `360px`
     page-level overflow caused by the shared metrics grid, not by the visual
     sections. `scripts/ipv6_visual_options.py` now lets metrics cards and
     metric values shrink/wrap with `min-width: 0`, `minmax(min(100%, 10rem),
     1fr)`, and `overflow-wrap: anywhere`.
-  - Complete locally: the expanded matrix now passes for 40 CSS-pixel widths
+  - Complete: the expanded matrix now passes for 40 CSS-pixel widths
     across all four visual pages: 320, 360, 390, 430, 479/480, 575/576,
     599/600, 639/640, 759/760, 767/768, 899/900, 979/980, 991/992,
     1023/1024, 1199/1200, 1279/1280, 1366, 1399/1400, 1439/1440, 1535/1536,
     1599/1600, 1919/1920, and 2560.
+  - Complete: commit `d7bade5` was pushed to `main`; GitHub Pages deployment
+    run `28962375073` completed successfully; live static checks and
+    Chrome/Playwright browser checks passed for the four selected visual pages.
 - Last material update:
-  - 2026-07-08 17:21 UTC Fixed the 360 px metrics-grid overflow and verified
-    160 local page/viewport combinations with zero failures.
+  - 2026-07-08 17:29 UTC Pushed and live-verified the expanded responsive
+    matrix fix on GitHub Pages.
 - Next pickup action:
-  - Commit, push, deploy, and live-check the expanded responsive-matrix fix.
+  - Design the next-generation AS141253 IPv6 visual representation from the
+    three selected foundations.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - Live GitHub Pages verification is pending until after push/deploy.
+  - None for the expanded responsive-matrix fix.
 
 ## Purpose / Big Picture
 
@@ -251,6 +255,7 @@
 - [x] 2026-07-08 07:44 UTC Replaced inert branch-card `+N more` labels with native `details`/`summary` disclosures and locally verified all selected visual foundations across phone, tablet, desktop, and wide-display viewport classes.
 - [x] 2026-07-08 07:49 UTC Pushed `32fad32`, Pages deployment `28926454066` succeeded, and live static/browser checks passed for branch-card disclosures plus responsive behaviour.
 - [x] 2026-07-08 17:21 UTC Ran the expanded responsive matrix, found and fixed the 360 px metrics-grid overflow, and verified 160 local page/viewport combinations with zero failures.
+- [x] 2026-07-08 17:29 UTC Pushed `d7bade5`, Pages deployment `28962375073` succeeded, and live static/browser checks passed for the expanded responsive-matrix fix.
 
 ## Decision Log
 
@@ -586,6 +591,19 @@
     cause was the shared metrics grid root-prefix card. After the metrics CSS
     fix, the rerun passed at 2026-07-08 17:20 UTC across 160 combinations:
     four visual pages by 40 CSS-pixel widths. Failures: 0.
+  - GitHub Pages deployment for `d7bade5`: passed at 2026-07-08 17:26 UTC;
+    pages-build-deployment run `28962375073` completed successfully.
+  - Live static checks: passed at 2026-07-08 17:27 UTC for
+    `visual-option-branch-cards.html`,
+    `visual-option-collapsible-dendrogram.html`,
+    `visual-option-purpose-cluster-graph.html`, and `visual-options.html`.
+    The deployed CSS included the metrics grid/wrapping fix, branch-card pages
+    had `details.branch-more` controls, and graph node labels remained 0.
+  - Live Chrome/Playwright DOM QA against GitHub Pages: passed at
+    2026-07-08 17:28 UTC at 360, 390, 768, 1440, and 1920 px widths. All four
+    visual pages had no page-level horizontal overflow, branch-card disclosure
+    controls opened/closed, graph node labels stayed absent after click
+    interactions, and SVG text overlaps were 0.
   - `make render-site PYTHON=<bundled-python>`: passed at 2026-07-08 17:22 UTC;
     generated 19 posts and refreshed generated Pages output.
   - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 17:22 UTC.
