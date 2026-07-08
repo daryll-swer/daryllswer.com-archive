@@ -6,11 +6,11 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; AS141253 IPv6 visual representation options now include
-  six additional interactive candidates generated from CSV/hierarchy data,
-  pushed, deployed, and ready for owner selection
+- Status: in progress; AS141253 IPv6 visual representation has been narrowed
+  to three selected CSV-derived foundations: branch cards, collapsible
+  dendrogram, and purpose cluster graph
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-07 21:43 UTC
+- Last updated: 2026-07-08 06:37 UTC
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -92,24 +92,30 @@
   - Complete: commit `43ce2ac` was pushed to `main`; GitHub Pages deployment
     run `28883547390` completed successfully; live static and browser checks
     passed for the visual-options gallery and five standalone pages.
-  - Complete locally: AS141253 visual options now include eleven generated
-    prototypes. The six new interactive candidates are radial prefix graph,
-    collapsible dendrogram, sunburst allocation map, animated allocation
-    walkthrough, purpose cluster graph, and searchable focus graph.
-  - Complete: commit `bce0d98` was pushed to `main`; GitHub Pages deployment
-    run `28900695345` completed successfully; live static and browser checks
-    passed for the expanded eleven-option gallery.
+  - Complete locally: AS141253 visual options have been pruned from eleven
+    exploratory generated models down to three owner-selected foundations:
+    branch cards, collapsible dendrogram, and purpose cluster graph. The
+    discarded standalone source and Pages HTML files were deleted.
+  - Complete locally: `scripts/ipv6_visual_options.py` now only generates the
+    selected foundations, and `scripts/validate-mirror.py` rejects stale
+    discarded option titles/files if they reappear.
+  - Complete locally: source artefacts and generated Pages output were
+    regenerated from existing CSV data after the public Google Sheet HTML fetch
+    timed out. No canonical sheet content update was required for this visual
+    pruning step.
 - Last material update:
-  - 2026-07-07 21:43 UTC Pushed the expanded eleven-option gallery, verified
-    Pages deployment `28900695345`, and live-checked the gallery plus the six
-    new standalone option pages.
+  - 2026-07-08 06:37 UTC Pruned AS141253 visual-options output to branch
+    cards, collapsible dendrogram, and purpose cluster graph; regenerated
+    source and Pages artefacts locally from existing CSV data; local
+    validation, public-safety scan, and browser QA passed.
 - Next pickup action:
-  - Owner selects the preferred AS141253 IPv6 visual representation direction.
+  - Commit/push the pruned three-foundation gallery and verify the deployed
+    GitHub Pages routes.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
-  - None for the generated selection prototypes; final model choice remains an
-    owner decision.
+  - Live GitHub Pages verification is still pending for the pruned
+    three-foundation output.
 
 ## Purpose / Big Picture
 
@@ -203,6 +209,9 @@
 - [x] 2026-07-07 16:53 UTC Pushed `43ce2ac`, Pages deployment `28883547390` succeeded, and live visual-option routes were verified.
 - [x] 2026-07-07 21:39 UTC Added six interactive AS141253 visual candidates and locally browser-checked the expanded eleven-option gallery.
 - [x] 2026-07-07 21:43 UTC Pushed `bce0d98`, Pages deployment `28900695345` succeeded, and live expanded-gallery routes were verified.
+- [x] 2026-07-08 06:32 UTC Pruned AS141253 visual-options source and Pages artefacts to the three selected foundations: branch cards, collapsible dendrogram, and purpose cluster graph.
+- [x] 2026-07-08 06:37 UTC Local validation, public-safety scan, browser QA, and removed-page 404 checks passed for the pruned three-foundation gallery.
+- [ ] 2026-07-08 06:37 UTC Commit/push and verify live Pages deployment for the pruned three-foundation gallery.
 
 ## Decision Log
 
@@ -410,6 +419,24 @@
     at desktop/default and 390 px mobile widths; page-level `scrollWidth`
     equalled viewport width, eleven option cards/sections rendered, and
     searchable focus returned loopback matches on the deployed page.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 06:37 UTC.
+  - `git diff --check`: passed at 2026-07-08 06:37 UTC.
+  - `make render-site PYTHON=<bundled-python>`: passed at
+    2026-07-08 06:32 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08
+    06:37 UTC with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at
+    2026-07-08 06:37 UTC with 0 public-safety findings.
+  - Local browser QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-08 06:37 UTC for the pruned visual-foundations gallery and three
+    standalone pages at desktop/default and 390 px mobile widths. The gallery
+    rendered three cards/sections, discarded model titles were absent, page
+    `scrollWidth` equalled viewport width, browser console errors were empty,
+    dendrogram expand/collapse worked, and purpose-cluster node selection
+    updated the detail panel.
+  - Local removed-page check: passed at 2026-07-08 06:37 UTC; all eight
+    discarded standalone visual-option routes returned HTTP 404 from the local
+    `docs/` server.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`

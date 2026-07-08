@@ -6,9 +6,9 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 IPv6 visual representation options
-- Status: complete; expanded eleven-option gallery is deployed and ready for
-  owner selection
-- Last updated: 2026-07-07 21:43 UTC
+- Status: in progress; AS141253 visual gallery has been pruned locally to
+  three selected foundations pending validation, push, and live Pages checks
+- Last updated: 2026-07-08 06:37 UTC
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -146,15 +146,14 @@
     `scripts/wordpress_palette.py`, and `scripts/validate-mirror.py` checks
     that source WordPress colour classes survive into generated Pages output
     and have generated CSS rules.
-- AS141253 visual representation options:
-  - Status: complete and pushed
-  - Notes: `scripts/ipv6_visual_options.py` generates a comparison gallery and
-    eleven standalone static/interactive HTML/CSS/JS options from the
-    CSV-derived prefix model. The first five static options remain in place;
-    the six new interactive candidates are radial prefix graph, collapsible
-    dendrogram, sunburst allocation map, animated allocation walkthrough,
-    purpose cluster graph, and searchable focus graph. Commit `bce0d98` is
-    deployed via GitHub Pages run `28900695345`.
+- AS141253 visual representation foundations:
+  - Status: implemented locally, pending validation/push/live verification
+  - Notes: `scripts/ipv6_visual_options.py` now generates only the three
+    owner-selected foundations from the CSV-derived prefix model: branch cards,
+    collapsible dendrogram, and purpose cluster graph. Discarded exploratory
+    standalone pages were deleted from `data/` and generated `docs/`, and
+    `scripts/validate-mirror.py` now fails if removed model titles/files
+    reappear.
 
 ## Execution Log
 
@@ -518,26 +517,56 @@
     WordPress palette markers and BGP article colour classes.
   - Live browser computed-style QA: pass at 2026-07-07 15:43 UTC for BGP
     Router ID WordPress colour marks.
+  - AS141253 visual pruning: local implementation at 2026-07-08 06:32 UTC
+    removed the eight discarded visual models from generator output, source
+    `data/` artefacts, and generated `docs/` artefacts. Kept foundations are
+    branch cards, collapsible dendrogram, and purpose cluster graph.
+  - Public Google Sheet export attempt: failed at 2026-07-08 06:32 UTC with a
+    `TimeoutError` while reading a public Google Sheet HTML tab. The ODS/HTML
+    snapshot churn was restored, and local-only CSV-derived visual/workbook
+    regeneration was used because canonical sheet data did not need refreshing
+    for this pruning step.
+  - `make render-site PYTHON=<bundled-python>`: pass at 2026-07-08 06:32 UTC
+    after local-only visual artefact regeneration.
+  - `python3 -m py_compile scripts/*.py`: pass at 2026-07-08 06:37 UTC.
+  - `git diff --check`: pass at 2026-07-08 06:37 UTC.
+  - `make validate PYTHON=<bundled-python>`: pass at 2026-07-08 06:37 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-08
+    06:37 UTC with 0 public-safety findings.
+  - Local browser QA against `http://127.0.0.1:4173/`: pass at 2026-07-08
+    06:37 UTC for the pruned visual-foundations gallery and three standalone
+    pages at desktop/default and 390 px mobile widths. The gallery rendered
+    three cards/sections, discarded model titles were absent, page
+    `scrollWidth` equalled viewport width, browser console errors were empty,
+    dendrogram expand/collapse worked, and purpose-cluster node selection
+    updated the detail panel.
+  - Local removed-page check: pass at 2026-07-08 06:37 UTC; all eight
+    discarded standalone visual-option routes returned HTTP 404 from the local
+    `docs/` server.
 - Not run:
-  - None for the generated selection prototypes.
+  - Push and live Pages verification for the pruned three-foundation gallery.
 
 ## Next Pickup
 
 - Next action:
-  - Owner selects the preferred AS141253 IPv6 visual representation direction.
+  - Commit/push and verify live Pages deployment for the pruned
+    three-foundation gallery.
 - Current blocker:
   - None for local implementation.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None for this prototype-generation step.
+  - Live GitHub Pages verification is pending for the pruned three-foundation
+    output.
 
 ## Completion Criteria
 
 - Done means:
   - Local repo contains scripts, mirrored published content, featured images, spreadsheet artefacts, generated GitHub Pages site, schemas, manifests, docs, validation results, and a public-safety scan result.
 - Remaining:
-  - Owner selection of the preferred AS141253 IPv6 visual representation.
+  - Design the next-generation AS141253 IPv6 visual representation from the
+    three selected foundations after this pruning commit is validated and live.
   - Optional follow-up: decide whether the remaining non-archived canonical
     links to `/contact/`, `/as149794/`, and `/geofeed/` should stay outbound,
     be manually edited, or be represented by archive landing pages.

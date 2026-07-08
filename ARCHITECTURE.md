@@ -71,11 +71,11 @@ flowchart LR
   uses the same archive typography, and has adjacent JSON and Graphviz DOT
   artefacts for future visualisation work.
 - `docs/sheets/as141253-ipv6-architecture-example/visual-options.html` is a
-  generated comparison gallery of alternate static and interactive HTML/CSS/JS
-  IPv6 subnetting visualisations. It currently includes spatial blocks,
-  prefix-length lanes, nibble ladder, branch cards, purpose swimlanes, radial
-  prefix graph, collapsible dendrogram, sunburst allocation map, animated
-  allocation walkthrough, purpose cluster graph, and searchable focus graph.
+  generated selected-foundations gallery for the AS141253 IPv6 subnetting
+  visualisation. It intentionally keeps only branch cards, collapsible
+  dendrogram, and purpose cluster graph as the basis for the next final model.
+  Earlier exploratory options were deleted from source and generated Pages
+  output.
 - Human-facing navigation and canonical URLs use clean directory URLs such as
   `https://daryll-swer.github.io/daryllswer.com-archive/`. The physical
   `docs/index.html` file remains the GitHub Pages entry point and generated
@@ -154,12 +154,14 @@ surface must not cause repeated workflow failures or archive deletion.
 - The AS141253 CIDR hierarchy is derived from CSV, not manually maintained.
   Parent/child edges must be calculated using IPv6 prefix containment. The
   generated JSON, DOT, and HTML checksums are recorded in the sheet manifest.
-- The AS141253 visual-options pages are generated prototypes for owner
-  selection. They must be derived from the CSV/hierarchy data, not hand-authored
-  as independent examples. Interactive prototypes must remain static
-  GitHub Pages-compatible HTML/CSS/JS with no backend or external runtime
-  dependency. The selected final visual model can replace or supersede these
-  prototypes later.
+- The AS141253 visual-options pages are generated selected foundations for the
+  next visualisation iteration. They must be derived from the CSV/hierarchy
+  data, not hand-authored as independent examples. Interactive behaviour must
+  remain static GitHub Pages-compatible HTML/CSS/JS with no backend or external
+  runtime dependency. The final visual model should combine the at-a-glance
+  readability of branch cards, the expand/collapse navigation of the
+  collapsible dendrogram, and the visual/aesthetic graph-theory direction of
+  the purpose cluster graph.
 - Spreadsheet CSV exports are normalised to LF line endings for stable Git
   diffs; generated HTML artefacts strip trailing line whitespace; ODS remains a
   binary artefact.
