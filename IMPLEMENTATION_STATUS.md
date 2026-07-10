@@ -6,8 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 final IPv6 visual model
-- Status: complete locally; hierarchy-only public model is awaiting commit,
-  deployment, and live verification
+- Status: complete; hierarchy-only public model is deployed and live-verified
 - Last updated: 2026-07-10
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
@@ -181,12 +180,13 @@
     40-width, 4-page local matrix passes, and commit `d7bade5` is deployed via
     GitHub Pages run `28962375073`.
 - AS141253 hierarchy-only public visual model:
-  - Status: complete locally
+  - Status: complete and pushed
   - Notes: Owner selected the native Full hierarchy disclosure model as the
     only public reader path. `visual.html` now renders only the full hierarchy;
     historical model logic is documented under the non-Pages data archive.
     Workbook, README, Markdown, and generated Pages links continue to prefer
-    `visual.html`; no legacy visual HTML is copied under `docs/`.
+    `visual.html`; no legacy visual HTML is copied under `docs/`. Commit
+    `f94d8b3` is deployed by GitHub Pages run `29081542020`.
 
 ## Execution Log
 
@@ -202,7 +202,11 @@
     exact reserved prefix. Local `visual.html`, workbook, and IPv6 article
     routes returned 200; the gallery and all three retired foundation routes
     returned 404.
-  - Result: pass locally; commit/push/live Pages verification pending.
+  - Deployment/live verification: commit `f94d8b3` was pushed to `main`; GitHub
+    Pages run `29081542020` succeeded. Live `visual.html`, workbook, and IPv6
+    article routes returned 200; the retired gallery and all three retired
+    foundation routes returned 404.
+  - Result: pass.
 - 2026-07-06 09:07 UTC:
   - Action: Read attached implementation prompt and inspected workspace state.
   - Evidence: `git status --short --branch` showed no commits on `main`; `git remote -v` showed no remotes.

@@ -6,8 +6,8 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete locally; hierarchy-only AS141253 visual-model revision is
-  awaiting commit, deployment, and live verification
+- Status: complete; hierarchy-only AS141253 visual model is deployed and
+  live-verified on GitHub Pages
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-10
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -23,10 +23,10 @@
 ## Current Status / Next Pickup
 
 - Current state:
-  - Complete locally: owner selected the existing Full hierarchy disclosure
+  - Complete: owner selected the existing Full hierarchy disclosure
     model as the sole public AS141253 visual. Historical visual-design logic is
     documented outside `docs/`, while the generated Pages tree contains only
-    `visual.html`; all four retired local routes return 404.
+    `visual.html`; all four retired Pages routes return 404.
   - Complete: archive published to `daryll-swer/daryllswer.com-archive`; old `daryll-swer/daryllswer.com-neteng-blog` repo deleted.
   - Complete locally: sponsor/trial lead CTAs are filtered from generated article bodies, and same-post numbered reference markers are rewritten to source URLs where extractable.
   - Complete locally: static GitHub Pages site generated under `docs/` with a home index, article pages, responsive figures, podcast embed fallbacks, and AS141253 sheet landing page.
@@ -163,11 +163,11 @@
     2560 px widths with no page-level horizontal overflow, working reserved
     disclosures, and working SVG minimap anchors.
 - Last material update:
-  - 2026-07-08 18:26 UTC Deployed the primary AS141253 `visual.html` model and
-    live-verified the final GitHub Pages route.
+  - 2026-07-10 Deployed hierarchy-only `visual.html` at commit `f94d8b3` via
+    GitHub Pages run `29081542020`; public visual, workbook, and IPv6 article
+    routes returned 200 while the four retired visual routes returned 404.
 - Next pickup action:
-  - Commit and push the hierarchy-only revision, wait for GitHub Pages, then
-    verify the public visual/workbook/article routes and retired-route 404s.
+  - None for this completed hierarchy-only visual-model revision.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
@@ -438,7 +438,7 @@
     more readable and useful than the hybrid dashboard or its visual
     foundations.
   - Date/Author: 2026-07-10, user/Codex
-  - Status: implemented locally
+  - Status: implemented and deployed
   - Impact: `visual.html` will render only the full hierarchy. Historical model
     logic will be documented outside `docs/`; no legacy route, navigation, or
     generated Pages copy may remain.
@@ -686,6 +686,21 @@
     px widths. Failures: 0. Checks covered page-level overflow, final section
     anchors, 57 reserved disclosure groups, reserved disclosure opening, and
     SVG minimap anchor targets/clicks.
+  - `make sync PYTHON=<bundled-python>`: passed on 2026-07-10; synced 19 posts
+    and exported 9 sheet tabs. `make render-site` regenerated 19 post pages.
+  - `python3 -m py_compile scripts/*.py` and `git diff --check`: passed on
+    2026-07-10.
+  - `make validate PYTHON=<bundled-python>`: passed on 2026-07-10 with 0
+    errors and 1 known sitemap warning. `make scan-secrets` passed with 0
+    findings.
+  - Local Chrome QA: passed on 2026-07-10 at 320, 360, 390, 430, 768, 1024,
+    1440, 1920, and 2560 CSS px. No page-level overflow; the hierarchy had 28
+    reserved groups; pointer and Enter-key disclosure controls exposed and hid
+    exact reserved-prefix details.
+  - GitHub Pages deployment for `f94d8b3`: passed on 2026-07-10; run
+    `29081542020` completed successfully. Live `visual.html`, workbook, and
+    IPv6 article routes returned 200; the retired gallery and all three
+    foundation routes returned 404.
 - Evidence paths:
   - `docs/VALIDATION.md`
   - `docs/index.html`
@@ -715,7 +730,6 @@
 - Achieved:
   - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, preview generation, and generated GitHub Pages site completed.
 - Remaining:
-  - Push the completed hierarchy-only revision and verify the GitHub Pages
-    deployment, including public retired-route 404s.
+  - None for the hierarchy-only AS141253 visual-model revision.
 - Retrospective timestamp:
   - 2026-07-06 09:20 UTC
