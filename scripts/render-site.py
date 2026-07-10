@@ -553,9 +553,13 @@ def render_sheet_page() -> None:
             font_asset_prefix="../../assets/fonts",
         ),
     )
-    shutil.copytree(source_dir, out_dir, dirs_exist_ok=True, ignore=shutil.ignore_patterns("workbook.html"))
-    font_rewrite_pages = [out_dir / "cidr-hierarchy.html", out_dir / "visual.html", out_dir / "visual-options.html"]
-    font_rewrite_pages.extend(sorted(out_dir.glob("visual-option-*.html")))
+    shutil.copytree(
+        source_dir,
+        out_dir,
+        dirs_exist_ok=True,
+        ignore=shutil.ignore_patterns("workbook.html", "legacy-visual-models"),
+    )
+    font_rewrite_pages = [out_dir / "cidr-hierarchy.html", out_dir / "visual.html"]
     for page in font_rewrite_pages:
         if page.exists():
             text = page.read_text(encoding="utf-8", errors="replace")

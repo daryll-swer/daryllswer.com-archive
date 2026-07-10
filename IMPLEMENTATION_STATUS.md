@@ -6,9 +6,9 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 final IPv6 visual model
-- Status: complete; primary `visual.html` generated, deployed, and
-  live-verified on GitHub Pages
-- Last updated: 2026-07-08 18:26 UTC
+- Status: complete locally; hierarchy-only public model is awaiting commit,
+  deployment, and live verification
+- Last updated: 2026-07-10
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -180,19 +180,29 @@
     `overflow-wrap: anywhere` for metrics layout/value wrapping. The full
     40-width, 4-page local matrix passes, and commit `d7bade5` is deployed via
     GitHub Pages run `28962375073`.
-- AS141253 final visual model:
-  - Status: complete and pushed
-  - Notes: `scripts/ipv6_visual_options.py` now generates primary `visual.html`
-    source and Pages artefacts. The page combines branch-card readability,
-    native disclosures, collapsed reserved-prefix summaries, a static
-    purpose-cluster SVG minimap, and a complete disclosure hierarchy. Workbook,
-    README, Markdown, and generated Pages links now prefer `visual.html` for
-    the AS141253 sheet replacement. Commits `b11b84a` and `5152975` are pushed
-    to `main`; GitHub Pages run `28965936383` deployed final commit
-    `5152975`.
+- AS141253 hierarchy-only public visual model:
+  - Status: complete locally
+  - Notes: Owner selected the native Full hierarchy disclosure model as the
+    only public reader path. `visual.html` now renders only the full hierarchy;
+    historical model logic is documented under the non-Pages data archive.
+    Workbook, README, Markdown, and generated Pages links continue to prefer
+    `visual.html`; no legacy visual HTML is copied under `docs/`.
 
 ## Execution Log
 
+- 2026-07-10:
+  - Action: Implemented the hierarchy-only AS141253 visual-model contract and
+    regenerated source and GitHub Pages output.
+  - Evidence: `make sync` exported 9 sheet tabs; `make render-site` generated
+    19 posts; `make validate` passed with 0 errors and 1 known sitemap warning;
+    `make scan-secrets` passed with 0 findings.
+  - Browser/local route QA: Chrome verified no page-level overflow at 320, 360,
+    390, 430, 768, 1024, 1440, 1920, and 2560 CSS px; 28 reserved disclosure
+    groups remained available; pointer and Enter-key toggles exposed and hid an
+    exact reserved prefix. Local `visual.html`, workbook, and IPv6 article
+    routes returned 200; the gallery and all three retired foundation routes
+    returned 404.
+  - Result: pass locally; commit/push/live Pages verification pending.
 - 2026-07-06 09:07 UTC:
   - Action: Read attached implementation prompt and inspected workspace state.
   - Evidence: `git status --short --branch` showed no commits on `main`; `git remote -v` showed no remotes.

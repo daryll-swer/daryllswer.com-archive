@@ -70,36 +70,19 @@ flowchart LR
   the same CSV `Prefix` columns with Python `ipaddress` containment checks,
   uses the same archive typography, and has adjacent JSON and Graphviz DOT
   artefacts for future visualisation work.
-- `docs/sheets/as141253-ipv6-architecture-example/visual.html` is the primary
-  human-facing AS141253 IPv6 visual model. It is a mostly static hybrid
-  dashboard generated from the CSV-derived hierarchy: branch-card readability
-  is the default, native `details`/`summary` disclosures provide expansion,
-  reserved prefixes are collapsed into count/range summaries by default, and a
-  static SVG purpose minimap links to readable branch-card anchors.
-- `docs/sheets/as141253-ipv6-architecture-example/visual-options.html` is a
-  generated selected-foundations gallery for the AS141253 IPv6 subnetting
-  visualisation. It intentionally keeps only branch cards, collapsible
-  dendrogram, and purpose cluster graph as secondary design references for
-  `visual.html`. Earlier exploratory options were deleted from source and
-  generated Pages output.
-- The selected AS141253 visual foundations preserve operational intent from
-  CSV `Notes`: branch cards render notes on parent/child prefix cards,
-  collapsible dendrogram summaries render node notes, and purpose cluster graph
-  exposes notes in the selected-node detail panel. Dense per-node labels are
-  intentionally omitted from the purpose graph plot area to prevent overlap;
-  persistent purpose labels plus click-to-inspect detail carry the readable
-  metadata.
-- Branch cards show the first twelve immediate children directly and place
-  additional children behind native HTML `details`/`summary` disclosure
-  controls. The `+N more` affordance must be expandable/collapsible without
-  custom JavaScript.
-- All selected AS141253 visual foundations must remain responsive across phone,
+- `docs/sheets/as141253-ipv6-architecture-example/visual.html` is the sole
+  human-facing AS141253 IPv6 visual model. It renders the complete
+  CSV-derived containment hierarchy with native `details`/`summary` controls.
+  Reserved siblings are collapsed into count/range summaries by default, but
+  their exact prefixes remain available in expandable details.
+- Historical visual-design material is retained only as a developer/AI
+  reference under `data/sheets/as141253-ipv6-architecture-example/legacy-visual-models/`.
+  The render pipeline excludes that directory and produces no legacy visual
+  pages or navigation under `docs/`, so GitHub Pages cannot serve those routes.
+- The public AS141253 hierarchy page must remain responsive across phone,
   tablet, desktop, and wide-display viewport classes. The page itself must not
-  introduce horizontal overflow. Dense graph/tree content may pan inside a
-  bounded `.visual-frame` scroll container when shrinking it further would make
-  the network model unreadable.
-- The responsive support matrix for the AS141253 visual foundations includes
-  the WCAG 320 CSS px reflow floor, common phone widths, common framework
+  introduce horizontal overflow. The responsive support matrix includes the
+  WCAG 320 CSS px reflow floor, common phone widths, common framework
   breakpoints, boundary-adjacent widths, desktop widths, and wide displays:
   320, 360, 390, 430, 479/480, 575/576, 599/600, 639/640, 759/760, 767/768,
   899/900, 979/980, 991/992, 1023/1024, 1199/1200, 1279/1280, 1366,
@@ -182,18 +165,13 @@ surface must not cause repeated workflow failures or archive deletion.
 - The AS141253 CIDR hierarchy is derived from CSV, not manually maintained.
   Parent/child edges must be calculated using IPv6 prefix containment. The
   generated JSON, DOT, and HTML checksums are recorded in the sheet manifest.
-- The AS141253 final visual model and foundation pages are generated from the
-  CSV/hierarchy data, not hand-authored as independent examples. `visual.html`
-  is the primary reader path and must combine the at-a-glance readability of
-  branch cards, the expand/collapse navigation of the collapsible dendrogram,
-  and the visual/aesthetic graph-theory direction of the purpose cluster graph.
-  CSV `Notes` values are first-class visual metadata. Reserved prefixes must
-  not disappear; they are collapsed into native disclosure summaries by
-  default, with exact prefix details still available. Generated visual pages
-  must keep page-level width bounded at common phone, tablet, desktop, and
-  wide-display viewports. Metrics cards and prefix values must shrink/wrap
-  with `min-width: 0` and `overflow-wrap: anywhere` so they do not create
-  small-width root overflow.
+- The AS141253 public visual model is generated from CSV/hierarchy data, not
+  hand-authored. `visual.html` is the only reader path and renders the full
+  hierarchy through native disclosure controls. CSV `Notes` values remain
+  first-class metadata; reserved prefixes must not disappear and are collapsed
+  only as expandable summaries. Historical design logic is explicitly
+  non-Pages reference material. The public page must keep page-level width
+  bounded at common phone, tablet, desktop, and wide-display viewports.
 - Spreadsheet CSV exports are normalised to LF line endings for stable Git
   diffs; generated HTML artefacts strip trailing line whitespace; ODS remains a
   binary artefact.

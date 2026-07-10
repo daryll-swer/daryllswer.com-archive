@@ -111,7 +111,7 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "9beb31fff915b13b456e48006ae2a8a50376e8449c6e140184f8d9260a0268a3",
+    "canonical_page_html_sha256": "7076477849248da9b936e103aa9f5dcae21dc8fcb62eeffaff8639ff919d52b5",
     "index_md_sha256": "f4c1be8f7d30f975f434d5f17d8bc618a88531ec6582b84cb5bc1f37025d25a2",
     "rendered_article_html_sha256": "16ef9d9b459784cc9368bf0a371ea80f58bab87fadb3babd9353823e2fa02583",
     "wordpress_post_json_sha256": "debc9c042f7043ae8aa6e6ff8dfe54d3402bf9c6f17e77f756329107f107f0a1"
@@ -123,7 +123,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2931",
     "canonical_html_path": "source/canonical-page.html",
-    "fetched_at": "2026-07-08T18:20:56+00:00",
+    "fetched_at": "2026-07-10T08:42:50+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

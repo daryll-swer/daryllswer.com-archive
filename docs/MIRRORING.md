@@ -240,18 +240,12 @@ The AS141253 Google Sheet is archived as a CSV-backed HTML workbook:
   standalone repository copy with clickable sheet tabs.
 - `docs/sheets/as141253-ipv6-architecture-example/index.html` is the generated
   GitHub Pages copy of the same workbook.
-- `data/sheets/as141253-ipv6-architecture-example/visual.html` is the primary
-  mostly static visual model for human readers.
+- `data/sheets/as141253-ipv6-architecture-example/visual.html` is the sole
+  public full-hierarchy visual model for human readers.
 - `docs/sheets/as141253-ipv6-architecture-example/visual.html` is the generated
-  GitHub Pages copy of that primary visual model.
+  GitHub Pages copy of that supported public model.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html` is the
   static IPv6 CIDR containment tree proof of concept generated from CSV.
-- `data/sheets/as141253-ipv6-architecture-example/visual-options.html` is a
-  generated selected-foundations gallery for the IPv6 subnetting
-  representation.
-- `data/sheets/as141253-ipv6-architecture-example/visual-option-*.html` stores
-  the three selected standalone foundations: branch cards, collapsible
-  dendrogram, and purpose cluster graph.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.json` is the
   machine-readable hierarchy model.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.dot` is the
@@ -271,37 +265,14 @@ parsed from CSV `Prefix` columns with Python `ipaddress`; parent selection is
 the most-specific existing supernet containing a child prefix. The graph output
 is a proof of concept and does not replace the workbook view yet.
 
-The primary `visual.html` page uses the same CSV-derived hierarchy model and
-combines the owner-selected foundations into one mostly static hybrid
-dashboard. Branch-card readability is the default experience, native HTML
-`details`/`summary` controls handle expansion, reserved prefixes collapse into
-count/range summaries by default, and a static purpose-cluster SVG minimap
-links to readable branch-card anchors. The visual-options pages remain as
-secondary design references for the three foundations: branch cards for
-at-a-glance operator readability, collapsible dendrogram for controlled
-expand/collapse navigation, and purpose cluster graph for the graph-theory
-visual direction.
-CSV `Notes` values are rendered as first-class operational metadata: branch
-cards show parent/child notes, collapsible dendrogram summaries show node
-notes, and the purpose cluster graph shows notes in the selected-node detail
-panel. Branch cards use native HTML `details`/`summary` disclosures for hidden
-children, so `+N more` is an actual expand/collapse control rather than a
-static count label. The purpose graph intentionally avoids dense per-node SVG
-labels because they overlap during selected-path interaction; purpose labels
-plus the detail panel carry the readable context instead.
+The public `visual.html` page uses the same CSV-derived hierarchy model and
+renders the complete containment tree with native HTML `details`/`summary`
+controls. CSV `Notes` values remain visible at each node. Reserved siblings are
+collapsed into count/range summaries by default and expand to their exact
+prefixes, preserving audit fidelity without making the default tree unreadable.
 
-The generated visual foundations use standard responsive CSS patterns:
-viewport metadata, CSS Grid/Flex wrapping, `min-width: 0` containment, bounded
-scroll containers, and media-query breakpoints. The page must not have
-horizontal overflow at common phone, tablet, desktop, or wide-display widths.
-Dense tree/graph canvases may use internal `.visual-frame` panning when that is
-more readable than compressing the model into a tiny viewport.
-
-Current visual-foundation responsive QA covers these CSS-pixel widths: 320,
-360, 390, 430, 479/480, 575/576, 599/600, 639/640, 759/760, 767/768,
-899/900, 979/980, 991/992, 1023/1024, 1199/1200, 1279/1280, 1366, 1399/1400,
-1439/1440, 1535/1536, 1599/1600, 1919/1920, and 2560. Metrics cards and
-prefix values must wrap rather than widening the page at narrow phone widths.
-Discarded exploratory models are deleted from source and Pages output. The
-final visualisation should combine these selected strengths and be recorded in
-this document and in `ARCHITECTURE.md`.
+Historical design material is retained outside `docs/` for maintainers and AI
+agents only. The render pipeline excludes it, and validation rejects both
+legacy Pages files and generated links to them. The public page uses responsive
+CSS with `min-width: 0` containment and bounded internal overflow so it reflows
+without page-level horizontal overflow from 320 CSS px through wide displays.

@@ -307,12 +307,6 @@ def render_workbook_page(
             0,
             f'<a href="{html_escape(artifact_rel(visual_model["path"], sheet_slug))}">Visual model</a>',
         )
-    visual_options = manifest.get("visual_options", {})
-    if visual_options.get("index", {}).get("path"):
-        actions.insert(
-            1 if visual_model.get("path") else 0,
-            f'<a href="{html_escape(artifact_rel(visual_options["index"]["path"], sheet_slug))}">Visual foundations</a>',
-        )
     if home_href:
         actions.insert(0, f'<a href="{html_escape(home_href)}">Archive index</a>')
     if repo_href:

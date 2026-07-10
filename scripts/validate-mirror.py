@@ -244,67 +244,63 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
             hierarchy_html = html_path.read_text(encoding="utf-8", errors="replace")
             if "prefix-tree" not in hierarchy_html or "AS141253 IPv6 CIDR Hierarchy" not in hierarchy_html:
                 errors.append("spreadsheet CIDR hierarchy HTML missing expected tree UI")
-    visual_options = manifest.get("visual_options", {})
-    if visual_options:
-        index_info = visual_options.get("index", {})
-        index_path = ROOT / index_info.get("path", "")
-        if not index_info.get("path") or not index_path.exists():
-            errors.append("spreadsheet visual options index missing")
-        elif index_info.get("sha256") and sha256_file(index_path) != index_info["sha256"]:
-            errors.append("spreadsheet visual options index checksum mismatch")
-        else:
-            index_html = index_path.read_text(encoding="utf-8", errors="replace")
-            for marker in [
-                "Branch cards",
-                "Collapsible dendrogram",
-                "Purpose cluster graph",
-            ]:
-                if marker not in index_html:
-                    errors.append(f"spreadsheet visual options index missing `{marker}`")
-            for marker in [
-                "Spatial block map",
-                "Prefix length lanes",
-                "Nibble ladder",
-                "Purpose swimlanes",
-                "Radial prefix graph",
-                "Sunburst allocation map",
-                "Animated allocation walkthrough",
-                "Searchable focus graph",
-            ]:
-                if marker in index_html:
-                    errors.append(f"spreadsheet visual options index still contains removed model `{marker}`")
-        options = visual_options.get("options", [])
-        if visual_options.get("option_count") != len(options):
-            errors.append("spreadsheet visual options option_count does not match options length")
-        for option in options:
-            option_path = ROOT / option.get("path", "")
-            option_title = option.get("title") or option.get("id") or "visual option"
-            if not option.get("path") or not option_path.exists():
-                errors.append(f"spreadsheet visual option missing: {option_title}")
-                continue
-            if option.get("sha256") and sha256_file(option_path) != option["sha256"]:
-                errors.append(f"spreadsheet visual option checksum mismatch: {option_title}")
-            option_html = option_path.read_text(encoding="utf-8", errors="replace")
-            if option_title not in option_html:
-                errors.append(f"spreadsheet visual option page missing title: {option_title}")
-        expected_ids = {"branch-cards", "collapsible-dendrogram", "purpose-cluster-graph"}
-        actual_ids = {str(option.get("id") or "") for option in options}
-        if actual_ids != expected_ids:
-            errors.append(f"spreadsheet visual options ids do not match selected foundations: {sorted(actual_ids)}")
-        source_visual_dir = index_path.parent
-        for removed_option_name in [
-            "spatial-blocks",
-            "level-lanes",
-            "nibble-ladder",
-            "purpose-swimlanes",
-            "radial-prefix-graph",
-            "sunburst-map",
-            "animated-walkthrough",
-            "searchable-focus-graph",
+    source_visual_dir = ROOT / "data" / "sheets" / "as141253-ipv6-architecture-example"
+    visual_model = manifest.get("visual_model", {})
+    visual_model_path = ROOT / visual_model.get("path", "")
+    if not visual_model.get("path") or not visual_model_path.exists():
+        errors.append("spreadsheet full-hierarchy visual model missing")
+    elif visual_model.get("sha256") and sha256_file(visual_model_path) != visual_model["sha256"]:
+        errors.append("spreadsheet full-hierarchy visual model checksum mismatch")
+    else:
+        visual_model_html = visual_model_path.read_text(encoding="utf-8", errors="replace")
+        for marker in ["AS141253 IPv6 Visual Model", "Full hierarchy", "final-tree-node", "data-reserved-group", "<details"]:
+            if marker not in visual_model_html:
+                errors.append(f"spreadsheet full-hierarchy visual model missing `{marker}`")
+        for marker in [
+            'id="at-a-glance-allocation"',
+            'id="operational-branches"',
+            'id="purpose-map"',
+            "<h2>At-a-glance allocation</h2>",
+            "<h2>Operational branches</h2>",
+            "<h2>Purpose map</h2>",
+            ">Visual foundations<",
+            "visual-options.html",
         ]:
-            option_path = source_visual_dir / f"visual-option-{removed_option_name}.html"
-            if option_path.exists():
-                errors.append(f"spreadsheet removed visual option still exists: {removed_option_name}")
+            if marker in visual_model_html:
+                errors.append(f"spreadsheet full-hierarchy visual model exposes legacy marker `{marker}`")
+        if "<script" in visual_model_html:
+            errors.append("spreadsheet full-hierarchy visual model should not require JavaScript")
+
+    if "visual_options" in manifest:
+        errors.append("spreadsheet manifest still exposes retired visual_options metadata")
+    legacy = manifest.get("legacy_visual_models", {})
+    legacy_path_value = str(legacy.get("path") or "")
+    legacy_path = ROOT / legacy_path_value
+    expected_legacy_prefix = "data/sheets/as141253-ipv6-architecture-example/legacy-visual-models/"
+    if not legacy_path_value.startswith(expected_legacy_prefix) or not legacy_path.exists():
+        errors.append("spreadsheet legacy visual-model reference is missing or not outside GitHub Pages output")
+    elif legacy.get("sha256") and sha256_file(legacy_path) != legacy["sha256"]:
+        errors.append("spreadsheet legacy visual-model reference checksum mismatch")
+    elif "excluded from GitHub Pages" not in legacy_path.read_text(encoding="utf-8", errors="replace"):
+        errors.append("spreadsheet legacy visual-model reference does not describe Pages exclusion")
+    if legacy.get("pages_published") is not False:
+        errors.append("spreadsheet legacy visual-model metadata must state pages_published=false")
+    for filename in [
+        "visual-options.html",
+        "visual-option-branch-cards.html",
+        "visual-option-collapsible-dendrogram.html",
+        "visual-option-purpose-cluster-graph.html",
+    ]:
+        if (source_visual_dir / filename).exists():
+            errors.append(f"spreadsheet legacy visual page remains in public source location: {filename}")
+
+    source_readme = source_visual_dir / "README.md"
+    if source_readme.exists():
+        source_readme_text = source_readme.read_text(encoding="utf-8", errors="replace")
+        if "visual.html" not in source_readme_text:
+            errors.append("spreadsheet README missing full-hierarchy visual model link")
+        if "visual-options.html" in source_readme_text or "Visual foundations" in source_readme_text:
+            errors.append("spreadsheet README still exposes legacy visual models")
     for tab in manifest.get("tabs", []):
         csv_info = tab.get("csv", {})
         csv_path = ROOT / csv_info.get("path", "")
@@ -534,8 +530,8 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
             errors.append("GitHub Pages AS141253 workbook tab count does not match manifest")
         if "visual.html" not in sheet_html or "Visual model" not in sheet_html:
             errors.append("GitHub Pages AS141253 workbook page missing visual model link")
-        if "visual-options.html" not in sheet_html:
-            errors.append("GitHub Pages AS141253 workbook page missing visual options link")
+        if "visual-options.html" in sheet_html or "Visual foundations" in sheet_html:
+            errors.append("GitHub Pages AS141253 workbook page exposes retired visual models")
         if 'href="../../index.html"' in sheet_html:
             errors.append("GitHub Pages AS141253 workbook navigation should use ../../ instead of ../../index.html")
         hierarchy_page = sheet_page.parent / "cidr-hierarchy.html"
@@ -558,11 +554,10 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
             visual_model_html = visual_model.read_text(encoding="utf-8", errors="replace")
             for marker in [
                 "AS141253 IPv6 Visual Model",
-                "At-a-glance allocation",
-                "Operational branches",
-                "Purpose map",
                 "Full hierarchy",
+                "final-tree-node",
                 "data-reserved-group",
+                "<details",
             ]:
                 if marker not in visual_model_html:
                     errors.append(f"GitHub Pages AS141253 visual model page missing `{marker}`")
@@ -570,59 +565,37 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
                 'id="at-a-glance-allocation"',
                 'id="operational-branches"',
                 'id="purpose-map"',
-                'id="full-hierarchy"',
+                "<h2>At-a-glance allocation</h2>",
+                "<h2>Operational branches</h2>",
+                "<h2>Purpose map</h2>",
+                ">Visual foundations<",
+                "visual-options.html",
             ]:
-                if marker not in visual_model_html:
-                    errors.append(f"GitHub Pages AS141253 visual model page missing section anchor `{marker}`")
-            if "../../../assets/fonts/" in visual_model_html:
-                errors.append("GitHub Pages AS141253 visual model page has unrewritten source font path")
-        visual_index = sheet_page.parent / "visual-options.html"
-        if not visual_index.exists():
-            errors.append("GitHub Pages AS141253 visual options page missing")
-        else:
-            visual_html = visual_index.read_text(encoding="utf-8", errors="replace")
-            for marker in [
-                "Branch cards",
-                "Collapsible dendrogram",
-                "Purpose cluster graph",
-            ]:
-                if marker not in visual_html:
-                    errors.append(f"GitHub Pages AS141253 visual options page missing `{marker}`")
-            for marker in [
-                "Spatial block map",
-                "Prefix length lanes",
-                "Nibble ladder",
-                "Purpose swimlanes",
-                "Radial prefix graph",
-                "Sunburst allocation map",
-                "Animated allocation walkthrough",
-                "Searchable focus graph",
-            ]:
-                if marker in visual_html:
-                    errors.append(f"GitHub Pages AS141253 visual options page still contains removed model `{marker}`")
-            if "../../../assets/fonts/" in visual_html:
-                errors.append("GitHub Pages AS141253 visual options page has unrewritten source font path")
-        for option_name in [
-            "branch-cards",
-            "collapsible-dendrogram",
-            "purpose-cluster-graph",
-        ]:
-            option_page = sheet_page.parent / f"visual-option-{option_name}.html"
-            if not option_page.exists():
-                errors.append(f"GitHub Pages AS141253 visual option missing: {option_name}")
-        for removed_option_name in [
-            "spatial-blocks",
-            "level-lanes",
-            "nibble-ladder",
-            "purpose-swimlanes",
-            "radial-prefix-graph",
-            "sunburst-map",
-            "animated-walkthrough",
-            "searchable-focus-graph",
-        ]:
-            option_page = sheet_page.parent / f"visual-option-{removed_option_name}.html"
-            if option_page.exists():
-                errors.append(f"GitHub Pages AS141253 removed visual option still exists: {removed_option_name}")
+                if marker in visual_model_html:
+                    errors.append(f"GitHub Pages AS141253 visual model page exposes legacy marker `{marker}`")
+            if "../../../assets/fonts/" in visual_model_html or "/Users/" in visual_model_html or "file://" in visual_model_html:
+                errors.append("GitHub Pages AS141253 visual model page leaks a source font or local filesystem path")
+            if "<script" in visual_model_html:
+                errors.append("GitHub Pages AS141253 visual model page should not require JavaScript")
+
+        legacy_pages = [
+            "visual-options.html",
+            "visual-option-branch-cards.html",
+            "visual-option-collapsible-dendrogram.html",
+            "visual-option-purpose-cluster-graph.html",
+        ]
+        for filename in legacy_pages:
+            if (sheet_page.parent / filename).exists():
+                errors.append(f"GitHub Pages AS141253 legacy visual page remains published: {filename}")
+        if (sheet_page.parent / "legacy-visual-models").exists():
+            errors.append("GitHub Pages AS141253 legacy visual-model archive must not be copied under docs")
+
+        for page in (ROOT / "docs").rglob("*.html"):
+            page_html = page.read_text(encoding="utf-8", errors="replace")
+            for legacy_route in legacy_pages:
+                if legacy_route in page_html:
+                    errors.append(f"GitHub Pages page still links a legacy AS141253 visual route: {rel(page)}")
+                    break
     index_html = site_index.read_text(encoding="utf-8", errors="replace")
     if "posts/" not in index_html:
         errors.append("GitHub Pages index does not link to generated post pages")

@@ -6,10 +6,10 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; primary AS141253 `visual.html` model is generated,
-  deployed, and live-verified on GitHub Pages
+- Status: complete locally; hierarchy-only AS141253 visual-model revision is
+  awaiting commit, deployment, and live verification
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-08 18:26 UTC
+- Last updated: 2026-07-10
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -23,6 +23,10 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - Complete locally: owner selected the existing Full hierarchy disclosure
+    model as the sole public AS141253 visual. Historical visual-design logic is
+    documented outside `docs/`, while the generated Pages tree contains only
+    `visual.html`; all four retired local routes return 404.
   - Complete: archive published to `daryll-swer/daryllswer.com-archive`; old `daryll-swer/daryllswer.com-neteng-blog` repo deleted.
   - Complete locally: sponsor/trial lead CTAs are filtered from generated article bodies, and same-post numbered reference markers are rewritten to source URLs where extractable.
   - Complete locally: static GitHub Pages site generated under `docs/` with a home index, article pages, responsive figures, podcast embed fallbacks, and AS141253 sheet landing page.
@@ -162,8 +166,8 @@
   - 2026-07-08 18:26 UTC Deployed the primary AS141253 `visual.html` model and
     live-verified the final GitHub Pages route.
 - Next pickup action:
-  - Owner review of the final `visual.html`; no implementation pickup is
-    pending for the accepted plan.
+  - Commit and push the hierarchy-only revision, wait for GitHub Pages, then
+    verify the public visual/workbook/article routes and retired-route 404s.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
@@ -273,6 +277,9 @@
 - [x] 2026-07-08 17:29 UTC Pushed `d7bade5`, Pages deployment `28962375073` succeeded, and live static/browser checks passed for the expanded responsive-matrix fix.
 - [x] 2026-07-08 18:03 UTC Implemented and generated primary AS141253 `visual.html` from the three selected foundations.
 - [x] 2026-07-08 18:13 UTC Local validation, public-safety scan, and Chrome/Playwright QA passed for `visual.html`, the workbook, and visual-foundation navigation.
+- [x] 2026-07-10 Implemented the hierarchy-only AS141253 public visual,
+  archived historical model references outside `docs/`, and locally verified
+  responsive reflow, native disclosures, public links, and retired-route 404s.
 
 ## Decision Log
 
@@ -426,16 +433,15 @@
   - Status: implemented locally
   - Impact: Visual pages use viewport metadata, CSS Grid/Flex wrapping, media
     queries, `min-width: 0` containment, and `.visual-frame` overflow handling.
-- Decision: Make `visual.html` the primary AS141253 visual model.
-  - Rationale: The selected foundations have complementary strengths; the
-    durable public page should combine branch-card readability, native
-    disclosure navigation, reserved-capacity summaries, and a static purpose
-    minimap rather than exposing only separate prototypes.
-  - Date/Author: 2026-07-08, user/Codex
+- Decision: Make Full hierarchy the sole public AS141253 visual model.
+  - Rationale: Owner review found native disclosure of the complete hierarchy
+    more readable and useful than the hybrid dashboard or its visual
+    foundations.
+  - Date/Author: 2026-07-10, user/Codex
   - Status: implemented locally
-  - Impact: `scripts/ipv6_visual_options.py` generates `visual.html`;
-    workbook, sheet README, Markdown, and Pages article links now prefer it;
-    `visual-options.html` remains a secondary foundations gallery.
+  - Impact: `visual.html` will render only the full hierarchy. Historical model
+    logic will be documented outside `docs/`; no legacy route, navigation, or
+    generated Pages copy may remain.
 
 ## Validation and Acceptance
 
@@ -709,8 +715,7 @@
 - Achieved:
   - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, preview generation, and generated GitHub Pages site completed.
 - Remaining:
-  - None for the final AS141253 IPv6 visual-model implementation. Optional
-    future work is owner review before replacing the canonical Google Sheet
-    link on daryllswer.com.
+  - Push the completed hierarchy-only revision and verify the GitHub Pages
+    deployment, including public retired-route 404s.
 - Retrospective timestamp:
   - 2026-07-06 09:20 UTC
