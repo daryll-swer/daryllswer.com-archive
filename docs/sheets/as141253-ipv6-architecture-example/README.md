@@ -6,9 +6,8 @@ This directory stores the public Google Sheet linked from the IPv6 architecture 
 
 - [AS141253-ipv6-architecture-example.ods](AS141253-ipv6-architecture-example.ods) is the styled open spreadsheet export.
 - [workbook.html](workbook.html) is the standalone CSV-backed HTML workbook with clickable sheet tabs.
-- [visual.html](visual.html) is the primary mostly static IPv6 visual model.
+- [visual.html](visual.html) is the sole public IPv6 full-hierarchy visual model.
 - [cidr-hierarchy.html](cidr-hierarchy.html) is the static IPv6 CIDR containment tree proof of concept.
-- [visual-options.html](visual-options.html) contains the selected HTML/CSS/JS foundations for the IPv6 subnetting visual model.
 - [cidr-hierarchy.json](cidr-hierarchy.json) is the machine-readable hierarchy model.
 - [cidr-hierarchy.dot](cidr-hierarchy.dot) is a Graphviz DOT export.
 - [published-workbook.html](html/published-workbook.html) is the full published workbook HTML snapshot.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-FileCopyrightText: 2026 Daryll Swer
 # SPDX-License-Identifier: MIT
-"""Build alternate IPv6 subnetting visualisation prototypes from CSV data."""
+"""Build the public IPv6 hierarchy model and retain legacy model references."""
 
 from __future__ import annotations
 
@@ -40,6 +40,44 @@ OPTION_SUMMARIES = {
     "collapsible-dendrogram": "Expandable left-to-right hierarchy so readers can reveal only the branch they are inspecting.",
     "purpose-cluster-graph": "Interactive node-link graph clustered by operational purpose rather than pure prefix depth.",
 }
+
+LEGACY_VISUAL_MODELS = [
+    {
+        "id": "at-a-glance-allocation",
+        "title": "At-a-glance allocation",
+        "source": "allocation_path_section",
+    },
+    {
+        "id": "operational-branches",
+        "title": "Operational branches",
+        "source": "operational_branches_section",
+    },
+    {
+        "id": "purpose-map",
+        "title": "Purpose map",
+        "source": "purpose_map_section",
+    },
+    {
+        "id": "branch-cards",
+        "title": "Branch cards",
+        "source": "branch_cards",
+    },
+    {
+        "id": "purpose-cluster-graph",
+        "title": "Purpose cluster graph",
+        "source": "purpose_cluster_graph",
+    },
+    {
+        "id": "visual-options-gallery",
+        "title": "Visual-options gallery",
+        "source": "render_index",
+    },
+]
+
+LEGACY_PUBLIC_FILENAMES = [
+    "visual-options.html",
+    *(f"visual-option-{option_id}.html" for option_id in OPTION_IDS),
+]
 
 BRANCH_VISIBLE_CHILDREN = 12
 FINAL_BRANCH_VISIBLE_CHILDREN = 8
@@ -860,21 +898,15 @@ def full_hierarchy_section(tree: dict) -> str:
 
 
 def final_visual_page(tree: dict, nodes: list[dict], font_asset_prefix: str) -> str:
-    body = (
-        metric_html(tree, nodes)
-        + allocation_path_section(nodes)
-        + operational_branches_section(nodes)
-        + purpose_map_section(nodes)
-        + full_hierarchy_section(tree)
-    )
+    body = full_hierarchy_section(tree)
     return page_shell(
         "AS141253 IPv6 Visual Model",
-        "A mostly static, CSV-derived hybrid dashboard for reading the IPv6 allocation model at a glance while preserving the complete hierarchy.",
+        "A CSV-derived, expandable IPv6 prefix containment hierarchy for inspecting the complete AS141253 allocation model.",
         body,
         font_asset_prefix=font_asset_prefix,
         current="visual-model",
         eyebrow="AS141253 IPv6 visual model",
-        footer_text="Generated from repository CSV files. Raw workbook, CSV, ODS, hierarchy, and visual-foundation artefacts remain available for audit.",
+        footer_text="Generated from repository CSV files. Raw workbook, CSV, ODS, and hierarchy artefacts remain available for audit.",
         include_script=False,
     )
 
@@ -1443,11 +1475,7 @@ def nav_links(current: str | None = None) -> str:
     links = ['<a href="./">Workbook</a>']
     if current != "visual-model":
         links.append('<a href="visual.html">Visual model</a>')
-    links.extend(['<a href="cidr-hierarchy.html">Tree model</a>', '<a href="visual-options.html">Visual foundations</a>'])
-    for option_id in OPTION_IDS:
-        if current == option_id:
-            continue
-        links.append(f'<a href="visual-option-{option_id}.html">{html_escape(OPTION_TITLES[option_id])}</a>')
+    links.append('<a href="cidr-hierarchy.html">CIDR hierarchy</a>')
     return "".join(links)
 
 
@@ -1546,11 +1574,29 @@ def render_index(tree: dict, nodes: list[dict], sections: dict[str, str], font_a
     )
 
 
+def legacy_reference_markdown() -> bytes:
+    lines = [
+        "# Legacy AS141253 Visual Models",
+        "",
+        "These are historical design references for maintainers, AI/LLM agents, and software developers.",
+        "",
+        "They are deliberately excluded from GitHub Pages. `../visual.html` is the sole supported public AS141253 visual model.",
+        "",
+        "The generator functions remain in `scripts/ipv6_visual_options.py`; no public HTML pages are produced for these models.",
+        "",
+        "## Archived Models",
+        "",
+    ]
+    for model in LEGACY_VISUAL_MODELS:
+        lines.append(f"- `{model['title']}`: generator function `{model['source']}`.")
+    lines.append("")
+    return "\n".join(lines).encode("utf-8")
+
+
 def build_ipv6_visual_options_artefacts(root: Path, out: Path, manifest: dict) -> dict:
     rows = read_prefix_rows(root, manifest)
     tree = prune_empty_children(attach_children(rows))
     nodes = flatten_tree(tree)
-    sections = all_sections(tree, nodes)
     font_prefix = "../../../assets/fonts"
 
     visual_model_body = final_visual_page(tree, nodes, font_prefix).encode("utf-8")
@@ -1558,34 +1604,32 @@ def build_ipv6_visual_options_artefacts(root: Path, out: Path, manifest: dict) -
     visual_model_info.update({
         "id": "visual-model",
         "title": "AS141253 IPv6 Visual Model",
-        "summary": "Primary mostly static hybrid dashboard for the AS141253 IPv6 allocation model.",
+        "summary": "Sole public CSV-derived full IPv6 prefix hierarchy model for AS141253.",
     })
 
-    index_body = render_index(tree, nodes, sections, font_prefix).encode("utf-8")
-    index_info = artefact_info(root, out / "visual-options.html", index_body, "text/html; charset=utf-8")
-    option_infos = []
-    for option_id in OPTION_IDS:
-        body = metric_html(tree, nodes) + sections[option_id]
-        page = page_shell(
-            f"{OPTION_TITLES[option_id]} - AS141253 IPv6 Visual Option",
-            OPTION_SUMMARIES[option_id],
-            body,
-            font_asset_prefix=font_prefix,
-            current=option_id,
-        ).encode("utf-8")
-        info = artefact_info(root, out / f"visual-option-{option_id}.html", page, "text/html; charset=utf-8")
-        info.update({
-            "id": option_id,
-            "title": OPTION_TITLES[option_id],
-            "summary": OPTION_SUMMARIES[option_id],
-        })
-        option_infos.append(info)
+    for filename in LEGACY_PUBLIC_FILENAMES:
+        (out / filename).unlink(missing_ok=True)
+
+    legacy_readme_info = artefact_info(
+        root,
+        out / "legacy-visual-models" / "README.md",
+        legacy_reference_markdown(),
+        "text/markdown; charset=utf-8",
+    )
+    legacy_reference = {
+        "status": "developer_ai_reference_only",
+        "pages_published": False,
+        "path": legacy_readme_info["path"],
+        "sha256": legacy_readme_info["sha256"],
+        "bytes": legacy_readme_info["bytes"],
+        "content_type": legacy_readme_info["content_type"],
+        "models": LEGACY_VISUAL_MODELS,
+        "source": "Generator functions retained in scripts/ipv6_visual_options.py; intentionally excluded from docs/.",
+    }
 
     return {
-        "model": "generated_html_css_visual_options",
+        "model": "hierarchy_only_ipv6_disclosure_tree",
         "source": "CSV Prefix columns and rooted IPv6 prefix containment tree",
         "visual_model": visual_model_info,
-        "option_count": len(option_infos),
-        "index": index_info,
-        "options": option_infos,
+        "legacy_reference": legacy_reference,
     }
