@@ -223,7 +223,7 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
             errors.append("spreadsheet tabbed workbook HTML tab count does not match manifest")
     hierarchy = manifest.get("cidr_hierarchy", {})
     if hierarchy:
-        for key in ["json", "html", "dot"]:
+        for key in ["json", "dot"]:
             item = hierarchy.get(key, {})
             path_value = item.get("path")
             if not path_value or not (ROOT / path_value).exists():
@@ -231,8 +231,11 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
                 continue
             if item.get("sha256") and sha256_file(ROOT / path_value) != item["sha256"]:
                 errors.append(f"spreadsheet CIDR hierarchy {key} checksum mismatch")
+        if "html" in hierarchy:
+            errors.append("spreadsheet CIDR hierarchy must not expose a redundant HTML reader model")
+        if (ROOT / "data" / "sheets" / "as141253-ipv6-architecture-example" / "cidr-hierarchy.html").exists():
+            errors.append("spreadsheet retired CIDR hierarchy HTML page remains in source output")
         json_path = ROOT / hierarchy.get("json", {}).get("path", "")
-        html_path = ROOT / hierarchy.get("html", {}).get("path", "")
         if json_path.exists():
             try:
                 tree = load_json(json_path)
@@ -240,10 +243,6 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
                     errors.append("spreadsheet CIDR hierarchy JSON does not contain a prefix tree")
             except Exception as exc:
                 errors.append(f"spreadsheet CIDR hierarchy JSON parse failed: {exc}")
-        if html_path.exists():
-            hierarchy_html = html_path.read_text(encoding="utf-8", errors="replace")
-            if "prefix-tree" not in hierarchy_html or "AS141253 IPv6 CIDR Hierarchy" not in hierarchy_html:
-                errors.append("spreadsheet CIDR hierarchy HTML missing expected tree UI")
     source_visual_dir = ROOT / "data" / "sheets" / "as141253-ipv6-architecture-example"
     visual_model = manifest.get("visual_model", {})
     visual_model_path = ROOT / visual_model.get("path", "")
@@ -301,6 +300,8 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
             errors.append("spreadsheet README missing full-hierarchy visual model link")
         if "visual-options.html" in source_readme_text or "Visual foundations" in source_readme_text:
             errors.append("spreadsheet README still exposes legacy visual models")
+        if "cidr-hierarchy.html" in source_readme_text:
+            errors.append("spreadsheet README still exposes retired CIDR hierarchy HTML")
     for tab in manifest.get("tabs", []):
         csv_info = tab.get("csv", {})
         csv_path = ROOT / csv_info.get("path", "")
@@ -532,17 +533,10 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
             errors.append("GitHub Pages AS141253 workbook page missing visual model link")
         if "visual-options.html" in sheet_html or "Visual foundations" in sheet_html:
             errors.append("GitHub Pages AS141253 workbook page exposes retired visual models")
+        if "cidr-hierarchy.html" in sheet_html or "CIDR hierarchy" in sheet_html:
+            errors.append("GitHub Pages AS141253 workbook page exposes retired CIDR hierarchy HTML")
         if 'href="../../index.html"' in sheet_html:
             errors.append("GitHub Pages AS141253 workbook navigation should use ../../ instead of ../../index.html")
-        hierarchy_page = sheet_page.parent / "cidr-hierarchy.html"
-        if not hierarchy_page.exists():
-            errors.append("GitHub Pages AS141253 CIDR hierarchy page missing")
-        else:
-            hierarchy_html = hierarchy_page.read_text(encoding="utf-8", errors="replace")
-            if "prefix-tree" not in hierarchy_html:
-                errors.append("GitHub Pages AS141253 CIDR hierarchy page missing prefix tree UI")
-            if 'href="index.html"' in hierarchy_html:
-                errors.append("GitHub Pages AS141253 CIDR hierarchy should link back to ./ instead of index.html")
         sheet_manifest = load_json(ROOT / "data" / "sheets" / "as141253-ipv6-architecture-example" / "manifest.json")
         visual_model_meta = sheet_manifest.get("visual_model", {})
         if not visual_model_meta.get("path") or not visual_model_meta.get("sha256"):
@@ -570,6 +564,8 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
                 "<h2>Purpose map</h2>",
                 ">Visual foundations<",
                 "visual-options.html",
+                "cidr-hierarchy.html",
+                ">CIDR hierarchy<",
             ]:
                 if marker in visual_model_html:
                     errors.append(f"GitHub Pages AS141253 visual model page exposes legacy marker `{marker}`")
@@ -579,6 +575,7 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
                 errors.append("GitHub Pages AS141253 visual model page should not require JavaScript")
 
         legacy_pages = [
+            "cidr-hierarchy.html",
             "visual-options.html",
             "visual-option-branch-cards.html",
             "visual-option-collapsible-dendrogram.html",

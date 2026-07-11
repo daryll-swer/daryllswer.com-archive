@@ -65,15 +65,15 @@ flowchart LR
   tabbed HTML workbook for the AS141253 sheet. It is rendered from repository
   CSV files, uses the same archive typography, and keeps adjacent ODS, CSV,
   CSVW, and Google HTML snapshots for editing/provenance.
-- `docs/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html` is a
-  generated proof-of-concept IPv6 prefix containment tree. It is derived from
-  the same CSV `Prefix` columns with Python `ipaddress` containment checks,
-  uses the same archive typography, and has adjacent JSON and Graphviz DOT
-  artefacts for future visualisation work.
 - `docs/sheets/as141253-ipv6-architecture-example/visual.html` is the sole
   human-facing AS141253 IPv6 visual model. It renders the complete
   CSV-derived containment hierarchy with native `details`/`summary` controls.
   Reserved siblings are collapsed into count/range summaries by default, but
+  retain exact expandable prefix details.
+- `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.json` and
+  `.dot` are derived developer/AI artefacts. They preserve the CSV-derived
+  IPv6 containment graph for audit and external tooling; no separate public
+  CIDR hierarchy HTML page is generated.
   their exact prefixes remain available in expandable details.
 - Historical visual-design material is retained only as a developer/AI
   reference under `data/sheets/as141253-ipv6-architecture-example/legacy-visual-models/`.
@@ -164,7 +164,7 @@ surface must not cause repeated workflow failures or archive deletion.
   artefact.
 - The AS141253 CIDR hierarchy is derived from CSV, not manually maintained.
   Parent/child edges must be calculated using IPv6 prefix containment. The
-  generated JSON, DOT, and HTML checksums are recorded in the sheet manifest.
+  generated JSON and DOT checksums are recorded in the sheet manifest.
 - The AS141253 public visual model is generated from CSV/hierarchy data, not
   hand-authored. `visual.html` is the only reader path and renders the full
   hierarchy through native disclosure controls. CSV `Notes` values remain

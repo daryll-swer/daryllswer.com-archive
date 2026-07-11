@@ -244,12 +244,12 @@ The AS141253 Google Sheet is archived as a CSV-backed HTML workbook:
   public full-hierarchy visual model for human readers.
 - `docs/sheets/as141253-ipv6-architecture-example/visual.html` is the generated
   GitHub Pages copy of that supported public model.
-- `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html` is the
-  static IPv6 CIDR containment tree proof of concept generated from CSV.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.json` is the
-  machine-readable hierarchy model.
+  developer/AI-facing machine-readable hierarchy model.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.dot` is the
-  Graphviz DOT export for external layout experiments.
+  developer/AI-facing Graphviz DOT export for external layout experiments.
+- No separate public CIDR hierarchy HTML page is generated; `visual.html` is
+  the single reader path.
 - `data/sheets/as141253-ipv6-architecture-example/csv/` remains the editable
   text source for each tab.
 - `AS141253-ipv6-architecture-example.ods` and `html/` snapshots preserve

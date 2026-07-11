@@ -559,7 +559,7 @@ def render_sheet_page() -> None:
         dirs_exist_ok=True,
         ignore=shutil.ignore_patterns("workbook.html", "legacy-visual-models"),
     )
-    font_rewrite_pages = [out_dir / "cidr-hierarchy.html", out_dir / "visual.html"]
+    font_rewrite_pages = [out_dir / "visual.html"]
     for page in font_rewrite_pages:
         if page.exists():
             text = page.read_text(encoding="utf-8", errors="replace")

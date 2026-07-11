@@ -6,12 +6,6 @@
       "path": "data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.dot",
       "sha256": "d3a01616d647ccd7c71c82eece47ed1426983564ac72a334d6f8f2196df5bcc9"
     },
-    "html": {
-      "bytes": 59581,
-      "content_type": "text/html; charset=utf-8",
-      "path": "data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html",
-      "sha256": "3e244aae9a62d5e5d34f2192047d8d1740684922155e010c895735ffa7bbd359"
-    },
     "json": {
       "bytes": 95215,
       "content_type": "application/json; charset=utf-8",
@@ -23,7 +17,7 @@
     "node_count": 153,
     "source": "CSV Prefix columns"
   },
-  "generated_at": "2026-07-10T08:43:38+00:00",
+  "generated_at": "2026-07-11T09:19:11+00:00",
   "legacy_visual_models": {
     "bytes": 788,
     "content_type": "text/markdown; charset=utf-8",
@@ -69,12 +63,12 @@
     "bytes": 180746,
     "content_type": "application/vnd.oasis.opendocument.spreadsheet",
     "path": "data/sheets/as141253-ipv6-architecture-example/AS141253-ipv6-architecture-example.ods",
-    "sha256": "40d577fb289df57f383739670e5add7ac940f9930cd16c2724a247880a36285b"
+    "sha256": "88b4c53384ba6890af1d9dc11106f34b490a0a05da501c58a7915228a0049b49"
   },
   "published_workbook_html": {
-    "bytes": 45976,
+    "bytes": 46151,
     "path": "data/sheets/as141253-ipv6-architecture-example/html/published-workbook.html",
-    "sha256": "51c0c280692954b8bc09b770e741cfe1ad8599d0bb3c9879339714cad2013657"
+    "sha256": "9764102cdbe7f29df27a02216dc71eb558d420885c5c819b3dc1ae46ba51a232"
   },
   "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml",
   "tabs": [
@@ -99,10 +93,10 @@
       },
       "gid": "0",
       "html": {
-        "bytes": 55853,
+        "bytes": 56137,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960double-colon-32.html",
-        "sha256": "9dc1abd5b1b222f7e81276a97ccee0d72b40a53e6cfb0ab3de302f4517b81df3",
+        "sha256": "8320405328fd13c031eff51e1f96898376187b89ad9c913d7dd645628278ba14",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=0"
       },
       "name": "2400:d960::/32"
@@ -128,10 +122,10 @@
       },
       "gid": "268073512",
       "html": {
-        "bytes": 45107,
+        "bytes": 45301,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960double-colon-32-34.html",
-        "sha256": "8e0dd8139102f8f58f659ba31bdc62602634a900e613543fcbde8fc84bab8f4b",
+        "sha256": "9b7b545604f97abdd3fb45748ac69496e25d27f145255c3a77c50bf20dee0f2c",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=268073512"
       },
       "name": "2400:d960::/32-34"
@@ -157,10 +151,10 @@
       },
       "gid": "1059737347",
       "html": {
-        "bytes": 63901,
+        "bytes": 64035,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960double-colon-34-40.html",
-        "sha256": "a5749b5f7332935dc7b7754e5992f8fe256c9701f68faa1e946b93661b090eb2",
+        "sha256": "fb3d091b4a6c8b0430a853257c7e7441dfaf3b2f0c9edcd94d8676ab7c8512a3",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1059737347"
       },
       "name": "2400:d960::/34-40"
@@ -186,10 +180,10 @@
       },
       "gid": "1582961520",
       "html": {
-        "bytes": 48129,
+        "bytes": 48292,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-800double-colon-40-44.html",
-        "sha256": "7fd89b9299685ad72db132f721b18fdfe6a9c61811916e61ceedb24e4d47ed31",
+        "sha256": "0e7f31226d689ac4c824e640d61ffd11fccce3965c2742a29023752308dc9ecc",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1582961520"
       },
       "name": "2400:d960:800::/40-44"
@@ -215,10 +209,10 @@
       },
       "gid": "1259404302",
       "html": {
-        "bytes": 48866,
+        "bytes": 49044,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-800double-colon-44-48.html",
-        "sha256": "7153642d7d3a69e309c85a6d422c455d093185b26db2a38c3aad9a11f0c43c2e",
+        "sha256": "2bd3d493b4db83ad7dfc43d1b5a122f935795d12a8f7d657b16a16edd22d9e1f",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1259404302"
       },
       "name": "2400:d960:800::/44-48"
@@ -244,10 +238,10 @@
       },
       "gid": "1315535264",
       "html": {
-        "bytes": 47945,
+        "bytes": 48145,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-800double-colon-48-64.html",
-        "sha256": "fbb2828da023243349ed162f51815edf1fca917aea48d7c2ca8e8c0b7cf57de8",
+        "sha256": "d2137bf7d02c62f761a94f4a0308e6cd7f274524f17c38acae8d24e289ca5f84",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1315535264"
       },
       "name": "2400:d960:800::/48-64"
@@ -273,10 +267,10 @@
       },
       "gid": "638030841",
       "html": {
-        "bytes": 48860,
+        "bytes": 49062,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-801double-colon-48-52.html",
-        "sha256": "a091533fa37133eea5da33f56ae810fe893a6fc7e9fdaf21d3a9bca4bd6938c5",
+        "sha256": "77fda9f01bed9bc4ddf220854af5a01eb779626ac413c2355e7a33c6f050aa4a",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=638030841"
       },
       "name": "2400:d960:801::/48-52"
@@ -302,10 +296,10 @@
       },
       "gid": "309733296",
       "html": {
-        "bytes": 48989,
+        "bytes": 49166,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-803double-colon-48-52.html",
-        "sha256": "06121ccb6b0ca631f6465aed17f610706107d156fa7b72c710e0a8efe3e23b84",
+        "sha256": "e45a6d8a17692362a35f9775869ff35ff271af759b4090cf547a528d81ea8572",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=309733296"
       },
       "name": "2400:d960:803::/48-52"
@@ -331,10 +325,10 @@
       },
       "gid": "1037809711",
       "html": {
-        "bytes": 47108,
+        "bytes": 47323,
         "content_type": "text/html; charset=utf-8",
         "path": "data/sheets/as141253-ipv6-architecture-example/html/2400-d960-804double-colon-48-56.html",
-        "sha256": "b8f022a2dd06881acbe4af65f86192235b5faeab07bbc11eb2ca4c515bc0ae7d",
+        "sha256": "9c3cbd8df7e28f837914fffde7c4321b2d6a9fac5b05ba26fc20c3666c87f89d",
         "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml/sheet?headers=false&gid=1037809711"
       },
       "name": "2400:d960:804::/48-56"
@@ -342,18 +336,18 @@
   ],
   "title": "AS141253's IPv6 Architecture Example - Daryll Swer - Google Drive",
   "visual_model": {
-    "bytes": 66107,
+    "bytes": 66059,
     "content_type": "text/html; charset=utf-8",
     "id": "visual-model",
     "path": "data/sheets/as141253-ipv6-architecture-example/visual.html",
-    "sha256": "1b6ddb9d31d276057092e63f244ef605aa9a092a40a5651ac5e7209e500edbd5",
+    "sha256": "97a375ecdec896b60faa380a1a9d75f49c8185e07c752c110979dd44d50be239",
     "summary": "Sole public CSV-derived full IPv6 prefix hierarchy model for AS141253.",
     "title": "AS141253 IPv6 Visual Model"
   },
   "workbook_html": {
-    "bytes": 49235,
+    "bytes": 49187,
     "content_type": "text/html; charset=utf-8",
     "path": "data/sheets/as141253-ipv6-architecture-example/workbook.html",
-    "sha256": "93cea183d4c44ec073285335564f58e6fe9126af3aec42e5454c3f71ed20bfa5"
+    "sha256": "8a26d8a180a43253dc12910efdfce3dc564c757b041d46f993ba02d6f0e9977b"
   }
 }

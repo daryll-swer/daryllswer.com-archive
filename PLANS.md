@@ -6,10 +6,10 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; hierarchy-only AS141253 visual model is deployed and
-  live-verified on GitHub Pages
+- Status: local route retirement complete; commit, deployment, and live-route
+  verification pending
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-10
+- Last updated: 2026-07-11
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -23,6 +23,10 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - Complete locally: `cidr-hierarchy.html` is retired as a redundant public
+    proof-of-concept page. Generation, source/Page output, and public
+    navigation now use `visual.html` only; CSV-derived JSON and DOT hierarchy
+    artefacts remain developer-facing source material.
   - Complete: owner selected the existing Full hierarchy disclosure
     model as the sole public AS141253 visual. Historical visual-design logic is
     documented outside `docs/`, while the generated Pages tree contains only
@@ -42,7 +46,7 @@
   - Complete locally: targeted sync support was added to `scripts/sync-wordpress-posts.py` so future refreshes can avoid rewriting every post bundle.
   - Complete locally: canonical drift automation was added with a weekly/manual GitHub Actions workflow, `archive-status.json`, and `docs/CANONICAL_DRIFT.md`.
   - Complete locally: drift automation uses a `healthy` -> `degraded` -> `canonical_unavailable` -> `frozen_archive` state model; `frozen_archive` no-ops before canonical network requests.
-  - Complete locally: AS141253 now has a CSV-derived IPv6 prefix containment tree proof of concept with HTML, JSON, and Graphviz DOT artefacts.
+  - Complete locally: AS141253 has CSV-derived IPv6 prefix-containment JSON and Graphviz DOT artefacts for developer/AI use.
   - Complete: validation and browser QA passed for refreshed article featured images, workbook link, and CIDR hierarchy page.
   - Complete: implementation and follow-up commits pushed to `main`; GitHub Pages deployed successfully and live routes were verified.
   - Complete: the manual `Canonical drift check` workflow passed on final commit `d20085f` after switching the drift checker to a browser-compatible archive User-Agent.
@@ -163,11 +167,15 @@
     2560 px widths with no page-level horizontal overflow, working reserved
     disclosures, and working SVG minimap anchors.
 - Last material update:
-  - 2026-07-10 Deployed hierarchy-only `visual.html` at commit `f94d8b3` via
-    GitHub Pages run `29081542020`; public visual, workbook, and IPv6 article
-    routes returned 200 while the four retired visual routes returned 404.
+  - 2026-07-11 Removed the redundant hierarchy renderer and public route
+    locally. `make sync` refreshed 19 posts and 9 sheet tabs; `make
+    render-site`, compile, whitespace, validation, and public-safety checks
+    passed. Local routes for visual/workbook/article returned 200 and the
+    retired hierarchy route returned 404.
 - Next pickup action:
-  - None for this completed hierarchy-only visual-model revision.
+  - Commit and push the completed retirement, wait for GitHub Pages, then
+    verify the retired route returns 404 while visual/workbook/article remain
+    available.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
@@ -244,7 +252,7 @@
 - [x] 2026-07-06 13:48 UTC Committed `822f47c`, pushed, retried transient Pages deploy failure with empty commit `46ec8cc`, and verified live clean root links.
 - [x] 2026-07-06 17:49 UTC Target-refreshed the three requested posts from canonical WordPress.
 - [x] 2026-07-06 17:53 UTC Added canonical drift checker, status/report files, and weekly/manual GitHub Actions workflow.
-- [x] 2026-07-06 17:59 UTC Added CSV-derived AS141253 IPv6 CIDR hierarchy HTML/JSON/DOT proof of concept.
+- [x] 2026-07-06 17:59 UTC Added CSV-derived AS141253 IPv6 CIDR hierarchy JSON/DOT proof of concept.
 - [x] 2026-07-06 18:01 UTC Regenerated sheet artefacts and GitHub Pages output.
 - [x] 2026-07-06 18:04 UTC Validation, public-safety scan, script compile, whitespace check, and local browser QA passed.
 - [x] 2026-07-06 18:09 UTC Committed `6b00f09`, pushed to `main`, verified Pages deployment success, and live-checked updated routes/assets.
@@ -364,10 +372,15 @@
   - Status: final locally
   - Impact: `.github/workflows/canonical-drift.yml`, `scripts/check-canonical-drift.py`, `archive-status.json`, and `docs/CANONICAL_DRIFT.md` implement the state/report path.
 - Decision: Generate an AS141253 IPv6 prefix containment tree from CSV.
-  - Rationale: CIDR hierarchy is naturally represented as a rooted containment tree; CSV remains editable while HTML/JSON/DOT improve readability and future graph rendering.
+  - Rationale: CIDR hierarchy is naturally represented as a rooted containment tree; CSV remains editable while JSON/DOT preserve an auditable graph for developer and AI tooling.
   - Date/Author: 2026-07-06, user/Codex
-  - Status: proof of concept locally
-  - Impact: `scripts/ipv6_hierarchy.py` generates `cidr-hierarchy.html`, `cidr-hierarchy.json`, and `cidr-hierarchy.dot`.
+  - Status: retained developer/AI artefact
+  - Impact: `scripts/ipv6_hierarchy.py` generates `cidr-hierarchy.json` and `cidr-hierarchy.dot`.
+- Decision: Retire the redundant public AS141253 CIDR hierarchy page.
+  - Rationale: The owner selected the full hierarchy view in `visual.html` as the ideal human reader experience; two public routes for the same data add confusion without capability.
+  - Date/Author: 2026-07-11, user/Codex
+  - Status: implemented locally; deployment pending
+  - Impact: `cidr-hierarchy.html` is not generated or published, public navigation targets `visual.html`, and the old Pages route must return 404 after deployment.
 - Decision: Self-host canonical typography for the archive.
   - Rationale: Public canonical CSS uses `Poppins` for body/form text and
     `Raleway` for headings; self-hosting keeps GitHub Pages readable without
