@@ -6,8 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: local route retirement complete; commit, deployment, and live-route
-  verification pending
+- Status: complete; `visual.html` is the sole deployed public hierarchy route
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-11
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -23,7 +22,7 @@
 ## Current Status / Next Pickup
 
 - Current state:
-  - Complete locally: `cidr-hierarchy.html` is retired as a redundant public
+  - Complete: `cidr-hierarchy.html` is retired as a redundant public
     proof-of-concept page. Generation, source/Page output, and public
     navigation now use `visual.html` only; CSV-derived JSON and DOT hierarchy
     artefacts remain developer-facing source material.
@@ -167,15 +166,15 @@
     2560 px widths with no page-level horizontal overflow, working reserved
     disclosures, and working SVG minimap anchors.
 - Last material update:
-  - 2026-07-11 Removed the redundant hierarchy renderer and public route
-    locally. `make sync` refreshed 19 posts and 9 sheet tabs; `make
-    render-site`, compile, whitespace, validation, and public-safety checks
-    passed. Local routes for visual/workbook/article returned 200 and the
-    retired hierarchy route returned 404.
+  - 2026-07-11 Removed the redundant hierarchy renderer and public route in
+    commit `4b4e813`. `make sync` refreshed 19 posts and 9 sheet tabs;
+    `make render-site`, compile, whitespace, validation, and public-safety
+    checks passed. GitHub Pages run `29147641547` succeeded; live
+    visual/workbook/article routes returned 200 and the retired hierarchy route
+    returned 404.
 - Next pickup action:
-  - Commit and push the completed retirement, wait for GitHub Pages, then
-    verify the retired route returns 404 while visual/workbook/article remain
-    available.
+  - Owner review of the deployed `visual.html` model; no implementation pickup
+    is pending.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
@@ -379,7 +378,7 @@
 - Decision: Retire the redundant public AS141253 CIDR hierarchy page.
   - Rationale: The owner selected the full hierarchy view in `visual.html` as the ideal human reader experience; two public routes for the same data add confusion without capability.
   - Date/Author: 2026-07-11, user/Codex
-  - Status: implemented locally; deployment pending
+  - Status: implemented and deployed
   - Impact: `cidr-hierarchy.html` is not generated or published, public navigation targets `visual.html`, and the old Pages route must return 404 after deployment.
 - Decision: Self-host canonical typography for the archive.
   - Rationale: Public canonical CSS uses `Poppins` for body/form text and

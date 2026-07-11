@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 final IPv6 visual model
-- Status: local route retirement complete; deployment verification pending
+- Status: complete; public route retirement deployed and live-verified
 - Last updated: 2026-07-11
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
@@ -77,11 +77,12 @@
   - Status: complete and pushed
   - Notes: `scripts/export-google-sheet.py` generates `data/sheets/as141253-ipv6-architecture-example/workbook.html`; `scripts/render-site.py` publishes it as the Pages sheet route.
 - AS141253 CIDR hierarchy route retirement:
-  - Status: complete locally
+  - Status: complete and deployed
   - Notes: `visual.html` is the sole human-facing hierarchy model. The
     CSV-derived JSON and DOT exports remain developer/AI artefacts;
     `cidr-hierarchy.html` has been removed from generation, Pages output, and
-    navigation. Deployment verification remains pending.
+    navigation. Commit `4b4e813` is deployed by GitHub Pages run
+    `29147641547`; live route verification passed.
 - Clean GitHub Pages root URL navigation:
   - Status: complete and pushed
   - Notes: `docs/index.html` remains the generated Pages entry file, but visible root navigation and root canonical metadata now use clean directory URLs.
@@ -206,8 +207,10 @@
   - Validation: `python3 -m py_compile scripts/*.py`, `git diff --check`,
     `make validate`, and `make scan-secrets` passed. Local route smoke checks
     returned 200 for visual/workbook/article and 404 for the retired route.
-  - Result: pass locally; commit, Pages deployment, and live verification
-    pending.
+  - Deployment/live verification: commit `4b4e813` was pushed to `main`;
+    GitHub Pages run `29147641547` succeeded. Live `visual.html`, workbook,
+    and IPv6 article routes returned 200 while the retired route returned 404.
+  - Result: pass.
 - 2026-07-10:
   - Action: Implemented the hierarchy-only AS141253 visual-model contract and
     regenerated source and GitHub Pages output.
