@@ -7,21 +7,14 @@ from __future__ import annotations
 
 import csv
 import hashlib
-import html
 import ipaddress
 import json
 import re
 from pathlib import Path
 
-from font_assets import FONT_BODY_STACK, FONT_HEADING_STACK, font_face_css
-
 
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
-
-
-def html_escape(value: object) -> str:
-    return html.escape(str(value), quote=True)
 
 
 def normalise_id(value: str) -> str:
@@ -131,221 +124,6 @@ def max_depth(node: dict, depth: int = 0) -> int:
     return max([depth] + [max_depth(child, depth + 1) for child in node.get("children", [])])
 
 
-def render_tree(node: dict, depth: int = 0) -> str:
-    open_attr = " open" if depth <= 2 else ""
-    label = node.get("label") or node.get("source_sheet") or ""
-    notes = node.get("notes") or ""
-    meta = []
-    if label:
-        meta.append(f'<span class="prefix-label">{html_escape(label)}</span>')
-    if node.get("source_sheet"):
-        meta.append(f'<span class="prefix-source">{html_escape(node["source_sheet"])}</span>')
-    children = node.get("children", [])
-    child_html = ""
-    if children:
-        child_html = "<ul>" + "".join(render_tree(child, depth + 1) for child in children) + "</ul>"
-    notes_html = f'<p class="prefix-notes">{html_escape(notes)}</p>' if notes else ""
-    return (
-        "<li>"
-        f"<details{open_attr}>"
-        "<summary>"
-        f'<span class="prefix">{html_escape(node.get("prefix", ""))}</span>'
-        f'<span class="prefix-length">/{html_escape(node.get("prefix_length", ""))}</span>'
-        f"{''.join(meta)}"
-        f'<span class="child-count">{len(children)} child prefix{"es" if len(children) != 1 else ""}</span>'
-        "</summary>"
-        f"{notes_html}"
-        f"{child_html}"
-        "</details>"
-        "</li>"
-    )
-
-
-def render_html(tree: dict, source_url: str, font_asset_prefix: str = "../../../assets/fonts") -> str:
-    total = count_nodes(tree)
-    depth = max_depth(tree)
-    body_font = FONT_BODY_STACK
-    heading_font = FONT_HEADING_STACK
-    return f"""<!doctype html>
-<html lang="en-IN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AS141253 IPv6 CIDR Hierarchy</title>
-  <style>
-{font_face_css(font_asset_prefix)}
-* {{ box-sizing: border-box; }}
-:root {{
-  color-scheme: light dark;
-  --bg: #f6f7f9;
-  --surface: #ffffff;
-  --surface-alt: #edf4f7;
-  --text: #17202a;
-  --muted: #5f6c78;
-  --border: #d6dde5;
-  --accent: #0b6f8a;
-  --reserved: #7a5c00;
-  --font-body: {body_font};
-  --font-heading: {heading_font};
-}}
-@media (prefers-color-scheme: dark) {{
-  :root {{
-    --bg: #101418;
-    --surface: #171d23;
-    --surface-alt: #202a32;
-    --text: #edf2f7;
-    --muted: #a8b4c0;
-    --border: #34404d;
-    --accent: #6cc7df;
-    --reserved: #e7c45d;
-  }}
-}}
-body {{
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  line-height: 1.55;
-}}
-a {{ color: var(--accent); text-underline-offset: .18em; }}
-.page-header, main, footer {{
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 1rem 1.25rem;
-}}
-.page-header {{
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: flex-start;
-  border-bottom: 1px solid var(--border);
-}}
-.actions {{ display: flex; gap: .6rem; flex-wrap: wrap; justify-content: flex-end; }}
-.actions a {{
-  display: inline-flex;
-  min-height: 2.25rem;
-  align-items: center;
-  padding: .4rem .7rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  text-decoration: none;
-  font-weight: 700;
-}}
-.eyebrow {{
-  margin: 0 0 .45rem;
-  color: var(--muted);
-  font-size: .82rem;
-  font-weight: 700;
-  letter-spacing: 0;
-  text-transform: uppercase;
-}}
-h1 {{ margin: 0; font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 3.2rem); line-height: 1.12; letter-spacing: 0; }}
-.summary {{ max-width: 780px; color: var(--muted); }}
-.metrics {{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-  gap: .75rem;
-  margin: 1rem 0;
-}}
-.metric {{
-  padding: .85rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-}}
-.metric strong {{ display: block; font-size: 1.45rem; }}
-.tree-shell {{
-  overflow-x: auto;
-  padding: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-}}
-.prefix-tree, .prefix-tree ul {{
-  list-style: none;
-  margin: 0;
-  padding-left: 1.15rem;
-  border-left: 1px solid var(--border);
-}}
-.prefix-tree {{ padding-left: 0; border-left: 0; }}
-.prefix-tree li {{ margin: .45rem 0; }}
-details {{ min-width: 48rem; }}
-summary {{
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  min-height: 2.35rem;
-  padding: .4rem .55rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface-alt);
-  cursor: pointer;
-}}
-.prefix {{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-weight: 800;
-  color: var(--accent);
-}}
-.prefix-length {{ color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }}
-.prefix-label, .prefix-source, .child-count {{
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.55rem;
-  padding: .15rem .45rem;
-  border-radius: 999px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--muted);
-  font-size: .85rem;
-  white-space: nowrap;
-}}
-.prefix-notes {{
-  max-width: 760px;
-  margin: .45rem 0 .65rem 1.75rem;
-  color: var(--muted);
-}}
-footer {{ color: var(--muted); font-size: .92rem; }}
-@media (max-width: 760px) {{
-  .page-header {{ flex-direction: column; }}
-  .actions {{ justify-content: flex-start; }}
-}}
-  </style>
-</head>
-<body>
-  <header class="page-header">
-    <div>
-      <p class="eyebrow">Graph-theory proof of concept</p>
-      <h1>AS141253 IPv6 CIDR Hierarchy</h1>
-      <p class="summary">A rooted prefix-containment tree generated from the repository CSV files. Parent/child edges are calculated with IPv6 network containment, not manual indentation.</p>
-    </div>
-    <nav class="actions" aria-label="Hierarchy actions">
-      <a href="./">Workbook</a>
-      <a href="cidr-hierarchy.json">JSON</a>
-      <a href="cidr-hierarchy.dot">DOT</a>
-      <a href="{html_escape(source_url)}">Original Google Sheet</a>
-    </nav>
-  </header>
-  <main>
-    <section class="metrics" aria-label="Hierarchy metrics">
-      <div class="metric"><strong>{total}</strong><span>prefix nodes</span></div>
-      <div class="metric"><strong>{depth}</strong><span>containment levels below root</span></div>
-      <div class="metric"><strong>{html_escape(tree.get("prefix", ""))}</strong><span>root prefix</span></div>
-    </section>
-    <section class="tree-shell" aria-label="IPv6 CIDR hierarchy">
-      <ul class="prefix-tree">
-        {render_tree(tree)}
-      </ul>
-    </section>
-  </main>
-  <footer>
-    <p>This is a static, self-contained HTML proof of concept. The CSV files remain the editable source of truth.</p>
-  </footer>
-</body>
-</html>
-"""
-
-
 def dot_id(prefix: str) -> str:
     return "n_" + re.sub(r"[^A-Za-z0-9_]+", "_", prefix)
 
@@ -376,14 +154,13 @@ def build_ipv6_hierarchy_artefacts(root: Path, out: Path, manifest: dict) -> dic
     rows = read_prefix_rows(root, manifest)
     tree = prune_empty_children(attach_children(rows))
     json_body = json.dumps(tree, ensure_ascii=False, indent=2, sort_keys=True).encode("utf-8") + b"\n"
-    html_body = render_html(tree, manifest.get("source_url", "")).encode("utf-8")
     dot_body = render_dot(tree).encode("utf-8")
+    (out / "cidr-hierarchy.html").unlink(missing_ok=True)
     return {
         "model": "rooted_ipv6_prefix_containment_tree",
         "source": "CSV Prefix columns",
         "node_count": count_nodes(tree),
         "max_depth": max_depth(tree),
         "json": artefact_info(root, out / "cidr-hierarchy.json", json_body, "application/json; charset=utf-8"),
-        "html": artefact_info(root, out / "cidr-hierarchy.html", html_body, "text/html; charset=utf-8"),
         "dot": artefact_info(root, out / "cidr-hierarchy.dot", dot_body, "text/vnd.graphviz; charset=utf-8"),
     }

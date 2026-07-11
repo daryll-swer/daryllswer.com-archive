@@ -1475,7 +1475,6 @@ def nav_links(current: str | None = None) -> str:
     links = ['<a href="./">Workbook</a>']
     if current != "visual-model":
         links.append('<a href="visual.html">Visual model</a>')
-    links.append('<a href="cidr-hierarchy.html">CIDR hierarchy</a>')
     return "".join(links)
 
 

@@ -6,8 +6,8 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 final IPv6 visual model
-- Status: complete; hierarchy-only public model is deployed and live-verified
-- Last updated: 2026-07-10
+- Status: local route retirement complete; deployment verification pending
+- Last updated: 2026-07-11
 - Implementer role/model/thread: current Codex Desktop thread; no subagent spawned yet
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
@@ -76,6 +76,12 @@
 - AS141253 tabbed workbook:
   - Status: complete and pushed
   - Notes: `scripts/export-google-sheet.py` generates `data/sheets/as141253-ipv6-architecture-example/workbook.html`; `scripts/render-site.py` publishes it as the Pages sheet route.
+- AS141253 CIDR hierarchy route retirement:
+  - Status: complete locally
+  - Notes: `visual.html` is the sole human-facing hierarchy model. The
+    CSV-derived JSON and DOT exports remain developer/AI artefacts;
+    `cidr-hierarchy.html` has been removed from generation, Pages output, and
+    navigation. Deployment verification remains pending.
 - Clean GitHub Pages root URL navigation:
   - Status: complete and pushed
   - Notes: `docs/index.html` remains the generated Pages entry file, but visible root navigation and root canonical metadata now use clean directory URLs.
@@ -90,7 +96,7 @@
   - Notes: `.github/workflows/canonical-drift.yml` runs weekly/manual checks. `scripts/check-canonical-drift.py` writes `archive-status.json` and `docs/CANONICAL_DRIFT.md`, with `frozen_archive` no-op behaviour for permanent canonical failure.
 - AS141253 IPv6 hierarchy proof of concept:
   - Status: complete and pushed
-  - Notes: `scripts/ipv6_hierarchy.py` derives a rooted IPv6 prefix containment tree from CSV, producing HTML, JSON, and Graphviz DOT artefacts. Current graph has 153 nodes and max depth 5.
+  - Notes: `scripts/ipv6_hierarchy.py` derives a rooted IPv6 prefix containment tree from CSV, producing JSON and Graphviz DOT developer/AI artefacts. Current graph has 153 nodes and max depth 5; `visual.html` is the sole public reader model.
 - Drift report:
   - Status: generated and pushed
   - Notes: Current state is `healthy` / `frozen=false`; report now shows 0
@@ -190,6 +196,18 @@
 
 ## Execution Log
 
+- 2026-07-11:
+  - Action: Retired the redundant public `cidr-hierarchy.html` route in favour
+    of the existing `visual.html` hierarchy reader.
+  - Evidence: Removed the retired HTML renderer, source/Pages artefacts, and
+    workbook/README/visual navigation links; manifest now contains only JSON
+    and DOT hierarchy exports. `make sync` refreshed 19 posts and 9 sheet
+    tabs; `make render-site` regenerated Pages output.
+  - Validation: `python3 -m py_compile scripts/*.py`, `git diff --check`,
+    `make validate`, and `make scan-secrets` passed. Local route smoke checks
+    returned 200 for visual/workbook/article and 404 for the retired route.
+  - Result: pass locally; commit, Pages deployment, and live verification
+    pending.
 - 2026-07-10:
   - Action: Implemented the hierarchy-only AS141253 visual-model contract and
     regenerated source and GitHub Pages output.

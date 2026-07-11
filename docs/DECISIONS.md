@@ -182,16 +182,15 @@
 - Rationale: CIDR allocation hierarchy is naturally a parent/child containment
   tree when each child prefix has one most-specific containing supernet. That
   model is easier to inspect than a multi-sheet workbook and can be rendered as
-  static HTML, JSON, and Graphviz DOT.
+  JSON and Graphviz DOT.
 - Evidence: RFC 4291 defines IPv6 addressing architecture; RFC 5952 defines
   canonical text representation expectations; Python `ipaddress` provides
   IPv4/IPv6 network manipulation including containment operations; D3
   hierarchy, Cytoscape.js, Mermaid, and Graphviz were evaluated as possible
   visualisation paths.
-- Impact: `scripts/ipv6_hierarchy.py` generates
-  `cidr-hierarchy.html`, `cidr-hierarchy.json`, and `cidr-hierarchy.dot` from
-  CSV. The workbook remains the default sheet page until the graph view is
-  validated further.
+- Impact: `scripts/ipv6_hierarchy.py` generates `cidr-hierarchy.json` and
+  `cidr-hierarchy.dot` from CSV. The public reader route is now
+  `visual.html`, which supersedes the earlier proof-of-concept HTML page.
 
 ## 2026-07-07: Self-Host Canonical Typography
 
