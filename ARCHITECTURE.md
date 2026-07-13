@@ -110,6 +110,16 @@ flowchart LR
 - The workflow commits only `archive-status.json` and `docs/CANONICAL_DRIFT.md`
   when those durable drift-state files change. Timestamped validation reports
   are not committed by scheduled checks.
+- The workflow must use explicit `actions/checkout@v6` and
+  `actions/setup-python@v6` steps, select CPython 3.12, cache pip by
+  `requirements.txt`, and run `python -m pip install -r requirements.txt`
+  before every archive Python script. The pip cache only reuses downloaded
+  packages; it never replaces dependency installation on a clean runner.
+- `scripts/validate-mirror.py` treats that workflow bootstrap as an invariant:
+  it verifies active steps, their order, and the `lxml` declaration in
+  `requirements.txt`. Any intentional action-version, Python-version, or
+  bootstrap redesign must update the workflow and its guard in one commit, then
+  pass a manually dispatched clean-hosted-runner verification.
 - Official GitHub Actions documentation supports scheduled and manual triggers,
   workflow concurrency, timeout controls, and workflow disabling. This repo
   still uses a sentinel/no-op pattern instead of self-disabling because it
