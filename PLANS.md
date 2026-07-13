@@ -383,7 +383,7 @@
   - Rationale: GitHub-hosted runners are clean and their default Python may change; validation imports `lxml`, which is declared in `requirements.txt` but was not installed by the scheduled workflow.
   - Date/Author: 2026-07-13, user/Codex
   - Status: implemented and hosted-runner verified
-  - Impact: The workflow selects Python 3.12, caches pip by `requirements.txt`, installs requirements before any archive script, and local validation detects loss or reordering of that bootstrap.
+  - Impact: The workflow selects Python 3.12, caches pip by `requirements.txt`, installs requirements before any archive script, and local validation detects loss or reordering of that bootstrap. The cache accelerates package downloads but never replaces installation; intentional action/Python/bootstrap changes must update this guard atomically and pass manual hosted-runner verification.
 - Decision: Generate an AS141253 IPv6 prefix containment tree from CSV.
   - Rationale: CIDR hierarchy is naturally represented as a rooted containment tree; CSV remains editable while JSON/DOT preserve an auditable graph for developer and AI tooling.
   - Date/Author: 2026-07-06, user/Codex

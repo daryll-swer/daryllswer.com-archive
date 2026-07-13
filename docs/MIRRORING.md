@@ -114,7 +114,16 @@ The workflow is intentionally low-cost:
 - public unauthenticated WordPress REST only;
 - 10 minute job timeout;
 - concurrency group with `cancel-in-progress`;
+- explicit CPython 3.12 setup, pip cache keyed to `requirements.txt`, and
+  `python -m pip install -r requirements.txt` before archive Python scripts;
 - commit only durable drift state/report changes.
+
+The pip cache accelerates downloads but is not an installed-environment cache;
+dependency installation remains mandatory on every clean runner. The
+`make validate` workflow guard verifies the active Python bootstrap, its order,
+and the `lxml` requirement. Change the workflow and guard together for any
+intentional action/Python/bootstrap upgrade, then manually dispatch the
+workflow to verify the clean hosted-runner path.
 
 Design references:
 
