@@ -6,8 +6,8 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: in progress; repairing scheduled canonical-drift workflow dependency
-  bootstrap after GitHub Actions validation failure
+- Status: complete; canonical-drift workflow dependency bootstrap is deployed
+  and hosted-runner verified
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-13
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -23,11 +23,12 @@
 ## Current Status / Next Pickup
 
 - Current state:
-  - Complete locally: scheduled canonical drift run `29229277522` reached a
+  - Complete: scheduled canonical drift run `29229277522` reached a
     healthy drift state but failed at `make validate` because the clean
     GitHub-hosted runner did not install the declared `lxml` dependency. The
     workflow now has explicit Python setup, requirements installation, and a
-    static local regression guard; hosted-runner verification is pending.
+    static local regression guard. Manual hosted-runner run `29231087908`
+    passed every step.
   - Complete: `cidr-hierarchy.html` is retired as a redundant public
     proof-of-concept page. Generation, source/Page output, and public
     navigation now use `visual.html` only; CSV-derived JSON and DOT hierarchy
@@ -177,11 +178,12 @@
     dependency: lxml. Install requirements.txt first.` The preceding canonical
     drift check completed healthy; the commit step was skipped and no archive
     changes were published. Commit `c2b0a06` adds explicit Python bootstrap,
-    dependency installation, and a regression guard; hosted-runner validation
-    remains pending.
+    dependency installation, and a regression guard. Manual hosted-runner run
+    `29231087908` passed with CPython 3.12.13, installed `lxml`/Pillow,
+    validation at 0 errors/1 known warning, and no drift-status commit.
 - Next pickup action:
-  - Run repository gates, push the remediation, then manually dispatch and
-    verify a successful canonical-drift workflow run.
+  - No implementation pickup is pending; the next scheduled run will reuse the
+    saved pip cache and enforce the same bootstrap contract.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
@@ -380,7 +382,7 @@
 - Decision: Treat the canonical-drift workflow's Python environment as an explicit dependency contract.
   - Rationale: GitHub-hosted runners are clean and their default Python may change; validation imports `lxml`, which is declared in `requirements.txt` but was not installed by the scheduled workflow.
   - Date/Author: 2026-07-13, user/Codex
-  - Status: implemented locally; hosted-runner verification pending
+  - Status: implemented and hosted-runner verified
   - Impact: The workflow selects Python 3.12, caches pip by `requirements.txt`, installs requirements before any archive script, and local validation detects loss or reordering of that bootstrap.
 - Decision: Generate an AS141253 IPv6 prefix containment tree from CSV.
   - Rationale: CIDR hierarchy is naturally represented as a rooted containment tree; CSV remains editable while JSON/DOT preserve an auditable graph for developer and AI tooling.

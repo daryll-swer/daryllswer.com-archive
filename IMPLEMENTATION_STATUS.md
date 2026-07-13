@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: canonical-drift workflow dependency remediation
-- Status: complete locally; hosted-runner verification pending
+- Status: complete; hosted-runner verification passed
 - Last updated: 2026-07-13
 - Implementer role/model/thread: `implementer-luna` / GPT-5.6 Luna XHigh worker; commit `c2b0a06`
 - Architect role/model/thread: current Codex Desktop thread plus user review
@@ -96,14 +96,14 @@
   - Status: complete and pushed
   - Notes: `.github/workflows/canonical-drift.yml` runs weekly/manual checks. `scripts/check-canonical-drift.py` writes `archive-status.json` and `docs/CANONICAL_DRIFT.md`, with `frozen_archive` no-op behaviour for permanent canonical failure.
 - Canonical drift Python bootstrap:
-  - Status: complete locally
+  - Status: complete and hosted-runner verified
   - Notes: Scheduled run `29229277522` failed because the clean runner did not
     install `lxml` before archive validation. The workflow now uses
     `actions/checkout@v6`, `actions/setup-python@v6`, Python 3.12, pip cache
     keyed to `requirements.txt`, and dependency installation before every
     archive script. `validate-mirror.py` guards the active workflow step
-    contract, order, and `lxml` declaration. Hosted-runner verification is
-    pending.
+    contract, order, and `lxml` declaration. Manual workflow run `29231087908`
+    verified the same clean hosted-runner path successfully.
 - AS141253 IPv6 hierarchy proof of concept:
   - Status: complete and pushed
   - Notes: `scripts/ipv6_hierarchy.py` derives a rooted IPv6 prefix containment tree from CSV, producing JSON and Graphviz DOT developer/AI artefacts. Current graph has 153 nodes and max depth 5; `visual.html` is the sole public reader model.
@@ -216,8 +216,12 @@
     `make validate` (0 errors, 1 known sitemap warning), and
     `make scan-secrets` passed. A mocked missing `setup-python` step caused
     the new workflow guard to fail as required.
-  - Result: pass locally; push and manually dispatched hosted-runner
-    verification pending.
+  - Deployment/hosted-runner verification: commits `c2b0a06` and `8148973`
+    were pushed to `main`. Manual run `29231087908` used CPython 3.12.13,
+    installed `lxml`/Pillow, completed archive validation with 0 errors and 1
+    known warning, passed the public-safety scan, and found no drift-status
+    changes to commit.
+  - Result: pass.
 - 2026-07-11:
   - Action: Retired the redundant public `cidr-hierarchy.html` route in favour
     of the existing `visual.html` hierarchy reader.
@@ -804,15 +808,14 @@
 ## Next Pickup
 
 - Next action:
-  - Push the workflow remediation, manually dispatch `Canonical drift check`,
-    and confirm the hosted runner completes every step successfully.
+  - No implementation pickup is pending for the workflow remediation.
 - Current blocker:
-  - None for local implementation; hosted-runner verification pending.
+  - None.
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - GitHub-hosted runner verification is pending. The known non-blocking
-    sitemap warning remains.
+  - The known non-blocking sitemap warning remains; workflow remediation has
+    no open verification gap.
 
 ## Completion Criteria
 
