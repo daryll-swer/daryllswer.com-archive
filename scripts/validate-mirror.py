@@ -645,9 +645,98 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
         errors.append("canonical drift GitHub Actions workflow missing")
     else:
         text = workflow.read_text(encoding="utf-8", errors="replace")
-        for marker in ["schedule:", "workflow_dispatch:", "concurrency:", "timeout-minutes:", "scripts/check-canonical-drift.py"]:
-            if marker not in text:
-                errors.append(f"canonical drift workflow missing `{marker}`")
+        active_lines = []
+        for lineno, raw_line in enumerate(text.splitlines(), start=1):
+            line = raw_line.split("#", 1)[0].rstrip()
+            if line.strip():
+                active_lines.append((lineno, line))
+
+        def has_active_line(pattern: str) -> bool:
+            return any(re.search(pattern, line) for _, line in active_lines)
+
+        for marker, pattern in [
+            ("schedule:", r"^\s*schedule:\s*$"),
+            ("workflow_dispatch:", r"^\s*workflow_dispatch:\s*$"),
+            ("concurrency:", r"^\s*concurrency:\s*$"),
+            ("timeout-minutes:", r"^\s*timeout-minutes:\s*10\s*$"),
+            ("scripts/check-canonical-drift.py", r"scripts/check-canonical-drift\.py"),
+        ]:
+            if not has_active_line(pattern):
+                errors.append(f"canonical drift workflow missing active `{marker}`")
+
+        step_blocks: dict[str, list[tuple[int, str]]] = {}
+        current_name: str | None = None
+        current_lines: list[tuple[int, str]] = []
+        for lineno, line in active_lines:
+            match = re.match(r"^\s*-\s+name:\s*(.+?)\s*$", line)
+            if match:
+                if current_name is not None:
+                    step_blocks[current_name] = current_lines
+                current_name = match.group(1).strip().strip("'\"")
+                current_lines = [(lineno, line)]
+            elif current_name is not None:
+                current_lines.append((lineno, line))
+        if current_name is not None:
+            step_blocks[current_name] = current_lines
+
+        required_steps = [
+            "Check out repository",
+            "Set up Python",
+            "Install Python dependencies",
+            "Check canonical drift",
+            "Validate public archive",
+        ]
+        for step_name in required_steps:
+            if step_name not in step_blocks:
+                errors.append(f"canonical drift workflow missing active step `{step_name}`")
+
+        def step_has(step_name: str, pattern: str) -> bool:
+            return any(re.search(pattern, line.strip()) for _, line in step_blocks.get(step_name, []))
+
+        required_step_lines = [
+            ("Check out repository", r"^uses:\s*actions/checkout@v6\s*$", "actions/checkout@v6"),
+            ("Set up Python", r"^uses:\s*actions/setup-python@v6\s*$", "actions/setup-python@v6"),
+            ("Set up Python", r"^python-version:\s*['\"]?3\.12['\"]?\s*$", "python-version 3.12"),
+            ("Set up Python", r"^cache:\s*['\"]?pip['\"]?\s*$", "pip cache"),
+            ("Set up Python", r"^cache-dependency-path:\s*['\"]?requirements\.txt['\"]?\s*$", "requirements.txt cache key"),
+            ("Install Python dependencies", r"^run:\s*python\s+-m\s+pip\s+install\s+-r\s+requirements\.txt\s*$", "requirements.txt installation"),
+        ]
+        for step_name, pattern, description in required_step_lines:
+            if step_name in step_blocks and not step_has(step_name, pattern):
+                errors.append(f"canonical drift workflow missing active `{description}` in `{step_name}`")
+
+        step_lines = {
+            name: step_blocks.get(name, [(0, "")])[0][0]
+            for name in required_steps
+            if name in step_blocks
+        }
+        ordered_steps = [
+            "Check out repository",
+            "Set up Python",
+            "Install Python dependencies",
+            "Check canonical drift",
+            "Validate public archive",
+        ]
+        present_steps = [name for name in ordered_steps if name in step_lines]
+        if present_steps != ordered_steps or any(
+            step_lines[left] >= step_lines[right]
+            for left, right in zip(ordered_steps, ordered_steps[1:])
+            if left in step_lines and right in step_lines
+        ):
+            errors.append("canonical drift workflow Python bootstrap steps are missing or out of order")
+
+        requirements = ROOT / "requirements.txt"
+        if not requirements.exists():
+            errors.append("requirements.txt missing; canonical drift workflow cannot install dependencies")
+        else:
+            has_lxml = False
+            for raw_line in requirements.read_text(encoding="utf-8", errors="replace").splitlines():
+                requirement = raw_line.split("#", 1)[0].strip()
+                if re.match(r"^lxml(?:\[[^]]+\])?(?:\s*[<>=!~].*)?$", requirement, re.IGNORECASE):
+                    has_lxml = True
+                    break
+            if not has_lxml:
+                errors.append("requirements.txt must declare lxml for the canonical drift validator")
     if not report_path.exists():
         errors.append("canonical drift report missing")
     if not status_path.exists():
