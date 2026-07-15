@@ -233,16 +233,14 @@ a:hover { color: var(--accent-2); }
   min-width: 0;
 }
 .brand-mark {
-  display: grid;
-  place-items: center;
+  display: block;
+  flex: 0 0 auto;
   width: 2.2rem;
   height: 2.2rem;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
-  color: var(--accent);
-  font-family: var(--font-heading);
-  font-weight: 800;
+  object-fit: cover;
 }
 .brand strong { font-family: var(--font-heading); font-weight: 700; }
 .brand small { display: block; color: var(--muted); font-size: .8rem; line-height: 1.1; }

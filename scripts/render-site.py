@@ -14,6 +14,8 @@ import shutil
 import urllib.parse
 from pathlib import Path
 
+from PIL import Image
+
 from font_assets import FONT_BODY_STACK, FONT_HEADING_STACK, copy_font_assets, font_face_css
 from sheet_workbook import render_workbook_page
 from wordpress_palette import wordpress_palette_css
@@ -32,6 +34,9 @@ SHEET_SOURCE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-r
 LOCALISABLE_HOSTS = {"www.daryllswer.com", "daryllswer.com"}
 TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
 TEXT_FRAGMENT_PREFIX = ":~:text="
+BRAND_FAVICON_SOURCE = ROOT / "assets" / "brand" / "01_DS_Favicon_Dark_Mode.png"
+BRAND_FAVICON_OUTPUT_NAME = "01_DS_Favicon_Dark_Mode-512.png"
+BRAND_FAVICON_SIZE = 512
 
 
 def write_text(path: Path, text: str) -> None:
@@ -52,6 +57,46 @@ def clean_generated_site() -> None:
     for path in [OUT / "index.html", OUT / ".nojekyll"]:
         if path.exists():
             path.unlink()
+
+
+def render_brand_favicon() -> None:
+    """Create a bounded Pages derivative from the owner-provided master PNG."""
+    if not BRAND_FAVICON_SOURCE.exists():
+        raise SystemExit(f"Missing proprietary brand favicon: {BRAND_FAVICON_SOURCE}")
+    destination = OUT / "assets" / "brand" / BRAND_FAVICON_OUTPUT_NAME
+    destination.parent.mkdir(parents=True, exist_ok=True)
+
+    # The owner-provided source is intentionally high-resolution; Pages serves
+    # a 512 px derivative so browser decoding remains bounded.
+    previous_pixel_limit = Image.MAX_IMAGE_PIXELS
+    Image.MAX_IMAGE_PIXELS = 150_000_000
+    try:
+        with Image.open(BRAND_FAVICON_SOURCE) as source:
+            if source.width != source.height:
+                raise SystemExit("Proprietary brand favicon source must be square")
+            rendered = source.convert("RGBA")
+            try:
+                rendered.thumbnail((BRAND_FAVICON_SIZE, BRAND_FAVICON_SIZE), Image.Resampling.LANCZOS)
+                if rendered.size != (BRAND_FAVICON_SIZE, BRAND_FAVICON_SIZE):
+                    raise SystemExit("Proprietary brand favicon derivative has unexpected dimensions")
+                temporary = destination.with_suffix(".tmp.png")
+                rendered.save(temporary, format="PNG", optimize=True)
+                temporary.replace(destination)
+            finally:
+                rendered.close()
+    finally:
+        Image.MAX_IMAGE_PIXELS = previous_pixel_limit
+
+
+def add_page_favicon(page: Path, href: str) -> None:
+    text = page.read_text(encoding="utf-8", errors="replace")
+    if 'rel="icon"' in text:
+        return
+    marker = "</head>"
+    if marker not in text:
+        raise SystemExit(f"Cannot add favicon; missing </head> in {page}")
+    icon_link = f'  <link rel="icon" type="image/png" href="{html_escape(href)}">\n'
+    write_text(page, text.replace(marker, icon_link + marker, 1))
 
 
 def strip_html(value: str | None) -> str:
@@ -403,6 +448,8 @@ def page_shell(
 ) -> str:
     image_meta = f'\n  <meta property="og:image" content="{html_escape(image_href)}">' if image_href else ""
     script = f'\n  <script src="{html_escape(js_href)}" defer></script>' if js_href else ""
+    asset_prefix = css_href.rsplit("theme.css", 1)[0]
+    favicon_href = f"{asset_prefix}brand/{BRAND_FAVICON_OUTPUT_NAME}"
     return f"""<!doctype html>
 <html lang="en-IN">
 <head>
@@ -413,6 +460,7 @@ def page_shell(
   <link rel="canonical" href="{html_escape(PAGES_BASE_URL + canonical_path.lstrip('/'))}">
   <meta property="og:title" content="{html_escape(title)}">
   <meta property="og:description" content="{html_escape(description)}">{image_meta}
+  <link rel="icon" type="image/png" href="{html_escape(favicon_href)}">
   <link rel="stylesheet" href="{html_escape(css_href)}">{script}
 </head>
 <body>
@@ -428,9 +476,10 @@ def clean_home_href(prefix: str) -> str:
 
 def site_header(prefix: str = "") -> str:
     home_href = clean_home_href(prefix)
+    favicon_href = f"{prefix}assets/brand/{BRAND_FAVICON_OUTPUT_NAME}"
     return f"""<header class="site-header">
   <a class="brand" href="{home_href}" aria-label="daryllswer.com Archive home">
-    <span class="brand-mark">DS</span>
+    <img class="brand-mark" src="{favicon_href}" alt="" width="36" height="36" decoding="async">
     <span><strong>daryllswer.com</strong><small>Archive</small></span>
   </a>
   <nav class="site-nav" aria-label="Primary">
@@ -559,11 +608,13 @@ def render_sheet_page() -> None:
         dirs_exist_ok=True,
         ignore=shutil.ignore_patterns("workbook.html", "legacy-visual-models"),
     )
+    add_page_favicon(out_dir / "index.html", f"../../assets/brand/{BRAND_FAVICON_OUTPUT_NAME}")
     font_rewrite_pages = [out_dir / "visual.html"]
     for page in font_rewrite_pages:
         if page.exists():
             text = page.read_text(encoding="utf-8", errors="replace")
             write_text(page, text.replace("../../../assets/fonts/", "../../assets/fonts/"))
+            add_page_favicon(page, f"../../assets/brand/{BRAND_FAVICON_OUTPUT_NAME}")
 
 
 def render_css() -> None:
@@ -635,16 +686,14 @@ a:hover { color: var(--accent-2); }
   min-width: 0;
 }
 .brand-mark {
-  display: grid;
-  place-items: center;
+  display: block;
+  flex: 0 0 auto;
   width: 2.2rem;
   height: 2.2rem;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
-  color: var(--accent);
-  font-family: var(--font-heading);
-  font-weight: 800;
+  object-fit: cover;
 }
 .brand strong { font-family: var(--font-heading); font-weight: 700; }
 .brand small { display: block; color: var(--muted); font-size: .8rem; line-height: 1.1; }
@@ -917,6 +966,7 @@ def main() -> int:
     render_css()
     render_js()
     copy_font_assets(ROOT, OUT / "assets" / "fonts")
+    render_brand_favicon()
     render_home(posts, metadata_by_slug)
     render_sheet_page()
     for post in posts:
