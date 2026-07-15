@@ -7,7 +7,7 @@
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
 - Status: complete; canonical-drift workflow bootstrap and proprietary README
-  logo and GitHub Pages favicon integration are verified locally
+  logo and GitHub Pages favicon integration are verified and deployed
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-15
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -34,7 +34,7 @@
     provenance, explicit exclusion from the repository's MIT and
     `CC-BY-NC-SA-4.0` licences, and a validation guard. The logo links to the
     local `#copyright-and-licences` section rather than the canonical site.
-  - Complete locally: the generated Pages text-only `DS` badge is replaced by
+  - Complete: the generated Pages text-only `DS` badge is replaced by
     the owner-provided official favicon. The source remains byte-exact under
     `assets/brand/`; a generated 512 px proprietary derivative serves the
     header and browser favicon without publishing the full-resolution source.
@@ -501,7 +501,7 @@
     generated 512 px derivative avoids a disproportionate browser decode while
     preserving the original asset and its provenance in the repository.
   - Date/Author: 2026-07-15, user/Codex
-  - Status: implemented and locally verified
+  - Status: implemented and deployed
   - Impact: `render-site.py` generates only
     `docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png`; validation rejects a
     missing manifest/notice/link, a wrong derivative size, lingering text-only
@@ -746,6 +746,11 @@
     workbook, and `visual.html` each had the proprietary 512 px favicon link;
     home/article headers used the image instead of the text-only `DS` badge,
     with no page-level horizontal overflow or console errors.
+  - GitHub Pages deployment for `b42434e`: passed on 2026-07-15; run
+    `29407999695` completed successfully. Live home, BGP article, and
+    AS141253 `visual.html` each reference the 512 px proprietary favicon;
+    the public asset returned `200 image/png` and matched the generated
+    derivative SHA-256 `c8ae2e50b88dc5252561a74821a7ba35261ae1ebdcfca86995e312ac73e18b35`.
   - GitHub Pages deployment for `5152975`: passed at 2026-07-08 18:24 UTC;
     pages-build-deployment run `28965936383` completed successfully.
   - Live static checks: passed at 2026-07-08 18:25 UTC for `visual.html`, the

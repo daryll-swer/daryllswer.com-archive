@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: GitHub Pages proprietary favicon integration
-- Status: complete locally; Pages favicon rendered and verified
+- Status: complete and deployed; Pages favicon rendered and verified
 - Last updated: 2026-07-15
 - Implementer role/model/thread: direct Codex Desktop implementation; no
   subagent used for this repository asset
@@ -73,7 +73,7 @@
     validation guard for the path, checksum, notice, local copyright-anchor
     target, and Pages exclusion.
 - GitHub Pages proprietary favicon:
-  - Status: complete locally
+  - Status: complete and deployed
   - Notes: Owner-provided `01_DS_Favicon_Dark_Mode.png` remains byte-exact in
     `assets/brand/`; `render-site.py` generates a 512 px proprietary
     derivative for the home/article header mark and browser favicon metadata.
@@ -239,8 +239,12 @@
     header mark, absence of the legacy text badge, no page-level horizontal
     overflow, and no console errors on the home, BGP article, workbook, and
     visual routes.
-  - Result: pass locally; commit, push, and live GitHub Pages verification
-    pending.
+  - Deployment/live verification: commit `b42434e` was pushed to `main`.
+    GitHub Pages run `29407999695` completed successfully. The live home and
+    BGP article use the official image header mark, `visual.html` exposes the
+    icon metadata, and the deployed 512 px PNG returned `200 image/png` with
+    SHA-256 `c8ae2e50b88dc5252561a74821a7ba35261ae1ebdcfca86995e312ac73e18b35`.
+  - Result: pass.
 - 2026-07-15:
   - Action: Added the owner-provided proprietary Daryll Swer logo as the
     README header, documented its rights boundary, and linked it to the local
