@@ -1,6 +1,6 @@
 # Validation
 
-Generated: 2026-07-15T10:06:56+00:00
+Generated: 2026-07-15T10:23:38+00:00
 
 ## WordPress REST
 
@@ -19,9 +19,10 @@ Generated: 2026-07-15T10:06:56+00:00
 - Self-hosted font files: 14
 - Self-hosted font bytes: 280912
 
-## Repository Identity Asset
+## Repository Identity Assets
 
 - README header: `assets/readme/13_DS_Logo_Dark_Mode_SEO.png`
+- Pages header and favicon source: `assets/brand/01_DS_Favicon_Dark_Mode.png`
 - Copyright: `© 2026 Daryll Swer. All rights reserved.`
 - Licence status: proprietary; excluded from MIT and CC-BY-NC-SA-4.0
 

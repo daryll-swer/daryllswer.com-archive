@@ -16,6 +16,8 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from PIL import Image
+
 try:
     import lxml.html
 except Exception as exc:  # pragma: no cover - environment guard
@@ -35,6 +37,10 @@ README_BRAND_ASSET_PATH = "assets/readme/13_DS_Logo_Dark_Mode_SEO.png"
 README_BRAND_MANIFEST_PATH = "assets/readme/manifest.json"
 README_BRAND_NOTICE_PATH = "LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt"
 README_BRAND_COPYRIGHT_NOTICE = "© 2026 Daryll Swer. All rights reserved."
+PAGES_FAVICON_SOURCE_PATH = "assets/brand/01_DS_Favicon_Dark_Mode.png"
+PAGES_FAVICON_MANIFEST_PATH = "assets/brand/manifest.json"
+PAGES_FAVICON_OUTPUT_PATH = "docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png"
+PAGES_FAVICON_SIZE = 512
 ARCHIVE_EXCLUDED_PATTERNS = [
     re.compile(r"It would be appreciated if you could help me continue", re.I),
     re.compile(r"Click here</a>\s*to donate now", re.I),
@@ -500,17 +506,29 @@ def validate_font_assets(errors: list[str]) -> dict | None:
     return manifest
 
 
-def validate_readme_brand_asset(errors: list[str]) -> dict | None:
-    """Keep the proprietary README logo separate from the archive licences."""
+def validate_brand_assets(errors: list[str]) -> dict | None:
+    """Keep the proprietary README logo and Pages favicon outside archive licences."""
     asset_path = ROOT / README_BRAND_ASSET_PATH
     manifest_path = ROOT / README_BRAND_MANIFEST_PATH
     notice_path = ROOT / README_BRAND_NOTICE_PATH
     readme_path = ROOT / "README.md"
     licensing_path = ROOT / "LICENSING.md"
+    favicon_source_path = ROOT / PAGES_FAVICON_SOURCE_PATH
+    favicon_manifest_path = ROOT / PAGES_FAVICON_MANIFEST_PATH
+    favicon_output_path = ROOT / PAGES_FAVICON_OUTPUT_PATH
 
-    for path in [asset_path, manifest_path, notice_path, readme_path, licensing_path]:
+    for path in [
+        asset_path,
+        manifest_path,
+        notice_path,
+        readme_path,
+        licensing_path,
+        favicon_source_path,
+        favicon_manifest_path,
+        favicon_output_path,
+    ]:
         if not path.exists():
-            errors.append(f"README brand asset requirement missing: {rel(path)}")
+            errors.append(f"proprietary brand asset requirement missing: {rel(path)}")
     if not asset_path.exists() or not manifest_path.exists():
         return None
 
@@ -560,7 +578,78 @@ def validate_readme_brand_asset(errors: list[str]) -> dict | None:
                 errors.append(f"README proprietary asset notice is missing `{marker}`")
     if (ROOT / "docs" / README_BRAND_ASSET_PATH).exists():
         errors.append("README proprietary logo must not be copied into GitHub Pages output")
-    return asset
+
+    if not favicon_source_path.exists() or not favicon_manifest_path.exists() or not favicon_output_path.exists():
+        return None
+    try:
+        favicon_manifest = load_json(favicon_manifest_path)
+    except Exception as exc:
+        errors.append(f"Pages favicon manifest parse failed: {exc}")
+        return None
+    favicon_assets = favicon_manifest.get("assets")
+    if not isinstance(favicon_assets, list) or len(favicon_assets) != 1:
+        errors.append("Pages favicon manifest must contain exactly one asset")
+        return None
+    favicon = favicon_assets[0]
+    if favicon.get("path") != Path(PAGES_FAVICON_SOURCE_PATH).name:
+        errors.append("Pages favicon manifest path does not match the source image")
+    if favicon.get("copyright_notice") != README_BRAND_COPYRIGHT_NOTICE:
+        errors.append("Pages favicon manifest copyright notice is missing or incorrect")
+    if favicon.get("licence_status") != "Proprietary; no public licence granted":
+        errors.append("Pages favicon manifest must state proprietary no-public-licence status")
+    if favicon.get("rights_notice") != "../../" + README_BRAND_NOTICE_PATH:
+        errors.append("Pages favicon manifest rights notice path is incorrect")
+    if favicon.get("pages_derivative", {}).get("path") != PAGES_FAVICON_OUTPUT_PATH:
+        errors.append("Pages favicon manifest derivative path is incorrect")
+    derivative = favicon.get("pages_derivative", {})
+    if (derivative.get("width"), derivative.get("height")) != (PAGES_FAVICON_SIZE, PAGES_FAVICON_SIZE):
+        errors.append("Pages favicon manifest derivative dimensions are incorrect")
+    expected_hash = favicon.get("sha256")
+    if not isinstance(expected_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
+        errors.append("Pages favicon manifest SHA-256 is missing or invalid")
+    elif sha256_file(favicon_source_path) != expected_hash:
+        errors.append("Pages favicon source checksum mismatch")
+
+    previous_pixel_limit = Image.MAX_IMAGE_PIXELS
+    Image.MAX_IMAGE_PIXELS = 150_000_000
+    try:
+        with Image.open(favicon_source_path) as image:
+            if image.format != "PNG" or image.size != (favicon.get("width"), favicon.get("height")):
+                errors.append("Pages favicon source format or dimensions do not match its manifest")
+        with Image.open(favicon_output_path) as image:
+            if image.format != "PNG" or image.size != (PAGES_FAVICON_SIZE, PAGES_FAVICON_SIZE):
+                errors.append("Pages favicon derivative must be a 512 px PNG")
+    except Exception as exc:
+        errors.append(f"Pages favicon image validation failed: {exc}")
+    finally:
+        Image.MAX_IMAGE_PIXELS = previous_pixel_limit
+
+    def validate_favicon_page(page: Path, href: str, *, expects_header: bool = False) -> None:
+        if not page.exists():
+            errors.append(f"Pages favicon target missing: {rel(page)}")
+            return
+        page_text = page.read_text(encoding="utf-8", errors="replace")
+        marker = f'<link rel="icon" type="image/png" href="{href}">'
+        if marker not in page_text:
+            errors.append(f"Pages favicon link missing from {rel(page)}")
+        if expects_header:
+            header_marker = f'<img class="brand-mark" src="{href}" alt=""'
+            if header_marker not in page_text:
+                errors.append(f"Pages favicon header image missing from {rel(page)}")
+
+    docs_root = ROOT / "docs"
+    validate_favicon_page(docs_root / "index.html", f"assets/brand/{Path(PAGES_FAVICON_OUTPUT_PATH).name}", expects_header=True)
+    for page in sorted((docs_root / "posts").glob("*/index.html")):
+        validate_favicon_page(page, f"../../assets/brand/{Path(PAGES_FAVICON_OUTPUT_PATH).name}", expects_header=True)
+    sheet_dir = docs_root / "sheets" / "as141253-ipv6-architecture-example"
+    for page in [sheet_dir / "index.html", sheet_dir / "visual.html"]:
+        validate_favicon_page(page, f"../../assets/brand/{Path(PAGES_FAVICON_OUTPUT_PATH).name}")
+    for page in docs_root.rglob("*.html"):
+        if 'class="brand-mark">DS</span>' in page.read_text(encoding="utf-8", errors="replace"):
+            errors.append(f"Pages generic DS brand mark remains in {rel(page)}")
+    if (docs_root / "assets" / "brand" / Path(PAGES_FAVICON_SOURCE_PATH).name).exists():
+        errors.append("Pages must not publish the full-resolution proprietary favicon source")
+    return {"readme_logo": asset, "pages_favicon": favicon}
 
 
 def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str], archived_keys: set[str]) -> dict | None:
@@ -890,13 +979,14 @@ def main() -> int:
                 "",
             ])
 
-    brand_asset = validate_readme_brand_asset(errors)
-    if brand_asset:
+    brand_assets = validate_brand_assets(errors)
+    if brand_assets:
         report.extend([
-            "## Repository Identity Asset",
+            "## Repository Identity Assets",
             "",
             f"- README header: `{README_BRAND_ASSET_PATH}`",
-            f"- Copyright: `{brand_asset.get('copyright_notice')}`",
+            f"- Pages header and favicon source: `{PAGES_FAVICON_SOURCE_PATH}`",
+            f"- Copyright: `{brand_assets['readme_logo'].get('copyright_notice')}`",
             "- Licence status: proprietary; excluded from MIT and CC-BY-NC-SA-4.0",
             "",
         ])

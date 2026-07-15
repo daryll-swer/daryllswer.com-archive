@@ -6,8 +6,8 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; canonical-drift workflow bootstrap and README proprietary
-  brand-asset notice are verified
+- Status: complete; canonical-drift workflow bootstrap and proprietary README
+  logo and GitHub Pages favicon integration are verified locally
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-15
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -34,6 +34,10 @@
     provenance, explicit exclusion from the repository's MIT and
     `CC-BY-NC-SA-4.0` licences, and a validation guard. The logo links to the
     local `#copyright-and-licences` section rather than the canonical site.
+  - Complete locally: the generated Pages text-only `DS` badge is replaced by
+    the owner-provided official favicon. The source remains byte-exact under
+    `assets/brand/`; a generated 512 px proprietary derivative serves the
+    header and browser favicon without publishing the full-resolution source.
   - Complete: `cidr-hierarchy.html` is retired as a redundant public
     proof-of-concept page. Generation, source/Page output, and public
     navigation now use `visual.html` only; CSV-derived JSON and DOT hierarchy
@@ -306,6 +310,10 @@
   validation passed with 0 errors and the safety scan found 0 findings.
 - [x] 2026-07-15 Changed the README logo link to the local
   `#copyright-and-licences` section and added a regression assertion.
+- [x] 2026-07-15 Replaced the generated Pages `DS` text badge with the
+  owner-provided favicon; generated and validated the proprietary 512 px
+  header/browser derivative across the home, article, workbook, and visual
+  Pages routes.
 
 ## Decision Log
 
@@ -487,6 +495,17 @@
   - Impact: The logo is covered by a dedicated rights notice and asset manifest;
     it is excluded from MIT and `CC-BY-NC-SA-4.0`, and validation rejects a
     missing, altered, or improperly documented header asset.
+- Decision: Serve a bounded GitHub Pages favicon derivative while retaining
+  the supplied official favicon as the byte-exact source of record.
+  - Rationale: The owner-provided square PNG is 11,811 px per side; serving a
+    generated 512 px derivative avoids a disproportionate browser decode while
+    preserving the original asset and its provenance in the repository.
+  - Date/Author: 2026-07-15, user/Codex
+  - Status: implemented and locally verified
+  - Impact: `render-site.py` generates only
+    `docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png`; validation rejects a
+    missing manifest/notice/link, a wrong derivative size, lingering text-only
+    `DS` markup, or publication of the full-resolution source under `docs/`.
 
 ## Validation and Acceptance
 
@@ -719,6 +738,14 @@
     requires the final `visual.html` section anchors.
   - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
     18:23 UTC with 0 public-safety findings.
+  - `make render-site`, `python3 -m py_compile scripts/*.py`, `git diff --check`,
+    `make validate`, and `make scan-secrets`: passed on 2026-07-15. Validation
+    recorded 0 errors and 1 known sitemap warning; public-safety recorded 0
+    findings.
+  - Local browser QA at 2026-07-15: home, BGP Router ID article, AS141253
+    workbook, and `visual.html` each had the proprietary 512 px favicon link;
+    home/article headers used the image instead of the text-only `DS` badge,
+    with no page-level horizontal overflow or console errors.
   - GitHub Pages deployment for `5152975`: passed at 2026-07-08 18:24 UTC;
     pages-build-deployment run `28965936383` completed successfully.
   - Live static checks: passed at 2026-07-08 18:25 UTC for `visual.html`, the
@@ -776,6 +803,9 @@
   - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, preview generation, and generated GitHub Pages site completed.
   - Owner-provided proprietary README header logo added with a separate rights
     notice, checksum provenance, and explicit mixed-licence boundary.
+  - Owner-provided proprietary favicon integrated into GitHub Pages headers and
+    browser metadata through a bounded generated derivative, with source
+    preservation and validation coverage.
 - Remaining:
   - None for the hierarchy-only AS141253 visual-model revision.
 - Retrospective timestamp:

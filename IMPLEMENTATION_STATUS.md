@@ -5,8 +5,8 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: README proprietary brand-asset notice
-- Status: complete; local validation and public-safety scan passed
+- Current sprint / workstream: GitHub Pages proprietary favicon integration
+- Status: complete locally; Pages favicon rendered and verified
 - Last updated: 2026-07-15
 - Implementer role/model/thread: direct Codex Desktop implementation; no
   subagent used for this repository asset
@@ -72,6 +72,14 @@
     manifest, explicit exclusion from MIT and `CC-BY-NC-SA-4.0`, and a
     validation guard for the path, checksum, notice, local copyright-anchor
     target, and Pages exclusion.
+- GitHub Pages proprietary favicon:
+  - Status: complete locally
+  - Notes: Owner-provided `01_DS_Favicon_Dark_Mode.png` remains byte-exact in
+    `assets/brand/`; `render-site.py` generates a 512 px proprietary
+    derivative for the home/article header mark and browser favicon metadata.
+    Validation covers manifests, checksum, notice, image dimensions, generated
+    links, removal of the text-only `DS` badge, and exclusion of the full-size
+    source from `docs/`.
 - GitHub publication:
   - Status: complete
   - Notes: New public repo `daryll-swer/daryllswer.com-archive` created and pushed; old repo `daryll-swer/daryllswer.com-neteng-blog` deleted.
@@ -214,6 +222,25 @@
 
 ## Execution Log
 
+- 2026-07-15:
+  - Action: Replaced the generated GitHub Pages `DS` text badge with the
+    owner-provided official favicon and emitted browser favicon metadata.
+  - Evidence: The byte-exact source is
+    `assets/brand/01_DS_Favicon_Dark_Mode.png` (SHA-256
+    `310e104810f12dc633f52ca23043c7350090e2b40f2dcf400ace84aecb16793f`).
+    `render-site.py` creates the proprietary
+    `docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png` derivative; Pages home
+    and article headers reference it, and the home, article, workbook, and
+    `visual.html` pages expose a local PNG favicon link.
+  - Validation: bundled-runtime `python -m py_compile scripts/*.py`, `make
+    render-site`, `make validate` (0 errors, 1 known sitemap warning), `make
+    scan-secrets` (0 findings), `git diff --check`, JSON parsing, image-size,
+    and source-checksum checks passed. Local browser QA confirmed the image
+    header mark, absence of the legacy text badge, no page-level horizontal
+    overflow, and no console errors on the home, BGP article, workbook, and
+    visual routes.
+  - Result: pass locally; commit, push, and live GitHub Pages verification
+    pending.
 - 2026-07-15:
   - Action: Added the owner-provided proprietary Daryll Swer logo as the
     README header, documented its rights boundary, and linked it to the local

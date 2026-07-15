@@ -13,16 +13,22 @@ not the publishing source of truth; WordPress remains canonical.
   state, or credentials.
 - Generated content is deterministic enough to re-run and compare.
 
-## Repository Identity Asset
+## Repository Identity Assets
 
 - `assets/readme/13_DS_Logo_Dark_Mode_SEO.png` is the owner-provided,
   byte-preserved proprietary logo used as the repository README header.
-- Its SHA-256 checksum and non-local provenance are recorded in
-  `assets/readme/manifest.json`; its rights notice is
+- `assets/brand/01_DS_Favicon_Dark_Mode.png` is the owner-provided,
+  byte-preserved proprietary favicon source. `scripts/render-site.py` produces
+  a 512 px PNG derivative at `docs/assets/brand/` for the generated Pages
+  header and browser icon, avoiding an excessive browser image decode.
+- Their SHA-256 checksums and non-local provenance are recorded in
+  `assets/readme/manifest.json` and `assets/brand/manifest.json`; their rights
+  notice is
   `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`.
-- It is not mirrored WordPress content, third-party media, GitHub Pages output,
-  MIT tooling, or `CC-BY-NC-SA-4.0` archive content. Future tooling must not
-  rename, re-encode, redistribute, or apply an open licence to it.
+- They are not mirrored WordPress content, third-party media, MIT tooling, or
+  `CC-BY-NC-SA-4.0` archive content. Future tooling must not rename,
+  re-encode, redistribute, or apply an open licence to the source assets. The
+  only permitted generated derivative is the documented 512 px Pages favicon.
 
 ## Data Flow
 

@@ -2,19 +2,22 @@ DARYLL SWER PROPRIETARY ASSET NOTICE
 
 Copyright © 2026 Daryll Swer. All rights reserved.
 
-This notice applies only to the following repository asset:
+This notice applies only to the following repository assets and their generated
+derivatives:
 
   assets/readme/13_DS_Logo_Dark_Mode_SEO.png
+  assets/brand/01_DS_Favicon_Dark_Mode.png
+  docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png
 
-The asset is an original Daryll Swer brand logo supplied by its copyright
-owner. It is proprietary. It is not licensed under the MIT License,
+The assets are original Daryll Swer brand artwork supplied by their copyright
+owner. They are proprietary. They are not licensed under the MIT License,
 CC-BY-NC-SA-4.0, or any other licence in this repository.
 
 Except to the extent required by applicable law or GitHub's Terms of Service
 for a public repository to be hosted, displayed, viewed, and forked through
 GitHub's service, no permission is granted to reproduce, distribute, publish,
 communicate to the public, modify, adapt, create derivative works from, or
-otherwise reuse the asset. No permission is granted to use the asset or the
+otherwise reuse the assets. No permission is granted to use the assets or the
 Daryll Swer name as a brand, trade mark, endorsement, affiliation, or source
 identifier.
 
@@ -23,5 +26,6 @@ including its protections for original artistic works and the owner's exclusive
 rights. Nothing in this notice excludes statutory exceptions or creates a
 governing-law or forum-selection agreement.
 
-For asset provenance and checksum, see assets/readme/manifest.json. This is a
-rights notice, not a registration certificate or legal opinion.
+For asset provenance and checksums, see assets/readme/manifest.json and
+assets/brand/manifest.json. This is a rights notice, not a registration
+certificate or legal opinion.

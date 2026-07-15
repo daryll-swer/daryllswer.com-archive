@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "assets": [
+    {
+      "path": "01_DS_Favicon_Dark_Mode.png",
+      "role": "GitHub Pages header and browser favicon source",
+      "title": "Daryll Swer favicon",
+      "source": "Owner-provided original",
+      "format": "image/png",
+      "width": 11811,
+      "height": 11811,
+      "sha256": "310e104810f12dc633f52ca23043c7350090e2b40f2dcf400ace84aecb16793f",
+      "copyright_notice": "© 2026 Daryll Swer. All rights reserved.",
+      "licence_status": "Proprietary; no public licence granted",
+      "rights_notice": "../../LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt",
+      "preservation": "Stored byte-for-byte from the owner-provided original",
+      "pages_derivative": {
+        "path": "docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png",
+        "width": 512,
+        "height": 512,
+        "format": "image/png",
+        "resampling": "LANCZOS"
+      }
+    }
+  ]
+}

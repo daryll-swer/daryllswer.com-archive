@@ -36,24 +36,28 @@ Do not assume third-party media or external artefacts are covered by either MIT
 or `CC-BY-NC-SA-4.0`. Preserve provenance where practical and flag unclear
 cases before redistribution.
 
-## Proprietary README Brand Asset
+## Proprietary Daryll Swer Brand Assets
 
-`assets/readme/13_DS_Logo_Dark_Mode_SEO.png` is an owner-provided Daryll Swer
-brand asset used only as the repository README header.
+`assets/readme/13_DS_Logo_Dark_Mode_SEO.png` and
+`assets/brand/01_DS_Favicon_Dark_Mode.png` are owner-provided proprietary
+Daryll Swer brand assets. The former is used only as the repository README
+header; the latter is retained byte-for-byte as the source for the generated
+GitHub Pages header and browser favicon.
 
 - Copyright notice: `© 2026 Daryll Swer. All rights reserved.`
 - Licence status: proprietary; no public copyright or trade mark licence is
   granted.
 - Notice and provenance: `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`
-  and `assets/readme/README.md`.
+  plus `assets/readme/README.md` and `assets/brand/README.md`.
 - Excluded from: the MIT licence, `CC-BY-NC-SA-4.0`, and every other repository
   licence or content grant.
 
 The notice reserves copying, distribution, modification, derivative use, and
-brand use except where applicable law requires otherwise. A public GitHub
-repository still carries the limited service permissions in GitHub's Terms of
-Service for hosting, viewing, and forking; this asset notice grants no broader
-permission.
+brand use except where applicable law requires otherwise. The generated 512 px
+Pages favicon is a proprietary derivative of the supplied source image. A
+public GitHub repository still carries the limited service permissions in
+GitHub's Terms of Service for hosting, viewing, and forking; this asset notice
+grants no broader permission.
 
 ## Self-Hosted Fonts
 
