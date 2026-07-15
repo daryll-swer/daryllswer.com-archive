@@ -31,17 +31,21 @@ POST_SITEMAP = "https://www.daryllswer.com/post-sitemap.xml"
 PAGES_BASE_URL = "https://daryll-swer.github.io/daryllswer.com-archive/"
 LOCALISABLE_HOSTS = {"www.daryllswer.com", "daryllswer.com"}
 TEXT_FRAGMENT_PREFIX = ":~:text="
+README_BRAND_ASSET_PATH = "assets/readme/13_DS_Logo_Dark_Mode_SEO.png"
+README_BRAND_MANIFEST_PATH = "assets/readme/manifest.json"
+README_BRAND_NOTICE_PATH = "LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt"
+README_BRAND_COPYRIGHT_NOTICE = "© 2026 Daryll Swer. All rights reserved."
 ARCHIVE_EXCLUDED_PATTERNS = [
     re.compile(r"It would be appreciated if you could help me continue", re.I),
     re.compile(r"Click here</a>\s*to donate now", re.I),
     re.compile(r"Click here to donate now", re.I),
-    re.compile(r"https://www\.daryllswer\.com/donation/?", re.I),
+    re.compile(r"https://www.daryllswer.com/donation/?", re.I),
     re.compile(r"This article was sponsored by the cybersecurity company", re.I),
     re.compile(r"You can claim your free 30-day trial using this", re.I),
 ]
-REMOTE_REFERENCE_ANCHOR_PATTERN = re.compile(r"https://www\.daryllswer\.com/[^)\s]+/#(?:h-)?references", re.I)
-WORDPRESS_MEDIA_PATTERN = re.compile(r"https://www\.daryllswer\.com/wp-content/uploads/", re.I)
-GOOGLE_SHEET_PATTERN = re.compile(r"https://docs\.google\.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml", re.I)
+REMOTE_REFERENCE_ANCHOR_PATTERN = re.compile(r"https://www.daryllswer.com/[^)\s]+/#(?:h-)?references", re.I)
+WORDPRESS_MEDIA_PATTERN = re.compile(r"https://www.daryllswer.com/wp-content/uploads/", re.I)
+GOOGLE_SHEET_PATTERN = re.compile(r"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml", re.I)
 WORDPRESS_COLOUR_CLASS_RE = re.compile(r"^has-[a-z0-9-]+(?:color|background-color|border-color)$")
 
 
@@ -496,6 +500,65 @@ def validate_font_assets(errors: list[str]) -> dict | None:
     return manifest
 
 
+def validate_readme_brand_asset(errors: list[str]) -> dict | None:
+    """Keep the proprietary README logo separate from the archive licences."""
+    asset_path = ROOT / README_BRAND_ASSET_PATH
+    manifest_path = ROOT / README_BRAND_MANIFEST_PATH
+    notice_path = ROOT / README_BRAND_NOTICE_PATH
+    readme_path = ROOT / "README.md"
+    licensing_path = ROOT / "LICENSING.md"
+
+    for path in [asset_path, manifest_path, notice_path, readme_path, licensing_path]:
+        if not path.exists():
+            errors.append(f"README brand asset requirement missing: {rel(path)}")
+    if not asset_path.exists() or not manifest_path.exists():
+        return None
+
+    try:
+        manifest = load_json(manifest_path)
+    except Exception as exc:
+        errors.append(f"README brand asset manifest parse failed: {exc}")
+        return None
+    assets = manifest.get("assets")
+    if not isinstance(assets, list) or len(assets) != 1:
+        errors.append("README brand asset manifest must contain exactly one asset")
+        return None
+    asset = assets[0]
+    if asset.get("path") != Path(README_BRAND_ASSET_PATH).name:
+        errors.append("README brand asset manifest path does not match the header logo")
+    if asset.get("copyright_notice") != README_BRAND_COPYRIGHT_NOTICE:
+        errors.append("README brand asset manifest copyright notice is missing or incorrect")
+    if asset.get("licence_status") != "Proprietary; no public licence granted":
+        errors.append("README brand asset manifest must state proprietary no-public-licence status")
+    if asset.get("rights_notice") != "../../" + README_BRAND_NOTICE_PATH:
+        errors.append("README brand asset manifest rights notice path is incorrect")
+    expected_hash = asset.get("sha256")
+    if not isinstance(expected_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
+        errors.append("README brand asset manifest SHA-256 is missing or invalid")
+    elif sha256_file(asset_path) != expected_hash:
+        errors.append("README brand asset checksum mismatch")
+
+    if readme_path.exists():
+        readme = readme_path.read_text(encoding="utf-8", errors="replace")
+        if f'src="{README_BRAND_ASSET_PATH}"' not in readme:
+            errors.append("README does not render the proprietary header logo")
+        if not re.search(r"© 2026 Daryll Swer. All\s+rights reserved.", readme):
+            errors.append("README does not state the proprietary logo copyright notice")
+    if licensing_path.exists():
+        licensing = licensing_path.read_text(encoding="utf-8", errors="replace")
+        for marker in [README_BRAND_ASSET_PATH, README_BRAND_NOTICE_PATH, "MIT", "proprietary content rights-4.0"]:
+            if marker not in licensing:
+                errors.append(f"LICENSING.md is missing README brand asset marker `{marker}`")
+    if notice_path.exists():
+        notice = notice_path.read_text(encoding="utf-8", errors="replace")
+        for marker in [README_BRAND_COPYRIGHT_NOTICE, README_BRAND_ASSET_PATH, "no permission is granted"]:
+            if marker not in notice:
+                errors.append(f"README proprietary asset notice is missing `{marker}`")
+    if (ROOT / "docs" / README_BRAND_ASSET_PATH).exists():
+        errors.append("README proprietary logo must not be copied into GitHub Pages output")
+    return asset
+
+
 def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str], archived_keys: set[str]) -> dict | None:
     site_index = ROOT / "docs" / "index.html"
     site_css = ROOT / "docs" / "assets" / "theme.css"
@@ -659,7 +722,7 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             ("workflow_dispatch:", r"^\s*workflow_dispatch:\s*$"),
             ("concurrency:", r"^\s*concurrency:\s*$"),
             ("timeout-minutes:", r"^\s*timeout-minutes:\s*10\s*$"),
-            ("scripts/check-canonical-drift.py", r"scripts/check-canonical-drift\.py"),
+            ("scripts/check-canonical-drift.py", r"scripts/check-canonical-drift.py"),
         ]:
             if not has_active_line(pattern):
                 errors.append(f"canonical drift workflow missing active `{marker}`")
@@ -696,10 +759,10 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
         required_step_lines = [
             ("Check out repository", r"^uses:\s*actions/checkout@v6\s*$", "actions/checkout@v6"),
             ("Set up Python", r"^uses:\s*actions/setup-python@v6\s*$", "actions/setup-python@v6"),
-            ("Set up Python", r"^python-version:\s*['\"]?3\.12['\"]?\s*$", "python-version 3.12"),
+            ("Set up Python", r"^python-version:\s*['\"]?3.12['\"]?\s*$", "python-version 3.12"),
             ("Set up Python", r"^cache:\s*['\"]?pip['\"]?\s*$", "pip cache"),
-            ("Set up Python", r"^cache-dependency-path:\s*['\"]?requirements\.txt['\"]?\s*$", "requirements.txt cache key"),
-            ("Install Python dependencies", r"^run:\s*python\s+-m\s+pip\s+install\s+-r\s+requirements\.txt\s*$", "requirements.txt installation"),
+            ("Set up Python", r"^cache-dependency-path:\s*['\"]?requirements.txt['\"]?\s*$", "requirements.txt cache key"),
+            ("Install Python dependencies", r"^run:\s*python\s+-m\s+pip\s+install\s+-r\s+requirements.txt\s*$", "requirements.txt installation"),
         ]
         for step_name, pattern, description in required_step_lines:
             if step_name in step_blocks and not step_has(step_name, pattern):
@@ -822,6 +885,17 @@ def main() -> int:
                 f"- Self-hosted font bytes: {font_bytes}",
                 "",
             ])
+
+    brand_asset = validate_readme_brand_asset(errors)
+    if brand_asset:
+        report.extend([
+            "## Repository Identity Asset",
+            "",
+            f"- README header: `{README_BRAND_ASSET_PATH}`",
+            f"- Copyright: `{brand_asset.get('copyright_notice')}`",
+            "- Licence status: proprietary; excluded from MIT and proprietary content rights-4.0",
+            "",
+        ])
 
     sheet_manifest = validate_spreadsheet(errors, warnings)
     if sheet_manifest:
