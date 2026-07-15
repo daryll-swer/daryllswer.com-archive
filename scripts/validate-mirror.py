@@ -542,6 +542,10 @@ def validate_readme_brand_asset(errors: list[str]) -> dict | None:
         readme = readme_path.read_text(encoding="utf-8", errors="replace")
         if f'src="{README_BRAND_ASSET_PATH}"' not in readme:
             errors.append("README does not render the proprietary header logo")
+        if 'href="#copyright-and-licences"' not in readme:
+            errors.append("README logo must link to the local copyright-and-licences section")
+        if "## Copyright and Licences" not in readme:
+            errors.append("README is missing the copyright-and-licences destination section")
         if not re.search(r"© 2026 Daryll Swer\. All\s+rights reserved\.", readme):
             errors.append("README does not state the proprietary logo copyright notice")
     if licensing_path.exists():

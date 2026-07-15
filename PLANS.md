@@ -32,7 +32,8 @@
   - Complete: added the owner-provided proprietary Daryll Swer logo as the
     README header, with a separate all-rights-reserved notice, checksum
     provenance, explicit exclusion from the repository's MIT and
-    `CC-BY-NC-SA-4.0` licences, and a validation guard.
+    `CC-BY-NC-SA-4.0` licences, and a validation guard. The logo links to the
+    local `#copyright-and-licences` section rather than the canonical site.
   - Complete: `cidr-hierarchy.html` is retired as a redundant public
     proof-of-concept page. Generation, source/Page output, and public
     navigation now use `visual.html` only; CSV-derived JSON and DOT hierarchy
@@ -303,6 +304,8 @@
 - [x] 2026-07-15 Added the owner-provided proprietary Daryll Swer README logo,
   dedicated rights notice, checksum manifest, and validation guard; local
   validation passed with 0 errors and the safety scan found 0 findings.
+- [x] 2026-07-15 Changed the README logo link to the local
+  `#copyright-and-licences` section and added a regression assertion.
 
 ## Decision Log
 

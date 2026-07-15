@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://www.daryllswer.com/">
+  <a href="#copyright-and-licences">
     <img src="assets/readme/13_DS_Logo_Dark_Mode_SEO.png" alt="Daryll Swer" width="1000">
   </a>
 </p>
@@ -28,7 +28,7 @@ metadata, original media files, and an asset manifest.
 - `archive-manifest.json` - generated root index of mirrored posts and checks.
 - `archive-status.json` - public canonical drift/frozen-archive state.
 
-## Licence
+## Copyright and Licences
 
 Repository scripts/tooling are MIT licensed. Mirrored blog content follows
 `CC-BY-NC-SA-4.0`, matching daryllswer.com unless per-file metadata says

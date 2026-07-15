@@ -70,7 +70,8 @@
   - Notes: Owner-provided `13_DS_Logo_Dark_Mode_SEO.png` is the
     README header with a dedicated all-rights-reserved notice, checksum
     manifest, explicit exclusion from MIT and `CC-BY-NC-SA-4.0`, and a
-    validation guard for the path, checksum, notice, and Pages exclusion.
+    validation guard for the path, checksum, notice, local copyright-anchor
+    target, and Pages exclusion.
 - GitHub publication:
   - Status: complete
   - Notes: New public repo `daryll-swer/daryllswer.com-archive` created and pushed; old repo `daryll-swer/daryllswer.com-neteng-blog` deleted.
@@ -215,7 +216,8 @@
 
 - 2026-07-15:
   - Action: Added the owner-provided proprietary Daryll Swer logo as the
-    README header and documented its rights boundary.
+    README header, documented its rights boundary, and linked it to the local
+    `#copyright-and-licences` section.
   - Evidence: `assets/readme/13_DS_Logo_Dark_Mode_SEO.png` is byte-identical
     to the supplied original with SHA-256
     `8719bf9e1b143538fb1c5d1def9fce3b4e0998ef16e403dc3c43ab2d2043cc66`.
