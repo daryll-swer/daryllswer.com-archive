@@ -36,6 +36,25 @@ Do not assume third-party media or external artefacts are covered by either MIT
 or `CC-BY-NC-SA-4.0`. Preserve provenance where practical and flag unclear
 cases before redistribution.
 
+## Proprietary README Brand Asset
+
+`assets/readme/13_DS_Logo_Dark_Mode_SEO.png` is an owner-provided Daryll Swer
+brand asset used only as the repository README header.
+
+- Copyright notice: `© 2026 Daryll Swer. All rights reserved.`
+- Licence status: proprietary; no public copyright or trade mark licence is
+  granted.
+- Notice and provenance: `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`
+  and `assets/readme/README.md`.
+- Excluded from: the MIT licence, `CC-BY-NC-SA-4.0`, and every other repository
+  licence or content grant.
+
+The notice reserves copying, distribution, modification, derivative use, and
+brand use except where applicable law requires otherwise. A public GitHub
+repository still carries the limited service permissions in GitHub's Terms of
+Service for hosting, viewing, and forking; this asset notice grants no broader
+permission.
+
 ## Self-Hosted Fonts
 
 The archive self-hosts `Poppins` and `Raleway` WOFF2 font files under

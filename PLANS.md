@@ -6,10 +6,10 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; canonical-drift workflow dependency bootstrap is deployed
-  and hosted-runner verified
+- Status: complete; canonical-drift workflow bootstrap and README proprietary
+  brand-asset notice are verified
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-13
+- Last updated: 2026-07-15
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -29,6 +29,10 @@
     workflow now has explicit Python setup, requirements installation, and a
     static local regression guard. Manual hosted-runner run `29231087908`
     passed every step.
+  - Complete: added the owner-provided proprietary Daryll Swer logo as the
+    README header, with a separate all-rights-reserved notice, checksum
+    provenance, explicit exclusion from the repository's MIT and
+    `CC-BY-NC-SA-4.0` licences, and a validation guard.
   - Complete: `cidr-hierarchy.html` is retired as a redundant public
     proof-of-concept page. Generation, source/Page output, and public
     navigation now use `visual.html` only; CSV-derived JSON and DOT hierarchy
@@ -296,6 +300,9 @@
 - [x] 2026-07-10 Implemented the hierarchy-only AS141253 public visual,
   archived historical model references outside `docs/`, and locally verified
   responsive reflow, native disclosures, public links, and retired-route 404s.
+- [x] 2026-07-15 Added the owner-provided proprietary Daryll Swer README logo,
+  dedicated rights notice, checksum manifest, and validation guard; local
+  validation passed with 0 errors and the safety scan found 0 findings.
 
 ## Decision Log
 
@@ -468,6 +475,15 @@
   - Impact: `visual.html` will render only the full hierarchy. Historical model
     logic will be documented outside `docs/`; no legacy route, navigation, or
     generated Pages copy may remain.
+- Decision: Treat the README logo as a proprietary repository asset rather
+  than mirrored content or open-source material.
+  - Rationale: The owner supplied the original Daryll Swer logo and explicitly
+    reserved all rights.
+  - Date/Author: 2026-07-15, user/Codex
+  - Status: implemented and verified
+  - Impact: The logo is covered by a dedicated rights notice and asset manifest;
+    it is excluded from MIT and `CC-BY-NC-SA-4.0`, and validation rejects a
+    missing, altered, or improperly documented header asset.
 
 ## Validation and Acceptance
 
@@ -755,6 +771,8 @@
 
 - Achieved:
   - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, preview generation, and generated GitHub Pages site completed.
+  - Owner-provided proprietary README header logo added with a separate rights
+    notice, checksum provenance, and explicit mixed-licence boundary.
 - Remaining:
   - None for the hierarchy-only AS141253 visual-model revision.
 - Retrospective timestamp:

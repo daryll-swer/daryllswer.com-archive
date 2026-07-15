@@ -5,10 +5,11 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: canonical-drift workflow dependency remediation
-- Status: complete; hosted-runner verification passed
-- Last updated: 2026-07-13
-- Implementer role/model/thread: `implementer-luna` / GPT-5.6 Luna XHigh worker; commit `c2b0a06`
+- Current sprint / workstream: README proprietary brand-asset notice
+- Status: complete; local validation and public-safety scan passed
+- Last updated: 2026-07-15
+- Implementer role/model/thread: direct Codex Desktop implementation; no
+  subagent used for this repository asset
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
 
@@ -64,6 +65,12 @@
 - Licensing:
   - Status: complete
   - Notes: Scripts/tooling are MIT licensed; mirrored blog content is `CC-BY-NC-SA-4.0`; third-party media/external artefacts are not assumed covered by either licence.
+- README proprietary brand asset:
+  - Status: complete and verified
+  - Notes: Owner-provided `13_DS_Logo_Dark_Mode_SEO.png` is the
+    README header with a dedicated all-rights-reserved notice, checksum
+    manifest, explicit exclusion from MIT and `CC-BY-NC-SA-4.0`, and a
+    validation guard for the path, checksum, notice, and Pages exclusion.
 - GitHub publication:
   - Status: complete
   - Notes: New public repo `daryll-swer/daryllswer.com-archive` created and pushed; old repo `daryll-swer/daryllswer.com-neteng-blog` deleted.
@@ -206,6 +213,19 @@
 
 ## Execution Log
 
+- 2026-07-15:
+  - Action: Added the owner-provided proprietary Daryll Swer logo as the
+    README header and documented its rights boundary.
+  - Evidence: `assets/readme/13_DS_Logo_Dark_Mode_SEO.png` is byte-identical
+    to the supplied original with SHA-256
+    `8719bf9e1b143538fb1c5d1def9fce3b4e0998ef16e403dc3c43ab2d2043cc66`.
+    `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt` reserves all rights;
+    `LICENSING.md` excludes the logo from MIT and `CC-BY-NC-SA-4.0`.
+  - Validation: bundled-runtime `python -m py_compile scripts/*.py`,
+    `make validate`, `make scan-secrets`, `git diff --check`, JSON parsing,
+    and source/asset checksum comparison passed. Validation recorded 0 errors
+    and 1 known sitemap warning; public-safety scan recorded 0 findings.
+  - Result: pass.
 - 2026-07-13:
   - Action: Diagnosed scheduled canonical-drift run `29229277522` and added a
     self-contained Python bootstrap plus regression validation.

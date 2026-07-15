@@ -1,6 +1,6 @@
 # Validation
 
-Generated: 2026-07-13T07:14:18+00:00
+Generated: 2026-07-15T10:02:38+00:00
 
 ## WordPress REST
 
@@ -18,6 +18,12 @@ Generated: 2026-07-13T07:14:18+00:00
 - Heading/title font: `Raleway`
 - Self-hosted font files: 14
 - Self-hosted font bytes: 280912
+
+## Repository Identity Asset
+
+- README header: `assets/readme/13_DS_Logo_Dark_Mode_SEO.png`
+- Copyright: `© 2026 Daryll Swer. All rights reserved.`
+- Licence status: proprietary; excluded from MIT and CC-BY-NC-SA-4.0
 
 ## Spreadsheet
 

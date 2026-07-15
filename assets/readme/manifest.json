@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "assets": [
+    {
+      "path": "13_DS_Logo_Dark_Mode_SEO.png",
+      "role": "README header image",
+      "title": "Daryll Swer logo",
+      "source": "Owner-provided original",
+      "format": "image/png",
+      "width": 5000,
+      "height": 2625,
+      "sha256": "8719bf9e1b143538fb1c5d1def9fce3b4e0998ef16e403dc3c43ab2d2043cc66",
+      "copyright_notice": "© 2026 Daryll Swer. All rights reserved.",
+      "licence_status": "Proprietary; no public licence granted",
+      "rights_notice": "../../LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt",
+      "preservation": "Stored byte-for-byte from the owner-provided original"
+    }
+  ]
+}
