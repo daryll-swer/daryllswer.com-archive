@@ -6,8 +6,8 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; AS141253 collapsed-first-open hardening and evidence-based
-  repository cleanup
+- Status: complete locally; proprietary brand asset provenance naming
+  refinement awaiting deployment verification
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-24
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -23,6 +23,14 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - Complete locally: renamed the logo and favicon provenance records to
+    `assets/readme/ASSET_PROVENANCE.md` and
+    `assets/brand/ASSET_PROVENANCE.md`. Documentation now identifies
+    `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt` as the controlling
+    legal notice and both provenance files as non-licence preservation records.
+    Validation requires the new paths and rejects either legacy asset
+    `README.md` path or textual reference. Logo/favicon bytes, sizes,
+    manifests, checksums, and licence boundaries are unchanged.
   - Complete: every AS141253 full-hierarchy disclosure is closed on a fresh
     `visual.html` load. The generator emits no `open` attributes for hierarchy
     disclosures and validation rejects their reintroduction in either source
@@ -192,6 +200,13 @@
     2560 px widths with no page-level horizontal overflow, working reserved
     disclosures, and working SVG minimap anchors.
 - Last material update:
+  - 2026-07-24: replaced ambiguous proprietary brand-asset README records with
+    consistently named provenance records. The root README, licence map,
+    controlling notice, architecture, validator, and generated validation
+    report now distinguish provenance from the rights instrument. Local checks
+    passed: no legacy references, `py_compile`, whitespace validation, archive
+    validation with 0 errors/1 known warning, and public-safety scan. Deployment
+    and public GitHub README-link verification are pending.
   - 2026-07-24: made the AS141253 hierarchy closed by default with native HTML
     disclosures, regenerated source and Pages output, and added validation for
     the no-`open` invariant. Local browser QA passed at 320, 390, 768, 1024,
@@ -201,7 +216,8 @@
     GitHub Pages run `30080507753`; the live `visual.html` returned HTTP 200
     and exposed zero hierarchy `details[open]` elements.
 - Next pickup action:
-  - No implementation pickup is pending.
+  - Push the provenance naming refinement, wait for GitHub Pages, and verify
+    the public repository README links.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
