@@ -5,11 +5,13 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: GitHub Pages proprietary favicon integration
-- Status: complete and deployed; Pages favicon rendered and verified
-- Last updated: 2026-07-15
-- Implementer role/model/thread: direct Codex Desktop implementation; no
-  subagent used for this repository asset
+- Current sprint / workstream: AS141253 hierarchy production hardening and
+  evidence-based repository cleanup
+- Status: complete locally; awaiting this change's GitHub Pages deployment
+- Last updated: 2026-07-24
+- Implementer role/model/thread: delegated `implementer-luna` for the bounded
+  generator and validation change; current Codex Desktop integrated and tested
+  the result
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: unknown; no warning observed in this turn
 
@@ -219,9 +221,37 @@
     Workbook, README, Markdown, and generated Pages links continue to prefer
     `visual.html`; no legacy visual HTML is copied under `docs/`. Commit
     `f94d8b3` is deployed by GitHub Pages run `29081542020`.
+- AS141253 collapsed-first-open production hardening:
+  - Status: complete locally; awaiting deployment
+  - Notes: `scripts/ipv6_visual_options.py` now emits every full-hierarchy
+    `details` element without `open`; native `details`/`summary` controls keep
+    each normal and reserved branch individually expandable. Validation now
+    rejects an `open` attribute on a hierarchy or reserved-prefix disclosure in
+    source or generated Pages output. The cleanup audit found no safely
+    removable tracked files or dead active scripts. Proven ignored local
+    caches, preview output, bytecode, and Finder metadata were moved to the
+    macOS Trash; audit/source/provenance/licence/brand/legacy reference files
+    remain intentionally retained.
 
 ## Execution Log
 
+- 2026-07-24:
+  - Action: Made the public AS141253 Full hierarchy closed by default and
+    completed a cautious production cleanup audit.
+  - Evidence: Generated source and Pages `visual.html` each contain 78
+    hierarchy disclosures and zero `open` attributes. Browser interaction
+    verified normal and nested reserved disclosures open and close; expanding
+    the `2 reserved /64 prefixes` group exposes
+    `2400:d960:800:9::/64` and `2400:d960:800:a::/64`.
+  - Validation: `make render-site`, `python -m py_compile scripts/*.py`,
+    `git diff --check`, `make validate` (0 errors, 1 known sitemap warning),
+    and `make scan-secrets` (0 findings) passed. Browser QA at 320, 390, 768,
+    1024, 1440, 1920, and 2560 CSS px found no page-level horizontal overflow
+    or console errors.
+  - Cleanup: no tracked path was removed. Removed ignored local transient
+    paths were moved to the macOS Trash after reference/CI/Makefile checks;
+    no repository history or remote state was changed.
+  - Result: local pass; deployment verification pending.
 - 2026-07-15:
   - Action: Replaced the generated GitHub Pages `DS` text badge with the
     owner-provided official favicon and emitted browser favicon metadata.

@@ -6,10 +6,10 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; canonical-drift workflow bootstrap and proprietary README
-  logo and GitHub Pages favicon integration are verified and deployed
+- Status: complete; AS141253 collapsed-first-open hardening and evidence-based
+  repository cleanup
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-15
+- Last updated: 2026-07-24
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -23,6 +23,16 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - Complete: every AS141253 full-hierarchy disclosure is closed on a fresh
+    `visual.html` load. The generator emits no `open` attributes for hierarchy
+    disclosures and validation rejects their reintroduction in either source
+    or generated Pages output. Native per-node and reserved-range expansion
+    remains available.
+  - Complete: cleanup inventory found no obsolete tracked repository files or
+    dead active scripts. Local ignored caches, preview output, Python bytecode,
+    and Finder metadata were moved to the macOS Trash; the active source,
+    Pages output, provenance, licences, JSON/DOT audit artefacts, and
+    developer/AI legacy reference remain intentionally retained.
   - Complete: scheduled canonical drift run `29229277522` reached a
     healthy drift state but failed at `make validate` because the clean
     GitHub-hosted runner did not install the declared `lxml` dependency. The
@@ -182,17 +192,14 @@
     2560 px widths with no page-level horizontal overflow, working reserved
     disclosures, and working SVG minimap anchors.
 - Last material update:
-  - 2026-07-13 Scheduled GitHub Actions run `29229277522` failed only at
-    public-archive validation: `scripts/validate-mirror.py` reported `Missing
-    dependency: lxml. Install requirements.txt first.` The preceding canonical
-    drift check completed healthy; the commit step was skipped and no archive
-    changes were published. Commit `c2b0a06` adds explicit Python bootstrap,
-    dependency installation, and a regression guard. Manual hosted-runner run
-    `29231087908` passed with CPython 3.12.13, installed `lxml`/Pillow,
-    validation at 0 errors/1 known warning, and no drift-status commit.
+  - 2026-07-24: made the AS141253 hierarchy closed by default with native HTML
+    disclosures, regenerated source and Pages output, and added validation for
+    the no-`open` invariant. Local browser QA passed at 320, 390, 768, 1024,
+    1440, 1920, and 2560 CSS px with no page-level overflow or console errors.
+    The cleanup audit removed no tracked files; only proven ignored local
+    transients were moved to the macOS Trash.
 - Next pickup action:
-  - No implementation pickup is pending; the next scheduled run will reuse the
-    saved pip cache and enforce the same bootstrap contract.
+  - No implementation pickup is pending.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
