@@ -6,8 +6,8 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: locally complete; AS141253 hierarchy controls and README asset-link
-  refinement pending publication
+- Status: complete and deployed; AS141253 hierarchy controls and README
+  asset-link refinement
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-24
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -214,8 +214,9 @@
     the bounded AS141253 hierarchy UI refinement and README proprietary-asset
     link improvement. All 78 disclosures load closed; normal and reserved
     controls, bulk expansion/collapse, and no-overflow checks passed at 320,
-    390, 768, 1024, 1440, 1920, and 2560 px viewports. Pending commit, Pages
-    deployment, and live verification.
+    390, 768, 1024, 1440, 1920, and 2560 px viewports. Commit `cd840c9` is
+    deployed by GitHub Pages build `1112336857`; live 320 px verification
+    confirmed the bulk controls and no console entries.
   - 2026-07-24: replaced ambiguous proprietary brand-asset README records with
     consistently named provenance records. The root README, licence map,
     controlling notice, architecture, validator, and generated validation
