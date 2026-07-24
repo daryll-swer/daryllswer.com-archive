@@ -1,4 +1,4 @@
-# Daryll Swer Brand Favicon
+# Daryll Swer Favicon Provenance
 
 `01_DS_Favicon_Dark_Mode.png` is the proprietary master source for the
 official Daryll Swer favicon used by the GitHub Pages archive header and
@@ -20,10 +20,16 @@ browser icon.
 Lanczos resampling. The derivative limits browser decoding to 512 x 512 px and
 is used in the Pages header and `<link rel="icon">` metadata.
 
-## Rights
+## Provenance and rights boundary
+
+This file records provenance and generated-derivative details for the favicon;
+it is not a licence. The README logo has a separate byte-preservation record
+at [`../readme/ASSET_PROVENANCE.md`](../readme/ASSET_PROVENANCE.md).
 
 Copyright © 2026 Daryll Swer. All rights reserved.
 
 The source and its Pages derivative are proprietary and excluded from the
 repository's MIT and `CC-BY-NC-SA-4.0` licences. The controlling notice is
 [`LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`](../../LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt).
+No licence is granted beyond applicable law and GitHub's limited
+public-repository service operation.

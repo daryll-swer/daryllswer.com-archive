@@ -35,12 +35,19 @@ LOCALISABLE_HOSTS = {"www.daryllswer.com", "daryllswer.com"}
 TEXT_FRAGMENT_PREFIX = ":~:text="
 README_BRAND_ASSET_PATH = "assets/readme/13_DS_Logo_Dark_Mode_SEO.png"
 README_BRAND_MANIFEST_PATH = "assets/readme/manifest.json"
+README_BRAND_PROVENANCE_PATH = "assets/readme/ASSET_PROVENANCE.md"
 README_BRAND_NOTICE_PATH = "LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt"
 README_BRAND_COPYRIGHT_NOTICE = "© 2026 Daryll Swer. All rights reserved."
 PAGES_FAVICON_SOURCE_PATH = "assets/brand/01_DS_Favicon_Dark_Mode.png"
 PAGES_FAVICON_MANIFEST_PATH = "assets/brand/manifest.json"
+PAGES_FAVICON_PROVENANCE_PATH = "assets/brand/ASSET_PROVENANCE.md"
 PAGES_FAVICON_OUTPUT_PATH = "docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png"
 PAGES_FAVICON_SIZE = 512
+LEGACY_BRAND_PROVENANCE_PATHS = (
+    "assets/readme/" + "README.md",
+    "assets/brand/" + "README.md",
+)
+TEXT_REFERENCE_SUFFIXES = {".html", ".json", ".md", ".py", ".txt", ".yaml", ".yml"}
 ARCHIVE_EXCLUDED_PATTERNS = [
     re.compile(r"It would be appreciated if you could help me continue", re.I),
     re.compile(r"Click here</a>\s*to donate now", re.I),
@@ -526,28 +533,49 @@ def validate_font_assets(errors: list[str]) -> dict | None:
 
 
 def validate_brand_assets(errors: list[str]) -> dict | None:
-    """Keep the proprietary README logo and Pages favicon outside archive licences."""
+    """Keep proprietary identity assets outside archive licences."""
     asset_path = ROOT / README_BRAND_ASSET_PATH
     manifest_path = ROOT / README_BRAND_MANIFEST_PATH
+    provenance_path = ROOT / README_BRAND_PROVENANCE_PATH
     notice_path = ROOT / README_BRAND_NOTICE_PATH
     readme_path = ROOT / "README.md"
     licensing_path = ROOT / "LICENSING.md"
     favicon_source_path = ROOT / PAGES_FAVICON_SOURCE_PATH
     favicon_manifest_path = ROOT / PAGES_FAVICON_MANIFEST_PATH
+    favicon_provenance_path = ROOT / PAGES_FAVICON_PROVENANCE_PATH
     favicon_output_path = ROOT / PAGES_FAVICON_OUTPUT_PATH
 
     for path in [
         asset_path,
         manifest_path,
+        provenance_path,
         notice_path,
         readme_path,
         licensing_path,
         favicon_source_path,
         favicon_manifest_path,
+        favicon_provenance_path,
         favicon_output_path,
     ]:
         if not path.exists():
             errors.append(f"proprietary brand asset requirement missing: {rel(path)}")
+    legacy_reference_bytes = [path.encode("utf-8") for path in LEGACY_BRAND_PROVENANCE_PATHS]
+    for candidate in ROOT.rglob("*"):
+        if (
+            not candidate.is_file()
+            or ".git" in candidate.parts
+            or candidate.is_symlink()
+            or candidate.suffix.lower() not in TEXT_REFERENCE_SUFFIXES
+        ):
+            continue
+        try:
+            candidate_bytes = candidate.read_bytes()
+        except OSError as exc:
+            errors.append(f"could not inspect repository file for legacy provenance path: {rel(candidate)} ({exc})")
+            continue
+        for legacy_path, legacy_bytes in zip(LEGACY_BRAND_PROVENANCE_PATHS, legacy_reference_bytes):
+            if legacy_bytes in candidate_bytes:
+                errors.append(f"legacy brand provenance reference `{legacy_path}` found in {rel(candidate)}")
     if not asset_path.exists() or not manifest_path.exists():
         return None
 
@@ -575,8 +603,21 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
     elif sha256_file(asset_path) != expected_hash:
         errors.append("README brand asset checksum mismatch")
 
+    if provenance_path.exists():
+        provenance = provenance_path.read_text(encoding="utf-8", errors="replace").lower()
+        for marker in [
+            "provenance",
+            "byte-for-byte",
+            "not a licence",
+            "controlling legal notice",
+            README_BRAND_NOTICE_PATH.lower(),
+        ]:
+            if marker not in provenance:
+                errors.append(f"README brand asset provenance record is missing `{marker}`")
+
     if readme_path.exists():
         readme = readme_path.read_text(encoding="utf-8", errors="replace")
+        readme_normalized = " ".join(readme.split()).lower()
         if f'src="{README_BRAND_ASSET_PATH}"' not in readme:
             errors.append("README does not render the proprietary header logo")
         if 'href="#copyright-and-licences"' not in readme:
@@ -585,9 +626,32 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
             errors.append("README is missing the copyright-and-licences destination section")
         if not re.search(r"© 2026 Daryll Swer\. All\s+rights reserved\.", readme):
             errors.append("README does not state the proprietary logo copyright notice")
+        for marker in [
+            README_BRAND_ASSET_PATH,
+            PAGES_FAVICON_SOURCE_PATH,
+            PAGES_FAVICON_OUTPUT_PATH,
+            "ASSET_PROVENANCE.md",
+            "provenance and byte-preservation evidence only",
+            "not a licence",
+            "controlling legal notice",
+            README_BRAND_NOTICE_PATH,
+            "MIT",
+            "CC-BY-NC-SA-4.0",
+            "applicable law",
+            "GitHub's limited public-repository service operation",
+        ]:
+            if marker.lower() not in readme_normalized:
+                errors.append(f"README is missing brand asset licensing/provenance marker `{marker}`")
     if licensing_path.exists():
         licensing = licensing_path.read_text(encoding="utf-8", errors="replace")
-        for marker in [README_BRAND_ASSET_PATH, README_BRAND_NOTICE_PATH, "MIT", "CC-BY-NC-SA-4.0"]:
+        for marker in [
+            README_BRAND_ASSET_PATH,
+            README_BRAND_PROVENANCE_PATH,
+            PAGES_FAVICON_PROVENANCE_PATH,
+            README_BRAND_NOTICE_PATH,
+            "MIT",
+            "CC-BY-NC-SA-4.0",
+        ]:
             if marker not in licensing:
                 errors.append(f"LICENSING.md is missing README brand asset marker `{marker}`")
     if notice_path.exists():
@@ -600,6 +664,11 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
 
     if not favicon_source_path.exists() or not favicon_manifest_path.exists() or not favicon_output_path.exists():
         return None
+    if favicon_provenance_path.exists():
+        favicon_provenance = favicon_provenance_path.read_text(encoding="utf-8", errors="replace").lower()
+        for marker in ["provenance", "not a licence", "controlling notice", README_BRAND_NOTICE_PATH.lower()]:
+            if marker not in favicon_provenance:
+                errors.append(f"Pages favicon provenance record is missing `{marker}`")
     try:
         favicon_manifest = load_json(favicon_manifest_path)
     except Exception as exc:
@@ -1005,7 +1074,9 @@ def main() -> int:
             "## Repository Identity Assets",
             "",
             f"- README header: `{README_BRAND_ASSET_PATH}`",
+            f"- README logo provenance: `{README_BRAND_PROVENANCE_PATH}`",
             f"- Pages header and favicon source: `{PAGES_FAVICON_SOURCE_PATH}`",
+            f"- Pages favicon provenance: `{PAGES_FAVICON_PROVENANCE_PATH}`",
             f"- Copyright: `{brand_assets['readme_logo'].get('copyright_notice')}`",
             "- Licence status: proprietary; excluded from MIT and CC-BY-NC-SA-4.0",
             "",

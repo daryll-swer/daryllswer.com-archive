@@ -21,9 +21,10 @@ not the publishing source of truth; WordPress remains canonical.
   byte-preserved proprietary favicon source. `scripts/render-site.py` produces
   a 512 px PNG derivative at `docs/assets/brand/` for the generated Pages
   header and browser icon, avoiding an excessive browser image decode.
-- Their SHA-256 checksums and non-local provenance are recorded in
-  `assets/readme/manifest.json` and `assets/brand/manifest.json`; their rights
-  notice is
+- Their SHA-256 checksums and byte-preserved provenance are recorded in
+  `assets/readme/ASSET_PROVENANCE.md`, `assets/readme/manifest.json`, and
+  `assets/brand/ASSET_PROVENANCE.md`, and `assets/brand/manifest.json`; their
+  controlling legal notice is
   `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`.
 - They are not mirrored WordPress content, third-party media, MIT tooling, or
   `CC-BY-NC-SA-4.0` archive content. Future tooling must not rename,

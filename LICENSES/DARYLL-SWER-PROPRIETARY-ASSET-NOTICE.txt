@@ -26,6 +26,7 @@ including its protections for original artistic works and the owner's exclusive
 rights. Nothing in this notice excludes statutory exceptions or creates a
 governing-law or forum-selection agreement.
 
-For asset provenance and checksums, see assets/readme/manifest.json and
-assets/brand/manifest.json. This is a rights notice, not a registration
-certificate or legal opinion.
+For asset provenance, byte-preservation details, and checksums, see
+assets/readme/ASSET_PROVENANCE.md, assets/readme/manifest.json,
+assets/brand/ASSET_PROVENANCE.md, and assets/brand/manifest.json. This is the
+controlling legal notice, not a registration certificate or legal opinion.

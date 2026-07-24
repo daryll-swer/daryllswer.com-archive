@@ -47,8 +47,12 @@ GitHub Pages header and browser favicon.
 - Copyright notice: `© 2026 Daryll Swer. All rights reserved.`
 - Licence status: proprietary; no public copyright or trade mark licence is
   granted.
-- Notice and provenance: `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`
-  plus `assets/readme/README.md` and `assets/brand/README.md`.
+- Controlling legal notice:
+  `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`.
+- Provenance and byte-preservation records:
+  `assets/readme/ASSET_PROVENANCE.md`, `assets/readme/manifest.json`, and
+  `assets/brand/ASSET_PROVENANCE.md`/`assets/brand/manifest.json`. These
+  records are not licences.
 - Excluded from: the MIT licence, `CC-BY-NC-SA-4.0`, and every other repository
   licence or content grant.
 

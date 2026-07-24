@@ -5,9 +5,10 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: AS141253 hierarchy production hardening and
-  evidence-based repository cleanup
-- Status: complete and deployed; live AS141253 visual verified
+- Current sprint / workstream: proprietary README logo provenance naming
+  refinement
+- Status: complete locally; deployment and public README-link verification
+  pending
 - Last updated: 2026-07-24
 - Implementer role/model/thread: delegated `implementer-luna` for the bounded
   generator and validation change; current Codex Desktop integrated and tested
@@ -74,6 +75,16 @@
     manifest, explicit exclusion from MIT and `CC-BY-NC-SA-4.0`, and a
     validation guard for the path, checksum, notice, local copyright-anchor
     target, and Pages exclusion.
+- README logo provenance naming refinement:
+  - Status: complete locally; deployment verification pending
+  - Notes: Renamed the logo record to
+    `assets/readme/ASSET_PROVENANCE.md` and the analogous favicon record to
+    `assets/brand/ASSET_PROVENANCE.md`, avoiding mixed terminology. Both
+    records are provenance/handling documents, not licences. The controlling
+    rights instrument remains
+    `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`; validation rejects
+    either legacy asset `README.md` path or textual reference. Source asset
+    bytes, SHA-256 values, manifests, and licence boundaries are unchanged.
 - GitHub Pages proprietary favicon:
   - Status: complete and deployed
   - Notes: Owner-provided `01_DS_Favicon_Dark_Mode.png` remains byte-exact in
@@ -237,6 +248,20 @@
 
 ## Execution Log
 
+- 2026-07-24:
+  - Action: Renamed proprietary logo and favicon provenance records from
+    ambiguous asset-local `README.md` names to `ASSET_PROVENANCE.md`.
+  - Evidence: Root README, `LICENSING.md`, the controlling proprietary notice,
+    architecture, asset records, validation, and generated validation report
+    now state the separation between the repository-wide licence map,
+    controlling notice, and provenance records. `rg` found zero legacy
+    asset-local `README.md` references. Logo and favicon SHA-256 values remain
+    `8719bf9e1b143538fb1c5d1def9fce3b4e0998ef16e403dc3c43ab2d2043cc66` and
+    `310e104810f12dc633f52ca23043c7350090e2b40f2dcf400ace84aecb16793f`.
+  - Validation: bundled-runtime `python -m py_compile scripts/*.py`,
+    `git diff --check`, `make validate` (0 errors, 1 known sitemap warning),
+    and `make scan-secrets` (0 findings) passed.
+  - Result: local pass; deployment and public README-link verification pending.
 - 2026-07-24:
   - Action: Made the public AS141253 Full hierarchy closed by default and
     completed a cautious production cleanup audit.

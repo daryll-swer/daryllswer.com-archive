@@ -1,6 +1,6 @@
 # Validation
 
-Generated: 2026-07-24T08:50:58+00:00
+Generated: 2026-07-24T09:09:11+00:00
 
 ## WordPress REST
 
@@ -22,7 +22,9 @@ Generated: 2026-07-24T08:50:58+00:00
 ## Repository Identity Assets
 
 - README header: `assets/readme/13_DS_Logo_Dark_Mode_SEO.png`
+- README logo provenance: `assets/readme/ASSET_PROVENANCE.md`
 - Pages header and favicon source: `assets/brand/01_DS_Favicon_Dark_Mode.png`
+- Pages favicon provenance: `assets/brand/ASSET_PROVENANCE.md`
 - Copyright: `© 2026 Daryll Swer. All rights reserved.`
 - Licence status: proprietary; excluded from MIT and CC-BY-NC-SA-4.0
 
