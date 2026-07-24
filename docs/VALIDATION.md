@@ -1,6 +1,6 @@
 # Validation
 
-Generated: 2026-07-24T10:12:11+00:00
+Generated: 2026-07-24T10:14:15+00:00
 
 ## WordPress REST
 
