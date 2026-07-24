@@ -888,12 +888,37 @@ def full_hierarchy_section(tree: dict) -> str:
         )
 
     return f"""
-<section class="visual-section" id="full-hierarchy">
+<section class="visual-section final-visual-section" id="full-hierarchy" data-final-tree-section>
   <h2>Full hierarchy</h2>
   <p class="summary">The complete CSV-derived containment tree remains available for audit, with reserved siblings grouped to keep the hierarchy readable.</p>
-  <div class="visual-frame"><div class="dendrogram-tree final-tree">{render_node(tree, 0)}</div></div>
+  <div class="visual-frame">
+    <div class="tree-toolbar" data-final-tree-controls hidden role="group" aria-label="Full hierarchy controls">
+      <button type="button" data-final-tree-expand aria-controls="full-hierarchy-tree">Expand all</button>
+      <button type="button" data-final-tree-collapse aria-controls="full-hierarchy-tree">Collapse all</button>
+    </div>
+    <div class="dendrogram-tree final-tree" id="full-hierarchy-tree" data-final-tree>{render_node(tree, 0)}</div>
+  </div>
 </section>
 """
+
+
+def final_tree_script() -> str:
+    return r"""
+  <script data-final-tree-enhancement>
+(() => {
+  const section = document.querySelector("[data-final-tree-section]");
+  if (!section) return;
+  const controls = section.querySelector("[data-final-tree-controls]");
+  const tree = section.querySelector("[data-final-tree]");
+  if (!controls || !tree) return;
+  controls.hidden = false;
+  const disclosures = () => tree.querySelectorAll("details.final-tree-node:not(.leaf), details.reserved-group");
+  const expand = controls.querySelector("[data-final-tree-expand]");
+  const collapse = controls.querySelector("[data-final-tree-collapse]");
+  if (expand) expand.addEventListener("click", () => disclosures().forEach((detail) => { detail.open = true; }));
+  if (collapse) collapse.addEventListener("click", () => disclosures().forEach((detail) => { detail.open = false; }));
+})();
+  </script>"""
 
 
 def final_visual_page(tree: dict, nodes: list[dict], font_asset_prefix: str) -> str:
@@ -907,6 +932,7 @@ def final_visual_page(tree: dict, nodes: list[dict], font_asset_prefix: str) -> 
         eyebrow="AS141253 IPv6 visual model",
         footer_text="Generated from repository CSV files. Raw workbook, CSV, ODS, and hierarchy artefacts remain available for audit.",
         include_script=False,
+        inline_script=final_tree_script(),
     )
 
 
@@ -917,6 +943,11 @@ def option_css() -> str:
   padding-top: 1rem;
   border-top: 1px solid var(--border);
   min-width: 0;
+}
+.final-visual-section {
+  margin-bottom: 0;
+  padding-top: 0;
+  border-top: 0;
 }
 .allocation-path {
   display: grid;
@@ -1043,9 +1074,9 @@ def option_css() -> str:
 .reserved-group {
   min-width: 0;
 }
-.reserved-group summary {
+.reserved-group > summary {
   display: grid;
-  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  grid-template-columns: 1.3rem minmax(0, max-content) minmax(0, 1fr);
   gap: .2rem .55rem;
   align-items: start;
   max-width: 100%;
@@ -1056,10 +1087,10 @@ def option_css() -> str:
   cursor: pointer;
   list-style: none;
 }
-.reserved-group summary::-webkit-details-marker {
+.reserved-group > summary::-webkit-details-marker {
   display: none;
 }
-.reserved-group summary:focus-visible {
+.reserved-group > summary:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
@@ -1073,7 +1104,7 @@ def option_css() -> str:
   overflow-wrap: anywhere;
 }
 .reserved-range {
-  grid-column: 1 / -1;
+  grid-column: 2 / -1;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: .82rem;
 }
@@ -1306,6 +1337,7 @@ def option_css() -> str:
 }
 .tree-toolbar button {
   min-height: 2rem;
+  padding: .25rem .55rem;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
@@ -1325,7 +1357,7 @@ def option_css() -> str:
   border-left: 1px solid var(--grid);
   scroll-margin-top: 1rem;
 }
-.tree-node summary {
+.tree-node > summary {
   display: flex;
   align-items: flex-start;
   gap: .5rem;
@@ -1334,8 +1366,10 @@ def option_css() -> str:
   list-style: none;
   flex-wrap: wrap;
 }
-.tree-node summary::-webkit-details-marker { display: none; }
-.tree-node summary::before {
+.tree-node > summary::-webkit-details-marker,
+.reserved-group > summary::-webkit-details-marker { display: none; }
+.tree-node > summary::before,
+.reserved-group > summary::before {
   content: "+";
   display: inline-grid;
   place-items: center;
@@ -1347,8 +1381,9 @@ def option_css() -> str:
   flex: 0 0 auto;
   margin-top: .08rem;
 }
-.tree-node[open] > summary::before { content: "-"; }
-.tree-node.leaf summary::before { content: ""; border-style: dashed; }
+.tree-node[open] > summary::before,
+.reserved-group[open] > summary::before { content: "-"; }
+.tree-node.leaf > summary::before { content: ""; border-style: dashed; }
 .tree-note {
   flex: 1 1 18rem;
   margin: .12rem 0 0;
@@ -1499,11 +1534,12 @@ def page_shell(
     eyebrow: str = "AS141253 IPv6 visual foundation",
     footer_text: str = "Generated from repository CSV files. These are the selected foundation models for the next IPv6 visualisation iteration.",
     include_script: bool = True,
+    inline_script: str = "",
 ) -> str:
-    script = f"""
+    script = inline_script or (f"""
   <script>
 {interactive_js()}
-  </script>""" if include_script else ""
+  </script>""" if include_script else "")
     return f"""<!doctype html>
 <html lang="en-IN">
 <head>

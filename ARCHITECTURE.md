@@ -88,7 +88,14 @@ flowchart LR
   CSV-derived containment hierarchy with native `details`/`summary` controls.
   Every hierarchy disclosure is closed on fresh load: generated hierarchy
   `details` elements must not carry `open`. Reserved siblings are collapsed
-  into count/range summaries, but retain exact expandable prefix details.
+  into count/range summaries, but retain exact expandable prefix details. A
+  single small inline progressive-enhancement script reveals initially hidden
+  `Expand all` and `Collapse all` buttons; it does not open disclosures at
+  load and only toggles non-leaf hierarchy nodes and reserved groups. Native
+  disclosure controls remain usable without JavaScript, and no external or
+  unrelated legacy script is emitted. The final hierarchy section suppresses
+  the generic section divider, and its toolbar sits inside the hierarchy frame
+  so the visual has no duplicate top rule or avoidable footer gap.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.json` and
   `.dot` are derived developer/AI artefacts. They preserve the CSV-derived
   IPv6 containment graph for audit and external tooling; no separate public
