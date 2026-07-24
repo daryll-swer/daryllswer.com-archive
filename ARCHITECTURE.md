@@ -85,13 +85,13 @@ flowchart LR
 - `docs/sheets/as141253-ipv6-architecture-example/visual.html` is the sole
   human-facing AS141253 IPv6 visual model. It renders the complete
   CSV-derived containment hierarchy with native `details`/`summary` controls.
-  Reserved siblings are collapsed into count/range summaries by default, but
-  retain exact expandable prefix details.
+  Every hierarchy disclosure is closed on fresh load: generated hierarchy
+  `details` elements must not carry `open`. Reserved siblings are collapsed
+  into count/range summaries, but retain exact expandable prefix details.
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.json` and
   `.dot` are derived developer/AI artefacts. They preserve the CSV-derived
   IPv6 containment graph for audit and external tooling; no separate public
   CIDR hierarchy HTML page is generated.
-  their exact prefixes remain available in expandable details.
 - Historical visual-design material is retained only as a developer/AI
   reference under `data/sheets/as141253-ipv6-architecture-example/legacy-visual-models/`.
   The render pipeline excludes that directory and produces no legacy visual
@@ -195,10 +195,12 @@ surface must not cause repeated workflow failures or archive deletion.
 - The AS141253 public visual model is generated from CSV/hierarchy data, not
   hand-authored. `visual.html` is the only reader path and renders the full
   hierarchy through native disclosure controls. CSV `Notes` values remain
-  first-class metadata; reserved prefixes must not disappear and are collapsed
-  only as expandable summaries. Historical design logic is explicitly
-  non-Pages reference material. The public page must keep page-level width
-  bounded at common phone, tablet, desktop, and wide-display viewports.
+  first-class metadata; all hierarchy disclosures must be closed on fresh
+  load, and reserved prefixes must not disappear. Reserved prefixes are
+  collapsed only as expandable summaries. Historical design logic is
+  explicitly non-Pages reference material. The public page must keep
+  page-level width bounded at common phone, tablet, desktop, and wide-display
+  viewports.
 - Spreadsheet CSV exports are normalised to LF line endings for stable Git
   diffs; generated HTML artefacts strip trailing line whitespace; ODS remains a
   binary artefact.

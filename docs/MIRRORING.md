@@ -276,9 +276,11 @@ is a proof of concept and does not replace the workbook view yet.
 
 The public `visual.html` page uses the same CSV-derived hierarchy model and
 renders the complete containment tree with native HTML `details`/`summary`
-controls. CSV `Notes` values remain visible at each node. Reserved siblings are
-collapsed into count/range summaries by default and expand to their exact
-prefixes, preserving audit fidelity without making the default tree unreadable.
+controls. Every hierarchy disclosure is closed on fresh load: generated
+hierarchy `details` elements must not carry `open`. CSV `Notes` values remain
+visible at each node. Reserved siblings are collapsed into count/range
+summaries by default and expand to their exact prefixes, preserving audit
+fidelity without making the default tree unreadable.
 
 Historical design material is retained outside `docs/` for maintainers and AI
 agents only. The render pipeline excludes it, and validation rejects both

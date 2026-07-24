@@ -879,10 +879,9 @@ def full_hierarchy_section(tree: dict) -> str:
         children = node.get("children", [])
         cat = category_slug(category_for(node))
         node_with_count = {**node, "child_count": len(children)}
-        open_attr = " open" if depth <= 1 else ""
         leaf_class = " leaf" if not children else ""
         return (
-            f'<details class="tree-node final-tree-node {cat}{leaf_class}" id="{prefix_anchor_id(node)}-tree"{open_attr}>'
+            f'<details class="tree-node final-tree-node {cat}{leaf_class}" id="{prefix_anchor_id(node)}-tree">'
             f'<summary>{prefix_chip(node_with_count, small=True)}{notes_html(node, "tree-note")}</summary>'
             f'{render_children(children, depth + 1)}'
             '</details>'

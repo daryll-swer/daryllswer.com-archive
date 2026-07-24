@@ -34,12 +34,11 @@ editable source of truth.
 | Mermaid | Low to medium | Good for repo Markdown diagrams, but large prefix sets become unwieldy and GitHub Pages would still need rendering support. |
 | Graphviz DOT | Medium | Good export/debug artefact and offline rendering path, but static SVG/PNG output is less ergonomic for large expandable trees. |
 
-## Implemented Proof Of Concept
+## Historical Proof Of Concept (Superseded)
 
 Implemented files:
 
 - `scripts/ipv6_hierarchy.py`
-- `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.html`
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.json`
 - `data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.dot`
 
@@ -55,13 +54,12 @@ Current generated graph:
 
 - 153 prefix nodes;
 - maximum depth 5;
-- self-contained HTML, no CDN dependency;
 - adjacent JSON and Graphviz DOT outputs for future visualisation work.
 
 ## Recommendation
 
-Keep the workbook as the default sheet page for now, but promote
-`cidr-hierarchy.html` as the readability proof of concept. If this view proves
-useful, the next iteration should add a richer D3 hierarchy view generated from
-`cidr-hierarchy.json`, with the current self-contained `<details>` tree kept as
-the durable fallback.
+The historical `cidr-hierarchy.html` proof of concept was retired. The public
+reader path is now `data/sheets/as141253-ipv6-architecture-example/visual.html`,
+which renders the complete tree with native `details`/`summary` controls and
+keeps every disclosure closed on fresh load. JSON and DOT remain durable
+developer/AI artefacts for audit and future offline visualisation experiments.

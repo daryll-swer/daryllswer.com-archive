@@ -136,6 +136,24 @@ def validate_excluded_operational_ctas(path: Path, errors: list[str]) -> None:
             return
 
 
+def validate_collapsed_hierarchy_details(visual_model_html: str, path: str, errors: list[str]) -> None:
+    try:
+        document = lxml.html.fromstring(visual_model_html)
+    except Exception as exc:
+        errors.append(f"{path}: could not inspect hierarchy details: {exc}")
+        return
+    hierarchy_details = document.xpath(
+        "//details["
+        "contains(concat(' ', normalize-space(@class), ' '), ' final-tree-node ') or "
+        "contains(concat(' ', normalize-space(@class), ' '), ' reserved-group ')"
+        "]"
+    )
+    for detail in hierarchy_details:
+        if "open" in detail.attrib:
+            identifier = detail.get("id") or detail.get("class") or "unknown"
+            errors.append(f"{path}: hierarchy detail `{identifier}` must not carry an open attribute")
+
+
 def validate_post(post_item: dict, errors: list[str], warnings: list[str], archived_keys: set[str]) -> None:
     bundle = ROOT / post_item["bundle_path"]
     index = bundle / "index.md"
@@ -279,6 +297,7 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
                 errors.append(f"spreadsheet full-hierarchy visual model exposes legacy marker `{marker}`")
         if "<script" in visual_model_html:
             errors.append("spreadsheet full-hierarchy visual model should not require JavaScript")
+        validate_collapsed_hierarchy_details(visual_model_html, rel(visual_model_path), errors)
 
     if "visual_options" in manifest:
         errors.append("spreadsheet manifest still exposes retired visual_options metadata")
@@ -729,6 +748,7 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
                 errors.append("GitHub Pages AS141253 visual model page leaks a source font or local filesystem path")
             if "<script" in visual_model_html:
                 errors.append("GitHub Pages AS141253 visual model page should not require JavaScript")
+            validate_collapsed_hierarchy_details(visual_model_html, rel(visual_model), errors)
 
         legacy_pages = [
             "cidr-hierarchy.html",
