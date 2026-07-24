@@ -7,8 +7,7 @@
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: proprietary README logo provenance naming
   refinement
-- Status: complete locally; deployment and public README-link verification
-  pending
+- Status: complete and deployed; public README links verified
 - Last updated: 2026-07-24
 - Implementer role/model/thread: delegated `implementer-luna` for the bounded
   generator and validation change; current Codex Desktop integrated and tested
@@ -76,7 +75,7 @@
     validation guard for the path, checksum, notice, local copyright-anchor
     target, and Pages exclusion.
 - README logo provenance naming refinement:
-  - Status: complete locally; deployment verification pending
+  - Status: complete and deployed
   - Notes: Renamed the logo record to
     `assets/readme/ASSET_PROVENANCE.md` and the analogous favicon record to
     `assets/brand/ASSET_PROVENANCE.md`, avoiding mixed terminology. Both
@@ -85,6 +84,9 @@
     `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`; validation rejects
     either legacy asset `README.md` path or textual reference. Source asset
     bytes, SHA-256 values, manifests, and licence boundaries are unchanged.
+    Commit `a401ecd` is deployed by GitHub Pages run `30081615905`; the public
+    GitHub README correctly links to both the new logo provenance record and
+    controlling notice.
 - GitHub Pages proprietary favicon:
   - Status: complete and deployed
   - Notes: Owner-provided `01_DS_Favicon_Dark_Mode.png` remains byte-exact in
@@ -261,7 +263,11 @@
   - Validation: bundled-runtime `python -m py_compile scripts/*.py`,
     `git diff --check`, `make validate` (0 errors, 1 known sitemap warning),
     and `make scan-secrets` (0 findings) passed.
-  - Result: local pass; deployment and public README-link verification pending.
+  - Deployment/public README verification: commit `a401ecd` was pushed to
+    `main`. GitHub Pages run `30081615905` completed successfully. The public
+    GitHub README renders one provenance-record link and one controlling-notice
+    link at the expected paths; both targets load with their expected headings.
+  - Result: pass.
 - 2026-07-24:
   - Action: Made the public AS141253 Full hierarchy closed by default and
     completed a cautious production cleanup audit.
