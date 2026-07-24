@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 reserved-prefix disclosure refinement
-- Status: locally complete; pending publication
+- Status: complete and deployed
 - Last updated: 2026-07-24
 - Implementer role/model/thread: delegated `implementer-luna` for the bounded
   generator and validation change; current Codex Desktop integrated and tested
@@ -101,7 +101,7 @@
     verification confirmed all 36 expandable groups open and re-collapse, a
     reserved-prefix marker changes to `-`, and no console entries are present.
 - AS141253 reserved-prefix disclosure refinement:
-  - Status: complete locally; pending publication
+  - Status: complete and deployed
   - Notes: All 15 one-prefix reserved allocations now render as static child
     cards with their exact prefix, label, and note; no singleton has a
     disclosure control. The 13 multi-prefix reserved ranges remain native
@@ -109,7 +109,9 @@
     expected singleton set from the CIDR hierarchy and rejects missing,
     malformed, or nested static leaves. Local browser QA passed at 320, 390,
     768, 1024, 1440, 1920, and 2560 px without page-level overflow or console
-    entries. Pending commit, Pages deployment, and live verification.
+    entries. Commit `560f8dc` is deployed by GitHub Pages build `1112361417`;
+    live 320 px verification confirmed `Delhi-12` is static, all 21 actual
+    disclosures expand/re-collapse, and no console entries are present.
 - GitHub Pages proprietary favicon:
   - Status: complete and deployed
   - Notes: Owner-provided `01_DS_Favicon_Dark_Mode.png` remains byte-exact in
