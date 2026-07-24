@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete locally; AS141253 responsive reserved-prefix card grids
+- Status: complete and deployed; AS141253 responsive reserved-prefix card grids
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-24
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -28,8 +28,9 @@
     `Delhi-16`) after active children and before multi-prefix reserve ranges.
     All 13 multi-prefix reserved summaries remain collapsed native disclosures
     whose expanded content retains responsive cards. Generator and validation
-    bind every singleton grid to its exact CIDR parent; Pages deployment is
-    pending.
+    bind every singleton grid to its exact CIDR parent. Commit `261a4e2` is
+    deployed by GitHub Pages build `30092569178`; live route verification
+    passed.
   - Complete and deployed: 15 one-prefix reserved allocations render as static leaf
     cards, not empty native disclosures. Only the 13 reserved summaries that
     represent multiple exact prefixes remain expandable. Generator,
@@ -228,7 +229,9 @@
     direct static leaves and no disclosure controls; all 13 multi-prefix
     ranges retain their native disclosures. The local visual passed at 320,
     390, 768, 1024, 1440, 1920, and 2560 CSS px with no page-level horizontal
-    overflow or console errors. GitHub Pages deployment is pending.
+    overflow or console errors. Commit `261a4e2` is deployed by GitHub Pages
+    build `30092569178`; the live visual returned HTTP 200 and passed the
+    singleton-grid structural smoke check.
   - 2026-07-24: began the AS141253 reserved-prefix disclosure refinement after
     confirming that 15 singleton reserved groups are redundant disclosures and
     13 multi-prefix groups remain useful expandable range summaries.

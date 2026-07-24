@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 responsive reserved-prefix card grids
-- Status: complete locally; GitHub Pages deployment pending
+- Status: complete and deployed
 - Last updated: 2026-07-24
 - Implementer role/model/thread: delegated `implementer-luna` for the bounded
   generator and validation change; the worker reached its model usage limit
@@ -115,7 +115,7 @@
     live 320 px verification confirmed `Delhi-12` is static, all 21 actual
     disclosures expand/re-collapse, and no console entries are present.
 - AS141253 responsive reserved-prefix card grids:
-  - Status: complete locally; Pages deployment pending
+  - Status: complete and deployed
   - Notes: Static singleton reserved leaves now group by immediate CIDR parent
     into responsive card grids. The Delhi `/40` allocation renders 15 `/44`
     reserve cards in one grid after active child branches and before
@@ -126,7 +126,9 @@
     a direct child of its matching hierarchy node. Local generation,
     compilation, diff validation, mirror validation, public-safety scan, and
     browser QA at 320, 390, 768, 1024, 1440, 1920, and 2560 CSS px passed with
-    no page-level horizontal overflow or console errors.
+    no page-level horizontal overflow or console errors. Commit `261a4e2` is
+    deployed by GitHub Pages build `30092569178`; the live visual returned
+    HTTP 200 and matched the one-grid/15-leaf/13-range structural contract.
 - GitHub Pages proprietary favicon:
   - Status: complete and deployed
   - Notes: Owner-provided `01_DS_Favicon_Dark_Mode.png` remains byte-exact in
