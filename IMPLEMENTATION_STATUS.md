@@ -5,9 +5,8 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: AS141253 hierarchy controls and README asset
-  links
-- Status: complete and deployed
+- Current sprint / workstream: AS141253 reserved-prefix disclosure refinement
+- Status: locally complete; pending publication
 - Last updated: 2026-07-24
 - Implementer role/model/thread: delegated `implementer-luna` for the bounded
   generator and validation change; current Codex Desktop integrated and tested
@@ -89,11 +88,11 @@
     controlling notice.
 - AS141253 hierarchy controls and README asset links:
   - Status: complete and deployed
-  - Notes: `visual.html` retains all 78 native disclosures closed on fresh
-    load and adds an audited local enhancement for explicit bulk expansion and
-    collapse. Reserved-prefix markers now share the ordinary hierarchy
-    open/closed state signal. The redundant section divider and avoidable
-    content-to-footer gap are removed. The root README links the named logo,
+  - Notes: The preceding deployment rendered all 78 native disclosures closed
+    on fresh load and added an audited local enhancement for explicit bulk
+    expansion and collapse. Reserved-prefix markers share the ordinary
+    hierarchy open/closed state signal. The redundant section divider and
+    avoidable content-to-footer gap are removed. The root README links the named logo,
     favicon source, and generated favicon derivative directly to their
     repository paths. `py_compile`, diff validation, mirror validation, and
     public-safety scan passed; local browser QA passed at 320, 390, 768, 1024,
@@ -101,6 +100,16 @@
     `cd840c9` is deployed by GitHub Pages build `1112336857`; live 320 px
     verification confirmed all 36 expandable groups open and re-collapse, a
     reserved-prefix marker changes to `-`, and no console entries are present.
+- AS141253 reserved-prefix disclosure refinement:
+  - Status: complete locally; pending publication
+  - Notes: All 15 one-prefix reserved allocations now render as static child
+    cards with their exact prefix, label, and note; no singleton has a
+    disclosure control. The 13 multi-prefix reserved ranges remain native
+    disclosures with 2–11 exact child prefixes. Validation derives the
+    expected singleton set from the CIDR hierarchy and rejects missing,
+    malformed, or nested static leaves. Local browser QA passed at 320, 390,
+    768, 1024, 1440, 1920, and 2560 px without page-level overflow or console
+    entries. Pending commit, Pages deployment, and live verification.
 - GitHub Pages proprietary favicon:
   - Status: complete and deployed
   - Notes: Owner-provided `01_DS_Favicon_Dark_Mode.png` remains byte-exact in

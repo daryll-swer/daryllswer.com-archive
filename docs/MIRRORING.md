@@ -278,13 +278,16 @@ The public `visual.html` page uses the same CSV-derived hierarchy model and
 renders the complete containment tree with native HTML `details`/`summary`
 controls. Every hierarchy disclosure is closed on fresh load: generated
 hierarchy `details` elements must not carry `open`. CSV `Notes` values remain
-visible at each node. Reserved siblings are collapsed into count/range
-summaries by default and expand to their exact prefixes, preserving audit
-fidelity without making the default tree unreadable. The page has one small
+visible at each node. A reserved group with multiple exact prefixes is
+collapsed into a count/range summary and expands to those exact prefixes; a
+single reserved allocation is rendered as a static leaf without an expansion
+control. This preserves audit fidelity without empty disclosures. The page has
+one small
 inline progressive-enhancement script: the explicit `Expand all` and
 `Collapse all` buttons start hidden, are revealed only when that local script
 runs, and do not open anything at load. `Expand all` opens non-leaf hierarchy
-nodes and reserved groups; `Collapse all` closes those same disclosures.
+nodes and multi-prefix reserved groups; `Collapse all` closes those same
+disclosures.
 Native per-disclosure controls remain the functional path without JavaScript.
 No external script, network request, graph logic, or retired visual-model
 JavaScript is emitted for this page; validation rejects any additional or
