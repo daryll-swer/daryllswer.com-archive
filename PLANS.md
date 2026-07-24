@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete and deployed; AS141253 reserved-prefix disclosure refinement
+- Status: complete locally; AS141253 responsive reserved-prefix card grids
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-24
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -22,6 +22,14 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - Complete locally: singleton reserved allocations now group into one
+    responsive static-card grid per immediate hierarchy parent. The Delhi
+    `/40` grid contains all 15 reserved `/44` allocations (`Delhi-02` through
+    `Delhi-16`) after active children and before multi-prefix reserve ranges.
+    All 13 multi-prefix reserved summaries remain collapsed native disclosures
+    whose expanded content retains responsive cards. Generator and validation
+    bind every singleton grid to its exact CIDR parent; Pages deployment is
+    pending.
   - Complete and deployed: 15 one-prefix reserved allocations render as static leaf
     cards, not empty native disclosures. Only the 13 reserved summaries that
     represent multiple exact prefixes remain expandable. Generator,
@@ -215,6 +223,12 @@
     2560 px widths with no page-level horizontal overflow, working reserved
     disclosures, and working SVG minimap anchors.
 - Last material update:
+  - 2026-07-24: completed local generation, structural validation, and browser
+    QA for responsive reserved-prefix card grids. The singleton grid has 15
+    direct static leaves and no disclosure controls; all 13 multi-prefix
+    ranges retain their native disclosures. The local visual passed at 320,
+    390, 768, 1024, 1440, 1920, and 2560 CSS px with no page-level horizontal
+    overflow or console errors. GitHub Pages deployment is pending.
   - 2026-07-24: began the AS141253 reserved-prefix disclosure refinement after
     confirming that 15 singleton reserved groups are redundant disclosures and
     13 multi-prefix groups remain useful expandable range summaries.

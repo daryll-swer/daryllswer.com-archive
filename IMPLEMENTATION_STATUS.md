@@ -5,14 +5,16 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: AS141253 reserved-prefix disclosure refinement
-- Status: complete and deployed
+- Current sprint / workstream: AS141253 responsive reserved-prefix card grids
+- Status: complete locally; GitHub Pages deployment pending
 - Last updated: 2026-07-24
 - Implementer role/model/thread: delegated `implementer-luna` for the bounded
-  generator and validation change; current Codex Desktop integrated and tested
-  the result
+  generator and validation change; the worker reached its model usage limit
+  before final reporting, and the user authorised current Codex Desktop to
+  complete integration and testing serially
 - Architect role/model/thread: current Codex Desktop thread plus user review
-- Current budget/rate-limit state: unknown; no warning observed in this turn
+- Current budget/rate-limit state: delegated Luna route reached a hard usage
+  limit; no independent model-bucket capacity is assumed
 
 ## Scope
 
@@ -112,6 +114,19 @@
     entries. Commit `560f8dc` is deployed by GitHub Pages build `1112361417`;
     live 320 px verification confirmed `Delhi-12` is static, all 21 actual
     disclosures expand/re-collapse, and no console entries are present.
+- AS141253 responsive reserved-prefix card grids:
+  - Status: complete locally; Pages deployment pending
+  - Notes: Static singleton reserved leaves now group by immediate CIDR parent
+    into responsive card grids. The Delhi `/40` allocation renders 15 `/44`
+    reserve cards in one grid after active child branches and before
+    multi-prefix range summaries. The 13 multi-prefix ranges remain collapsed
+    native disclosures whose exact cards render after expansion. Validation
+    derives the expected singleton-to-parent mapping from the hierarchy,
+    requires each leaf to be a direct grid child, and requires the grid to be
+    a direct child of its matching hierarchy node. Local generation,
+    compilation, diff validation, mirror validation, public-safety scan, and
+    browser QA at 320, 390, 768, 1024, 1440, 1920, and 2560 CSS px passed with
+    no page-level horizontal overflow or console errors.
 - GitHub Pages proprietary favicon:
   - Status: complete and deployed
   - Notes: Owner-provided `01_DS_Favicon_Dark_Mode.png` remains byte-exact in

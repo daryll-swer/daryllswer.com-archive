@@ -88,9 +88,10 @@ flowchart LR
   CSV-derived containment hierarchy with native `details`/`summary` controls.
   Every hierarchy disclosure is closed on fresh load: generated hierarchy
   `details` elements must not carry `open`. Reserved sibling groups with two
-  or more exact prefixes are collapsed into count/range summaries; a single
-  reserved allocation is a static leaf with no disclosure control. Both retain
-  the exact prefix details. A
+  or more exact prefixes are collapsed into count/range summaries; singleton
+  reserved allocations sharing a direct hierarchy parent are static leaves in
+  one responsive card grid, after allocated child branches and before
+  multi-prefix reserve ranges. Both retain the exact prefix details. A
   single small inline progressive-enhancement script reveals initially hidden
   `Expand all` and `Collapse all` buttons; it does not open disclosures at
   load and only toggles non-leaf hierarchy nodes and multi-prefix reserved
@@ -208,8 +209,9 @@ surface must not cause repeated workflow failures or archive deletion.
   hierarchy through native disclosure controls. CSV `Notes` values remain
   first-class metadata; all hierarchy disclosures must be closed on fresh
   load, and reserved prefixes must not disappear. A reserved allocation is an
-  expandable summary only when it represents multiple exact prefixes; a
-  singleton is rendered as a static leaf. Historical design logic is
+  expandable summary only when it represents multiple exact prefixes; singleton
+  leaves sharing a direct parent render together in a responsive card grid.
+  Historical design logic is
   explicitly non-Pages reference material. The public page must keep
   page-level width bounded at common phone, tablet, desktop, and wide-display
   viewports.
