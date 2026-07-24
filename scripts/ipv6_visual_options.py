@@ -239,15 +239,7 @@ def reserved_group_details(group: list[dict]) -> str:
         return ""
     first = group[0]
     if len(group) == 1:
-        label = label_for(first) or "Reserved"
-        note = notes_for(first) or "Reserved"
-        leaf = {**first, "label": label, "child_count": 0}
-        return (
-            '<div class="child-item reserved-leaf" data-reserved-leaf>'
-            f'{prefix_chip(leaf, small=True)}'
-            f'<p class="child-note">{html_escape(note)}</p>'
-            '</div>'
-        )
+        return reserved_singleton_leaf(first)
     last = group[-1]
     length = int(first.get("prefix_length") or 0)
     label = label_for(first) or "Reserved"
@@ -265,6 +257,31 @@ def reserved_group_details(group: list[dict]) -> str:
         '</summary>'
         f'<div class="child-preview reserved-items">{exact}</div>'
         '</details>'
+    )
+
+
+def reserved_singleton_leaf(node: dict) -> str:
+    label = label_for(node) or "Reserved"
+    note = notes_for(node) or "Reserved"
+    leaf = {**node, "label": label, "child_count": 0}
+    return (
+        '<div class="child-item reserved-leaf" data-reserved-leaf>'
+        f'{prefix_chip(leaf, small=True)}'
+        f'<p class="child-note">{html_escape(note)}</p>'
+        '</div>'
+    )
+
+
+def reserved_singleton_grid(groups: list[list[dict]], parent: dict) -> str:
+    leaves = [group[0] for group in groups if len(group) == 1]
+    if not leaves:
+        return ""
+    exact = "".join(reserved_singleton_leaf(leaf) for leaf in leaves)
+    return (
+        '<div class="child-preview reserved-singleton-grid" data-reserved-singleton-grid '
+        f'data-reserved-singleton-parent="{html_escape(node_key(parent))}">'
+        f'{exact}'
+        '</div>'
     )
 
 
@@ -879,10 +896,14 @@ def purpose_map_section(nodes: list[dict]) -> str:
 
 
 def full_hierarchy_section(tree: dict) -> str:
-    def render_children(children: list[dict], depth: int) -> str:
+    def render_children(parent: dict, depth: int) -> str:
+        children = parent.get("children", [])
         active_children, reserved_groups = grouped_reserved_children(children)
+        singleton_groups = [group for group in reserved_groups if len(group) == 1]
+        multi_prefix_groups = [group for group in reserved_groups if len(group) > 1]
         rendered = [render_node(child, depth) for child in active_children]
-        rendered.extend(reserved_group_details(group) for group in reserved_groups)
+        rendered.append(reserved_singleton_grid(singleton_groups, parent))
+        rendered.extend(reserved_group_details(group) for group in multi_prefix_groups)
         return "".join(rendered)
 
     def render_node(node: dict, depth: int) -> str:
@@ -893,7 +914,7 @@ def full_hierarchy_section(tree: dict) -> str:
         return (
             f'<details class="tree-node final-tree-node {cat}{leaf_class}" id="{prefix_anchor_id(node)}-tree">'
             f'<summary>{prefix_chip(node_with_count, small=True)}{notes_html(node, "tree-note")}</summary>'
-            f'{render_children(children, depth + 1)}'
+            f'{render_children(node, depth + 1)}'
             '</details>'
         )
 
@@ -1045,7 +1066,8 @@ def option_css() -> str:
   gap: .55rem;
   min-width: 0;
 }
-.child-preview {
+.child-preview,
+.reserved-singleton-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
   gap: .5rem;

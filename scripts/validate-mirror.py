@@ -78,6 +78,7 @@ FINAL_VISUAL_CSS_MARKERS = (
     ".reserved-group > summary::before",
     ".tree-node[open] > summary::before",
     ".reserved-group[open] > summary::before",
+    ".reserved-singleton-grid",
 )
 FINAL_VISUAL_FORBIDDEN_SCRIPT_MARKERS = (
     "data-graph-data",
@@ -188,15 +189,15 @@ def validate_collapsed_hierarchy_details(visual_model_html: str, path: str, erro
             errors.append(f"{path}: hierarchy detail `{identifier}` must not carry an open attribute")
 
 
-def expected_reserved_singleton_prefixes(errors: list[str]) -> set[str] | None:
-    """Return exact reserved prefixes that should render as static leaves."""
+def expected_reserved_singletons(errors: list[str]) -> dict[str, str] | None:
+    """Return static reserved leaves mapped to their immediate parent prefix."""
     try:
         tree = load_json(AS141253_HIERARCHY_PATH)
     except Exception as exc:
         errors.append(f"could not load AS141253 hierarchy for reserved-leaf validation: {exc}")
         return None
 
-    singletons: set[str] = set()
+    singletons: dict[str, str] = {}
 
     def is_reserved(node: dict) -> bool:
         text = " ".join(str(node.get(key) or "") for key in ["label", "notes", "source_sheet"]).lower()
@@ -215,7 +216,7 @@ def expected_reserved_singleton_prefixes(errors: list[str]) -> set[str] | None:
             visit(child)
         for group in groups.values():
             if len(group) == 1 and group[0].get("prefix"):
-                singletons.add(str(group[0]["prefix"]))
+                singletons[str(group[0]["prefix"])] = str(node.get("prefix") or "")
 
     if not isinstance(tree, dict):
         errors.append("AS141253 hierarchy must be a JSON object for reserved-leaf validation")
@@ -231,6 +232,23 @@ def validate_reserved_group_shapes(document, path: str, errors: list[str]) -> No
         "]"
     )
     for group in reserved_groups:
+        identifier = group.get("id") or group.get("class") or "reserved-group"
+        if group.get("data-reserved-group") is None or not any(
+            token == "reserved-group" for token in (group.get("class") or "").split()
+        ):
+            errors.append(f"{path}: {identifier} must expose both reserved-group class and data attribute")
+        if "open" in group.attrib:
+            errors.append(f"{path}: {identifier} must not carry an open attribute")
+        summaries = group.xpath("./summary")
+        reserved_items = group.xpath(
+            "./div["
+            "contains(concat(' ', normalize-space(@class), ' '), ' reserved-items ')"
+            "]"
+        )
+        if len(summaries) != 1 or len(reserved_items) != 1:
+            errors.append(
+                f"{path}: {identifier} must contain exactly one direct summary and reserved-items container"
+            )
         exact_cards = group.xpath(
             "./div["
             "contains(concat(' ', normalize-space(@class), ' '), ' reserved-items ')"
@@ -239,11 +257,14 @@ def validate_reserved_group_shapes(document, path: str, errors: list[str]) -> No
             "]"
         )
         if len(exact_cards) < 2:
-            identifier = group.get("id") or group.get("class") or "reserved-group"
             errors.append(
                 f"{path}: {identifier} must contain at least 2 exact reserved prefix cards; found {len(exact_cards)}"
             )
+        if len(reserved_items) == 1 and len(reserved_items[0].getchildren()) != len(exact_cards):
+            errors.append(f"{path}: {identifier} reserved-items must contain only direct exact prefix cards")
         for card in exact_cards:
+            if card.get("data-reserved-leaf") is not None or "reserved-leaf" in (card.get("class") or "").split():
+                errors.append(f"{path}: {identifier} multi-prefix group must not contain a static reserved leaf")
             chips = card.xpath(
                 ".//*["
                 "contains(concat(' ', normalize-space(@class), ' '), ' prefix-chip ')"
@@ -254,6 +275,49 @@ def validate_reserved_group_shapes(document, path: str, errors: list[str]) -> No
                 errors.append(
                     f"{path}: reserved-group exact prefix card must contain exactly one prefix chip and code; found {len(chips)} chips and {len(prefixes)} codes"
                 )
+
+    singleton_grids = document.xpath(
+        "//*[@data-reserved-singleton-grid or "
+        "contains(concat(' ', normalize-space(@class), ' '), ' reserved-singleton-grid ')]"
+    )
+    expected_singletons = expected_reserved_singletons(errors)
+    for grid in singleton_grids:
+        identifier = grid.get("id") or grid.get("class") or "reserved-singleton-grid"
+        if grid.get("data-reserved-singleton-grid") is None or not any(
+            token == "reserved-singleton-grid" for token in (grid.get("class") or "").split()
+        ):
+            errors.append(f"{path}: {identifier} must expose both singleton-grid class and data attribute")
+        if grid.xpath(".//details | .//summary"):
+            errors.append(f"{path}: {identifier} must not contain a disclosure control")
+        direct_cards = grid.xpath(
+            "./div["
+            "contains(concat(' ', normalize-space(@class), ' '), ' child-item ')"
+            "]"
+        )
+        if not direct_cards:
+            errors.append(f"{path}: {identifier} must contain at least one direct reserved leaf card")
+        if len(grid.getchildren()) != len(direct_cards):
+            errors.append(f"{path}: {identifier} must contain only direct reserved leaf cards")
+        for card in direct_cards:
+            if card.get("data-reserved-leaf") is None or "reserved-leaf" not in (card.get("class") or "").split():
+                errors.append(f"{path}: {identifier} direct cards must expose reserved-leaf class and data attribute")
+        if expected_singletons is not None:
+            prefixes = {"".join(code.itertext()).strip() for card in direct_cards for code in card.xpath(".//code")}
+            parent_prefixes = {expected_singletons.get(prefix) for prefix in prefixes}
+            if len(parent_prefixes) != 1 or None in parent_prefixes:
+                errors.append(f"{path}: {identifier} must contain singleton leaves from exactly one hierarchy parent")
+            else:
+                parent_prefix = parent_prefixes.pop()
+                expected_tree_id = f"prefix-{re.sub(r'[^a-z0-9]+', '-', parent_prefix.lower()).strip('-') or 'root'}-tree"
+                if grid.get("data-reserved-singleton-parent") != parent_prefix:
+                    errors.append(
+                        f"{path}: {identifier} parent data must be {parent_prefix!r}"
+                    )
+                parent = grid.getparent()
+                if parent is None or parent.tag != "details" or parent.get("id") != expected_tree_id:
+                    errors.append(
+                        f"{path}: {identifier} must be a direct child of hierarchy parent {expected_tree_id!r}"
+                    )
 
     reserved_leaves = document.xpath(
         "//*[@data-reserved-leaf or "
@@ -272,6 +336,16 @@ def validate_reserved_group_shapes(document, path: str, errors: list[str]) -> No
             "ancestor::details[contains(concat(' ', normalize-space(@class), ' '), ' reserved-group ')]"
         ):
             errors.append(f"{path}: {identifier} must not be nested inside a reserved-group disclosure")
+        singleton_ancestors = leaf.xpath(
+            "ancestor::*["
+            "contains(concat(' ', normalize-space(@class), ' '), ' reserved-singleton-grid ') or "
+            "@data-reserved-singleton-grid"
+            "]"
+        )
+        if len(singleton_ancestors) != 1:
+            errors.append(f"{path}: {identifier} must belong to exactly one reserved-singleton-grid")
+        elif leaf.getparent() is not singleton_ancestors[0]:
+            errors.append(f"{path}: {identifier} must be a direct child of its reserved-singleton-grid")
         chips = leaf.xpath(
             ".//*["
             "contains(concat(' ', normalize-space(@class), ' '), ' prefix-chip ')"
@@ -285,11 +359,21 @@ def validate_reserved_group_shapes(document, path: str, errors: list[str]) -> No
             continue
         rendered_singletons.add("".join(prefixes[0].itertext()).strip())
 
-    expected_singletons = expected_reserved_singleton_prefixes(errors)
-    if expected_singletons is not None and rendered_singletons != expected_singletons:
+    expected_prefixes = set(expected_singletons or {})
+    if expected_singletons is not None and rendered_singletons != expected_prefixes:
         errors.append(
-            f"{path}: reserved static leaves do not match the hierarchy; expected {sorted(expected_singletons)}, found {sorted(rendered_singletons)}"
+            f"{path}: reserved static leaves do not match the hierarchy; expected {sorted(expected_prefixes)}, found {sorted(rendered_singletons)}"
         )
+    if expected_singletons is not None:
+        grid_prefixes = {
+            "".join(code.itertext()).strip()
+            for grid in singleton_grids
+            for code in grid.xpath("./div[contains(concat(' ', normalize-space(@class), ' '), ' reserved-leaf ')]//code")
+        }
+        if grid_prefixes != expected_prefixes:
+            errors.append(
+                f"{path}: reserved singleton grids do not match the hierarchy; expected {sorted(expected_prefixes)}, found {sorted(grid_prefixes)}"
+            )
 
 
 def validate_final_visual_html(visual_model_html: str, path: str, errors: list[str]) -> None:

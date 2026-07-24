@@ -279,9 +279,10 @@ renders the complete containment tree with native HTML `details`/`summary`
 controls. Every hierarchy disclosure is closed on fresh load: generated
 hierarchy `details` elements must not carry `open`. CSV `Notes` values remain
 visible at each node. A reserved group with multiple exact prefixes is
-collapsed into a count/range summary and expands to those exact prefixes; a
-single reserved allocation is rendered as a static leaf without an expansion
-control. This preserves audit fidelity without empty disclosures. The page has
+collapsed into a count/range summary and expands to those exact prefixes; singleton
+reserved allocations sharing a direct parent render as static cards in one responsive grid,
+after allocated child branches and before those multi-prefix ranges. This preserves audit
+fidelity without empty disclosures or excessive vertical scrolling. The page has
 one small
 inline progressive-enhancement script: the explicit `Expand all` and
 `Collapse all` buttons start hidden, are revealed only when that local script

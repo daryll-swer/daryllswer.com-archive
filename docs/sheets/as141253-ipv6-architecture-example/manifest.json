@@ -336,11 +336,11 @@
   ],
   "title": "AS141253's IPv6 Architecture Example - Daryll Swer - Google Drive",
   "visual_model": {
-    "bytes": 63771,
+    "bytes": 63935,
     "content_type": "text/html; charset=utf-8",
     "id": "visual-model",
     "path": "data/sheets/as141253-ipv6-architecture-example/visual.html",
-    "sha256": "31bb919ff180c36ce12ace7eb820b57b90ae133741e5aff994698e1041e07559",
+    "sha256": "0d7583a2f4c9c9dacd2f95b0bdc9ab38596060a26cc6e8eb779b1fc5dccad90c",
     "summary": "Sole public CSV-derived full IPv6 prefix hierarchy model for AS141253.",
     "title": "AS141253 IPv6 Visual Model"
   },
