@@ -280,7 +280,17 @@ controls. Every hierarchy disclosure is closed on fresh load: generated
 hierarchy `details` elements must not carry `open`. CSV `Notes` values remain
 visible at each node. Reserved siblings are collapsed into count/range
 summaries by default and expand to their exact prefixes, preserving audit
-fidelity without making the default tree unreadable.
+fidelity without making the default tree unreadable. The page has one small
+inline progressive-enhancement script: the explicit `Expand all` and
+`Collapse all` buttons start hidden, are revealed only when that local script
+runs, and do not open anything at load. `Expand all` opens non-leaf hierarchy
+nodes and reserved groups; `Collapse all` closes those same disclosures.
+Native per-disclosure controls remain the functional path without JavaScript.
+No external script, network request, graph logic, or retired visual-model
+JavaScript is emitted for this page; validation rejects any additional or
+external script. The final hierarchy section suppresses the generic divider
+and places its toolbar within the hierarchy frame to avoid a duplicate top
+rule and surplus content-to-footer spacing.
 
 Historical design material is retained outside `docs/` for maintainers and AI
 agents only. The render pipeline excludes it, and validation rejects both

@@ -43,6 +43,10 @@ PAGES_FAVICON_MANIFEST_PATH = "assets/brand/manifest.json"
 PAGES_FAVICON_PROVENANCE_PATH = "assets/brand/ASSET_PROVENANCE.md"
 PAGES_FAVICON_OUTPUT_PATH = "docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png"
 PAGES_FAVICON_SIZE = 512
+README_BRAND_MARKDOWN_LINKS = tuple(
+    f"[{path}]({path})"
+    for path in [README_BRAND_ASSET_PATH, PAGES_FAVICON_SOURCE_PATH, PAGES_FAVICON_OUTPUT_PATH]
+)
 LEGACY_BRAND_PROVENANCE_PATHS = (
     "assets/readme/" + "README.md",
     "assets/brand/" + "README.md",
@@ -60,6 +64,28 @@ REMOTE_REFERENCE_ANCHOR_PATTERN = re.compile(r"https://www\.daryllswer\.com/[^)\
 WORDPRESS_MEDIA_PATTERN = re.compile(r"https://www\.daryllswer\.com/wp-content/uploads/", re.I)
 GOOGLE_SHEET_PATTERN = re.compile(r"https://docs\.google\.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml", re.I)
 WORDPRESS_COLOUR_CLASS_RE = re.compile(r"^has-[a-z0-9-]+(?:color|background-color|border-color)$")
+FINAL_VISUAL_SCRIPT_MARKERS = (
+    "data-final-tree-section",
+    "data-final-tree-controls",
+    "data-final-tree-expand",
+    "data-final-tree-collapse",
+    "details.final-tree-node:not(.leaf), details.reserved-group",
+    "detail.open = true",
+    "detail.open = false",
+)
+FINAL_VISUAL_CSS_MARKERS = (
+    ".tree-node > summary::before",
+    ".reserved-group > summary::before",
+    ".tree-node[open] > summary::before",
+    ".reserved-group[open] > summary::before",
+)
+FINAL_VISUAL_FORBIDDEN_SCRIPT_MARKERS = (
+    "data-graph-data",
+    "initGraphSection",
+    "JSON.parse",
+    "data-dendrogram-section",
+    "interactive_js",
+)
 
 
 def now_iso() -> str:
@@ -159,6 +185,64 @@ def validate_collapsed_hierarchy_details(visual_model_html: str, path: str, erro
         if "open" in detail.attrib:
             identifier = detail.get("id") or detail.get("class") or "unknown"
             errors.append(f"{path}: hierarchy detail `{identifier}` must not carry an open attribute")
+
+
+def validate_final_visual_html(visual_model_html: str, path: str, errors: list[str]) -> None:
+    """Validate the native disclosure model and its one local enhancement script."""
+    try:
+        document = lxml.html.fromstring(visual_model_html)
+    except Exception as exc:
+        errors.append(f"{path}: could not inspect final visual: {exc}")
+        return
+
+    controls = document.xpath("//*[@data-final-tree-controls]")
+    if len(controls) != 1:
+        errors.append(f"{path}: final visual must contain exactly one progressive-enhancement control group")
+    else:
+        control_group = controls[0]
+        if "hidden" not in control_group.attrib:
+            errors.append(f"{path}: final visual controls must be hidden before enhancement")
+        if control_group.get("role") != "group" or control_group.get("aria-label") != "Full hierarchy controls":
+            errors.append(f"{path}: final visual controls must expose an accessible group label")
+    for attribute, label in [
+        ("data-final-tree-expand", "Expand all"),
+        ("data-final-tree-collapse", "Collapse all"),
+    ]:
+        buttons = document.xpath(f"//*[@{attribute}]")
+        if len(buttons) != 1:
+            errors.append(f"{path}: final visual must contain exactly one {label!r} control")
+            continue
+        button = buttons[0]
+        if button.tag != "button" or button.get("type") != "button":
+            errors.append(f"{path}: {label!r} control must be an explicit button")
+        if button.get("aria-controls") != "full-hierarchy-tree":
+            errors.append(f"{path}: {label!r} control must identify the final hierarchy")
+        if " ".join(button.itertext()).strip() != label:
+            errors.append(f"{path}: {label!r} control has unexpected accessible text")
+
+    scripts = document.xpath("//script")
+    if len(scripts) != 1:
+        errors.append(f"{path}: final visual must contain exactly one expected inline script")
+    else:
+        script = scripts[0]
+        if script.get("src"):
+            errors.append(f"{path}: final visual must not load an external script")
+        if script.get("data-final-tree-enhancement") is None:
+            errors.append(f"{path}: final visual script is missing its expected enhancement marker")
+        script_text = script.text or ""
+        for marker in FINAL_VISUAL_SCRIPT_MARKERS:
+            if marker not in script_text:
+                errors.append(f"{path}: final visual script is missing `{marker}`")
+        for marker in FINAL_VISUAL_FORBIDDEN_SCRIPT_MARKERS:
+            if marker in script_text:
+                errors.append(f"{path}: final visual script contains unrelated legacy marker `{marker}`")
+
+    for marker in FINAL_VISUAL_CSS_MARKERS:
+        if marker not in visual_model_html:
+            errors.append(f"{path}: final visual is missing scoped disclosure marker rule `{marker}`")
+    if ".tree-node summary" in visual_model_html:
+        errors.append(f"{path}: final visual contains an unscoped tree summary selector")
+    validate_collapsed_hierarchy_details(visual_model_html, path, errors)
 
 
 def validate_post(post_item: dict, errors: list[str], warnings: list[str], archived_keys: set[str]) -> None:
@@ -302,9 +386,7 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
         ]:
             if marker in visual_model_html:
                 errors.append(f"spreadsheet full-hierarchy visual model exposes legacy marker `{marker}`")
-        if "<script" in visual_model_html:
-            errors.append("spreadsheet full-hierarchy visual model should not require JavaScript")
-        validate_collapsed_hierarchy_details(visual_model_html, rel(visual_model_path), errors)
+        validate_final_visual_html(visual_model_html, rel(visual_model_path), errors)
 
     if "visual_options" in manifest:
         errors.append("spreadsheet manifest still exposes retired visual_options metadata")
@@ -627,9 +709,7 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
         if not re.search(r"© 2026 Daryll Swer\. All\s+rights reserved\.", readme):
             errors.append("README does not state the proprietary logo copyright notice")
         for marker in [
-            README_BRAND_ASSET_PATH,
-            PAGES_FAVICON_SOURCE_PATH,
-            PAGES_FAVICON_OUTPUT_PATH,
+            *README_BRAND_MARKDOWN_LINKS,
             "ASSET_PROVENANCE.md",
             "provenance and byte-preservation evidence only",
             "not a licence",
@@ -815,9 +895,7 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
                     errors.append(f"GitHub Pages AS141253 visual model page exposes legacy marker `{marker}`")
             if "../../../assets/fonts/" in visual_model_html or "/Users/" in visual_model_html or "file://" in visual_model_html:
                 errors.append("GitHub Pages AS141253 visual model page leaks a source font or local filesystem path")
-            if "<script" in visual_model_html:
-                errors.append("GitHub Pages AS141253 visual model page should not require JavaScript")
-            validate_collapsed_hierarchy_details(visual_model_html, rel(visual_model), errors)
+            validate_final_visual_html(visual_model_html, rel(visual_model), errors)
 
         legacy_pages = [
             "cidr-hierarchy.html",

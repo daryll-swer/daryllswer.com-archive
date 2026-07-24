@@ -6,8 +6,8 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete and deployed; proprietary brand asset provenance naming
-  refinement verified
+- Status: locally complete; AS141253 hierarchy controls and README asset-link
+  refinement pending publication
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-24
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -23,6 +23,13 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - Complete locally: the sole public AS141253 hierarchy visual has one
+    header divider only, no avoidable content-to-footer spacing, correct
+    reserved-prefix `+`/`-` disclosure markers, and progressive-enhancement
+    `Expand all` / `Collapse all` controls. The script neither opens
+    disclosures at load nor loads an external dependency, and native per-node
+    controls remain the fallback. The root README links each named proprietary
+    asset path directly to its repository file.
   - Complete: renamed the logo and favicon provenance records to
     `assets/readme/ASSET_PROVENANCE.md` and
     `assets/brand/ASSET_PROVENANCE.md`. Documentation now identifies
@@ -203,6 +210,12 @@
     2560 px widths with no page-level horizontal overflow, working reserved
     disclosures, and working SVG minimap anchors.
 - Last material update:
+  - 2026-07-24: completed local regeneration, validation, and browser QA for
+    the bounded AS141253 hierarchy UI refinement and README proprietary-asset
+    link improvement. All 78 disclosures load closed; normal and reserved
+    controls, bulk expansion/collapse, and no-overflow checks passed at 320,
+    390, 768, 1024, 1440, 1920, and 2560 px viewports. Pending commit, Pages
+    deployment, and live verification.
   - 2026-07-24: replaced ambiguous proprietary brand-asset README records with
     consistently named provenance records. The root README, licence map,
     controlling notice, architecture, validator, and generated validation

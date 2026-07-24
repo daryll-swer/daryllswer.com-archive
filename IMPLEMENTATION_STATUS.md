@@ -5,9 +5,9 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: proprietary README logo provenance naming
-  refinement
-- Status: complete and deployed; public README links verified
+- Current sprint / workstream: AS141253 hierarchy controls and README asset
+  links
+- Status: locally complete; pending publication
 - Last updated: 2026-07-24
 - Implementer role/model/thread: delegated `implementer-luna` for the bounded
   generator and validation change; current Codex Desktop integrated and tested
@@ -87,6 +87,17 @@
     Commit `a401ecd` is deployed by GitHub Pages run `30081615905`; the public
     GitHub README correctly links to both the new logo provenance record and
     controlling notice.
+- AS141253 hierarchy controls and README asset links:
+  - Status: complete locally; pending publication
+  - Notes: `visual.html` retains all 78 native disclosures closed on fresh
+    load and adds an audited local enhancement for explicit bulk expansion and
+    collapse. Reserved-prefix markers now share the ordinary hierarchy
+    open/closed state signal. The redundant section divider and avoidable
+    content-to-footer gap are removed. The root README links the named logo,
+    favicon source, and generated favicon derivative directly to their
+    repository paths. `py_compile`, diff validation, mirror validation, and
+    public-safety scan passed; local browser QA passed at 320, 390, 768, 1024,
+    1440, 1920, and 2560 px without page-level horizontal overflow.
 - GitHub Pages proprietary favicon:
   - Status: complete and deployed
   - Notes: Owner-provided `01_DS_Favicon_Dark_Mode.png` remains byte-exact in

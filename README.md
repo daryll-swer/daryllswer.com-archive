@@ -33,9 +33,9 @@ metadata, original media files, and an asset manifest.
 Repository scripts/tooling are MIT licensed. Mirrored blog content follows
 `CC-BY-NC-SA-4.0`, matching daryllswer.com unless per-file metadata says
 otherwise. The README header logo
-(`assets/readme/13_DS_Logo_Dark_Mode_SEO.png`) and the GitHub Pages favicon
-source (`assets/brand/01_DS_Favicon_Dark_Mode.png`) and generated derivative
-(`docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png`) are proprietary brand
+([assets/readme/13_DS_Logo_Dark_Mode_SEO.png](assets/readme/13_DS_Logo_Dark_Mode_SEO.png)) and the GitHub Pages favicon
+source ([assets/brand/01_DS_Favicon_Dark_Mode.png](assets/brand/01_DS_Favicon_Dark_Mode.png)) and generated derivative
+([docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png](docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png)) are proprietary brand
 assets: `© 2026 Daryll Swer. All rights reserved.` They are excluded from both
 the MIT and
 `CC-BY-NC-SA-4.0` licences. `assets/readme/ASSET_PROVENANCE.md` is provenance
