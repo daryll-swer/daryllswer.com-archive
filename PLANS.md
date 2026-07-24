@@ -197,7 +197,9 @@
     the no-`open` invariant. Local browser QA passed at 320, 390, 768, 1024,
     1440, 1920, and 2560 CSS px with no page-level overflow or console errors.
     The cleanup audit removed no tracked files; only proven ignored local
-    transients were moved to the macOS Trash.
+    transients were moved to the macOS Trash. Commit `dabcbda` is deployed by
+    GitHub Pages run `30080507753`; the live `visual.html` returned HTTP 200
+    and exposed zero hierarchy `details[open]` elements.
 - Next pickup action:
   - No implementation pickup is pending.
 - Open blockers or risks:

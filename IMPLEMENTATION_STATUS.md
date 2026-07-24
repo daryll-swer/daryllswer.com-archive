@@ -7,7 +7,7 @@
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: AS141253 hierarchy production hardening and
   evidence-based repository cleanup
-- Status: complete locally; awaiting this change's GitHub Pages deployment
+- Status: complete and deployed; live AS141253 visual verified
 - Last updated: 2026-07-24
 - Implementer role/model/thread: delegated `implementer-luna` for the bounded
   generator and validation change; current Codex Desktop integrated and tested
@@ -222,7 +222,7 @@
     `visual.html`; no legacy visual HTML is copied under `docs/`. Commit
     `f94d8b3` is deployed by GitHub Pages run `29081542020`.
 - AS141253 collapsed-first-open production hardening:
-  - Status: complete locally; awaiting deployment
+  - Status: complete and deployed
   - Notes: `scripts/ipv6_visual_options.py` now emits every full-hierarchy
     `details` element without `open`; native `details`/`summary` controls keep
     each normal and reserved branch individually expandable. Validation now
@@ -231,7 +231,9 @@
     removable tracked files or dead active scripts. Proven ignored local
     caches, preview output, bytecode, and Finder metadata were moved to the
     macOS Trash; audit/source/provenance/licence/brand/legacy reference files
-    remain intentionally retained.
+    remain intentionally retained. Commit `dabcbda` is deployed by GitHub
+    Pages run `30080507753`; live `visual.html` returned HTTP 200 with zero
+    hierarchy `details[open]` elements.
 
 ## Execution Log
 
@@ -251,7 +253,11 @@
   - Cleanup: no tracked path was removed. Removed ignored local transient
     paths were moved to the macOS Trash after reference/CI/Makefile checks;
     no repository history or remote state was changed.
-  - Result: local pass; deployment verification pending.
+  - Deployment/live verification: commit `dabcbda` was pushed to `main`.
+    GitHub Pages run `30080507753` completed successfully. The live
+    `visual.html` returned HTTP 200 with its expected AS141253 marker and zero
+    hierarchy `details[open]` elements.
+  - Result: pass.
 - 2026-07-15:
   - Action: Replaced the generated GitHub Pages `DS` text badge with the
     owner-provided official favicon and emitted browser favicon metadata.
