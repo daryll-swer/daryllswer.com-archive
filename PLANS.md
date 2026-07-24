@@ -6,8 +6,8 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete and deployed; AS141253 hierarchy controls and README
-  asset-link refinement
+- Status: locally complete; AS141253 reserved-prefix disclosure refinement
+  pending publication
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-24
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -23,6 +23,11 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - Complete locally: 15 one-prefix reserved allocations render as static leaf
+    cards, not empty native disclosures. Only the 13 reserved summaries that
+    represent multiple exact prefixes remain expandable. Generator,
+    validation, generated Pages output, documentation, and responsive browser
+    QA are complete; commit, deployment, and live verification are pending.
   - Complete locally: the sole public AS141253 hierarchy visual has one
     header divider only, no avoidable content-to-footer spacing, correct
     reserved-prefix `+`/`-` disclosure markers, and progressive-enhancement
@@ -210,6 +215,14 @@
     2560 px widths with no page-level horizontal overflow, working reserved
     disclosures, and working SVG minimap anchors.
 - Last material update:
+  - 2026-07-24: began the AS141253 reserved-prefix disclosure refinement after
+    confirming that 15 singleton reserved groups are redundant disclosures and
+    13 multi-prefix groups remain useful expandable range summaries.
+  - 2026-07-24: completed local generation, validation, and browser QA for the
+    refinement. `Delhi-12` (`2400:d960:8b0::/44`) is a static leaf; all 13
+    multi-prefix reserved ranges retain exact expandable children. The page
+    remains closed on load with no overflow at 320, 390, 768, 1024, 1440,
+    1920, and 2560 px. Pending commit, Pages deployment, and live check.
   - 2026-07-24: completed local regeneration, validation, and browser QA for
     the bounded AS141253 hierarchy UI refinement and README proprietary-asset
     link improvement. All 78 disclosures load closed; normal and reserved

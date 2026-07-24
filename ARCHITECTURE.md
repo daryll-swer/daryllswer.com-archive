@@ -87,11 +87,14 @@ flowchart LR
   human-facing AS141253 IPv6 visual model. It renders the complete
   CSV-derived containment hierarchy with native `details`/`summary` controls.
   Every hierarchy disclosure is closed on fresh load: generated hierarchy
-  `details` elements must not carry `open`. Reserved siblings are collapsed
-  into count/range summaries, but retain exact expandable prefix details. A
+  `details` elements must not carry `open`. Reserved sibling groups with two
+  or more exact prefixes are collapsed into count/range summaries; a single
+  reserved allocation is a static leaf with no disclosure control. Both retain
+  the exact prefix details. A
   single small inline progressive-enhancement script reveals initially hidden
   `Expand all` and `Collapse all` buttons; it does not open disclosures at
-  load and only toggles non-leaf hierarchy nodes and reserved groups. Native
+  load and only toggles non-leaf hierarchy nodes and multi-prefix reserved
+  groups. Native
   disclosure controls remain usable without JavaScript, and no external or
   unrelated legacy script is emitted. The final hierarchy section suppresses
   the generic section divider, and its toolbar sits inside the hierarchy frame
@@ -204,8 +207,9 @@ surface must not cause repeated workflow failures or archive deletion.
   hand-authored. `visual.html` is the only reader path and renders the full
   hierarchy through native disclosure controls. CSV `Notes` values remain
   first-class metadata; all hierarchy disclosures must be closed on fresh
-  load, and reserved prefixes must not disappear. Reserved prefixes are
-  collapsed only as expandable summaries. Historical design logic is
+  load, and reserved prefixes must not disappear. A reserved allocation is an
+  expandable summary only when it represents multiple exact prefixes; a
+  singleton is rendered as a static leaf. Historical design logic is
   explicitly non-Pages reference material. The public page must keep
   page-level width bounded at common phone, tablet, desktop, and wide-display
   viewports.

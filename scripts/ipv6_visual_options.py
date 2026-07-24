@@ -238,6 +238,16 @@ def reserved_group_details(group: list[dict]) -> str:
     if not group:
         return ""
     first = group[0]
+    if len(group) == 1:
+        label = label_for(first) or "Reserved"
+        note = notes_for(first) or "Reserved"
+        leaf = {**first, "label": label, "child_count": 0}
+        return (
+            '<div class="child-item reserved-leaf" data-reserved-leaf>'
+            f'{prefix_chip(leaf, small=True)}'
+            f'<p class="child-note">{html_escape(note)}</p>'
+            '</div>'
+        )
     last = group[-1]
     length = int(first.get("prefix_length") or 0)
     label = label_for(first) or "Reserved"
