@@ -19,7 +19,8 @@
         "original_article_url",
         "publisher",
         "scope",
-        "media_rights"
+        "media_rights",
+        "external_fallback"
       ],
       "properties": {
         "rights_holder": {"type": "string", "minLength": 1},
@@ -28,7 +29,8 @@
         "original_article_url": {"type": "string", "format": "uri"},
         "publisher": {"type": "string", "minLength": 1},
         "scope": {"type": "string", "minLength": 1},
-        "media_rights": {"type": "string", "minLength": 1}
+        "media_rights": {"type": "string", "minLength": 1},
+        "external_fallback": {"type": "boolean"}
       }
     }
   }

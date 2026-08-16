@@ -50,6 +50,13 @@
   notice and matching metadata without inferring DS/SN SEO directives for
   GitHub Pages. A verified retirement must remove any matching registry entry
   transactionally with its current-tree post bundle.
+- Archive SEO is source-first. In `source_primary`, only the archive homepage
+  is indexable; reader routes use archive-local canonical/Open Graph metadata
+  plus `noindex, follow`. `archive_discovery` is a non-reverting fallback
+  entered only after DS reaches `frozen_archive`. A registry-marked external
+  original must independently reach `frozen_source` before its repost can be
+  indexable. Never inherit DS/SN robots, canonical, or Open Graph metadata;
+  use `docs/SEO_RECOVERY.md` for any manual recovery.
 
 ## Public Repository Safety
 
@@ -72,6 +79,7 @@ make render-site
 make validate
 make scan-secrets
 make check-drift
+make check-rights-sources
 make render-preview
 ```
 

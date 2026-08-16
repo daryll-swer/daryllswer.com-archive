@@ -410,6 +410,13 @@ class CanonicalRetirementTests(unittest.TestCase):
             "confirmation_count": 2,
         }
         status["retirement_candidates"] = [candidate]
+        status["external_sources"] = {
+            "5324": {
+                "post_id": 5324,
+                "url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/",
+                "state": "healthy",
+            }
+        }
         (self.root / "archive-status.json").write_text(json.dumps(status), encoding="utf-8")
         original_manifest = (self.root / "archive-manifest.json").read_bytes()
         plan = {
@@ -430,6 +437,8 @@ class CanonicalRetirementTests(unittest.TestCase):
         }
         RECONCILE.retire_one(plan, json.loads(original_manifest), json.loads((self.root / "archive-status.json").read_text()))
         self.assertEqual(json.loads((self.root / "content" / "rights-registry.json").read_text()), {})
+        updated_status = json.loads((self.root / "archive-status.json").read_text())
+        self.assertNotIn("5324", updated_status["external_sources"])
 
     def test_reconcile_retirement_rolls_back_rights_registry_when_commit_fails(self):
         post = {**summary(5324, "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/", "bgp"), "bundle_path": "content/posts/2026-06-04-bgp"}

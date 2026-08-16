@@ -160,11 +160,14 @@ def retire_one(plan: dict, manifest: dict, status: dict) -> None:
     updated_manifest["posts"] = [post for post in posts if post.get("id") != item.get("id")]
     updated_manifest["post_count"] = len(updated_manifest["posts"])
     updated_manifest["generated_at"] = now_iso()
-    updated_status = dict(status)
+    updated_status = json.loads(json.dumps(status))
     updated_status["retirement_candidates"] = []
     updated_status["last_drift_hash"] = None
     updated_status["last_drift_detected_at"] = None
     updated_status["updated_at"] = updated_manifest["generated_at"]
+    external_sources = updated_status.get("external_sources")
+    if isinstance(external_sources, dict):
+        external_sources.pop(str(item["id"]), None)
 
     manifest_path = ROOT / "archive-manifest.json"
     status_path = ROOT / "archive-status.json"

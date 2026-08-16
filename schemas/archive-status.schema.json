@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daryllswer.com/schemas/archive-status.schema.json",
+  "type": "object",
+  "required": ["version", "state", "frozen", "seo_state", "policy", "external_sources"],
+  "properties": {
+    "version": {"type": "integer", "minimum": 2},
+    "canonical_site": {"type": "string", "format": "uri"},
+    "state": {"enum": ["healthy", "degraded", "canonical_unavailable", "frozen_archive"]},
+    "frozen": {"type": "boolean"},
+    "seo_state": {"enum": ["source_primary", "archive_discovery"]},
+    "seo_activated_at": {"type": ["string", "null"]},
+    "policy": {
+      "type": "object",
+      "required": ["frozen_archive_noops_without_network"],
+      "properties": {
+        "frozen_archive_noops_without_network": {"const": true},
+        "external_source_interval_days": {"type": "integer", "minimum": 1},
+        "external_source_unavailable_after_consecutive_failures": {"type": "integer", "minimum": 1},
+        "external_source_frozen_after_consecutive_failures": {"type": "integer", "minimum": 1},
+        "external_source_frozen_minimum_failure_window_days": {"type": "integer", "minimum": 1}
+      }
+    },
+    "external_sources": {
+      "type": "object",
+      "propertyNames": {"pattern": "^[1-9][0-9]*$"},
+      "additionalProperties": {
+        "type": "object",
+        "required": ["post_id", "url", "state", "promotion_blocked", "consecutive_failures"],
+        "properties": {
+          "post_id": {"type": "integer", "minimum": 1},
+          "url": {"type": "string", "format": "uri"},
+          "state": {"enum": ["healthy", "degraded", "source_unavailable", "frozen_source"]},
+          "frozen": {"type": "boolean"},
+          "promotion_blocked": {"type": "boolean"},
+          "consecutive_failures": {"type": "integer", "minimum": 0},
+          "last_checked_at": {"type": ["string", "null"]},
+          "last_success_at": {"type": ["string", "null"]},
+          "first_failure_at": {"type": ["string", "null"]},
+          "last_failure_at": {"type": ["string", "null"]},
+          "last_observation": {"type": ["object", "null"]}
+        }
+      }
+    }
+  }
+}

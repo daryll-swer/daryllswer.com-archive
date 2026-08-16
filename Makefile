@@ -3,7 +3,7 @@
 
 PYTHON ?= python3
 
-.PHONY: sync validate scan-secrets render-preview prepare-brand-favicon render-site check-drift clean
+.PHONY: sync validate scan-secrets render-preview prepare-brand-favicon render-site check-drift check-rights-sources clean
 
 sync:
 	$(PYTHON) scripts/sync-wordpress-posts.py
@@ -26,6 +26,10 @@ render-site: prepare-brand-favicon
 
 check-drift:
 	$(PYTHON) scripts/check-canonical-drift.py
+	$(PYTHON) scripts/external_source_monitor.py
+
+check-rights-sources:
+	$(PYTHON) scripts/external_source_monitor.py
 
 clean:
 	rm -rf .preview .cache .tmp __pycache__ scripts/__pycache__

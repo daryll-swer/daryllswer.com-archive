@@ -256,6 +256,8 @@ def render_workbook_page(
     home_href: str | None = None,
     repo_href: str | None = None,
     font_asset_prefix: str | None = None,
+    canonical_url: str | None = None,
+    robots: str | None = "noindex,follow",
 ) -> str:
     tabs = manifest.get("tabs", [])
     inputs = []
@@ -307,12 +309,19 @@ def render_workbook_page(
         actions.append(f'<a href="{html_escape(repo_href)}">Repository</a>')
 
     title = manifest.get("title") or "AS141253 IPv6 Architecture Example"
+    seo = ""
+    if canonical_url:
+        seo = (
+            (f'\n  <meta name="robots" content="{html_escape(robots)}">' if robots else "")
+            + f'\n  <link rel="canonical" href="{html_escape(canonical_url)}">'
+            f'\n  <meta property="og:url" content="{html_escape(canonical_url)}">'
+        )
     return f"""<!doctype html>
 <html lang="en-IN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{html_escape(title)}</title>
+  <title>{html_escape(title)}</title>{seo}
   <style>{workbook_css(len(tabs), font_asset_prefix)}</style>
 </head>
 <body>

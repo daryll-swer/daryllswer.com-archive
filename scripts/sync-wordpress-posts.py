@@ -49,6 +49,7 @@ RIGHTS_REQUIRED_FIELDS = (
     "publisher",
     "scope",
     "media_rights",
+    "external_fallback",
 )
 OPERATIONAL_CTA_LABEL = "site_operational_cta"
 OPERATIONAL_TEXT_MARKERS = (
@@ -144,6 +145,8 @@ def validate_rights_record(post_id: str, record: object) -> None:
             raise ValueError(f"rights registry entry {post_id} field {key} must be a non-empty string")
     if not isinstance(record["default_ds_cc_applies"], bool):
         raise ValueError(f"rights registry entry {post_id} field default_ds_cc_applies must be boolean")
+    if not isinstance(record["external_fallback"], bool):
+        raise ValueError(f"rights registry entry {post_id} field external_fallback must be boolean")
     parsed = urllib.parse.urlsplit(record["original_article_url"])
     if parsed.scheme not in {"http", "https"} or not parsed.netloc:
         raise ValueError(f"rights registry entry {post_id} original_article_url is not an absolute URL")

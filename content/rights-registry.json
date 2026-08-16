@@ -6,6 +6,7 @@
     "publisher": "Swer Networks",
     "rights_holder": "Swer Networks",
     "rights_status": "proprietary/all-rights-reserved",
-    "scope": "article-text"
+    "scope": "article-text",
+    "external_fallback": true
   }
 }

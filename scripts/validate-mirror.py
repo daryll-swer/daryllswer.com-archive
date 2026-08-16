@@ -33,6 +33,7 @@ POST_SITEMAP = "https://www.daryllswer.com/post-sitemap.xml"
 PAGES_HOME_TITLE = "daryllswer.com – Archive"
 RIGHTS_REGISTRY_PATH = ROOT / "content" / "rights-registry.json"
 RIGHTS_SCHEMA_PATH = ROOT / "schemas" / "rights-registry.schema.json"
+ARCHIVE_STATUS_SCHEMA_PATH = ROOT / "schemas" / "archive-status.schema.json"
 RIGHTS_NOTICE_PATH = ROOT / "LICENSES" / "SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt"
 RIGHTS_REQUIRED_FIELDS = (
     "rights_holder",
@@ -42,6 +43,7 @@ RIGHTS_REQUIRED_FIELDS = (
     "publisher",
     "scope",
     "media_rights",
+    "external_fallback",
 )
 REQUIRED_ARCHIVED_RIGHTS_ID = "5324"
 # WordPress REST is authoritative for archived posts. This exact public article
@@ -53,6 +55,7 @@ DOCUMENTED_SOURCE_SITEMAP_EXCEPTIONS = {
     ),
 }
 PAGES_BASE_URL = "https://daryll-swer.github.io/daryllswer.com-archive/"
+GOOGLE_SITE_VERIFICATION = "xEHOYZuv2ksSHn7MsBoCv9bkRPlwSFgyGoMtcn6lQIY"
 LOCALISABLE_HOSTS = {"www.daryllswer.com", "daryllswer.com"}
 TEXT_FRAGMENT_PREFIX = ":~:text="
 README_BRAND_ASSET_PATH = "assets/readme/13_DS_Logo_Dark_Mode_SEO.png"
@@ -214,6 +217,9 @@ def validate_rights_record_shape(post_id: str, record: object, errors: list[str]
     if "default_ds_cc_applies" in record and not isinstance(record["default_ds_cc_applies"], bool):
         errors.append(f"{path}: `default_ds_cc_applies` must be boolean")
         valid = False
+    if "external_fallback" in record and not isinstance(record["external_fallback"], bool):
+        errors.append(f"{path}: `external_fallback` must be boolean")
+        valid = False
     if isinstance(record.get("original_article_url"), str):
         parsed = urllib.parse.urlsplit(record["original_article_url"])
         if parsed.scheme not in {"http", "https"} or not parsed.netloc:
@@ -276,7 +282,10 @@ def validate_rights_registry(archive: dict, errors: list[str]) -> dict[str, dict
         except Exception as exc:
             errors.append(f"{matches[0].get('slug', post_id)}: rights metadata parse failed: {exc}")
             continue
-        if metadata.get("rights") != record:
+        metadata_rights = metadata.get("rights")
+        legacy_record = dict(record)
+        legacy_record.pop("external_fallback", None)
+        if metadata_rights != record and metadata_rights != legacy_record:
             errors.append(f"{matches[0].get('slug', post_id)}: generated metadata.rights does not match its registry entry")
 
         if record.get("rights_status") != "proprietary/all-rights-reserved":
@@ -316,7 +325,7 @@ def validate_rights_registry(archive: dict, errors: list[str]) -> dict[str, dict
             errors.append(
                 f"{post.get('slug', post_id)}: generated metadata.rights has no matching registry entry"
             )
-        elif metadata.get("rights") != record:
+        elif metadata.get("rights") != record and metadata.get("rights") != {key: value for key, value in record.items() if key != "external_fallback"}:
             errors.append(
                 f"{post.get('slug', post_id)}: generated metadata.rights does not exactly match its registry entry"
             )
@@ -1275,7 +1284,16 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
     return {"readme_logo": asset, "pages_favicon": favicon}
 
 
-def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str], archived_keys: set[str]) -> dict | None:
+def validate_pages_site(
+    posts: list[dict],
+    errors: list[str],
+    warnings: list[str],
+    archived_keys: set[str],
+    registry: dict[str, dict] | None = None,
+    status: dict | None = None,
+) -> dict | None:
+    registry = registry or {}
+    status = status or {"seo_state": "source_primary"}
     site_index = ROOT / "docs" / "index.html"
     site_css = ROOT / "docs" / "assets" / "theme.css"
     site_js = ROOT / "docs" / "assets" / "archive.js"
@@ -1302,6 +1320,7 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
     if not sheet_page.exists():
         errors.append("GitHub Pages AS141253 workbook page missing")
     else:
+        reader_robots = None if status_seo_state(status) == "archive_discovery" else "noindex,follow"
         sheet_html = sheet_page.read_text(encoding="utf-8", errors="replace")
         if "sheet-tabs" not in sheet_html:
             errors.append("GitHub Pages AS141253 workbook page missing sheet tabs")
@@ -1325,6 +1344,10 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
             errors.append("GitHub Pages AS141253 visual model page missing")
         else:
             visual_model_html = visual_model.read_text(encoding="utf-8", errors="replace")
+            visual_route = PAGES_BASE_URL + "sheets/as141253-ipv6-architecture-example/visual.html"
+            validate_pages_canonical_url(visual_model, visual_route, errors)
+            validate_pages_open_graph_url(visual_model, visual_route, errors)
+            validate_pages_robots(visual_model, reader_robots, errors)
             for marker in [
                 "AS141253 IPv6 Visual Model",
                 "Full hierarchy",
@@ -1365,6 +1388,11 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
         if (sheet_page.parent / "legacy-visual-models").exists():
             errors.append("GitHub Pages AS141253 legacy visual-model archive must not be copied under docs")
 
+        sheet_route = PAGES_BASE_URL + "sheets/as141253-ipv6-architecture-example/"
+        validate_pages_canonical_url(sheet_page, sheet_route, errors)
+        validate_pages_open_graph_url(sheet_page, sheet_route, errors)
+        validate_pages_robots(sheet_page, reader_robots, errors)
+
         for page in (ROOT / "docs").rglob("*.html"):
             page_html = page.read_text(encoding="utf-8", errors="replace")
             for legacy_route in legacy_pages:
@@ -1383,6 +1411,8 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
         errors.append("GitHub Pages index navigation should use the clean ./ root URL, not index.html")
     validate_pages_canonical_url(site_index, PAGES_BASE_URL, errors)
     validate_pages_open_graph_url(site_index, PAGES_BASE_URL, errors)
+    validate_pages_robots(site_index, None, errors)
+    validate_google_verification(site_index, errors)
     for post in posts:
         page = ROOT / "docs" / "posts" / post["slug"] / "index.html"
         if not page.exists():
@@ -1391,6 +1421,11 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
         html = page.read_text(encoding="utf-8", errors="replace")
         validate_pages_canonical_url(page, PAGES_BASE_URL + f"posts/{post['slug']}/", errors)
         validate_pages_open_graph_url(page, PAGES_BASE_URL + f"posts/{post['slug']}/", errors)
+        validate_pages_robots(
+            page,
+            None if status_post_is_eligible(post, registry, status) else "noindex,follow",
+            errors,
+        )
         try:
             source_doc = parse_html_file(ROOT / post["bundle_path"] / "source" / "rendered-article.html")
             page_doc = parse_html_file(page)
@@ -1419,10 +1454,254 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
                 errors.append(f"{post['slug']}: GitHub Pages article missing podcast embed wrapper")
         validate_pages_heading_controls(page, post, errors)
     validate_pages_article_links(posts, archived_keys, errors)
+    for page in sorted((ROOT / "docs").rglob("*.html")):
+        try:
+            document = parse_html_file(page)
+            values = document.xpath("//meta[@property='og:url']/@content") + document.xpath("//link[@rel='canonical']/@href")
+            for value in values:
+                if not value.startswith(PAGES_BASE_URL):
+                    errors.append(f"{rel(page)}: canonical/Open Graph URL must remain archive-local; found {value}")
+        except Exception as exc:
+            errors.append(f"{rel(page)}: generated HTML parse failed while checking archive-local metadata URLs: {exc}")
+    snapshot_root = ROOT / "docs" / "sheets" / "as141253-ipv6-architecture-example" / "html"
+    for page in sorted(snapshot_root.glob("*.html")):
+        validate_pages_robots(page, "noindex,nofollow", errors)
+        snapshot_html = page.read_text(encoding="utf-8", errors="replace")
+        if re.search(r"<meta\b(?=[^>]*\bhttp-equiv\s*=\s*[\"']?refresh\b)[^>]*>", snapshot_html, re.I):
+            errors.append(f"{rel(page)}: raw snapshot must not retain an executable refresh redirect")
+        try:
+            document = parse_html_file(page)
+            csp_values = document.xpath(
+                "//meta[translate(@http-equiv, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', "
+                "'abcdefghijklmnopqrstuvwxyz')='content-security-policy']/@content"
+            )
+        except Exception as exc:
+            errors.append(f"{rel(page)}: raw snapshot CSP validation failed: {exc}")
+            continue
+        if len(csp_values) != 1 or "script-src 'none'" not in csp_values[0] or "default-src 'none'" not in csp_values[0]:
+            errors.append(f"{rel(page)}: raw snapshot must have one restrictive script-blocking CSP")
     return font_manifest
 
 
-def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | None:
+def status_seo_state(status: dict) -> str:
+    value = status.get("seo_state")
+    if value in {"source_primary", "archive_discovery"}:
+        return value
+    return "archive_discovery" if status.get("state") == "frozen_archive" else "source_primary"
+
+
+def status_post_is_eligible(post: dict, registry: dict[str, dict], status: dict) -> bool:
+    if status_seo_state(status) != "archive_discovery":
+        return False
+    source = (status.get("external_sources") or {}).get(str(post.get("id")))
+    if source is not None:
+        return source.get("state") == "frozen_source" and source.get("promotion_blocked") is not True
+    return (registry.get(str(post.get("id"))) or {}).get("external_fallback") is not True
+
+
+def meta_values(page: Path, *, name: str | None = None, property_name: str | None = None) -> list[str]:
+    document = parse_html_file(page)
+    if name:
+        return document.xpath(f"//meta[translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='{name.lower()}']/@content")
+    return document.xpath(f"//meta[@property='{property_name}']/@content")
+
+
+def validate_pages_robots(page: Path, expected: str | None, errors: list[str]) -> None:
+    try:
+        values = meta_values(page, name="robots")
+    except Exception as exc:
+        errors.append(f"{rel(page)}: generated HTML parse failed while checking robots metadata: {exc}")
+        return
+    expected_values = [] if expected is None else [expected]
+    if values != expected_values:
+        errors.append(f"{rel(page)}: robots metadata must be exactly {expected_values!r}; found {values!r}")
+
+
+def validate_google_verification(site_index: Path, errors: list[str]) -> None:
+    try:
+        values = meta_values(site_index, name="google-site-verification")
+    except Exception as exc:
+        errors.append(f"{rel(site_index)}: Google verification metadata parse failed: {exc}")
+        return
+    if values != [GOOGLE_SITE_VERIFICATION]:
+        errors.append(f"{rel(site_index)}: Google site verification tag is missing or not exact")
+    for page in sorted((ROOT / "docs").rglob("*.html")):
+        if page == site_index:
+            continue
+        try:
+            if meta_values(page, name="google-site-verification"):
+                errors.append(f"{rel(page)}: Google site verification tag must appear on the homepage only")
+        except Exception as exc:
+            errors.append(f"{rel(page)}: generated HTML parse failed while checking Google verification metadata: {exc}")
+
+
+def validate_generated_seo_outputs(posts: list[dict], metadata_by_slug: dict[str, dict], registry: dict[str, dict], status: dict, errors: list[str]) -> None:
+    docs = ROOT / "docs"
+    recovery = docs / "SEO_RECOVERY.md"
+    if not recovery.exists():
+        errors.append("docs/SEO_RECOVERY.md missing; archive SEO recovery would be undocumented")
+    else:
+        recovery_text = recovery.read_text(encoding="utf-8", errors="replace")
+        for marker in [
+            "scripts/manage-archive-seo.py resume-ds --owner-verified",
+            "scripts/manage-archive-seo.py resume-external --post-id 5324 --owner-verified",
+            "Do not edit `archive-status.json` manually.",
+        ]:
+            if marker not in recovery_text:
+                errors.append(f"docs/SEO_RECOVERY.md missing required recovery guidance: {marker}")
+    if not (docs / "EXTERNAL_SOURCE_STATUS.md").exists():
+        errors.append("docs/EXTERNAL_SOURCE_STATUS.md missing; run scripts/external_source_monitor.py")
+    robots = docs / "robots.txt"
+    sitemap = docs / "sitemap.xml"
+    feed = docs / "feed.xml"
+    if not robots.exists():
+        errors.append("docs/robots.txt missing; run make render-site")
+    else:
+        lines = robots.read_text(encoding="utf-8", errors="replace").splitlines()
+        if "User-agent: *" not in lines or "Allow: /" not in lines:
+            errors.append("docs/robots.txt must allow crawlers to observe page-level robots metadata")
+        if f"Sitemap: {PAGES_BASE_URL}sitemap.xml" not in lines:
+            errors.append("docs/robots.txt sitemap URL is incorrect")
+    expected_urls = {PAGES_BASE_URL}
+    if status_seo_state(status) == "archive_discovery":
+        expected_urls.update(
+            PAGES_BASE_URL + f"posts/{post['slug']}/"
+            for post in posts
+            if status_post_is_eligible(post, registry, status)
+        )
+        expected_urls.update({
+            PAGES_BASE_URL + "sheets/as141253-ipv6-architecture-example/",
+            PAGES_BASE_URL + "sheets/as141253-ipv6-architecture-example/visual.html",
+        })
+    if not sitemap.exists():
+        errors.append("docs/sitemap.xml missing; run make render-site")
+    else:
+        try:
+            root = ET.fromstring(sitemap.read_bytes())
+            namespace = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+            locations = [item.findtext(namespace + "loc", default="") for item in root.findall(namespace + "url")]
+            if set(locations) != expected_urls or len(locations) != len(expected_urls):
+                errors.append("docs/sitemap.xml URLs do not match the current SEO eligibility state")
+            for item in root.findall(namespace + "url"):
+                if item.find(namespace + "priority") is not None or item.find(namespace + "changefreq") is not None:
+                    errors.append("docs/sitemap.xml must not contain priority or changefreq")
+                loc = item.findtext(namespace + "loc", default="")
+                lastmod = item.findtext(namespace + "lastmod")
+                matching = next((post for post in posts if loc == PAGES_BASE_URL + f"posts/{post['slug']}/"), None)
+                if matching is None and lastmod is not None:
+                    errors.append(f"docs/sitemap.xml has lastmod on a non-post route: {loc}")
+                if matching is not None:
+                    expected_lastmod = matching.get("modified")
+                    if lastmod != expected_lastmod and lastmod != (expected_lastmod or "").replace("+00:00", "Z"):
+                        errors.append(f"docs/sitemap.xml lastmod is not sourced from post metadata for {loc}")
+        except Exception as exc:
+            errors.append(f"docs/sitemap.xml parse failed: {exc}")
+    if status_seo_state(status) != "archive_discovery":
+        if feed.exists():
+            errors.append("docs/feed.xml must be absent in source_primary")
+        return
+    if not feed.exists():
+        errors.append("docs/feed.xml missing in archive_discovery")
+        return
+    try:
+        root = ET.fromstring(feed.read_bytes())
+        channel = root.find("channel")
+        if channel is None or channel.findtext("language") != "en-IN":
+            errors.append("docs/feed.xml must declare language en-IN")
+        atom = "{http://www.w3.org/2005/Atom}link"
+        self_links = [item for item in root.findall(f"channel/{atom}") if item.get("rel") == "self"]
+        if len(self_links) != 1 or self_links[0].get("href") != PAGES_BASE_URL + "feed.xml":
+            errors.append("docs/feed.xml atom self link is incorrect")
+        items = root.findall("channel/item")
+        eligible = [post for post in posts if status_post_is_eligible(post, registry, status)]
+        expected_ids = {int(post["id"]) for post in sorted(eligible, key=lambda item: (item.get("published") or "", int(item.get("id") or 0)), reverse=True)[:10]}
+        actual_ids = set()
+        for item in items:
+            guid = item.findtext("guid", default="")
+            match = re.fullmatch(r"urn:daryllswer-com-archive:wordpress-post:([1-9][0-9]*)", guid)
+            if not match:
+                errors.append(f"docs/feed.xml has an invalid stable ID-based GUID: {guid}")
+            else:
+                actual_ids.add(int(match.group(1)))
+            link = item.findtext("link", default="")
+            if not link.startswith(PAGES_BASE_URL + "posts/"):
+                errors.append("docs/feed.xml item link is not archive-local")
+            encoded = item.find("{http://purl.org/rss/1.0/modules/content/}encoded")
+            body = encoded.text or "" if encoded is not None else ""
+            if re.search(r"(?:href|src)=['\"](?:\.?\.?/|/)", body):
+                errors.append("docs/feed.xml content:encoded contains a relative local URL")
+            if any(marker in body.lower() for marker in ["<comments", "<slash:", "<wfw:", "<wp:", "appeared first"]):
+                errors.append("docs/feed.xml content:encoded contains omitted source/comment metadata")
+            if match and match.group(1) == REQUIRED_ARCHIVED_RIGHTS_ID:
+                registry_record = registry.get(REQUIRED_ARCHIVED_RIGHTS_ID) or {}
+                original = registry_record.get("original_article_url", "")
+                if original not in body or "Swer Networks" not in body:
+                    errors.append("docs/feed.xml BGP repost item does not retain its visible Swer Networks rights/provenance block")
+        if channel is not None:
+            last_build = channel.findtext("lastBuildDate", default="")
+            if not last_build:
+                errors.append("docs/feed.xml must include deterministic lastBuildDate")
+            image_url = channel.findtext("image/url", default="")
+            if image_url != PAGES_BASE_URL + "assets/brand/01_DS_Favicon_Dark_Mode-512.png":
+                errors.append("docs/feed.xml must use the archive favicon derivative")
+        if len(items) > 10 or actual_ids != expected_ids:
+            errors.append("docs/feed.xml items do not match the ten most recent eligible posts")
+    except Exception as exc:
+        errors.append(f"docs/feed.xml parse failed: {exc}")
+
+
+def validate_archive_status(status: dict, registry: dict[str, dict], errors: list[str], warnings: list[str]) -> None:
+    if not ARCHIVE_STATUS_SCHEMA_PATH.exists():
+        errors.append("archive status schema missing")
+    else:
+        try:
+            schema = load_json(ARCHIVE_STATUS_SCHEMA_PATH)
+            check_required(status, schema, "archive-status.json", errors)
+        except Exception as exc:
+            errors.append(f"archive-status.schema.json parse failed: {exc}")
+    allowed = {"healthy", "degraded", "canonical_unavailable", "frozen_archive"}
+    if status.get("state") not in allowed:
+        errors.append(f"archive-status.json has invalid state `{status.get('state')}`")
+    if status.get("state") == "frozen_archive" and status.get("frozen") is not True:
+        errors.append("archive-status.json frozen_archive state must set frozen=true")
+    if status.get("state") != "frozen_archive" and status.get("frozen") is True:
+        errors.append("archive-status.json frozen=true outside frozen_archive state")
+    if status.get("seo_state") not in {"source_primary", "archive_discovery"}:
+        errors.append("archive-status.json has invalid seo_state")
+    if status.get("state") == "frozen_archive" and status.get("seo_state") != "archive_discovery":
+        errors.append("archive-status.json must activate archive_discovery exactly with frozen_archive")
+    if status.get("seo_state") == "source_primary" and status.get("seo_activated_at") is not None:
+        errors.append("archive-status.json must never auto-revert archive_discovery to source_primary")
+    policy = status.get("policy") or {}
+    if policy.get("frozen_archive_noops_without_network") is not True:
+        errors.append("archive-status.json must declare frozen_archive no-op policy")
+    external_sources = status.get("external_sources") or {}
+    for post_id, source in external_sources.items():
+        record = registry.get(post_id)
+        if not isinstance(record, dict) or record.get("external_fallback") is not True:
+            errors.append(f"archive-status.json tracks an external source not opted into the rights registry: {post_id}")
+            continue
+        if source.get("post_id") != int(post_id):
+            errors.append(f"archive-status.json external source post_id does not match its registry key: {post_id}")
+    for post_id, record in registry.items():
+        if record.get("external_fallback") is not True:
+            continue
+        source = external_sources.get(post_id)
+        if source is None:
+            warnings.append(f"archive-status.json has no observation record for opted-in external source {post_id}")
+            continue
+        if source.get("url") != record.get("original_article_url"):
+            errors.append(f"archive-status.json external source URL does not match rights registry for {post_id}")
+        if source.get("state") not in {"healthy", "degraded", "source_unavailable", "frozen_source"}:
+            errors.append(f"archive-status.json has invalid external source state for {post_id}")
+        if source.get("state") == "frozen_source" and source.get("frozen") is not True:
+            errors.append(f"archive-status.json frozen_source must set frozen=true for {post_id}")
+        if source.get("state") != "frozen_source" and source.get("frozen") is True:
+            errors.append(f"archive-status.json external source frozen flag is inconsistent for {post_id}")
+
+
+def validate_drift_automation(errors: list[str], warnings: list[str], registry: dict[str, dict] | None = None) -> dict | None:
+    registry = registry or {}
     workflow = ROOT / ".github" / "workflows" / "canonical-drift.yml"
     status_path = ROOT / "archive-status.json"
     report_path = ROOT / "docs" / "CANONICAL_DRIFT.md"
@@ -1446,6 +1725,7 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             ("timeout-minutes:", r"^\s*timeout-minutes:\s*25\s*$"),
             ("controlled favicon preparation", r"make\s+prepare-brand-favicon"),
             ("scripts/check-canonical-drift.py", r"scripts/check-canonical-drift\.py"),
+            ("scripts/external_source_monitor.py", r"scripts/external_source_monitor\.py"),
             ("scripts/reconcile-canonical-drift.py", r"scripts/reconcile-canonical-drift\.py"),
             ("action-plan outside checkout", r"runner\.temp.*canonical-drift-action-plan\.json"),
             ("reconciliation result outside checkout", r"runner\.temp.*canonical-drift-reconciliation-result\.json"),
@@ -1474,6 +1754,7 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             "Install Python dependencies",
             "Prepare controlled brand favicon",
             "Check canonical drift",
+            "Check external sources",
             "Reconcile canonical drift",
             "Read reconciliation result",
             "Render generated Pages",
@@ -1497,11 +1778,13 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             ("Prepare controlled brand favicon", r"^run:\s*\|\s*$", "controlled favicon preparation"),
             ("Prepare controlled brand favicon", r"make\s+prepare-brand-favicon", "controlled favicon make target"),
             ("Check canonical drift", r"--action-plan\s+.*runner\.temp.*canonical-drift-action-plan\.json", "external action-plan output"),
+            ("Check external sources", r"scripts/external_source_monitor\.py", "external source monitor"),
+            ("Check external sources", r"runner\.temp.*external-source-result\.json", "external source result"),
             ("Reconcile canonical drift", r"scripts/reconcile-canonical-drift\.py", "canonical drift reconciler"),
             ("Reconcile canonical drift", r"--result\s+.*runner\.temp.*canonical-drift-reconciliation-result\.json", "external reconciliation result"),
             ("Read reconciliation result", r"content_changed", "reconciliation content-change output"),
             ("Render generated Pages", r"^run:\s+make\s+render-site\s*$", "generated Pages rendering"),
-            ("Render generated Pages", r"^if:\s*steps\.brand-favicon\.outputs\.changed\s*==\s*'true'\s*\|\|\s*steps\.reconciliation\.outputs\.content_changed\s*==\s*'true'\s*$", "conditional Pages rendering"),
+            ("Render generated Pages", r"steps\.external\.outputs\.changed|steps\.canonical\.outputs\.status_changed", "SEO/source-state render trigger"),
             ("Verify reconciled canonical state", r"scripts/check-canonical-drift\.py\s+--fresh\s*$", "fresh post-reconciliation drift comparison"),
         ]
         for step_name, pattern, description in required_step_lines:
@@ -1519,6 +1802,7 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             "Install Python dependencies",
             "Prepare controlled brand favicon",
             "Check canonical drift",
+            "Check external sources",
             "Reconcile canonical drift",
             "Read reconciliation result",
             "Render generated Pages",
@@ -1555,16 +1839,7 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
     except Exception as exc:
         errors.append(f"archive-status.json parse failed: {exc}")
         return None
-    allowed = {"healthy", "degraded", "canonical_unavailable", "frozen_archive"}
-    if status.get("state") not in allowed:
-        errors.append(f"archive-status.json has invalid state `{status.get('state')}`")
-    if status.get("state") == "frozen_archive" and status.get("frozen") is not True:
-        errors.append("archive-status.json frozen_archive state must set frozen=true")
-    if status.get("state") != "frozen_archive" and status.get("frozen") is True:
-        warnings.append("archive-status.json frozen=true outside frozen_archive state")
-    policy = status.get("policy", {})
-    if policy.get("frozen_archive_noops_without_network") is not True:
-        errors.append("archive-status.json must declare frozen_archive no-op policy")
+    validate_archive_status(status, registry, errors, warnings)
     return status
 
 
@@ -1572,6 +1847,8 @@ def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
     report: list[str] = ["# Validation", "", f"Generated: {now_iso()}", ""]
+    status_path = ROOT / "archive-status.json"
+    status = load_json(status_path) if status_path.exists() else {}
 
     archive_path = ROOT / "archive-manifest.json"
     if not archive_path.exists():
@@ -1588,7 +1865,7 @@ def main() -> int:
         archived_keys = archive_route_keys(archive)
         if post_count != len(posts):
             errors.append(f"archive post_count {post_count} does not match posts length {len(posts)}")
-        rights_registry = validate_rights_registry(archive, errors)
+        rights_registry = validate_rights_registry(archive, errors) or {}
         if rights_registry:
             report.extend([
                 "## Per-Post Rights Registry",
@@ -1597,58 +1874,47 @@ def main() -> int:
                 "- Registry keys are immutable WordPress post IDs.",
                 "",
             ])
-        try:
-            body, headers = request(POSTS_ENDPOINT)
-            live_posts = json.loads(body.decode("utf-8"))
-            live_total = int(headers.get("X-WP-Total", len(live_posts)))
-            live_ids = {item.get("id") for item in live_posts if item.get("id") is not None}
-            archived_ids = {item.get("id") for item in posts if item.get("id") is not None}
-            missing_active_ids = sorted(archived_ids - live_ids)
-            if missing_active_ids:
-                errors.append(f"WordPress REST is missing active archive post IDs: {missing_active_ids}")
-            if live_total != len(posts):
-                errors.append(
-                    f"WordPress REST reports {live_total} posts, archive has {len(posts)}"
-                )
-            report.extend([
-                "## WordPress REST",
-                "",
-                f"- Live X-WP-Total: {live_total}",
-                f"- Archived posts: {len(posts)}",
-                "",
-            ])
-        except Exception as exc:
-            warnings.append(f"could not verify WordPress REST count: {exc}")
+        if status.get("state") == "frozen_archive":
+            report.extend(["## WordPress REST", "", "- Skipped: frozen archive state forbids DS source requests.", ""])
+        else:
+            try:
+                body, headers = request(POSTS_ENDPOINT)
+                live_posts = json.loads(body.decode("utf-8"))
+                live_total = int(headers.get("X-WP-Total", len(live_posts)))
+                live_ids = {item.get("id") for item in live_posts if item.get("id") is not None}
+                archived_ids = {item.get("id") for item in posts if item.get("id") is not None}
+                missing_active_ids = sorted(archived_ids - live_ids)
+                if missing_active_ids:
+                    errors.append(f"WordPress REST is missing active archive post IDs: {missing_active_ids}")
+                if live_total != len(posts):
+                    errors.append(f"WordPress REST reports {live_total} posts, archive has {len(posts)}")
+                report.extend(["## WordPress REST", "", f"- Live X-WP-Total: {live_total}", f"- Archived posts: {len(posts)}", ""])
+            except Exception as exc:
+                warnings.append(f"could not verify WordPress REST count: {exc}")
 
-        try:
-            sm_urls = sitemap_urls()
-            manifest_urls = {
-                url for post in posts if isinstance((url := post.get("canonical_url")), str)
-            }
-            missing, extra, intentional_exclusions = classify_sitemap_difference(
-                sm_urls, manifest_urls
-            )
-            if missing:
-                errors.append(f"sitemap URLs missing from archive: {missing}")
-            if extra:
-                warnings.append(f"archive URLs not present in post sitemap: {extra}")
-            report.extend([
-                "## Sitemap Cross-Check",
-                "",
-                f"- Sitemap post URLs: {len(sm_urls)}",
-                f"- Archive URLs: {len(manifest_urls)}",
-                f"- Documented source-sitemap exceptions: {len(intentional_exclusions)}",
-            ])
-            report.extend(
-                f"  - `{url}`: {reason}" for url, reason in intentional_exclusions
-            )
-            report.append("")
-        except Exception as exc:
-            warnings.append(f"could not verify sitemap: {exc}")
+            try:
+                sm_urls = sitemap_urls()
+                manifest_urls = {url for post in posts if isinstance((url := post.get("canonical_url")), str)}
+                missing, extra, intentional_exclusions = classify_sitemap_difference(sm_urls, manifest_urls)
+                if missing:
+                    errors.append(f"sitemap URLs missing from archive: {missing}")
+                if extra:
+                    warnings.append(f"archive URLs not present in post sitemap: {extra}")
+                report.extend(["## Sitemap Cross-Check", "", f"- Sitemap post URLs: {len(sm_urls)}", f"- Archive URLs: {len(manifest_urls)}", f"- Documented source-sitemap exceptions: {len(intentional_exclusions)}"])
+                report.extend(f"  - `{url}`: {reason}" for url, reason in intentional_exclusions)
+                report.append("")
+            except Exception as exc:
+                warnings.append(f"could not verify sitemap: {exc}")
 
         for post in posts:
             validate_post(post, errors, warnings, archived_keys)
-        font_manifest = validate_pages_site(posts, errors, warnings, archived_keys)
+        font_manifest = validate_pages_site(posts, errors, warnings, archived_keys, rights_registry, status)
+        metadata_by_slug = {
+            post["slug"]: load_json(ROOT / post["bundle_path"] / "metadata.json")
+            for post in posts
+            if (ROOT / post["bundle_path"] / "metadata.json").exists()
+        }
+        validate_generated_seo_outputs(posts, metadata_by_slug, rights_registry, status, errors)
         if font_manifest:
             font_files = font_manifest.get("files", [])
             font_bytes = sum(int(item.get("bytes") or 0) for item in font_files)
@@ -1687,7 +1953,7 @@ def main() -> int:
                 "",
             ])
 
-    drift_status = validate_drift_automation(errors, warnings)
+    drift_status = validate_drift_automation(errors, warnings, rights_registry if archive else {})
     if drift_status:
         report.extend(["## Canonical Drift Automation", "", f"- State: `{drift_status.get('state')}`", f"- Frozen: `{str(drift_status.get('frozen')).lower()}`", ""])
 

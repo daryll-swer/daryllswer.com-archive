@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import email.utils
 import html as html_lib
 import json
 import re
@@ -35,6 +36,9 @@ TEXT_FRAGMENT_PREFIX = ":~:text="
 BRAND_FAVICON_SOURCE = ROOT / "assets" / "brand" / "01_DS_Favicon_Dark_Mode.png"
 BRAND_FAVICON_DERIVATIVE = ROOT / "assets" / "brand" / "derivatives" / "01_DS_Favicon_Dark_Mode-512.png"
 BRAND_FAVICON_OUTPUT_NAME = "01_DS_Favicon_Dark_Mode-512.png"
+ARCHIVE_STATUS_PATH = ROOT / "archive-status.json"
+RIGHTS_REGISTRY_PATH = ROOT / "content" / "rights-registry.json"
+GOOGLE_SITE_VERIFICATION = "xEHOYZuv2ksSHn7MsBoCv9bkRPlwSFgyGoMtcn6lQIY"
 
 
 def write_text(path: Path, text: str) -> None:
@@ -48,11 +52,35 @@ def load_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def seo_state(status: dict) -> str:
+    value = status.get("seo_state")
+    if value in {"source_primary", "archive_discovery"}:
+        return value
+    return "archive_discovery" if status.get("state") == "frozen_archive" else "source_primary"
+
+
+def archive_discovery(status: dict) -> bool:
+    return seo_state(status) == "archive_discovery"
+
+
+def post_is_seo_eligible(post: dict, metadata: dict, status: dict) -> bool:
+    if not archive_discovery(status):
+        return False
+    source = (status.get("external_sources") or {}).get(str(post.get("id")))
+    if source is not None:
+        return source.get("state") == "frozen_source" and source.get("promotion_blocked") is not True
+    rights = metadata.get("rights") or {}
+    if rights.get("external_fallback") is None and RIGHTS_REGISTRY_PATH.exists():
+        registry = load_json(RIGHTS_REGISTRY_PATH)
+        rights = registry.get(str(post.get("id"))) or rights
+    return rights.get("external_fallback") is not True
+
+
 def clean_generated_site() -> None:
     for path in [OUT / "posts", OUT / "assets", OUT / "sheets"]:
         if path.exists():
             shutil.rmtree(path)
-    for path in [OUT / "index.html", OUT / ".nojekyll"]:
+    for path in [OUT / "index.html", OUT / ".nojekyll", OUT / "robots.txt", OUT / "sitemap.xml", OUT / "feed.xml"]:
         if path.exists():
             path.unlink()
 
@@ -430,10 +458,16 @@ def page_shell(
     canonical_path: str,
     image_href: str | None = None,
     js_href: str | None = None,
+    robots: str | None = "noindex,follow",
+    feed_href: str | None = None,
+    google_verification: str | None = None,
 ) -> str:
     page_url = PAGES_BASE_URL + canonical_path.lstrip("/")
     image_meta = f'\n  <meta property="og:image" content="{html_escape(image_href)}">' if image_href else ""
     script = f'\n  <script src="{html_escape(js_href)}" defer></script>' if js_href else ""
+    feed_link = f'\n  <link rel="alternate" type="application/rss+xml" title="daryllswer.com – Archive feed" href="{html_escape(feed_href)}">' if feed_href else ""
+    verification = f'\n  <meta name="google-site-verification" content="{html_escape(google_verification)}">' if google_verification else ""
+    robots_tag = f'\n  <meta name="robots" content="{html_escape(robots)}">' if robots else ""
     asset_prefix = css_href.rsplit("theme.css", 1)[0]
     favicon_href = f"{asset_prefix}brand/{BRAND_FAVICON_OUTPUT_NAME}"
     return f"""<!doctype html>
@@ -443,12 +477,13 @@ def page_shell(
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{html_escape(title)}</title>
   <meta name="description" content="{html_escape(description)}">
+{robots_tag}
   <link rel="canonical" href="{html_escape(page_url)}">
   <meta property="og:title" content="{html_escape(title)}">
   <meta property="og:description" content="{html_escape(description)}">{image_meta}
   <meta property="og:url" content="{html_escape(page_url)}">
   <link rel="icon" type="image/png" href="{html_escape(favicon_href)}">
-  <link rel="stylesheet" href="{html_escape(css_href)}">{script}
+  <link rel="stylesheet" href="{html_escape(css_href)}">{feed_link}{verification}{script}
 </head>
 <body>
 {body}
@@ -498,7 +533,7 @@ def post_card(post: dict, metadata: dict) -> str:
 </article>"""
 
 
-def render_home(posts: list[dict], metadata_by_slug: dict[str, dict]) -> None:
+def render_home(posts: list[dict], metadata_by_slug: dict[str, dict], status: dict) -> None:
     cards = "\n".join(post_card(post, metadata_by_slug[post["slug"]]) for post in posts)
     body = f"""{site_header()}
 <main class="home">
@@ -522,11 +557,14 @@ def render_home(posts: list[dict], metadata_by_slug: dict[str, dict]) -> None:
             body,
             "assets/theme.css",
             "",
+            robots=None,
+            feed_href="feed.xml" if archive_discovery(status) else None,
+            google_verification=GOOGLE_SITE_VERIFICATION,
         ),
     )
 
 
-def render_post(post: dict, metadata: dict, canonical_to_slug: dict[str, str]) -> None:
+def render_post(post: dict, metadata: dict, canonical_to_slug: dict[str, str], status: dict) -> None:
     bundle = ROOT / post["bundle_path"]
     out_dir = OUT / "posts" / post["slug"]
     assets_src = bundle / "assets"
@@ -570,6 +608,7 @@ def render_post(post: dict, metadata: dict, canonical_to_slug: dict[str, str]) -
             f"posts/{post['slug']}/",
             image_meta,
             "../../assets/archive.js",
+            robots=None if post_is_seo_eligible(post, metadata, status) else "noindex,follow",
         ),
     )
 
@@ -598,7 +637,50 @@ def canonical_post_route_map(posts: list[dict]) -> dict[str, str]:
     return mapping
 
 
-def render_sheet_page() -> None:
+RAW_SNAPSHOT_CSP = (
+    "default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; "
+    "script-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+)
+
+
+def rewrite_generated_html_seo(
+    page: Path,
+    canonical_url: str,
+    robots: str | None,
+    *,
+    raw_snapshot: bool = False,
+) -> None:
+    text = page.read_text(encoding="utf-8", errors="replace")
+    patterns = [
+        r"\s*<meta\s+name=[\"']robots[\"'][^>]*>",
+        r"\s*<link\s+rel=[\"']canonical[\"'][^>]*>",
+        r"\s*<meta\s+property=[\"']og:url[\"'][^>]*>",
+    ]
+    if raw_snapshot:
+        # Google-published HTML includes fallback JavaScript that redirects to
+        # Google when its application runtime is unavailable.  Archive copies
+        # are evidence artefacts, so keep the bytes as text but prevent scripts,
+        # refreshes, forms, and external subresource loads from executing.
+        patterns.extend([
+            r"\s*<meta\b(?=[^>]*\bhttp-equiv\s*=\s*[\"']?refresh\b)[^>]*>",
+            r"\s*<meta\b(?=[^>]*\bhttp-equiv\s*=\s*[\"']?content-security-policy\b)[^>]*>",
+            r"\s*<base\b[^>]*>",
+        ])
+    for pattern in patterns:
+        text = re.sub(pattern, "", text, flags=re.I)
+    tags = (
+        (f'\n  <meta http-equiv="Content-Security-Policy" content="{RAW_SNAPSHOT_CSP}">' if raw_snapshot else "")
+        + (f'\n  <meta name="robots" content="{html_escape(robots)}">' if robots else "")
+        + f'\n  <link rel="canonical" href="{html_escape(canonical_url)}">'
+        f'\n  <meta property="og:url" content="{html_escape(canonical_url)}">'
+    )
+    if "<head>" not in text.lower():
+        raise SystemExit(f"Cannot add SEO metadata; missing <head> in {page}")
+    text = re.sub(r"<head>", "<head>" + tags, text, count=1, flags=re.I)
+    write_text(page, text)
+
+
+def render_sheet_page(status: dict) -> None:
     source_dir = ROOT / "data" / "sheets" / SHEET_SLUG
     manifest = load_json(source_dir / "manifest.json")
     out_dir = OUT / "sheets" / SHEET_SLUG
@@ -611,6 +693,8 @@ def render_sheet_page() -> None:
             home_href="../../",
             repo_href="https://github.com/daryll-swer/daryllswer.com-archive",
             font_asset_prefix="../../assets/fonts",
+            canonical_url=PAGES_BASE_URL + f"sheets/{SHEET_SLUG}/",
+            robots=None if archive_discovery(status) else "noindex,follow",
         ),
     )
     shutil.copytree(
@@ -626,6 +710,154 @@ def render_sheet_page() -> None:
             text = page.read_text(encoding="utf-8", errors="replace")
             write_text(page, text.replace("../../../assets/fonts/", "../../assets/fonts/"))
             add_page_favicon(page, f"../../assets/brand/{BRAND_FAVICON_OUTPUT_NAME}")
+    reader_robots = None if archive_discovery(status) else "noindex,follow"
+    rewrite_generated_html_seo(
+        out_dir / "visual.html",
+        PAGES_BASE_URL + f"sheets/{SHEET_SLUG}/visual.html",
+        reader_robots,
+    )
+    for page in sorted(out_dir.rglob("*.html")):
+        if page.name in {"index.html", "visual.html"}:
+            continue
+        relative = page.relative_to(OUT).as_posix()
+        rewrite_generated_html_seo(
+            page,
+            PAGES_BASE_URL + relative,
+            "noindex,nofollow",
+            raw_snapshot=True,
+        )
+
+
+def render_robots(status: dict) -> None:
+    state = seo_state(status)
+    write_text(
+        OUT / "robots.txt",
+        "\n".join([
+            "User-agent: *",
+            "Allow: /",
+            f"# Archive SEO state: {state}",
+            f"Sitemap: {PAGES_BASE_URL}sitemap.xml",
+            "",
+        ]),
+    )
+
+
+def sitemap_lastmod(value: str | None) -> str | None:
+    if not value:
+        return None
+    try:
+        parsed = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return parsed.isoformat().replace("+00:00", "Z")
+
+
+def render_sitemap(posts: list[dict], metadata_by_slug: dict[str, dict], status: dict) -> None:
+    urls = [(PAGES_BASE_URL, None)]
+    if archive_discovery(status):
+        for post in posts:
+            if post_is_seo_eligible(post, metadata_by_slug[post["slug"]], status):
+                urls.append((PAGES_BASE_URL + f"posts/{post['slug']}/", sitemap_lastmod(post.get("modified"))))
+        urls.extend([
+            (PAGES_BASE_URL + f"sheets/{SHEET_SLUG}/", None),
+            (PAGES_BASE_URL + f"sheets/{SHEET_SLUG}/visual.html", None),
+        ])
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+    for url, lastmod in urls:
+        lines.append("  <url>")
+        lines.append(f"    <loc>{html_escape(url)}</loc>")
+        if lastmod:
+            lines.append(f"    <lastmod>{html_escape(lastmod)}</lastmod>")
+        lines.append("  </url>")
+    lines.extend(["</urlset>", ""])
+    write_text(OUT / "sitemap.xml", "\n".join(lines))
+
+
+def rss_cdata(value: str) -> str:
+    return "<![CDATA[" + value.replace("]]>", "]]]]><![CDATA[>") + "]]>"
+
+
+def absolute_feed_body(body_html: str, post_slug: str) -> str:
+    root = lxml.html.fragment_fromstring(body_html, create_parent="div")
+    base = PAGES_BASE_URL + f"posts/{post_slug}/"
+    for element in root.xpath(".//*[@href or @src]"):
+        for attribute in ["href", "src"]:
+            value = element.get(attribute)
+            if not value or value.startswith(("data:", "mailto:", "tel:")):
+                continue
+            if not urllib.parse.urlsplit(value).scheme:
+                element.set(attribute, urllib.parse.urljoin(base, value))
+    return "".join(lxml.html.tostring(child, encoding="unicode") for child in root)
+
+
+def feed_pub_date(value: str | None) -> str:
+    try:
+        parsed = dt.datetime.fromisoformat((value or "").replace("Z", "+00:00"))
+    except ValueError:
+        parsed = dt.datetime(1970, 1, 1, tzinfo=dt.timezone.utc)
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=dt.timezone.utc)
+    return email.utils.format_datetime(parsed, usegmt=True)
+
+
+def feed_last_build_date(posts: list[dict], status: dict) -> str:
+    values = [post.get("modified") or post.get("published") for post in posts]
+    values.append(status.get("seo_activated_at"))
+    parsed_values = []
+    for value in values:
+        try:
+            parsed = dt.datetime.fromisoformat((value or "").replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        parsed_values.append(parsed if parsed.tzinfo else parsed.replace(tzinfo=dt.timezone.utc))
+    latest = max(parsed_values, default=dt.datetime(1970, 1, 1, tzinfo=dt.timezone.utc))
+    return email.utils.format_datetime(latest, usegmt=True)
+
+
+def render_feed(posts: list[dict], metadata_by_slug: dict[str, dict], canonical_to_slug: dict[str, str], status: dict) -> None:
+    if not archive_discovery(status):
+        return
+    eligible = [post for post in posts if post_is_seo_eligible(post, metadata_by_slug[post["slug"]], status)]
+    eligible.sort(key=lambda item: (item.get("published") or "", int(item.get("id") or 0)), reverse=True)
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">',
+        "  <channel>",
+        f"    <title>{html_escape(ARCHIVE_HOME_TITLE)}</title>",
+        f"    <link>{html_escape(PAGES_BASE_URL)}</link>",
+        "    <description>Public archive of daryllswer.com network engineering writing.</description>",
+        "    <language>en-IN</language>",
+        f"    <lastBuildDate>{html_escape(feed_last_build_date(eligible[:10], status))}</lastBuildDate>",
+        f'    <atom:link href="{html_escape(PAGES_BASE_URL + "feed.xml")}" rel="self" type="application/rss+xml" />',
+        "    <image>",
+        f"      <url>{html_escape(PAGES_BASE_URL + 'assets/brand/' + BRAND_FAVICON_OUTPUT_NAME)}</url>",
+        f"      <title>{html_escape(ARCHIVE_HOME_TITLE)}</title>",
+        f"      <link>{html_escape(PAGES_BASE_URL)}</link>",
+        "    </image>",
+    ]
+    for post in eligible[:10]:
+        metadata = metadata_by_slug[post["slug"]]
+        bundle = ROOT / post["bundle_path"]
+        body = absolute_feed_body(article_body_html(post, canonical_to_slug), post["slug"])
+        excerpt = post_excerpt(bundle, metadata)
+        url = PAGES_BASE_URL + f"posts/{post['slug']}/"
+        lines.extend([
+            "    <item>",
+            f"      <title>{html_escape(post['title'])}</title>",
+            f"      <link>{html_escape(url)}</link>",
+            f"      <guid isPermaLink=\"false\">urn:daryllswer-com-archive:wordpress-post:{int(post['id'])}</guid>",
+            f"      <pubDate>{html_escape(feed_pub_date(post.get('published')))}</pubDate>",
+            "      <dc:creator>Daryll Swer</dc:creator>",
+            f"      <description>{html_escape(excerpt)}</description>",
+            *[f"      <category>{html_escape(category.get('name', ''))}</category>" for category in metadata.get("categories") or [] if category.get("name")],
+            f"      <content:encoded>{rss_cdata(body)}</content:encoded>",
+            "    </item>",
+        ])
+    lines.extend(["  </channel>", "</rss>", ""])
+    write_text(OUT / "feed.xml", "\n".join(lines))
 
 
 def render_css() -> None:
@@ -962,6 +1194,7 @@ def render_js() -> None:
 
 def main() -> int:
     archive = load_json(ROOT / "archive-manifest.json")
+    status = load_json(ARCHIVE_STATUS_PATH) if ARCHIVE_STATUS_PATH.exists() else {}
     posts = archive.get("posts", [])
     metadata_by_slug = {
         post["slug"]: load_json(ROOT / post["bundle_path"] / "metadata.json")
@@ -974,10 +1207,13 @@ def main() -> int:
     render_js()
     copy_font_assets(ROOT, OUT / "assets" / "fonts")
     copy_brand_favicon()
-    render_home(posts, metadata_by_slug)
-    render_sheet_page()
+    render_home(posts, metadata_by_slug, status)
+    render_sheet_page(status)
     for post in posts:
-        render_post(post, metadata_by_slug[post["slug"]], canonical_to_slug)
+        render_post(post, metadata_by_slug[post["slug"]], canonical_to_slug, status)
+    render_robots(status)
+    render_sitemap(posts, metadata_by_slug, status)
+    render_feed(posts, metadata_by_slug, canonical_to_slug, status)
     write_text(OUT / ".nojekyll", "")
     print(f"site generated: {OUT / 'index.html'}")
     print(f"posts generated: {len(posts)}")
