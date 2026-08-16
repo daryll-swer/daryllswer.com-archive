@@ -43,7 +43,13 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force }}" = "true" ]; then
             args="--force"
           fi
-          python3 scripts/check-canonical-drift.py $args
+          python3 scripts/check-canonical-drift.py $args --action-plan "${{ runner.temp }}/canonical-drift-action-plan.json"
+
+      - name: Reconcile canonical drift
+        run: python3 scripts/reconcile-canonical-drift.py --action-plan "${{ runner.temp }}/canonical-drift-action-plan.json"
+
+      - name: Render generated Pages
+        run: make render-site
 
       - name: Read archive state
         id: archive-state
@@ -57,14 +63,57 @@ jobs:
           make validate
           make scan-secrets
 
+      - name: Check workflow changed paths
+        run: |
+          python3 - <<'PY'
+          import re
+          import subprocess
+          import sys
+
+          paths = set()
+          for command in [
+              ["git", "diff", "--name-only"],
+              ["git", "diff", "--cached", "--name-only"],
+              ["git", "ls-files", "--others", "--exclude-standard"],
+          ]:
+              paths.update(line for line in subprocess.check_output(command, text=True).splitlines() if line)
+          allowed = re.compile(
+              r"(?:archive-manifest\.json|archive-status\.json|docs/CANONICAL_DRIFT\.md|"
+              r"docs/VALIDATION\.md|docs/PUBLIC_SAFETY\.md|docs/index\.html|docs/\.nojekyll|"
+              r"docs/assets/.+|docs/posts/.+|docs/sheets/.+|content/posts/.+)"
+          )
+          unexpected = sorted(path for path in paths if not allowed.fullmatch(path))
+          if unexpected:
+              print("Unexpected workflow changes:", file=sys.stderr)
+              print("\n".join(unexpected), file=sys.stderr)
+              raise SystemExit(1)
+          print(f"Changed paths are within the canonical archive allowlist ({len(paths)} path(s)).")
+          PY
+
       - name: Commit drift status changes
         run: |
-          if git diff --quiet -- archive-status.json docs/CANONICAL_DRIFT.md; then
-            echo "No drift status changes to commit."
+          git add -A -- archive-manifest.json archive-status.json docs/CANONICAL_DRIFT.md docs/index.html docs/.nojekyll docs/assets docs/posts docs/sheets content/posts
+          if git diff --cached --quiet; then
+            echo "No archive or generated Pages changes to commit."
             exit 0
           fi
+          python3 - <<'PY'
+          import re
+          import subprocess
+          import sys
+
+          paths = subprocess.check_output(["git", "diff", "--cached", "--name-only"], text=True).splitlines()
+          allowed = re.compile(
+              r"(?:archive-manifest\.json|archive-status\.json|docs/CANONICAL_DRIFT\.md|"
+              r"docs/index\.html|docs/\.nojekyll|docs/assets/.+|docs/posts/.+|docs/sheets/.+|content/posts/.+)"
+          )
+          unexpected = sorted(path for path in paths if not allowed.fullmatch(path))
+          if unexpected:
+              print("Unexpected staged paths:", file=sys.stderr)
+              print("\n".join(unexpected), file=sys.stderr)
+              raise SystemExit(1)
+          PY
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add archive-status.json docs/CANONICAL_DRIFT.md
           git commit -m "Record canonical drift check"
           git push

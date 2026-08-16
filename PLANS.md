@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete and deployed; AS141253 responsive reserved-prefix card grids
+- Status: complete locally; canonical post retirement automation
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-07-24
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -22,6 +22,22 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - In progress: add a bounded canonical-content reconciliation path. A post
+    retirement requires two successful weekly confirmations at least seven
+    days apart, exactly one missing immutable WordPress ID, direct REST and
+    canonical HTTP `404`/`410` evidence, and no concurrent content anomaly.
+    Canonical reachability states remain separate and may never remove
+    archive content. Current-tree removal preserves Git history; up to one
+    newly detected post may be automatically mirrored per run.
+  - Complete locally: the reconciliation workflow now separates health from
+    content state, confirms only one missing WordPress ID across two healthy
+    weekly observations at least seven days apart, and requires direct REST
+    and canonical `404`/`410` evidence before removing its current-tree
+    bundle and regenerated Pages route. No history rewrite occurs. Candidate
+    state is cleared after retirement; intentional dead local routes are
+    inferred from existing Markdown links rather than retained in a public
+    retirement registry. Five temporary-repository tests and all standard
+    rendering, validation, compile, and public-safety checks pass locally.
   - Complete locally: singleton reserved allocations now group into one
     responsive static-card grid per immediate hierarchy parent. The Delhi
     `/40` grid contains all 15 reserved `/44` allocations (`Delhi-02` through

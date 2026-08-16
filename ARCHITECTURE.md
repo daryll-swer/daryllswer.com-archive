@@ -126,19 +126,23 @@ flowchart LR
 - `.github/workflows/canonical-drift.yml` runs a low-frequency weekly check and
   supports manual `workflow_dispatch`.
 - `scripts/check-canonical-drift.py` uses only the public WordPress REST index
-  and local archive manifests. It checks for new, missing/unlisted, modified,
-  featured-image, and WordPress-uploaded image-media drift.
+  and local archive manifests. It checks for new, missing/unlisted, relocated,
+  modified, featured-image, and WordPress-uploaded image-media drift by
+  immutable WordPress post ID where possible.
 - Third-party documents, PDFs, downloads, and external artefacts are not
   mirror-required drift. They remain outbound links unless the owner explicitly
   approves mirroring a specific artefact.
-- The automation is detection-first. It records drift in
-  `docs/CANONICAL_DRIFT.md` and durable state in `archive-status.json`; it does
-  not silently rewrite article bundles.
+- The automation remains detection-first for existing-post changes. It records
+  drift in `docs/CANONICAL_DRIFT.md` and durable state in
+  `archive-status.json`. A separate bounded reconciliation path may mirror one
+  new post or retire one verified missing post; it never refreshes changed
+  content automatically.
 - The workflow has a 10 minute timeout and a concurrency group so overlapping
   scheduled/manual runs cannot pile up.
-- The workflow commits only `archive-status.json` and `docs/CANONICAL_DRIFT.md`
-  when those durable drift-state files change. Timestamped validation reports
-  are not committed by scheduled checks.
+- The workflow commits only allowlisted reconciliation paths: drift status and
+  report, the archive manifest, affected post bundles, and regenerated Pages
+  output. Timestamped validation reports and temporary action plans are never
+  committed by scheduled checks.
 - The workflow must use explicit `actions/checkout@v6` and
   `actions/setup-python@v6` steps, select CPython 3.12, cache pip by
   `requirements.txt`, and run `python -m pip install -r requirements.txt`
@@ -167,6 +171,30 @@ flowchart LR
 The frozen state is intended for owner-unavailable futures: DNS expiry, TLS
 failure, WordPress death, hosting loss, or a possibly hijacked canonical
 surface must not cause repeated workflow failures or archive deletion.
+
+### Content Reconciliation Model
+
+- Health state and content reconciliation are separate. A failed canonical
+  request can update only the health state; it cannot create or execute a
+  retirement plan.
+- A post is a retirement candidate only when its immutable WordPress ID is
+  absent from a fresh healthy REST collection. A same-ID URL or slug change is
+  relocation, not deletion.
+- Retirement requires exactly one missing archived post, no concurrent new or
+  relocated post, a live count exactly one lower than the archive count, two
+  compatible healthy observations at least seven days apart, and direct REST
+  item plus canonical URL responses of `404` or `410`.
+- The candidate record is temporary. Successful reconciliation removes the
+  current-tree post bundle, its media and evidence, its archive-manifest entry,
+  and generated Pages output, then clears per-post candidate data. Git history
+  is deliberately retained.
+- At most one newly detected public post is mirrored in one scheduled run.
+  A restored post follows the same new-post path. Existing-post changes remain
+  report-only.
+- Historical Markdown links that prove a target was once mirrored retain a
+  local Pages route after retirement. It is intentionally unavailable until a
+  later restoration is mirrored; unrelated canonical pages are never
+  localised.
 
 ## Invariants
 

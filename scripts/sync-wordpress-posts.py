@@ -1102,11 +1102,11 @@ def main() -> int:
     args = parse_args()
     generated_at = now_iso()
     posts, rest_headers = fetch_all_posts()
-    canonical_to_bundle = canonical_bundle_map(posts)
     slugs = selected_slugs(args)
     if slugs:
         return sync_selected_posts(posts, rest_headers, generated_at, slugs)
 
+    canonical_to_bundle = canonical_bundle_map(posts)
     manifest_posts = [sync_post(post, generated_at, canonical_to_bundle) for post in posts]
     write_archive_manifest(
         generated_at=generated_at,

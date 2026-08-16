@@ -587,6 +587,30 @@ def render_post(post: dict, metadata: dict, canonical_to_slug: dict[str, str]) -
     )
 
 
+HISTORICAL_LOCAL_POST_LINK = re.compile(r"\]\(\.\./(\d{4}-\d{2}-\d{2}-[a-z0-9-]+)/index\.md(?:[?#][^)]*)?\)", re.I)
+
+
+def canonical_post_route_map(posts: list[dict]) -> dict[str, str]:
+    mapping = {
+        key: post["slug"]
+        for post in posts
+        if (key := canonical_url_key(post.get("canonical_url") or ""))
+    }
+    # Existing Markdown local links prove a formerly mirrored post route.
+    # Preserve that local route after retirement without storing a public
+    # retired-post registry; a restored active post always overrides it.
+    for post in posts:
+        index = ROOT / post["bundle_path"] / "index.md"
+        if not index.exists():
+            continue
+        for bundle_name in HISTORICAL_LOCAL_POST_LINK.findall(index.read_text(encoding="utf-8", errors="replace")):
+            slug = bundle_name[11:]
+            key = canonical_url_key(f"https://www.daryllswer.com/{slug}/")
+            if key and key not in mapping:
+                mapping[key] = slug
+    return mapping
+
+
 def render_sheet_page() -> None:
     source_dir = ROOT / "data" / "sheets" / SHEET_SLUG
     manifest = load_json(source_dir / "manifest.json")
@@ -956,11 +980,7 @@ def main() -> int:
         post["slug"]: load_json(ROOT / post["bundle_path"] / "metadata.json")
         for post in posts
     }
-    canonical_to_slug = {
-        key: post["slug"]
-        for post in posts
-        if (key := canonical_url_key(post.get("canonical_url") or ""))
-    }
+    canonical_to_slug = canonical_post_route_map(posts)
 
     clean_generated_site()
     render_css()
