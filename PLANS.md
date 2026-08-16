@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: locally complete - source-first archive SEO, RSS, and fallback discovery; Pages deployment pending
+- Status: complete and hosted verified - source-first archive SEO, RSS, and fallback discovery
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-08-17
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -30,8 +30,11 @@
     owner-verified and manual through `docs/SEO_RECOVERY.md`. Google
     verification, workflow gating, external source monitoring, raw-snapshot
     redirect containment, schemas, validation, and tests are implemented.
-    Local verification passed; commit, push, and hosted Pages verification are
-    pending.
+    Commit `a298c35` is on `main`; GitHub Pages deployment `31978596471`
+    completed successfully. Live verification confirmed the requested normal
+    state: one homepage Google verification tag, homepage-only sitemap,
+    absent feed, local canonical/Open Graph URLs, BGP `noindex,follow`, and
+    zero browser console errors.
   - Complete and GitHub-rendered verified: the README Copyright and Licences
     section uses readable semantic asset links and separate licence, brand,
     provenance, and third-party paragraphs. All four direct asset destinations
@@ -329,8 +332,9 @@
     GitHub Pages run `30080507753`; the live `visual.html` returned HTTP 200
     and exposed zero hierarchy `details[open]` elements.
 - Next pickup action:
-  - Commit the verified source-first SEO implementation, push `main`, then
-    verify the normal-state GitHub Pages deployment and record its result.
+  - No implementation pickup is pending for this workstream. The remaining
+    owner action is to verify the Google URL-prefix property and submit the
+    public sitemap as recorded in the delivery report.
 - Open blockers or risks:
   - None.
 - Verification gap:

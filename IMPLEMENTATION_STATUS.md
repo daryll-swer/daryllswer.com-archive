@@ -7,7 +7,7 @@
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: source-first archive SEO, RSS, and fallback
   discovery
-- Status: locally complete; initial GitHub Pages deployment pending
+- Status: complete and hosted verified
 - Last updated: 2026-08-17
 - Implementer role/model/thread: delegated `implementer-luna` completed the
   bounded rights-registry, reconciliation, renderer, and validation changes;
@@ -19,7 +19,7 @@
 ## Latest Delivery
 
 - Source-first archive SEO, RSS, and fallback discovery:
-  - Status: locally complete; hosted deployment pending
+  - Status: complete and hosted verified
   - Scope: Separate Pages indexing policy from DS canonical-health state. The
     archive homepage remains indexable in normal operation; article readers,
     workbook, and primary IPv6 visual must be `noindex, follow` until DS
@@ -43,8 +43,13 @@
     `make scan-secrets` all passed. Local browser QA confirmed no page-level
     horizontal overflow at 320, 390, 768, 1024, 1440, 1920, and 2560 CSS px
     for homepage, BGP post, workbook, and IPv6 visual; raw source snapshots
-    remain local with no console errors. Commit, push, and live Pages QA remain
-    pending.
+    remain local with no console errors.
+  - Delivery: commit `a298c35` (`Add source-first archive SEO fallback`) was
+    pushed to `main`. GitHub Pages deployment `31978596471` succeeded. Live
+    smoke checks confirmed the homepage title/local canonical/Open Graph URL,
+    one Google verification tag, homepage-only sitemap, absent normal-state
+    feed, BGP source-first `noindex,follow` plus its Swer Networks rights
+    block, IPv6 visual `noindex,follow`, and no browser console errors.
 
 - Per-post rights registry for Swer Networks reposts:
   - Status: complete and hosted verified
