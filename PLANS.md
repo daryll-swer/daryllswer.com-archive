@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: in progress; deterministic Pages and full canonical update reconciliation
+- Status: complete; deterministic Pages and full canonical update reconciliation
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-08-17
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -22,13 +22,13 @@
 ## Current Status / Next Pickup
 
 - Current state:
-  - In progress: eliminate encoder-dependent favicon churn and reconcile every
-    verified changed existing post as an all-or-nothing batch. The checked
-    512 px favicon derivative is stored outside generated Pages output and is
-    copied byte-for-byte during rendering. A healthy run may add one new post
-    plus all existing-post updates; relocation/missing anomalies continue to
-    block synchronisation and retirement remains a separate two-confirmation
-    current-tree-only action.
+  - Complete and hosted-verified: encoder-dependent favicon churn is removed
+    and every verified existing-post edit is eligible for an all-or-nothing
+    reconciliation batch. The controlled 512 px derivative is copied
+    byte-for-byte during rendering. Commit `bd4d35a` passed the manually
+    dispatched canonical workflow `31966939174`; its clean path skipped both
+    Pages rendering and post-reconciliation work. The permitted status-report
+    commit `a41fab9` deployed through GitHub Pages run `31966955910`.
   - Complete locally: the reconciliation workflow now separates health from
     content state, confirms only one missing WordPress ID across two healthy
     weekly observations at least seven days apart, and requires direct REST
@@ -246,8 +246,9 @@
     renders. A clean healthy REST comparison backfilled raw canonical-body
     fingerprint baselines for all 19 bundles. Unit/integration tests now cover
     master-change/no-op/tamper behaviour, all-existing update plans, staged
-    failure, and rollback. Final validation, push, hosted workflow dispatch,
-    and Pages verification remain pending.
+    failure, and rollback. Commit `bd4d35a` was pushed, canonical workflow
+    `31966939174` passed with its clean render path skipped, and GitHub Pages
+    run `31966955910` deployed the permitted status-report follow-up.
   - 2026-07-24: completed local generation, structural validation, and browser
     QA for responsive reserved-prefix card grids. The singleton grid has 15
     direct static leaves and no disclosure controls; all 13 multi-prefix
@@ -291,8 +292,7 @@
     GitHub Pages run `30080507753`; the live `visual.html` returned HTTP 200
     and exposed zero hierarchy `details[open]` elements.
 - Next pickup action:
-  - Complete local and hosted-workflow validation, then commit and push the
-    deterministic derivative and batch reconciliation implementation.
+  - No implementation pickup is pending for this workstream.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
@@ -611,7 +611,7 @@
     post changes are canonical drift, not merely report material, but a
     partial batch would produce an internally inconsistent archive.
   - Date/Author: 2026-08-17, user/Codex
-  - Status: implemented locally; hosted verification pending
+  - Status: implemented and hosted verified
   - Impact: `scripts/prepare-brand-favicon.py` regenerates the checked 512 px
     derivative only after a master-checksum change. `render-site.py` copies it
     byte-for-byte. A healthy reconciliation stages every changed existing post

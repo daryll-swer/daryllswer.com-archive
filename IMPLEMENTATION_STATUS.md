@@ -7,14 +7,14 @@
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: deterministic Pages and full canonical update
   reconciliation
-- Status: in progress
+- Status: complete and hosted verified
 - Last updated: 2026-08-17
 - Implementer role/model/thread: delegated `implementer-luna` completed the
   bounded controlled-favicon generator and validation change; current Codex
-  Desktop is integrating the batch-reconciliation path and running checks
+  Desktop completed integration, validation, and hosted verification
 - Architect role/model/thread: current Codex Desktop thread plus user review
-- Current budget/rate-limit state: no active implementation-route limit is
-  blocking final integration or verification
+- Current budget/rate-limit state: no active implementation-route limit
+  affected the completed workstream
 
 ## Scope
 
@@ -135,15 +135,15 @@
     deployed by GitHub Pages build `30092569178`; the live visual returned
     HTTP 200 and matched the one-grid/15-leaf/13-range structural contract.
 - GitHub Pages proprietary favicon:
-  - Status: superseded by controlled derivative work in progress
+  - Status: complete and hosted verified
   - Notes: Owner-provided `01_DS_Favicon_Dark_Mode.png` remains byte-exact in
     `assets/brand/`; the new controlled 512 px derivative is tracked under
-    `assets/brand/derivatives/` and will be copied byte-for-byte to Pages.
+    `assets/brand/derivatives/` and is copied byte-for-byte to Pages.
     Validation now covers the master/derivative relationship, checksums,
     dimensions, generated links, removal of the text-only `DS` badge, and
     exclusion of the full-size source from `docs/`.
 - Deterministic Pages and full canonical update reconciliation:
-  - Status: complete locally; hosted verification pending
+  - Status: complete and hosted verified
   - Notes: `scripts/prepare-brand-favicon.py` generates the tracked 512 px
     proprietary favicon derivative only after a master checksum change, and
     `render-site.py` byte-copies it into Pages. The weekly workflow prepares
@@ -152,7 +152,12 @@
     with at most one new/restored post; staging, target-ID validation, full
     bundle replacement, manifest replacement, and rollback prevent partial
     publication. The clean 2026-08-17 comparison backfilled raw canonical-body
-    fingerprints for all 19 current post bundles.
+    fingerprints for all 19 current post bundles. Commit `bd4d35a` passed
+    manual canonical workflow run `31966939174`; its clean path skipped the
+    render step. The status-report follow-up `a41fab9` deployed successfully
+    through GitHub Pages run `31966955910`; live homepage, article, visual,
+    and favicon routes returned HTTP 200, with the deployed favicon SHA-256
+    equal to the controlled derivative checksum.
 - GitHub publication:
   - Status: complete
   - Notes: New public repo `daryll-swer/daryllswer.com-archive` created and pushed; old repo `daryll-swer/daryllswer.com-neteng-blog` deleted.
@@ -185,7 +190,7 @@
   - Status: complete and pushed
   - Notes: `.github/workflows/canonical-drift.yml` runs weekly/manual checks. `scripts/check-canonical-drift.py` writes `archive-status.json` and `docs/CANONICAL_DRIFT.md`, with `frozen_archive` no-op behaviour for permanent canonical failure.
 - Canonical post retirement automation:
-  - Status: superseded by full reconciliation work in progress
+  - Status: included in the complete full-reconciliation workstream
   - Notes: a healthy canonical comparison now classifies posts by immutable
     WordPress ID. One missing post may be retired only after two compatible
     weekly observations at least seven days apart, direct REST-item and
@@ -1000,7 +1005,7 @@
 ## Next Pickup
 
 - Next action:
-  - No implementation pickup is pending for the workflow remediation.
+  - No implementation pickup is pending for the completed workstream.
 - Current blocker:
   - None.
 - Budget/rate blocker:
