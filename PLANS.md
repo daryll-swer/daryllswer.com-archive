@@ -22,10 +22,11 @@
 ## Current Status / Next Pickup
 
 - Current state:
-  - Complete locally: raw-path asset link labels in the README copyright
+  - Complete and GitHub-rendered verified: raw-path asset link labels in the README copyright
     paragraph with human-readable semantic links while retaining all four
     direct destinations and proprietary-rights language. The validator now
-    requires those semantic links and rejects the legacy raw-path form.
+    requires those semantic links and rejects the legacy raw-path form. Commit
+    `03cf939` renders all four links to their expected public repository files.
   - Complete and hosted-verified: the archive landing page title and Open Graph title are
     `daryllswer.com – Archive`. The archive remains at its dedicated project
     Pages URL; the account-level `daryll-swer.github.io` namespace is reserved
