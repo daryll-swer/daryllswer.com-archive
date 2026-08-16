@@ -504,7 +504,7 @@ def render_home(posts: list[dict], metadata_by_slug: dict[str, dict]) -> None:
 <main class="home">
   <section class="home-hero">
     <p class="eyebrow">Public mirror and long-term archive</p>
-    <h1>daryllswer.com Archive</h1>
+    <h1>{html_escape(ARCHIVE_HOME_TITLE)}</h1>
     <p>Network engineering, architecture, IPv6, routing, operations, and related writing mirrored from the canonical WordPress site.</p>
   </section>
   <section class="post-list" aria-label="Archived articles">

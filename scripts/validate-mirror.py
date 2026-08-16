@@ -843,6 +843,18 @@ def validate_pages_open_graph_url(page: Path, expected: str, errors: list[str]) 
         errors.append(f"{rel(page)}: Open Graph URL must be exactly {expected!r}; found {values!r}")
 
 
+def validate_pages_home_h1(page: Path, expected: str, errors: list[str]) -> None:
+    try:
+        document = parse_html_file(page)
+    except Exception as exc:
+        errors.append(f"{rel(page)}: generated HTML parse failed while checking homepage H1: {exc}")
+        return
+    headings = document.xpath("//main[contains(concat(' ', normalize-space(@class), ' '), ' home ')]//h1")
+    values = [heading.text_content() for heading in headings]
+    if values != [expected]:
+        errors.append(f"{rel(page)}: homepage H1 must be exactly {expected!r}; found {values!r}")
+
+
 def validate_pages_canonical_url(page: Path, expected: str, errors: list[str]) -> None:
     try:
         document = parse_html_file(page)
@@ -1366,6 +1378,7 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
         errors.append("GitHub Pages index title does not match the archive homepage title")
     if f'<meta property="og:title" content="{PAGES_HOME_TITLE}">' not in index_html:
         errors.append("GitHub Pages index Open Graph title does not match the archive homepage title")
+    validate_pages_home_h1(site_index, PAGES_HOME_TITLE, errors)
     if 'href="index.html"' in index_html:
         errors.append("GitHub Pages index navigation should use the clean ./ root URL, not index.html")
     validate_pages_canonical_url(site_index, PAGES_BASE_URL, errors)
