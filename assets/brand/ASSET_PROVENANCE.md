@@ -15,10 +15,14 @@ browser icon.
 
 ## Generated Pages Derivative
 
-`scripts/render-site.py` generates
-`docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png` from this source using
-Lanczos resampling. The derivative limits browser decoding to 512 x 512 px and
-is used in the Pages header and `<link rel="icon">` metadata.
+`scripts/prepare-brand-favicon.py` creates the controlled
+`derivatives/01_DS_Favicon_Dark_Mode-512.png` from this source using Lanczos
+resampling only when the master checksum changes. Its byte SHA-256 and the
+master-to-derivative checksum relationship are recorded in `manifest.json`.
+`scripts/render-site.py` then copies that controlled derivative byte-for-byte
+to `docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png`. The derivative limits
+browser decoding to 512 x 512 px and is used in the Pages header and
+`<link rel="icon">` metadata.
 
 ## Provenance and rights boundary
 

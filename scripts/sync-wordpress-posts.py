@@ -33,7 +33,7 @@ except Exception:  # pragma: no cover - optional dimension support
     Image = None
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(os.environ.get("ARCHIVE_ROOT", Path(__file__).resolve().parents[1])).resolve()
 SITE = "https://www.daryllswer.com"
 POSTS_ENDPOINT = f"{SITE}/wp-json/wp/v2/posts?per_page=100&_embed=1"
 MEDIA_ENDPOINT = f"{SITE}/wp-json/wp/v2/media"
@@ -949,6 +949,10 @@ def sync_post(post: dict, generated_at: str, canonical_to_bundle: dict[str, str]
             "canonical_html_path": "source/canonical-page.html",
             "rendered_article_path": "source/rendered-article.html",
             "wordpress_post_path": "source/wordpress-post.json",
+            # This is intentionally captured before archive-only CTA filtering so
+            # drift checks can detect a canonical body change without treating
+            # our durable-content exclusions as a perpetual difference.
+            "canonical_rendered_content_sha256": sha256_bytes(rendered_article_raw.encode("utf-8")),
             "fetched_at": generated_at,
         },
         "archive_filters": {
@@ -1018,6 +1022,13 @@ def parse_args() -> argparse.Namespace:
         default="",
         help="Comma-separated WordPress post slugs to refresh.",
     )
+    parser.add_argument(
+        "--expected-id",
+        action="append",
+        default=[],
+        type=int,
+        help="Expected immutable WordPress ID for automation-safe targeted refreshes. May be supplied more than once.",
+    )
     return parser.parse_args()
 
 
@@ -1056,7 +1067,13 @@ def write_archive_manifest(
     write_json(ROOT / "archive-manifest.json", manifest)
 
 
-def sync_selected_posts(posts: list[dict], rest_headers: dict[str, str], generated_at: str, slugs: set[str]) -> int:
+def sync_selected_posts(
+    posts: list[dict],
+    rest_headers: dict[str, str],
+    generated_at: str,
+    slugs: set[str],
+    expected_ids: set[int] | None = None,
+) -> int:
     archive_path = ROOT / "archive-manifest.json"
     if not archive_path.exists():
         print("error: archive-manifest.json missing; run a full sync before targeted refresh", file=sys.stderr)
@@ -1067,6 +1084,11 @@ def sync_selected_posts(posts: list[dict], rest_headers: dict[str, str], generat
     if missing:
         print(f"error: requested slug(s) not found in WordPress REST: {', '.join(missing)}", file=sys.stderr)
         return 1
+    if expected_ids:
+        selected_ids = {posts_by_slug[slug].get("id") for slug in slugs}
+        if len(selected_ids) != len(slugs) or selected_ids != expected_ids:
+            print("error: requested slugs do not match the expected immutable WordPress IDs", file=sys.stderr)
+            return 1
 
     archive = load_json(archive_path)
     canonical_to_bundle = canonical_bundle_map(posts)
@@ -1103,8 +1125,12 @@ def main() -> int:
     generated_at = now_iso()
     posts, rest_headers = fetch_all_posts()
     slugs = selected_slugs(args)
+    expected_ids = set(args.expected_id)
+    if expected_ids and not slugs:
+        print("error: --expected-id requires --slug or --slugs", file=sys.stderr)
+        return 1
     if slugs:
-        return sync_selected_posts(posts, rest_headers, generated_at, slugs)
+        return sync_selected_posts(posts, rest_headers, generated_at, slugs, expected_ids or None)
 
     canonical_to_bundle = canonical_bundle_map(posts)
     manifest_posts = [sync_post(post, generated_at, canonical_to_bundle) for post in posts]

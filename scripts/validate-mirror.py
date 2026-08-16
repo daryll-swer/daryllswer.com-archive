@@ -41,11 +41,17 @@ README_BRAND_COPYRIGHT_NOTICE = "© 2026 Daryll Swer. All rights reserved."
 PAGES_FAVICON_SOURCE_PATH = "assets/brand/01_DS_Favicon_Dark_Mode.png"
 PAGES_FAVICON_MANIFEST_PATH = "assets/brand/manifest.json"
 PAGES_FAVICON_PROVENANCE_PATH = "assets/brand/ASSET_PROVENANCE.md"
+PAGES_FAVICON_DERIVATIVE_PATH = "assets/brand/derivatives/01_DS_Favicon_Dark_Mode-512.png"
 PAGES_FAVICON_OUTPUT_PATH = "docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png"
 PAGES_FAVICON_SIZE = 512
 README_BRAND_MARKDOWN_LINKS = tuple(
     f"[{path}]({path})"
-    for path in [README_BRAND_ASSET_PATH, PAGES_FAVICON_SOURCE_PATH, PAGES_FAVICON_OUTPUT_PATH]
+    for path in [
+        README_BRAND_ASSET_PATH,
+        PAGES_FAVICON_SOURCE_PATH,
+        PAGES_FAVICON_DERIVATIVE_PATH,
+        PAGES_FAVICON_OUTPUT_PATH,
+    ]
 )
 LEGACY_BRAND_PROVENANCE_PATHS = (
     "assets/readme/" + "README.md",
@@ -454,6 +460,9 @@ def validate_post(post_item: dict, errors: list[str], warnings: list[str], archi
     metadata = load_json(metadata_path)
     schema = load_json(ROOT / "schemas" / "post-metadata.schema.json")
     check_required(metadata, schema, rel(metadata_path), errors)
+    canonical_fingerprint = (metadata.get("source") or {}).get("canonical_rendered_content_sha256")
+    if not isinstance(canonical_fingerprint, str) or not re.fullmatch(r"[0-9a-f]{64}", canonical_fingerprint):
+        errors.append(f"{post_item['slug']}: missing or malformed canonical rendered-content checksum")
     if metadata.get("canonical_url") != post_item.get("canonical_url"):
         errors.append(f"{post_item['slug']}: manifest canonical URL does not match metadata")
     featured = metadata.get("featured_image")
@@ -819,6 +828,7 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
     favicon_source_path = ROOT / PAGES_FAVICON_SOURCE_PATH
     favicon_manifest_path = ROOT / PAGES_FAVICON_MANIFEST_PATH
     favicon_provenance_path = ROOT / PAGES_FAVICON_PROVENANCE_PATH
+    favicon_derivative_path = ROOT / PAGES_FAVICON_DERIVATIVE_PATH
     favicon_output_path = ROOT / PAGES_FAVICON_OUTPUT_PATH
 
     for path in [
@@ -831,6 +841,7 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
         favicon_source_path,
         favicon_manifest_path,
         favicon_provenance_path,
+        favicon_derivative_path,
         favicon_output_path,
     ]:
         if not path.exists():
@@ -936,7 +947,12 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
     if (ROOT / "docs" / README_BRAND_ASSET_PATH).exists():
         errors.append("README proprietary logo must not be copied into GitHub Pages output")
 
-    if not favicon_source_path.exists() or not favicon_manifest_path.exists() or not favicon_output_path.exists():
+    if (
+        not favicon_source_path.exists()
+        or not favicon_manifest_path.exists()
+        or not favicon_derivative_path.exists()
+        or not favicon_output_path.exists()
+    ):
         return None
     if favicon_provenance_path.exists():
         favicon_provenance = favicon_provenance_path.read_text(encoding="utf-8", errors="replace").lower()
@@ -964,13 +980,31 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
     if favicon.get("pages_derivative", {}).get("path") != PAGES_FAVICON_OUTPUT_PATH:
         errors.append("Pages favicon manifest derivative path is incorrect")
     derivative = favicon.get("pages_derivative", {})
+    if derivative.get("prepared_path") != PAGES_FAVICON_DERIVATIVE_PATH:
+        errors.append("Pages favicon manifest prepared derivative path is incorrect")
+    if derivative.get("format") != "image/png":
+        errors.append("Pages favicon manifest derivative format is incorrect")
     if (derivative.get("width"), derivative.get("height")) != (PAGES_FAVICON_SIZE, PAGES_FAVICON_SIZE):
         errors.append("Pages favicon manifest derivative dimensions are incorrect")
     expected_hash = favicon.get("sha256")
+    expected_derivative_source_hash = derivative.get("source_sha256")
+    expected_derivative_hash = derivative.get("sha256")
+    source_checksum = sha256_file(favicon_source_path)
     if not isinstance(expected_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
         errors.append("Pages favicon manifest SHA-256 is missing or invalid")
-    elif sha256_file(favicon_source_path) != expected_hash:
+    elif source_checksum != expected_hash:
         errors.append("Pages favicon source checksum mismatch")
+    if not isinstance(expected_derivative_source_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_derivative_source_hash):
+        errors.append("Pages favicon manifest derivative source SHA-256 is missing or invalid")
+    elif expected_derivative_source_hash != source_checksum:
+        errors.append("Pages favicon manifest derivative source checksum relationship is incorrect")
+    if not isinstance(expected_derivative_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_derivative_hash):
+        errors.append("Pages favicon manifest derivative SHA-256 is missing or invalid")
+    else:
+        if sha256_file(favicon_derivative_path) != expected_derivative_hash:
+            errors.append("Pages favicon prepared derivative checksum mismatch")
+        if sha256_file(favicon_output_path) != expected_derivative_hash:
+            errors.append("Pages favicon generated output checksum mismatch")
 
     previous_pixel_limit = Image.MAX_IMAGE_PIXELS
     Image.MAX_IMAGE_PIXELS = 150_000_000
@@ -978,6 +1012,9 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
         with Image.open(favicon_source_path) as image:
             if image.format != "PNG" or image.size != (favicon.get("width"), favicon.get("height")):
                 errors.append("Pages favicon source format or dimensions do not match its manifest")
+        with Image.open(favicon_derivative_path) as image:
+            if image.format != "PNG" or image.size != (PAGES_FAVICON_SIZE, PAGES_FAVICON_SIZE):
+                errors.append("Prepared Pages favicon derivative must be a 512 px PNG")
         with Image.open(favicon_output_path) as image:
             if image.format != "PNG" or image.size != (PAGES_FAVICON_SIZE, PAGES_FAVICON_SIZE):
                 errors.append("Pages favicon derivative must be a 512 px PNG")
@@ -985,6 +1022,9 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
         errors.append(f"Pages favicon image validation failed: {exc}")
     finally:
         Image.MAX_IMAGE_PIXELS = previous_pixel_limit
+
+    if favicon_derivative_path.read_bytes() != favicon_output_path.read_bytes():
+        errors.append("Pages favicon prepared derivative and generated output are not byte-for-byte identical")
 
     def validate_favicon_page(page: Path, href: str, *, expects_header: bool = False) -> None:
         if not page.exists():
@@ -1175,10 +1215,12 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             ("schedule:", r"^\s*schedule:\s*$"),
             ("workflow_dispatch:", r"^\s*workflow_dispatch:\s*$"),
             ("concurrency:", r"^\s*concurrency:\s*$"),
-            ("timeout-minutes:", r"^\s*timeout-minutes:\s*10\s*$"),
+            ("timeout-minutes:", r"^\s*timeout-minutes:\s*25\s*$"),
+            ("controlled favicon preparation", r"make\s+prepare-brand-favicon"),
             ("scripts/check-canonical-drift.py", r"scripts/check-canonical-drift\.py"),
             ("scripts/reconcile-canonical-drift.py", r"scripts/reconcile-canonical-drift\.py"),
             ("action-plan outside checkout", r"runner\.temp.*canonical-drift-action-plan\.json"),
+            ("reconciliation result outside checkout", r"runner\.temp.*canonical-drift-reconciliation-result\.json"),
         ]:
             if not has_active_line(pattern):
                 errors.append(f"canonical drift workflow missing active `{marker}`")
@@ -1202,9 +1244,12 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             "Check out repository",
             "Set up Python",
             "Install Python dependencies",
+            "Prepare controlled brand favicon",
             "Check canonical drift",
             "Reconcile canonical drift",
+            "Read reconciliation result",
             "Render generated Pages",
+            "Verify reconciled canonical state",
             "Validate public archive",
         ]
         for step_name in required_steps:
@@ -1221,9 +1266,15 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             ("Set up Python", r"^cache:\s*['\"]?pip['\"]?\s*$", "pip cache"),
             ("Set up Python", r"^cache-dependency-path:\s*['\"]?requirements\.txt['\"]?\s*$", "requirements.txt cache key"),
             ("Install Python dependencies", r"^run:\s*python\s+-m\s+pip\s+install\s+-r\s+requirements\.txt\s*$", "requirements.txt installation"),
+            ("Prepare controlled brand favicon", r"^run:\s*\|\s*$", "controlled favicon preparation"),
+            ("Prepare controlled brand favicon", r"make\s+prepare-brand-favicon", "controlled favicon make target"),
             ("Check canonical drift", r"--action-plan\s+.*runner\.temp.*canonical-drift-action-plan\.json", "external action-plan output"),
             ("Reconcile canonical drift", r"scripts/reconcile-canonical-drift\.py", "canonical drift reconciler"),
+            ("Reconcile canonical drift", r"--result\s+.*runner\.temp.*canonical-drift-reconciliation-result\.json", "external reconciliation result"),
+            ("Read reconciliation result", r"content_changed", "reconciliation content-change output"),
             ("Render generated Pages", r"^run:\s+make\s+render-site\s*$", "generated Pages rendering"),
+            ("Render generated Pages", r"^if:\s*steps\.brand-favicon\.outputs\.changed\s*==\s*'true'\s*\|\|\s*steps\.reconciliation\.outputs\.content_changed\s*==\s*'true'\s*$", "conditional Pages rendering"),
+            ("Verify reconciled canonical state", r"scripts/check-canonical-drift\.py\s+--fresh\s*$", "fresh post-reconciliation drift comparison"),
         ]
         for step_name, pattern, description in required_step_lines:
             if step_name in step_blocks and not step_has(step_name, pattern):
@@ -1238,9 +1289,12 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             "Check out repository",
             "Set up Python",
             "Install Python dependencies",
+            "Prepare controlled brand favicon",
             "Check canonical drift",
             "Reconcile canonical drift",
+            "Read reconciliation result",
             "Render generated Pages",
+            "Verify reconciled canonical state",
             "Validate public archive",
         ]
         present_steps = [name for name in ordered_steps if name in step_lines]

@@ -16,6 +16,9 @@
       "preservation": "Stored byte-for-byte from the owner-provided original",
       "pages_derivative": {
         "path": "docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png",
+        "prepared_path": "assets/brand/derivatives/01_DS_Favicon_Dark_Mode-512.png",
+        "source_sha256": "310e104810f12dc633f52ca23043c7350090e2b40f2dcf400ace84aecb16793f",
+        "sha256": "b2788225535411fa37516b9b40a51942546554976c02267e12877b6699dacf57",
         "width": 512,
         "height": 512,
         "format": "image/png",

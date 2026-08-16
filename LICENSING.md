@@ -39,10 +39,11 @@ cases before redistribution.
 ## Proprietary Daryll Swer Brand Assets
 
 `assets/readme/13_DS_Logo_Dark_Mode_SEO.png` and
-`assets/brand/01_DS_Favicon_Dark_Mode.png` are owner-provided proprietary
-Daryll Swer brand assets. The former is used only as the repository README
-header; the latter is retained byte-for-byte as the source for the generated
-GitHub Pages header and browser favicon.
+`assets/brand/01_DS_Favicon_Dark_Mode.png` and its controlled derivative under
+`assets/brand/derivatives/` are owner-provided proprietary Daryll Swer brand
+assets. The former is used only as the repository README header; the favicon
+master remains byte-for-byte preserved and the controlled derivative is copied
+byte-for-byte to the GitHub Pages header and browser favicon.
 
 - Copyright notice: `© 2026 Daryll Swer. All rights reserved.`
 - Licence status: proprietary; no public copyright or trade mark licence is

@@ -34,7 +34,7 @@ UNAVAILABLE_AFTER_FAILURES = 3
 FREEZE_AFTER_FAILURES = 8
 FREEZE_AFTER_DAYS = 30
 RETIREMENT_CONFIRMATION_MIN_DAYS = 7
-ACTION_PLAN_VERSION = 1
+ACTION_PLAN_VERSION = 2
 DEFAULT_ACTION_PLAN_NAME = "canonical-drift-action-plan.json"
 REST_POST_ITEM_TEMPLATE = f"{SITE}/wp-json/wp/v2/posts/{{post_id}}"
 WP_UPLOAD_RE = re.compile(
@@ -169,16 +169,17 @@ def load_status(generated_at: str) -> dict:
     return status
 
 
-def request_posts(status: dict) -> tuple[list[dict] | None, dict[str, str], bool]:
+def request_posts(status: dict, *, fresh: bool = False) -> tuple[list[dict] | None, dict[str, str], bool]:
     headers = {
         "User-Agent": UA,
         "Accept": "application/json",
     }
-    cache = status.get("http_cache", {}).get(POSTS_ENDPOINT, {})
-    if cache.get("etag"):
-        headers["If-None-Match"] = cache["etag"]
-    if cache.get("last_modified"):
-        headers["If-Modified-Since"] = cache["last_modified"]
+    if not fresh:
+        cache = status.get("http_cache", {}).get(POSTS_ENDPOINT, {})
+        if cache.get("etag"):
+            headers["If-None-Match"] = cache["etag"]
+        if cache.get("last_modified"):
+            headers["If-Modified-Since"] = cache["last_modified"]
 
     req = urllib.request.Request(POSTS_ENDPOINT, headers=headers)
     try:
@@ -200,6 +201,11 @@ def request_posts(status: dict) -> tuple[list[dict] | None, dict[str, str], bool
         with urllib.request.urlopen(page_req, timeout=45) as resp:
             posts.extend(json.loads(resp.read().decode("utf-8")))
     return posts, resp_headers, False
+
+
+def needs_fresh_collection(status: dict, forced: bool = False) -> bool:
+    """Require a body response for explicit and retirement-confirmation checks."""
+    return forced or bool(status.get("retirement_candidates"))
 
 
 def embedded_featured_url(post: dict) -> str | None:
@@ -224,6 +230,7 @@ def live_post_summary(post: dict) -> dict:
         "modified": post.get("modified"),
         "featured_image_url": embedded_featured_url(post),
         "content_text_sha256": sha256_text(normalise_text(content_html)),
+        "canonical_rendered_content_sha256": sha256_text(content_html),
         "content_media_urls": media,
     }
 
@@ -241,6 +248,7 @@ def archived_post_summary(post_item: dict) -> dict:
         and is_mirror_required_wordpress_media(asset.get("source_url"))
     })
     featured = metadata.get("featured_image") or {}
+    source = metadata.get("source") or {}
     return {
         "id": metadata.get("id"),
         "slug": metadata.get("slug"),
@@ -249,6 +257,7 @@ def archived_post_summary(post_item: dict) -> dict:
         "modified": metadata.get("modified"),
         "featured_image_url": featured.get("source_url"),
         "content_text_sha256": sha256_text(normalise_text(rendered)),
+        "canonical_rendered_content_sha256": source.get("canonical_rendered_content_sha256"),
         "content_media_urls": uploaded_assets,
         "bundle_path": post_item.get("bundle_path"),
     }
@@ -300,6 +309,9 @@ def compare_drift(live_posts: list[dict]) -> dict:
                     "archived": archived.get(key),
                     "live": live.get(key),
                 })
+        archived_content_hash = archived.get("canonical_rendered_content_sha256")
+        if archived_content_hash and live.get("canonical_rendered_content_sha256") != archived_content_hash:
+            fields.append({"field": "canonical_rendered_content_sha256"})
         live_media = {media_identity(item): item for item in live.get("content_media_urls", [])}
         archived_media = {media_identity(item): item for item in archived.get("content_media_urls", [])}
         added_media = sorted(live_media[key] for key in set(live_media) - set(archived_media))
@@ -315,6 +327,17 @@ def compare_drift(live_posts: list[dict]) -> dict:
                 "id": post_id,
                 "canonical_url": live_url or archived_url,
                 "slug": live.get("slug") or archived.get("slug"),
+                "expected": {
+                    key: live.get(key)
+                    for key in [
+                        "id",
+                        "slug",
+                        "canonical_url",
+                        "modified",
+                        "featured_image_url",
+                        "canonical_rendered_content_sha256",
+                    ]
+                },
                 "fields": fields,
             })
 
@@ -330,6 +353,62 @@ def compare_drift(live_posts: list[dict]) -> dict:
         "missing_urls": sorted((item.get("canonical_url") or "").rstrip("/") for item in missing_posts),
         "changed_posts": changed,
     }
+
+
+def backfill_canonical_content_fingerprints(drift: dict, live_posts: list[dict]) -> list[int]:
+    """Record missing raw canonical-body fingerprints after a clean comparison.
+
+    Existing bundles created before automatic reconciliation did not retain the
+    raw canonical body checksum because their stored source HTML had archive
+    CTA filtering applied. A clean, healthy REST comparison is the only safe
+    time to establish that baseline: no outstanding mutation can be hidden.
+    """
+    if (
+        drift.get("new_ids")
+        or drift.get("missing_ids")
+        or drift.get("relocated_posts")
+        or drift.get("changed_posts")
+    ):
+        return []
+
+    live_by_id = {item.get("id"): item for item in _live_summaries(live_posts)}
+    archive = load_json(ROOT / "archive-manifest.json")
+    updated_ids = []
+    for post in archive.get("posts") or []:
+        post_id = post.get("id")
+        live = live_by_id.get(post_id)
+        fingerprint = live.get("canonical_rendered_content_sha256") if isinstance(live, dict) else None
+        if not isinstance(post_id, int) or not isinstance(fingerprint, str):
+            continue
+        bundle_path = Path(str(post.get("bundle_path") or ""))
+        if (
+            bundle_path.is_absolute()
+            or ".." in bundle_path.parts
+            or bundle_path.parts[:2] != ("content", "posts")
+            or len(bundle_path.parts) != 3
+        ):
+            raise RuntimeError(f"cannot backfill canonical fingerprint for post ID {post_id}: unsafe bundle path")
+        bundle = ROOT / bundle_path
+        current = ROOT
+        for component in bundle_path.parts:
+            current /= component
+            if current.is_symlink():
+                raise RuntimeError(f"cannot backfill canonical fingerprint for post ID {post_id}: bundle path is symlinked")
+        metadata_path = bundle / "metadata.json"
+        if not metadata_path.is_file() or metadata_path.is_symlink():
+            raise RuntimeError(f"cannot backfill canonical fingerprint for post ID {post_id}: metadata is unavailable")
+        metadata = load_json(metadata_path)
+        if metadata.get("id") != post_id:
+            raise RuntimeError(f"cannot backfill canonical fingerprint for post ID {post_id}: metadata ID mismatch")
+        source = metadata.get("source")
+        if not isinstance(source, dict):
+            raise RuntimeError(f"cannot backfill canonical fingerprint for post ID {post_id}: source metadata is malformed")
+        if source.get("canonical_rendered_content_sha256"):
+            continue
+        source["canonical_rendered_content_sha256"] = fingerprint
+        write_json(metadata_path, metadata)
+        updated_ids.append(post_id)
+    return updated_ids
 
 
 def drift_hash(drift: dict) -> str:
@@ -539,6 +618,7 @@ def build_action_plan(
             "eligible": False,
         },
         "sync_posts": [],
+        "update_posts": [],
         "action": "none",
         "reason": note or "No automatic reconciliation action is safe.",
     }
@@ -561,10 +641,20 @@ def build_action_plan(
         return plan
 
     new_posts = sorted(drift.get("new_posts", []), key=lambda item: int(item.get("id", 0)))
-    if new_posts and len(new_posts) == 1 and not drift.get("missing_ids") and not drift.get("relocated_posts"):
-        plan["sync_posts"] = [new_posts[0]]
+    changed_posts = sorted(drift.get("changed_posts", []), key=lambda item: int(item.get("id", 0)))
+    if (
+        len(new_posts) <= 1
+        and not drift.get("missing_ids")
+        and not drift.get("relocated_posts")
+        and (new_posts or changed_posts)
+    ):
+        plan["sync_posts"] = new_posts
+        plan["update_posts"] = changed_posts
         plan["action"] = "sync"
-        plan["reason"] = "At most one newly detected immutable WordPress ID is eligible for automatic mirroring per run."
+        plan["reason"] = (
+            "One new immutable WordPress ID at most, plus every verified changed existing post, "
+            "will be mirrored as one atomic reconciliation batch."
+        )
     return plan
 
 
@@ -587,6 +677,13 @@ def render_report(status: dict, drift: dict | None, note: str) -> str:
         f"- `canonical_unavailable`: after {UNAVAILABLE_AFTER_FAILURES} consecutive failed runs.",
         f"- `frozen_archive`: after {FREEZE_AFTER_FAILURES} consecutive failed runs across at least {FREEZE_AFTER_DAYS} days.",
         "- When `frozen_archive` is set, future scheduled checks no-op before any canonical network request.",
+        "",
+        "## Reconciliation Policy",
+        "",
+        "- A healthy run may synchronise every detected changed existing post as one all-or-nothing batch.",
+        "- The same batch may include at most one newly published or restored post.",
+        "- Relocations and missing-post anomalies block automatic synchronisation; retirement has separate two-confirmation safeguards.",
+        "- Canonical outages never update or remove archive content.",
         "",
     ]
 
@@ -674,6 +771,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true", help="Print status without writing state/report files.")
     parser.add_argument("--force", action="store_true", help="Bypass frozen_archive no-op for a manual recovery check.")
+    parser.add_argument("--fresh", action="store_true", help="Bypass conditional REST validators for a fresh comparison.")
     parser.add_argument(
         "--action-plan",
         help="Write the one-run reconciliation action plan outside the repository.",
@@ -703,7 +801,10 @@ def main() -> int:
         return 0
 
     try:
-        live_posts, headers, not_modified = request_posts(status)
+        live_posts, headers, not_modified = request_posts(
+            status,
+            fresh=needs_fresh_collection(status, args.fresh),
+        )
         update_cache(status, headers)
         reset_failure(status, generated_at)
         if not_modified:
@@ -716,9 +817,12 @@ def main() -> int:
             if live_posts is None:
                 raise RuntimeError("internal error: live_posts was unexpectedly empty")
             drift = compare_drift(live_posts)
+            baseline_ids = backfill_canonical_content_fingerprints(drift, live_posts)
             status["last_live_post_count"] = drift["live_post_count"]
             status["last_live_post_summaries"] = _live_summaries(live_posts)
             note = "Canonical REST was reachable and compared with the archive manifest."
+            if baseline_ids:
+                note += f" Recorded canonical content-fingerprint baselines for {len(baseline_ids)} post(s)."
         status["last_live_post_count"] = drift["live_post_count"]
         evidence = retirement_endpoint_evidence(drift.get("missing_posts", []))
         previous_candidates = json.loads(json.dumps(status.get("retirement_candidates") or []))
@@ -773,7 +877,7 @@ def main() -> int:
 
     if persist:
         write_json(STATUS_PATH, status)
-        maybe_write(REPORT_PATH, report, dry_run=False)
+    maybe_write(REPORT_PATH, report, dry_run=False)
     print(f"canonical drift state={status.get('state')} frozen={status.get('frozen')}")
     return 0
 

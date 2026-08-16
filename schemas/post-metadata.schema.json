@@ -13,7 +13,16 @@
     "author": {"type": "object"},
     "categories": {"type": "array"},
     "tags": {"type": "array"},
-    "source": {"type": "object"},
+    "source": {
+      "type": "object",
+      "required": ["canonical_rendered_content_sha256"],
+      "properties": {
+        "canonical_rendered_content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
     "hashes": {"type": "object"},
     "featured_image": {"type": ["object", "null"]},
     "assets_manifest": {"type": "string"},

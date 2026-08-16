@@ -18,9 +18,11 @@ not the publishing source of truth; WordPress remains canonical.
 - `assets/readme/13_DS_Logo_Dark_Mode_SEO.png` is the owner-provided,
   byte-preserved proprietary logo used as the repository README header.
 - `assets/brand/01_DS_Favicon_Dark_Mode.png` is the owner-provided,
-  byte-preserved proprietary favicon source. `scripts/render-site.py` produces
-  a 512 px PNG derivative at `docs/assets/brand/` for the generated Pages
-  header and browser icon, avoiding an excessive browser image decode.
+  byte-preserved proprietary favicon source. Its controlled 512 px derivative
+  is stored under `assets/brand/derivatives/`; `scripts/render-site.py` copies
+  that approved byte sequence into `docs/assets/brand/` for the generated
+  Pages header and browser icon, avoiding both excessive browser decoding and
+  encoder-dependent Pages churn.
 - Their SHA-256 checksums and byte-preserved provenance are recorded in
   `assets/readme/ASSET_PROVENANCE.md`, `assets/readme/manifest.json`, and
   `assets/brand/ASSET_PROVENANCE.md`, and `assets/brand/manifest.json`; their
@@ -29,7 +31,10 @@ not the publishing source of truth; WordPress remains canonical.
 - They are not mirrored WordPress content, third-party media, MIT tooling, or
   `CC-BY-NC-SA-4.0` archive content. Future tooling must not rename,
   re-encode, redistribute, or apply an open licence to the source assets. The
-  only permitted generated derivative is the documented 512 px Pages favicon.
+  only permitted generated derivative is the documented 512 px Pages favicon;
+  its manifest records both master and derivative checksums. A changed master
+  refreshes it through `scripts/prepare-brand-favicon.py`, while ordinary
+  renders never re-encode it.
 
 ## Data Flow
 
@@ -132,13 +137,13 @@ flowchart LR
 - Third-party documents, PDFs, downloads, and external artefacts are not
   mirror-required drift. They remain outbound links unless the owner explicitly
   approves mirroring a specific artefact.
-- The automation remains detection-first for existing-post changes. It records
-  drift in `docs/CANONICAL_DRIFT.md` and durable state in
-  `archive-status.json`. A separate bounded reconciliation path may mirror one
-  new post or retire one verified missing post; it never refreshes changed
-  content automatically.
-- The workflow has a 10 minute timeout and a concurrency group so overlapping
-  scheduled/manual runs cannot pile up.
+- The automation records drift in `docs/CANONICAL_DRIFT.md` and durable state
+  in `archive-status.json`. A separate reconciliation path mirrors every
+  verified changed existing post as one atomic batch, may add one new/restored
+  post in that batch, or retires one independently verified missing post.
+- The workflow has a 25 minute timeout and a concurrency group so overlapping
+  scheduled/manual runs cannot pile up. It prepares the controlled favicon on
+  every run but renders Pages only after a content or brand-master change.
 - The workflow commits only allowlisted reconciliation paths: drift status and
   report, the archive manifest, affected post bundles, and regenerated Pages
   output. Timestamped validation reports and temporary action plans are never
@@ -184,13 +189,22 @@ surface must not cause repeated workflow failures or archive deletion.
   relocated post, a live count exactly one lower than the archive count, two
   compatible healthy observations at least seven days apart, and direct REST
   item plus canonical URL responses of `404` or `410`.
+- A pending retirement candidate forces a fresh REST collection fetch; a
+  conditional `304` cannot count as a confirmation.
 - The candidate record is temporary. Successful reconciliation removes the
   current-tree post bundle, its media and evidence, its archive-manifest entry,
   and generated Pages output, then clears per-post candidate data. Git history
   is deliberately retained.
 - At most one newly detected public post is mirrored in one scheduled run.
-  A restored post follows the same new-post path. Existing-post changes remain
-  report-only.
+  A restored post follows the same new-post path. Every detected existing-post
+  change is included in the same staging batch; any failed target rolls the
+  whole batch back and nothing is published.
+- Same-ID URL/slug changes remain relocation reports, not automatic updates or
+  deletions. Missing/relocated anomalies block a synchronisation batch.
+- All bundles store a canonical rendered-content checksum before archive CTA
+  filtering. A clean healthy comparison backfills the baseline for legacy
+  bundles once, supporting content-fingerprint comparison without treating
+  deliberate archive filtering as recurring drift.
 - Historical Markdown links that prove a target was once mirrored retain a
   local Pages route after retirement. It is intentionally unavailable until a
   later restoration is mirrored; unrelated canonical pages are never

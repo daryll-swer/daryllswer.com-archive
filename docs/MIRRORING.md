@@ -103,22 +103,27 @@ Linked third-party documents, PDFs, downloads, and external artefacts are not
 mirror-required drift. They remain outbound links unless the owner explicitly
 approves mirroring a specific artefact.
 
-This automation is detection-first for existing-post changes. It writes durable
-state to `archive-status.json` and a human-readable report to
-`docs/CANONICAL_DRIFT.md`. It may automatically mirror one newly detected
-public post or retire one strictly verified missing post; it does not refresh
-changed existing article bundles automatically.
+This automation writes durable state to `archive-status.json` and a
+human-readable report to `docs/CANONICAL_DRIFT.md`. A healthy run may mirror
+every detected changed existing article bundle as one all-or-nothing batch, and
+may include one newly detected or restored post. A same-ID URL/slug relocation
+remains report-only and blocks the batch rather than being mistaken for an
+update or deletion.
 
 The workflow is intentionally low-cost:
 
 - weekly schedule plus manual dispatch;
 - no private credentials;
 - public unauthenticated WordPress REST only;
-- 10 minute job timeout;
+- 25 minute job timeout;
 - concurrency group with `cancel-in-progress`;
 - explicit CPython 3.12 setup, pip cache keyed to `requirements.txt`, and
   `python -m pip install -r requirements.txt` before archive Python scripts;
-- bounded reconciliation of at most one new post or one confirmed retirement;
+- one new/restored post at most plus all verified existing-post updates in one
+  atomic batch, or one confirmed retirement;
+- Pages rendering only after a verified content reconciliation or a changed
+  proprietary favicon master; clean health checks do not re-encode or rewrite
+  the favicon;
 - commit only allowlisted drift, manifest, affected bundle, and generated
   Pages paths.
 
@@ -153,7 +158,17 @@ the post REST endpoint and its canonical URL. Any failed request or anomaly
 clears the confirmation sequence and cannot remove archive content. Successful
 retirement removes the current-tree post bundle, assets, source evidence,
 archive-manifest entry, and generated Pages route; it does not rewrite Git
-history. Candidate details are cleared from the current branch after success.
+history. A pending candidate always forces a fresh REST collection fetch rather
+than accepting a conditional `304`. Candidate details are cleared from the
+current branch after success.
+
+For existing-post updates, the checker compares immutable IDs, title, modified
+timestamp, featured image, WordPress-uploaded body media, and a raw canonical
+rendered-content fingerprint. A clean healthy comparison backfills the
+fingerprint baseline for older bundles once. The synchroniser stages the
+complete batch outside the repository, revalidates each expected WordPress ID,
+and replaces bundles plus the manifest only after every target succeeds. Any
+target failure leaves the published archive unchanged.
 
 To unfreeze manually, a future maintainer must verify that the canonical site
 is healthy and owner-controlled, edit `archive-status.json` back to `healthy`,

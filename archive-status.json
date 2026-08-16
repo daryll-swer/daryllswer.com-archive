@@ -17,6 +17,7 @@
   "last_live_post_count": 19,
   "last_live_post_summaries": [
     {
+      "canonical_rendered_content_sha256": "797b1bcef9bb84190ba4a91cbf258354529bb4a6de1ca6e04935c8c47b2d572b",
       "canonical_url": "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/",
       "content_media_urls": [],
       "content_text_sha256": "801a83f745eb98aa729770f7c73797edac6f5ddf591c3a89496e26cc9411fd82",
@@ -27,6 +28,7 @@
       "title": "bgp router id structuring in ipv6 native networks"
     },
     {
+      "canonical_rendered_content_sha256": "0530f9a7d323f0de52858be9006b1cf3993fb7326e006de9350992f11f45a392",
       "canonical_url": "https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2025/03/IMG_1961.jpg",
@@ -42,6 +44,7 @@
       "title": "how to bring data centre-like connectivity to your home with ipttth"
     },
     {
+      "canonical_rendered_content_sha256": "81f669b954933243d95299b08bdb65dd3ba4f6a102e7670ee9e81ffaec75dff8",
       "canonical_url": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/",
       "content_media_urls": [],
       "content_text_sha256": "5d246348a589ba61f80e65d29b214086dea6dba192670d5bbc08fd230729dd2c",
@@ -52,6 +55,7 @@
       "title": "how to configure routed ipv6 in docker"
     },
     {
+      "canonical_rendered_content_sha256": "dd6e529246f887b5a662599db94bff56903f8a2a21072049deb2980243a7c270",
       "canonical_url": "https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/",
       "content_media_urls": [],
       "content_text_sha256": "5fc8d323c1771bb56167d4492e3b2fa39c800f85becce6b843431af115bf80e0",
@@ -62,6 +66,7 @@
       "title": "let’s talk about cgnat and ipv6, yet again."
     },
     {
+      "canonical_rendered_content_sha256": "3e27dc3bfe445a67fe6081e6c1e8cb473734b0493d53fd2e6fae890502f9c7c6",
       "canonical_url": "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-1_OOB_Edge_in_the_DC.png",
@@ -86,6 +91,7 @@
       "title": "out-of-band network design for service provider networks"
     },
     {
+      "canonical_rendered_content_sha256": "27ba2b392893ac838e3fb43100f9d3e9e4b93cab51d7a0c3c73bcaf9daaff41c",
       "canonical_url": "https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2024/01/iptables_raw_filter_setup.png",
@@ -100,6 +106,7 @@
       "title": "drop early, drop often: raw vs filter iptables packet filtering"
     },
     {
+      "canonical_rendered_content_sha256": "fcb0f096447d9d16e44ed69d5239b93e4e8cf6170eef460590fc2100ff66ef36",
       "canonical_url": "https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2023/09/image.png"
@@ -112,6 +119,7 @@
       "title": "ipv6 router advertisement: why is it enabled by default on some network vendors?"
     },
     {
+      "canonical_rendered_content_sha256": "22a596354f4063e24b13825da8df1a3ea08e60ff5b3c6bfecbef221fc07ba953",
       "canonical_url": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2023/09/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg"
@@ -124,6 +132,7 @@
       "title": "bgplay data misinterpretation led to bgp false alarm call on my number"
     },
     {
+      "canonical_rendered_content_sha256": "02bd5157b976cc3e01ddb00442b6400ed190f76ce6f3870163cb7e9120b65229",
       "canonical_url": "https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/",
       "content_media_urls": [],
       "content_text_sha256": "728c922ed60013bd1bfd14cf5ea3df36bc5323d4f07f3207dd6811622f9d497a",
@@ -134,6 +143,7 @@
       "title": "behavioural differences of ipv6 subnet-router anycast address implementations"
     },
     {
+      "canonical_rendered_content_sha256": "eade99e89b45cc5885e4eabc931f32f77f5745ebaa5a3c090f440eaffae0c7f3",
       "canonical_url": "https://www.daryllswer.com/an-interesting-folk-tale-behind-the-khasi-matrilineal-system/",
       "content_media_urls": [],
       "content_text_sha256": "1e4550677014ff834d1082069ca91f7c9a647c8ef282f4aa1e5603ad720de33e",
@@ -144,6 +154,7 @@
       "title": "an interesting folk tale behind the khasi matrilineal system"
     },
     {
+      "canonical_rendered_content_sha256": "b6cbc20cd64dc4825ac6033ac28c544cb38de8f1cd9e4719ce590b489ebc55af",
       "canonical_url": "https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-2-DC-Topology-Example.png",
@@ -158,6 +169,7 @@
       "title": "ipv6 architecture and subnetting guide for network engineers and operators"
     },
     {
+      "canonical_rendered_content_sha256": "1ae66e1443702e91c88c76d8718adcfd80b1d3e3e3ae03d320a6d9eabda79378",
       "canonical_url": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/",
       "content_media_urls": [],
       "content_text_sha256": "f520e53eabb1a1a40914f1ae833d0660606d8c9d805811806bf5902bf171a174",
@@ -168,6 +180,7 @@
       "title": "navigating a bgp zombie outbreak on juniper routers"
     },
     {
+      "canonical_rendered_content_sha256": "67308c2801da4aabddb10cc02bc3a0f813c3abfedd25483e5971668a5bfb1d01",
       "canonical_url": "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2022/12/image-3840x1873.png",
@@ -181,6 +194,7 @@
       "title": "interesting ipv6 observation on ndp (neighbour discovery protocol)"
     },
     {
+      "canonical_rendered_content_sha256": "82a058f42142a22bfb5b9d273366509b2e3ea8940f210a7bef2721386c863e48",
       "canonical_url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET.png",
@@ -198,6 +212,7 @@
       "title": "how did i set up my own autonomous system?"
     },
     {
+      "canonical_rendered_content_sha256": "59bb7ca518d395542f17787838a1f11a8eaa84ac15c2edc3a386d50c1f596519",
       "canonical_url": "https://www.daryllswer.com/the-human-side-of-isps/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2021/08/image.png"
@@ -210,6 +225,7 @@
       "title": "the human side of isps"
     },
     {
+      "canonical_rendered_content_sha256": "4bcf3d5fbbd21d1dbe2d21e185cf3040237aa95ed35507f2f2888191b2c0d076",
       "canonical_url": "https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-LAN-Include-Dynamic.png",
@@ -234,6 +250,7 @@
       "title": "edge router & bng optimisation guide for isps"
     },
     {
+      "canonical_rendered_content_sha256": "129d9b82a905bbfcf8f6496dabfac06ad2c4a505652a36133c3619ac30fd91d3",
       "canonical_url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
@@ -248,6 +265,7 @@
       "title": "multi-wan setups with retail isps [part 2 – implementation (using routeros)]"
     },
     {
+      "canonical_rendered_content_sha256": "09a728237a239e55892905afdd00d5b070ba15b392f6e65ac0a63bc3c44b710a",
       "canonical_url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png",
@@ -261,6 +279,7 @@
       "title": "multi-wan setups with retail isps (part 1 – theory)"
     },
     {
+      "canonical_rendered_content_sha256": "73fb425b38b0ac16f705844c2832da104fc4350a45e0fe845cff0a99ad85edbf",
       "canonical_url": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
       "content_media_urls": [],
       "content_text_sha256": "092fa95ddef2b76ff623031758ea8648e688a0acdaa68133fad8ba751a65acd4",
@@ -271,7 +290,7 @@
       "title": "shortcomings of cgnat and potential workarounds"
     }
   ],
-  "last_success_at": "2026-08-16T18:17:19Z",
+  "last_success_at": "2026-08-16T18:59:00Z",
   "manual_recovery": {
     "unfreeze_steps": [
       "Confirm the canonical site is again under the owner's control.",
@@ -289,6 +308,6 @@
   },
   "retirement_candidates": [],
   "state": "healthy",
-  "updated_at": "2026-08-16T18:17:19Z",
+  "updated_at": "2026-08-16T18:59:00Z",
   "version": 1
 }
