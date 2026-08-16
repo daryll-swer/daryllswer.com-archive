@@ -15,7 +15,263 @@
   "last_drift_detected_at": null,
   "last_drift_hash": null,
   "last_live_post_count": 19,
-  "last_success_at": "2026-07-07T15:22:58Z",
+  "last_live_post_summaries": [
+    {
+      "canonical_url": "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/",
+      "content_media_urls": [],
+      "content_text_sha256": "801a83f745eb98aa729770f7c73797edac6f5ddf591c3a89496e26cc9411fd82",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg",
+      "id": 5324,
+      "modified": "2026-06-14T05:55:24",
+      "slug": "bgp-router-id-structuring-in-ipv6-native-networks",
+      "title": "bgp router id structuring in ipv6 native networks"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2025/03/IMG_1961.jpg",
+        "https://www.daryllswer.com/wp-content/uploads/2025/05/AS149794_BLR_BGP_Peers-scaled.png",
+        "https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-1_BLR_Layer_1_Topology-scaled.png",
+        "https://www.daryllswer.com/wp-content/uploads/2025/05/Figure-3_SHL_Layer_1_Topology-scaled.png"
+      ],
+      "content_text_sha256": "2ee9c48c9b0851e415e8bf7e443f7bda4d505d6cc3984cb9191cb79d08987ade",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Data-centre_cables_FT-scaled.jpg",
+      "id": 4285,
+      "modified": "2025-08-29T16:02:17",
+      "slug": "how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth",
+      "title": "how to bring data centre-like connectivity to your home with ipttth"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/",
+      "content_media_urls": [],
+      "content_text_sha256": "5d246348a589ba61f80e65d29b214086dea6dba192670d5bbc08fd230729dd2c",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2025/05/Docker-IPv6.png",
+      "id": 5136,
+      "modified": "2025-05-19T12:04:34",
+      "slug": "how-to-configure-routed-ipv6-in-docker",
+      "title": "how to configure routed ipv6 in docker"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/",
+      "content_media_urls": [],
+      "content_text_sha256": "5fc8d323c1771bb56167d4492e3b2fa39c800f85becce6b843431af115bf80e0",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2025/04/NAT_Mess.png",
+      "id": 5018,
+      "modified": "2026-06-06T17:45:08",
+      "slug": "lets-talk-about-cgnat-and-ipv6-yet-again",
+      "title": "let’s talk about cgnat and ipv6, yet again."
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-1_OOB_Edge_in_the_DC.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-2_OOB_L3_Dist_in_the_DC.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-3_OOB_Dist_Switch_in_the_DC.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-4_OOB_in_the_DC_Layer_1.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-5_OOB_in_the_DC_Layer_2-3.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-6_OOB_for_ISP_Layer_1-3074x4320.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-6_OOB_for_ISP_Layer_1.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-7_OOB_for_ISP_Layer_2-3-3071x4320.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-7_OOB_for_ISP_Layer_2-3.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-8_Inter-Site_OOB_Transport-7680x2042.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-8_Inter-Site_OOB_Transport.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear-7680x2449.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear.png"
+      ],
+      "content_text_sha256": "b298be4191759e6193b11b0628bca6dbfd9ac4463ea8d9fa10371a1d6c866cdd",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png",
+      "id": 2931,
+      "modified": "2026-06-06T17:45:13",
+      "slug": "out-of-band-network-design-for-service-provider-networks",
+      "title": "out-of-band network design for service provider networks"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2024/01/iptables_raw_filter_setup.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/01/test-1-cpu-usage.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/01/test-2-cpu-usage.png"
+      ],
+      "content_text_sha256": "46fe728cc82b5d0ffcdadf3b846add4c50aeefa3d72c87c01a5bb443f511fa6e",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2024/01/drop_packets_parachutes.webp",
+      "id": 3138,
+      "modified": "2025-05-21T01:52:14",
+      "slug": "drop-early-drop-often-raw-vs-filter-iptables-packet-filtering",
+      "title": "drop early, drop often: raw vs filter iptables packet filtering"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2023/09/image.png"
+      ],
+      "content_text_sha256": "29ea6e775786faa09c7ebe15575a79f158e7fe3d6855ff0e1b2c5d140dbb83dc",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/IPv6_RA_featured_Image.png",
+      "id": 2836,
+      "modified": "2025-05-21T01:52:12",
+      "slug": "ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors",
+      "title": "ipv6 router advertisement: why is it enabled by default on some network vendors?"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2023/09/Figure-1-Screenshot-from-RIPE-BGPlay-of-the-very-specific-BGP-data-output.jpg"
+      ],
+      "content_text_sha256": "47845a05ab94964d0045f245d4ce010179c80bb952c0ee787a3e0329bad3569e",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2023/09/BGP_False_Alarm_Featured_Image.png",
+      "id": 2803,
+      "modified": "2025-05-21T01:52:11",
+      "slug": "bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number",
+      "title": "bgplay data misinterpretation led to bgp false alarm call on my number"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/",
+      "content_media_urls": [],
+      "content_text_sha256": "728c922ed60013bd1bfd14cf5ea3df36bc5323d4f07f3207dd6811622f9d497a",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2023/08/Subnet-Router-Anycast.jpg",
+      "id": 2739,
+      "modified": "2025-05-21T01:47:33",
+      "slug": "behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations",
+      "title": "behavioural differences of ipv6 subnet-router anycast address implementations"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/an-interesting-folk-tale-behind-the-khasi-matrilineal-system/",
+      "content_media_urls": [],
+      "content_text_sha256": "1e4550677014ff834d1082069ca91f7c9a647c8ef282f4aa1e5603ad720de33e",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2023/05/ShotInSohra-DaryllSwer.jpg",
+      "id": 2492,
+      "modified": "2025-05-21T02:00:28",
+      "slug": "an-interesting-folk-tale-behind-the-khasi-matrilineal-system",
+      "title": "an interesting folk tale behind the khasi matrilineal system"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-2-DC-Topology-Example.png",
+        "https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1-2710x4320.png",
+        "https://www.daryllswer.com/wp-content/uploads/2023/04/Figure-3-ISP-Topology-Example-1.png"
+      ],
+      "content_text_sha256": "beb571e19ba091e6c64b68c4088fefd87fec521677b913f8f4a50189575edadc",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Scaffold_FT.png",
+      "id": 1512,
+      "modified": "2026-06-06T17:44:32",
+      "slug": "ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators",
+      "title": "ipv6 architecture and subnetting guide for network engineers and operators"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/",
+      "content_media_urls": [],
+      "content_text_sha256": "f520e53eabb1a1a40914f1ae833d0660606d8c9d805811806bf5902bf171a174",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2023/03/Zombie-routes_FT.webp",
+      "id": 2053,
+      "modified": "2025-05-21T01:47:21",
+      "slug": "navigating-a-bgp-zombie-outbreak-on-juniper-routers",
+      "title": "navigating a bgp zombie outbreak on juniper routers"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2022/12/image-3840x1873.png",
+        "https://www.daryllswer.com/wp-content/uploads/2022/12/image.png"
+      ],
+      "content_text_sha256": "20d3744c568dcb6ac6ac43d2ad64bf18cc8a1ad3004ed499332d35fb680b4fac",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2022/12/image.png",
+      "id": 1674,
+      "modified": "2025-05-21T01:52:10",
+      "slug": "interesting-ipv6-observation-on-ndp-neighbour-discovery-protocol",
+      "title": "interesting ipv6 observation on ndp (neighbour discovery protocol)"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2021/11/Figure-1-AS-SET.png",
+        "https://www.daryllswer.com/wp-content/uploads/2022/04/Figure-4-SCTP-Traffic-Snippet.png",
+        "https://www.daryllswer.com/wp-content/uploads/2022/04/image.png",
+        "https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-3-Network-Topology.png",
+        "https://www.daryllswer.com/wp-content/uploads/2022/05/Figure-5-BGPlay-showing-AS29075-still-advertising-old-routes-of-AS210777.png",
+        "https://www.daryllswer.com/wp-content/uploads/2022/12/image-1.png"
+      ],
+      "content_text_sha256": "06aa9ecebcb69d8378044d24711c7cc36508ae52f13121d5e82a887fd3f8fbaf",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2022/06/AS-Cropped.png",
+      "id": 970,
+      "modified": "2025-06-23T20:41:31",
+      "slug": "how-did-i-set-up-my-own-autonomous-system",
+      "title": "how did i set up my own autonomous system?"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/the-human-side-of-isps/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2021/08/image.png"
+      ],
+      "content_text_sha256": "c2def08c658965e7eca45ea337d0cd4de1704b0ed70c0fe1b3ee6a3ead333448",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2021/08/Computer-with-people.png",
+      "id": 558,
+      "modified": "2025-05-21T01:47:31",
+      "slug": "the-human-side-of-isps",
+      "title": "the human side of isps"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-LAN-Include-Dynamic.png",
+        "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-12-BitTorrent-Seeding-Behind-CGNAT.png",
+        "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-13-Src-nat-vs-Netmap.png",
+        "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-15-PPPoE-IPv6-configuration.png",
+        "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-Recommended-Connection-Tracking-Timeout-Values.png",
+        "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-9-PPPoE-Server-MTU-MRU-TCP-MSS-Clamping-config.png",
+        "https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-10-MTU-and-TCP-MSS-correctly-working-on-the-internet.png",
+        "https://www.daryllswer.com/wp-content/uploads/2022/10/Figure-16-IPv6-working-correctly.jpg",
+        "https://www.daryllswer.com/wp-content/uploads/2023/12/image.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.27.19 AM.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.31.27 AM.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.36.45 AM.png",
+        "https://www.daryllswer.com/wp-content/uploads/2024/01/Screenshot-2024-01-20-at-2.37.02 AM.png"
+      ],
+      "content_text_sha256": "60bd0788e9abc7396cf12f38bb122a87defb58af50566bc2bb274e2715971ec1",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2022/11/834B1158-30C5-42F5-A513-FDA123138559.jpg",
+      "id": 269,
+      "modified": "2026-05-30T00:09:08",
+      "slug": "edge-router-bng-optimisation-guide-for-isps",
+      "title": "edge router & bng optimisation guide for isps"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-In-this-case-ether1-and-ether2-are-the-underlying-ethernet-interfaces.png",
+        "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png",
+        "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2.png"
+      ],
+      "content_text_sha256": "9a6f09143702f6dc8767deb9471a0f7f05efa85821020e65f77213e823f708c2",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
+      "id": 115,
+      "modified": "2026-07-06T21:24:21",
+      "slug": "multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros",
+      "title": "multi-wan setups with retail isps [part 2 – implementation (using routeros)]"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/",
+      "content_media_urls": [
+        "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-1-A-simple-non-technical-diagram-to-illustrate-Multi-WAN-setup-with-two-ISPs.png",
+        "https://www.daryllswer.com/wp-content/uploads/2021/09/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png"
+      ],
+      "content_text_sha256": "a67e81754155c184b097faa372d46c2d4c4ebffe387bfffe80ad79daa59ccc28",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2021/03/Multi_WAN_FT-scaled.jpg",
+      "id": 66,
+      "modified": "2026-07-06T21:25:28",
+      "slug": "multi-wan-setups-with-retail-isps-part-1-theory",
+      "title": "multi-wan setups with retail isps (part 1 – theory)"
+    },
+    {
+      "canonical_url": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/",
+      "content_media_urls": [],
+      "content_text_sha256": "092fa95ddef2b76ff623031758ea8648e688a0acdaa68133fad8ba751a65acd4",
+      "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2026/07/Shortcomings_CGNAT_FT-scaled.jpg",
+      "id": 29,
+      "modified": "2026-07-06T19:06:12",
+      "slug": "shortcomings-of-cgnat-and-potential-work-arounds",
+      "title": "shortcomings of cgnat and potential workarounds"
+    }
+  ],
+  "last_success_at": "2026-08-16T18:17:19Z",
   "manual_recovery": {
     "unfreeze_steps": [
       "Confirm the canonical site is again under the owner's control.",
@@ -31,7 +287,8 @@
     "frozen_archive_minimum_failure_window_days": 30,
     "frozen_archive_noops_without_network": true
   },
+  "retirement_candidates": [],
   "state": "healthy",
-  "updated_at": "2026-07-07T15:22:58Z",
+  "updated_at": "2026-08-16T18:17:19Z",
   "version": 1
 }
