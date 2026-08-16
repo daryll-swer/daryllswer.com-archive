@@ -9,6 +9,11 @@ not the publishing source of truth; WordPress remains canonical.
 
 - Public inputs only: WordPress REST API, sitemap/RSS, canonical HTML, media
   URLs, and public Google Sheet exports.
+- WordPress REST is authoritative for the archived published-post set; sitemap
+  and RSS are secondary cross-checks. The deliberately no-indexed BGP Router
+  ID mirror is an exact documented sitemap exclusion because it originated at
+  public swernetworks.com; any other archive URL absent from the post sitemap
+  remains validation drift.
 - No private admin exports, backend access, database dumps, cookies, browser
   state, or credentials.
 - Generated content is deterministic enough to re-run and compare.

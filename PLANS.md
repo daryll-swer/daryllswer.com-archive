@@ -22,6 +22,10 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - Complete locally: the deliberately no-indexed BGP Router ID article is an
+    explicit sitemap exception because it mirrors a public swernetworks.com
+    article. WordPress REST remains authoritative; validation continues to
+    report every other unexpected archive/sitemap mismatch.
   - Complete and hosted-verified: encoder-dependent favicon churn is removed
     and every verified existing-post edit is eligible for an all-or-nothing
     reconciliation batch. The controlled 512 px derivative is copied
@@ -294,10 +298,9 @@
 - Next pickup action:
   - No implementation pickup is pending for this workstream.
 - Open blockers or risks:
-  - WordPress REST has one post not listed in `post-sitemap.xml`.
+  - None.
 - Verification gap:
-  - None for `visual.html`. The known non-blocking warning remains: WordPress
-    REST has one post not listed in `post-sitemap.xml`.
+  - None.
 
 ## Purpose / Big Picture
 

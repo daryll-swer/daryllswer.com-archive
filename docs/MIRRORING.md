@@ -12,6 +12,13 @@ mirror for audit, readability, and long-term maintenance.
 4. Sitemap/RSS for cross-checking missing posts.
 5. Public Google Sheet export endpoints for linked spreadsheet artefacts.
 
+WordPress REST is authoritative for the archive's published-post set. Sitemap
+and RSS data are secondary cross-checks. The exact BGP Router ID article URL
+is an intentional sitemap exception: it mirrors a public `swernetworks.com`
+article and is deliberately no-indexed on daryllswer.com, so it is absent from
+`post-sitemap.xml`. Validation records that documented exception but continues
+to warn for any other archived post absent from the sitemap.
+
 ## Post Bundle
 
 Each post lives under `content/posts/YYYY-MM-DD-slug/`:

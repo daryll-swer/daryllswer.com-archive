@@ -30,6 +30,14 @@ ROOT = Path(__file__).resolve().parents[1]
 UA = "daryllswer-com-archive-validator/1.0 (+https://www.daryllswer.com/)"
 POSTS_ENDPOINT = "https://www.daryllswer.com/wp-json/wp/v2/posts?per_page=100&_embed=1"
 POST_SITEMAP = "https://www.daryllswer.com/post-sitemap.xml"
+# WordPress REST is authoritative for archived posts. This exact public article
+# originated at swernetworks.com and is deliberately no-indexed on the
+# daryllswer.com mirror, so WordPress omits it from the post sitemap.
+INTENTIONAL_SITEMAP_EXCLUSIONS = {
+    "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/": (
+        "public swernetworks.com article mirrored to daryllswer.com; deliberately no-indexed"
+    ),
+}
 PAGES_BASE_URL = "https://daryll-swer.github.io/daryllswer.com-archive/"
 LOCALISABLE_HOSTS = {"www.daryllswer.com", "daryllswer.com"}
 TEXT_FRAGMENT_PREFIX = ":~:text="
@@ -515,6 +523,23 @@ def sitemap_urls() -> set[str]:
         if loc and loc != "https://www.daryllswer.com/":
             urls.add(loc)
     return urls
+
+
+def classify_sitemap_difference(
+    sitemap: set[str], archive: set[str]
+) -> tuple[list[str], list[str], list[tuple[str, str]]]:
+    """Separate true sitemap drift from documented canonical no-index exclusions."""
+    missing_from_archive = sorted(sitemap - archive)
+    missing_from_sitemap = archive - sitemap
+    intentional = sorted(
+        (url, INTENTIONAL_SITEMAP_EXCLUSIONS[url])
+        for url in missing_from_sitemap
+        if url in INTENTIONAL_SITEMAP_EXCLUSIONS
+    )
+    unexpected_missing_from_sitemap = sorted(
+        url for url in missing_from_sitemap if url not in INTENTIONAL_SITEMAP_EXCLUSIONS
+    )
+    return missing_from_archive, unexpected_missing_from_sitemap, intentional
 
 
 def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
@@ -1385,14 +1410,27 @@ def main() -> int:
 
         try:
             sm_urls = sitemap_urls()
-            manifest_urls = {p.get("canonical_url") for p in posts}
-            missing = sorted(sm_urls - manifest_urls)
-            extra = sorted(manifest_urls - sm_urls)
+            manifest_urls = {
+                url for post in posts if isinstance((url := post.get("canonical_url")), str)
+            }
+            missing, extra, intentional_exclusions = classify_sitemap_difference(
+                sm_urls, manifest_urls
+            )
             if missing:
                 errors.append(f"sitemap URLs missing from archive: {missing}")
             if extra:
                 warnings.append(f"archive URLs not present in post sitemap: {extra}")
-            report.extend(["## Sitemap Cross-Check", "", f"- Sitemap post URLs: {len(sm_urls)}", f"- Archive URLs: {len(manifest_urls)}", ""])
+            report.extend([
+                "## Sitemap Cross-Check",
+                "",
+                f"- Sitemap post URLs: {len(sm_urls)}",
+                f"- Archive URLs: {len(manifest_urls)}",
+                f"- Intentional no-index exclusions: {len(intentional_exclusions)}",
+            ])
+            report.extend(
+                f"  - `{url}`: {reason}" for url, reason in intentional_exclusions
+            )
+            report.append("")
         except Exception as exc:
             warnings.append(f"could not verify sitemap: {exc}")
 

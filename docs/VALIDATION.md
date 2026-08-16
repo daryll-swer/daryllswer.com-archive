@@ -1,6 +1,6 @@
 # Validation
 
-Generated: 2026-08-16T19:15:56+00:00
+Generated: 2026-08-16T20:12:08+00:00
 
 ## WordPress REST
 
@@ -11,6 +11,8 @@ Generated: 2026-08-16T19:15:56+00:00
 
 - Sitemap post URLs: 18
 - Archive URLs: 19
+- Intentional no-index exclusions: 1
+  - `https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/`: public swernetworks.com article mirrored to daryllswer.com; deliberately no-indexed
 
 ## Typography
 
@@ -44,11 +46,7 @@ Generated: 2026-08-16T19:15:56+00:00
 ## Result
 
 - Errors: 0
-- Warnings: 1
-
-## Warnings
-
-- archive URLs not present in post sitemap: ['https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/']
+- Warnings: 0
 
 ## Status
 
