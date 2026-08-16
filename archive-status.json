@@ -1,6 +1,27 @@
 {
   "canonical_site": "https://www.daryllswer.com",
   "created_at": "2026-07-06T17:52:37Z",
+  "external_sources": {
+    "5324": {
+      "consecutive_failures": 0,
+      "first_failure_at": null,
+      "frozen": false,
+      "last_checked_at": "2026-08-16T22:47:55Z",
+      "last_failure_at": null,
+      "last_observation": {
+        "countable_failure": false,
+        "state": "healthy",
+        "status": 200,
+        "url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/"
+      },
+      "last_success_at": "2026-08-16T22:47:55Z",
+      "post_id": 5324,
+      "promotion_blocked": false,
+      "state": "healthy",
+      "url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/"
+    }
+  },
+  "external_sources_updated_at": "2026-08-16T22:47:55Z",
   "failure": {
     "consecutive_failures": 0,
     "first_failure_at": null,
@@ -17,13 +38,13 @@
   "last_live_post_count": 19,
   "last_live_post_summaries": [
     {
-      "canonical_rendered_content_sha256": "797b1bcef9bb84190ba4a91cbf258354529bb4a6de1ca6e04935c8c47b2d572b",
+      "canonical_rendered_content_sha256": "bad63fc76efaf7af518876c0fec823dd9c7889b422ac9cd764612945d7a319dd",
       "canonical_url": "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/",
       "content_media_urls": [],
-      "content_text_sha256": "801a83f745eb98aa729770f7c73797edac6f5ddf591c3a89496e26cc9411fd82",
+      "content_text_sha256": "ecdb7f193149c9e373e8efa4cead142d042aec6867df13f268079660d995d77f",
       "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2026/06/BGP_RouterID_FT-scaled.jpg",
       "id": 5324,
-      "modified": "2026-06-14T05:55:24",
+      "modified": "2026-08-17T02:29:23",
       "slug": "bgp-router-id-structuring-in-ipv6-native-networks",
       "title": "bgp router id structuring in ipv6 native networks"
     },
@@ -290,24 +311,30 @@
       "title": "shortcomings of cgnat and potential workarounds"
     }
   ],
-  "last_success_at": "2026-08-16T18:59:00Z",
+  "last_success_at": "2026-08-16T22:51:42Z",
   "manual_recovery": {
     "unfreeze_steps": [
       "Confirm the canonical site is again under the owner's control.",
-      "Change state from frozen_archive to healthy and frozen from true to false.",
-      "Reset failure.consecutive_failures to 0 and clear failure timestamps/details.",
-      "Run scripts/check-canonical-drift.py --force, then validate before resuming scheduled mirroring."
+      "Follow docs/SEO_RECOVERY.md after verifying current owner control of the source.",
+      "Use scripts/manage-archive-seo.py with --owner-verified; do not edit SEO or health state manually.",
+      "Render, validate, scan for secrets, review the diff, then commit before resuming scheduled mirroring."
     ]
   },
   "policy": {
     "canonical_unavailable_after_consecutive_failures": 3,
     "degraded_after_consecutive_failures": 1,
+    "external_source_frozen_after_consecutive_failures": 8,
+    "external_source_frozen_minimum_failure_window_days": 30,
+    "external_source_interval_days": 7,
+    "external_source_unavailable_after_consecutive_failures": 3,
     "frozen_archive_after_consecutive_failures": 8,
     "frozen_archive_minimum_failure_window_days": 30,
     "frozen_archive_noops_without_network": true
   },
   "retirement_candidates": [],
+  "seo_activated_at": null,
+  "seo_state": "source_primary",
   "state": "healthy",
-  "updated_at": "2026-08-16T18:59:00Z",
-  "version": 1
+  "updated_at": "2026-08-16T22:51:42Z",
+  "version": 2
 }

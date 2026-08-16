@@ -48,12 +48,24 @@ jobs:
           fi
 
       - name: Check canonical drift
+        id: canonical
         run: |
+          before="$(sha256sum archive-status.json | cut -d' ' -f1)"
           args=""
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force }}" = "true" ]; then
             args="--force"
           fi
           python3 scripts/check-canonical-drift.py $args --action-plan "${{ runner.temp }}/canonical-drift-action-plan.json"
+          after="$(sha256sum archive-status.json | cut -d' ' -f1)"
+          echo "status_changed=$([ "$before" != "$after" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Check external sources
+        id: external
+        run: |
+          python3 scripts/external_source_monitor.py \
+            --result "${{ runner.temp }}/external-source-result.json"
+          changed="$(python3 -c 'import json; print(str(json.load(open("${{ runner.temp }}/external-source-result.json", encoding="utf-8")).get("changed") is True).lower())')"
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
 
       - name: Reconcile canonical drift
         run: |
@@ -68,21 +80,16 @@ jobs:
           echo "content_changed=$changed" >> "$GITHUB_OUTPUT"
 
       - name: Render generated Pages
-        if: steps.brand-favicon.outputs.changed == 'true' || steps.reconciliation.outputs.content_changed == 'true'
+        id: render-pages
+        if: steps.brand-favicon.outputs.changed == 'true' || steps.canonical.outputs.status_changed == 'true' || steps.external.outputs.changed == 'true' || steps.reconciliation.outputs.content_changed == 'true'
         run: make render-site
 
       - name: Verify reconciled canonical state
         if: steps.reconciliation.outputs.content_changed == 'true'
         run: python3 scripts/check-canonical-drift.py --fresh
 
-      - name: Read archive state
-        id: archive-state
-        run: |
-          state="$(python3 -c 'import json; print(json.load(open("archive-status.json", encoding="utf-8")).get("state", ""))')"
-          echo "state=$state" >> "$GITHUB_OUTPUT"
-
       - name: Validate public archive
-        if: steps.archive-state.outputs.state != 'frozen_archive'
+        if: steps.render-pages.outcome == 'success'
         run: |
           make validate
           make scan-secrets
@@ -103,7 +110,8 @@ jobs:
               paths.update(line for line in subprocess.check_output(command, text=True).splitlines() if line)
           allowed = re.compile(
               r"(?:archive-manifest\.json|archive-status\.json|docs/CANONICAL_DRIFT\.md|"
-              r"docs/VALIDATION\.md|docs/PUBLIC_SAFETY\.md|docs/index\.html|docs/\.nojekyll|"
+              r"docs/EXTERNAL_SOURCE_STATUS\.md|docs/VALIDATION\.md|docs/PUBLIC_SAFETY\.md|"
+              r"docs/robots\.txt|docs/sitemap\.xml|docs/feed\.xml|docs/index\.html|docs/\.nojekyll|"
               r"assets/brand/manifest\.json|assets/brand/derivatives/.+|"
               r"docs/assets/.+|docs/posts/.+|docs/sheets/.+|content/posts/.+)"
           )
@@ -117,7 +125,7 @@ jobs:
 
       - name: Commit drift status changes
         run: |
-          git add -A -- archive-manifest.json archive-status.json assets/brand/manifest.json assets/brand/derivatives docs/CANONICAL_DRIFT.md docs/index.html docs/.nojekyll docs/assets docs/posts docs/sheets content/posts
+          git add -A -- archive-manifest.json archive-status.json assets/brand/manifest.json assets/brand/derivatives docs/CANONICAL_DRIFT.md docs/EXTERNAL_SOURCE_STATUS.md docs/VALIDATION.md docs/PUBLIC_SAFETY.md docs/robots.txt docs/sitemap.xml docs/feed.xml docs/index.html docs/.nojekyll docs/assets docs/posts docs/sheets content/posts
           if git diff --cached --quiet; then
             echo "No archive or generated Pages changes to commit."
             exit 0
@@ -130,6 +138,8 @@ jobs:
           paths = subprocess.check_output(["git", "diff", "--cached", "--name-only"], text=True).splitlines()
           allowed = re.compile(
               r"(?:archive-manifest\.json|archive-status\.json|docs/CANONICAL_DRIFT\.md|"
+              r"docs/EXTERNAL_SOURCE_STATUS\.md|docs/VALIDATION\.md|docs/PUBLIC_SAFETY\.md|"
+              r"docs/robots\.txt|docs/sitemap\.xml|docs/feed\.xml|"
               r"assets/brand/manifest\.json|assets/brand/derivatives/.+|"
               r"docs/index\.html|docs/\.nojekyll|docs/assets/.+|docs/posts/.+|docs/sheets/.+|content/posts/.+)"
           )

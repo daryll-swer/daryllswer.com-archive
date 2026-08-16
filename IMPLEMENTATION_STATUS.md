@@ -5,9 +5,9 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: per-post rights registry for Swer Networks
-  reposts
-- Status: complete and hosted verified; verification record pending push
+- Current sprint / workstream: source-first archive SEO, RSS, and fallback
+  discovery
+- Status: locally complete; initial GitHub Pages deployment pending
 - Last updated: 2026-08-17
 - Implementer role/model/thread: delegated `implementer-luna` completed the
   bounded rights-registry, reconciliation, renderer, and validation changes;
@@ -17,6 +17,34 @@
   affected the completed workstream
 
 ## Latest Delivery
+
+- Source-first archive SEO, RSS, and fallback discovery:
+  - Status: locally complete; hosted deployment pending
+  - Scope: Separate Pages indexing policy from DS canonical-health state. The
+    archive homepage remains indexable in normal operation; article readers,
+    workbook, and primary IPv6 visual must be `noindex, follow` until DS
+    reaches the existing bounded `frozen_archive` state. At that time eligible
+    archive routes become discoverable, with renderer-owned `robots.txt`, XML
+    sitemap, and local RSS. Rights-registry Swer Networks reposts remain
+    excluded until each registered external original independently freezes.
+    No DS/SN canonical, robots, or Open Graph metadata is inherited. Source
+    recovery will require explicit owner verification and a documented manual
+    command, not automatic reversal after an HTTP success.
+  - Delivered: versioned archive SEO state, rights-registry external fallback
+    opt-in, weekly external-source monitor, owner-verified recovery CLI,
+    renderer-owned robots/sitemap/RSS generation, Google verification tag,
+    workflow render gating, and validation coverage. Pages evidence snapshots
+    receive an additional restrictive CSP so their upstream fallback scripts
+    cannot redirect readers away from the archive. A safe post retirement
+    transaction also removes any matching external-source health record.
+  - Verification: `make render-site`; 44-test Python suite; bytecode
+    compilation; workflow YAML parse; local/live canonical drift dry run;
+    `git diff --check`; `make validate` (0 errors, 0 warnings); and
+    `make scan-secrets` all passed. Local browser QA confirmed no page-level
+    horizontal overflow at 320, 390, 768, 1024, 1440, 1920, and 2560 CSS px
+    for homepage, BGP post, workbook, and IPv6 visual; raw source snapshots
+    remain local with no console errors. Commit, push, and live Pages QA remain
+    pending.
 
 - Per-post rights registry for Swer Networks reposts:
   - Status: complete and hosted verified

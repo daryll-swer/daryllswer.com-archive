@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete and hosted verified; verification record pending push
+- Status: locally complete - source-first archive SEO, RSS, and fallback discovery; Pages deployment pending
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-08-17
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -22,6 +22,16 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - Locally complete: source-first archive SEO keeps only the archive homepage
+    indexable while DS is healthy. The new non-reverting `archive_discovery`
+    state activates only after the existing DS frozen threshold, generates the
+    archive sitemap and feed, and permits a registry-marked Swer Networks
+    repost only after its independent source is `frozen_source`. Recovery is
+    owner-verified and manual through `docs/SEO_RECOVERY.md`. Google
+    verification, workflow gating, external source monitoring, raw-snapshot
+    redirect containment, schemas, validation, and tests are implemented.
+    Local verification passed; commit, push, and hosted Pages verification are
+    pending.
   - Complete and GitHub-rendered verified: the README Copyright and Licences
     section uses readable semantic asset links and separate licence, brand,
     provenance, and third-party paragraphs. All four direct asset destinations
@@ -319,7 +329,8 @@
     GitHub Pages run `30080507753`; the live `visual.html` returned HTTP 200
     and exposed zero hierarchy `details[open]` elements.
 - Next pickup action:
-  - No implementation pickup is pending for this workstream.
+  - Commit the verified source-first SEO implementation, push `main`, then
+    verify the normal-state GitHub Pages deployment and record its result.
 - Open blockers or risks:
   - None.
 - Verification gap:

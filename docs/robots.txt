@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+# Archive SEO state: source_primary
+Sitemap: https://daryll-swer.github.io/daryllswer.com-archive/sitemap.xml

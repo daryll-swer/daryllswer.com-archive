@@ -117,6 +117,7 @@
   "published": "2026-06-04T14:36:35",
   "rights": {
     "media_rights": "separate attribution/right notices",
+    "external_fallback": true,
     "original_article_url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/",
     "publisher": "Swer Networks",
     "rights_holder": "Swer Networks",

@@ -35,9 +35,15 @@ not the publishing source of truth; WordPress remains canonical.
   notice and original-publication link. The archive does not inject duplicate
   notices or inherit DS/SN canonical, robots, or Open Graph URL directives;
   generated Pages retains its own archive-local metadata.
+- A registry-marked external original may explicitly opt into fallback
+  discovery. Its independent availability state is recorded by immutable post
+  ID and never inferred from daryllswer.com health. A healthy external source
+  keeps its archive repost `noindex`; only that source's separately frozen
+  state can make its archive route eligible in archive-discovery mode.
 - If a registry-marked post is safely retired, reconciliation removes its
-  registry entry in the same transactional current-tree mutation as the bundle,
-  manifest, and status update; a failed mutation restores all of them.
+  registry entry and any matching external-source state in the same
+  transactional current-tree mutation as the bundle, manifest, and status
+  update; a failed mutation restores all of them.
 
 ## Repository Identity Assets
 
@@ -84,6 +90,10 @@ flowchart LR
   WP --> Drift
   Drift --> Status["archive-status.json"]
   Drift --> DriftReport["docs/CANONICAL_DRIFT.md"]
+  Rights["content/rights-registry.json"] --> SourceHealth["external-original monitor"]
+  SourceHealth --> Status
+  Status --> Site
+  Site --> Discovery["robots.txt, sitemap.xml, feed.xml"]
 ```
 
 ## Rendered Site
@@ -152,6 +162,48 @@ flowchart LR
   `docs/index.html` file remains the GitHub Pages entry point and generated
   artefact, not the preferred public link.
 
+### Source-First Archive SEO
+
+- The archive owns its Pages metadata. Every generated reader page has a
+  GitHub Pages-local canonical URL and Open Graph URL; DS/SN canonical tags,
+  robots directives, and Open Graph URLs are never inherited.
+- The initial SEO mode is `source_primary`: the archive homepage is indexable
+  as archive navigation, while article reader pages, the workbook, and the
+  primary IPv6 visual use `noindex, follow`. Raw source snapshots and
+  non-reader HTML artefacts always use `noindex, nofollow`. Canonical snapshot
+  source remains preserved under `data/`; the Pages copy additionally strips
+  executable refresh/base directives and injects a restrictive CSP so an
+  upstream application fallback cannot redirect an archive visitor away.
+- `archive_discovery` begins only when the separate DS health state reaches
+  `frozen_archive` after eight failures spanning at least 30 days. It does not
+  automatically revert after later HTTP success. Eligible archive reader
+  routes then become indexable, and the renderer produces an archive sitemap
+  and local RSS feed.
+- The sitemap contains only the homepage in `source_primary`. In
+  `archive_discovery`, it additionally includes eligible posts, the workbook
+  landing page, and the primary IPv6 visual with truthful modification dates.
+  It excludes assets, source snapshots, validation reports, retired routes,
+  legacy references, and still-healthy external-original reposts.
+- The archive-generated RSS 2.0 feed exists only in `archive_discovery`. It
+  is generated from local archive data, never copied from the live WordPress
+  feed, and provides the ten most recently published eligible posts with
+  archive-local URLs and stable immutable-ID GUIDs. It deliberately excludes
+  WordPress comments and source-domain SEO metadata.
+- `robots.txt` always permits crawling and advertises the local absolute
+  sitemap URL. The generated homepage carries the public Google Search Console
+  verification token once; it is archive configuration, not a credential.
+- External originals recorded in the rights registry are monitored weekly only
+  while active. Their state is `healthy`, `degraded`, `source_unavailable`, or
+  `frozen_source`. DNS, TLS, network, `404`/`410`, and persistent server
+  failures may advance failure state; `401`, `403`, `429`, and unexpected-host
+  redirects block promotion and require review. Once frozen, a source is not
+  requested again unless an owner explicitly invokes the documented recovery
+  path.
+- A positive HTTP response does not automatically restore source priority or
+  `noindex`. Recovery requires a maintainer to verify owner control and use
+  the manual procedure in `docs/SEO_RECOVERY.md`; this avoids treating a
+  restored, redirected, or hijacked endpoint as authoritative automatically.
+
 ## Canonical Drift Automation
 
 - `.github/workflows/canonical-drift.yml` runs a low-frequency weekly check and
@@ -169,7 +221,8 @@ flowchart LR
   post in that batch, or retires one independently verified missing post.
 - The workflow has a 25 minute timeout and a concurrency group so overlapping
   scheduled/manual runs cannot pile up. It prepares the controlled favicon on
-  every run but renders Pages only after a content or brand-master change.
+  every run but renders Pages only after a content, brand-master, archive SEO,
+  sitemap, or feed eligibility change.
 - The workflow commits only allowlisted reconciliation paths: drift status and
   report, the archive manifest, affected post bundles, and regenerated Pages
   output. Timestamped validation reports and temporary action plans are never
@@ -202,6 +255,12 @@ flowchart LR
 The frozen state is intended for owner-unavailable futures: DNS expiry, TLS
 failure, WordPress death, hosting loss, or a possibly hijacked canonical
 surface must not cause repeated workflow failures or archive deletion.
+
+The archive SEO mode is separate: it begins at `source_primary`, transitions
+once to `archive_discovery` when DS freezes, and can return only through the
+documented owner-verified manual recovery procedure. An external original has
+its own independent failure sequence, so a DS freeze cannot promote a Swer
+Networks repost while its registered original remains active.
 
 ### Content Reconciliation Model
 

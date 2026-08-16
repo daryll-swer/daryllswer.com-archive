@@ -160,6 +160,33 @@
   archive homepage browser and Open Graph title. Post and workbook titles,
   project URL, canonical paths, and relative navigation remain unchanged.
 
+## 2026-08-17: Use Source-First Archive Discovery Fallback
+
+- Decision: Keep DS-origin reader routes `noindex, follow` while the canonical
+  DS site remains healthy, index the archive homepage as a distinct navigation
+  surface, and promote eligible archive routes only after the existing bounded
+  DS freeze threshold. Generate the sitemap, robots file, and archive-owned
+  RSS feed from local data at that point.
+- Rationale: This avoids competing with live canonical content while retaining
+  a durable crawler-discoverable route when the source has failed for a long
+  bounded period. A GitHub Pages archive cannot depend on a live WordPress RSS
+  feed after source loss.
+- External source exception: a rights-registry Swer Networks repost remains
+  `noindex` and excluded from discovery until its registered external original
+  independently reaches the same bounded frozen state. Availability recovery
+  is owner-verified and manual, not inferred from a later successful request.
+- Evidence: Google distinguishes XML sitemaps as complete URL discovery from
+  RSS/Atom as recent-change discovery and recommends using both where useful:
+  <https://developers.google.com/search/blog/2014/10/best-practices-for-xml-sitemaps-rssatom>.
+  The Sitemap Protocol defines the optional truthful `lastmod` field:
+  <https://www.sitemaps.org/protocol.html>.
+- Impact: generated Pages URLs remain self-canonical. `archive-status.json`
+  records separate archive SEO and external-source states; the renderer emits
+  `robots.txt`, `sitemap.xml`, and a ten-item local RSS feed according to
+  eligibility. The homepage carries a public Google verification tag once,
+  and `docs/SEO_RECOVERY.md` is the only supported return path to source
+  priority.
+
 ## 2026-07-06: Use Detection-First Canonical Drift Automation
 
 - Decision: Add a weekly/manual GitHub Actions drift check that records drift

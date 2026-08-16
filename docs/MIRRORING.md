@@ -61,6 +61,32 @@ canonical metadata should use clean directory URLs, for example
 `https://daryll-swer.github.io/daryllswer.com-archive/` and relative `./` or
 `../../` links, instead of redundant `index.html` links.
 
+### Archive SEO and Discovery
+
+The Pages archive owns its canonical and Open Graph URLs. It does not copy
+DS/SN canonical, robots, or Open Graph URL metadata. While the DS source is
+active, the archive runs in `source_primary`: only the archive homepage is
+indexable, while article readers, the workbook, and the primary IPv6 visual
+are `noindex, follow`. Source snapshots and non-reader HTML remain
+`noindex, nofollow`. The preserved source remains under `data/`; its Pages
+derivative has refresh/base directives removed and a restrictive CSP injected,
+so upstream application fallback scripts cannot execute or redirect a reader.
+
+When the independent canonical-health sentinel reaches `frozen_archive`, the
+SEO state changes once to `archive_discovery`. The generated `robots.txt`
+allows crawling and points to the archive sitemap; the sitemap expands from
+the homepage to eligible reader routes, and a local RSS feed is generated from
+the stored archive rather than copied from WordPress. The feed and sitemap use
+only archive-owned URLs. An external-original repost remains excluded until
+the source URL recorded in the rights registry independently reaches
+`frozen_source`.
+
+The generated homepage contains the public Google Search Console verification
+token once. It enables ownership verification for the project Pages URL but is
+not a secret and does not make crawler discovery depend on future account
+access. A later positive HTTP response cannot reverse SEO state automatically;
+follow `docs/SEO_RECOVERY.md` after owner-control verification.
+
 The generated theme uses the canonical site typography:
 
 - `Poppins` for body/content text.

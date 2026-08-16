@@ -120,10 +120,12 @@ def is_mirror_required_wordpress_media(url: str) -> bool:
 
 def default_status(generated_at: str) -> dict:
     return {
-        "version": 1,
+        "version": 2,
         "canonical_site": SITE,
         "state": "healthy",
         "frozen": False,
+        "seo_state": "source_primary",
+        "seo_activated_at": None,
         "created_at": generated_at,
         "updated_at": generated_at,
         "policy": {
@@ -132,6 +134,10 @@ def default_status(generated_at: str) -> dict:
             "frozen_archive_after_consecutive_failures": FREEZE_AFTER_FAILURES,
             "frozen_archive_minimum_failure_window_days": FREEZE_AFTER_DAYS,
             "frozen_archive_noops_without_network": True,
+            "external_source_interval_days": 7,
+            "external_source_unavailable_after_consecutive_failures": 3,
+            "external_source_frozen_after_consecutive_failures": 8,
+            "external_source_frozen_minimum_failure_window_days": 30,
         },
         "failure": {
             "consecutive_failures": 0,
@@ -145,12 +151,13 @@ def default_status(generated_at: str) -> dict:
         "last_live_post_summaries": [],
         "retirement_candidates": [],
         "http_cache": {},
+        "external_sources": {},
         "manual_recovery": {
             "unfreeze_steps": [
                 "Confirm the canonical site is again under the owner's control.",
-                "Change state from frozen_archive to healthy and frozen from true to false.",
-                "Reset failure.consecutive_failures to 0 and clear failure timestamps/details.",
-                "Run scripts/check-canonical-drift.py --force, then validate before resuming scheduled mirroring.",
+                "Follow docs/SEO_RECOVERY.md; do not edit SEO or health state manually.",
+                "Use scripts/manage-archive-seo.py resume-ds --owner-verified.",
+                "Render, validate, scan for secrets, review the diff, then commit before resuming scheduled mirroring.",
             ]
         },
     }
@@ -160,12 +167,23 @@ def load_status(generated_at: str) -> dict:
     if not STATUS_PATH.exists():
         return default_status(generated_at)
     status = load_json(STATUS_PATH)
-    status.setdefault("policy", default_status(generated_at)["policy"])
+    defaults = default_status(generated_at)
+    status["version"] = max(int(status.get("version") or 1), 2)
+    status.setdefault("policy", defaults["policy"])
+    for key, value in defaults["policy"].items():
+        status["policy"].setdefault(key, value)
     status.setdefault("failure", default_status(generated_at)["failure"])
     status.setdefault("http_cache", {})
     status.setdefault("last_live_post_summaries", [])
     status.setdefault("retirement_candidates", [])
     status.setdefault("manual_recovery", default_status(generated_at)["manual_recovery"])
+    status.setdefault("external_sources", {})
+    if status.get("seo_state") not in {"source_primary", "archive_discovery"}:
+        status["seo_state"] = "archive_discovery" if status.get("state") == "frozen_archive" else "source_primary"
+    if status.get("state") == "frozen_archive" and status.get("seo_state") == "source_primary":
+        status["seo_state"] = "archive_discovery"
+        status["seo_activated_at"] = status.get("seo_activated_at") or status.get("updated_at") or generated_at
+    status.setdefault("seo_activated_at", None)
     return status
 
 
@@ -458,6 +476,9 @@ def record_failure(status: dict, generated_at: str, kind: str, detail: str) -> N
 
     status["state"] = state
     status["frozen"] = frozen
+    if state == "frozen_archive" and status.get("seo_state") == "source_primary":
+        status["seo_state"] = "archive_discovery"
+        status["seo_activated_at"] = generated_at
     status["retirement_candidates"] = []
     status["updated_at"] = generated_at
     status["failure"] = {
@@ -746,12 +767,11 @@ def render_report(status: dict, drift: dict | None, note: str) -> str:
     lines.extend([
         "## Manual Recovery",
         "",
-        "If the archive is frozen and a future maintainer verifies that the canonical site is healthy and still owner-controlled:",
+        "If the archive is frozen and a future maintainer verifies that the canonical site is healthy and still owner-controlled, do not edit archive-status.json directly:",
         "",
-        "1. Edit `archive-status.json` and set `state` to `healthy` and `frozen` to `false`.",
-        "2. Reset `failure.consecutive_failures` to `0` and clear failure timestamps/details.",
-        "3. Run `python3 scripts/check-canonical-drift.py --force`.",
-        "4. Run `make validate` and `make scan-secrets` before resuming scheduled mirroring.",
+        "1. Follow `docs/SEO_RECOVERY.md` and confirm current owner control of the source.",
+        "2. Run `python3 scripts/manage-archive-seo.py resume-ds --owner-verified`.",
+        "3. Render, validate, scan for secrets, review the diff, then commit before resuming scheduled mirroring.",
         "",
     ])
     return "\n".join(lines)
@@ -785,7 +805,8 @@ def main() -> int:
     status_existed = STATUS_PATH.exists()
     status = load_status(generated_at)
     previous_status = json.loads(json.dumps(status))
-    persist = not status_existed
+    persisted_status = load_json(STATUS_PATH) if status_existed else None
+    persist = not status_existed or persisted_status != status
     action_plan = None
 
     if status.get("state") == "frozen_archive" and not args.force:
@@ -797,6 +818,9 @@ def main() -> int:
         )
         if args.action_plan:
             write_action_plan(action_plan_path(args.action_plan), action_plan)
+        if persist and not args.dry_run:
+            write_json(STATUS_PATH, status)
+            maybe_write(REPORT_PATH, render_report(status, None, "Archive is frozen; no canonical network request was made."), dry_run=False)
         print("archive is frozen; no canonical network requests made")
         return 0
 
