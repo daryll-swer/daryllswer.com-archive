@@ -1,6 +1,11 @@
 # Validation
 
-Generated: 2026-08-16T20:28:43+00:00
+Generated: 2026-08-16T21:39:22+00:00
+
+## Per-Post Rights Registry
+
+- Registry entries: 1
+- Registry keys are immutable WordPress post IDs.
 
 ## WordPress REST
 
@@ -11,8 +16,8 @@ Generated: 2026-08-16T20:28:43+00:00
 
 - Sitemap post URLs: 18
 - Archive URLs: 19
-- Intentional no-index exclusions: 1
-  - `https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/`: public swernetworks.com article mirrored to daryllswer.com; deliberately no-indexed
+- Documented source-sitemap exceptions: 1
+  - `https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/`: documented source-sitemap exception
 
 ## Typography
 

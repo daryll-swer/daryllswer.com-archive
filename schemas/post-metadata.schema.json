@@ -66,6 +66,9 @@
     "assets_manifest": {
       "type": "string"
     },
+    "rights": {
+      "$ref": "rights-registry.schema.json#/$defs/rights"
+    },
     "validation": {
       "type": "object"
     }

@@ -14,10 +14,9 @@ mirror for audit, readability, and long-term maintenance.
 
 WordPress REST is authoritative for the archive's published-post set. Sitemap
 and RSS data are secondary cross-checks. The exact BGP Router ID article URL
-is an intentional sitemap exception: it mirrors a public `swernetworks.com`
-article and is deliberately no-indexed on daryllswer.com, so it is absent from
-`post-sitemap.xml`. Validation records that documented exception but continues
-to warn for any other archived post absent from the sitemap.
+is a documented source-sitemap exception. Validation records that exception
+but continues to warn for any other archived post absent from the sitemap. It
+does not determine or alter GitHub Pages SEO metadata.
 
 ## Post Bundle
 
@@ -30,6 +29,11 @@ Each post lives under `content/posts/YYYY-MM-DD-slug/`:
 - `source/rendered-article.html` stores the REST-rendered article body.
 - `source/canonical-page.html` stores the public canonical HTML snapshot.
 - `assets/manifest.json` records downloaded asset provenance and checksums.
+- `content/rights-registry.json` records explicit per-post rights exceptions
+  by immutable WordPress ID; matching `metadata.json` files contain structured
+  rights data. Source-visible rights blocks and original-publication links are
+  preserved without adding archive-only notices. A verified retirement removes
+  its matching registry entry transactionally with its current-tree bundle.
 
 Markdown conversion is best-effort. HTML snapshots are preserved for fidelity
 where Markdown cannot represent the original formatting safely.

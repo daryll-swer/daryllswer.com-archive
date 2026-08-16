@@ -19,33 +19,34 @@ def load_script(name: str, filename: str):
 
 
 VALIDATOR = load_script("validate_mirror_sitemap", "validate-mirror.py")
-NOINDEX_MIRROR = "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/"
+SOURCE_SITEMAP_EXCEPTION = "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/"
 ORDINARY_POST = "https://www.daryllswer.com/example-post/"
 
 
 class SitemapExclusionTests(unittest.TestCase):
-    def test_only_documented_noindex_mirror_is_excluded_from_warning(self):
+    def test_only_documented_source_sitemap_exception_is_excluded_from_warning(self):
         missing, unexpected, intentional = VALIDATOR.classify_sitemap_difference(
-            {ORDINARY_POST}, {ORDINARY_POST, NOINDEX_MIRROR}
+            {ORDINARY_POST}, {ORDINARY_POST, SOURCE_SITEMAP_EXCEPTION}
         )
 
         self.assertEqual(missing, [])
         self.assertEqual(unexpected, [])
         self.assertEqual(
             intentional,
-            [(NOINDEX_MIRROR, VALIDATOR.INTENTIONAL_SITEMAP_EXCLUSIONS[NOINDEX_MIRROR])],
+            [(SOURCE_SITEMAP_EXCEPTION, VALIDATOR.DOCUMENTED_SOURCE_SITEMAP_EXCEPTIONS[SOURCE_SITEMAP_EXCEPTION])],
         )
+        self.assertNotIn("noindex", intentional[0][1].lower())
 
     def test_an_unknown_sitemap_absence_remains_a_warning_candidate(self):
         missing, unexpected, intentional = VALIDATOR.classify_sitemap_difference(
-            set(), {NOINDEX_MIRROR, ORDINARY_POST}
+            set(), {SOURCE_SITEMAP_EXCEPTION, ORDINARY_POST}
         )
 
         self.assertEqual(missing, [])
         self.assertEqual(unexpected, [ORDINARY_POST])
         self.assertEqual(
             intentional,
-            [(NOINDEX_MIRROR, VALIDATOR.INTENTIONAL_SITEMAP_EXCLUSIONS[NOINDEX_MIRROR])],
+            [(SOURCE_SITEMAP_EXCEPTION, VALIDATOR.DOCUMENTED_SOURCE_SITEMAP_EXCEPTIONS[SOURCE_SITEMAP_EXCEPTION])],
         )
 
 

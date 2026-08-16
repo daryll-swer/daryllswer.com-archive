@@ -1,4 +1,18 @@
-<p class="wp-block-paragraph">At <a href="https://swernetworks.com" type="link" id="swernetworks.com" target="_blank" rel="noreferrer noopener">Swer Networks</a>, we design and implement scalable, future-ready IPv6 architectures for our clients. This includes everything from tailoring <a href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" type="link" id="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" target="_blank" rel="noreferrer noopener">geographical addressing models</a> to the structuring of Border Gateway Protocol (BGP) Router IDs in modern networks. In this post, we focus specifically on the design and structuring of BGP Router IDs within IPv6-native environments.</p>
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">Originally published on <a href="https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/">Swer Networks</a>.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Copyright:</strong> © 2026 Swer Networks. All rights reserved.</p>
+
+
+
+<p class="wp-block-paragraph">This article was first published by Swer Networks and is republished here on daryllswer.com. Content rights are governed by the applicable rights record.com’s default proprietary content rights 4.0 licence. Media remains subject to any separate attribution or rights notice.</p>
+</blockquote>
+
+
+
+<p class="wp-block-paragraph">At <a href="https://www.swernetworks.com" data-type="link" data-id="https://www.swernetworks.com" target="_blank" rel="noreferrer noopener">Swer Networks</a>, we design and implement scalable, future-ready IPv6 architectures for our clients. This includes everything from tailoring <a type="link" href="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" id="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" target="_blank" rel="noreferrer noopener">geographical addressing models</a> to the structuring of Border Gateway Protocol (BGP) Router IDs in modern networks. In this post, we focus specifically on the design and structuring of BGP Router IDs within IPv6-native environments.</p>
 
 
 
@@ -15,7 +29,7 @@
 
 
 
-<p class="wp-block-paragraph">— <a href="https://datatracker.ietf.org/doc/html/rfc4271#section-1.1" type="link" id="https://datatracker.ietf.org/doc/html/rfc4271#section-1.1" target="_blank" rel="noreferrer noopener">RFC 4271, Section 1.1</a></p>
+<p class="wp-block-paragraph">- <a href="https://datatracker.ietf.org/doc/html/rfc4271#section-1.1" type="link" id="https://datatracker.ietf.org/doc/html/rfc4271#section-1.1" target="_blank" rel="noreferrer noopener">RFC 4271, Section 1.1</a></p>
 </blockquote>
 
 
@@ -36,7 +50,7 @@
 
 
 
-<p class="wp-block-paragraph">So the question arises — how do we handle BGP Router ID numbering structure in IPv6 native networks?</p>
+<p class="wp-block-paragraph">So the question arises - how do we handle BGP Router ID numbering structure in IPv6 native networks?</p>
 
 
 
@@ -49,7 +63,7 @@
 
 
 
-<p class="wp-block-paragraph">— <a href="https://datatracker.ietf.org/doc/html/rfc6286#section-2.1" type="link" id="https://datatracker.ietf.org/doc/html/rfc6286#section-2.1">RFC 6286, Section 2.1</a></p>
+<p class="wp-block-paragraph">- <a href="https://datatracker.ietf.org/doc/html/rfc6286#section-2.1" type="link" id="https://datatracker.ietf.org/doc/html/rfc6286#section-2.1">RFC 6286, Section 2.1</a></p>
 </blockquote>
 
 
@@ -62,7 +76,7 @@
 
 
 
-<p class="wp-block-paragraph">In fact, the RFC explicitly states that the shift was driven by the needs of IPv6‑only networks, where relying on an IPv4 address for an identifier was no longer viable:</p>
+<p class="wp-block-paragraph">In fact, the RFC explicitly states that the shift was driven by the needs of IPv6-only networks, where relying on an IPv4 address for an identifier was no longer viable:</p>
 
 
 
@@ -71,7 +85,7 @@
 
 
 
-<p class="wp-block-paragraph">— <a href="https://datatracker.ietf.org/doc/html/rfc6286#section-1" target="_blank" rel="noreferrer noopener">RFC 6286, Section 1</a></p>
+<p class="wp-block-paragraph">- <a href="https://datatracker.ietf.org/doc/html/rfc6286#section-1" target="_blank" rel="noreferrer noopener">RFC 6286, Section 1</a></p>
 </blockquote>
 
 
@@ -93,7 +107,7 @@
 
 
 
-<p class="wp-block-paragraph">— <a href="https://datatracker.ietf.org/doc/html/rfc6286#section-2.3" target="_blank" rel="noreferrer noopener">RFC 6286, Section 2.3</a></p>
+<p class="wp-block-paragraph">- <a href="https://datatracker.ietf.org/doc/html/rfc6286#section-2.3" target="_blank" rel="noreferrer noopener">RFC 6286, Section 2.3</a></p>
 </blockquote>
 
 
@@ -115,12 +129,12 @@
 
 
 
-<li><mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">C</mark>–<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">D</mark> → Represents a 16-bit instance ID, allowing up to 512 unique IDs per Function Code <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-amber-color">A</mark>.</li>
+<li><mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">C</mark>-<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">D</mark> → Represents a 16-bit instance ID, allowing up to 512 unique IDs per Function Code <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-amber-color">A</mark>.</li>
 </ul>
 
 
 
-<p class="wp-block-paragraph">This means, for example, if <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-amber-color">A</mark>=3 and <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-vivid-red-color">B</mark>=0, then for function 3, C – D gives us 512 possible instances of the Router ID, meaning 65,536 possible BGP routers in an organisation matching the function code <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-amber-color">A</mark>=3.</p>
+<p class="wp-block-paragraph">This means, for example, if <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-amber-color">A</mark>=3 and <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-vivid-red-color">B</mark>=0, then for function 3, C - D gives us 512 possible instances of the Router ID, meaning 65,536 possible BGP routers in an organisation matching the function code <mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-amber-color">A</mark>=3.</p>
 
 
 
@@ -128,7 +142,7 @@
 
 
 
-<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong><strong>Function code (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-amber-color">A</mark>)</strong></strong></td><td><strong>Function name</strong></td><td><strong><strong>Tenant/reserved (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-vivid-red-color">B</mark>)</strong></strong></td><td><strong><strong>Router ID range (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">C</mark>–<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">D</mark>)</strong></strong></td></tr><tr><td>0</td><td>Lab/test/R&amp;D</td><td>0</td><td>0.0.0.1 – 0.0.255.255</td></tr><tr><td>1</td><td>DFZ-Facing PE routers</td><td>0</td><td>1.0.0.0 – 1.0.255.255</td></tr><tr><td>2</td><td>P routers</td><td>0</td><td>2.0.0.0 – 2.0.255.255</td></tr><tr><td>3</td><td>DIA/IP Transit customer-facing PE Routers</td><td>0</td><td>3.0.0.0 – 3.0.255.255</td></tr><tr><td>4</td><td>NNI/UNI-facing PE Routers</td><td>0</td><td>4.0.0.0 – 4.0.255.255</td></tr></tbody></table><figcaption class="wp-element-caption">Table-1 Router ID Structure example</figcaption></figure>
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong><strong>Function code (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-amber-color">A</mark>)</strong></strong></td><td><strong>Function name</strong></td><td><strong><strong>Tenant/reserved (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-vivid-red-color">B</mark>)</strong></strong></td><td><strong><strong>Router ID range (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">C</mark>-<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">D</mark>)</strong></strong></td></tr><tr><td>0</td><td>Lab/test/R&amp;D</td><td>0</td><td>0.0.0.1 - 0.0.255.255</td></tr><tr><td>1</td><td>DFZ-Facing PE routers</td><td>0</td><td>1.0.0.0 - 1.0.255.255</td></tr><tr><td>2</td><td>P routers</td><td>0</td><td>2.0.0.0 - 2.0.255.255</td></tr><tr><td>3</td><td>DIA/IP Transit customer-facing PE Routers</td><td>0</td><td>3.0.0.0 - 3.0.255.255</td></tr><tr><td>4</td><td>NNI/UNI-facing PE Routers</td><td>0</td><td>4.0.0.0 - 4.0.255.255</td></tr></tbody></table><figcaption class="wp-element-caption">Table-1 Router ID Structure example</figcaption></figure>
 
 
 
