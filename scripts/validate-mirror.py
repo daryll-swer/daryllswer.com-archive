@@ -30,6 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 UA = "daryllswer-com-archive-validator/1.0 (+https://www.daryllswer.com/)"
 POSTS_ENDPOINT = "https://www.daryllswer.com/wp-json/wp/v2/posts?per_page=100&_embed=1"
 POST_SITEMAP = "https://www.daryllswer.com/post-sitemap.xml"
+PAGES_HOME_TITLE = "daryllswer.com – Archive"
 # WordPress REST is authoritative for archived posts. This exact public article
 # originated at swernetworks.com and is deliberately no-indexed on the
 # daryllswer.com mirror, so WordPress omits it from the post sitemap.
@@ -1178,6 +1179,10 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
     index_html = site_index.read_text(encoding="utf-8", errors="replace")
     if "posts/" not in index_html:
         errors.append("GitHub Pages index does not link to generated post pages")
+    if f"<title>{PAGES_HOME_TITLE}</title>" not in index_html:
+        errors.append("GitHub Pages index title does not match the archive homepage title")
+    if f'<meta property="og:title" content="{PAGES_HOME_TITLE}">' not in index_html:
+        errors.append("GitHub Pages index Open Graph title does not match the archive homepage title")
     if 'href="index.html"' in index_html:
         errors.append("GitHub Pages index navigation should use the clean ./ root URL, not index.html")
     if 'rel="canonical" href="https://daryll-swer.github.io/daryllswer.com-archive/index.html"' in index_html:

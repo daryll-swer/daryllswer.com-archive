@@ -16,6 +16,16 @@
 - Current budget/rate-limit state: no active implementation-route limit
   affected the completed workstream
 
+## Latest Delivery
+
+- Homepage title and Pages URL policy:
+  - Status: complete locally
+  - Notes: The generated archive homepage must use `daryllswer.com – Archive`
+    for its browser and Open Graph titles. The dedicated project Pages URL is
+    retained; article and spreadsheet titles remain unchanged. Renderer,
+    regression validation, compilation, unit/integration tests, and
+    public-safety scanning pass; hosted Pages verification remains pending.
+
 ## Scope
 
 - In scope:

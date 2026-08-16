@@ -148,6 +148,18 @@
   `https://daryll-swer.github.io/daryllswer.com-archive/`. `make validate`
   fails if generated navigation regresses to visible `index.html` root links.
 
+## 2026-08-17: Retain the Archive as a Dedicated Project Pages Site
+
+- Decision: Keep the archive at
+  `https://daryll-swer.github.io/daryllswer.com-archive/` and reserve the
+  `daryll-swer.github.io` user-site namespace for a future account-level
+  landing page.
+- Rationale: The dedicated project URL retains the archive repository's clear
+  identity and avoids a URL migration solely to occupy the account root.
+- Impact: `scripts/render-site.py` emits `daryllswer.com – Archive` as the
+  archive homepage browser and Open Graph title. Post and workbook titles,
+  project URL, canonical paths, and relative navigation remain unchanged.
+
 ## 2026-07-06: Use Detection-First Canonical Drift Automation
 
 - Decision: Add a weekly/manual GitHub Actions drift check that records drift

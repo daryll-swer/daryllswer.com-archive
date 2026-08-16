@@ -17,6 +17,12 @@ not the publishing source of truth; WordPress remains canonical.
 - No private admin exports, backend access, database dumps, cookies, browser
   state, or credentials.
 - Generated content is deterministic enough to re-run and compare.
+- The archive remains a GitHub Pages project site at
+  `https://daryll-swer.github.io/daryllswer.com-archive/`; the account-level
+  `daryll-swer.github.io` user-site namespace is intentionally reserved for a
+  future landing page. The generated archive homepage title and Open Graph
+  title are `daryllswer.com – Archive`; article and workbook titles remain
+  descriptive to their content.
 
 ## Repository Identity Assets
 
