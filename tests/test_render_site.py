@@ -84,6 +84,21 @@ class RenderSiteOpenGraphTests(unittest.TestCase):
             )
             self.assertTrue(any("canonical URL must be exactly" in error for error in errors))
 
+    def test_validator_rejects_old_homepage_h1(self):
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            page_path = Path(directory) / "index.html"
+            page_path.write_text(
+                '<main class="home"><h1>daryllswer.com Archive</h1></main>',
+                encoding="utf-8",
+            )
+            errors = []
+            VALIDATOR.validate_pages_home_h1(
+                page_path,
+                VALIDATOR.PAGES_HOME_TITLE,
+                errors,
+            )
+            self.assertTrue(any("homepage H1 must be exactly" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()
