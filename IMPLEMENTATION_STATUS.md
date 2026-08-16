@@ -7,11 +7,11 @@
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: per-post rights registry for Swer Networks
   reposts
-- Status: complete locally; deployment verification pending
+- Status: complete and hosted verified; verification record pending push
 - Last updated: 2026-08-17
 - Implementer role/model/thread: delegated `implementer-luna` completed the
   bounded rights-registry, reconciliation, renderer, and validation changes;
-  current Codex Desktop is completing integration and deployment verification
+  current Codex Desktop completed integration and deployment verification
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: no active implementation-route limit
   affected the completed workstream
@@ -19,7 +19,7 @@
 ## Latest Delivery
 
 - Per-post rights registry for Swer Networks reposts:
-  - Status: complete locally; deployment verification pending
+  - Status: complete and hosted verified
   - Notes: Added a registry and schema keyed by immutable WordPress ID, plus
     the controlling Swer Networks proprietary-content notice. Post `5324`
     now carries an exact structured rights projection, while its DS source URL
@@ -31,6 +31,11 @@
     bundle, manifest, and status update, restoring all data on failure.
     Local action-plan reconciliation refreshed only ID `5324`; final drift
     comparison found 19 live and 19 archived posts with no remaining changes.
+    Commit `a331083` deployed through GitHub Pages run `31974261872`; live
+    BGP verification found the original-publication and copyright notices once
+    each, the Swer Networks original link once, archive-local canonical and
+    `og:url` values, no robots tag, no source SEO directive, no console errors,
+    and no page-level horizontal overflow.
 
 - README asset-link copy refinement:
   - Status: complete and GitHub-rendered verified

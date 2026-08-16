@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete locally; deployment verification pending
+- Status: complete and hosted verified; verification record pending push
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-08-17
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -45,6 +45,10 @@
     The registry allows an empty state only when no archived protected post
     remains; a retirement removes its entry transactionally. All Pages
     canonical and `og:url` values are verified to use the GitHub Pages route.
+    Commit `a331083` deployed through GitHub Pages run `31974261872`; the live
+    BGP route retained the rights notice and original link exactly once, had no
+    browser console errors or horizontal overflow, and exposed no DS/SN source
+    canonical, robots, or Open Graph URL directive.
   - Complete and hosted-verified: encoder-dependent favicon churn is removed
     and every verified existing-post edit is eligible for an all-or-nothing
     reconciliation batch. The controlled 512 px derivative is copied
