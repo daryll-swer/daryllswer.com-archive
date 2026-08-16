@@ -5,9 +5,9 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: AS141253 responsive reserved-prefix card grids
-- Status: complete and deployed
-- Last updated: 2026-07-24
+- Current sprint / workstream: canonical post retirement automation
+- Status: complete locally
+- Last updated: 2026-08-16
 - Implementer role/model/thread: delegated `implementer-luna` for the bounded
   generator and validation change; the worker reached its model usage limit
   before final reporting, and the user authorised current Codex Desktop to
@@ -20,8 +20,12 @@
 
 - In scope:
   - Public WordPress post mirroring, public featured/inline/linked media, Google Sheet public exports, GitHub Pages static site generation, manifests, schemas, validation, and safety scan.
+  - Conservative reconciliation of one confirmed canonical post retirement:
+    remove its current-tree bundle and derived Pages route only after two
+    healthy weekly confirmations at least seven days apart.
 - Out of scope:
   - Remote force-push/visibility changes without explicit confirmation.
+  - Automated Git-history rewriting or removal of already published commits.
   - Private WordPress admin exports, database access, SSH backend access, private comments, credentials, cookies, browser profiles, and local-only operational state.
 
 ## Changed Files / Areas
@@ -168,6 +172,18 @@
 - Canonical drift automation:
   - Status: complete and pushed
   - Notes: `.github/workflows/canonical-drift.yml` runs weekly/manual checks. `scripts/check-canonical-drift.py` writes `archive-status.json` and `docs/CANONICAL_DRIFT.md`, with `frozen_archive` no-op behaviour for permanent canonical failure.
+- Canonical post retirement automation:
+  - Status: complete locally
+  - Notes: a healthy canonical comparison now classifies posts by immutable
+    WordPress ID. One missing post may be retired only after two compatible
+    weekly observations at least seven days apart, direct REST-item and
+    canonical-route `404`/`410` evidence, and no concurrent new, relocation,
+    changed, or multi-post anomaly. Reconciliation removes only the verified
+    current-tree bundle and manifest entry, clears temporary candidate state,
+    regenerates Pages, and preserves Git history. New public content is capped
+    at one automatic mirror per run; existing-post drift remains report-only.
+    Tests cover classification, confirmation timing, path rejection,
+    transactional rollback, and retirement cleanup.
 - Canonical drift Python bootstrap:
   - Status: complete and hosted-runner verified
   - Notes: Scheduled run `29229277522` failed because the clean runner did not

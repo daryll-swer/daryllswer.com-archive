@@ -103,9 +103,11 @@ Linked third-party documents, PDFs, downloads, and external artefacts are not
 mirror-required drift. They remain outbound links unless the owner explicitly
 approves mirroring a specific artefact.
 
-This automation is detection-first. It writes durable state to
-`archive-status.json` and a human-readable report to
-`docs/CANONICAL_DRIFT.md`; it does not automatically refresh article bundles.
+This automation is detection-first for existing-post changes. It writes durable
+state to `archive-status.json` and a human-readable report to
+`docs/CANONICAL_DRIFT.md`. It may automatically mirror one newly detected
+public post or retire one strictly verified missing post; it does not refresh
+changed existing article bundles automatically.
 
 The workflow is intentionally low-cost:
 
@@ -116,7 +118,9 @@ The workflow is intentionally low-cost:
 - concurrency group with `cancel-in-progress`;
 - explicit CPython 3.12 setup, pip cache keyed to `requirements.txt`, and
   `python -m pip install -r requirements.txt` before archive Python scripts;
-- commit only durable drift state/report changes.
+- bounded reconciliation of at most one new post or one confirmed retirement;
+- commit only allowlisted drift, manifest, affected bundle, and generated
+  Pages paths.
 
 The pip cache accelerates downloads but is not an installed-environment cache;
 dependency installation remains mandatory on every clean runner. The
@@ -140,6 +144,16 @@ Design references:
 If `archive-status.json` reaches `frozen_archive`, future scheduled runs exit
 before making canonical network requests. This preserves the last known good
 archive if daryllswer.com becomes unavailable permanently.
+
+A single post retirement is not a reachability failure. It requires two
+healthy weekly observations at least seven days apart, exactly one absent
+WordPress post ID, no concurrent new/relocated/multi-post anomaly, a live post
+count exactly one lower than the archive count, and `404` or `410` from both
+the post REST endpoint and its canonical URL. Any failed request or anomaly
+clears the confirmation sequence and cannot remove archive content. Successful
+retirement removes the current-tree post bundle, assets, source evidence,
+archive-manifest entry, and generated Pages route; it does not rewrite Git
+history. Candidate details are cleared from the current branch after success.
 
 To unfreeze manually, a future maintainer must verify that the canonical site
 is healthy and owner-controlled, edit `archive-status.json` back to `healthy`,

@@ -131,6 +131,10 @@ def canonical_url_key(url: str) -> str | None:
     return urllib.parse.urlunsplit(("https", "www.daryllswer.com", path, "", "")).rstrip("/")
 
 
+def archive_route_keys(archive: dict) -> set[str]:
+    return {key for item in archive.get("posts", []) or [] if (key := canonical_url_key(item.get("canonical_url") or ""))}
+
+
 def markdown_body(markdown: str) -> str:
     return re.sub(r"\A---\s*\n.*?\n---\s*\n", "", markdown, flags=re.S)
 
@@ -1173,6 +1177,8 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             ("concurrency:", r"^\s*concurrency:\s*$"),
             ("timeout-minutes:", r"^\s*timeout-minutes:\s*10\s*$"),
             ("scripts/check-canonical-drift.py", r"scripts/check-canonical-drift\.py"),
+            ("scripts/reconcile-canonical-drift.py", r"scripts/reconcile-canonical-drift\.py"),
+            ("action-plan outside checkout", r"runner\.temp.*canonical-drift-action-plan\.json"),
         ]:
             if not has_active_line(pattern):
                 errors.append(f"canonical drift workflow missing active `{marker}`")
@@ -1197,6 +1203,8 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             "Set up Python",
             "Install Python dependencies",
             "Check canonical drift",
+            "Reconcile canonical drift",
+            "Render generated Pages",
             "Validate public archive",
         ]
         for step_name in required_steps:
@@ -1213,6 +1221,9 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             ("Set up Python", r"^cache:\s*['\"]?pip['\"]?\s*$", "pip cache"),
             ("Set up Python", r"^cache-dependency-path:\s*['\"]?requirements\.txt['\"]?\s*$", "requirements.txt cache key"),
             ("Install Python dependencies", r"^run:\s*python\s+-m\s+pip\s+install\s+-r\s+requirements\.txt\s*$", "requirements.txt installation"),
+            ("Check canonical drift", r"--action-plan\s+.*runner\.temp.*canonical-drift-action-plan\.json", "external action-plan output"),
+            ("Reconcile canonical drift", r"scripts/reconcile-canonical-drift\.py", "canonical drift reconciler"),
+            ("Render generated Pages", r"^run:\s+make\s+render-site\s*$", "generated Pages rendering"),
         ]
         for step_name, pattern, description in required_step_lines:
             if step_name in step_blocks and not step_has(step_name, pattern):
@@ -1228,6 +1239,8 @@ def validate_drift_automation(errors: list[str], warnings: list[str]) -> dict | 
             "Set up Python",
             "Install Python dependencies",
             "Check canonical drift",
+            "Reconcile canonical drift",
+            "Render generated Pages",
             "Validate public archive",
         ]
         present_steps = [name for name in ordered_steps if name in step_lines]
@@ -1290,20 +1303,29 @@ def main() -> int:
     if archive:
         post_count = archive.get("post_count")
         posts = archive.get("posts", [])
-        archived_keys = {
-            key
-            for post in posts
-            if (key := canonical_url_key(post.get("canonical_url") or ""))
-        }
+        archived_keys = archive_route_keys(archive)
         if post_count != len(posts):
             errors.append(f"archive post_count {post_count} does not match posts length {len(posts)}")
         try:
             body, headers = request(POSTS_ENDPOINT)
             live_posts = json.loads(body.decode("utf-8"))
             live_total = int(headers.get("X-WP-Total", len(live_posts)))
+            live_ids = {item.get("id") for item in live_posts if item.get("id") is not None}
+            archived_ids = {item.get("id") for item in posts if item.get("id") is not None}
+            missing_active_ids = sorted(archived_ids - live_ids)
+            if missing_active_ids:
+                errors.append(f"WordPress REST is missing active archive post IDs: {missing_active_ids}")
             if live_total != len(posts):
-                errors.append(f"WordPress REST reports {live_total} posts, archive has {len(posts)}")
-            report.extend(["## WordPress REST", "", f"- Live X-WP-Total: {live_total}", f"- Archived posts: {len(posts)}", ""])
+                errors.append(
+                    f"WordPress REST reports {live_total} posts, archive has {len(posts)}"
+                )
+            report.extend([
+                "## WordPress REST",
+                "",
+                f"- Live X-WP-Total: {live_total}",
+                f"- Archived posts: {len(posts)}",
+                "",
+            ])
         except Exception as exc:
             warnings.append(f"could not verify WordPress REST count: {exc}")
 
