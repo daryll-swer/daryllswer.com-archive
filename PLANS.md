@@ -22,10 +22,12 @@
 ## Current Status / Next Pickup
 
 - Current state:
-  - Complete locally: the archive landing page title and Open Graph title are
+  - Complete and hosted-verified: the archive landing page title and Open Graph title are
     `daryllswer.com – Archive`. The archive remains at its dedicated project
     Pages URL; the account-level `daryll-swer.github.io` namespace is reserved
-    for a future landing page.
+    for a future landing page. Commit `bfeafa6` deployed through GitHub Pages
+    run `31970160414`; live homepage and article checks passed without console
+    errors.
   - Complete locally: the deliberately no-indexed BGP Router ID article is an
     explicit sitemap exception because it mirrors a public swernetworks.com
     article. WordPress REST remains authoritative; validation continues to
