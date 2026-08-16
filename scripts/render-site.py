@@ -26,6 +26,7 @@ except Exception as exc:  # pragma: no cover - environment guard
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs"
 PAGES_BASE_URL = "https://daryll-swer.github.io/daryllswer.com-archive/"
+ARCHIVE_HOME_TITLE = "daryllswer.com – Archive"
 SHEET_SLUG = "as141253-ipv6-architecture-example"
 SHEET_SOURCE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml"
 LOCALISABLE_HOSTS = {"www.daryllswer.com", "daryllswer.com"}
@@ -514,7 +515,7 @@ def render_home(posts: list[dict], metadata_by_slug: dict[str, dict]) -> None:
     write_text(
         OUT / "index.html",
         page_shell(
-            "daryllswer.com Archive",
+            ARCHIVE_HOME_TITLE,
             "Public mirror of daryllswer.com network engineering articles.",
             body,
             "assets/theme.css",
