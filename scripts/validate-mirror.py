@@ -53,7 +53,13 @@ PAGES_FAVICON_PROVENANCE_PATH = "assets/brand/ASSET_PROVENANCE.md"
 PAGES_FAVICON_DERIVATIVE_PATH = "assets/brand/derivatives/01_DS_Favicon_Dark_Mode-512.png"
 PAGES_FAVICON_OUTPUT_PATH = "docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png"
 PAGES_FAVICON_SIZE = 512
-README_BRAND_MARKDOWN_LINKS = tuple(
+README_BRAND_SEMANTIC_LINKS = (
+    ("README header logo", README_BRAND_ASSET_PATH),
+    ("GitHub Pages favicon source", PAGES_FAVICON_SOURCE_PATH),
+    ("generated derivative", PAGES_FAVICON_DERIVATIVE_PATH),
+    ("byte-for-byte GitHub Pages favicon", PAGES_FAVICON_OUTPUT_PATH),
+)
+README_BRAND_LEGACY_PATH_LINKS = tuple(
     f"[{path}]({path})"
     for path in [
         README_BRAND_ASSET_PATH,
@@ -939,8 +945,14 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
             errors.append("README is missing the copyright-and-licences destination section")
         if not re.search(r"© 2026 Daryll Swer\. All\s+rights reserved\.", readme):
             errors.append("README does not state the proprietary logo copyright notice")
+        for label, path in README_BRAND_SEMANTIC_LINKS:
+            marker = f"[{label}]({path})"
+            if marker not in readme:
+                errors.append(f"README is missing semantic proprietary asset link `{marker}`")
+        for marker in README_BRAND_LEGACY_PATH_LINKS:
+            if marker in readme:
+                errors.append(f"README retains legacy raw-path proprietary asset link `{marker}`")
         for marker in [
-            *README_BRAND_MARKDOWN_LINKS,
             "ASSET_PROVENANCE.md",
             "provenance and byte-preservation evidence only",
             "not a licence",

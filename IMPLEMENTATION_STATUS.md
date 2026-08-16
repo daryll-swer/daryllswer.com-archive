@@ -18,6 +18,12 @@
 
 ## Latest Delivery
 
+- README asset-link copy refinement:
+  - Status: complete locally
+  - Notes: Replaced raw filename/path link labels in the proprietary-assets
+    paragraph with four semantic labels, preserving all destinations and
+    licence/provenance safeguards. The validator requires the semantic links
+    and rejects the legacy raw-path form.
 - Homepage title and Pages URL policy:
   - Status: complete and hosted verified
   - Notes: The generated archive homepage must use `daryllswer.com – Archive`
