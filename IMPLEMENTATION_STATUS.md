@@ -48,7 +48,9 @@
   - Notes: ODS, 9 LF-normalised CSV exports, 9 CSVW metadata files, whitespace-normalised HTML snapshots, and clickable artefact links generated.
 - `docs/VALIDATION.md`:
   - Status: complete
-  - Notes: Validation passed with 0 errors and 1 sitemap warning.
+  - Notes: Validation treats the deliberately no-indexed BGP Router ID mirror
+    as a documented sitemap exception. WordPress REST remains authoritative;
+    unexpected sitemap absences remain warnings.
 - `docs/PUBLIC_SAFETY.md`:
   - Status: complete
   - Notes: Public-safety scan passed with 0 findings after replacing local path references with public-safe placeholders.
@@ -1011,8 +1013,8 @@
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - The known non-blocking sitemap warning remains; workflow remediation has
-    no open verification gap.
+  - None. The BGP Router ID sitemap absence is an intentional no-index
+    exception for a public swernetworks.com mirror, not an unresolved warning.
 
 ## Completion Criteria
 
