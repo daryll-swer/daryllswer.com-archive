@@ -43,7 +43,16 @@
       "type": "array"
     },
     "source": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "canonical_rendered_content_sha256"
+      ],
+      "properties": {
+        "canonical_rendered_content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
     },
     "hashes": {
       "type": "object"

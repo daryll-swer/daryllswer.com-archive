@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete locally; canonical post retirement automation
+- Status: in progress; deterministic Pages and full canonical update reconciliation
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-07-24
+- Last updated: 2026-08-17
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -22,13 +22,13 @@
 ## Current Status / Next Pickup
 
 - Current state:
-  - In progress: add a bounded canonical-content reconciliation path. A post
-    retirement requires two successful weekly confirmations at least seven
-    days apart, exactly one missing immutable WordPress ID, direct REST and
-    canonical HTTP `404`/`410` evidence, and no concurrent content anomaly.
-    Canonical reachability states remain separate and may never remove
-    archive content. Current-tree removal preserves Git history; up to one
-    newly detected post may be automatically mirrored per run.
+  - In progress: eliminate encoder-dependent favicon churn and reconcile every
+    verified changed existing post as an all-or-nothing batch. The checked
+    512 px favicon derivative is stored outside generated Pages output and is
+    copied byte-for-byte during rendering. A healthy run may add one new post
+    plus all existing-post updates; relocation/missing anomalies continue to
+    block synchronisation and retirement remains a separate two-confirmation
+    current-tree-only action.
   - Complete locally: the reconciliation workflow now separates health from
     content state, confirms only one missing WordPress ID across two healthy
     weekly observations at least seven days apart, and requires direct REST
@@ -240,6 +240,14 @@
     2560 px widths with no page-level horizontal overflow, working reserved
     disclosures, and working SVG minimap anchors.
 - Last material update:
+  - 2026-08-17: implemented deterministic favicon preparation and full
+    canonical update reconciliation locally. The controlled 512 px derivative
+    is byte-copied into Pages and remained SHA-256 stable across repeated
+    renders. A clean healthy REST comparison backfilled raw canonical-body
+    fingerprint baselines for all 19 bundles. Unit/integration tests now cover
+    master-change/no-op/tamper behaviour, all-existing update plans, staged
+    failure, and rollback. Final validation, push, hosted workflow dispatch,
+    and Pages verification remain pending.
   - 2026-07-24: completed local generation, structural validation, and browser
     QA for responsive reserved-prefix card grids. The singleton grid has 15
     direct static leaves and no disclosure controls; all 13 multi-prefix
@@ -283,7 +291,8 @@
     GitHub Pages run `30080507753`; the live `visual.html` returned HTTP 200
     and exposed zero hierarchy `details[open]` elements.
 - Next pickup action:
-  - No implementation pickup is pending.
+  - Complete local and hosted-workflow validation, then commit and push the
+    deterministic derivative and batch reconciliation implementation.
 - Open blockers or risks:
   - WordPress REST has one post not listed in `post-sitemap.xml`.
 - Verification gap:
@@ -592,11 +601,26 @@
     generated 512 px derivative avoids a disproportionate browser decode while
     preserving the original asset and its provenance in the repository.
   - Date/Author: 2026-07-15, user/Codex
-  - Status: implemented and deployed
-  - Impact: `render-site.py` generates only
-    `docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png`; validation rejects a
-    missing manifest/notice/link, a wrong derivative size, lingering text-only
-    `DS` markup, or publication of the full-resolution source under `docs/`.
+  - Status: superseded by controlled derivative decision below
+  - Impact: The original bounded derivative requirement remains, but ordinary
+    Pages renders must no longer invoke a PNG encoder.
+- Decision: Track a controlled favicon derivative and reconcile all verified
+  existing-post updates atomically.
+  - Rationale: Re-encoding the same visual favicon on different render hosts
+    produced different PNG bytes, causing needless Pages commits. Existing
+    post changes are canonical drift, not merely report material, but a
+    partial batch would produce an internally inconsistent archive.
+  - Date/Author: 2026-08-17, user/Codex
+  - Status: implemented locally; hosted verification pending
+  - Impact: `scripts/prepare-brand-favicon.py` regenerates the checked 512 px
+    derivative only after a master-checksum change. `render-site.py` copies it
+    byte-for-byte. A healthy reconciliation stages every changed existing post
+    and at most one new/restored post outside the checkout, then replaces all
+    affected bundles and the manifest together. A clean comparison establishes
+    a raw canonical-body baseline for legacy bundles before strict validation
+    requires it. Relocations, missing-post anomalies, outages, and frozen state
+    block updates; retirement remains independently bounded and history remains
+    intact.
 
 ## Validation and Acceptance
 

@@ -7,6 +7,7 @@ derivatives:
 
   assets/readme/13_DS_Logo_Dark_Mode_SEO.png
   assets/brand/01_DS_Favicon_Dark_Mode.png
+  assets/brand/derivatives/01_DS_Favicon_Dark_Mode-512.png
   docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png
 
 The assets are original Daryll Swer brand artwork supplied by their copyright

@@ -3,7 +3,7 @@
 
 PYTHON ?= python3
 
-.PHONY: sync validate scan-secrets render-preview render-site check-drift clean
+.PHONY: sync validate scan-secrets render-preview prepare-brand-favicon render-site check-drift clean
 
 sync:
 	$(PYTHON) scripts/sync-wordpress-posts.py
@@ -18,7 +18,10 @@ scan-secrets:
 render-preview:
 	$(PYTHON) scripts/render-preview.py
 
-render-site:
+prepare-brand-favicon:
+	$(PYTHON) scripts/prepare-brand-favicon.py
+
+render-site: prepare-brand-favicon
 	$(PYTHON) scripts/render-site.py
 
 check-drift:

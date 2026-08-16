@@ -1,6 +1,7 @@
 import hashlib
 import importlib.util
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -75,6 +76,10 @@ class CanonicalRetirementTests(unittest.TestCase):
             "modified": post["modified"],
             "featured_image": None,
         }
+        if post.get("canonical_rendered_content_sha256"):
+            metadata["source"] = {
+                "canonical_rendered_content_sha256": post["canonical_rendered_content_sha256"],
+            }
         (bundle / "metadata.json").write_text(json.dumps(metadata), encoding="utf-8")
         (bundle / "source" / "rendered-article.html").write_text(post["slug"], encoding="utf-8")
         (bundle / "assets" / "manifest.json").write_text(json.dumps({"assets": []}), encoding="utf-8")
@@ -138,6 +143,155 @@ class CanonicalRetirementTests(unittest.TestCase):
         new_plan = DRIFT.build_action_plan(status, new_drift, iso("2026-01-08"), None)
         self.assertEqual(new_plan["action"], "none")
         self.assertEqual(new_plan["sync_posts"], [])
+
+    def test_pending_retirement_forces_a_fresh_collection_fetch(self):
+        self.assertFalse(DRIFT.needs_fresh_collection({}))
+        self.assertTrue(DRIFT.needs_fresh_collection({}, forced=True))
+        self.assertTrue(DRIFT.needs_fresh_collection({"retirement_candidates": [{"id": 1}]}))
+
+    def test_content_fingerprint_and_all_changed_posts_are_in_one_sync_plan(self):
+        post_one = {
+            **summary(1, "https://www.daryllswer.com/one/", "one"),
+            "canonical_rendered_content_sha256": "original-one",
+            "bundle_path": "content/posts/2020-01-01-one",
+        }
+        post_two = {
+            **summary(2, "https://www.daryllswer.com/two/", "two"),
+            "canonical_rendered_content_sha256": "original-two",
+            "bundle_path": "content/posts/2020-01-02-two",
+        }
+        for post in [post_one, post_two]:
+            self.write_bundle(post)
+        self.write_archive([post_one, post_two])
+        live = [
+            {**summary(1, "https://www.daryllswer.com/one/", "one"), "canonical_rendered_content_sha256": "changed-one"},
+            {**summary(2, "https://www.daryllswer.com/two/", "two"), "canonical_rendered_content_sha256": "changed-two"},
+        ]
+        drift = DRIFT.compare_drift(live)
+        self.assertEqual([item["id"] for item in drift["changed_posts"]], [1, 2])
+        plan = DRIFT.build_action_plan(DRIFT.default_status(iso("2026-01-08")), drift, iso("2026-01-08"))
+        self.assertEqual(plan["version"], 2)
+        self.assertEqual(plan["action"], "sync")
+        self.assertEqual([item["id"] for item in plan["update_posts"]], [1, 2])
+        self.assertEqual(plan["sync_posts"], [])
+
+    def test_clean_comparison_backfills_legacy_content_fingerprints_only(self):
+        post = {
+            **summary(1, "https://www.daryllswer.com/one/", "one"),
+            "bundle_path": "content/posts/2020-01-01-one",
+        }
+        self.write_bundle(post)
+        self.write_archive([post])
+        metadata_path = self.root / post["bundle_path"] / "metadata.json"
+        metadata = json.loads(metadata_path.read_text())
+        metadata["source"] = {}
+        metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
+        live = [{**summary(1, post["canonical_url"], post["slug"]), "canonical_rendered_content_sha256": "a" * 64}]
+        clean_drift = DRIFT.compare_drift(live)
+        self.assertEqual(DRIFT.backfill_canonical_content_fingerprints(clean_drift, live), [1])
+        metadata = json.loads((self.root / post["bundle_path"] / "metadata.json").read_text())
+        self.assertEqual(metadata["source"]["canonical_rendered_content_sha256"], "a" * 64)
+
+        changed_drift = {**clean_drift, "changed_posts": [{"id": 1}]}
+        live[0]["canonical_rendered_content_sha256"] = "b" * 64
+        self.assertEqual(DRIFT.backfill_canonical_content_fingerprints(changed_drift, live), [])
+        metadata = json.loads((self.root / post["bundle_path"] / "metadata.json").read_text())
+        self.assertEqual(metadata["source"]["canonical_rendered_content_sha256"], "a" * 64)
+
+    def test_sync_targets_requires_the_complete_changed_post_batch(self):
+        posts = [
+            {**summary(1, "https://www.daryllswer.com/one/", "one"), "bundle_path": "content/posts/2020-01-01-one"},
+            {**summary(2, "https://www.daryllswer.com/two/", "two"), "bundle_path": "content/posts/2020-01-02-two"},
+        ]
+        for post in posts:
+            self.write_bundle(post)
+        self.write_archive(posts)
+        changed = []
+        for post in posts:
+            changed.append({
+                "id": post["id"],
+                "slug": post["slug"],
+                "canonical_url": post["canonical_url"],
+                "expected": {"id": post["id"], "slug": post["slug"]},
+                "fields": [{"field": "modified"}],
+            })
+        plan = {
+            "version": 2,
+            "drift": {"new_ids": [], "missing_ids": [], "relocated_posts": [], "changed_posts": changed},
+            "sync_posts": [],
+            "update_posts": changed,
+        }
+        new_posts, updates = RECONCILE.sync_targets(plan, {"posts": posts})
+        self.assertEqual(new_posts, [])
+        self.assertEqual([item["id"] for item in updates], [1, 2])
+        plan["update_posts"] = [changed[0]]
+        with self.assertRaises(ValueError):
+            RECONCILE.sync_targets(plan, {"posts": posts})
+
+    def test_staged_sync_rolls_back_all_replaced_bundles_when_manifest_write_fails(self):
+        posts = [
+            {**summary(1, "https://www.daryllswer.com/one/", "one"), "bundle_path": "content/posts/2020-01-01-one"},
+            {**summary(2, "https://www.daryllswer.com/two/", "two"), "bundle_path": "content/posts/2020-01-02-two"},
+        ]
+        originals = [self.write_bundle(post) for post in posts]
+        self.write_archive(posts)
+        original_manifest = (self.root / "archive-manifest.json").read_bytes()
+        original_markers = [(bundle / "source" / "rendered-article.html").read_text(encoding="utf-8") for bundle in originals]
+
+        stage = Path(tempfile.mkdtemp())
+        try:
+            staged_posts = []
+            for post in posts:
+                staged = dict(post)
+                staged["title"] = f"updated-{post['title']}"
+                staged_posts.append(staged)
+                bundle = stage / staged["bundle_path"]
+                (bundle / "source").mkdir(parents=True)
+                (bundle / "metadata.json").write_text(
+                    json.dumps({"id": staged["id"], "canonical_url": staged["canonical_url"]}), encoding="utf-8"
+                )
+                (bundle / "source" / "rendered-article.html").write_text(f"updated-{staged['slug']}", encoding="utf-8")
+            (stage / "archive-manifest.json").write_text(json.dumps({"post_count": 2, "posts": staged_posts}), encoding="utf-8")
+
+            with mock.patch.object(RECONCILE, "atomic_write_json", side_effect=OSError("simulated manifest failure")):
+                with self.assertRaises(OSError):
+                    RECONCILE.apply_staged_sync(stage, {"posts": posts}, [], [{"id": 1}, {"id": 2}])
+
+            self.assertEqual((self.root / "archive-manifest.json").read_bytes(), original_manifest)
+            self.assertEqual(
+                [(bundle / "source" / "rendered-article.html").read_text(encoding="utf-8") for bundle in originals],
+                original_markers,
+            )
+        finally:
+            shutil.rmtree(stage, ignore_errors=True)
+
+    def test_staged_sync_failure_leaves_live_bundles_unchanged(self):
+        post = {**summary(1, "https://www.daryllswer.com/one/", "one"), "bundle_path": "content/posts/2020-01-01-one"}
+        bundle = self.write_bundle(post)
+        marker = bundle / "assets" / "existing-media.png"
+        marker.write_bytes(b"existing media")
+        self.write_archive([post])
+        changed = {
+            "id": 1,
+            "slug": "one",
+            "canonical_url": post["canonical_url"],
+            "expected": {"id": 1, "slug": "one", "canonical_url": post["canonical_url"]},
+            "fields": [{"field": "modified"}],
+        }
+        plan = {
+            "version": 2,
+            "drift": {"new_ids": [], "missing_ids": [], "relocated_posts": [], "changed_posts": [changed]},
+            "sync_posts": [],
+            "update_posts": [changed],
+        }
+        original_manifest = (self.root / "archive-manifest.json").read_bytes()
+        original_article = (bundle / "source" / "rendered-article.html").read_bytes()
+        with mock.patch.object(RECONCILE.subprocess, "run", return_value=mock.Mock(returncode=1)):
+            with self.assertRaisesRegex(RuntimeError, "staged automatic sync failed"):
+                RECONCILE.stage_sync(plan, {"posts": [post]})
+        self.assertEqual((self.root / "archive-manifest.json").read_bytes(), original_manifest)
+        self.assertEqual((bundle / "source" / "rendered-article.html").read_bytes(), original_article)
+        self.assertEqual(marker.read_bytes(), b"existing media")
 
     def test_reconcile_retirement_removes_one_bundle_and_clears_candidate(self):
         post = {**summary(2, "https://www.daryllswer.com/missing/", "missing"), "bundle_path": "content/posts/2020-01-02-missing"}

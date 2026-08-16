@@ -8,13 +8,10 @@ from __future__ import annotations
 import datetime as dt
 import html as html_lib
 import json
-import os
 import re
 import shutil
 import urllib.parse
 from pathlib import Path
-
-from PIL import Image
 
 from font_assets import FONT_BODY_STACK, FONT_HEADING_STACK, copy_font_assets, font_face_css
 from sheet_workbook import render_workbook_page
@@ -35,8 +32,8 @@ LOCALISABLE_HOSTS = {"www.daryllswer.com", "daryllswer.com"}
 TRACKING_QUERY_KEYS = {"fbclid", "gclid", "mc_cid", "mc_eid"}
 TEXT_FRAGMENT_PREFIX = ":~:text="
 BRAND_FAVICON_SOURCE = ROOT / "assets" / "brand" / "01_DS_Favicon_Dark_Mode.png"
+BRAND_FAVICON_DERIVATIVE = ROOT / "assets" / "brand" / "derivatives" / "01_DS_Favicon_Dark_Mode-512.png"
 BRAND_FAVICON_OUTPUT_NAME = "01_DS_Favicon_Dark_Mode-512.png"
-BRAND_FAVICON_SIZE = 512
 
 
 def write_text(path: Path, text: str) -> None:
@@ -59,33 +56,20 @@ def clean_generated_site() -> None:
             path.unlink()
 
 
-def render_brand_favicon() -> None:
-    """Create a bounded Pages derivative from the owner-provided master PNG."""
+def copy_brand_favicon() -> None:
+    """Copy the prepared derivative byte-for-byte into the Pages output."""
     if not BRAND_FAVICON_SOURCE.exists():
-        raise SystemExit(f"Missing proprietary brand favicon: {BRAND_FAVICON_SOURCE}")
+        raise SystemExit(f"Missing proprietary brand favicon master: {BRAND_FAVICON_SOURCE}")
+    if not BRAND_FAVICON_DERIVATIVE.exists():
+        raise SystemExit(
+            "Missing prepared proprietary brand favicon derivative: "
+            f"{BRAND_FAVICON_DERIVATIVE}. Run scripts/prepare-brand-favicon.py first."
+        )
     destination = OUT / "assets" / "brand" / BRAND_FAVICON_OUTPUT_NAME
     destination.parent.mkdir(parents=True, exist_ok=True)
-
-    # The owner-provided source is intentionally high-resolution; Pages serves
-    # a 512 px derivative so browser decoding remains bounded.
-    previous_pixel_limit = Image.MAX_IMAGE_PIXELS
-    Image.MAX_IMAGE_PIXELS = 150_000_000
-    try:
-        with Image.open(BRAND_FAVICON_SOURCE) as source:
-            if source.width != source.height:
-                raise SystemExit("Proprietary brand favicon source must be square")
-            rendered = source.convert("RGBA")
-            try:
-                rendered.thumbnail((BRAND_FAVICON_SIZE, BRAND_FAVICON_SIZE), Image.Resampling.LANCZOS)
-                if rendered.size != (BRAND_FAVICON_SIZE, BRAND_FAVICON_SIZE):
-                    raise SystemExit("Proprietary brand favicon derivative has unexpected dimensions")
-                temporary = destination.with_suffix(".tmp.png")
-                rendered.save(temporary, format="PNG", optimize=True)
-                temporary.replace(destination)
-            finally:
-                rendered.close()
-    finally:
-        Image.MAX_IMAGE_PIXELS = previous_pixel_limit
+    shutil.copyfile(BRAND_FAVICON_DERIVATIVE, destination)
+    if BRAND_FAVICON_DERIVATIVE.read_bytes() != destination.read_bytes():
+        raise SystemExit("Prepared proprietary brand favicon was not copied byte-for-byte")
 
 
 def add_page_favicon(page: Path, href: str) -> None:
@@ -986,7 +970,7 @@ def main() -> int:
     render_css()
     render_js()
     copy_font_assets(ROOT, OUT / "assets" / "fonts")
-    render_brand_favicon()
+    copy_brand_favicon()
     render_home(posts, metadata_by_slug)
     render_sheet_page()
     for post in posts:

@@ -87,6 +87,7 @@
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/5136",
     "canonical_html_path": "source/canonical-page.html",
+    "canonical_rendered_content_sha256": "81f669b954933243d95299b08bdb65dd3ba4f6a102e7670ee9e81ffaec75dff8",
     "fetched_at": "2026-07-11T09:17:44+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"

@@ -5,24 +5,25 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: canonical post retirement automation
-- Status: complete locally
-- Last updated: 2026-08-16
-- Implementer role/model/thread: delegated `implementer-luna` for the bounded
-  generator and validation change; the worker reached its model usage limit
-  before final reporting, and the user authorised current Codex Desktop to
-  complete integration and testing serially
+- Current sprint / workstream: deterministic Pages and full canonical update
+  reconciliation
+- Status: in progress
+- Last updated: 2026-08-17
+- Implementer role/model/thread: delegated `implementer-luna` completed the
+  bounded controlled-favicon generator and validation change; current Codex
+  Desktop is integrating the batch-reconciliation path and running checks
 - Architect role/model/thread: current Codex Desktop thread plus user review
-- Current budget/rate-limit state: delegated Luna route reached a hard usage
-  limit; no independent model-bucket capacity is assumed
+- Current budget/rate-limit state: no active implementation-route limit is
+  blocking final integration or verification
 
 ## Scope
 
 - In scope:
   - Public WordPress post mirroring, public featured/inline/linked media, Google Sheet public exports, GitHub Pages static site generation, manifests, schemas, validation, and safety scan.
-  - Conservative reconciliation of one confirmed canonical post retirement:
-    remove its current-tree bundle and derived Pages route only after two
-    healthy weekly confirmations at least seven days apart.
+  - Conservative reconciliation: atomically mirror all verified edits to
+    existing posts and at most one new/restored post per healthy run; retire
+    one confirmed missing post only after two healthy weekly confirmations at
+    least seven days apart.
 - Out of scope:
   - Remote force-push/visibility changes without explicit confirmation.
   - Automated Git-history rewriting or removal of already published commits.
@@ -134,13 +135,24 @@
     deployed by GitHub Pages build `30092569178`; the live visual returned
     HTTP 200 and matched the one-grid/15-leaf/13-range structural contract.
 - GitHub Pages proprietary favicon:
-  - Status: complete and deployed
+  - Status: superseded by controlled derivative work in progress
   - Notes: Owner-provided `01_DS_Favicon_Dark_Mode.png` remains byte-exact in
-    `assets/brand/`; `render-site.py` generates a 512 px proprietary
-    derivative for the home/article header mark and browser favicon metadata.
-    Validation covers manifests, checksum, notice, image dimensions, generated
-    links, removal of the text-only `DS` badge, and exclusion of the full-size
-    source from `docs/`.
+    `assets/brand/`; the new controlled 512 px derivative is tracked under
+    `assets/brand/derivatives/` and will be copied byte-for-byte to Pages.
+    Validation now covers the master/derivative relationship, checksums,
+    dimensions, generated links, removal of the text-only `DS` badge, and
+    exclusion of the full-size source from `docs/`.
+- Deterministic Pages and full canonical update reconciliation:
+  - Status: complete locally; hosted verification pending
+  - Notes: `scripts/prepare-brand-favicon.py` generates the tracked 512 px
+    proprietary favicon derivative only after a master checksum change, and
+    `render-site.py` byte-copies it into Pages. The weekly workflow prepares
+    the asset every run but renders Pages only after a brand-master or verified
+    content change. Drift plans now batch every verified existing-post update
+    with at most one new/restored post; staging, target-ID validation, full
+    bundle replacement, manifest replacement, and rollback prevent partial
+    publication. The clean 2026-08-17 comparison backfilled raw canonical-body
+    fingerprints for all 19 current post bundles.
 - GitHub publication:
   - Status: complete
   - Notes: New public repo `daryll-swer/daryllswer.com-archive` created and pushed; old repo `daryll-swer/daryllswer.com-neteng-blog` deleted.
@@ -173,7 +185,7 @@
   - Status: complete and pushed
   - Notes: `.github/workflows/canonical-drift.yml` runs weekly/manual checks. `scripts/check-canonical-drift.py` writes `archive-status.json` and `docs/CANONICAL_DRIFT.md`, with `frozen_archive` no-op behaviour for permanent canonical failure.
 - Canonical post retirement automation:
-  - Status: complete locally
+  - Status: superseded by full reconciliation work in progress
   - Notes: a healthy canonical comparison now classifies posts by immutable
     WordPress ID. One missing post may be retired only after two compatible
     weekly observations at least seven days apart, direct REST-item and
@@ -181,9 +193,11 @@
     changed, or multi-post anomaly. Reconciliation removes only the verified
     current-tree bundle and manifest entry, clears temporary candidate state,
     regenerates Pages, and preserves Git history. New public content is capped
-    at one automatic mirror per run; existing-post drift remains report-only.
-    Tests cover classification, confirmation timing, path rejection,
-    transactional rollback, and retirement cleanup.
+    at one automatic mirror per run. Existing-post updates now join that new
+    post in a single staged all-or-nothing batch; relocation and missing-post
+    anomalies continue to block update mutation. Tests cover classification,
+    confirmation timing, path rejection, transactional rollback, favicon
+    byte stability, and batch completeness.
 - Canonical drift Python bootstrap:
   - Status: complete and hosted-runner verified
   - Notes: Scheduled run `29229277522` failed because the clean runner did not
