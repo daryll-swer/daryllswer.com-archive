@@ -168,8 +168,22 @@ def retire_one(plan: dict, manifest: dict, status: dict) -> None:
 
     manifest_path = ROOT / "archive-manifest.json"
     status_path = ROOT / "archive-status.json"
+    rights_registry_path = ROOT / "content" / "rights-registry.json"
     original_manifest = manifest_path.read_bytes()
     original_status = status_path.read_bytes()
+    if rights_registry_path.is_symlink():
+        raise ValueError("rights registry is symlinked")
+    if rights_registry_path.exists() and not rights_registry_path.is_file():
+        raise ValueError("rights registry is not a regular file")
+    original_rights_registry = rights_registry_path.read_bytes() if rights_registry_path.exists() else None
+    rights_registry = load_json(rights_registry_path) if original_rights_registry is not None else {}
+    if not isinstance(rights_registry, dict):
+        raise ValueError("rights registry must be an object")
+    updated_rights_registry = dict(rights_registry)
+    rights_registry_key = str(item["id"])
+    rights_registry_changed = rights_registry_key in updated_rights_registry
+    if rights_registry_changed:
+        del updated_rights_registry[rights_registry_key]
     temporary_root = Path(tempfile.mkdtemp(prefix="daryllswer-retirement-"))
     temporary_bundle = temporary_root / bundle.name
     moved = False
@@ -178,11 +192,17 @@ def retire_one(plan: dict, manifest: dict, status: dict) -> None:
         moved = True
         atomic_write_json(manifest_path, updated_manifest)
         atomic_write_json(status_path, updated_status)
+        if rights_registry_changed:
+            atomic_write_json(rights_registry_path, updated_rights_registry)
     except Exception:
         if manifest_path.exists():
             restore_bytes(manifest_path, original_manifest)
         if status_path.exists():
             restore_bytes(status_path, original_status)
+        if original_rights_registry is not None:
+            restore_bytes(rights_registry_path, original_rights_registry)
+        elif rights_registry_path.exists() and rights_registry_path.is_file():
+            rights_registry_path.unlink()
         if moved and not bundle.exists() and temporary_bundle.exists():
             shutil.move(str(temporary_bundle), str(bundle))
         raise
@@ -247,6 +267,13 @@ def stage_sync(plan: dict, manifest: dict) -> tuple[Path, list[dict], list[dict]
     stage_root = Path(tempfile.mkdtemp(prefix="daryllswer-sync-stage-"))
     try:
         (stage_root / "archive-manifest.json").write_bytes((ROOT / "archive-manifest.json").read_bytes())
+        registry_source = ROOT / "content" / "rights-registry.json"
+        if not registry_source.is_file() or registry_source.is_symlink():
+            raise RuntimeError("staged automatic sync requires content/rights-registry.json")
+        registry_stage = stage_root / "content" / "rights-registry.json"
+        registry_stage.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(registry_source, registry_stage)
+        rights_registry = load_json(registry_source)
         command = [
             sys.executable,
             str(ROOT / "scripts" / "sync-wordpress-posts.py"),
@@ -274,6 +301,10 @@ def stage_sync(plan: dict, manifest: dict) -> tuple[Path, list[dict], list[dict]
             staged_bundle = stage_root / relative
             if not staged_bundle.is_dir() or staged_bundle.is_symlink() or not (staged_bundle / "metadata.json").is_file():
                 raise RuntimeError(f"staged automatic sync did not produce a safe bundle for ID {post_id}")
+            if str(post_id) in rights_registry:
+                staged_metadata = load_json(staged_bundle / "metadata.json")
+                if staged_metadata.get("rights") != rights_registry[str(post_id)]:
+                    raise RuntimeError(f"staged automatic sync did not apply rights registry for ID {post_id}")
         return stage_root, new_posts, updates
     except Exception:
         shutil.rmtree(stage_root, ignore_errors=True)

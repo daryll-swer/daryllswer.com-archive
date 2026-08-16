@@ -44,6 +44,12 @@
   generated GitHub Pages site may render richer embed wrappers with fallback
   links.
 - Treat comments as out of scope unless the owner explicitly asks for them.
+- Apply the daryllswer.com default content licence only to original DS content
+  covered by that default. Treat `content/rights-registry.json` as the source
+  of record for explicit per-post rights exceptions; preserve the source body
+  notice and matching metadata without inferring DS/SN SEO directives for
+  GitHub Pages. A verified retirement must remove any matching registry entry
+  transactionally with its current-tree post bundle.
 
 ## Public Repository Safety
 

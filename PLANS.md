@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete; deterministic Pages and full canonical update reconciliation
+- Status: complete locally; deployment verification pending
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-08-17
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -34,10 +34,17 @@
     for a future landing page. Commit `bfeafa6` deployed through GitHub Pages
     run `31970160414`; live homepage and article checks passed without console
     errors.
-  - Complete locally: the deliberately no-indexed BGP Router ID article is an
-    explicit sitemap exception because it mirrors a public swernetworks.com
-    article. WordPress REST remains authoritative; validation continues to
-    report every other unexpected archive/sitemap mismatch.
+  - Complete locally: replaced the ambiguous default-content licence wording
+    with a registry-backed per-post rights model. The BGP Router ID republication is
+    proprietary Swer Networks content, all rights reserved; its source-sitemap
+    exception is neutral and has no GitHub Pages SEO effect.
+  - Complete locally: `content/rights-registry.json` now maps WordPress ID
+    `5324` to Swer Networks proprietary article-text rights. Safe targeted
+    reconciliation refreshed the post's Markdown, source evidence, media
+    manifest, archive manifest, generated route, and exact metadata projection.
+    The registry allows an empty state only when no archived protected post
+    remains; a retirement removes its entry transactionally. All Pages
+    canonical and `og:url` values are verified to use the GitHub Pages route.
   - Complete and hosted-verified: encoder-dependent favicon churn is removed
     and every verified existing-post edit is eligible for an all-or-nothing
     reconciliation batch. The controlled 512 px derivative is copied
@@ -460,8 +467,10 @@
 - Decision: License scripts and tooling under MIT.
   - Rationale: Owner explicitly selected MIT in side-thread decision.
   - Date/Author: 2026-07-06, user/Codex
-  - Status: final
-  - Impact: MIT applies to scripts/tooling only; mirrored content remains `CC-BY-NC-SA-4.0` unless metadata says otherwise.
+  - Status: superseded in part by the per-post rights registry
+  - Impact: MIT applies to scripts/tooling only. `CC-BY-NC-SA-4.0` applies to
+    original DS content covered by the DS default; registry-marked reposts
+    retain their explicit proprietary or other recorded rights classification.
 - Decision: Use GitHub repository name `daryllswer.com-archive`.
   - Rationale: Owner selected the shorter archive name.
   - Date/Author: 2026-07-06, user

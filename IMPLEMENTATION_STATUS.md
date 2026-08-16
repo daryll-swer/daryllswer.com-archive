@@ -5,18 +5,32 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: deterministic Pages and full canonical update
-  reconciliation
-- Status: complete and hosted verified
+- Current sprint / workstream: per-post rights registry for Swer Networks
+  reposts
+- Status: complete locally; deployment verification pending
 - Last updated: 2026-08-17
 - Implementer role/model/thread: delegated `implementer-luna` completed the
-  bounded controlled-favicon generator and validation change; current Codex
-  Desktop completed integration, validation, and hosted verification
+  bounded rights-registry, reconciliation, renderer, and validation changes;
+  current Codex Desktop is completing integration and deployment verification
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: no active implementation-route limit
   affected the completed workstream
 
 ## Latest Delivery
+
+- Per-post rights registry for Swer Networks reposts:
+  - Status: complete locally; deployment verification pending
+  - Notes: Added a registry and schema keyed by immutable WordPress ID, plus
+    the controlling Swer Networks proprietary-content notice. Post `5324`
+    now carries an exact structured rights projection, while its DS source URL
+    remains the archive source identity. The refreshed source body, Markdown,
+    and Pages output preserve the visible Swer Networks rights block and its
+    original-publication link once. Archive pages use only exact GitHub Pages
+    `rel="canonical"` and `og:url` metadata; DS/SN SEO directives are never
+    inherited. A safe retirement removes a matching registry entry with the
+    bundle, manifest, and status update, restoring all data on failure.
+    Local action-plan reconciliation refreshed only ID `5324`; final drift
+    comparison found 19 live and 19 archived posts with no remaining changes.
 
 - README asset-link copy refinement:
   - Status: complete and GitHub-rendered verified
@@ -68,10 +82,10 @@
   - Status: complete
   - Notes: ODS, 9 LF-normalised CSV exports, 9 CSVW metadata files, whitespace-normalised HTML snapshots, and clickable artefact links generated.
 - `docs/VALIDATION.md`:
-  - Status: complete
-  - Notes: Validation treats the deliberately no-indexed BGP Router ID mirror
-    as a documented sitemap exception. WordPress REST remains authoritative;
-    unexpected sitemap absences remain warnings.
+  - Status: in progress
+  - Notes: Validation is being updated to treat the BGP Router ID repost as a
+    neutral documented source-sitemap exception. WordPress REST remains
+    authoritative; unexpected sitemap absences remain warnings.
 - `docs/PUBLIC_SAFETY.md`:
   - Status: complete
   - Notes: Public-safety scan passed with 0 findings after replacing local path references with public-safe placeholders.
@@ -94,8 +108,11 @@
   - Status: complete locally
   - Notes: Markdown uses durable embed links; Pages article output uses iframe wrappers with fallback links.
 - Licensing:
-  - Status: complete
-  - Notes: Scripts/tooling are MIT licensed; mirrored blog content is `CC-BY-NC-SA-4.0`; third-party media/external artefacts are not assumed covered by either licence.
+  - Status: complete locally; deployment verification pending
+  - Notes: Scripts/tooling are MIT licensed. The DS default
+    `CC-BY-NC-SA-4.0` classification applies only to original DS content;
+    registry-marked reposts carry their own rights classification. Third-party
+    media/external artefacts are not assumed covered by either licence.
 - README proprietary brand asset:
   - Status: complete and verified
   - Notes: Owner-provided `13_DS_Logo_Dark_Mode_SEO.png` is the
@@ -1034,8 +1051,9 @@
 - Budget/rate blocker:
   - None observed.
 - Verification gap:
-  - None. The BGP Router ID sitemap absence is an intentional no-index
-    exception for a public swernetworks.com mirror, not an unresolved warning.
+  - None. The BGP Router ID sitemap absence is a documented source-sitemap
+    exception for a public Swer Networks republication, not an unresolved
+    warning and not a GitHub Pages SEO directive.
 
 ## Completion Criteria
 

@@ -2,7 +2,7 @@
 title: "BGP Router ID Structuring in IPv6 Native Networks"
 slug: "bgp-router-id-structuring-in-ipv6-native-networks"
 date: "2026-06-04T14:36:35"
-last_modified: "2026-06-14T05:55:24"
+last_modified: "2026-08-17T02:29:23"
 canonical_url: "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/"
 wordpress_id: 5324
 featured_image: "assets/BGP_RouterID_FT-scaled.jpg"
@@ -15,7 +15,25 @@ tags:
 ---
 ![BGP Router ID Structuring in IPv6 Native Networks](assets/BGP_RouterID_FT-scaled.jpg)
 
-At [Swer Networks](https://swernetworks.com), we design and implement scalable, future-ready IPv6 architectures for our clients. This includes everything from tailoring [geographical addressing models](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md) to the structuring of Border Gateway Protocol (BGP) Router IDs in modern networks. In this post, we focus specifically on the design and structuring of BGP Router IDs within IPv6-native environments.
+> Originally published on [Swer Networks](https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/).
+>
+>
+>
+>
+>
+>
+>
+> **Copyright:** © 2026 Swer Networks. All rights reserved.
+>
+>
+>
+>
+>
+>
+>
+> This article was first published by Swer Networks and is republished here on daryllswer.com. It is not licensed under daryllswer.com’s default CC BY-NC-SA 4.0 licence. Media remains subject to any separate attribution or rights notice.
+
+At [Swer Networks](https://www.swernetworks.com), we design and implement scalable, future-ready IPv6 architectures for our clients. This includes everything from tailoring [geographical addressing models](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md) to the structuring of Border Gateway Protocol (BGP) Router IDs in modern networks. In this post, we focus specifically on the design and structuring of BGP Router IDs within IPv6-native environments.
 
 ## Introduction
 

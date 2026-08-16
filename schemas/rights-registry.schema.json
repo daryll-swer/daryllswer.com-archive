@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daryllswer.com/schemas/rights-registry.schema.json",
+  "type": "object",
+  "propertyNames": {
+    "pattern": "^[1-9][0-9]*$"
+  },
+  "additionalProperties": {
+    "$ref": "#/$defs/rights"
+  },
+  "$defs": {
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rights_holder",
+        "rights_status",
+        "default_ds_cc_applies",
+        "original_article_url",
+        "publisher",
+        "scope",
+        "media_rights"
+      ],
+      "properties": {
+        "rights_holder": {"type": "string", "minLength": 1},
+        "rights_status": {"type": "string", "minLength": 1},
+        "default_ds_cc_applies": {"type": "boolean"},
+        "original_article_url": {"type": "string", "format": "uri"},
+        "publisher": {"type": "string", "minLength": 1},
+        "scope": {"type": "string", "minLength": 1},
+        "media_rights": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

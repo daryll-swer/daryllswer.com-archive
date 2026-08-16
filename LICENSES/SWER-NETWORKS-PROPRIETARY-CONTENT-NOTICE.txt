@@ -1,0 +1,19 @@
+SWER NETWORKS PROPRIETARY CONTENT NOTICE
+
+Copyright (c) 2026 Swer Networks. All rights reserved.
+
+This notice applies to article text identified in content/rights-registry.json
+as proprietary Swer Networks content, including the BGP Router ID Structuring
+in IPv6 Native Networks article. The article was originally published at:
+
+https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/
+
+The article text is proprietary and all rights are reserved by Swer Networks.
+It is not licensed under daryllswer.com's default Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 licence. Media is separate and remains
+subject to any applicable attribution or rights notice.
+
+This notice is the controlling repository notice for the registry entries above.
+It does not grant permission to reproduce, distribute, modify, adapt, or create
+derivative works from the proprietary article text, except as required by
+applicable law or the limited operation of this public repository by GitHub.

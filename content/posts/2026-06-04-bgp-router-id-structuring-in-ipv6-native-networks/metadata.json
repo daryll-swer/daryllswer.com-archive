@@ -107,20 +107,29 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "f6846cccd527f0fda55199c4623a34f8a8e7b90a6718f3e79823a6b52e25eb9a",
-    "index_md_sha256": "df6500f7acc650d7e8de460437e18dd00189d704629d8c8ed16c4bdaf4f30d84",
-    "rendered_article_html_sha256": "c56861b9921a374c3dfdcf12f83f1e5f022a8bdcba95e736adc072940972ea0b",
-    "wordpress_post_json_sha256": "fdfd89faf6120f78aed6df0155800ea61cccd12b92376e1f8441bd39bfbe8a80"
+    "canonical_page_html_sha256": "4ed24e09fafd18a1782eab1bc027d3dc8e48bf364bc65d5c51523547e7bb2b07",
+    "index_md_sha256": "6afbccb8191a3f16aa3d3eb3fa39845e5d90ef565194f75ff6a15910931bb508",
+    "rendered_article_html_sha256": "acc77e9193f7c6a5d1054f304481ea36a2a99c0520ef6eeefb613582d448f8a1",
+    "wordpress_post_json_sha256": "b9074a27e2e93995ad73a78e49e19d04b0a372c956ad62a3b0cbc10f1c8b01fe"
   },
   "id": 5324,
-  "modified": "2026-06-14T05:55:24",
+  "modified": "2026-08-17T02:29:23",
   "published": "2026-06-04T14:36:35",
+  "rights": {
+    "default_ds_cc_applies": false,
+    "media_rights": "separate attribution/right notices",
+    "original_article_url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/",
+    "publisher": "Swer Networks",
+    "rights_holder": "Swer Networks",
+    "rights_status": "proprietary/all-rights-reserved",
+    "scope": "article-text"
+  },
   "slug": "bgp-router-id-structuring-in-ipv6-native-networks",
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/5324",
     "canonical_html_path": "source/canonical-page.html",
-    "canonical_rendered_content_sha256": "797b1bcef9bb84190ba4a91cbf258354529bb4a6de1ca6e04935c8c47b2d572b",
-    "fetched_at": "2026-07-11T09:17:44+00:00",
+    "canonical_rendered_content_sha256": "bad63fc76efaf7af518876c0fec823dd9c7889b422ac9cd764612945d7a319dd",
+    "fetched_at": "2026-08-16T21:19:52+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },

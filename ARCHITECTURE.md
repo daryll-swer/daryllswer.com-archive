@@ -10,10 +10,9 @@ not the publishing source of truth; WordPress remains canonical.
 - Public inputs only: WordPress REST API, sitemap/RSS, canonical HTML, media
   URLs, and public Google Sheet exports.
 - WordPress REST is authoritative for the archived published-post set; sitemap
-  and RSS are secondary cross-checks. The deliberately no-indexed BGP Router
-  ID mirror is an exact documented sitemap exclusion because it originated at
-  public swernetworks.com; any other archive URL absent from the post sitemap
-  remains validation drift.
+  and RSS are secondary cross-checks. The BGP Router ID republication is a
+  documented source-sitemap exception; it does not change GitHub Pages SEO.
+  Any other archive URL absent from the post sitemap remains validation drift.
 - No private admin exports, backend access, database dumps, cookies, browser
   state, or credentials.
 - Generated content is deterministic enough to re-run and compare.
@@ -23,6 +22,22 @@ not the publishing source of truth; WordPress remains canonical.
   future landing page. The generated archive homepage title and Open Graph
   title are `daryllswer.com – Archive`; article and workbook titles remain
   descriptive to their content.
+
+## Per-Post Rights
+
+- `content/rights-registry.json` records explicit article-rights exceptions by
+  immutable WordPress ID. The default `CC-BY-NC-SA-4.0` classification applies
+  only to original DS content covered by the DS default licence.
+- Registry entries are copied into matching post `metadata.json` `rights`
+  objects and validated against the manifest and source body. A registry entry
+  cannot be silently applied to a different post.
+- Registry-marked proprietary reposts preserve their source-visible rights
+  notice and original-publication link. The archive does not inject duplicate
+  notices or inherit DS/SN canonical, robots, or Open Graph URL directives;
+  generated Pages retains its own archive-local metadata.
+- If a registry-marked post is safely retired, reconciliation removes its
+  registry entry in the same transactional current-tree mutation as the bundle,
+  manifest, and status update; a failed mutation restores all of them.
 
 ## Repository Identity Assets
 

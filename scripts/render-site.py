@@ -431,6 +431,7 @@ def page_shell(
     image_href: str | None = None,
     js_href: str | None = None,
 ) -> str:
+    page_url = PAGES_BASE_URL + canonical_path.lstrip("/")
     image_meta = f'\n  <meta property="og:image" content="{html_escape(image_href)}">' if image_href else ""
     script = f'\n  <script src="{html_escape(js_href)}" defer></script>' if js_href else ""
     asset_prefix = css_href.rsplit("theme.css", 1)[0]
@@ -442,9 +443,10 @@ def page_shell(
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{html_escape(title)}</title>
   <meta name="description" content="{html_escape(description)}">
-  <link rel="canonical" href="{html_escape(PAGES_BASE_URL + canonical_path.lstrip('/'))}">
+  <link rel="canonical" href="{html_escape(page_url)}">
   <meta property="og:title" content="{html_escape(title)}">
   <meta property="og:description" content="{html_escape(description)}">{image_meta}
+  <meta property="og:url" content="{html_escape(page_url)}">
   <link rel="icon" type="image/png" href="{html_escape(favicon_href)}">
   <link rel="stylesheet" href="{html_escape(css_href)}">{script}
 </head>

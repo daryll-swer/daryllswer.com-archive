@@ -17,15 +17,33 @@ The public daryllswer.com site states that the site content is licensed under
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
 (`CC-BY-NC-SA-4.0`).
 
-This repository mirrors that public content licence for original blog article
-content unless per-file or per-asset metadata states otherwise.
+This repository mirrors that public content licence only for original
+daryllswer.com article text/content covered by the site's default licence.
+It does not infer a licence for reposted or otherwise separately owned
+content.
 
 - SPDX identifier: `CC-BY-NC-SA-4.0`
 - Licence text: `LICENSES/CC-BY-NC-SA-4.0.txt`
-- Applies to: mirrored original blog text/content from daryllswer.com unless
-  per-file metadata says otherwise.
+- Applies to: mirrored original daryllswer.com text/content that has no
+  explicit per-post rights exception.
 - Does not apply to: repository scripts/tooling, third-party media, or external
-  artefacts.
+  artefacts, or proprietary reposted content.
+
+## Proprietary Swer Networks Reposts
+
+`content/rights-registry.json` is the source record for explicit per-post
+rights exceptions. A registry-marked post has matching structured `rights`
+metadata in its post bundle and retains the source article's visible rights
+notice; the registry does not alter GitHub Pages SEO metadata.
+
+The BGP Router ID republication (WordPress ID `5324`) is proprietary Swer
+Networks article text, all rights reserved. It is excluded from the
+daryllswer.com `CC-BY-NC-SA-4.0` default. Media remains subject to its own
+attribution or rights notice.
+
+- Controlling archive notice:
+  `LICENSES/SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt`.
+- Original publication URL: `https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/`.
 
 ## Third-Party Media and External Artefacts
 

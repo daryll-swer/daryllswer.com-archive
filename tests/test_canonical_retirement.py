@@ -64,6 +64,24 @@ class CanonicalRetirementTests(unittest.TestCase):
             json.dumps({"post_count": len(posts), "posts": posts}, indent=2), encoding="utf-8"
         )
 
+    def write_rights_registry(self, post_id=5324):
+        registry_path = self.root / "content" / "rights-registry.json"
+        registry_path.parent.mkdir(parents=True, exist_ok=True)
+        registry_path.write_text(
+            json.dumps({
+                str(post_id): {
+                    "default_ds_cc_applies": False,
+                    "media_rights": "separate attribution/right notices",
+                    "original_article_url": "https://www.swernetworks.com/blog/example/",
+                    "publisher": "Swer Networks",
+                    "rights_holder": "Swer Networks",
+                    "rights_status": "proprietary/all-rights-reserved",
+                    "scope": "article-text",
+                }
+            }),
+            encoding="utf-8",
+        )
+
     def write_bundle(self, post):
         bundle = self.root / post["bundle_path"]
         (bundle / "source").mkdir(parents=True)
@@ -271,6 +289,7 @@ class CanonicalRetirementTests(unittest.TestCase):
         marker = bundle / "assets" / "existing-media.png"
         marker.write_bytes(b"existing media")
         self.write_archive([post])
+        self.write_rights_registry()
         changed = {
             "id": 1,
             "slug": "one",
@@ -292,6 +311,49 @@ class CanonicalRetirementTests(unittest.TestCase):
         self.assertEqual((self.root / "archive-manifest.json").read_bytes(), original_manifest)
         self.assertEqual((bundle / "source" / "rendered-article.html").read_bytes(), original_article)
         self.assertEqual(marker.read_bytes(), b"existing media")
+
+    def test_staged_sync_copies_rights_registry_before_public_sync(self):
+        post = {**summary(5324, "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/", "bgp"), "bundle_path": "content/posts/2026-06-04-bgp"}
+        self.write_archive([post])
+        self.write_rights_registry(5324)
+        changed = {
+            "id": 5324,
+            "slug": "bgp",
+            "canonical_url": post["canonical_url"],
+            "expected": {"id": 5324, "slug": "bgp"},
+            "fields": [{"field": "modified"}],
+        }
+        plan = {
+            "version": 2,
+            "drift": {"new_ids": [], "missing_ids": [], "relocated_posts": [], "changed_posts": [changed]},
+            "sync_posts": [],
+            "update_posts": [changed],
+        }
+
+        def fake_sync(command, cwd, env, check):
+            stage = Path(env["ARCHIVE_ROOT"])
+            staged_registry = stage / "content" / "rights-registry.json"
+            self.assertTrue(staged_registry.is_file())
+            rights = json.loads(staged_registry.read_text(encoding="utf-8"))["5324"]
+            bundle = stage / post["bundle_path"]
+            (bundle / "source").mkdir(parents=True)
+            (bundle / "metadata.json").write_text(
+                json.dumps({"id": 5324, "canonical_url": post["canonical_url"], "rights": rights}),
+                encoding="utf-8",
+            )
+            (stage / "archive-manifest.json").write_text(
+                json.dumps({"post_count": 1, "posts": [post]}), encoding="utf-8"
+            )
+            return mock.Mock(returncode=0)
+
+        with mock.patch.object(RECONCILE.subprocess, "run", side_effect=fake_sync):
+            stage, new_posts, updates = RECONCILE.stage_sync(plan, {"posts": [post]})
+        try:
+            self.assertEqual(new_posts, [])
+            self.assertEqual([item["id"] for item in updates], [5324])
+            self.assertTrue((stage / "content" / "rights-registry.json").is_file())
+        finally:
+            shutil.rmtree(stage, ignore_errors=True)
 
     def test_reconcile_retirement_removes_one_bundle_and_clears_candidate(self):
         post = {**summary(2, "https://www.daryllswer.com/missing/", "missing"), "bundle_path": "content/posts/2020-01-02-missing"}
@@ -332,6 +394,88 @@ class CanonicalRetirementTests(unittest.TestCase):
         self.assertNotIn("retired_routes", result)
         updated_status = json.loads((self.root / "archive-status.json").read_text())
         self.assertEqual(updated_status["retirement_candidates"], [])
+
+    def test_reconcile_retirement_removes_matching_rights_registry_entry(self):
+        post = {**summary(5324, "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/", "bgp"), "bundle_path": "content/posts/2026-06-04-bgp"}
+        self.write_bundle(post)
+        self.write_archive([post])
+        self.write_rights_registry(5324)
+        status = DRIFT.default_status(iso("2026-01-01"))
+        candidate = {
+            "id": 5324,
+            "slug": "bgp",
+            "canonical_url": post["canonical_url"],
+            "bundle_path": post["bundle_path"],
+            "healthy_confirmations": [{"observed_at": iso("2026-01-01")}, {"observed_at": iso("2026-01-08")}],
+            "confirmation_count": 2,
+        }
+        status["retirement_candidates"] = [candidate]
+        (self.root / "archive-status.json").write_text(json.dumps(status), encoding="utf-8")
+        original_manifest = (self.root / "archive-manifest.json").read_bytes()
+        plan = {
+            "version": 1,
+            "canonical_healthy": True,
+            "archive_manifest_sha256": hashlib.sha256(original_manifest).hexdigest(),
+            "drift": {"live_post_count": 0, "archived_post_count": 1, "missing_posts": [post], "missing_ids": [5324], "new_ids": [], "relocated_posts": [], "changed_posts": []},
+            "retirement": {
+                "candidate": candidate,
+                "eligible": True,
+                "endpoint_evidence": {
+                    "passed": True,
+                    "rest": {"status": 404, "passed": True},
+                    "canonical_route": {"status": 410, "passed": True},
+                },
+            },
+            "action": "retire",
+        }
+        RECONCILE.retire_one(plan, json.loads(original_manifest), json.loads((self.root / "archive-status.json").read_text()))
+        self.assertEqual(json.loads((self.root / "content" / "rights-registry.json").read_text()), {})
+
+    def test_reconcile_retirement_rolls_back_rights_registry_when_commit_fails(self):
+        post = {**summary(5324, "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/", "bgp"), "bundle_path": "content/posts/2026-06-04-bgp"}
+        bundle = self.write_bundle(post)
+        self.write_archive([post])
+        self.write_rights_registry(5324)
+        status = DRIFT.default_status(iso("2026-01-01"))
+        candidate = {
+            "id": 5324,
+            "slug": "bgp",
+            "canonical_url": post["canonical_url"],
+            "bundle_path": post["bundle_path"],
+            "healthy_confirmations": [{"observed_at": iso("2026-01-01")}, {"observed_at": iso("2026-01-08")}],
+            "confirmation_count": 2,
+        }
+        status["retirement_candidates"] = [candidate]
+        status_path = self.root / "archive-status.json"
+        status_path.write_text(json.dumps(status), encoding="utf-8")
+        manifest_path = self.root / "archive-manifest.json"
+        registry_path = self.root / "content" / "rights-registry.json"
+        original_manifest = manifest_path.read_bytes()
+        original_status = status_path.read_bytes()
+        original_registry = registry_path.read_bytes()
+        plan = {
+            "version": 1,
+            "canonical_healthy": True,
+            "archive_manifest_sha256": hashlib.sha256(original_manifest).hexdigest(),
+            "drift": {"live_post_count": 0, "archived_post_count": 1, "missing_posts": [post], "missing_ids": [5324], "new_ids": [], "relocated_posts": [], "changed_posts": []},
+            "retirement": {
+                "candidate": candidate,
+                "eligible": True,
+                "endpoint_evidence": {
+                    "passed": True,
+                    "rest": {"status": 404, "passed": True},
+                    "canonical_route": {"status": 410, "passed": True},
+                },
+            },
+            "action": "retire",
+        }
+        with mock.patch.object(RECONCILE, "atomic_write_json", side_effect=[None, None, OSError("simulated rights registry failure")]):
+            with self.assertRaises(OSError):
+                RECONCILE.retire_one(plan, json.loads(original_manifest), json.loads(original_status))
+        self.assertTrue(bundle.is_dir())
+        self.assertEqual(manifest_path.read_bytes(), original_manifest)
+        self.assertEqual(status_path.read_bytes(), original_status)
+        self.assertEqual(registry_path.read_bytes(), original_registry)
 
     def test_reconcile_rejects_unsafe_bundle_path(self):
         with self.assertRaises(ValueError):

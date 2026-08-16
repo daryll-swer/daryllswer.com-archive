@@ -31,12 +31,25 @@ UA = "daryllswer-com-archive-validator/1.0 (+https://www.daryllswer.com/)"
 POSTS_ENDPOINT = "https://www.daryllswer.com/wp-json/wp/v2/posts?per_page=100&_embed=1"
 POST_SITEMAP = "https://www.daryllswer.com/post-sitemap.xml"
 PAGES_HOME_TITLE = "daryllswer.com – Archive"
+RIGHTS_REGISTRY_PATH = ROOT / "content" / "rights-registry.json"
+RIGHTS_SCHEMA_PATH = ROOT / "schemas" / "rights-registry.schema.json"
+RIGHTS_NOTICE_PATH = ROOT / "LICENSES" / "SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt"
+RIGHTS_REQUIRED_FIELDS = (
+    "rights_holder",
+    "rights_status",
+    "default_ds_cc_applies",
+    "original_article_url",
+    "publisher",
+    "scope",
+    "media_rights",
+)
+REQUIRED_ARCHIVED_RIGHTS_ID = "5324"
 # WordPress REST is authoritative for archived posts. This exact public article
-# originated at swernetworks.com and is deliberately no-indexed on the
-# daryllswer.com mirror, so WordPress omits it from the post sitemap.
-INTENTIONAL_SITEMAP_EXCLUSIONS = {
+# has a documented source-sitemap exception; unknown sitemap absences remain
+# warning candidates.
+DOCUMENTED_SOURCE_SITEMAP_EXCEPTIONS = {
     "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/": (
-        "public swernetworks.com article mirrored to daryllswer.com; deliberately no-indexed"
+        "documented source-sitemap exception"
     ),
 }
 PAGES_BASE_URL = "https://daryll-swer.github.io/daryllswer.com-archive/"
@@ -180,6 +193,142 @@ def check_required(data, schema, path: str, errors: list[str]) -> None:
     for key in schema.get("required", []):
         if key not in data:
             errors.append(f"{path}: missing required key `{key}`")
+
+
+def validate_rights_record_shape(post_id: str, record: object, errors: list[str]) -> bool:
+    path = f"content/rights-registry.json[{post_id!r}]"
+    if not isinstance(record, dict):
+        errors.append(f"{path}: expected object")
+        return False
+    missing = [key for key in RIGHTS_REQUIRED_FIELDS if key not in record]
+    if missing:
+        errors.append(f"{path}: missing required key(s): {', '.join(missing)}")
+    extra = sorted(set(record) - set(RIGHTS_REQUIRED_FIELDS))
+    if extra:
+        errors.append(f"{path}: unsupported key(s): {', '.join(extra)}")
+    valid = not missing and not extra
+    for key in ["rights_holder", "rights_status", "original_article_url", "publisher", "scope", "media_rights"]:
+        if key in record and (not isinstance(record[key], str) or not record[key].strip()):
+            errors.append(f"{path}: `{key}` must be a non-empty string")
+            valid = False
+    if "default_ds_cc_applies" in record and not isinstance(record["default_ds_cc_applies"], bool):
+        errors.append(f"{path}: `default_ds_cc_applies` must be boolean")
+        valid = False
+    if isinstance(record.get("original_article_url"), str):
+        parsed = urllib.parse.urlsplit(record["original_article_url"])
+        if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+            errors.append(f"{path}: `original_article_url` must be an absolute HTTP(S) URL")
+            valid = False
+    if record.get("rights_status") == "proprietary/all-rights-reserved" and record.get("default_ds_cc_applies") is not False:
+        errors.append(f"{path}: proprietary content must set `default_ds_cc_applies` to false")
+        valid = False
+    return valid
+
+
+def validate_rights_registry(archive: dict, errors: list[str]) -> dict[str, dict] | None:
+    if not RIGHTS_SCHEMA_PATH.exists():
+        errors.append("rights registry schema missing")
+    else:
+        try:
+            schema = load_json(RIGHTS_SCHEMA_PATH)
+            schema_record = (schema.get("$defs") or {}).get("rights")
+            if not isinstance(schema_record, dict) or set(schema_record.get("required", [])) != set(RIGHTS_REQUIRED_FIELDS):
+                errors.append("rights registry schema does not define the approved rights record")
+        except Exception as exc:
+            errors.append(f"rights registry schema parse failed: {exc}")
+    if not RIGHTS_REGISTRY_PATH.exists():
+        errors.append("rights registry missing at content/rights-registry.json")
+        return None
+    try:
+        registry = load_json(RIGHTS_REGISTRY_PATH)
+    except Exception as exc:
+        errors.append(f"rights registry parse failed: {exc}")
+        return None
+    if not isinstance(registry, dict):
+        errors.append("rights registry must be an object")
+        return None
+
+    valid_records: dict[str, dict] = {}
+    posts = archive.get("posts", []) or []
+    archived_ids = {post.get("id") for post in posts}
+    if 5324 in archived_ids and REQUIRED_ARCHIVED_RIGHTS_ID not in registry:
+        errors.append(
+            "content/rights-registry.json must contain an entry for archived WordPress post ID 5324"
+        )
+    for post_id, record in registry.items():
+        if not isinstance(post_id, str) or not re.fullmatch(r"[1-9][0-9]*", post_id):
+            errors.append(f"content/rights-registry.json: invalid immutable WordPress ID key `{post_id}`")
+            continue
+        if not validate_rights_record_shape(post_id, record, errors):
+            continue
+        valid_records[post_id] = record
+        matches = [post for post in posts if post.get("id") == int(post_id)]
+        if len(matches) != 1:
+            errors.append(f"content/rights-registry.json[{post_id!r}]: must resolve to exactly one manifest post; found {len(matches)}")
+            continue
+        bundle = ROOT / matches[0].get("bundle_path", "")
+        metadata_path = bundle / "metadata.json"
+        if not metadata_path.exists():
+            errors.append(f"{matches[0].get('slug', post_id)}: rights metadata is missing at {rel(metadata_path)}")
+            continue
+        try:
+            metadata = load_json(metadata_path)
+        except Exception as exc:
+            errors.append(f"{matches[0].get('slug', post_id)}: rights metadata parse failed: {exc}")
+            continue
+        if metadata.get("rights") != record:
+            errors.append(f"{matches[0].get('slug', post_id)}: generated metadata.rights does not match its registry entry")
+
+        if record.get("rights_status") != "proprietary/all-rights-reserved":
+            continue
+        evidence_paths = [
+            bundle / "index.md",
+            bundle / "source" / "rendered-article.html",
+            bundle / "source" / "canonical-page.html",
+            bundle / "source" / "wordpress-post.json",
+        ]
+        evidence = "\n".join(
+            path.read_text(encoding="utf-8", errors="replace")
+            for path in evidence_paths
+            if path.exists()
+        )
+        normalised = " ".join(evidence.split()).lower()
+        if record["original_article_url"] not in evidence:
+            errors.append(f"{matches[0].get('slug', post_id)}: proprietary rights evidence is missing the original publication link")
+        if not all(marker in normalised for marker in ["swer networks", "copyright", "all rights reserved"]):
+            errors.append(f"{matches[0].get('slug', post_id)}: proprietary rights evidence is missing Swer Networks copyright/all-rights-reserved wording")
+        if not re.search(r"not licensed under .*cc by-nc-sa 4\.0 licen[cs]e", normalised):
+            errors.append(f"{matches[0].get('slug', post_id)}: proprietary rights evidence is missing explicit CC exclusion")
+
+    for post in posts:
+        metadata_path = ROOT / post.get("bundle_path", "") / "metadata.json"
+        if not metadata_path.exists():
+            continue
+        try:
+            metadata = load_json(metadata_path)
+        except Exception:
+            continue
+        if "rights" not in metadata:
+            continue
+        post_id = str(post.get("id"))
+        record = valid_records.get(post_id)
+        if record is None:
+            errors.append(
+                f"{post.get('slug', post_id)}: generated metadata.rights has no matching registry entry"
+            )
+        elif metadata.get("rights") != record:
+            errors.append(
+                f"{post.get('slug', post_id)}: generated metadata.rights does not exactly match its registry entry"
+            )
+
+    if not RIGHTS_NOTICE_PATH.exists():
+        errors.append(f"proprietary rights notice missing: {rel(RIGHTS_NOTICE_PATH)}")
+    else:
+        notice = RIGHTS_NOTICE_PATH.read_text(encoding="utf-8", errors="replace").lower()
+        for marker in ["swer networks", "all rights reserved", "not licensed under", "creative commons", "content/rights-registry.json"]:
+            if marker not in notice:
+                errors.append(f"{rel(RIGHTS_NOTICE_PATH)}: missing `{marker}`")
+    return valid_records
 
 
 def markdown_image_paths(markdown: str) -> list[str]:
@@ -535,16 +684,16 @@ def sitemap_urls() -> set[str]:
 def classify_sitemap_difference(
     sitemap: set[str], archive: set[str]
 ) -> tuple[list[str], list[str], list[tuple[str, str]]]:
-    """Separate true sitemap drift from documented canonical no-index exclusions."""
+    """Separate true sitemap drift from documented source-sitemap exceptions."""
     missing_from_archive = sorted(sitemap - archive)
     missing_from_sitemap = archive - sitemap
     intentional = sorted(
-        (url, INTENTIONAL_SITEMAP_EXCLUSIONS[url])
+        (url, DOCUMENTED_SOURCE_SITEMAP_EXCEPTIONS[url])
         for url in missing_from_sitemap
-        if url in INTENTIONAL_SITEMAP_EXCLUSIONS
+        if url in DOCUMENTED_SOURCE_SITEMAP_EXCEPTIONS
     )
     unexpected_missing_from_sitemap = sorted(
-        url for url in missing_from_sitemap if url not in INTENTIONAL_SITEMAP_EXCLUSIONS
+        url for url in missing_from_sitemap if url not in DOCUMENTED_SOURCE_SITEMAP_EXCEPTIONS
     )
     return missing_from_archive, unexpected_missing_from_sitemap, intentional
 
@@ -681,6 +830,28 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
 
 def parse_html_file(path: Path):
     return lxml.html.fromstring(path.read_text(encoding="utf-8", errors="replace"))
+
+
+def validate_pages_open_graph_url(page: Path, expected: str, errors: list[str]) -> None:
+    try:
+        document = parse_html_file(page)
+    except Exception as exc:
+        errors.append(f"{rel(page)}: generated HTML parse failed while checking Open Graph URL: {exc}")
+        return
+    values = document.xpath("//meta[@property='og:url']/@content")
+    if values != [expected]:
+        errors.append(f"{rel(page)}: Open Graph URL must be exactly {expected!r}; found {values!r}")
+
+
+def validate_pages_canonical_url(page: Path, expected: str, errors: list[str]) -> None:
+    try:
+        document = parse_html_file(page)
+    except Exception as exc:
+        errors.append(f"{rel(page)}: generated HTML parse failed while checking canonical URL: {exc}")
+        return
+    values = document.xpath("//link[@rel='canonical']/@href")
+    if values != [expected]:
+        errors.append(f"{rel(page)}: canonical URL must be exactly {expected!r}; found {values!r}")
 
 
 def class_predicate(class_name: str) -> str:
@@ -1197,14 +1368,16 @@ def validate_pages_site(posts: list[dict], errors: list[str], warnings: list[str
         errors.append("GitHub Pages index Open Graph title does not match the archive homepage title")
     if 'href="index.html"' in index_html:
         errors.append("GitHub Pages index navigation should use the clean ./ root URL, not index.html")
-    if 'rel="canonical" href="https://daryll-swer.github.io/daryllswer.com-archive/index.html"' in index_html:
-        errors.append("GitHub Pages index canonical URL should use the clean project root")
+    validate_pages_canonical_url(site_index, PAGES_BASE_URL, errors)
+    validate_pages_open_graph_url(site_index, PAGES_BASE_URL, errors)
     for post in posts:
         page = ROOT / "docs" / "posts" / post["slug"] / "index.html"
         if not page.exists():
             errors.append(f"{post['slug']}: GitHub Pages article missing")
             continue
         html = page.read_text(encoding="utf-8", errors="replace")
+        validate_pages_canonical_url(page, PAGES_BASE_URL + f"posts/{post['slug']}/", errors)
+        validate_pages_open_graph_url(page, PAGES_BASE_URL + f"posts/{post['slug']}/", errors)
         try:
             source_doc = parse_html_file(ROOT / post["bundle_path"] / "source" / "rendered-article.html")
             page_doc = parse_html_file(page)
@@ -1402,6 +1575,15 @@ def main() -> int:
         archived_keys = archive_route_keys(archive)
         if post_count != len(posts):
             errors.append(f"archive post_count {post_count} does not match posts length {len(posts)}")
+        rights_registry = validate_rights_registry(archive, errors)
+        if rights_registry:
+            report.extend([
+                "## Per-Post Rights Registry",
+                "",
+                f"- Registry entries: {len(rights_registry)}",
+                "- Registry keys are immutable WordPress post IDs.",
+                "",
+            ])
         try:
             body, headers = request(POSTS_ENDPOINT)
             live_posts = json.loads(body.decode("utf-8"))
@@ -1442,7 +1624,7 @@ def main() -> int:
                 "",
                 f"- Sitemap post URLs: {len(sm_urls)}",
                 f"- Archive URLs: {len(manifest_urls)}",
-                f"- Intentional no-index exclusions: {len(intentional_exclusions)}",
+                f"- Documented source-sitemap exceptions: {len(intentional_exclusions)}",
             ])
             report.extend(
                 f"  - `{url}`: {reason}" for url, reason in intentional_exclusions

@@ -34,10 +34,22 @@ except Exception:  # pragma: no cover - optional dimension support
 
 
 ROOT = Path(os.environ.get("ARCHIVE_ROOT", Path(__file__).resolve().parents[1])).resolve()
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 SITE = "https://www.daryllswer.com"
 POSTS_ENDPOINT = f"{SITE}/wp-json/wp/v2/posts?per_page=100&_embed=1"
 MEDIA_ENDPOINT = f"{SITE}/wp-json/wp/v2/media"
 UA = "daryllswer-com-archive-sync/1.0 (+https://www.daryllswer.com/)"
+RIGHTS_REGISTRY_PATH = ROOT / "content" / "rights-registry.json"
+RIGHTS_SCHEMA_PATH = REPOSITORY_ROOT / "schemas" / "rights-registry.schema.json"
+RIGHTS_REQUIRED_FIELDS = (
+    "rights_holder",
+    "rights_status",
+    "default_ds_cc_applies",
+    "original_article_url",
+    "publisher",
+    "scope",
+    "media_rights",
+)
 OPERATIONAL_CTA_LABEL = "site_operational_cta"
 OPERATIONAL_TEXT_MARKERS = (
     "it would be appreciated if you could help me continue to provide valuable network engineering content",
@@ -116,6 +128,50 @@ def write_json(path: Path, data) -> None:
 
 def load_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def validate_rights_record(post_id: str, record: object) -> None:
+    if not isinstance(record, dict):
+        raise ValueError(f"rights registry entry {post_id} must be an object")
+    missing = [key for key in RIGHTS_REQUIRED_FIELDS if key not in record]
+    if missing:
+        raise ValueError(f"rights registry entry {post_id} is missing: {', '.join(missing)}")
+    if set(record) != set(RIGHTS_REQUIRED_FIELDS):
+        extra = sorted(set(record) - set(RIGHTS_REQUIRED_FIELDS))
+        raise ValueError(f"rights registry entry {post_id} has unsupported fields: {', '.join(extra)}")
+    for key in ["rights_holder", "rights_status", "original_article_url", "publisher", "scope", "media_rights"]:
+        if not isinstance(record[key], str) or not record[key].strip():
+            raise ValueError(f"rights registry entry {post_id} field {key} must be a non-empty string")
+    if not isinstance(record["default_ds_cc_applies"], bool):
+        raise ValueError(f"rights registry entry {post_id} field default_ds_cc_applies must be boolean")
+    parsed = urllib.parse.urlsplit(record["original_article_url"])
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        raise ValueError(f"rights registry entry {post_id} original_article_url is not an absolute URL")
+
+
+def load_rights_registry() -> dict[str, dict]:
+    """Load the root registry before any public synchronisation requests."""
+    if not RIGHTS_REGISTRY_PATH.is_file():
+        raise ValueError(f"rights registry missing: {RIGHTS_REGISTRY_PATH}")
+    if not RIGHTS_SCHEMA_PATH.is_file():
+        raise ValueError(f"rights registry schema missing: {RIGHTS_SCHEMA_PATH}")
+    schema = load_json(RIGHTS_SCHEMA_PATH)
+    schema_record = (schema.get("$defs") or {}).get("rights") if isinstance(schema, dict) else None
+    if not isinstance(schema_record, dict) or set(schema_record.get("required", [])) != set(RIGHTS_REQUIRED_FIELDS):
+        raise ValueError("rights registry schema does not define the approved rights record")
+    registry = load_json(RIGHTS_REGISTRY_PATH)
+    if not isinstance(registry, dict):
+        raise ValueError("rights registry must be an object")
+    for post_id, record in registry.items():
+        if not isinstance(post_id, str) or not re.fullmatch(r"[1-9][0-9]*", post_id):
+            raise ValueError(f"rights registry key must be an immutable WordPress ID: {post_id!r}")
+        validate_rights_record(post_id, record)
+    return registry
+
+
+def rights_for_post(post_id: int, rights_registry: dict[str, dict]) -> dict | None:
+    record = rights_registry.get(str(post_id))
+    return copy.deepcopy(record) if record is not None else None
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -832,7 +888,13 @@ def frontmatter(post: dict, categories: list[dict], tags: list[dict], featured_l
     return "\n".join(lines)
 
 
-def sync_post(post: dict, generated_at: str, canonical_to_bundle: dict[str, str] | None = None) -> dict:
+def sync_post(
+    post: dict,
+    generated_at: str,
+    canonical_to_bundle: dict[str, str] | None = None,
+    rights_registry: dict[str, dict] | None = None,
+) -> dict:
+    rights_registry = rights_registry if rights_registry is not None else load_rights_registry()
     bundle = ROOT / "content" / "posts" / date_slug(post)
     source_dir = bundle / "source"
     assets_dir = bundle / "assets"
@@ -971,6 +1033,9 @@ def sync_post(post: dict, generated_at: str, canonical_to_bundle: dict[str, str]
         "assets_manifest": "assets/manifest.json",
         "validation": {"status": "pending"},
     }
+    rights = rights_for_post(post["id"], rights_registry)
+    if rights is not None:
+        metadata["rights"] = rights
     if featured_media:
         metadata["featured_media_sizes"] = featured_media.get("media_details", {}).get("sizes", {})
     write_json(bundle / "metadata.json", metadata)
@@ -1073,6 +1138,7 @@ def sync_selected_posts(
     generated_at: str,
     slugs: set[str],
     expected_ids: set[int] | None = None,
+    rights_registry: dict[str, dict] | None = None,
 ) -> int:
     archive_path = ROOT / "archive-manifest.json"
     if not archive_path.exists():
@@ -1091,9 +1157,10 @@ def sync_selected_posts(
             return 1
 
     archive = load_json(archive_path)
+    rights_registry = rights_registry if rights_registry is not None else load_rights_registry()
     canonical_to_bundle = canonical_bundle_map(posts)
     refreshed = {
-        slug: sync_post(posts_by_slug[slug], generated_at, canonical_to_bundle)
+        slug: sync_post(posts_by_slug[slug], generated_at, canonical_to_bundle, rights_registry)
         for slug in sorted(slugs)
     }
 
@@ -1122,6 +1189,7 @@ def sync_selected_posts(
 
 def main() -> int:
     args = parse_args()
+    rights_registry = load_rights_registry()
     generated_at = now_iso()
     posts, rest_headers = fetch_all_posts()
     slugs = selected_slugs(args)
@@ -1130,10 +1198,17 @@ def main() -> int:
         print("error: --expected-id requires --slug or --slugs", file=sys.stderr)
         return 1
     if slugs:
-        return sync_selected_posts(posts, rest_headers, generated_at, slugs, expected_ids or None)
+        return sync_selected_posts(
+            posts,
+            rest_headers,
+            generated_at,
+            slugs,
+            expected_ids or None,
+            rights_registry,
+        )
 
     canonical_to_bundle = canonical_bundle_map(posts)
-    manifest_posts = [sync_post(post, generated_at, canonical_to_bundle) for post in posts]
+    manifest_posts = [sync_post(post, generated_at, canonical_to_bundle, rights_registry) for post in posts]
     write_archive_manifest(
         generated_at=generated_at,
         rest_headers=rest_headers,
