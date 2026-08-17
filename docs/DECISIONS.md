@@ -187,6 +187,19 @@
   and `docs/SEO_RECOVERY.md` is the only supported return path to source
   priority.
 
+## 2026-08-17: Use Allowlisted All-State Workflow Staging
+
+- Decision: Stage the canonical-drift clean checkout with `git add -A -- .`,
+  then enforce the existing strict changed-path allowlist before commit.
+- Rationale: The source-first mode intentionally omits optional `docs/feed.xml`.
+  Naming that absent path directly caused a healthy scheduled workflow to fail
+  with Git exit `128`; a literal path list would also be brittle when a valid
+  recovery removes the feed.
+- Impact: The workflow supports permitted additions, modifications, and
+  deletions without optional-file pathspec failures. Pre- and post-staging
+  allowlist checks remain the boundary preventing unrelated paths from being
+  committed. Validation and regression tests require this behaviour.
+
 ## 2026-07-06: Use Detection-First Canonical Drift Automation
 
 - Decision: Add a weekly/manual GitHub Actions drift check that records drift

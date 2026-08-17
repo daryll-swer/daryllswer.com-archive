@@ -225,7 +225,11 @@ flowchart LR
   sitemap, or feed eligibility change.
 - The workflow commits only allowlisted reconciliation paths: drift status and
   report, the archive manifest, affected post bundles, and regenerated Pages
-  output. Timestamped validation reports and temporary action plans are never
+  output. It uses root-scoped all-state staging so permitted additions,
+  modifications, and deletions are handled even when optional generated files
+  such as `docs/feed.xml` are absent. Strict path allowlists run both before
+  and after staging, and fail before commit for every unexpected path.
+  Timestamped validation reports and temporary action plans are never
   committed by scheduled checks.
 - The workflow must use explicit `actions/checkout@v6` and
   `actions/setup-python@v6` steps, select CPython 3.12, cache pip by

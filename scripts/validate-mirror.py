@@ -1760,6 +1760,8 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
             "Render generated Pages",
             "Verify reconciled canonical state",
             "Validate public archive",
+            "Check workflow changed paths",
+            "Commit drift status changes",
         ]
         for step_name in required_steps:
             if step_name not in step_blocks:
@@ -1786,10 +1788,29 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
             ("Render generated Pages", r"^run:\s+make\s+render-site\s*$", "generated Pages rendering"),
             ("Render generated Pages", r"steps\.external\.outputs\.changed|steps\.canonical\.outputs\.status_changed", "SEO/source-state render trigger"),
             ("Verify reconciled canonical state", r"scripts/check-canonical-drift\.py\s+--fresh\s*$", "fresh post-reconciliation drift comparison"),
+            ("Check workflow changed paths", r"git.*diff.*--name-only", "pre-staging changed-path scan"),
+            ("Check workflow changed paths", r"git.*diff.*--cached.*--name-only", "pre-staging index scan"),
+            ("Check workflow changed paths", r"git.*ls-files.*--others.*--exclude-standard", "pre-staging untracked-path scan"),
+            ("Check workflow changed paths", r"allowed\s*=\s*re\.compile", "pre-staging path allowlist"),
+            ("Check workflow changed paths", r"unexpected\s*=\s*sorted", "pre-staging unexpected-path check"),
+            ("Check workflow changed paths", r"raise\s+SystemExit\(1\)", "pre-staging allowlist failure"),
+            ("Commit drift status changes", r"^git\s+add\s+-A\s+--\s+\.\s*$", "root-scoped all-state staging"),
+            ("Commit drift status changes", r"git.*diff.*--cached.*--name-only", "post-staging path scan"),
+            ("Commit drift status changes", r"allowed\s*=\s*re\.compile", "post-staging path allowlist"),
+            ("Commit drift status changes", r"unexpected\s*=\s*sorted", "post-staging unexpected-path check"),
+            ("Commit drift status changes", r"raise\s+SystemExit\(1\)", "post-staging allowlist failure"),
+            ("Commit drift status changes", r"^git\s+commit\s+", "workflow commit"),
+            ("Commit drift status changes", r"^git\s+push\s*$", "workflow push"),
         ]
         for step_name, pattern, description in required_step_lines:
             if step_name in step_blocks and not step_has(step_name, pattern):
                 errors.append(f"canonical drift workflow missing active `{description}` in `{step_name}`")
+
+        commit_lines = [line for _, line in step_blocks.get("Commit drift status changes", [])]
+        if any(re.search(r"\bgit\s+add\b[^\n]*\bdocs/feed\.xml\b", line) for line in commit_lines):
+            errors.append(
+                "canonical drift workflow must not pass optional docs/feed.xml directly to git add"
+            )
 
         step_lines = {
             name: step_blocks.get(name, [(0, "")])[0][0]
@@ -1808,6 +1829,8 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
             "Render generated Pages",
             "Verify reconciled canonical state",
             "Validate public archive",
+            "Check workflow changed paths",
+            "Commit drift status changes",
         ]
         present_steps = [name for name in ordered_steps if name in step_lines]
         if present_steps != ordered_steps or any(
@@ -1815,7 +1838,7 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
             for left, right in zip(ordered_steps, ordered_steps[1:])
             if left in step_lines and right in step_lines
         ):
-            errors.append("canonical drift workflow Python bootstrap steps are missing or out of order")
+            errors.append("canonical drift workflow required steps are missing or out of order")
 
         requirements = ROOT / "requirements.txt"
         if not requirements.exists():

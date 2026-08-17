@@ -5,9 +5,8 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: source-first archive SEO, RSS, and fallback
-  discovery
-- Status: complete and hosted verified
+- Current sprint / workstream: canonical drift workflow staging reliability
+- Status: locally complete; hosted-runner verification pending
 - Last updated: 2026-08-17
 - Implementer role/model/thread: delegated `implementer-luna` completed the
   bounded rights-registry, reconciliation, renderer, and validation changes;
@@ -17,6 +16,25 @@
   affected the completed workstream
 
 ## Latest Delivery
+
+- Canonical drift workflow staging reliability:
+  - Status: locally complete; hosted-runner verification pending
+  - Root cause: scheduled run `31993154684` completed public canonical and
+    external-source checks, then failed with exit `128` because its final
+    `git add` command named `docs/feed.xml` even though that file is correctly
+    absent in normal `source_primary` mode.
+  - Delivered: root-scoped all-state staging replaces the brittle literal path
+    list. Existing strict allowlists run before and after staging, so an
+    unexpected changed path still fails the workflow before it can commit or
+    push. Static validation requires that strategy and rejects a literal
+    optional-feed path. Focused tests cover the normal absent-feed case and
+    both unsafe staging regressions.
+  - Local verification: 3 focused workflow tests and the 47-test Python suite
+    passed; Python compilation, workflow YAML parsing, `git diff --check`,
+    `make validate` with 0 errors/0 warnings, and `make scan-secrets` passed.
+    Exact `git add -A -- .` staging succeeded with `docs/feed.xml` absent and
+    staged only the four expected repair paths. Commit, push, and a clean
+    hosted-runner manual dispatch remain required.
 
 - Source-first archive SEO, RSS, and fallback discovery:
   - Status: complete and hosted verified
