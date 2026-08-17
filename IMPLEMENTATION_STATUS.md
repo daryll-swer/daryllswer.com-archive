@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: canonical drift workflow staging reliability
-- Status: locally complete; hosted-runner verification pending
+- Status: complete and hosted-runner verified
 - Last updated: 2026-08-17
 - Implementer role/model/thread: delegated `implementer-luna` completed the
   bounded rights-registry, reconciliation, renderer, and validation changes;
@@ -18,7 +18,7 @@
 ## Latest Delivery
 
 - Canonical drift workflow staging reliability:
-  - Status: locally complete; hosted-runner verification pending
+  - Status: complete and hosted-runner verified
   - Root cause: scheduled run `31993154684` completed public canonical and
     external-source checks, then failed with exit `128` because its final
     `git add` command named `docs/feed.xml` even though that file is correctly
@@ -33,8 +33,12 @@
     passed; Python compilation, workflow YAML parsing, `git diff --check`,
     `make validate` with 0 errors/0 warnings, and `make scan-secrets` passed.
     Exact `git add -A -- .` staging succeeded with `docs/feed.xml` absent and
-    staged only the four expected repair paths. Commit, push, and a clean
-    hosted-runner manual dispatch remain required.
+    staged only the four expected repair paths.
+  - Delivery: commit `f8f17ae` (`Harden canonical drift staging`) was pushed
+    to `main`. Clean manual workflow run `32002363426` completed successfully
+    in 17 seconds: all executed steps passed, normal no-change gating skipped
+    Pages rendering and reconciliation verification, and the final staging/
+    commit step completed without a pathspec error.
 
 - Source-first archive SEO, RSS, and fallback discovery:
   - Status: complete and hosted verified
