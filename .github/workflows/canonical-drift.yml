@@ -125,7 +125,7 @@ jobs:
 
       - name: Commit drift status changes
         run: |
-          git add -A -- archive-manifest.json archive-status.json assets/brand/manifest.json assets/brand/derivatives docs/CANONICAL_DRIFT.md docs/EXTERNAL_SOURCE_STATUS.md docs/VALIDATION.md docs/PUBLIC_SAFETY.md docs/robots.txt docs/sitemap.xml docs/feed.xml docs/index.html docs/.nojekyll docs/assets docs/posts docs/sheets content/posts
+          git add -A -- .
           if git diff --cached --quiet; then
             echo "No archive or generated Pages changes to commit."
             exit 0

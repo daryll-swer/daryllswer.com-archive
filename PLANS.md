@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete and hosted verified - source-first archive SEO, RSS, and fallback discovery
+- Status: locally complete - canonical drift staging repair pending hosted verification
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-08-17
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -22,6 +22,16 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - Locally complete: scheduled GitHub Actions run `31993154684` completed its
+    canonical and external-source checks, then failed in the final commit step
+    because normal `source_primary` intentionally omits `docs/feed.xml` while
+    the workflow passed that absent optional path to `git add`. The repair now
+    uses root-scoped all-state staging followed by the existing strict
+    post-staging allowlist, so permitted additions, modifications, and
+    deletions are staged without literal optional-path dependence. Static
+    validation and focused regression tests reject a return to the unsafe
+    pattern. Remaining work: commit, push, then manually dispatch the clean
+    hosted runner and verify a no-change result.
   - Locally complete: source-first archive SEO keeps only the archive homepage
     indexable while DS is healthy. The new non-reverting `archive_discovery`
     state activates only after the existing DS frozen threshold, generates the
