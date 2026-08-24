@@ -6,7 +6,7 @@
       "consecutive_failures": 0,
       "first_failure_at": null,
       "frozen": false,
-      "last_checked_at": "2026-08-16T22:47:55Z",
+      "last_checked_at": "2026-08-24T04:06:58Z",
       "last_failure_at": null,
       "last_observation": {
         "countable_failure": false,
@@ -14,14 +14,14 @@
         "status": 200,
         "url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/"
       },
-      "last_success_at": "2026-08-16T22:47:55Z",
+      "last_success_at": "2026-08-24T04:06:58Z",
       "post_id": 5324,
       "promotion_blocked": false,
       "state": "healthy",
       "url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/"
     }
   },
-  "external_sources_updated_at": "2026-08-16T22:47:55Z",
+  "external_sources_updated_at": "2026-08-24T04:06:58Z",
   "failure": {
     "consecutive_failures": 0,
     "first_failure_at": null,
@@ -335,6 +335,6 @@
   "seo_activated_at": null,
   "seo_state": "source_primary",
   "state": "healthy",
-  "updated_at": "2026-08-16T22:51:42Z",
+  "updated_at": "2026-08-24T04:06:58Z",
   "version": 2
 }
