@@ -6,7 +6,7 @@
       "consecutive_failures": 0,
       "first_failure_at": null,
       "frozen": false,
-      "last_checked_at": "2026-09-14T08:58:43Z",
+      "last_checked_at": "2026-09-21T08:59:57Z",
       "last_failure_at": null,
       "last_observation": {
         "countable_failure": false,
@@ -14,20 +14,20 @@
         "status": 200,
         "url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/"
       },
-      "last_success_at": "2026-09-14T08:58:43Z",
+      "last_success_at": "2026-09-21T08:59:57Z",
       "post_id": 5324,
       "promotion_blocked": false,
       "state": "healthy",
       "url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/"
     }
   },
-  "external_sources_updated_at": "2026-09-14T08:58:43Z",
+  "external_sources_updated_at": "2026-09-21T08:59:57Z",
   "failure": {
-    "consecutive_failures": 1,
-    "first_failure_at": "2026-09-14T08:58:42Z",
-    "last_failure_at": "2026-09-14T08:58:42Z",
-    "last_failure_detail": "HTTP Error 403: Forbidden",
-    "last_failure_kind": "HTTPError"
+    "consecutive_failures": 0,
+    "first_failure_at": null,
+    "last_failure_at": null,
+    "last_failure_detail": null,
+    "last_failure_kind": null
   },
   "frozen": false,
   "http_cache": {
@@ -311,7 +311,7 @@
       "title": "shortcomings of cgnat and potential workarounds"
     }
   ],
-  "last_success_at": "2026-08-16T22:51:42Z",
+  "last_success_at": "2026-09-21T08:59:44Z",
   "manual_recovery": {
     "unfreeze_steps": [
       "Confirm the canonical site is again under the owner's control.",
@@ -334,7 +334,7 @@
   "retirement_candidates": [],
   "seo_activated_at": null,
   "seo_state": "source_primary",
-  "state": "degraded",
-  "updated_at": "2026-09-14T08:58:43Z",
+  "state": "healthy",
+  "updated_at": "2026-09-21T08:59:57Z",
   "version": 2
 }

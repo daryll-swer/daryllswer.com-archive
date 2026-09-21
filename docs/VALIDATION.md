@@ -1,11 +1,23 @@
 # Validation
 
-Generated: 2026-09-14T08:58:46+00:00
+Generated: 2026-09-21T08:59:59+00:00
 
 ## Per-Post Rights Registry
 
 - Registry entries: 1
 - Registry keys are immutable WordPress post IDs.
+
+## WordPress REST
+
+- Live X-WP-Total: 19
+- Archived posts: 19
+
+## Sitemap Cross-Check
+
+- Sitemap post URLs: 18
+- Archive URLs: 19
+- Documented source-sitemap exceptions: 1
+  - `https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/`: documented source-sitemap exception
 
 ## Typography
 
@@ -33,18 +45,13 @@ Generated: 2026-09-14T08:58:46+00:00
 
 ## Canonical Drift Automation
 
-- State: `degraded`
+- State: `healthy`
 - Frozen: `false`
 
 ## Result
 
 - Errors: 0
-- Warnings: 2
-
-## Warnings
-
-- could not verify WordPress REST count: HTTP Error 403: Forbidden
-- could not verify sitemap: HTTP Error 403: Forbidden
+- Warnings: 0
 
 ## Status
 
