@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: proprietary content policy and history maintenance
-- Status: current-tree verification complete; isolated history verification pending
+- Status: current-tree and isolated history verified; publication pending
 - Last updated: 2026-10-22
 - Implementer role/model/thread: delegated `implementer-luna` completed the
   bounded rights-registry, reconciliation, renderer, and validation changes;
@@ -18,7 +18,7 @@
 ## Latest Delivery
 
 - Proprietary content policy and history maintenance:
-  - Status: current-tree verification complete; no remote history has changed.
+  - Status: current-tree and isolated history verified; publication pending.
   - Policy: copyright 2026 Daryll Swer, all rights reserved, for owner-held
     content; retain Swer Networks' proprietary exception, MIT tooling, font
     licences and third-party attribution.
@@ -31,9 +31,15 @@
     fingerprints and 19 source fetch times are unchanged. The 18 DS technical
     Markdown bodies, rendered text/links and canonical article text/links are
     unchanged; the Swer technical Markdown suffix is unchanged.
-  - Next: verify the isolated history transformation, publish with an explicit
-    remote lease, then verify Pages, retire obsolete hosted records and restore
-    automation.
+  - Historical verification: 90 commits retain parent topology, author and
+    committer dates; 14,867 binary file-snapshots are byte-identical; all
+    targeted reachable-object/path/message/archive scans are clear. Across
+    40,580 stored-artifact checks, 13,680 metadata-file checks and 2,185 raw
+    provenance comparisons there are no new mismatches. The 36 early CSV
+    manifest line-ending discrepancies already present in the original
+    history are preserved; the current tip validates without errors/warnings.
+  - Next: publish with an explicit remote lease, verify Pages, retire obsolete
+    hosted records and restore automation.
 
 - Canonical drift workflow staging reliability:
   - Status: complete and hosted-runner verified
