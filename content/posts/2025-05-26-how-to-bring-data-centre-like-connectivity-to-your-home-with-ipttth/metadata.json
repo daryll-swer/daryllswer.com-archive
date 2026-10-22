@@ -9,7 +9,20 @@
         "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
         "tag": "li"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -114,9 +127,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "54ddc01b8606ad3f270dae3ca897bb8aff4133fcc9225bad084a589d4e4b596f",
-    "index_md_sha256": "4a6aa9b7e6250faf839bdfd686848843f60d826ffa435caf3977e6d1899373df",
+    "index_md_sha256": "7ce351c827811d3ed03cc143b378cb2becaa31c9c67cf9c80deb0837f8ab27a1",
     "rendered_article_html_sha256": "22b7a4ee24bca27a17c930aa1b95d6328f1e734b5652233b4cad67cddcc88b3c",
-    "wordpress_post_json_sha256": "c848cf27c1c9e7a495d0bf3c394c3078272fecdbe4ad6b06119c3300abf38fd2"
+    "wordpress_post_json_sha256": "d59fa4298f12d0ad3e2676caa53f18dfbb9ef0bda7ae6317cf8baa448eba6b61"
   },
   "id": 4285,
   "modified": "2025-08-29T16:02:17",
@@ -165,5 +178,16 @@
   "title": "How to bring data centre-like connectivity to your home with IPTTTH",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/how-to-bring-data-centre-like-connectivity-to-your-home-with-ipttth/"
   }
 }

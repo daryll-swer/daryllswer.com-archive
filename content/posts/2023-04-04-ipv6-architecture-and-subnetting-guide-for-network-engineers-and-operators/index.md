@@ -473,3 +473,5 @@ Ideally, NAT66/NPTv6 should be avoided to the maximum possible extent as both de
 I also hope that the Payment Card Industry Data Security Standard (PCI DSS) learns that NAT(66) is not a security tool and there is no need for NAT in IPv6 to begin with, sooner than later, before their [current requirements](https://twitter.com/stubarea51/status/1511083163921092609) create a technical debt that becomes far too difficult to remove in the future.
 
 I want this article to drop a ground-shaking delivery to the networking industry for a best-practices-compliant-IPv6 roll-out! Let’s see more routed /48s!
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

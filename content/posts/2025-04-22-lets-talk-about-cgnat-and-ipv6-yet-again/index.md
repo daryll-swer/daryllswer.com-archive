@@ -119,3 +119,5 @@ NAT was and always will be what we call in India, [jugaad engineering](https://e
 11. [https://www.a10networks.com/wp-content/uploads/A10-DG-Carrier_Grade_NAT_CGN_Large_Scale_NAT_LSN.pdfhttps://www.a10networks.com/wp-content/uploads/A10-DG-Carrier_Grade_NAT_CGN_Large_Scale_NAT_LSN.pdf](https://www.a10networks.com/wp-content/uploads/A10-DG-Carrier_Grade_NAT_CGN_Large_Scale_NAT_LSN.pdf)
 12. [https://www.f5.com/resources/white-papers/the-myth-of-network-address-translation-as-security](https://www.f5.com/resources/white-papers/the-myth-of-network-address-translation-as-security)
 13. [https://samy.pl/slipstream/](https://samy.pl/slipstream/)
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

@@ -159,3 +159,5 @@ In [part one](../2021-03-28-multi-wan-setups-with-retail-isps-part-1-theory/inde
 The upload bandwidth never reached 300Mbps due to ISP1’s MTU of 1460 which resulted in packet fragmentation and hence affected throughput performance and was able to reach only an average of 170Mbps for upload. ISP2’s MTU is a straight 1500 and was able to reach its advertised speed, which I verified by looking at the link rate on the router itself. Since MRU for both links were 1500, download bandwidth was able to reach its advertised speed on both links.
 
 This is why MTU should be taken care of to prevent issues.
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

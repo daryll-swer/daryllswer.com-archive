@@ -1,5 +1,16 @@
 {
-  "_archive_filters": [],
+  "_archive_filters": [
+    {
+      "category": "source_rights_declaration",
+      "count": 1,
+      "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+    },
+    {
+      "category": "source_site_copyright_container",
+      "count": 2,
+      "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+    }
+  ],
   "_embedded": {
     "author": [
       {
@@ -81,7 +92,7 @@
           "author_name": "Daryll Swer",
           "author_url": "https://www.daryllswer.com/",
           "content": {
-            "rendered": "<blockquote><p> Can you still just point your generic residential ISP’s Name servers to your public IP addresses</p></blockquote>\n<p>No. You need BGP.</p>\n<blockquote><p>So what would be the scenario of applying your own ASN, IPv4 &#038; IPv6 blocks internally without the enormous expense and Layer 8 complications?</p></blockquote>\n<p>You can use cloud services and tunnel over WireGuard, but the performance takes a hit.</p>\n"
+            "rendered": "<blockquote><p> Can you still just point your generic residential ISP’s Name servers to your public IP addresses</p></blockquote>\n<p>No. You need BGP.</p>\n<blockquote><p>So what would be the scenario of applying your own ASN, IPv4 &amp; IPv6 blocks internally without the enormous expense and Layer 8 complications?</p></blockquote>\n<p>You can use cloud services and tunnel over WireGuard, but the performance takes a hit.</p>\n"
           },
           "date": "2025-11-30T19:16:33",
           "id": 1859,
@@ -129,7 +140,7 @@
           "author_name": "Alfred Dayton",
           "author_url": "https://www.adayton.com",
           "content": {
-            "rendered": "<p>So what would be the scenario of applying your own ASN, IPv4 &amp; IPv6 blocks internally without the enormous expense and Layer 8 complications? Can you still just point your generic residential ISP&#8217;s Name servers to your public IP addresses? I.E. why do you need a POP or Transit at all?</p>\n"
+            "rendered": "<p>So what would be the scenario of applying your own ASN, IPv4 &amp; IPv6 blocks internally without the enormous expense and Layer 8 complications? Can you still just point your generic residential ISP’s Name servers to your public IP addresses? I.E. why do you need a POP or Transit at all?</p>\n"
           },
           "date": "2025-11-30T11:16:35",
           "id": 1858,

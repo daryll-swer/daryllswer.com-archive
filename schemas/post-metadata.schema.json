@@ -12,7 +12,8 @@
     "source",
     "hashes",
     "featured_image",
-    "assets_manifest"
+    "assets_manifest",
+    "rights"
   ],
   "properties": {
     "id": {
@@ -49,6 +50,10 @@
       ],
       "properties": {
         "canonical_rendered_content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "canonical_page_html_raw_sha256": {
           "type": "string",
           "pattern": "^[0-9a-f]{64}$"
         }

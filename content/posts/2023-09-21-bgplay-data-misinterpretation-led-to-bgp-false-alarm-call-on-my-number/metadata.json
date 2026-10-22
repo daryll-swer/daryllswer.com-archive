@@ -22,7 +22,20 @@
         "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
         "tag": "h4"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -81,9 +94,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "a0593b65a9216c1bc12167f30da1aed121c0d02c7e91dfa2e312363784453ea4",
-    "index_md_sha256": "842fdf24a4bc51590a640b403426162a815e2a4ebc1bfecdf126936cea2a3142",
+    "index_md_sha256": "edd6924eecb4e320bc3f33c922dddaa64b385788d29c9bbe466a96f35585a250",
     "rendered_article_html_sha256": "7ae129e7e2ffb8d320280773e468f69a32f676beb32a060757fba63ec98cd148",
-    "wordpress_post_json_sha256": "504c93b85e14735f40963d79b33c572c1e4c6b2f5d259c976776b2db1523a8f6"
+    "wordpress_post_json_sha256": "5e0f3e173fc3c456258df16d09847f199d5339f1a16a2c9fb0e5bf1f8735a056"
   },
   "id": 2803,
   "modified": "2025-05-21T01:52:11",
@@ -126,5 +139,16 @@
   "title": "BGPlay data misinterpretation led to BGP false alarm call on my number",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/bgplay-data-misinterpretation-led-to-bgp-false-alarm-call-on-my-number/"
   }
 }

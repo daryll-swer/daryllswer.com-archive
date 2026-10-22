@@ -1,5 +1,16 @@
 {
-  "_archive_filters": [],
+  "_archive_filters": [
+    {
+      "category": "source_rights_declaration",
+      "count": 1,
+      "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+    },
+    {
+      "category": "source_site_copyright_container",
+      "count": 2,
+      "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+    }
+  ],
   "_embedded": {
     "author": [
       {
@@ -417,7 +428,7 @@
   "date_gmt": "2024-01-26T19:39:13",
   "excerpt": {
     "protected": false,
-    "rendered": "<p>This article examines iptables&#8217; performance in filtering traffic at different processing stages within a Linux-based router. Tests were conducted comparing raw and filter tables&#8217; efficiency in handling dropped traffic.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/\">Continue reading<span class=\"screen-reader-text\">Drop Early, Drop Often: Raw vs Filter iptables packet filtering</span></a></div>\n"
+    "rendered": "<p>This article examines iptables’ performance in filtering traffic at different processing stages within a Linux-based router. Tests were conducted comparing raw and filter tables’ efficiency in handling dropped traffic.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/\">Continue reading<span class=\"screen-reader-text\">Drop Early, Drop Often: Raw vs Filter iptables packet filtering</span></a></div>\n"
   },
   "featured_media": 3202,
   "format": "standard",

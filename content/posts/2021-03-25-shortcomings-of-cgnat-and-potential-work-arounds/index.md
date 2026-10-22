@@ -80,3 +80,5 @@ There are two broad ways to workaround CGNAT cons:
 Even if you properly configured CGNAT with full cone + EIM-NAT, it is still only a plaster solution. The proper solution is to migrate 100% to IPv6, and ensure IPv6 best practices are followed to the letter.
 
 Additionally, for both ISPs and end-users, you can test the quality of your NAT44 (NAT) or NAT444 (CGNAT) configuration using this [tool](https://github.com/HMBSbige/NatTypeTester). If you see EIM-NAT and Full-Cone, then your IPv4 P2P networking will work fine, until you migrate fully to IPv6.
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

@@ -44,12 +44,17 @@
   generated GitHub Pages site may render richer embed wrappers with fallback
   links.
 - Treat comments as out of scope unless the owner explicitly asks for them.
-- Apply the daryllswer.com default content licence only to original DS content
-  covered by that default. Treat `content/rights-registry.json` as the source
-  of record for explicit per-post rights exceptions; preserve the source body
-  notice and matching metadata without inferring DS/SN SEO directives for
-  GitHub Pages. A verified retirement must remove any matching registry entry
-  transactionally with its current-tree post bundle.
+- Daryll Swer-owned mirrored article text, media and supporting content are
+  copyright 2026 Daryll Swer, all rights reserved, under the repository's
+  proprietary content notice. Resolve rights metadata for every post; retain
+  `content/rights-registry.json` as the source of explicit ownership exceptions.
+  Preserve Swer Networks' proprietary rights and original-publication link,
+  and all applicable third-party rights/attribution. Never infer content rights
+  from source-site chrome or apply the MIT tooling licence to article content.
+  Record source-rights filtering without storing removed wording, and keep raw
+  canonical fingerprints distinct from stored-file checksums. A verified
+  retirement removes any matching registry entry transactionally with its
+  current-tree bundle. Rights policy does not change DS/SN SEO independence.
 - Archive SEO is source-first. In `source_primary`, only the archive homepage
   is indexable; reader routes use archive-local canonical/Open Graph metadata
   plus `noindex, follow`. `archive_discovery` is a non-reverting fallback

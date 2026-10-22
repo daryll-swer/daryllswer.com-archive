@@ -92,3 +92,5 @@ Similarly, the variation in ICMPv6 responses across vendors could possibly pose 
 ## Conclusion
 
 In conclusion, our exploration of subnet-router anycast addresses has shed light on the behavioural differences that exist across various network vendors and operating systems. Understanding these nuances is crucial for network administrators to ensure protection against unintended accessibility or exposure.
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

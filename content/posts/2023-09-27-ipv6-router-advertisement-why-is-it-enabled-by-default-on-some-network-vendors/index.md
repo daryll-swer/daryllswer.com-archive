@@ -119,3 +119,5 @@ Yet in the world of networking, proactive mindset towards improving the human-ne
 Therefore, I think vendors ought to do more and make proactive efforts with “sensible defaults”, not just for IPv6 RAs to be disabled by default on a global level, but for anything else we could think of that would warrant a sensible default.
 
 IPv6 RA is an essential part of IPv6 SLAAC and DHCPv6, but it is important to carefully remember, IPv6 RAs are not required nor suitable for all situations, and therefore it should be explicitly disabled when not required and enable it only on an interface where you require its functionalities.
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

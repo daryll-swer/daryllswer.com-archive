@@ -15,7 +15,20 @@
         "removed_text_sha256": "99134c20b7efa118e827bc1a33491b7baa1c458b8612e0758df4febf7a904e10",
         "tag": "p"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -114,9 +127,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "40a4d5fe15e49f4b5d43f95a1441bcff3caaa2bac51dac15b45e2799d3b9a568",
-    "index_md_sha256": "13dcbefd76337f30b8f208e9cd15b9579caf9e161dac08679e607efebd131973",
+    "index_md_sha256": "67d857911631252cae9838a84b2759adb1aa9142607c65928c93b21fb4fe552a",
     "rendered_article_html_sha256": "052be600754e2e38cee6f838fe4b2711f25d0e42469288f4d091fb7fd68215c9",
-    "wordpress_post_json_sha256": "64c3e9477a713cdaf373d34b16074e8327e31a353ebef0dd6464bb4da99af6aa"
+    "wordpress_post_json_sha256": "1cfe51ec5ad878804058115f7b71bb7ab3655f13b05232de87069d342865242b"
   },
   "id": 269,
   "modified": "2026-05-30T00:09:08",
@@ -207,5 +220,16 @@
   "title": "Edge Router & BNG Optimisation Guide for ISPs",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/edge-router-bng-optimisation-guide-for-isps/"
   }
 }

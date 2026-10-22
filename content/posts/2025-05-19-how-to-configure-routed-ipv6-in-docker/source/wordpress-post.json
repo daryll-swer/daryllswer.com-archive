@@ -1,5 +1,16 @@
 {
-  "_archive_filters": [],
+  "_archive_filters": [
+    {
+      "category": "source_rights_declaration",
+      "count": 1,
+      "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+    },
+    {
+      "category": "source_site_copyright_container",
+      "count": 2,
+      "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+    }
+  ],
   "_embedded": {
     "author": [
       {
@@ -81,7 +92,7 @@
           "author_name": "Daryll Swer",
           "author_url": "https://www.daryllswer.com/",
           "content": {
-            "rendered": "<p>A few things:<br />\n1. Ideally, the industry should&#8217;ve learnt from network design process and move the container firewalling to the container namespace itself, instead of complicating the host when there are hundreds/thousands of containers at scale. Since the namespace concept by itself is a unique network stack, it would&#8217;ve been trivial for this to happen, but it didn&#8217;t. I&#8217;ve seen some similar takes from the OpenBSD-type communities on how jails/container security should&#8217;ve been in Linux.</p>\n<p>2. Ideally as-is today, disable iptables manipulation of Docker and manage the firewall rules yourself using nftables &#8211; since you&#8217;re a software engineer, this is trivial, just automate it with some scripting and CI/CD pipeline for config management.</p>\n<p>3. I&#8217;ve been delaying nftables for too long for personal use, I plan to, later this year perhaps, create a “Daryll Swer nftables template” that matches (and improves upon) my legacy iptables rules that I&#8217;ve used in production networks. This would be use-able by Docker users as well, so keep an eye on my blog.</p>\n<p>4. Yes, don&#8217;t mix multiple networks (subnets), single custom bridge, single subnet (/64 is sufficient for scale) route that subnet over eBGP (since this is host-networking and eBGP is the recommended industry standard for host routing).</p>\n"
+            "rendered": "<p>A few things:<br>\n1. Ideally, the industry should’ve learnt from network design process and move the container firewalling to the container namespace itself, instead of complicating the host when there are hundreds/thousands of containers at scale. Since the namespace concept by itself is a unique network stack, it would’ve been trivial for this to happen, but it didn’t. I’ve seen some similar takes from the OpenBSD-type communities on how jails/container security should’ve been in Linux.</p>\n<p>2. Ideally as-is today, disable iptables manipulation of Docker and manage the firewall rules yourself using nftables – since you’re a software engineer, this is trivial, just automate it with some scripting and CI/CD pipeline for config management.</p>\n<p>3. I’ve been delaying nftables for too long for personal use, I plan to, later this year perhaps, create a “Daryll Swer nftables template” that matches (and improves upon) my legacy iptables rules that I’ve used in production networks. This would be use-able by Docker users as well, so keep an eye on my blog.</p>\n<p>4. Yes, don’t mix multiple networks (subnets), single custom bridge, single subnet (/64 is sufficient for scale) route that subnet over eBGP (since this is host-networking and eBGP is the recommended industry standard for host routing).</p>\n"
           },
           "date": "2025-10-15T20:58:47",
           "id": 1856,
@@ -135,7 +146,7 @@
           "author_name": "Tristan Velloza Kildaire",
           "author_url": "https://deavmi.assigned.network",
           "content": {
-            "rendered": "<p>Got it working.<br />\nFirstly, need to still publish the port for Docker firewalling reasons, so I had to add:</p>\n<p>&#8220;`yaml<br />\nports:<br />\n     # Port i want acessible<br />\n     &#8211; 3000/tcp<br />\n&#8220;`</p>\n<p>Secondly, having a mix of networks in `networks:` didn&#8217;t help. I removed those; only then did it seem to work.</p>\n<p>I haven&#8217;t remove ip6tables for this either, kept that there as it can still be useful for cases where I don&#8217;t do this `routed` mode.</p>\n"
+            "rendered": "<p>Got it working.<br>\nFirstly, need to still publish the port for Docker firewalling reasons, so I had to add:</p>\n<p>“`yaml<br>\nports:<br>\n     # Port i want acessible<br>\n     – 3000/tcp<br>\n“`</p>\n<p>Secondly, having a mix of networks in `networks:` didn’t help. I removed those; only then did it seem to work.</p>\n<p>I haven’t remove ip6tables for this either, kept that there as it can still be useful for cases where I don’t do this `routed` mode.</p>\n"
           },
           "date": "2025-10-15T20:41:09",
           "id": 1855,
@@ -183,7 +194,7 @@
           "author_name": "Tristan Velloza Kildaire",
           "author_url": "https://deavmi.assigned.network",
           "content": {
-            "rendered": "<p>I am able to get ICMPv6 packets in with this setup and have confirmed it (I exec&#8217;d into the container and then tcpdump&#8217;d).</p>\n<p>However, any port-based protocols like TCP and UDP seem to fail when sent form that same remote host (several hops away); only pinging works it seems.</p>\n<p>Any ideas? I know the container is bound correctly and I can reach 9from the container machine) the container&#8217;s port 3000. But trying to do so remotely doesn&#8217;t work.</p>\n<p>I have tried both with iptables6 set to `true` and `false`.</p>\n<p>My network config is here: <a href=\"https://github.com/deavmi/docker/blob/master/nodes/services/networks.yml#L26\" rel=\"nofollow ugc\">https://github.com/deavmi/docker/blob/master/nodes/services/networks.yml#L26</a><br />\nAnd the service, `gitea_old`, here: <a href=\"https://github.com/deavmi/docker/blob/master/nodes/services/git.yml#L23\" rel=\"nofollow ugc\">https://github.com/deavmi/docker/blob/master/nodes/services/git.yml#L23</a></p>\n"
+            "rendered": "<p>I am able to get ICMPv6 packets in with this setup and have confirmed it (I exec’d into the container and then tcpdump’d).</p>\n<p>However, any port-based protocols like TCP and UDP seem to fail when sent form that same remote host (several hops away); only pinging works it seems.</p>\n<p>Any ideas? I know the container is bound correctly and I can reach 9from the container machine) the container’s port 3000. But trying to do so remotely doesn’t work.</p>\n<p>I have tried both with iptables6 set to `true` and `false`.</p>\n<p>My network config is here: <a href=\"https://github.com/deavmi/docker/blob/master/nodes/services/networks.yml#L26\" rel=\"nofollow ugc\">https://github.com/deavmi/docker/blob/master/nodes/services/networks.yml#L26</a><br>\nAnd the service, `gitea_old`, here: <a href=\"https://github.com/deavmi/docker/blob/master/nodes/services/git.yml#L23\" rel=\"nofollow ugc\">https://github.com/deavmi/docker/blob/master/nodes/services/git.yml#L23</a></p>\n"
           },
           "date": "2025-10-15T19:35:44",
           "id": 1854,
@@ -225,7 +236,7 @@
           "author_name": "Abel Martín",
           "author_url": "",
           "content": {
-            "rendered": "<p>I&#8217;ve been years waiting for a write-up like yours. Hopefully, the Docker community starts embracing best practices when it comes to IPv6 networking. Your help pushing for a better understanding of IPv6 in Docker is much appreciated.</p>\n<p>Keep up the good work!</p>\n"
+            "rendered": "<p>I’ve been years waiting for a write-up like yours. Hopefully, the Docker community starts embracing best practices when it comes to IPv6 networking. Your help pushing for a better understanding of IPv6 in Docker is much appreciated.</p>\n<p>Keep up the good work!</p>\n"
           },
           "date": "2025-05-27T03:06:01",
           "id": 1818,

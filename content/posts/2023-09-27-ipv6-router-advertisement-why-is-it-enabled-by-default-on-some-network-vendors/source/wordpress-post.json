@@ -5,6 +5,16 @@
       "redacted": true,
       "removed_text_sha256": "e437c43030518b2b6ed3e1403610cddfaf947c5917d37219a2e758079c3e204d",
       "tag": "h4"
+    },
+    {
+      "category": "source_rights_declaration",
+      "count": 1,
+      "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+    },
+    {
+      "category": "source_site_copyright_container",
+      "count": 2,
+      "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
     }
   ],
   "_embedded": {
@@ -333,7 +343,7 @@
   "date_gmt": "2023-09-27T15:24:49",
   "excerpt": {
     "protected": false,
-    "rendered": "<p>IPv6 Router Advertisement (RA) is a core component of SLAAC and DHCPv6, but it&#8217;s not required for all situations. Some network vendors enable RA by default, but you should disable it when not needed.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/\">Continue reading<span class=\"screen-reader-text\">IPv6 Router Advertisement: Why is it enabled by default on some network vendors?</span></a></div>\n"
+    "rendered": "<p>IPv6 Router Advertisement (RA) is a core component of SLAAC and DHCPv6, but it’s not required for all situations. Some network vendors enable RA by default, but you should disable it when not needed.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/\">Continue reading<span class=\"screen-reader-text\">IPv6 Router Advertisement: Why is it enabled by default on some network vendors?</span></a></div>\n"
   },
   "featured_media": 2954,
   "format": "standard",

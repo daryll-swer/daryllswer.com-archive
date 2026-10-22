@@ -9,7 +9,20 @@
         "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
         "tag": "li"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -76,9 +89,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "2ea194cd570207c719e915c2e99ef8313eee6bea3c05231a17f834eae392f5aa",
-    "index_md_sha256": "5b64ae286ece178746aa8f62719e1074534738e8f680ed7ab259c28a7482e684",
+    "index_md_sha256": "2b5f2a3258ab7a8760e9a93ff3b96dae9b9dd9363f4beb9fbb5c4b5f5cf9b166",
     "rendered_article_html_sha256": "4b6f717df78e498f779529a2e373016a1d9cca758e6d46f116925a2c5b32b459",
-    "wordpress_post_json_sha256": "867ffc2580cbd0e9909c6c1426b70c73f96f218e8b87eaace63e3bbe6a1b22f0"
+    "wordpress_post_json_sha256": "61ab26c397709eb1a48a07a5fba03cc91d3d1e4f42e3266e07bb57a405f47237"
   },
   "id": 5136,
   "modified": "2025-05-19T12:04:34",
@@ -115,5 +128,16 @@
   "title": "How to configure routed IPv6 in Docker",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/how-to-configure-routed-ipv6-in-docker/"
   }
 }

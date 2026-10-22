@@ -11,6 +11,16 @@
       "redacted": true,
       "removed_text_sha256": "355c7987352eb1f9e3d8be819ac9de0cfc8c2945d95a47ec6e953c3dc0fed613",
       "tag": "p"
+    },
+    {
+      "category": "source_rights_declaration",
+      "count": 1,
+      "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+    },
+    {
+      "category": "source_site_copyright_container",
+      "count": 2,
+      "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
     }
   ],
   "_embedded": {

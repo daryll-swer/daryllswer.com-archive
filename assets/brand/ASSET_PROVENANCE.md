@@ -33,7 +33,7 @@ at [`../readme/ASSET_PROVENANCE.md`](../readme/ASSET_PROVENANCE.md).
 Copyright © 2026 Daryll Swer. All rights reserved.
 
 The source and its Pages derivative are proprietary and excluded from the
-repository's MIT and `proprietary content rights-4.0` licences. The controlling notice is
+repository's MIT tooling licence and any other content permissions. The controlling notice is
 [`LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`](../../LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt).
 No licence is granted beyond applicable law and GitHub's limited
 public-repository service operation.

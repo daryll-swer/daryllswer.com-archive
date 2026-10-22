@@ -58,3 +58,5 @@ In the case of a route **leak**, the leak can occur anywhere between any AS in t
 In this particular incident, the false-alarm was harmless. However, it is essential to be aware of the potential for misinterpreting BGP data, as this can lead to unnecessary and costly troubleshooting exercises.
 
 Network operators should educate themselves on how to read BGP data correctly. There are many resources available online and in books, and there are also many experienced network operators who are willing to share their knowledge.
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

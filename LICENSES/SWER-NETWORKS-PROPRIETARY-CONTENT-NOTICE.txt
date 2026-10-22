@@ -8,8 +8,9 @@ in IPv6 Native Networks article. The article was originally published at:
 
 https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/
 
-The article text is proprietary and all rights are reserved by Swer Networks. Content rights are governed by the applicable rights record.com's default proprietary content rights 4.0 licence. Media is separate and remains
-subject to any applicable attribution or rights notice.
+The article text is proprietary and all rights are reserved by Swer Networks.
+Media is separate and remains subject to any applicable attribution or rights
+notice. The Daryll Swer content notice does not apply to this article text.
 
 This notice is the controlling repository notice for the registry entries above.
 It does not grant permission to reproduce, distribute, modify, adapt, or create

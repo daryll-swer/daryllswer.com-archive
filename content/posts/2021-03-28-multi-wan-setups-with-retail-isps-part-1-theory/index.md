@@ -83,3 +83,5 @@ The end result of my setup is demonstrated below:
 [![](assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png)](assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png)
 
 _Figure-2 [IP Address is intentionally left visible as it poses no security risk (Dynamic IP Address)]_
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

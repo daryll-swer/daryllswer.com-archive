@@ -30,10 +30,11 @@ metadata, original media files, and an asset manifest.
 
 ## Copyright and Licences
 
-Repository scripts/tooling are MIT licensed. Original daryllswer.com content
-covered by the site's default licence is `proprietary content rights-4.0`. Explicit reposts
-and other rights exceptions follow the per-post rights registry, generated
-metadata, and visible article notice; they are not covered by that default.
+Daryll Swer-owned mirrored articles, media and supporting content are
+copyright © 2026 Daryll Swer. All rights reserved. Swer Networks reposts
+retain their separately recorded proprietary rights. Third-party material
+remains subject to its applicable rights notices. Repository scripts and
+tooling remain MIT licensed.
 
 The [README header logo](assets/readme/13_DS_Logo_Dark_Mode_SEO.png),
 [GitHub Pages favicon source](assets/brand/01_DS_Favicon_Dark_Mode.png), and
@@ -41,20 +42,21 @@ The [README header logo](assets/readme/13_DS_Logo_Dark_Mode_SEO.png),
 published as the [byte-for-byte GitHub Pages favicon](docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png),
 are proprietary brand assets:
 `© 2026 Daryll Swer. All rights reserved.` They
-are excluded from both the MIT and
-`proprietary content rights-4.0` licences.
+are excluded from the MIT tooling licence and any other repository content
+permissions.
 
 `assets/readme/ASSET_PROVENANCE.md` is provenance
 and byte-preservation evidence only; it is not a licence. No licence is granted
 beyond applicable law and GitHub's limited public-repository service
 operation.
 
-Third-party media and external artefacts are not assumed to be
-covered by either licence.
+Third-party media and external artefacts are not covered by the repository's
+tooling licence or proprietary ownership claims.
 
 See [`LICENSING.md`](LICENSING.md), the per-post
 [`content/rights-registry.json`](content/rights-registry.json),
 [`assets/readme/ASSET_PROVENANCE.md`](assets/readme/ASSET_PROVENANCE.md), and
 the controlling legal notices:
+[`LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt`](LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt),
 [`LICENSES/SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt`](LICENSES/SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt) and
 [`LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`](LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt).

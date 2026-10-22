@@ -22,6 +22,17 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from rights_policy import (
+    RIGHTS_FIELDS,
+    load_rights_registry as load_policy_rights_registry,
+    markdown_notice_count,
+    normalise_markdown_notice_eof,
+    rights_for_post as resolve_policy_rights,
+    rights_notice_markdown,
+    sanitise_rest_post,
+    sanitise_source_rights_html,
+)
+
 try:
     import lxml.html
 except Exception as exc:  # pragma: no cover - environment guard
@@ -41,16 +52,7 @@ MEDIA_ENDPOINT = f"{SITE}/wp-json/wp/v2/media"
 UA = "daryllswer-com-archive-sync/1.0 (+https://www.daryllswer.com/)"
 RIGHTS_REGISTRY_PATH = ROOT / "content" / "rights-registry.json"
 RIGHTS_SCHEMA_PATH = REPOSITORY_ROOT / "schemas" / "rights-registry.schema.json"
-RIGHTS_REQUIRED_FIELDS = (
-    "rights_holder",
-    "rights_status",
-    "content_rights_status",
-    "original_article_url",
-    "publisher",
-    "scope",
-    "media_rights",
-    "external_fallback",
-)
+RIGHTS_REQUIRED_FIELDS = RIGHTS_FIELDS
 OPERATIONAL_CTA_LABEL = "site_operational_cta"
 OPERATIONAL_TEXT_MARKERS = (
     "it would be appreciated if you could help me continue to provide valuable network engineering content",
@@ -132,49 +134,18 @@ def load_json(path: Path):
 
 
 def validate_rights_record(post_id: str, record: object) -> None:
-    if not isinstance(record, dict):
-        raise ValueError(f"rights registry entry {post_id} must be an object")
-    missing = [key for key in RIGHTS_REQUIRED_FIELDS if key not in record]
-    if missing:
-        raise ValueError(f"rights registry entry {post_id} is missing: {', '.join(missing)}")
-    if set(record) != set(RIGHTS_REQUIRED_FIELDS):
-        extra = sorted(set(record) - set(RIGHTS_REQUIRED_FIELDS))
-        raise ValueError(f"rights registry entry {post_id} has unsupported fields: {', '.join(extra)}")
-    for key in ["rights_holder", "rights_status", "original_article_url", "publisher", "scope", "media_rights"]:
-        if not isinstance(record[key], str) or not record[key].strip():
-            raise ValueError(f"rights registry entry {post_id} field {key} must be a non-empty string")
-    if not isinstance(record["content_rights_status"], bool):
-        raise ValueError(f"rights registry entry {post_id} field content_rights_status must be boolean")
-    if not isinstance(record["external_fallback"], bool):
-        raise ValueError(f"rights registry entry {post_id} field external_fallback must be boolean")
-    parsed = urllib.parse.urlsplit(record["original_article_url"])
-    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
-        raise ValueError(f"rights registry entry {post_id} original_article_url is not an absolute URL")
+    from rights_policy import validate_rights_record as validate_policy_rights_record
+
+    validate_policy_rights_record(post_id, record)
 
 
 def load_rights_registry() -> dict[str, dict]:
     """Load the root registry before any public synchronisation requests."""
-    if not RIGHTS_REGISTRY_PATH.is_file():
-        raise ValueError(f"rights registry missing: {RIGHTS_REGISTRY_PATH}")
-    if not RIGHTS_SCHEMA_PATH.is_file():
-        raise ValueError(f"rights registry schema missing: {RIGHTS_SCHEMA_PATH}")
-    schema = load_json(RIGHTS_SCHEMA_PATH)
-    schema_record = (schema.get("$defs") or {}).get("rights") if isinstance(schema, dict) else None
-    if not isinstance(schema_record, dict) or set(schema_record.get("required", [])) != set(RIGHTS_REQUIRED_FIELDS):
-        raise ValueError("rights registry schema does not define the approved rights record")
-    registry = load_json(RIGHTS_REGISTRY_PATH)
-    if not isinstance(registry, dict):
-        raise ValueError("rights registry must be an object")
-    for post_id, record in registry.items():
-        if not isinstance(post_id, str) or not re.fullmatch(r"[1-9][0-9]*", post_id):
-            raise ValueError(f"rights registry key must be an immutable WordPress ID: {post_id!r}")
-        validate_rights_record(post_id, record)
-    return registry
+    return load_policy_rights_registry(RIGHTS_REGISTRY_PATH, RIGHTS_SCHEMA_PATH)
 
 
-def rights_for_post(post_id: int, rights_registry: dict[str, dict]) -> dict | None:
-    record = rights_registry.get(str(post_id))
-    return copy.deepcopy(record) if record is not None else None
+def rights_for_post(post_id: int, rights_registry: dict[str, dict], canonical_url: str | None = None) -> dict:
+    return resolve_policy_rights(post_id, rights_registry, canonical_url)
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -634,7 +605,7 @@ def collect_inline_images(content_html: str, base_url: str) -> list[dict]:
 
 def is_media_file_url(url: str) -> bool:
     path = urllib.parse.urlsplit(url).path.lower()
-    return bool(re.search(r".(?:png|jpe?g|gif|webp|svg|pdf|ods|xlsx?|csv)$", path))
+    return bool(re.search(r"\.(?:png|jpe?g|gif|webp|svg|pdf|ods|xlsx?|csv)$", path))
 
 
 def collect_linked_media(content_html: str, base_url: str) -> list[dict]:
@@ -733,7 +704,7 @@ def media_lookup_key(url: str | None) -> str:
         return ""
     parsed = urllib.parse.urlsplit(url)
     name = Path(urllib.parse.unquote(parsed.path)).name.lower()
-    return re.sub(r"-\d+x\d+(?=.[a-z0-9]+$)", "", name)
+    return re.sub(r"-\d+x\d+(?=\.[a-z0-9]+$)", "", name)
 
 
 def text_of(el) -> str:
@@ -910,14 +881,31 @@ def sync_post(
     canonical_body, _ = request(post["link"])
     canonical_html_raw = canonical_body.decode("utf-8", errors="replace")
     rendered_article_raw = post.get("content", {}).get("rendered", "")
+    rights = rights_for_post(post["id"], rights_registry, post["link"])
     canonical_meta = parse_canonical_metadata(canonical_html_raw)
     rendered_article, article_exclusions = sanitise_operational_ctas(rendered_article_raw, full_document=False)
     canonical_html, page_exclusions = sanitise_operational_ctas(canonical_html_raw, full_document=True)
+    rendered_article, article_rights_transforms = sanitise_source_rights_html(
+        rendered_article,
+        full_document=False,
+        rights=rights,
+    )
+    canonical_html, page_rights_transforms = sanitise_source_rights_html(
+        canonical_html,
+        full_document=True,
+        rights=rights,
+    )
     categories, tags = taxonomy(post)
 
     archived_post = copy.deepcopy(post)
     archived_post.setdefault("content", {})["rendered"] = rendered_article
-    archived_post["_archive_filters"] = article_exclusions
+    archived_post, rest_rights_transforms = sanitise_rest_post(archived_post, rights=rights)
+    source_rights_transforms = [
+        *article_rights_transforms,
+        *page_rights_transforms,
+        *rest_rights_transforms,
+    ]
+    archived_post["_archive_filters"] = [*article_exclusions, *source_rights_transforms]
 
     write_json(source_dir / "wordpress-post.json", archived_post)
     write_text(source_dir / "rendered-article.html", rendered_article)
@@ -985,6 +973,10 @@ def sync_post(
         alt = (featured_asset or {}).get("alt") or title
         md += f"![{alt}]({featured_local})\n\n"
     md += body_md
+    if markdown_notice_count(md, rights) == 0:
+        md += rights_notice_markdown(rights)
+    else:
+        md = normalise_markdown_notice_eof(md, rights=rights)
     write_markdown(bundle / "index.md", md)
 
     asset_manifest = {
@@ -1016,14 +1008,17 @@ def sync_post(
             "wordpress_post_path": "source/wordpress-post.json",
             # This is intentionally captured before archive-only CTA filtering so
             # drift checks can detect a canonical body change without treating
-            # our durable-content exclusions as a perpetual difference.
+            # archive-only source-rights or operational filters as drift.
             "canonical_rendered_content_sha256": sha256_bytes(rendered_article_raw.encode("utf-8")),
+            "canonical_page_html_raw_sha256": sha256_bytes(canonical_html_raw.encode("utf-8")),
             "fetched_at": generated_at,
         },
         "archive_filters": {
-            "applied": bool(article_exclusions or page_exclusions),
+            "applied": bool(article_exclusions or page_exclusions or source_rights_transforms),
             "article_body_exclusions": article_exclusions,
             "canonical_page_exclusions": page_exclusions,
+            "source_rights_filtered": bool(source_rights_transforms),
+            "source_rights_transforms": source_rights_transforms,
         },
         "hashes": {
             "wordpress_post_json_sha256": sha256_file(source_dir / "wordpress-post.json"),
@@ -1035,10 +1030,8 @@ def sync_post(
         "featured_image_detection_method": featured_method,
         "assets_manifest": "assets/manifest.json",
         "validation": {"status": "pending"},
+        "rights": rights,
     }
-    rights = rights_for_post(post["id"], rights_registry)
-    if rights is not None:
-        metadata["rights"] = rights
     if featured_media:
         metadata["featured_media_sizes"] = featured_media.get("media_details", {}).get("sizes", {})
     write_json(bundle / "metadata.json", metadata)

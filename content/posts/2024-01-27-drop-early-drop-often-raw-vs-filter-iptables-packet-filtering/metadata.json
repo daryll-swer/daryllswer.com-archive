@@ -9,7 +9,20 @@
         "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
         "tag": "li"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -68,9 +81,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "e410481b4925df5f8e955a8f0b74346a1810d2cc5970e71899d620be587272c4",
-    "index_md_sha256": "e6d5860514cd89347be65f5b118c5c9537de951a9d27ab1a0654742da0db6270",
+    "index_md_sha256": "255fd90845da984a246b610540021371b2bc2f948e1eeafd85be0b7dbf94aecb",
     "rendered_article_html_sha256": "26e857d78003d144553336f351ed9c2f21f1c000db101cc20641cb7f49dff854",
-    "wordpress_post_json_sha256": "33567520941cfd219b14b12e1f753966f4d030975df30f202db8fb87bf7488db"
+    "wordpress_post_json_sha256": "d1f23126cc04ab9bf38f12b3ef6a5b503067d3b94f9c1ac360ad463809d4b9ac"
   },
   "id": 3138,
   "modified": "2025-05-21T01:52:14",
@@ -101,5 +114,16 @@
   "title": "Drop Early, Drop Often: Raw vs Filter iptables packet filtering",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/drop-early-drop-often-raw-vs-filter-iptables-packet-filtering/"
   }
 }

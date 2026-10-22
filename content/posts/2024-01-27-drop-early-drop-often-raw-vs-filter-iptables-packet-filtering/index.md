@@ -197,3 +197,5 @@ Essentially, you may want to do something that’s less efficient in the normal 
 It’s worth remembering that connection tracking is expensive and becomes vulnerable to a DDoS attack as the table may flood. I believe that opting for a stateless approach is preferable when the circumstances allow. However, if you are compelled to adopt a stateful approach, it is advisable to establish NoTrack rules for trusted traffic, [BUM traffic](https://en.wikipedia.org/wiki/Broadcast,_unknown-unicast_and_multicast_traffic), as well as trusted BGP/OSPF/LDP neighbours. Additionally, consider dropping certain types of traffic in the raw and filter stages based on your traffic distribution.
 
 My friend’s intention with this test was not to determine the best thing for every situation, but rather to get a small sense of the relative performance of one of these options versus the other.
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

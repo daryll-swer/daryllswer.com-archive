@@ -5,6 +5,16 @@
       "redacted": true,
       "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
       "tag": "h4"
+    },
+    {
+      "category": "source_rights_declaration",
+      "count": 1,
+      "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+    },
+    {
+      "category": "source_site_copyright_container",
+      "count": 2,
+      "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
     }
   ],
   "_embedded": {
@@ -541,7 +551,7 @@
   "date_gmt": "2021-03-28T08:14:36",
   "excerpt": {
     "protected": false,
-    "rendered": "<p>An article on Multi-WAN setups using consumer-grade ISPs.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/\">Continue reading<span class=\"screen-reader-text\">Multi-WAN setups with retail ISPs (Part 1 &#8211; Theory)</span></a></div>\n"
+    "rendered": "<p>An article on Multi-WAN setups using consumer-grade ISPs.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/\">Continue reading<span class=\"screen-reader-text\">Multi-WAN setups with retail ISPs (Part 1 – Theory)</span></a></div>\n"
   },
   "featured_media": 5595,
   "format": "standard",

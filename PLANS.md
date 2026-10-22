@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete and hosted verified - canonical drift staging repair
+- Status: in progress - proprietary content policy and history maintenance
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-08-17
+- Last updated: 2026-10-22
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -22,6 +22,18 @@
 ## Current Status / Next Pickup
 
 - Current state:
+  - In progress: apply owner-selected proprietary rights to Daryll Swer-owned
+    content, retain Swer Networks ownership and third-party terms, and enforce
+    resolved rights consistently through synchronisation and publishing.
+    Scheduled reconciliation is temporarily paused with no active writer.
+    Work is isolated from the public branch; a private rollback bundle exists.
+    The approved delivery includes development-history maintenance, verified
+    Pages publication, removal of obsolete hosted run/deployment records, and
+    restoration of scheduled automation. Current-tree verification passes:
+    60 tests, zero mirror errors/warnings, public-safety and whitespace checks,
+    a repeat-migration no-op, unchanged binary assets and preserved source
+    fingerprints/fetch times. Next: isolated historical-object verification.
+    No remote history has changed yet.
   - Complete and hosted verified: scheduled GitHub Actions run `31993154684` completed its
     canonical and external-source checks, then failed in the final commit step
     because normal `source_primary` intentionally omits `docs/feed.xml` while
@@ -53,7 +65,7 @@
     semantic links and rejects the legacy raw-path form. Commit `52d0aad`
     renders all four links to their expected public repository files.
   - Complete and hosted-verified: the archive landing page title and Open Graph title are
-    `daryllswer.com - Archive`. The archive remains at its dedicated project
+    `daryllswer.com – Archive`. The archive remains at its dedicated project
     Pages URL; the account-level `daryll-swer.github.io` namespace is reserved
     for a future landing page. Commit `9f03874` deployed through GitHub Pages
     run `31970160414`; live homepage and article checks passed without console
@@ -140,8 +152,8 @@
     passed every step.
   - Complete: added the owner-provided proprietary Daryll Swer logo as the
     README header, with a separate all-rights-reserved notice, checksum
-    provenance, explicit exclusion from the repository's MIT and
-    `proprietary content rights-4.0` licences, and a validation guard. The logo links to the
+    provenance, explicit exclusion from the repository's tooling licence,
+    and a validation guard. The logo links to the
     local `#copyright-and-licences` section rather than the canonical site.
   - Complete: the generated Pages text-only `DS` badge is replaced by
     the owner-provided official favicon. The source remains byte-exact under
@@ -497,10 +509,10 @@
 - Decision: License scripts and tooling under MIT.
   - Rationale: Owner explicitly selected MIT in side-thread decision.
   - Date/Author: 2026-07-06, user/Codex
-  - Status: superseded in part by the per-post rights registry
-  - Impact: MIT applies to scripts/tooling only. `proprietary content rights-4.0` applies to
-    original DS content covered by the DS default; registry-marked reposts
-    retain their explicit proprietary or other recorded rights classification.
+  - Status: final; article rights are governed separately
+  - Impact: MIT applies to scripts/tooling only. Owner-held article content is
+    proprietary; registry-marked reposts retain their explicit rights holder
+    and recorded rights classification.
 - Decision: Use GitHub repository name `daryllswer.com-archive`.
   - Rationale: Owner selected the shorter archive name.
   - Date/Author: 2026-07-06, user
@@ -647,7 +659,7 @@
   - Date/Author: 2026-07-15, user/Codex
   - Status: implemented and verified
   - Impact: The logo is covered by a dedicated rights notice and asset manifest;
-    it is excluded from MIT and `proprietary content rights-4.0`, and validation rejects a
+    it is excluded from the MIT tooling licence, and validation rejects a
     missing, altered, or improperly documented header asset.
 - Decision: Serve a bounded GitHub Pages favicon derivative while retaining
   the supplied official favicon as the byte-exact source of record.
@@ -683,9 +695,9 @@
   - `make validate`: passed at 2026-07-06 09:29 UTC; validation recorded 0 errors and 1 warning.
   - `make scan-secrets`: passed at 2026-07-06 09:29 UTC; public-safety scan recorded 0 findings.
   - `make render-preview`: passed; generated `.preview/index.html`.
-  - `rg -n "It would be appreciated|Click here to donate|https://www\.daryllswer\.com/donation/?" content/posts -g 'index.md' -g 'source/rendered-article.html' -g 'source/wordpress-post.json' -g 'source/canonical-page.html'`: no matches.
+  - `rg -n "It would be appreciated|Click here to donate|https://www\\.daryllswer\\.com/donation/?" content/posts -g 'index.md' -g 'source/rendered-article.html' -g 'source/wordpress-post.json' -g 'source/canonical-page.html'`: no matches.
   - `make validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 09:49 UTC; validation recorded 0 errors and 1 warning, public-safety scan recorded 0 findings.
-  - `rg -n "https://www\.daryllswer\.com/[^)\\s]+/#(?:h-)?references|#h-references|This article was sponsored|FastNetMon|free 30-day" content/posts -g 'index.md'`: no matches.
+  - `rg -n "https://www\\.daryllswer\\.com/[^)\\s]+/#(?:h-)?references|#h-references|This article was sponsored|FastNetMon|free 30-day" content/posts -g 'index.md'`: no matches.
   - `make sync render-site validate PYTHON=<bundled-python>`: passed at 2026-07-06 11:35 UTC; validation recorded 0 errors and 1 warning.
   - `python3 -m py_compile scripts/sync-wordpress-posts.py scripts/validate-mirror.py scripts/render-site.py`: passed at 2026-07-06 11:52 UTC.
   - `python3 -m py_compile scripts/*.py`: passed at 2026-07-06 12:00 UTC.

@@ -5,6 +5,16 @@
       "redacted": true,
       "removed_text_sha256": "e437c43030518b2b6ed3e1403610cddfaf947c5917d37219a2e758079c3e204d",
       "tag": "h4"
+    },
+    {
+      "category": "source_rights_declaration",
+      "count": 1,
+      "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+    },
+    {
+      "category": "source_site_copyright_container",
+      "count": 2,
+      "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
     }
   ],
   "_embedded": {
@@ -567,7 +577,7 @@
   "date_gmt": "2025-04-22T10:24:09",
   "excerpt": {
     "protected": false,
-    "rendered": "<p>Yet another blog article on IPv4, NAT, CGNAT, Hairpinning and native IPv6.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/\">Continue reading<span class=\"screen-reader-text\">Let&#8217;s talk about CGNAT and IPv6, yet again.</span></a></div>\n"
+    "rendered": "<p>Yet another blog article on IPv4, NAT, CGNAT, Hairpinning and native IPv6.</p>\n<div class=\"more-link-wrapper\"><a class=\"more-link\" href=\"https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/\">Continue reading<span class=\"screen-reader-text\">Let’s talk about CGNAT and IPv6, yet again.</span></a></div>\n"
   },
   "featured_media": 5063,
   "format": "standard",

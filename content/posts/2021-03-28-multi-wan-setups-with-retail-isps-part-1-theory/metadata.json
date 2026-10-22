@@ -22,7 +22,20 @@
         "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
         "tag": "h4"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -107,9 +120,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "763808afb27f3f80590739dfcd6baa19b11ce6d7ace7729d1fc5dfe6a7ae94f3",
-    "index_md_sha256": "673b9f3570effaccc7546ddbeb657b13a271b1e8762c3714672e5406576505dc",
+    "index_md_sha256": "56ea020c8aaee7d9658e8f6c463f3146618788923014cc85162665de24b7ef90",
     "rendered_article_html_sha256": "f542d402feb693f69635fdfbd3a693d4e65794c200a9efb2f666b4524b7153f1",
-    "wordpress_post_json_sha256": "480f0727ed46b25c5bc7fbfce2516cb79289cff1463f8da1db89356b9fac0115"
+    "wordpress_post_json_sha256": "032fc37f6d58e60dcf785190e9d5c51a7fc5bbb181a1553afdfd4d7d220f48f0"
   },
   "id": 66,
   "modified": "2026-07-06T21:25:28",
@@ -158,5 +171,16 @@
   "title": "Multi-WAN setups with retail ISPs (Part 1 – Theory)",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/"
   }
 }

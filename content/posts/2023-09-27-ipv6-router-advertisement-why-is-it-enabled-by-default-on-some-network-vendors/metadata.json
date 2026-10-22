@@ -22,7 +22,20 @@
         "removed_text_sha256": "e437c43030518b2b6ed3e1403610cddfaf947c5917d37219a2e758079c3e204d",
         "tag": "h4"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -75,9 +88,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "3047a26955929d4d99c7bd93a24c8fd304c913bbf4c522b83dc2a1fc22bd353e",
-    "index_md_sha256": "abb79ff33f57a47efec674f3cb705db8fb115547abde5dcb4a76c57432abd04a",
+    "index_md_sha256": "49928083b658230e895ebc3b308ae88e89c601aa3f704f6e5920ad5e3ec3ef82",
     "rendered_article_html_sha256": "3b2e013cd774d410135506ba3613a1b8788bedd8c9e079114ac32acd069509d7",
-    "wordpress_post_json_sha256": "69bdc67cd90f74133cb3d7b625da84079825e0ee672e5ae9bebd6589f5b826cd"
+    "wordpress_post_json_sha256": "12dce822392f867c02ea6c14220f6df4642ceff48e3f824f04f4099c9bd5ead9"
   },
   "id": 2836,
   "modified": "2025-05-21T01:52:12",
@@ -102,5 +115,16 @@
   "title": "IPv6 Router Advertisement: Why is it enabled by default on some network vendors?",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/ipv6-router-advertisement-why-is-it-enabled-by-default-on-some-network-vendors/"
   }
 }

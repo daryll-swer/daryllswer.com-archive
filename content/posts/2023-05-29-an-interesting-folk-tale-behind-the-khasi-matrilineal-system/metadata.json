@@ -9,7 +9,20 @@
         "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
         "tag": "li"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -108,9 +121,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "df4f1e0ccaec756882646f08be639a21ccaee4240254415e70d9bd9aa56eda7c",
-    "index_md_sha256": "40b3f2d9c6f791d1679e6bceabccdb0d6256e07fed779d9c0fca84a9abdfca7a",
+    "index_md_sha256": "7473d87647ca5399a6cad63baeef685ad29c952707a39eaa0905919f6e2aa16c",
     "rendered_article_html_sha256": "64465484c89d645b14b1792a8e8b52910f6cccf004552540a079e129b5f95a4f",
-    "wordpress_post_json_sha256": "a8e5d51d0e44425371e58b3654a2ab80c04e76c68d92a18a9609812947c475ac"
+    "wordpress_post_json_sha256": "46ef6fd889247ca91411829722f6f3300dc09008f7cd75edfb758dbf11423ef4"
   },
   "id": 2492,
   "modified": "2025-05-21T02:00:28",
@@ -141,5 +154,16 @@
   "title": "An Interesting Folk Tale Behind the Khasi Matrilineal System",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/an-interesting-folk-tale-behind-the-khasi-matrilineal-system/"
   }
 }

@@ -5,6 +5,16 @@
       "redacted": true,
       "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
       "tag": "h4"
+    },
+    {
+      "category": "source_rights_declaration",
+      "count": 1,
+      "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+    },
+    {
+      "category": "source_site_copyright_container",
+      "count": 2,
+      "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
     }
   ],
   "_embedded": {
@@ -136,7 +146,7 @@
           "author_name": "Chris",
           "author_url": "",
           "content": {
-            "rendered": "<p>I shared this post at: <a href=\"https://forum.autonomi.community/t/update-1st-august-2024/40178/23?u=chrisfostertv\" rel=\"nofollow ugc\">https://forum.autonomi.community/t/update-1st-august-2024/40178/23?u=chrisfostertv</a></p>\n<p>Were currently Beta testing the upcoming Autonomi network (p2p) and one of the challenges in running nodes from behind a home router is hole punching/ port forwarding.</p>\n<p>Well I followed your advice, went to static IP to bypass CGNAT&#8230;what a difference. Better internet performance and can run nodes without udp port forwarding.</p>\n<p>All the big node runners are using port forwarding with powerful routers and worrying about NAT table entries&#8230;if that could be bypassed..wow.</p>\n<p>Thanks</p>\n<p>Chris</p>\n<p>It&#8217;s got me excited as it could be of great benefit to an autonomous p2p network and also the ISP&#8217;s as well.</p>\n"
+            "rendered": "<p>I shared this post at: <a href=\"https://forum.autonomi.community/t/update-1st-august-2024/40178/23?u=chrisfostertv\" rel=\"nofollow ugc\">https://forum.autonomi.community/t/update-1st-august-2024/40178/23?u=chrisfostertv</a></p>\n<p>Were currently Beta testing the upcoming Autonomi network (p2p) and one of the challenges in running nodes from behind a home router is hole punching/ port forwarding.</p>\n<p>Well I followed your advice, went to static IP to bypass CGNAT…what a difference. Better internet performance and can run nodes without udp port forwarding.</p>\n<p>All the big node runners are using port forwarding with powerful routers and worrying about NAT table entries…if that could be bypassed..wow.</p>\n<p>Thanks</p>\n<p>Chris</p>\n<p>It’s got me excited as it could be of great benefit to an autonomous p2p network and also the ISP’s as well.</p>\n"
           },
           "date": "2024-08-02T11:53:15",
           "id": 1204,
@@ -178,7 +188,7 @@
           "author_name": "Jorge",
           "author_url": "",
           "content": {
-            "rendered": "<p>I&#8217;m sorry, the comment was for the 2 WANs setup post but I pubished it in thr wrong one. Nevertheless, I&#8217;m a TIER3 for saying someway. So I can&#8217;t use LACP/Bonding because our WANs are from different TIER2 ISPs I don&#8217;t have an ASN yet. IPTV services reported are those that aren&#8217;t legal, but customers hire them, so I don&#8217;t have all the info from them like dst-address, ports etc, because everyone use a different setup or change the address every one in a while. I have been monitoring the balancing since August 5th and is working great, still waiting for a WAN to fail to confirm failover because with my previous config I was having an issue with all the marked connections reamining active until shutting down the interface.</p>\n"
+            "rendered": "<p>I’m sorry, the comment was for the 2 WANs setup post but I pubished it in thr wrong one. Nevertheless, I’m a TIER3 for saying someway. So I can’t use LACP/Bonding because our WANs are from different TIER2 ISPs I don’t have an ASN yet. IPTV services reported are those that aren’t legal, but customers hire them, so I don’t have all the info from them like dst-address, ports etc, because everyone use a different setup or change the address every one in a while. I have been monitoring the balancing since August 5th and is working great, still waiting for a WAN to fail to confirm failover because with my previous config I was having an issue with all the marked connections reamining active until shutting down the interface.</p>\n"
           },
           "date": "2022-08-10T00:04:29",
           "id": 9,
@@ -232,7 +242,7 @@
           "author_name": "Daryll Swer",
           "author_url": "https://www.daryllswer.com/",
           "content": {
-            "rendered": "<p>IPTV would be ISP/Unicast specific/Multicast traffic and shouldn&#8217;t be subjected to the load balancing. Create seperate preceding rules for IPTV traffic and ensure it&#8217;s always &#8220;accepted&#8221; before hitting the PCC/Nth rules on the destination IP or port or both. Then you can still use Nth to achieve bandwidth aggregation for everything else.</p>\n<p>If you&#8217;re an ISP you should be using LACP/Bonding.</p>\n"
+            "rendered": "<p>IPTV would be ISP/Unicast specific/Multicast traffic and shouldn’t be subjected to the load balancing. Create seperate preceding rules for IPTV traffic and ensure it’s always “accepted” before hitting the PCC/Nth rules on the destination IP or port or both. Then you can still use Nth to achieve bandwidth aggregation for everything else.</p>\n<p>If you’re an ISP you should be using LACP/Bonding.</p>\n"
           },
           "date": "2022-08-05T04:35:50",
           "id": 8,

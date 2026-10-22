@@ -22,7 +22,20 @@
         "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
         "tag": "h4"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -107,9 +120,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "d7bbcbc1b0ba198e3a899b13cac74241f55d5ddf2396c7d71d07279e8ada8b10",
-    "index_md_sha256": "d8238f69a84a2d4e9c9e275bd3a211351caa7de832ad97e65fe1554156b3f249",
+    "index_md_sha256": "706a6e0383cbadc2c5dc3255269c7dd7350b4fe720113e2aeb55de7656fdb35c",
     "rendered_article_html_sha256": "b18b2937dce9778587cc37bc0a7a883709c441d8d4d7e533e6cc2e7485f32b4c",
-    "wordpress_post_json_sha256": "f06b0952a31e1a0dceba8dcf07787c6b23b80e94c7b95b96563cfa60169f3355"
+    "wordpress_post_json_sha256": "545bb083cbf4a8e25837bb42457f2088d2541fca41959f37d9762c4d24c7b0e3"
   },
   "id": 29,
   "modified": "2026-07-06T19:06:12",
@@ -164,5 +177,16 @@
   "title": "Shortcomings of CGNAT and Potential Workarounds",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/shortcomings-of-cgnat-and-potential-work-arounds/"
   }
 }

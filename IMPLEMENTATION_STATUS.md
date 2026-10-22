@@ -5,9 +5,9 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: canonical drift workflow staging reliability
-- Status: complete and hosted-runner verified
-- Last updated: 2026-08-17
+- Current sprint / workstream: proprietary content policy and history maintenance
+- Status: current-tree verification complete; isolated history verification pending
+- Last updated: 2026-10-22
 - Implementer role/model/thread: delegated `implementer-luna` completed the
   bounded rights-registry, reconciliation, renderer, and validation changes;
   current Codex Desktop completed integration and deployment verification
@@ -16,6 +16,24 @@
   affected the completed workstream
 
 ## Latest Delivery
+
+- Proprietary content policy and history maintenance:
+  - Status: current-tree verification complete; no remote history has changed.
+  - Policy: copyright 2026 Daryll Swer, all rights reserved, for owner-held
+    content; retain Swer Networks' proprietary exception, MIT tooling, font
+    licences and third-party attribution.
+  - Preparation: remote state isolated at 89 commits, a private rollback
+    bundle verified, and reconciliation temporarily paused with no active job.
+  - Verified locally: all 19 post bundles resolve rights and contain one
+    applicable visible notice; 60 tests pass; mirror validation reports zero
+    errors/warnings; public-safety and whitespace checks pass. Repeat offline
+    migration is a no-op. All 176 media/font/workbook binaries, 19 raw content
+    fingerprints and 19 source fetch times are unchanged. The 18 DS technical
+    Markdown bodies, rendered text/links and canonical article text/links are
+    unchanged; the Swer technical Markdown suffix is unchanged.
+  - Next: verify the isolated history transformation, publish with an explicit
+    remote lease, then verify Pages, retire obsolete hosted records and restore
+    automation.
 
 - Canonical drift workflow staging reliability:
   - Status: complete and hosted-runner verified
@@ -103,7 +121,7 @@
     without browser console errors.
 - Homepage title and Pages URL policy:
   - Status: complete and hosted verified
-  - Notes: The generated archive homepage must use `daryllswer.com - Archive`
+  - Notes: The generated archive homepage must use `daryllswer.com – Archive`
     for its browser and Open Graph titles. The dedicated project Pages URL is
     retained; article and spreadsheet titles remain unchanged. Renderer,
     regression validation, compilation, unit/integration tests, and
@@ -169,15 +187,14 @@
   - Notes: Markdown uses durable embed links; Pages article output uses iframe wrappers with fallback links.
 - Licensing:
   - Status: complete locally; deployment verification pending
-  - Notes: Scripts/tooling are MIT licensed. The DS default
-    `proprietary content rights-4.0` classification applies only to original DS content;
-    registry-marked reposts carry their own rights classification. Third-party
-    media/external artefacts are not assumed covered by either licence.
+  - Notes: Scripts/tooling are MIT licensed. Daryll Swer-owned content is
+    proprietary; registry-marked reposts carry their own rights classification.
+    Third-party media and external artefacts retain their separate terms.
 - README proprietary brand asset:
   - Status: complete and verified
   - Notes: Owner-provided `13_DS_Logo_Dark_Mode_SEO.png` is the
     README header with a dedicated all-rights-reserved notice, checksum
-    manifest, explicit exclusion from MIT and `proprietary content rights-4.0`, and a
+    manifest, explicit exclusion from the MIT tooling licence, and a
     validation guard for the path, checksum, notice, local copyright-anchor
     target, and Pages exclusion.
 - README logo provenance naming refinement:
@@ -212,7 +229,7 @@
   - Notes: All 15 one-prefix reserved allocations now render as static child
     cards with their exact prefix, label, and note; no singleton has a
     disclosure control. The 13 multi-prefix reserved ranges remain native
-    disclosures with 2-11 exact child prefixes. Validation derives the
+    disclosures with 2–11 exact child prefixes. Validation derives the
     expected singleton set from the CIDR hierarchy and rejects missing,
     malformed, or nested static leaves. Local browser QA passed at 320, 390,
     768, 1024, 1440, 1920, and 2560 px without page-level overflow or console
@@ -497,7 +514,7 @@
     to the supplied original with SHA-256
     `8719bf9e1b143538fb1c5d1def9fce3b4e0998ef16e403dc3c43ab2d2043cc66`.
     `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt` reserves all rights;
-    `LICENSING.md` excludes the logo from MIT and `proprietary content rights-4.0`.
+    `LICENSING.md` excludes the logo from the MIT tooling licence.
   - Validation: bundled-runtime `python -m py_compile scripts/*.py`,
     `make validate`, `make scan-secrets`, `git diff --check`, JSON parsing,
     and source/asset checksum comparison passed. Validation recorded 0 errors
@@ -870,7 +887,7 @@
   - `make sync validate scan-secrets render-preview`: pass at 2026-07-06 09:29 UTC.
   - Direct `rg` check for excluded donation CTA/donation URL in generated article files: no matches at 2026-07-06 09:29 UTC.
   - `make validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-06 09:49 UTC.
-  - `rg -n "https://www\.daryllswer\.com/[^)\\s]+/#(?:h-)?references|#h-references|This article was sponsored|FastNetMon|free 30-day" content/posts -g 'index.md'`: no matches at 2026-07-06 09:50 UTC.
+  - `rg -n "https://www\\.daryllswer\\.com/[^)\\s]+/#(?:h-)?references|#h-references|This article was sponsored|FastNetMon|free 30-day" content/posts -g 'index.md'`: no matches at 2026-07-06 09:50 UTC.
   - `make sync render-site validate PYTHON=<bundled-python>`: pass at 2026-07-06 11:35 UTC with 0 errors and 1 known sitemap warning.
   - `python3 -m py_compile scripts/*.py`: pass at 2026-07-06 12:00 UTC.
   - `make sync render-site validate scan-secrets PYTHON=<bundled-python>`: pass at 2026-07-06 12:03 UTC with 0 validation errors, 1 known sitemap warning, and 0 public-safety findings.

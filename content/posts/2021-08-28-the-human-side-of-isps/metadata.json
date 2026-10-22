@@ -22,7 +22,20 @@
         "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
         "tag": "h4"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -113,9 +126,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "56c561e53afb130c63366b25eb7879fcea8a7a3ba1adf7e163b24cc84e8bf60b",
-    "index_md_sha256": "b2da892d9bb635e85a3e05cce3e8befc7f0dc3876c61c5237e0009ce919b0789",
+    "index_md_sha256": "dce86c478cdce3fb9a46e33d58ca3f91f7eabec31935f6cc9f27b6fb931bb9fa",
     "rendered_article_html_sha256": "b2177f8f7a72d6ab346ae6e5153f1543e1b18465f381c8debf2ca05fb7e357a3",
-    "wordpress_post_json_sha256": "0985d57ca82e32830268d7c700eadf3baa3fbcaf5695ff5d15b54e30b8831299"
+    "wordpress_post_json_sha256": "5cfb79485ddcfb55d8a0d8f03adf45b4094624277f965518c14e944bffbc980b"
   },
   "id": 558,
   "modified": "2025-05-21T01:47:31",
@@ -146,5 +159,16 @@
   "title": "The Human Side of ISPs",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/the-human-side-of-isps/"
   }
 }

@@ -14,8 +14,9 @@
       "additionalProperties": false,
       "required": [
         "rights_holder",
+        "copyright_year",
         "rights_status",
-        "content_rights_status",
+        "notice_path",
         "original_article_url",
         "publisher",
         "scope",
@@ -27,7 +28,16 @@
           "type": "string",
           "minLength": 1
         },
+        "copyright_year": {
+          "type": "integer",
+          "minimum": 1900,
+          "maximum": 9999
+        },
         "rights_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notice_path": {
           "type": "string",
           "minLength": 1
         },

@@ -348,3 +348,5 @@ The end result is that at a large scale, the OOB L2 switches will have their MDB
 In summary, if I am the owner of the network, I should be able to power cycle devices remotely, and globally. Even if my production network is offline, I should be able to access most devices via console over LTE for example, as a backup, in case the IP fabric of the OOB network itself fails. My reliance on on-site field personnel should be greatly reduced unless there is a physical issue.
 
 I hope this article has broadened your understanding of the many ways to implement a dedicated OOB infrastructure. As the network architect, it’s your role to adapt, modify, and refine these concepts to suit your specific, localised use cases. My aim is for this content to be practical for everyone — from newcomers to experienced professionals and business owners.
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

@@ -22,7 +22,20 @@
         "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
         "tag": "h4"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -115,9 +128,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "6ab7024c3d220c88c986ab3034c6fd8a0d16f19217bd15d3b5c8fc8425a77b82",
-    "index_md_sha256": "7bc716c6eedf1ff6206ceb8b099f2e44d6af60360285b238e09f4272fdb2508c",
+    "index_md_sha256": "7e3e283b6fc7bd5fd14561da664bb7c31705a7787ea617984d8591053225929a",
     "rendered_article_html_sha256": "7b76e972bf01959cdb0df329f172f84443a5239a2f946f36da35e59514f56939",
-    "wordpress_post_json_sha256": "a6ee7881ff4d684ba6db9e54440916cd69c0f622933af05699c5bcbae55a0fe4"
+    "wordpress_post_json_sha256": "d2bf92044019673763efd3fd10a29458deda045e17ee63fae11752bd77d81b6e"
   },
   "id": 2739,
   "modified": "2025-05-21T01:47:33",
@@ -148,5 +161,16 @@
   "title": "Behavioural differences of IPv6 subnet-router anycast address implementations",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/"
   }
 }

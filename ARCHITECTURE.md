@@ -20,17 +20,24 @@ not the publishing source of truth; WordPress remains canonical.
   `https://daryll-swer.github.io/daryllswer.com-archive/`; the account-level
   `daryll-swer.github.io` user-site namespace is intentionally reserved for a
   future landing page. The generated archive homepage title and Open Graph
-  title are `daryllswer.com - Archive`; article and workbook titles remain
+  title are `daryllswer.com – Archive`; article and workbook titles remain
   descriptive to their content.
 
 ## Per-Post Rights
 
-- `content/rights-registry.json` records explicit article-rights exceptions by
-  immutable WordPress ID. The default `proprietary content rights-4.0` classification applies
-  only to original DS content covered by the DS default licence.
-- Registry entries are copied into matching post `metadata.json` `rights`
-  objects and validated against the manifest and source body. A registry entry
-  cannot be silently applied to a different post.
+- Daryll Swer-owned article text, original media and supporting content are
+  copyright 2026 Daryll Swer, all rights reserved. The proprietary content
+  notice controls that material; MIT remains confined to repository tooling.
+  Third-party material retains its separate attribution and applicable terms.
+- `content/rights-registry.json` records explicit ownership exceptions by
+  immutable WordPress ID. Every post's `metadata.json` contains its resolved
+  `rights` object, derived from the default policy or its matching registry
+  entry. Swer Networks remains the holder of the BGP Router ID article text.
+- Source-rights filtering removes source-site declarations from stored
+  captures and records generic transformation evidence without removed text.
+  Stored-file hashes describe the filtered capture; raw canonical fingerprints
+  remain distinct for drift detection. Markdown and Pages expose one applicable
+  rights notice per article without duplicate Swer Networks notices.
 - Registry-marked proprietary reposts preserve their source-visible rights
   notice and original-publication link. The archive does not inject duplicate
   notices or inherit DS/SN canonical, robots, or Open Graph URL directives;
@@ -61,7 +68,7 @@ not the publishing source of truth; WordPress remains canonical.
   controlling legal notice is
   `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`.
 - They are not mirrored WordPress content, third-party media, MIT tooling, or
-  `proprietary content rights-4.0` archive content. Future tooling must not rename,
+  proprietary archive article content. Future tooling must not rename,
   re-encode, redistribute, or apply an open licence to the source assets. The
   only permitted generated derivative is the documented 512 px Pages favicon;
   its manifest records both master and derivative checksums. A changed master

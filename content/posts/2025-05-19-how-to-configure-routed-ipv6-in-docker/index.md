@@ -95,3 +95,5 @@ If you want to continue using Docker’s built-in iptables manipulation, then re
 ## Conclusion
 
 As we’ve seen in this post, routed IPv6 with Docker doesn’t need to be complex.
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

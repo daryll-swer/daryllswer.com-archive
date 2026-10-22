@@ -22,7 +22,20 @@
         "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
         "tag": "h4"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -107,9 +120,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "e343504d7cbaa8532d2746f97bf524d388230bef336ad8d069ac5cd2d7f45e7b",
-    "index_md_sha256": "1ae6db3b999971b6fd72d3a72fc123b9b878fca521bac061b51a889069b2725c",
+    "index_md_sha256": "7a648af0bdb3ad43ea6d78c1b3d100f09c1e0677ce6deed3b81335e81abc62aa",
     "rendered_article_html_sha256": "aec67eb6a951c73dc3397ad7abdb5aed8e51753a4ee56480b0270478ea549540",
-    "wordpress_post_json_sha256": "d02d85afa0c1008ea728ecd406e2332ed3d517510373f9946ccc130de2867f49"
+    "wordpress_post_json_sha256": "7ac41db899491372f5505e804527cf20fc07dcd9782c85f6d4e58db266c2d2c5"
   },
   "id": 115,
   "modified": "2026-07-06T21:24:21",
@@ -170,5 +183,16 @@
   "title": "Multi-WAN setups with retail ISPs [Part 2 – Implementation (Using RouterOS)]",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/multi-wan-setups-with-retail-isps-part-2-implementation-using-routeros/"
   }
 }

@@ -13,21 +13,20 @@ Repository scripts and tooling are licensed under the MIT License.
 
 ## Mirrored Blog Content
 
-The public daryllswer.com site states that the site content is licensed under
-proprietary content rights 4.0 International
-(`proprietary content rights-4.0`).
+Daryll Swer-owned mirrored articles, original media and supporting content are
+copyright © 2026 Daryll Swer. All rights reserved.
 
-This repository mirrors that public content licence only for original
-daryllswer.com article text/content covered by the site's default licence.
-It does not infer a licence for reposted or otherwise separately owned
-content.
+- Rights status: proprietary; no public reuse licence is granted.
+- Controlling notice: `LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt`.
+- Applies to: Daryll Swer-owned article text, media and supporting content,
+  including the original IPv6 allocation example.
+- Does not apply to: MIT repository tooling, Swer Networks article text,
+  third-party quotations/media, fonts or other separately attributed material.
 
-- SPDX identifier: `proprietary content rights-4.0`
-- Licence text: `LICENSES/proprietary content rights-4.0.txt`
-- Applies to: mirrored original daryllswer.com text/content that has no
-  explicit per-post rights exception.
-- Does not apply to: repository scripts/tooling, third-party media, or external
-  artefacts, or proprietary reposted content.
+Each article has resolved rights metadata and a visible applicable notice.
+The registry records explicit exceptions by immutable WordPress post ID.
+Source publication and modification dates are preserved. No notice limits
+applicable law or permissions already validly granted.
 
 ## Proprietary Swer Networks Reposts
 
@@ -37,9 +36,9 @@ metadata in its post bundle and retains the source article's visible rights
 notice; the registry does not alter GitHub Pages SEO metadata.
 
 The BGP Router ID republication (WordPress ID `5324`) is proprietary Swer
-Networks article text, all rights reserved. It is excluded from the
-daryllswer.com `proprietary content rights-4.0` default. Media remains subject to its own
-attribution or rights notice.
+Networks article text, all rights reserved. Its original-publication provenance
+and ownership remain distinct from Daryll Swer-owned content. Media remains
+subject to its own attribution or rights notice.
 
 - Controlling archive notice:
   `LICENSES/SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt`.
@@ -50,9 +49,9 @@ attribution or rights notice.
 Some posts may reference third-party media, external documents, embedded
 services, spreadsheets, or externally hosted artefacts.
 
-Do not assume third-party media or external artefacts are covered by either MIT
-or `proprietary content rights-4.0`. Preserve provenance where practical and flag unclear
-cases before redistribution.
+Do not assume third-party material is covered by the MIT tooling licence or
+repository ownership claims. Preserve source attribution and applicable rights
+notices; flag unclear cases before redistribution.
 
 ## Proprietary Daryll Swer Brand Assets
 
@@ -72,8 +71,8 @@ byte-for-byte to the GitHub Pages header and browser favicon.
   `assets/readme/ASSET_PROVENANCE.md`, `assets/readme/manifest.json`, and
   `assets/brand/ASSET_PROVENANCE.md`/`assets/brand/manifest.json`. These
   records are not licences.
-- Excluded from: the MIT licence, `proprietary content rights-4.0`, and every other repository
-  licence or content grant.
+- Excluded from: the MIT tooling licence and every other repository licence or
+  content grant.
 
 The notice reserves copying, distribution, modification, derivative use, and
 brand use except where applicable law requires otherwise. The generated 512 px

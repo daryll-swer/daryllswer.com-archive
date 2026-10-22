@@ -24,27 +24,24 @@ except Exception as exc:  # pragma: no cover - environment guard
     raise SystemExit("Missing dependency: lxml. Install requirements.txt first.") from exc
 
 from wordpress_palette import WORDPRESS_COLOR_PRESETS
+from rights_policy import (
+    RIGHTS_FIELDS,
+    html_notice_count,
+    markdown_notice_count,
+    resolve_rights,
+    validate_rights_record,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
 UA = "daryllswer-com-archive-validator/1.0 (+https://www.daryllswer.com/)"
 POSTS_ENDPOINT = "https://www.daryllswer.com/wp-json/wp/v2/posts?per_page=100&_embed=1"
 POST_SITEMAP = "https://www.daryllswer.com/post-sitemap.xml"
-PAGES_HOME_TITLE = "daryllswer.com - Archive"
+PAGES_HOME_TITLE = "daryllswer.com – Archive"
 RIGHTS_REGISTRY_PATH = ROOT / "content" / "rights-registry.json"
 RIGHTS_SCHEMA_PATH = ROOT / "schemas" / "rights-registry.schema.json"
 ARCHIVE_STATUS_SCHEMA_PATH = ROOT / "schemas" / "archive-status.schema.json"
-RIGHTS_NOTICE_PATH = ROOT / "LICENSES" / "SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt"
-RIGHTS_REQUIRED_FIELDS = (
-    "rights_holder",
-    "rights_status",
-    "content_rights_status",
-    "original_article_url",
-    "publisher",
-    "scope",
-    "media_rights",
-    "external_fallback",
-)
+RIGHTS_REQUIRED_FIELDS = RIGHTS_FIELDS
 REQUIRED_ARCHIVED_RIGHTS_ID = "5324"
 # WordPress REST is authoritative for archived posts. This exact public article
 # has a documented source-sitemap exception; unknown sitemap absences remain
@@ -93,13 +90,13 @@ ARCHIVE_EXCLUDED_PATTERNS = [
     re.compile(r"It would be appreciated if you could help me continue", re.I),
     re.compile(r"Click here</a>\s*to donate now", re.I),
     re.compile(r"Click here to donate now", re.I),
-    re.compile(r"https://www.daryllswer.com/donation/?", re.I),
+    re.compile(r"https://www\.daryllswer\.com/donation/?", re.I),
     re.compile(r"This article was sponsored by the cybersecurity company", re.I),
     re.compile(r"You can claim your free 30-day trial using this", re.I),
 ]
-REMOTE_REFERENCE_ANCHOR_PATTERN = re.compile(r"https://www.daryllswer.com/[^)\s]+/#(?:h-)?references", re.I)
-WORDPRESS_MEDIA_PATTERN = re.compile(r"https://www.daryllswer.com/wp-content/uploads/", re.I)
-GOOGLE_SHEET_PATTERN = re.compile(r"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml", re.I)
+REMOTE_REFERENCE_ANCHOR_PATTERN = re.compile(r"https://www\.daryllswer\.com/[^)\s]+/#(?:h-)?references", re.I)
+WORDPRESS_MEDIA_PATTERN = re.compile(r"https://www\.daryllswer\.com/wp-content/uploads/", re.I)
+GOOGLE_SHEET_PATTERN = re.compile(r"https://docs\.google\.com/spreadsheets/d/e/2PACX-1vQ32t5C9BW-rV36gUo93uYcLw9GMPqg7BMks8u17dlLhWmIUzIdCe4iexLBQKdnDwykAom929K2dTxR/pubhtml", re.I)
 WORDPRESS_COLOUR_CLASS_RE = re.compile(r"^has-[a-z0-9-]+(?:color|background-color|border-color)$")
 FINAL_VISUAL_SCRIPT_MARKERS = (
     "data-final-tree-section",
@@ -200,35 +197,12 @@ def check_required(data, schema, path: str, errors: list[str]) -> None:
 
 def validate_rights_record_shape(post_id: str, record: object, errors: list[str]) -> bool:
     path = f"content/rights-registry.json[{post_id!r}]"
-    if not isinstance(record, dict):
-        errors.append(f"{path}: expected object")
+    try:
+        validate_rights_record(post_id, record)
+    except ValueError as exc:
+        errors.append(f"{path}: {exc}")
         return False
-    missing = [key for key in RIGHTS_REQUIRED_FIELDS if key not in record]
-    if missing:
-        errors.append(f"{path}: missing required key(s): {', '.join(missing)}")
-    extra = sorted(set(record) - set(RIGHTS_REQUIRED_FIELDS))
-    if extra:
-        errors.append(f"{path}: unsupported key(s): {', '.join(extra)}")
-    valid = not missing and not extra
-    for key in ["rights_holder", "rights_status", "original_article_url", "publisher", "scope", "media_rights"]:
-        if key in record and (not isinstance(record[key], str) or not record[key].strip()):
-            errors.append(f"{path}: `{key}` must be a non-empty string")
-            valid = False
-    if "content_rights_status" in record and not isinstance(record["content_rights_status"], bool):
-        errors.append(f"{path}: `content_rights_status` must be boolean")
-        valid = False
-    if "external_fallback" in record and not isinstance(record["external_fallback"], bool):
-        errors.append(f"{path}: `external_fallback` must be boolean")
-        valid = False
-    if isinstance(record.get("original_article_url"), str):
-        parsed = urllib.parse.urlsplit(record["original_article_url"])
-        if parsed.scheme not in {"http", "https"} or not parsed.netloc:
-            errors.append(f"{path}: `original_article_url` must be an absolute HTTP(S) URL")
-            valid = False
-    if record.get("rights_status") == "proprietary/all-rights-reserved" and record.get("content_rights_status") is not False:
-        errors.append(f"{path}: proprietary content must set `content_rights_status` to false")
-        valid = False
-    return valid
+    return True
 
 
 def validate_rights_registry(archive: dict, errors: list[str]) -> dict[str, dict] | None:
@@ -246,7 +220,7 @@ def validate_rights_registry(archive: dict, errors: list[str]) -> dict[str, dict
         errors.append("rights registry missing at content/rights-registry.json")
         return None
     try:
-        registry = load_json(RIGHTS_REGISTRY_PATH)
+            registry = load_json(RIGHTS_REGISTRY_PATH)
     except Exception as exc:
         errors.append(f"rights registry parse failed: {exc}")
         return None
@@ -282,19 +256,32 @@ def validate_rights_registry(archive: dict, errors: list[str]) -> dict[str, dict
         except Exception as exc:
             errors.append(f"{matches[0].get('slug', post_id)}: rights metadata parse failed: {exc}")
             continue
+        expected_rights = resolve_rights(matches[0]["id"], matches[0]["canonical_url"], registry)
         metadata_rights = metadata.get("rights")
-        legacy_record = dict(record)
-        legacy_record.pop("external_fallback", None)
-        if metadata_rights != record and metadata_rights != legacy_record:
+        if metadata_rights != expected_rights:
             errors.append(f"{matches[0].get('slug', post_id)}: generated metadata.rights does not match its registry entry")
 
-        if record.get("rights_status") != "proprietary/all-rights-reserved":
+    for post in posts:
+        post_id = str(post.get("id"))
+        metadata_path = ROOT / post.get("bundle_path", "") / "metadata.json"
+        if not metadata_path.exists():
             continue
+        try:
+            metadata = load_json(metadata_path)
+            expected_rights = resolve_rights(post["id"], post["canonical_url"], registry)
+        except (KeyError, ValueError, json.JSONDecodeError) as exc:
+            errors.append(f"{post.get('slug', post_id)}: could not resolve rights: {exc}")
+            continue
+        if metadata.get("rights") != expected_rights:
+            errors.append(f"{post.get('slug', post_id)}: metadata.rights does not equal resolved default/exception rights")
+        notice_path = ROOT / expected_rights["notice_path"]
+        if not notice_path.exists():
+            errors.append(f"{post.get('slug', post_id)}: rights notice missing: {expected_rights['notice_path']}")
         evidence_paths = [
-            bundle / "index.md",
-            bundle / "source" / "rendered-article.html",
-            bundle / "source" / "canonical-page.html",
-            bundle / "source" / "wordpress-post.json",
+            ROOT / post.get("bundle_path", "") / "index.md",
+            ROOT / post.get("bundle_path", "") / "source" / "rendered-article.html",
+            ROOT / post.get("bundle_path", "") / "source" / "canonical-page.html",
+            ROOT / post.get("bundle_path", "") / "source" / "wordpress-post.json",
         ]
         evidence = "\n".join(
             path.read_text(encoding="utf-8", errors="replace")
@@ -302,41 +289,17 @@ def validate_rights_registry(archive: dict, errors: list[str]) -> dict[str, dict
             if path.exists()
         )
         normalised = " ".join(evidence.split()).lower()
-        if record["original_article_url"] not in evidence:
-            errors.append(f"{matches[0].get('slug', post_id)}: proprietary rights evidence is missing the original publication link")
-        if not all(marker in normalised for marker in ["swer networks", "copyright", "all rights reserved"]):
-            errors.append(f"{matches[0].get('slug', post_id)}: proprietary rights evidence is missing Swer Networks copyright/all-rights-reserved wording")
-        if not re.search(r"not licensed under .*proprietary content rights 4.0 licen[cs]e", normalised):
-            errors.append(f"{matches[0].get('slug', post_id)}: proprietary rights evidence is missing explicit CC exclusion")
-
-    for post in posts:
-        metadata_path = ROOT / post.get("bundle_path", "") / "metadata.json"
-        if not metadata_path.exists():
-            continue
-        try:
-            metadata = load_json(metadata_path)
-        except Exception:
-            continue
-        if "rights" not in metadata:
-            continue
-        post_id = str(post.get("id"))
-        record = valid_records.get(post_id)
-        if record is None:
-            errors.append(
-                f"{post.get('slug', post_id)}: generated metadata.rights has no matching registry entry"
-            )
-        elif metadata.get("rights") != record and metadata.get("rights") != {key: value for key, value in record.items() if key != "external_fallback"}:
-            errors.append(
-                f"{post.get('slug', post_id)}: generated metadata.rights does not exactly match its registry entry"
-            )
-
-    if not RIGHTS_NOTICE_PATH.exists():
-        errors.append(f"proprietary rights notice missing: {rel(RIGHTS_NOTICE_PATH)}")
-    else:
-        notice = RIGHTS_NOTICE_PATH.read_text(encoding="utf-8", errors="replace").lower()
-        for marker in ["swer networks", "all rights reserved", "not licensed under", "proprietary content rights", "content/rights-registry.json"]:
-            if marker not in notice:
-                errors.append(f"{rel(RIGHTS_NOTICE_PATH)}: missing `{marker}`")
+        if not all(marker in normalised for marker in [
+            expected_rights["rights_holder"].lower(),
+            str(expected_rights["copyright_year"]),
+            "copyright",
+            "all rights reserved",
+        ]):
+            errors.append(f"{post.get('slug', post_id)}: rights evidence is missing holder/copyright/all-rights-reserved wording")
+        if evidence_paths[0].exists() and markdown_notice_count(
+            evidence_paths[0].read_text(encoding="utf-8", errors="replace"), expected_rights
+        ) != 1:
+            errors.append(f"{post.get('slug', post_id)}: Markdown must contain exactly one applicable rights notice")
     return valid_records
 
 
@@ -1135,7 +1098,7 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
             errors.append("README logo must link to the local copyright-and-licences section")
         if "## Copyright and Licences" not in readme:
             errors.append("README is missing the copyright-and-licences destination section")
-        if not re.search(r"© 2026 Daryll Swer. All\s+rights reserved.", readme):
+        if not re.search(r"© 2026 Daryll Swer\. All\s+rights reserved\.", readme):
             errors.append("README does not state the proprietary logo copyright notice")
         for label, path in README_BRAND_SEMANTIC_LINKS:
             marker = f"[{label}]({path})"
@@ -1151,7 +1114,7 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
             "controlling legal notice",
             README_BRAND_NOTICE_PATH,
             "MIT",
-            "proprietary content rights-4.0",
+            "proprietary",
             "applicable law",
             "GitHub's limited public-repository service operation",
         ]:
@@ -1165,7 +1128,7 @@ def validate_brand_assets(errors: list[str]) -> dict | None:
             PAGES_FAVICON_PROVENANCE_PATH,
             README_BRAND_NOTICE_PATH,
             "MIT",
-            "proprietary content rights-4.0",
+            "proprietary",
         ]:
             if marker not in licensing:
                 errors.append(f"LICENSING.md is missing README brand asset marker `{marker}`")
@@ -1429,6 +1392,9 @@ def validate_pages_site(
         try:
             source_doc = parse_html_file(ROOT / post["bundle_path"] / "source" / "rendered-article.html")
             page_doc = parse_html_file(page)
+            resolved_rights = resolve_rights(post["id"], post["canonical_url"], registry)
+            if html_notice_count(page_doc, resolved_rights) != 1:
+                errors.append(f"{post['slug']}: GitHub Pages article must contain exactly one applicable rights notice")
             source_colour_classes = wordpress_colour_classes(source_doc)
             if source_colour_classes:
                 page_colour_classes = wordpress_colour_classes(page_doc)
@@ -1616,6 +1582,7 @@ def validate_generated_seo_outputs(posts: list[dict], metadata_by_slug: dict[str
         eligible = [post for post in posts if status_post_is_eligible(post, registry, status)]
         expected_ids = {int(post["id"]) for post in sorted(eligible, key=lambda item: (item.get("published") or "", int(item.get("id") or 0)), reverse=True)[:10]}
         actual_ids = set()
+        posts_by_id = {int(post["id"]): post for post in posts}
         for item in items:
             guid = item.findtext("guid", default="")
             match = re.fullmatch(r"urn:daryllswer-com-archive:wordpress-post:([1-9][0-9]*)", guid)
@@ -1628,15 +1595,19 @@ def validate_generated_seo_outputs(posts: list[dict], metadata_by_slug: dict[str
                 errors.append("docs/feed.xml item link is not archive-local")
             encoded = item.find("{http://purl.org/rss/1.0/modules/content/}encoded")
             body = encoded.text or "" if encoded is not None else ""
-            if re.search(r"(?:href|src)=['\"](?:.?.?/|/)", body):
+            if re.search(r"(?:href|src)=['\"](?:\.?\.?/|/)", body):
                 errors.append("docs/feed.xml content:encoded contains a relative local URL")
             if any(marker in body.lower() for marker in ["<comments", "<slash:", "<wfw:", "<wp:", "appeared first"]):
                 errors.append("docs/feed.xml content:encoded contains omitted source/comment metadata")
-            if match and match.group(1) == REQUIRED_ARCHIVED_RIGHTS_ID:
-                registry_record = registry.get(REQUIRED_ARCHIVED_RIGHTS_ID) or {}
-                original = registry_record.get("original_article_url", "")
-                if original not in body or "Swer Networks" not in body:
-                    errors.append("docs/feed.xml BGP repost item does not retain its visible Swer Networks rights/provenance block")
+            if match and int(match.group(1)) in posts_by_id:
+                feed_post = posts_by_id[int(match.group(1))]
+                try:
+                    feed_rights = resolve_rights(feed_post["id"], feed_post["canonical_url"], registry)
+                    feed_doc = lxml.html.fragment_fromstring(body, create_parent="div")
+                    if html_notice_count(feed_doc, feed_rights) != 1:
+                        errors.append(f"docs/feed.xml item {match.group(1)} must contain exactly one applicable rights notice")
+                except ValueError as exc:
+                    errors.append(f"docs/feed.xml item {match.group(1)} rights resolution failed: {exc}")
         if channel is not None:
             last_build = channel.findtext("lastBuildDate", default="")
             if not last_build:
@@ -1724,11 +1695,11 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
             ("concurrency:", r"^\s*concurrency:\s*$"),
             ("timeout-minutes:", r"^\s*timeout-minutes:\s*25\s*$"),
             ("controlled favicon preparation", r"make\s+prepare-brand-favicon"),
-            ("scripts/check-canonical-drift.py", r"scripts/check-canonical-drift.py"),
-            ("scripts/external_source_monitor.py", r"scripts/external_source_monitor.py"),
-            ("scripts/reconcile-canonical-drift.py", r"scripts/reconcile-canonical-drift.py"),
-            ("action-plan outside checkout", r"runner.temp.*canonical-drift-action-plan.json"),
-            ("reconciliation result outside checkout", r"runner.temp.*canonical-drift-reconciliation-result.json"),
+            ("scripts/check-canonical-drift.py", r"scripts/check-canonical-drift\.py"),
+            ("scripts/external_source_monitor.py", r"scripts/external_source_monitor\.py"),
+            ("scripts/reconcile-canonical-drift.py", r"scripts/reconcile-canonical-drift\.py"),
+            ("action-plan outside checkout", r"runner\.temp.*canonical-drift-action-plan\.json"),
+            ("reconciliation result outside checkout", r"runner\.temp.*canonical-drift-reconciliation-result\.json"),
         ]:
             if not has_active_line(pattern):
                 errors.append(f"canonical drift workflow missing active `{marker}`")
@@ -1773,30 +1744,30 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
         required_step_lines = [
             ("Check out repository", r"^uses:\s*actions/checkout@v6\s*$", "actions/checkout@v6"),
             ("Set up Python", r"^uses:\s*actions/setup-python@v6\s*$", "actions/setup-python@v6"),
-            ("Set up Python", r"^python-version:\s*['\"]?3.12['\"]?\s*$", "python-version 3.12"),
+            ("Set up Python", r"^python-version:\s*['\"]?3\.12['\"]?\s*$", "python-version 3.12"),
             ("Set up Python", r"^cache:\s*['\"]?pip['\"]?\s*$", "pip cache"),
-            ("Set up Python", r"^cache-dependency-path:\s*['\"]?requirements.txt['\"]?\s*$", "requirements.txt cache key"),
-            ("Install Python dependencies", r"^run:\s*python\s+-m\s+pip\s+install\s+-r\s+requirements.txt\s*$", "requirements.txt installation"),
+            ("Set up Python", r"^cache-dependency-path:\s*['\"]?requirements\.txt['\"]?\s*$", "requirements.txt cache key"),
+            ("Install Python dependencies", r"^run:\s*python\s+-m\s+pip\s+install\s+-r\s+requirements\.txt\s*$", "requirements.txt installation"),
             ("Prepare controlled brand favicon", r"^run:\s*\|\s*$", "controlled favicon preparation"),
             ("Prepare controlled brand favicon", r"make\s+prepare-brand-favicon", "controlled favicon make target"),
-            ("Check canonical drift", r"--action-plan\s+.*runner.temp.*canonical-drift-action-plan.json", "external action-plan output"),
-            ("Check external sources", r"scripts/external_source_monitor.py", "external source monitor"),
-            ("Check external sources", r"runner.temp.*external-source-result.json", "external source result"),
-            ("Reconcile canonical drift", r"scripts/reconcile-canonical-drift.py", "canonical drift reconciler"),
-            ("Reconcile canonical drift", r"--result\s+.*runner.temp.*canonical-drift-reconciliation-result.json", "external reconciliation result"),
+            ("Check canonical drift", r"--action-plan\s+.*runner\.temp.*canonical-drift-action-plan\.json", "external action-plan output"),
+            ("Check external sources", r"scripts/external_source_monitor\.py", "external source monitor"),
+            ("Check external sources", r"runner\.temp.*external-source-result\.json", "external source result"),
+            ("Reconcile canonical drift", r"scripts/reconcile-canonical-drift\.py", "canonical drift reconciler"),
+            ("Reconcile canonical drift", r"--result\s+.*runner\.temp.*canonical-drift-reconciliation-result\.json", "external reconciliation result"),
             ("Read reconciliation result", r"content_changed", "reconciliation content-change output"),
             ("Render generated Pages", r"^run:\s+make\s+render-site\s*$", "generated Pages rendering"),
-            ("Render generated Pages", r"steps.external.outputs.changed|steps.canonical.outputs.status_changed", "SEO/source-state render trigger"),
-            ("Verify reconciled canonical state", r"scripts/check-canonical-drift.py\s+--fresh\s*$", "fresh post-reconciliation drift comparison"),
+            ("Render generated Pages", r"steps\.external\.outputs\.changed|steps\.canonical\.outputs\.status_changed", "SEO/source-state render trigger"),
+            ("Verify reconciled canonical state", r"scripts/check-canonical-drift\.py\s+--fresh\s*$", "fresh post-reconciliation drift comparison"),
             ("Check workflow changed paths", r"git.*diff.*--name-only", "pre-staging changed-path scan"),
             ("Check workflow changed paths", r"git.*diff.*--cached.*--name-only", "pre-staging index scan"),
             ("Check workflow changed paths", r"git.*ls-files.*--others.*--exclude-standard", "pre-staging untracked-path scan"),
-            ("Check workflow changed paths", r"allowed\s*=\s*re.compile", "pre-staging path allowlist"),
+            ("Check workflow changed paths", r"allowed\s*=\s*re\.compile", "pre-staging path allowlist"),
             ("Check workflow changed paths", r"unexpected\s*=\s*sorted", "pre-staging unexpected-path check"),
             ("Check workflow changed paths", r"raise\s+SystemExit\(1\)", "pre-staging allowlist failure"),
-            ("Commit drift status changes", r"^git\s+add\s+-A\s+--\s+.\s*$", "root-scoped all-state staging"),
+            ("Commit drift status changes", r"^git\s+add\s+-A\s+--\s+\.\s*$", "root-scoped all-state staging"),
             ("Commit drift status changes", r"git.*diff.*--cached.*--name-only", "post-staging path scan"),
-            ("Commit drift status changes", r"allowed\s*=\s*re.compile", "post-staging path allowlist"),
+            ("Commit drift status changes", r"allowed\s*=\s*re\.compile", "post-staging path allowlist"),
             ("Commit drift status changes", r"unexpected\s*=\s*sorted", "post-staging unexpected-path check"),
             ("Commit drift status changes", r"raise\s+SystemExit\(1\)", "post-staging allowlist failure"),
             ("Commit drift status changes", r"^git\s+commit\s+", "workflow commit"),
@@ -1807,7 +1778,7 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
                 errors.append(f"canonical drift workflow missing active `{description}` in `{step_name}`")
 
         commit_lines = [line for _, line in step_blocks.get("Commit drift status changes", [])]
-        if any(re.search(r"\bgit\s+add\b[^\n]*\bdocs/feed.xml\b", line) for line in commit_lines):
+        if any(re.search(r"\bgit\s+add\b[^\n]*\bdocs/feed\.xml\b", line) for line in commit_lines):
             errors.append(
                 "canonical drift workflow must not pass optional docs/feed.xml directly to git add"
             )
@@ -1961,7 +1932,7 @@ def main() -> int:
             f"- Pages header and favicon source: `{PAGES_FAVICON_SOURCE_PATH}`",
             f"- Pages favicon provenance: `{PAGES_FAVICON_PROVENANCE_PATH}`",
             f"- Copyright: `{brand_assets['readme_logo'].get('copyright_notice')}`",
-            "- Licence status: proprietary; excluded from MIT and proprietary content rights-4.0",
+            "- Licence status: proprietary; separate from MIT tooling",
             "",
         ])
 

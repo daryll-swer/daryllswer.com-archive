@@ -15,6 +15,7 @@ import urllib.parse
 from pathlib import Path
 
 from font_assets import FONT_BODY_STACK, FONT_HEADING_STACK, copy_font_assets, font_face_css
+from rights_policy import html_notice_count, resolve_rights, rights_notice_html
 from sheet_workbook import render_workbook_page
 from wordpress_palette import wordpress_palette_css
 
@@ -435,10 +436,11 @@ def remove_unsafe_attrs(root) -> None:
         bad.drop_tree()
 
 
-def article_body_html(post: dict, canonical_to_slug: dict[str, str]) -> str:
+def article_body_html(post: dict, canonical_to_slug: dict[str, str], rights: dict | None = None) -> str:
     bundle = ROOT / post["bundle_path"]
     raw = (bundle / "source" / "rendered-article.html").read_text(encoding="utf-8", errors="replace")
     root = lxml.html.fragment_fromstring(raw, create_parent="div")
+    rights = rights or resolve_rights(post["id"], post["canonical_url"], {})
     exact_assets, keyed_assets = build_asset_maps(bundle)
     remove_unsafe_attrs(root)
     replace_verse_blocks(root)
@@ -447,6 +449,9 @@ def article_body_html(post: dict, canonical_to_slug: dict[str, str]) -> str:
     wrap_iframes(root)
     ensure_heading_ids(root)
     add_heading_permalink_controls(root)
+    if html_notice_count(root, rights) == 0:
+        notice = lxml.html.fragment_fromstring(rights_notice_html(rights), create_parent="div")
+        root.insert(0, notice[0])
     return "".join(lxml.html.tostring(child, encoding="unicode") for child in root)
 
 
@@ -579,7 +584,7 @@ def render_post(post: dict, metadata: dict, canonical_to_slug: dict[str, str], s
         image_meta = PAGES_BASE_URL + f"posts/{post['slug']}/{featured}"
     categories = metadata.get("categories") or []
     category_text = ", ".join(c.get("name", "") for c in categories if c.get("name"))
-    body_html = article_body_html(post, canonical_to_slug)
+    body_html = article_body_html(post, canonical_to_slug, metadata.get("rights"))
     body = f"""{site_header("../../")}
 <main class="article-shell">
   <article class="article">
@@ -841,7 +846,7 @@ def render_feed(posts: list[dict], metadata_by_slug: dict[str, dict], canonical_
     for post in eligible[:10]:
         metadata = metadata_by_slug[post["slug"]]
         bundle = ROOT / post["bundle_path"]
-        body = absolute_feed_body(article_body_html(post, canonical_to_slug), post["slug"])
+        body = absolute_feed_body(article_body_html(post, canonical_to_slug, metadata.get("rights")), post["slug"])
         excerpt = post_excerpt(bundle, metadata)
         url = PAGES_BASE_URL + f"posts/{post['slug']}/"
         lines.extend([

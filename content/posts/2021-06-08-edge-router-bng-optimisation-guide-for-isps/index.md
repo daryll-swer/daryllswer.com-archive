@@ -1551,3 +1551,5 @@ These are some strange behaviours that I could not explain. If you have further 
     - But for whatever reason, when using src NAT as the action for a public prefix, it keeps on changing the “NATted” public IP and hence the source IP on the WAN for the customers. This results in traffic breaking or triggering DDoS protection on sites like Cloudflare protected ones
     - And for whatever reason, even though Netmap is meant for 1:1, it works for 1:Many bindings and it does not result in the constant changing of source IP for the customers
   - I have not found any technical information on why these behaviours occur or why netmap even works in the first place for 1:Many bindings
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

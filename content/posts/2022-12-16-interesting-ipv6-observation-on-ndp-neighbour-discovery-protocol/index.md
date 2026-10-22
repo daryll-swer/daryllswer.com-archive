@@ -95,3 +95,5 @@ Here is the snippet:
 /ipv6 firewall raw
 add action=accept chain=prerouting comment="Accept all ICMPv6 traffic from BGP peers (Required for LL<>GUA packets)" icmp-options=!154:4-5 in-interface-list=WAN protocol=icmpv6 src-address-list=bgp_peers
 ```
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

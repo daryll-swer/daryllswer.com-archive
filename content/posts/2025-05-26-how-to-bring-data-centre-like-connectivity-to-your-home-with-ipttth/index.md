@@ -180,3 +180,5 @@ Still, nothing ‘free’ lasts forever, so my general advice would be to make t
 All things considered, if you’re as passionate about network engineering as I am and believe the trade-offs discussed are worth it, then this unique Internet experience is something worth taking if you have the opportunity.
 
 Thanks to owning my own IPv6 Provider-independent Address (PIA) space, nothing beats the feeling of being able to configure IPv6 SLAAC with an ‘infinity’ preferred and valid lifetime timer on my home LAN. Being both a network engineer and an end-user offers a truly rewarding perspective that I encourage you to pursue!
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

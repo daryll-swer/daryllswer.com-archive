@@ -22,7 +22,20 @@
         "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
         "tag": "h4"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -81,9 +94,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "9cb61b7193ed8091f23547274618a9253b773f719f058ffc8d6ae2a32449084c",
-    "index_md_sha256": "7d7e1e09711b966a48998d9e1565ad36b43763c625728f3f82afd12566db90fd",
+    "index_md_sha256": "46a07049b3d6de9c36a477f76fa0037f87d3a480b3bb9458f6e027e7982e8891",
     "rendered_article_html_sha256": "fe1bb6efe72b01f313a699206141ed12b1c9a74e3ab7b28d3995b7599d3c4023",
-    "wordpress_post_json_sha256": "e4626ce2b3752a4639262bd414444ad8adb673c39ea6001cc5c523ec6b7d2974"
+    "wordpress_post_json_sha256": "5d23cf96eec26c62034bb2ed62fa9bada1ba2c535b46093517ae28db283a8cc5"
   },
   "id": 2053,
   "modified": "2025-05-21T01:47:21",
@@ -120,5 +133,16 @@
   "title": "Navigating a BGP Zombie Outbreak on Juniper Routers",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/navigating-a-bgp-zombie-outbreak-on-juniper-routers/"
   }
 }

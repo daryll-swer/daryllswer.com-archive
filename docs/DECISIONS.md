@@ -1,5 +1,20 @@
 # Decisions
 
+## 2026-10-22: Enforce Explicit Proprietary Content Rights
+
+- Decision: Daryll Swer-owned mirrored articles, original media and supporting
+  content are copyright 2026 Daryll Swer, all rights reserved. Swer Networks
+  retains its proprietary repost ownership. MIT applies only to tooling;
+  fonts and third-party material retain their applicable terms.
+- Rationale: Rights are an explicit owner-selected archive policy rather than
+  an inference from source-site chrome. Every post must expose resolved rights
+  metadata and one applicable visible notice.
+- Impact: Source-rights filtering is applied before public capture storage.
+  Generic filter evidence and stored-file hashes remain separate from raw
+  canonical fingerprints. Development-history maintenance is owner-approved
+  and performed offline with a private rollback bundle; routine reconciliation
+  continues to prohibit history rewriting.
+
 ## 2026-07-06: Use Static-Site Page Bundles
 
 - Decision: Store posts as `content/posts/YYYY-MM-DD-slug/index.md` bundles.

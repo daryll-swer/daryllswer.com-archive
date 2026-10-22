@@ -87,3 +87,5 @@ This is not to say that a flexible system that may be derived in the future base
 As a Khasi individual, I note the importance of our matrilineal system and how it supposedly originated, and the stories that weave our cultural tapestry. Through the power of oral tradition, we have safeguarded our heritage, passing down the wisdom of our ancestors from one generation to the next.
 
 Whether or not we can easily move from matrilineal to patriarchal or maybe even support both, remains to be seen. I would personally like to hear input from experts in the medical and relevant fields. Accidental incest should be minimised to prevent diseases and genetic disorders.
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

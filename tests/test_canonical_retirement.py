@@ -70,13 +70,15 @@ class CanonicalRetirementTests(unittest.TestCase):
         registry_path.write_text(
             json.dumps({
                 str(post_id): {
-                    "content_rights_status": False,
+                    "copyright_year": 2026,
                     "media_rights": "separate attribution/right notices",
-                    "original_article_url": "https://www.swernetworks.com/blog/example/",
-                    "publisher": "Swer Networks",
-                    "rights_holder": "Swer Networks",
+                    "notice_path": "LICENSES/EXAMPLE-PROPRIETARY-NOTICE.txt",
+                    "original_article_url": "https://origin.example/articles/example/",
+                    "publisher": "Example Publisher",
+                    "rights_holder": "Example Publisher",
                     "rights_status": "proprietary/all-rights-reserved",
                     "scope": "article-text",
+                    "external_fallback": True,
                 }
             }),
             encoding="utf-8",
@@ -352,6 +354,52 @@ class CanonicalRetirementTests(unittest.TestCase):
             self.assertEqual(new_posts, [])
             self.assertEqual([item["id"] for item in updates], [5324])
             self.assertTrue((stage / "content" / "rights-registry.json").is_file())
+        finally:
+            shutil.rmtree(stage, ignore_errors=True)
+
+    def test_staged_sync_applies_default_rights_when_registry_has_no_exception(self):
+        post = {**summary(1, "https://archive.example/one/", "one"), "bundle_path": "content/posts/2026-01-01-one"}
+        self.write_archive([post])
+        registry_path = self.root / "content" / "rights-registry.json"
+        registry_path.parent.mkdir(parents=True, exist_ok=True)
+        registry_path.write_text("{}", encoding="utf-8")
+        changed = {
+            "id": 1,
+            "slug": "one",
+            "canonical_url": post["canonical_url"],
+            "expected": {"id": 1, "slug": "one"},
+            "fields": [{"field": "modified"}],
+        }
+        plan = {
+            "version": 2,
+            "drift": {"new_ids": [], "missing_ids": [], "relocated_posts": [], "changed_posts": [changed]},
+            "sync_posts": [],
+            "update_posts": [changed],
+        }
+
+        def fake_sync(command, cwd, env, check):
+            stage = Path(env["ARCHIVE_ROOT"])
+            bundle = stage / post["bundle_path"]
+            bundle.mkdir(parents=True, exist_ok=True)
+            rights = RECONCILE.resolve_rights(1, post["canonical_url"], {})
+            (bundle / "metadata.json").write_text(
+                json.dumps({"id": 1, "canonical_url": post["canonical_url"], "rights": rights}),
+                encoding="utf-8",
+            )
+            (stage / "archive-manifest.json").write_text(
+                json.dumps({"post_count": 1, "posts": [post]}), encoding="utf-8"
+            )
+            return mock.Mock(returncode=0)
+
+        with mock.patch.object(RECONCILE.subprocess, "run", side_effect=fake_sync):
+            stage, new_posts, updates = RECONCILE.stage_sync(plan, {"posts": [post]})
+        try:
+            staged_rights = json.loads((stage / post["bundle_path"] / "metadata.json").read_text())["rights"]
+            self.assertEqual(staged_rights["rights_holder"], "Daryll Swer")
+            self.assertEqual(staged_rights["copyright_year"], 2026)
+            self.assertEqual(staged_rights["notice_path"], "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt")
+            self.assertEqual(new_posts, [])
+            self.assertEqual([item["id"] for item in updates], [1])
         finally:
             shutil.rmtree(stage, ignore_errors=True)
 

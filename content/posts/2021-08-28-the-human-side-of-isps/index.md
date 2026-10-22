@@ -190,3 +190,5 @@ I will end this with the following:
 Computer systems do not configure themselves (at least not yet anyway); good configuration comes from good human operators (who, in turn, require a good education, technical skills, mental health and wellbeing).
 
 And always remember that we’re all part of one global, technical community. Only by sharing our experiences can we build on what we’ve achieved and work through any problems that emerge.
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

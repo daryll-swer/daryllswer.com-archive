@@ -5,6 +5,16 @@
       "redacted": true,
       "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
       "tag": "h4"
+    },
+    {
+      "category": "source_rights_declaration",
+      "count": 1,
+      "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+    },
+    {
+      "category": "source_site_copyright_container",
+      "count": 2,
+      "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
     }
   ],
   "_embedded": {
@@ -232,7 +242,7 @@
           "author_name": "Daryll Swer",
           "author_url": "http://daryllswer.com/",
           "content": {
-            "rendered": "<p>Hi</p>\n<p>Topology generally has limited scope regarding NPTv6 load balancing for PA blocks, as such networks are usually just enterprise/SOHO type setup that don&#8217;t have their own ASN and public IP blocks, so even their network topology is not going to be a complex infrastructure compared to backbone networks of an org, where generally such backbones also mean complex topology.</p>\n<p>What this means is, if you&#8217;re a customer of ISP A and ISP B, where both provided you with a routed /48 each, and you want to make full use of the bandwidth capacity/failover of both ISPs, then you simply use NPTv6 to do the seamless translation of internal prefix (non-ULA) with external prefix. So meaning /48 internal prefix is NPTv6&#8217;ed to both ISPs&#8217; /48, of course order of precedence in the config will impact which ISP is preferred.</p>\n<p>You can refer to Figure 1 <a href=\"http://daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/\" target=\"_blank\" rel=\"noopener ugc nofollow\">here</a> for example, it&#8217;s the same concept just that in this one it&#8217;s IPv4/NAT with Policy Based Routing.</p>\n<p>And you can even combine NPTv6 (as described) in conjunction with PBR to load balance and fully utilise bandwidth capacity of both providers. You simply apply PBR to the external prefixes, this way, if ISP A and ISP B, both are 1Gbps, you can more or less achieve 2Gbps throughput if done correctly. But this is outside the scope of the article.</p>\n"
+            "rendered": "<p>Hi</p>\n<p>Topology generally has limited scope regarding NPTv6 load balancing for PA blocks, as such networks are usually just enterprise/SOHO type setup that don’t have their own ASN and public IP blocks, so even their network topology is not going to be a complex infrastructure compared to backbone networks of an org, where generally such backbones also mean complex topology.</p>\n<p>What this means is, if you’re a customer of ISP A and ISP B, where both provided you with a routed /48 each, and you want to make full use of the bandwidth capacity/failover of both ISPs, then you simply use NPTv6 to do the seamless translation of internal prefix (non-ULA) with external prefix. So meaning /48 internal prefix is NPTv6’ed to both ISPs’ /48, of course order of precedence in the config will impact which ISP is preferred.</p>\n<p>You can refer to Figure 1 <a href=\"http://daryllswer.com/multi-wan-setups-with-retail-isps-part-1-theory/\" target=\"_blank\" rel=\"noopener ugc nofollow\">here</a> for example, it’s the same concept just that in this one it’s IPv4/NAT with Policy Based Routing.</p>\n<p>And you can even combine NPTv6 (as described) in conjunction with PBR to load balance and fully utilise bandwidth capacity of both providers. You simply apply PBR to the external prefixes, this way, if ISP A and ISP B, both are 1Gbps, you can more or less achieve 2Gbps throughput if done correctly. But this is outside the scope of the article.</p>\n"
           },
           "date": "2023-04-12T14:59:22",
           "id": 117,
@@ -280,7 +290,7 @@
           "author_name": "Tayfun",
           "author_url": "",
           "content": {
-            "rendered": "<p>Great comprehensive article with good examples. I just have one request; if you don&#8217;t mind could you please share a topology for &#8220;load-balancing using NPTv6 in combination with non-ULA address space&#8221;. It would be very useful to fully understand the idea.</p>\n"
+            "rendered": "<p>Great comprehensive article with good examples. I just have one request; if you don’t mind could you please share a topology for “load-balancing using NPTv6 in combination with non-ULA address space”. It would be very useful to fully understand the idea.</p>\n"
           },
           "date": "2023-04-12T14:41:25",
           "id": 116,

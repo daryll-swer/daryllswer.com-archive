@@ -22,7 +22,20 @@
         "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
         "tag": "h4"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -81,9 +94,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "846df35e440371cdf9e93750c892a439c9ca9e806b2ce9bf8d8ef32f3901117b",
-    "index_md_sha256": "4c1a26a329ae267b2d5a5775e778bf28d520a9e4a8052e18faf3cfb81979e3f4",
+    "index_md_sha256": "d02af05ba403ad682e22ad1066fc6f9c9691f89bd827eff76901e903113748a1",
     "rendered_article_html_sha256": "9219b2d1c182fa7efa093ee06eaff59a231b4555f8b71645e72dd8aebca07517",
-    "wordpress_post_json_sha256": "23b0ce3ecccf075f543d2bc9452922744d8f82063586404d6f593a9eaa47bb41"
+    "wordpress_post_json_sha256": "f02e36614498968dee900e43270a9899a5fb0ce82dbe21e4e839229367d9741d"
   },
   "id": 1512,
   "modified": "2026-06-06T17:44:32",
@@ -144,5 +157,16 @@
   "title": "IPv6 Architecture and Subnetting Guide for Network Engineers and Operators",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/"
   }
 }

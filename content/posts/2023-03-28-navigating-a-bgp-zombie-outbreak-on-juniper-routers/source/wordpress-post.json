@@ -5,6 +5,16 @@
       "redacted": true,
       "removed_text_sha256": "d603c2ffd53e6410b18a3e349b8e109cd67994c8afdb6bb5d74b39a92a614fb4",
       "tag": "h4"
+    },
+    {
+      "category": "source_rights_declaration",
+      "count": 1,
+      "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+    },
+    {
+      "category": "source_site_copyright_container",
+      "count": 2,
+      "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
     }
   ],
   "_embedded": {
@@ -88,7 +98,7 @@
           "author_name": "Daryll Swer",
           "author_url": "http://daryllswer.com/",
           "content": {
-            "rendered": "<p>Indeed, the logic is sound. Approximately 8-ish Juniper employees saw this blog post at least once, via social media (I know via Analytics). However, knowing Juniper (or any other big vendor), they are unlikely to reach out to me or fix this bug, unless I report it via JTAC (which isn&#8217;t going to happen).</p>\n<p>For this type of reason (money/greed – Hello Flex Licensing), I extensively specialise in alternative vendors like MikroTik &#8211; Don&#8217;t need to pay $3k to get a bug fixed within a few weeks or months at the most. I strongly believe in open source networking 😉</p>\n<p>Anyway, like-wise, interesting discussion it was 🙂</p>\n"
+            "rendered": "<p>Indeed, the logic is sound. Approximately 8-ish Juniper employees saw this blog post at least once, via social media (I know via Analytics). However, knowing Juniper (or any other big vendor), they are unlikely to reach out to me or fix this bug, unless I report it via JTAC (which isn’t going to happen).</p>\n<p>For this type of reason (money/greed – Hello Flex Licensing), I extensively specialise in alternative vendors like MikroTik – Don’t need to pay $3k to get a bug fixed within a few weeks or months at the most. I strongly believe in open source networking 😉</p>\n<p>Anyway, like-wise, interesting discussion it was 🙂</p>\n"
           },
           "date": "2023-03-30T16:30:35",
           "id": 129,
@@ -136,7 +146,7 @@
           "author_name": "Cathal Mooney",
           "author_url": "",
           "content": {
-            "rendered": "<p>Yep your logic is sound there &#8211; if a reboot fixes it it&#8217;s not about the config!  Very odd what&#8217;s happening alright.  Interesting discussing with you 🙂</p>\n"
+            "rendered": "<p>Yep your logic is sound there – if a reboot fixes it it’s not about the config!  Very odd what’s happening alright.  Interesting discussing with you 🙂</p>\n"
           },
           "date": "2023-03-30T16:10:14",
           "id": 128,
@@ -190,7 +200,7 @@
           "author_name": "Daryll Swer",
           "author_url": "http://daryllswer.com/",
           "content": {
-            "rendered": "<p>Hi</p>\n<p>The prefix list by default seems to be an exact match already, even though Juniper doesn&#8217;t explicitly say it <a href=\"https://www.juniper.net/documentation/us/en/software/junos/routing-policy/topics/ref/statement/prefix-list-edit-policy-options.html\" target=\"_blank\" rel=\"noopener nofollow ugc\">here</a>.</p>\n<p>We&#8217;ve been using prefix list on many other routers in different ASes with no problems for exporting only aggregates.</p>\n<p>Another user also tested the config and <a href=\"https://github.com/topranks/homerlabs/tree/main/labs/filterlab\" target=\"_blank\" rel=\"noopener nofollow ugc\">confirmed</a>, there&#8217;s nothing wrong with using prefix list directly as I did.</p>\n<p>It&#8217;s also based on the simple logical fact that if a reboot fixed the issue, then the issue isn&#8217;t in the config. If it was the config, then why would a reboot fix the issue?</p>\n"
+            "rendered": "<p>Hi</p>\n<p>The prefix list by default seems to be an exact match already, even though Juniper doesn’t explicitly say it <a href=\"https://www.juniper.net/documentation/us/en/software/junos/routing-policy/topics/ref/statement/prefix-list-edit-policy-options.html\" target=\"_blank\" rel=\"noopener nofollow ugc\">here</a>.</p>\n<p>We’ve been using prefix list on many other routers in different ASes with no problems for exporting only aggregates.</p>\n<p>Another user also tested the config and <a href=\"https://github.com/topranks/homerlabs/tree/main/labs/filterlab\" target=\"_blank\" rel=\"noopener nofollow ugc\">confirmed</a>, there’s nothing wrong with using prefix list directly as I did.</p>\n<p>It’s also based on the simple logical fact that if a reboot fixed the issue, then the issue isn’t in the config. If it was the config, then why would a reboot fix the issue?</p>\n"
           },
           "date": "2023-03-29T12:02:51",
           "id": 127,

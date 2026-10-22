@@ -11,8 +11,8 @@ derivatives:
   docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png
 
 The assets are original Daryll Swer brand artwork supplied by their copyright
-owner. They are proprietary. They are not licensed under the MIT License,
-proprietary content rights-4.0, or any other licence in this repository.
+owner. They are proprietary. They are not licensed under the MIT License or
+any other licence in this repository.
 
 Except to the extent required by applicable law or GitHub's Terms of Service
 for a public repository to be hosted, displayed, viewed, and forked through

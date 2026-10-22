@@ -25,9 +25,9 @@ Each post lives under `content/posts/YYYY-MM-DD-slug/`:
 - `index.md` is the human-readable Markdown body with YAML front matter.
 - `metadata.json` records source IDs, timestamps, canonical URLs, hashes,
   featured image metadata, taxonomy, and validation state.
-- `source/wordpress-post.json` stores the public REST record.
-- `source/rendered-article.html` stores the REST-rendered article body.
-- `source/canonical-page.html` stores the public canonical HTML snapshot.
+- `source/wordpress-post.json` stores the filtered public REST record.
+- `source/rendered-article.html` stores the filtered REST-rendered article body.
+- `source/canonical-page.html` stores the filtered public canonical HTML capture.
 - `assets/manifest.json` records downloaded asset provenance and checksums.
 - `content/rights-registry.json` records explicit per-post rights exceptions
   by immutable WordPress ID; matching `metadata.json` files contain structured
@@ -35,7 +35,16 @@ Each post lives under `content/posts/YYYY-MM-DD-slug/`:
   preserved without adding archive-only notices. A verified retirement removes
   its matching registry entry transactionally with its current-tree bundle.
 
-Markdown conversion is best-effort. HTML snapshots are preserved for fidelity
+Source-rights transformations remove source-site declarations in favour of the
+repository's owner-selected rights policy. The archive records generic filter
+categories, counts and hashes without retaining removed wording. Stored-file
+checksums describe filtered captures; raw canonical content fingerprints remain
+separate for drift comparison. Every article resolves rights metadata and one
+visible applicable copyright notice. Daryll Swer-owned content is copyright
+2026 Daryll Swer, all rights reserved; Swer Networks and third-party material
+retain their separately recorded rights.
+
+Markdown conversion is best-effort. Filtered HTML captures are preserved for fidelity
 where Markdown cannot represent the original formatting safely.
 
 ## GitHub Pages Site

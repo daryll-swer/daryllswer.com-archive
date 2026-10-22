@@ -9,7 +9,40 @@
         "removed_text_sha256": "3433844a443e80708d701b27c3442d17911a71d7269f6495309237829d82fbc3",
         "tag": "li"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "mapped_original_source_notice",
+        "count": 1,
+        "sha256": "540c0e123f1de1bacb697e5fff0574c5e1f61cc08452a3b73091c699df0ceeeb"
+      },
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      },
+      {
+        "category": "mapped_original_source_notice",
+        "count": 1,
+        "sha256": "540c0e123f1de1bacb697e5fff0574c5e1f61cc08452a3b73091c699df0ceeeb"
+      },
+      {
+        "category": "mapped_original_source_notice",
+        "count": 1,
+        "sha256": "540c0e123f1de1bacb697e5fff0574c5e1f61cc08452a3b73091c699df0ceeeb"
+      },
+      {
+        "category": "mapped_original_source_notice",
+        "count": 1,
+        "sha256": "6c267f3bc6dd28c827bb83c3d990fce4293ebce8dce3aac015e654bcecc63b9e"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -107,22 +140,24 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "2483a887e2f3af478874c5da7f38fe3199853107289ddc26db1dcdcf7f5e49d7",
-    "index_md_sha256": "2e65bfee4930ac74569dffac9e0b209b620c29a423ed8fb397214d41c5577696",
-    "rendered_article_html_sha256": "96d3e2badba95c16e614a0cf63bd4f8f13ce6e6026027049c0c53a0898b0ab3f",
-    "wordpress_post_json_sha256": "de0862beeacadaf20f56003e7cfebe746aa1432ea4be5f4d772655f6f08043c1"
+    "canonical_page_html_sha256": "4f7c7a8fb647835806f210d76920849c3f7d76e94f88c419ca5e3f917930bdbc",
+    "index_md_sha256": "92ed7c98f8c6e66b98ee84b6588eef0a2d11cb27782c58c7cbbc52489b9f1ea7",
+    "rendered_article_html_sha256": "d0d618fdd09d2f999eeb4423f486eb0097e0576b76694a15f90038aeedb5bcd3",
+    "wordpress_post_json_sha256": "c7054adb75d4effdbd8ce4de6cb0be1f0e9c6f682f16336152abf5e2baa1fe90"
   },
   "id": 5324,
   "modified": "2026-08-17T02:29:23",
   "published": "2026-06-04T14:36:35",
   "rights": {
+    "rights_holder": "Swer Networks",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Swer Networks",
+    "scope": "article-text",
     "media_rights": "separate attribution/right notices",
     "external_fallback": true,
-    "original_article_url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/",
-    "publisher": "Swer Networks",
-    "rights_holder": "Swer Networks",
-    "rights_status": "proprietary/all-rights-reserved",
-    "scope": "article-text"
+    "original_article_url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/"
   },
   "slug": "bgp-router-id-structuring-in-ipv6-native-networks",
   "source": {

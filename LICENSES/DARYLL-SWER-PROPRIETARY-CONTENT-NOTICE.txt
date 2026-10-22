@@ -1,0 +1,22 @@
+DARYLL SWER PROPRIETARY CONTENT NOTICE
+
+Copyright © 2026 Daryll Swer. All rights reserved.
+
+This notice applies to Daryll Swer-owned mirrored articles, original media and
+supporting content in this repository. Publication and modification dates in
+the archive remain records of the source publications.
+
+The content is proprietary. Except as permitted by applicable law, existing
+permissions or GitHub's limited operation of this public repository, no
+permission is granted to reproduce, distribute, publish, modify, adapt, create
+derivative works from or otherwise reuse it.
+
+Swer Networks reposts remain subject to the rights holder, original-publication
+provenance and controlling notice recorded in content/rights-registry.json.
+Third-party quotations, media, fonts and external artefacts remain subject to
+their applicable rights and attribution notices; this notice claims no
+ownership of that material. Repository scripts and tooling have their own MIT
+licence. Daryll Swer brand assets have a separate proprietary asset notice.
+
+Nothing in this notice limits statutory exceptions or permissions already
+validly granted. It does not assert copyright or trade mark registration.

@@ -34,7 +34,20 @@
         "removed_text_sha256": "355c7987352eb1f9e3d8be819ac9de0cfc8c2945d95a47ec6e953c3dc0fed613",
         "tag": "p"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -71,9 +84,9 @@
   "featured_media_sizes": {},
   "hashes": {
     "canonical_page_html_sha256": "910f3b6fce3d89a03e456e341efea94d8d559990ed7263a7f7dbc0a5bcdfdb19",
-    "index_md_sha256": "fcaeff8aaeb12540398d3b5a3b593093e2a94212a4fa88044d765aa91bf0490d",
+    "index_md_sha256": "e7b4fe29e958774d6997e58a2d8187df58df8ab1a66873a2765f676ff4d2f17b",
     "rendered_article_html_sha256": "1002a75c9563e5696d72d02c35eb1e0f39313360ecb998604f852a6c2cab390a",
-    "wordpress_post_json_sha256": "95cd2f993c00ecf184bc813c5ae275f4cf479ad3615a80922c91f1b9f8dd906b"
+    "wordpress_post_json_sha256": "e2d8857c233aad802ebb68346e2314f508f1c619ee3683f97c1aa87f8f048f9a"
   },
   "id": 970,
   "modified": "2025-06-23T20:41:31",
@@ -140,5 +153,16 @@
   "title": "How did I set up my own Autonomous System?",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/how-did-i-set-up-my-own-autonomous-system/"
   }
 }

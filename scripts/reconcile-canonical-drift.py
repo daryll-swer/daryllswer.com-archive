@@ -16,6 +16,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+from rights_policy import resolve_rights
+
 
 ROOT = Path(__file__).resolve().parents[1]
 ACTION_PLAN_VERSION = 2
@@ -304,10 +306,10 @@ def stage_sync(plan: dict, manifest: dict) -> tuple[Path, list[dict], list[dict]
             staged_bundle = stage_root / relative
             if not staged_bundle.is_dir() or staged_bundle.is_symlink() or not (staged_bundle / "metadata.json").is_file():
                 raise RuntimeError(f"staged automatic sync did not produce a safe bundle for ID {post_id}")
-            if str(post_id) in rights_registry:
-                staged_metadata = load_json(staged_bundle / "metadata.json")
-                if staged_metadata.get("rights") != rights_registry[str(post_id)]:
-                    raise RuntimeError(f"staged automatic sync did not apply rights registry for ID {post_id}")
+            staged_metadata = load_json(staged_bundle / "metadata.json")
+            expected_rights = resolve_rights(post_id, item["canonical_url"], rights_registry)
+            if staged_metadata.get("rights") != expected_rights:
+                raise RuntimeError(f"staged automatic sync did not apply resolved rights for ID {post_id}")
         return stage_root, new_posts, updates
     except Exception:
         shutil.rmtree(stage_root, ignore_errors=True)

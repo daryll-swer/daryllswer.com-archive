@@ -22,7 +22,20 @@
         "removed_text_sha256": "e437c43030518b2b6ed3e1403610cddfaf947c5917d37219a2e758079c3e204d",
         "tag": "h4"
       }
-    ]
+    ],
+    "source_rights_transforms": [
+      {
+        "category": "source_rights_declaration",
+        "count": 1,
+        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
+      },
+      {
+        "category": "source_site_copyright_container",
+        "count": 2,
+        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+      }
+    ],
+    "source_rights_filtered": true
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -99,9 +112,9 @@
   },
   "hashes": {
     "canonical_page_html_sha256": "21e7153fdb64188c2c9b02d50af216c3e5db67c554f11bb71c46a9274d79fbba",
-    "index_md_sha256": "956b96b00fb322b21fd8cb7fd80a59becff76aa19e24e0595ef0a0a23ab89930",
+    "index_md_sha256": "b112700577a1ce4e3d67f2dca839187b324b16a5de40338d640822473cff7a85",
     "rendered_article_html_sha256": "66267fb7ce112b2009b9d71c7b8840199d7188cb6e43021aebea1b5023c0ed98",
-    "wordpress_post_json_sha256": "bede2c642013ad55bd7f19413b0486fa395137192dbf2ce1109f9a768143aa89"
+    "wordpress_post_json_sha256": "f9d49043539b2ca90a6f50091c8a6afaeefe4025ff496d33af565c512c52cf58"
   },
   "id": 5018,
   "modified": "2026-06-06T17:45:08",
@@ -156,5 +169,16 @@
   "title": "Let’s talk about CGNAT and IPv6, yet again.",
   "validation": {
     "status": "pending"
+  },
+  "rights": {
+    "rights_holder": "Daryll Swer",
+    "copyright_year": 2026,
+    "rights_status": "proprietary/all-rights-reserved",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "publisher": "Daryll Swer",
+    "scope": "article-text",
+    "media_rights": "separate attribution/right notices",
+    "external_fallback": false,
+    "original_article_url": "https://www.daryllswer.com/lets-talk-about-cgnat-and-ipv6-yet-again/"
   }
 }

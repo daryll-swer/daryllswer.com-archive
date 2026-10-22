@@ -1,6 +1,6 @@
 # Validation
 
-Generated: 2026-10-12T10:54:54+00:00
+Generated: 2026-10-22T01:24:56+00:00
 
 ## Per-Post Rights Registry
 
@@ -33,7 +33,7 @@ Generated: 2026-10-12T10:54:54+00:00
 - Pages header and favicon source: `assets/brand/01_DS_Favicon_Dark_Mode.png`
 - Pages favicon provenance: `assets/brand/ASSET_PROVENANCE.md`
 - Copyright: `© 2026 Daryll Swer. All rights reserved.`
-- Licence status: proprietary; excluded from MIT and proprietary content rights-4.0
+- Licence status: proprietary; separate from MIT tooling
 
 ## Spreadsheet
 

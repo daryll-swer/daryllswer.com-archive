@@ -179,3 +179,5 @@ If someone reading this post is from Juniper or someone with extensive knowledge
 Some people have suggested using the ‘from protocol aggregate’ parameter in the policies as a mitigation/workaround. While this could in theory mitigate the issue, it also creates a problem with our internal policy logic because in this case we have downstream BGP customers, and their prefixes are part of as48635-v4 / as48635-v6 prefix list and for obvious reasons, we do not ‘aggregate’ customer prefixes. The as48635-v**X** prefix list is generated based on our AS-SET and hence this workaround isn’t ideal for us.
 
 **At the same time, it still doesn’t answer the question of why a reboot fixed the issue just fine.**
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.

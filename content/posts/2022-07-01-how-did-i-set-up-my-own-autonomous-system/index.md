@@ -300,3 +300,5 @@ The answer to this question depends on your perspective. On one hand, running my
 Networking is a vast field; it is impossible for me to learn and know everything, so the goal is to keep the AS live, keep learning, and keep experimenting. However, I do have one immediate and specific topic to investigate — using jumbo frames on the public Internet (or at least, with peers via bilateral/PNIs/IXPs). A larger frame size means a larger payload, which means the underlying L2 paths require a smaller number of frames to be forwarded and fewer packets to be routed on L3. In theory, this should improve end-to-end performance. I aim to find out how much of a performance improvement the end user really sees.
 
 I currently do not have the capacity to peer/connect with IXPs, but hopefully I’ll be able to test this out and document the process, in the near future.
+
+> **Copyright:** © 2026 Daryll Swer. All rights reserved.
