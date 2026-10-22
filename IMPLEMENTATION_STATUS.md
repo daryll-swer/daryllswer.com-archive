@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: proprietary content policy and history maintenance
-- Status: current-tree and isolated history verified; publication pending
+- Status: complete and hosted verified
 - Last updated: 2026-10-22
 - Implementer role/model/thread: delegated `implementer-luna` completed the
   bounded rights-registry, reconciliation, renderer, and validation changes;
@@ -18,7 +18,7 @@
 ## Latest Delivery
 
 - Proprietary content policy and history maintenance:
-  - Status: current-tree and isolated history verified; publication pending.
+  - Status: complete and hosted verified.
   - Policy: copyright 2026 Daryll Swer, all rights reserved, for owner-held
     content; retain Swer Networks' proprietary exception, MIT tooling, font
     licences and third-party attribution.
@@ -38,8 +38,20 @@
     provenance comparisons there are no new mismatches. The 36 early CSV
     manifest line-ending discrepancies already present in the original
     history are preserved; the current tip validates without errors/warnings.
-  - Next: publish with an explicit remote lease, verify Pages, retire obsolete
-    hosted records and restore automation.
+  - Delivery: the proprietary policy commit is `d6e97b9`; the verified history
+    was published with an explicit remote lease at `6f96be8`. A fresh public
+    clone found zero targeted text/path/message/archive matches across its
+    91 commits. All six checked reader/discovery routes returned HTTP 200;
+    sample DS/Swer articles expose one correct rights notice and local SEO
+    metadata, and the IPv6 hierarchy remains collapsed on initial load.
+  - Hosted records: removed 61 obsolete Actions runs and 44 obsolete Pages
+    deployment records after successful replacement deployment 39706509967.
+    Reconciliation is active again. Manual run 39706985755 passed in 25 seconds
+    and produced only the expected status/report commit `1497d08`; its Pages
+    deployment 39707035073 also succeeded.
+  - Next: normal weekly maintenance. Private rollback and migration evidence
+    remain outside the public repository. Routine automation does not rewrite
+    history or change copyright holders.
 
 - Canonical drift workflow staging reliability:
   - Status: complete and hosted-runner verified

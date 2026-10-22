@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: locally verified - proprietary content policy; publication pending
+- Status: complete and hosted verified - proprietary content policy
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-10-22
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -36,8 +36,12 @@
     90 commits preserve topology/authorship/dates, all targeted object/path/
     message/archive scans are clear, binary snapshots are unchanged, and
     positive stored-file/provenance comparisons introduce no new mismatches.
-    Next: lease-protected publication, live verification and hosted-record
-    retirement. No remote history has changed yet.
+    Published with an explicit remote lease. Fresh-clone and live-route checks
+    pass; 61 obsolete Actions runs and 44 obsolete deployment records were
+    removed. Scheduled reconciliation is active, and manual run 39706985755
+    passed with normal rendering/validation and a status-only bot commit.
+    Pages deployments 39706509967 and 39707035073 succeeded. Next: normal
+    weekly maintenance; routine automation never rewrites Git history.
   - Complete and hosted verified: scheduled GitHub Actions run `31993154684` completed its
     canonical and external-source checks, then failed in the final commit step
     because normal `source_primary` intentionally omits `docs/feed.xml` while
