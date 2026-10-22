@@ -22,14 +22,12 @@
 ## Current Status / Next Pickup
 
 - Current state:
-  - In progress: apply owner-selected proprietary rights to Daryll Swer-owned
-    content, retain Swer Networks ownership and third-party terms, and enforce
-    resolved rights consistently through synchronisation and publishing.
-    Scheduled reconciliation is temporarily paused with no active writer.
-    Work is isolated from the public branch; a private rollback bundle exists.
-    The approved delivery includes development-history maintenance, verified
-    Pages publication, removal of obsolete hosted run/deployment records, and
-    restoration of scheduled automation. Current-tree verification passes:
+  - Complete and hosted verified: owner-selected proprietary rights apply to
+    Daryll Swer-owned content, with Swer Networks ownership and third-party
+    terms retained. Resolved rights are enforced consistently through
+    synchronisation and publishing. Development-history maintenance, Pages
+    publication, obsolete hosted-record removal, and restoration of scheduled
+    automation are complete. Current-tree verification passes:
     60 tests, zero mirror errors/warnings, public-safety and whitespace checks,
     a repeat-migration no-op, unchanged binary assets and preserved source
     fingerprints/fetch times. Isolated history verification is complete:
@@ -40,8 +38,13 @@
     pass; 61 obsolete Actions runs and 44 obsolete deployment records were
     removed. Scheduled reconciliation is active, and manual run 39706985755
     passed with normal rendering/validation and a status-only bot commit.
-    Pages deployments 39706509967 and 39707035073 succeeded. Next: normal
-    weekly maintenance; routine automation never rewrites Git history.
+    Pages deployments 39706509967, 39707035073, and 39707155884 succeeded.
+    The final delivery record is commit `8dc0825`; local branch/index alignment
+    is verified and the temporary workspace recovery note is removed. The
+    owner declined continued retention of the verified private rollback
+    bundle, which has been deleted; other private migration evidence remains
+    outside the repository. Next: normal weekly maintenance; routine
+    automation never rewrites Git history.
   - Complete and hosted verified: scheduled GitHub Actions run `31993154684` completed its
     canonical and external-source checks, then failed in the final commit step
     because normal `source_primary` intentionally omits `docs/feed.xml` while

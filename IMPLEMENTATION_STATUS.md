@@ -49,8 +49,15 @@
     Reconciliation is active again. Manual run 39706985755 passed in 25 seconds
     and produced only the expected status/report commit `1497d08`; its Pages
     deployment 39707035073 also succeeded.
-  - Next: normal weekly maintenance. Private rollback and migration evidence
-    remain outside the public repository. Routine automation does not rewrite
+  - Workspace close-out: local `HEAD` and `origin/main` both match the final
+    delivery record `8dc0825`; final Pages deployment 39707155884 succeeded.
+    The temporary local recovery note is removed. At the owner's request,
+    the verified private rollback bundle was deleted; other private migration
+    evidence remains outside the public repository.
+  - Close-out checks: `make validate` passed with zero errors/warnings;
+    `make scan-secrets` and `git diff --check` passed. No site rendering or
+    application-code changes were required for this documentation correction.
+  - Next: normal weekly maintenance. Routine automation does not rewrite
     history or change copyright holders.
 
 - Canonical drift workflow staging reliability:
