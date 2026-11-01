@@ -10,6 +10,7 @@ import datetime as dt
 import hashlib
 import html
 import json
+import math
 import os
 import re
 import sys
@@ -19,6 +20,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
+
+from source_health import SourceObservationError, classify_exception, classify_http_status
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +36,10 @@ REPORT_PATH = ROOT / "docs" / "CANONICAL_DRIFT.md"
 UNAVAILABLE_AFTER_FAILURES = 3
 FREEZE_AFTER_FAILURES = 8
 FREEZE_AFTER_DAYS = 30
+REQUEST_TIMEOUT_SECONDS = 20
+MAX_RESPONSE_BYTES = 10 * 1024 * 1024
+MAX_REST_PAGES = 100
+REST_PER_PAGE = 100
 RETIREMENT_CONFIRMATION_MIN_DAYS = 7
 ACTION_PLAN_VERSION = 2
 DEFAULT_ACTION_PLAN_NAME = "canonical-drift-action-plan.json"
@@ -187,6 +194,96 @@ def load_status(generated_at: str) -> dict:
     return status
 
 
+class _NoRedirectHandler(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):  # pragma: no cover - urllib hook
+        return None
+
+
+NO_REDIRECT_OPENER = urllib.request.build_opener(_NoRedirectHandler)
+
+
+def _normalise_response_headers(headers) -> dict[str, str]:
+    canonical_names = {
+        "x-wp-total": "X-WP-Total",
+        "x-wp-totalpages": "X-WP-TotalPages",
+        "etag": "ETag",
+        "last-modified": "Last-Modified",
+    }
+    return {
+        canonical_names.get(key.lower(), key): value
+        for key, value in headers.items()
+    }
+
+
+def _read_rest_page(url: str, headers: dict[str, str]) -> tuple[bytes, dict[str, str]]:
+    try:
+        with NO_REDIRECT_OPENER.open(urllib.request.Request(url, headers=headers), timeout=REQUEST_TIMEOUT_SECONDS) as resp:
+            body = resp.read(MAX_RESPONSE_BYTES + 1)
+            if len(body) > MAX_RESPONSE_BYTES:
+                raise SourceObservationError("invalid_response", "REST response exceeds size limit", countable=False)
+            return body, _normalise_response_headers(resp.headers)
+    except urllib.error.HTTPError:
+        raise
+    except Exception as exc:
+        classified = classify_exception(exc)
+        if classified is exc:
+            raise
+        raise classified from exc
+
+
+def _header_value(headers: dict[str, str], name: str) -> str | None:
+    return next((value for key, value in headers.items() if key.lower() == name.lower()), None)
+
+
+def _parse_pagination(headers: dict[str, str]) -> tuple[int, int]:
+    try:
+        total_value = _header_value(headers, "X-WP-Total")
+        pages_value = _header_value(headers, "X-WP-TotalPages")
+        if total_value is None or pages_value is None:
+            raise ValueError("WordPress REST pagination headers are missing")
+        total = int(total_value)
+        pages = int(pages_value)
+        expected_pages = max(1, math.ceil(total / REST_PER_PAGE))
+        if total < 0 or pages < 1 or pages > MAX_REST_PAGES or pages != expected_pages:
+            raise ValueError("WordPress REST pagination headers are incoherent or out of bounds")
+        return total, pages
+    except (TypeError, ValueError) as exc:
+        raise SourceObservationError("invalid_response", str(exc), countable=False) from exc
+
+
+def _validate_post_objects(posts: list[object]) -> list[dict]:
+    validated = []
+    ids = set()
+    required = {
+        "slug": str,
+        "link": str,
+        "modified": str,
+    }
+    for position, post in enumerate(posts, start=1):
+        if not isinstance(post, dict):
+            raise SourceObservationError("invalid_response", f"REST post {position} is not an object", countable=False)
+        post_id = post.get("id")
+        if isinstance(post_id, bool) or not isinstance(post_id, int) or post_id <= 0:
+            raise SourceObservationError("invalid_response", f"REST post {position} has an invalid ID", countable=False)
+        if post_id in ids:
+            raise SourceObservationError("invalid_response", f"REST response contains duplicate post ID {post_id}", countable=False)
+        ids.add(post_id)
+        if any(not isinstance(post.get(key), value_type) or not post[key] for key, value_type in required.items()):
+            raise SourceObservationError("invalid_response", f"REST post {post_id} has invalid required fields", countable=False)
+        for parent in ("title", "content"):
+            nested = post.get(parent)
+            if not isinstance(nested, dict) or not isinstance(nested.get("rendered"), str):
+                raise SourceObservationError("invalid_response", f"REST post {post_id} has invalid {parent}.rendered", countable=False)
+        embedded = post.get("_embedded", {})
+        if not isinstance(embedded, dict):
+            raise SourceObservationError("invalid_response", f"REST post {post_id} has invalid _embedded object", countable=False)
+        featured_media = embedded.get("wp:featuredmedia", [])
+        if not isinstance(featured_media, list) or any(not isinstance(item, dict) for item in featured_media):
+            raise SourceObservationError("invalid_response", f"REST post {post_id} has invalid featured-media data", countable=False)
+        validated.append(post)
+    return validated
+
+
 def request_posts(status: dict, *, fresh: bool = False) -> tuple[list[dict] | None, dict[str, str], bool]:
     headers = {
         "User-Agent": UA,
@@ -198,26 +295,65 @@ def request_posts(status: dict, *, fresh: bool = False) -> tuple[list[dict] | No
             headers["If-None-Match"] = cache["etag"]
         if cache.get("last_modified"):
             headers["If-Modified-Since"] = cache["last_modified"]
+    conditional_request = "If-None-Match" in headers or "If-Modified-Since" in headers
 
-    req = urllib.request.Request(POSTS_ENDPOINT, headers=headers)
     try:
-        with urllib.request.urlopen(req, timeout=45) as resp:
-            body = resp.read()
-            resp_headers = dict(resp.headers.items())
+        body, resp_headers = _read_rest_page(POSTS_ENDPOINT, headers)
     except urllib.error.HTTPError as exc:
-        if exc.code == 304:
-            return None, dict(exc.headers.items()), True
+        try:
+            if exc.code == 304 and not fresh and conditional_request:
+                return None, _normalise_response_headers(exc.headers), True
+            if exc.code == 304:
+                raise SourceObservationError("unexpected_not_modified", "HTTP 304 without a sent conditional validator", countable=False) from exc
+            raise classify_exception(exc) from exc
+        finally:
+            exc.close()
+    try:
+        posts = json.loads(body.decode("utf-8"))
+        if not isinstance(posts, list):
+            raise ValueError("WordPress REST response was not a JSON list")
+        expected_total, pages = _parse_pagination(resp_headers)
+        validated_posts = _validate_post_objects(posts)
+    except SourceObservationError:
         raise
-
-    posts = json.loads(body.decode("utf-8"))
-    if not isinstance(posts, list):
-        raise RuntimeError("WordPress REST response was not a JSON list")
-    pages = int(resp_headers.get("X-WP-TotalPages", "1"))
+    except Exception as exc:
+        raise SourceObservationError("invalid_response", str(exc), countable=False) from exc
+    if len(validated_posts) > REST_PER_PAGE:
+        raise SourceObservationError("invalid_response", "REST page exceeds per_page limit", countable=False)
+    if len(validated_posts) != min(REST_PER_PAGE, expected_total):
+        raise SourceObservationError("invalid_response", "first REST page length is inconsistent with pagination", countable=False)
+    posts = validated_posts
     for page in range(2, pages + 1):
+        if page < 2 or page > pages:
+            raise SourceObservationError("invalid_response", "REST pagination requested an out-of-range page", countable=False)
         page_url = f"{POSTS_ENDPOINT}&page={page}"
-        page_req = urllib.request.Request(page_url, headers={"User-Agent": UA, "Accept": "application/json"})
-        with urllib.request.urlopen(page_req, timeout=45) as resp:
-            posts.extend(json.loads(resp.read().decode("utf-8")))
+        try:
+            page_body, page_headers = _read_rest_page(page_url, {"User-Agent": UA, "Accept": "application/json"})
+            page_total, page_count = _parse_pagination(page_headers)
+            if (page_total, page_count) != (expected_total, pages):
+                raise SourceObservationError("invalid_response", "REST pagination headers changed between pages", countable=False)
+            page_posts = json.loads(page_body.decode("utf-8"))
+            if not isinstance(page_posts, list):
+                raise ValueError("WordPress REST page was not a JSON list")
+            page_posts = _validate_post_objects(page_posts)
+            expected_page_length = min(REST_PER_PAGE, max(0, expected_total - (page - 1) * REST_PER_PAGE))
+            if len(page_posts) != expected_page_length:
+                raise SourceObservationError("invalid_response", "REST page length is inconsistent with pagination", countable=False)
+            posts.extend(page_posts)
+        except urllib.error.HTTPError as exc:
+            try:
+                if exc.code == 304:
+                    raise SourceObservationError("unexpected_not_modified", "HTTP 304 on a paginated REST response", countable=False) from exc
+                raise classify_exception(exc) from exc
+            finally:
+                exc.close()
+        except SourceObservationError:
+            raise
+        except Exception as exc:
+            raise SourceObservationError("invalid_response", str(exc), countable=False) from exc
+    if len(posts) != expected_total:
+        raise SourceObservationError("invalid_response", "REST post count does not match X-WP-Total", countable=False)
+    _validate_post_objects(posts)
     return posts, resp_headers, False
 
 
@@ -456,9 +592,26 @@ def reset_failure(status: dict, generated_at: str) -> None:
 
 
 def record_failure(status: dict, generated_at: str, kind: str, detail: str) -> None:
+    if status.get("state") == "frozen_archive" or status.get("frozen") is True:
+        status["updated_at"] = generated_at
+        status["retirement_candidates"] = []
+        failure = status.setdefault("failure", {})
+        failure.update({"last_failure_at": generated_at, "last_failure_kind": kind, "last_failure_detail": detail[:500]})
+        return
     failure = status.setdefault("failure", {})
-    count = int(failure.get("consecutive_failures") or 0) + 1
-    first_failure_at = failure.get("first_failure_at") or generated_at
+    qualifying = kind in {"dns", "tls", "transport", "not_found", "server_error"}
+    count = int(failure.get("consecutive_failures") or 0) + 1 if qualifying else 0
+    first_failure_at = (failure.get("first_failure_at") or generated_at) if qualifying else None
+    if not qualifying:
+        status.update({"state": "degraded", "frozen": False, "updated_at": generated_at, "retirement_candidates": []})
+        status["failure"] = {
+            "consecutive_failures": 0,
+            "first_failure_at": None,
+            "last_failure_at": generated_at,
+            "last_failure_kind": kind,
+            "last_failure_detail": detail[:500],
+        }
+        return
     first_dt = parse_iso(first_failure_at)
     elapsed_days = 0
     if first_dt:
@@ -490,23 +643,24 @@ def record_failure(status: dict, generated_at: str, kind: str, detail: str) -> N
     }
 
 
-class _NoRedirectHandler(urllib.request.HTTPRedirectHandler):
-    def redirect_request(self, req, fp, code, msg, headers, newurl):  # pragma: no cover - urllib hook
-        return None
-
-
-NO_REDIRECT_OPENER = urllib.request.build_opener(_NoRedirectHandler)
+def classify_run_exception(exc: Exception) -> tuple[str, str]:
+    if isinstance(exc, SourceObservationError):
+        return exc.kind, str(exc)
+    return "internal_error", f"{type(exc).__name__}: {exc}"
 
 
 def endpoint_status(url: str) -> dict:
     """Return direct endpoint evidence without following redirects."""
     request = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "*/*"})
     try:
-        with NO_REDIRECT_OPENER.open(request, timeout=45) as response:
+        with NO_REDIRECT_OPENER.open(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
             code = int(getattr(response, "status", response.getcode()))
             return {"url": url, "status": code, "passed": code in {404, 410}}
     except urllib.error.HTTPError as exc:
-        return {"url": url, "status": int(exc.code), "passed": exc.code in {404, 410}}
+        try:
+            return {"url": url, "status": int(exc.code), "passed": exc.code in {404, 410}}
+        finally:
+            exc.close()
     except Exception as exc:
         return {"url": url, "status": None, "passed": False, "error": f"{type(exc).__name__}: {exc}"}
 
@@ -695,9 +849,11 @@ def render_report(status: dict, drift: dict | None, note: str) -> str:
         "## Failure Policy",
         "",
         f"- `degraded`: after 1 failed run.",
-        f"- `canonical_unavailable`: after {UNAVAILABLE_AFTER_FAILURES} consecutive failed runs.",
-        f"- `frozen_archive`: after {FREEZE_AFTER_FAILURES} consecutive failed runs across at least {FREEZE_AFTER_DAYS} days.",
-        "- When `frozen_archive` is set, future scheduled checks no-op before any canonical network request.",
+        f"- `canonical_unavailable`: after {UNAVAILABLE_AFTER_FAILURES} qualifying consecutive outage observations.",
+        f"- `frozen_archive`: after {FREEZE_AFTER_FAILURES} qualifying DNS/TLS/transport, HTTP 404/410, or HTTP 5xx observations across at least {FREEZE_AFTER_DAYS} days.",
+        "- HTTP 401/403/429, redirects, malformed responses, and internal errors are non-qualifying; they reset the consecutive outage sequence and cannot advance freeze.",
+        f"- Current qualifying outage sequence: {status.get('failure', {}).get('consecutive_failures', 0)}/{FREEZE_AFTER_FAILURES}; first observation: {status.get('failure', {}).get('first_failure_at') or 'none'}.",
+        "- When `frozen_archive` is set, scheduled checks no-op. `--force` performs a diagnostic only; it never compares or mutates content/state. Recovery requires the owner-verified manager command.",
         "",
         "## Reconciliation Policy",
         "",
@@ -708,7 +864,7 @@ def render_report(status: dict, drift: dict | None, note: str) -> str:
         "",
     ]
 
-    if status.get("failure", {}).get("consecutive_failures"):
+    if status.get("failure", {}).get("last_failure_at"):
         failure = status["failure"]
         lines.extend([
             "## Latest Failure",
@@ -790,12 +946,13 @@ def maybe_write(path: Path, text: str, dry_run: bool) -> bool:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true", help="Print status without writing state/report files.")
-    parser.add_argument("--force", action="store_true", help="Bypass frozen_archive no-op for a manual recovery check.")
+    parser.add_argument("--force", action="store_true", help="Run a fresh frozen-source diagnostic; state changes require owner-verified recovery.")
     parser.add_argument("--fresh", action="store_true", help="Bypass conditional REST validators for a fresh comparison.")
     parser.add_argument(
         "--action-plan",
         help="Write the one-run reconciliation action plan outside the repository.",
     )
+    parser.add_argument("--result", help="Write machine-readable eligibility transition output outside the repository.")
     return parser.parse_args()
 
 
@@ -809,7 +966,24 @@ def main() -> int:
     persist = not status_existed or persisted_status != status
     action_plan = None
 
-    if status.get("state") == "frozen_archive" and not args.force:
+    def write_result() -> None:
+        if not args.result:
+            return
+        destination = Path(args.result).expanduser().resolve()
+        if destination.is_relative_to(ROOT.resolve()):
+            raise ValueError("canonical result must be outside the repository")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        before = previous_status.get("seo_state") == "archive_discovery"
+        after = status.get("seo_state") == "archive_discovery"
+        destination.write_text(json.dumps({
+            "eligibility_changed": before != after,
+            "eligible_before": before,
+            "eligible_after": after,
+            "timestamp_changed": status.get("updated_at") != previous_status.get("updated_at"),
+        }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+    is_frozen = status.get("state") == "frozen_archive" or status.get("frozen") is True
+    if is_frozen and not args.force:
         action_plan = build_action_plan(
             status,
             None,
@@ -818,16 +992,39 @@ def main() -> int:
         )
         if args.action_plan:
             write_action_plan(action_plan_path(args.action_plan), action_plan)
+        write_result()
         if persist and not args.dry_run:
             write_json(STATUS_PATH, status)
             maybe_write(REPORT_PATH, render_report(status, None, "Archive is frozen; no canonical network request was made."), dry_run=False)
         print("archive is frozen; no canonical network requests made")
         return 0
 
+    frozen_diagnostic = is_frozen
+    if frozen_diagnostic:
+        note = "Frozen-source diagnostic only; no archive comparison, content backfill, reconciliation, or state transition was performed."
+        try:
+            live_posts, _, not_modified = request_posts(status, fresh=True)
+            if not isinstance(live_posts, list) or not_modified:
+                raise RuntimeError("forced frozen diagnostic did not return a fresh REST collection")
+            note += f" A fresh REST collection was received ({len(live_posts)} posts); owner-verified recovery remains required."
+        except Exception as exc:
+            note += f" The diagnostic failed ({classify_run_exception(exc)[0]}); frozen state is unchanged."
+        action_plan = build_action_plan(status, None, generated_at, note=note)
+        report = render_report(status, None, note)
+        if args.action_plan:
+            write_action_plan(action_plan_path(args.action_plan), action_plan)
+        write_result()
+        if args.dry_run:
+            print(json.dumps({"state": status.get("state"), "frozen": status.get("frozen"), "action": "none"}, indent=2))
+            print(report)
+        else:
+            print(f"canonical frozen diagnostic complete; state={status.get('state')} frozen={status.get('frozen')}; no state changes made")
+        return 0
+
     try:
         live_posts, headers, not_modified = request_posts(
             status,
-            fresh=needs_fresh_collection(status, args.fresh),
+            fresh=args.force or needs_fresh_collection(status, args.fresh),
         )
         update_cache(status, headers)
         reset_failure(status, generated_at)
@@ -880,7 +1077,8 @@ def main() -> int:
         report = render_report(status, drift, note)
         action_plan = build_action_plan(status, drift, generated_at, evidence, note)
     except Exception as exc:
-        record_failure(status, generated_at, type(exc).__name__, str(exc))
+        failure_kind, failure_detail = classify_run_exception(exc)
+        record_failure(status, generated_at, failure_kind, failure_detail)
         report = render_report(status, None, "Canonical check failed; the existing archive content is preserved.")
         persist = True
         action_plan = build_action_plan(
@@ -894,6 +1092,7 @@ def main() -> int:
         action_plan = build_action_plan(status, None, generated_at, note="No action plan was produced.")
     if args.action_plan:
         write_action_plan(action_plan_path(args.action_plan), action_plan)
+    write_result()
     if args.dry_run:
         print(json.dumps({"state": status.get("state"), "frozen": status.get("frozen")}, indent=2))
         print(report)

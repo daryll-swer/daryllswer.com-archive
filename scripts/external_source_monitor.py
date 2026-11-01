@@ -10,13 +10,13 @@ import copy
 import datetime as dt
 import json
 import os
-import socket
-import ssl
 import sys
 import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
+
+from source_health import classify_exception, classify_http_status
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +29,7 @@ DEGRADED = "degraded"
 SOURCE_UNAVAILABLE = "source_unavailable"
 FROZEN_SOURCE = "frozen_source"
 INTERVAL_DAYS = 7
+REQUEST_TIMEOUT_SECONDS = 20
 UNAVAILABLE_AFTER_FAILURES = 3
 FREEZE_AFTER_FAILURES = 8
 FREEZE_AFTER_DAYS = 30
@@ -91,15 +92,6 @@ class _NoRedirectHandler(urllib.request.HTTPRedirectHandler):
 NO_REDIRECT_OPENER = urllib.request.build_opener(_NoRedirectHandler)
 
 
-def error_kind(exc: Exception) -> str:
-    reason = getattr(exc, "reason", exc)
-    if isinstance(reason, ssl.SSLError) or isinstance(exc, ssl.SSLError):
-        return "tls"
-    if isinstance(reason, socket.gaierror) or isinstance(exc, socket.gaierror):
-        return "dns"
-    return "network"
-
-
 def observation(url: str, *, opener=NO_REDIRECT_OPENER) -> dict:
     """Make exactly one bounded public request without following redirects."""
     request = urllib.request.Request(
@@ -109,7 +101,7 @@ def observation(url: str, *, opener=NO_REDIRECT_OPENER) -> dict:
     )
     expected_host = urllib.parse.urlsplit(url).netloc.lower()
     try:
-        with opener.open(request, timeout=45) as response:
+        with opener.open(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
             status = int(getattr(response, "status", response.getcode()))
             response.read(MAX_BODY_BYTES)
             if 200 <= status < 300:
@@ -117,18 +109,20 @@ def observation(url: str, *, opener=NO_REDIRECT_OPENER) -> dict:
             if 300 <= status < 400:
                 location = response.headers.get("Location", "")
                 target = urllib.parse.urljoin(url, location)
-                target_host = urllib.parse.urlsplit(target).netloc.lower()
-                if target_host != expected_host:
-                    return {
-                        "url": url,
-                        "status": status,
-                        "state": DEGRADED,
-                        "countable_failure": False,
-                        "promotion_blocked": True,
-                        "blocked_reason": "unexpected_host_redirect",
-                        "redirect_location": target,
-                    }
-                return {"url": url, "status": status, "state": HEALTH, "countable_failure": False, "redirect_location": target}
+                target_host = urllib.parse.urlsplit(target).netloc.lower() if location else ""
+                return {
+                    "url": url,
+                    "status": status,
+                    "state": DEGRADED,
+                    "countable_failure": False,
+                    "promotion_blocked": True,
+                    "blocked_reason": (
+                        "redirect_missing_location" if not location else
+                        "unexpected_host_redirect" if target_host != expected_host else
+                        "same_host_redirect_unverified"
+                    ),
+                    "redirect_location": target if location else None,
+                }
             return {
                 "url": url,
                 "status": status,
@@ -143,17 +137,20 @@ def observation(url: str, *, opener=NO_REDIRECT_OPENER) -> dict:
             location = exc.headers.get("Location", "")
             if 300 <= status < 400:
                 target = urllib.parse.urljoin(url, location)
-                if urllib.parse.urlsplit(target).netloc.lower() != expected_host:
-                    return {
-                        "url": url,
-                        "status": status,
-                        "state": DEGRADED,
-                        "countable_failure": False,
-                        "promotion_blocked": True,
-                        "blocked_reason": "unexpected_host_redirect",
-                        "redirect_location": target,
-                    }
-                return {"url": url, "status": status, "state": HEALTH, "countable_failure": False, "redirect_location": target}
+                target_host = urllib.parse.urlsplit(target).netloc.lower() if location else ""
+                return {
+                    "url": url,
+                    "status": status,
+                    "state": DEGRADED,
+                    "countable_failure": False,
+                    "promotion_blocked": True,
+                    "blocked_reason": (
+                        "redirect_missing_location" if not location else
+                        "unexpected_host_redirect" if target_host != expected_host else
+                        "same_host_redirect_unverified"
+                    ),
+                    "redirect_location": target if location else None,
+                }
             blocked = status in {401, 403, 429} or (400 <= status < 500 and status not in {404, 410})
             return {
                 "url": url,
@@ -166,14 +163,15 @@ def observation(url: str, *, opener=NO_REDIRECT_OPENER) -> dict:
         finally:
             exc.close()
     except Exception as exc:
+        classified = classify_exception(exc)
         return {
             "url": url,
             "status": None,
             "state": DEGRADED,
-            "countable_failure": True,
+            "countable_failure": classified.countable,
             "promotion_blocked": False,
-            "blocked_reason": error_kind(exc),
-            "error": f"{type(exc).__name__}: {exc}",
+            "blocked_reason": classified.kind,
+            "error": str(classified),
         }
 
 
@@ -193,10 +191,12 @@ def empty_source(item: dict) -> dict:
     }
 
 
-def apply_observation(item: dict, result: dict, observed_at: str) -> None:
+def apply_observation(item: dict, result: dict, observed_at: str, *, recovery_authorized: bool = False) -> None:
     item["last_checked_at"] = observed_at
     item["last_observation"] = result
     item["promotion_blocked"] = result.get("promotion_blocked") is True
+    if item.get("state") == FROZEN_SOURCE and not recovery_authorized:
+        return
     if result.get("state") == HEALTH:
         item.update({
             "state": HEALTH,
@@ -278,11 +278,17 @@ def render_report(status: dict) -> str:
     return "\n".join(lines)
 
 
-def run(*, status_path: Path = STATUS_PATH, registry_path: Path = REGISTRY_PATH, force: bool = False, post_ids: set[int] | None = None, now: dt.datetime | None = None, opener=NO_REDIRECT_OPENER) -> dict:
+def run(*, status_path: Path = STATUS_PATH, registry_path: Path = REGISTRY_PATH, force: bool = False, recovery_authorized: bool = False, post_ids: set[int] | None = None, now: dt.datetime | None = None, opener=NO_REDIRECT_OPENER) -> dict:
+    if recovery_authorized and (not force or not post_ids or len(post_ids) != 1):
+        raise ValueError("authorised recovery requires a forced check of exactly one source")
     now = now or now_utc()
     observed_at = iso(now)
     status = load_json(status_path)
     before = copy.deepcopy(status)
+    before_eligible = {
+        post_id for post_id, item in (status.get("external_sources") or {}).items()
+        if status.get("seo_state") == "archive_discovery" and item.get("state") == FROZEN_SOURCE
+    }
     status["version"] = max(int(status.get("version") or 1), 2)
     status.setdefault("external_sources", {})
     status.setdefault("policy", {})
@@ -314,7 +320,7 @@ def run(*, status_path: Path = STATUS_PATH, registry_path: Path = REGISTRY_PATH,
         selected = post_ids is None or source["post_id"] in post_ids
         if selected and due_for_check(item, now, force=force):
             result = observation(source["url"], opener=opener)
-            apply_observation(item, result, observed_at)
+            apply_observation(item, result, observed_at, recovery_authorized=recovery_authorized)
             requests += 1
         else:
             skipped.append(post_id)
@@ -330,14 +336,27 @@ def run(*, status_path: Path = STATUS_PATH, registry_path: Path = REGISTRY_PATH,
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(report, encoding="utf-8")
     changed = status != before or report != previous_report
+    after_eligible = {
+        post_id for post_id, item in (status.get("external_sources") or {}).items()
+        if status.get("seo_state") == "archive_discovery" and item.get("state") == FROZEN_SOURCE
+    }
     if status != before:
         write_json(status_path, status)
-    return {"changed": changed, "network_requests": requests, "skipped_post_ids": skipped, "status": status}
+    return {
+        "changed": changed,
+        "timestamp_changed": status.get("updated_at") != before.get("updated_at") or status.get("external_sources_updated_at") != before.get("external_sources_updated_at"),
+        "eligibility_changed": before_eligible != after_eligible,
+        "eligible_post_ids_before": sorted(before_eligible, key=int),
+        "eligible_post_ids_after": sorted(after_eligible, key=int),
+        "network_requests": requests,
+        "skipped_post_ids": skipped,
+        "status": status,
+    }
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--force", action="store_true", help="Allow a check of a frozen_source entry for manual recovery.")
+    parser.add_argument("--force", action="store_true", help="Run a diagnostic probe of frozen sources without changing their frozen state.")
     parser.add_argument("--post-id", type=int, action="append", help="Restrict a manual check to one opted-in immutable WordPress post ID; repeatable.")
     parser.add_argument("--result", help="Write result JSON outside the repository.")
     return parser.parse_args()

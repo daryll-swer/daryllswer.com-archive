@@ -94,7 +94,7 @@ def resume_external(post_id: int) -> None:
 
     monitor = load_module("external_source_monitor.py", "archive_seo_external_monitor")
     before = load_json(STATUS_PATH)
-    result = monitor.run(force=True, post_ids={post_id})
+    result = monitor.run(force=True, recovery_authorized=True, post_ids={post_id})
     status = result["status"]
     source = (status.get("external_sources") or {}).get(str(post_id))
     if not source or source.get("state") != monitor.HEALTH or source.get("last_checked_at") == before.get("external_sources", {}).get(str(post_id), {}).get("last_checked_at"):
