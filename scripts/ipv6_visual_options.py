@@ -447,6 +447,9 @@ body {{
   line-height: 1.55;
 }}
 a {{ color: var(--accent); text-underline-offset: .18em; }}
+a:focus-visible, button:focus-visible, summary:focus-visible {{ outline: 3px solid var(--accent); outline-offset: 3px; }}
+.skip-link {{ position: absolute; z-index: 20; inset: .5rem auto auto .5rem; padding: .5rem .75rem; transform: translateY(-160%); background: var(--surface); color: var(--text); }}
+.skip-link:focus {{ transform: translateY(0); }}
 .page-header, main, footer {{
   width: 100%;
   max-width: 1600px;
@@ -593,6 +596,13 @@ footer {{ color: var(--muted); font-size: .92rem; }}
   .page-header {{ flex-direction: column; }}
   .actions {{ justify-content: flex-start; }}
   .visual-frame {{ padding: .75rem; }}
+}}
+@media print {{
+  body {{ background: #fff; color: #000; }}
+  .actions, .skip-link, button {{ display: none !important; }}
+  details:not([open]) > :not(summary) {{ display: block !important; }}
+  details {{ break-inside: avoid; }}
+  a {{ color: inherit; }}
 }}
 """
 
@@ -1053,7 +1063,6 @@ def option_css() -> str:
   gap: .65rem;
   align-content: start;
   min-width: 0;
-  overflow: hidden;
   padding: .85rem;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -1538,7 +1547,7 @@ def interactive_js() -> str:
 
 
 def nav_links(current: str | None = None) -> str:
-    links = ['<a href="./">Workbook</a>']
+    links = ['<a href="./">Workbook</a>', '<a href="../../sitemap.xml">Sitemap</a>']
     if current != "visual-model":
         links.append('<a href="visual.html">Visual model</a>')
     return "".join(links)
@@ -1584,6 +1593,7 @@ def page_shell(
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="page-header">
     <div>
       <p class="eyebrow">{html_escape(eyebrow)}</p>
@@ -1594,7 +1604,7 @@ def page_shell(
       {nav_links(current)}
     </nav>
   </header>
-  <main>
+  <main id="main-content" tabindex="-1">
     {body}
   </main>
   <footer>
@@ -1659,13 +1669,15 @@ def legacy_reference_markdown() -> bytes:
     return "\n".join(lines).encode("utf-8")
 
 
-def build_ipv6_visual_options_artefacts(root: Path, out: Path, manifest: dict) -> dict:
+def render_ipv6_visual_model(root: Path, manifest: dict, font_asset_prefix: str = "../../../assets/fonts") -> bytes:
     rows = read_prefix_rows(root, manifest)
     tree = prune_empty_children(attach_children(rows))
     nodes = flatten_tree(tree)
-    font_prefix = "../../../assets/fonts"
+    return final_visual_page(tree, nodes, font_asset_prefix).encode("utf-8")
 
-    visual_model_body = final_visual_page(tree, nodes, font_prefix).encode("utf-8")
+
+def build_ipv6_visual_options_artefacts(root: Path, out: Path, manifest: dict) -> dict:
+    visual_model_body = render_ipv6_visual_model(root, manifest)
     visual_model_info = artefact_info(root, out / "visual.html", visual_model_body, "text/html; charset=utf-8")
     visual_model_info.update({
         "id": "visual-model",

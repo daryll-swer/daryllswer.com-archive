@@ -172,6 +172,9 @@ body {
   line-height: 1.55;
 }
 a { color: var(--accent); text-underline-offset: .18em; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.skip-link { position: absolute; z-index: 20; inset: .5rem auto auto .5rem; padding: .5rem .75rem; transform: translateY(-160%); background: var(--surface); color: var(--text); }
+.skip-link:focus { transform: translateY(0); }
 .page-header, main, footer {
   width: 100%;
   max-width: 1600px;
@@ -319,6 +322,13 @@ footer { color: var(--muted); font-size: .92rem; }
   .actions { justify-content: flex-start; }
   .visual-frame { padding: .75rem; }
 }
+@media print {
+  body { background: #fff; color: #000; }
+  .actions, .skip-link, button { display: none !important; }
+  details:not([open]) > :not(summary) { display: block !important; }
+  details { break-inside: avoid; }
+  a { color: inherit; }
+}
 
 
 .visual-section {
@@ -405,7 +415,6 @@ footer { color: var(--muted); font-size: .92rem; }
   gap: .65rem;
   align-content: start;
   min-width: 0;
-  overflow: hidden;
   padding: .85rem;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -807,6 +816,7 @@ footer { color: var(--muted); font-size: .92rem; }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="page-header">
     <div>
       <p class="eyebrow">AS141253 IPv6 visual model</p>
@@ -814,10 +824,10 @@ footer { color: var(--muted); font-size: .92rem; }
       <p class="summary">A CSV-derived, expandable IPv6 prefix containment hierarchy for inspecting the complete AS141253 allocation model.</p>
     </div>
     <nav class="actions" aria-label="Visualisation actions">
-      <a href="./">Workbook</a>
+      <a href="./">Workbook</a><a href="../../sitemap.xml">Sitemap</a>
     </nav>
   </header>
-  <main>
+  <main id="main-content" tabindex="-1">
     
 <section class="visual-section final-visual-section" id="full-hierarchy" data-final-tree-section>
   <h2>Full hierarchy</h2>

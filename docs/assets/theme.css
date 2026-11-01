@@ -195,9 +195,6 @@
     --code-text: #f7fafc;
   }
 }
-html {
-  overflow-x: hidden;
-}
 body {
   margin: 0;
   background: var(--bg);
@@ -205,9 +202,14 @@ body {
   font-family: var(--font-body);
   font-weight: 400;
   line-height: 1.65;
-  overflow-x: hidden;
 }
-a { color: var(--accent); text-decoration-thickness: .08em; text-underline-offset: .18em; }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible {
+  outline: 3px solid var(--accent-2);
+  outline-offset: 3px;
+}
+.skip-link { position: absolute; z-index: 100; inset: .5rem auto auto .5rem; padding: .5rem .75rem; transform: translateY(-160%); background: var(--surface); color: var(--text); }
+.skip-link:focus { transform: translateY(0); }
+a { color: var(--accent); text-decoration-thickness: .08em; text-underline-offset: .18em; overflow-wrap: anywhere; }
 a:hover { color: var(--accent-2); }
 .site-header, .home, .post-card, .site-footer {
   font-family: var(--font-body);
@@ -226,12 +228,16 @@ a:hover { color: var(--accent-2); }
 }
 .brand {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: .65rem;
   color: var(--text);
   text-decoration: none;
   min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
+.brand > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
 .brand-mark {
   display: block;
   flex: 0 0 auto;
@@ -279,8 +285,8 @@ h1 { margin: 0 0 1rem; max-width: 900px; font-size: 3.4rem; }
   border-radius: 8px;
   min-width: 0;
 }
-.post-card-image { display: block; min-height: 160px; border-radius: 6px; overflow: hidden; background: var(--surface-alt); }
-.post-card-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.post-card-image { display: block; width: 100%; min-width: 0; max-width: 100%; min-height: 160px; border-radius: 6px; overflow: hidden; background: var(--surface-alt); }
+.post-card-image img { width: 100%; max-width: 100%; height: 100%; object-fit: cover; display: block; }
 .post-card-body { min-width: 0; }
 .post-card h2 { margin: .15rem 0 .55rem; font-size: 1.55rem; }
 .post-card h2 a { color: var(--text); text-decoration: none; }
@@ -312,6 +318,7 @@ h1 { margin: 0 0 1rem; max-width: 900px; font-size: 3.4rem; }
 .article-body h6 {
   scroll-margin-top: 1.25rem;
 }
+.article-body a { overflow-wrap: anywhere; }
 .article-body h2 { margin-top: 2.2rem; padding-top: .3rem; }
 .article-body h3 { margin-top: 1.8rem; }
 .heading-title-link {
@@ -404,10 +411,8 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface-alt);
-  overflow: hidden;
 }
 .embed-label { margin: 0 0 .5rem; font-weight: 700; }
-.media-frame { display: block; width: 100%; height: 52px; min-height: 52px; border: 0; background: var(--surface); }
 .embed-fallback { margin: .65rem 0 0; font-size: .92rem; }
 .article-footer, .site-footer {
   max-width: 1180px;
@@ -431,13 +436,22 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   font-weight: 700;
 }
 .button.secondary { background: var(--surface); color: var(--accent); border: 1px solid var(--border); }
-.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+.table-wrap { min-width: 0; max-width: 100%; overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+.table-wrap:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media print {
+  body { background: #fff; color: #000; }
+  .site-nav, .skip-link, .heading-permalink { display: none !important; }
+  .article-shell, .article { max-width: none; margin: 0; padding: 0; }
+  a { color: inherit; }
+  img, figure, table { break-inside: avoid; }
+  .table-wrap, .sheet-viewport { overflow: visible; max-height: none; }
+}
 table { width: 100%; border-collapse: collapse; }
 th, td { padding: .75rem; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
 th { color: var(--muted); font-size: .85rem; text-transform: uppercase; }
 @media (max-width: 760px) {
   .site-header { align-items: flex-start; flex-direction: column; }
-  .post-card { grid-template-columns: 1fr; }
+  .post-card { grid-template-columns: minmax(0, 1fr); }
   .post-card-image { aspect-ratio: 16 / 9; }
   h1 { font-size: 2.2rem; }
   .post-card h2 { font-size: 1.3rem; }

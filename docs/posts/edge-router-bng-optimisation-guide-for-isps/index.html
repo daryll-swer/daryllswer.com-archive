@@ -17,6 +17,7 @@
   <script src="../../assets/archive.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="../../" aria-label="daryllswer.com Archive home">
     <img class="brand-mark" src="../../assets/brand/01_DS_Favicon_Dark_Mode-512.png" alt="" width="36" height="36" decoding="async">
@@ -24,11 +25,12 @@
   </a>
   <nav class="site-nav" aria-label="Primary">
     <a href="../../">Index</a>
+    <a href="../../sitemap.xml">Sitemap</a>
     <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
     <a href="https://www.daryllswer.com/">Canonical site</a>
   </nav>
 </header>
-<main class="article-shell">
+<main class="article-shell" id="main-content" tabindex="-1">
   <article class="article">
     <header class="article-header">
       <p class="meta">08 June 2021 / ISP, Networking</p>
@@ -37,7 +39,7 @@
       <img class="featured-image" src="assets/834B1158-30C5-42F5-A513-FDA123138559.jpg" alt="">
     </header>
     <div class="article-body">
-      <p class="archive-rights-notice" data-archive-rights-notice="true"><strong>Copyright:</strong> © 2026 Daryll Swer. All rights reserved.</p><pre class="wp-block-preformatted"><strong>Announcement<br></strong><br><strong>This documentation will no longer be maintained</strong>.<br><br><strong>For any professional services, <a href="https://www.swernetworks.com/" target="_blank" rel="noopener noreferrer">click here</a></strong>.</pre>
+      <p class="archive-rights-notice" data-archive-rights-notice="true"><strong>Copyright:</strong> © 2026 Daryll Swer. All rights reserved.</p><pre class="wp-block-preformatted"><strong>Announcement<br></strong><br><strong>This documentation will no longer be maintained</strong>.<br><br><strong>For any professional services, <a href="https://www.swernetworks.com/" rel="noopener noreferrer" target="_blank">click here</a></strong>.</pre>
 
 
 
@@ -1369,7 +1371,7 @@ add blackhole comment="Blackhole route for Customer CGNAT pool" disabled=no dst-
 add blackhole comment="Blackhole route for Customer public pool" disabled=no dst-address=103.176.189.128/25
 
 <strong>/ipv6 route
-</strong>add blackhole comment="Blackhole route for Customer LAN pool" disabled=no dst-address=<span style="font-family: monospace; font-size: inherit;">2405:a140:8::/46</span>
+</strong>add blackhole comment="Blackhole route for Customer LAN pool" disabled=no dst-address=<span style="">2405:a140:8::/46</span>
 add blackhole comment="Blackhole route for Customer WAN pool" disabled=no dst-address=2405:a140:f:d400::/54</code></pre>
 
 
@@ -1412,7 +1414,7 @@ add type=blackhole comment="Blackhole route for Customer public pool" disabled=n
 
 
 
-<li><span style="font-size: 1em;">Lacks </span><a style="font-size: 1em;" href="https://forum.mikrotik.com/viewtopic.php?f=2&amp;t=54607" target="_blank" rel="noopener noreferrer">basic DDoS protection</a><span style="font-size: 1em;"> </span></li>
+<li><span style="">Lacks </span><a href="https://forum.mikrotik.com/viewtopic.php?f=2&amp;t=54607" target="_blank" rel="noopener noreferrer">basic DDoS protection</a><span style=""> </span></li>
 
 
 
@@ -1809,7 +1811,7 @@ add action=drop chain=input comment="defconf: drop everything else not coming fr
 
 
 
-<p class="wp-block-paragraph">Please note on RouterOS v7, you need to properly configure <a href="https://youtu.be/py4up-lO8zY" target="_blank" rel="noopener noreferrer">BGP affinity</a> to avoid CPU issues.</p>
+<p class="wp-block-paragraph">Please note on RouterOS v7, you need to properly configure <a href="https://youtu.be/py4up-lO8zY" rel="noopener noreferrer" target="_blank">BGP affinity</a> to avoid CPU issues.</p>
 
 
 

@@ -17,6 +17,7 @@
   <script src="../../assets/archive.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="../../" aria-label="daryllswer.com Archive home">
     <img class="brand-mark" src="../../assets/brand/01_DS_Favicon_Dark_Mode-512.png" alt="" width="36" height="36" decoding="async">
@@ -24,11 +25,12 @@
   </a>
   <nav class="site-nav" aria-label="Primary">
     <a href="../../">Index</a>
+    <a href="../../sitemap.xml">Sitemap</a>
     <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
     <a href="https://www.daryllswer.com/">Canonical site</a>
   </nav>
 </header>
-<main class="article-shell">
+<main class="article-shell" id="main-content" tabindex="-1">
   <article class="article">
     <header class="article-header">
       <p class="meta">22 April 2025 / Networking</p>
@@ -38,7 +40,7 @@
     </header>
     <div class="article-body">
       <p class="archive-rights-notice" data-archive-rights-notice="true"><strong>Copyright:</strong> © 2026 Daryll Swer. All rights reserved.</p><blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
-<p class="wp-block-paragraph"><strong>For professional CGNAT and IPv6 deployment services aligned with industry best practices, <a href="https://www.swernetworks.com/" target="_blank" rel="noopener noreferrer">click here</a>.</strong></p>
+<p class="wp-block-paragraph"><strong>For professional CGNAT and IPv6 deployment services aligned with industry best practices, <a href="https://www.swernetworks.com/" rel="noopener noreferrer" target="_blank">click here</a>.</strong></p>
 </blockquote>
 
 
@@ -47,7 +49,7 @@
 
 
 
-<p class="wp-block-paragraph">I have had a few back-and-forth with a fellow blogger, on a series of blog posts on the subject of IPv4, NAT, CGNAT and IPv6<sup>[<a href="#h-references">1</a>][<a href="#h-references">2</a>][<a href="#h-references">3</a>]</sup>, along with consistently seeing people who do not understand the right way to do NAT-ting in general, motivated me to write this blog post.</p>
+<p class="wp-block-paragraph">I have had a few back-and-forth with a fellow blogger, on a series of blog posts on the subject of IPv4, NAT, CGNAT and IPv6<sup>[<a href="#h-references" rel="noopener noreferrer">1</a>][<a href="#h-references" rel="noopener noreferrer">2</a>][<a href="#h-references" rel="noopener noreferrer">3</a>]</sup>, along with consistently seeing people who do not understand the right way to do NAT-ting in general, motivated me to write this blog post.</p>
 
 
 
@@ -59,7 +61,7 @@
 
 
 
-<p class="wp-block-paragraph">Software developers spent decades coming up with complex workarounds, simply because network engineers and network business stakeholders alike insisted decades ago that the way to future-proof the Internet ecosystem was to use (CG)NAT, handicap layer-4 across the planet to just TCP/UDP, destroy any hope of future replacements for either of these layer 4 protocols (DCCP, UDP-Lite, SCTP etc all died on arrival); instead of early adoption of native <strong>routed</strong> IPv6 (NAT-ted IPv4 <strong>isn’t</strong> <strong>routing</strong>), remember, IPv6 was first introduced into the public domain back in December 1995<sup>[<a href="#h-references">4</a>]</sup>.</p>
+<p class="wp-block-paragraph">Software developers spent decades coming up with complex workarounds, simply because network engineers and network business stakeholders alike insisted decades ago that the way to future-proof the Internet ecosystem was to use (CG)NAT, handicap layer-4 across the planet to just TCP/UDP, destroy any hope of future replacements for either of these layer 4 protocols (DCCP, UDP-Lite, SCTP etc all died on arrival); instead of early adoption of native <strong>routed</strong> IPv6 (NAT-ted IPv4 <strong>isn’t</strong> <strong>routing</strong>), remember, IPv6 was first introduced into the public domain back in December 1995<sup>[<a href="#h-references" rel="noopener noreferrer">4</a>]</sup>.</p>
 
 
 
@@ -79,7 +81,7 @@
 
 
 
-<p class="wp-block-paragraph">Because here’s the thing—with IPv6, you don’t need NAT. If you just <strong>routed</strong> everything end-to-end, things would be simpler, cleaner, and far more scalable. Now I am well aware of issues with IPv6 multi-homing and PA space, that’s already covered in my <a href="../ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/">IPv6 Architecture guide</a>, which is why <em>‘routed’</em> is <strong>bolded</strong> 😉 – PA multi-homing issue is no excuse to avoid IPv6, because it’s the same problem in IPv4<sup>[<a href="#h-references">5</a>]</sup>.</p>
+<p class="wp-block-paragraph">Because here’s the thing—with IPv6, you don’t need NAT. If you just <strong>routed</strong> everything end-to-end, things would be simpler, cleaner, and far more scalable. Now I am well aware of issues with IPv6 multi-homing and PA space, that’s already covered in my <a href="../ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/">IPv6 Architecture guide</a>, which is why <em>‘routed’</em> is <strong>bolded</strong> 😉 – PA multi-homing issue is no excuse to avoid IPv6, because it’s the same problem in IPv4<sup>[<a href="#h-references" rel="noopener noreferrer">5</a>]</sup>.</p>
 
 
 
@@ -95,7 +97,7 @@
 
 
 
-<p class="wp-block-paragraph">You don’t have to take my word for it, read a book or two about these acronyms<sup>[<a href="#h-references">6</a>]</sup>, to see the insane complexity brought upon us by those who insisted NAT-ting &gt; routing (hello IPv6!).</p>
+<p class="wp-block-paragraph">You don’t have to take my word for it, read a book or two about these acronyms<sup>[<a href="#h-references" rel="noopener noreferrer">6</a>]</sup>, to see the insane complexity brought upon us by those who insisted NAT-ting &gt; routing (hello IPv6!).</p>
 
 
 
@@ -112,7 +114,7 @@
 
 
 
-<li>Here’s where it gets even worse in NAT-ted networks: If both calling endpoints are in the same LAN/broadcast domain, and their calling application software called upon STUN discovery to try to initiate the call, the call will fail, because most NAT configurations are missing NAT hairpinning (aka NAT Loopback)<sup>[<a href="#h-references">7</a>]</sup>, what happens is both endpoints for example will be NAT-ted to a public IP 1.1.1.1, each endpoint has a unique source port, for example 1025, 1026, so now STUN discovers 1.1.1.1:1025, 1.1.1.1:1026, and now the endpoints try to talk to each other destined towards each of these public IP port mappings — and fails spectacularly because no hairpinning by default on most NAT configurations. Such a problem doesn’t exist in <strong>routed</strong>, <strong>NAT-less</strong> environments. What happens now is, the call will be routed through the public internet via TURN relay server, and the latency jumped from 1ms on the LAN to who knows what latency on the public internet.</li>
+<li>Here’s where it gets even worse in NAT-ted networks: If both calling endpoints are in the same LAN/broadcast domain, and their calling application software called upon STUN discovery to try to initiate the call, the call will fail, because most NAT configurations are missing NAT hairpinning (aka NAT Loopback)<sup>[<a href="#h-references" rel="noopener noreferrer">7</a>]</sup>, what happens is both endpoints for example will be NAT-ted to a public IP 1.1.1.1, each endpoint has a unique source port, for example 1025, 1026, so now STUN discovers 1.1.1.1:1025, 1.1.1.1:1026, and now the endpoints try to talk to each other destined towards each of these public IP port mappings — and fails spectacularly because no hairpinning by default on most NAT configurations. Such a problem doesn’t exist in <strong>routed</strong>, <strong>NAT-less</strong> environments. What happens now is, the call will be routed through the public internet via TURN relay server, and the latency jumped from 1ms on the LAN to who knows what latency on the public internet.</li>
 
 
 
@@ -125,11 +127,11 @@
 
 
 
-<p class="wp-block-paragraph">“But this is hypothetical, isn’t it?” — Nope, you need to think about this in large scale SP networks and campus networks, a lot of endpoint-to-endpoint traffic does exist on everyday end-user applications like WhatsApp P2P calling for example, at large scale, so much traffic is TURN-relayed back into the public Internet, when it could’ve just stayed intra-AS or intra-LAN, with hairpinning<sup>[<a href="#h-references">8</a>]</sup> or in the case of native <strong>routed</strong> IPv6.</p>
+<p class="wp-block-paragraph">“But this is hypothetical, isn’t it?” — Nope, you need to think about this in large scale SP networks and campus networks, a lot of endpoint-to-endpoint traffic does exist on everyday end-user applications like WhatsApp P2P calling for example, at large scale, so much traffic is TURN-relayed back into the public Internet, when it could’ve just stayed intra-AS or intra-LAN, with hairpinning<sup>[<a href="#h-references" rel="noopener noreferrer">8</a>]</sup> or in the case of native <strong>routed</strong> IPv6.</p>
 
 
 
-<p class="wp-block-paragraph">“Oh, but I’m a DC operator, I’m not an ISP or Enterprise, NAT is harmless for us, right?” — No. Give this podcast a listen<sup>[<a href="#h-references">9</a>]</sup>, NAT has insane overhead even at hyperscaler companies like Meta or Google.</p>
+<p class="wp-block-paragraph">“Oh, but I’m a DC operator, I’m not an ISP or Enterprise, NAT is harmless for us, right?” — No. Give this podcast a listen<sup>[<a href="#h-references" rel="noopener noreferrer">9</a>]</sup>, NAT has insane overhead even at hyperscaler companies like Meta or Google.</p>
 
 
 
@@ -154,11 +156,11 @@
 
 
 <ol class="wp-block-list">
-<li>We start by enabling hairpinning<sup>[<a href="#h-references">7</a>]</sup> to ensure that intra-(CG)NAT traffic on the LAN or AS works correctly, this gets rid of TURN for intra-NAT traffic.</li>
+<li>We start by enabling hairpinning<sup>[<a href="#h-references" rel="noopener noreferrer">7</a>]</sup> to ensure that intra-(CG)NAT traffic on the LAN or AS works correctly, this gets rid of TURN for intra-NAT traffic.</li>
 
 
 
-<li>Then we enable EIM &amp; EIF on the NAT device<sup>[<a href="#h-references">10</a>] </sup>for port range 1024-65535 for both TCP and UDP, this will help ensure P2P traffic continues to work for TCP/UDP, it will get rid of TURN for general global NAT-ted traffic that egresses from the (CG)NAT device.</li>
+<li>Then we enable EIM &amp; EIF on the NAT device<sup>[<a href="#h-references" rel="noopener noreferrer">10</a>] </sup>for port range 1024-65535 for both TCP and UDP, this will help ensure P2P traffic continues to work for TCP/UDP, it will get rid of TURN for general global NAT-ted traffic that egresses from the (CG)NAT device.</li>
 
 
 
@@ -176,7 +178,7 @@
 
 
 <ol class="wp-block-list">
-<li>NAT Hairpinning/Loopback doesn’t work the same way and/or doesn’t work correctly on all operating systems. For example, it works out-of-the-box without user configuration on proprietary CGNAT solutions like A10 Networks (page 31)<sup>[<a href="#h-references">11</a>]</sup>, but it won’t be that simple on a Linux-based device, if you try to create a Hairpin NAT rule on a Linux box, it may or may not work depending on the implementation, for all Src-NAT-ted traffic — Remember, hairpinning is supposed to permit intra-NAT traffic to work, without them necessarily being DNAT-ted, such as Xbox gaming sessions P2P between two hosts behind the NAT, or two SIP Clients trying to talk to each other over their Src-NAT-ted IP using STUN discovery without TURN. I have not yet seen RFC-like hairpinning <strong>simplicity</strong> on any vendor other than A10 CGNAT, if we go by their official documentation.</li>
+<li>NAT Hairpinning/Loopback doesn’t work the same way and/or doesn’t work correctly on all operating systems. For example, it works out-of-the-box without user configuration on proprietary CGNAT solutions like A10 Networks (page 31)<sup>[<a href="#h-references" rel="noopener noreferrer">11</a>]</sup>, but it won’t be that simple on a Linux-based device, if you try to create a Hairpin NAT rule on a Linux box, it may or may not work depending on the implementation, for all Src-NAT-ted traffic — Remember, hairpinning is supposed to permit intra-NAT traffic to work, without them necessarily being DNAT-ted, such as Xbox gaming sessions P2P between two hosts behind the NAT, or two SIP Clients trying to talk to each other over their Src-NAT-ted IP using STUN discovery without TURN. I have not yet seen RFC-like hairpinning <strong>simplicity</strong> on any vendor other than A10 CGNAT, if we go by their official documentation.</li>
 
 
 
@@ -219,7 +221,7 @@
 
 
 
-<p class="wp-block-paragraph">No, it isn’t<sup>[<a href="#h-references">12</a>][<a href="#h-references">13</a>] </sup>— If you need a firewall, then you enable a firewall for both IPv4 and IPv6, NAT isn’t a firewall technology.</p>
+<p class="wp-block-paragraph">No, it isn’t<sup>[<a href="#h-references" rel="noopener noreferrer">12</a>][<a href="#h-references" rel="noopener noreferrer">13</a>] </sup>— If you need a firewall, then you enable a firewall for both IPv4 and IPv6, NAT isn’t a firewall technology.</p>
 
 
 

@@ -17,6 +17,7 @@
   <script src="../../assets/archive.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="../../" aria-label="daryllswer.com Archive home">
     <img class="brand-mark" src="../../assets/brand/01_DS_Favicon_Dark_Mode-512.png" alt="" width="36" height="36" decoding="async">
@@ -24,11 +25,12 @@
   </a>
   <nav class="site-nav" aria-label="Primary">
     <a href="../../">Index</a>
+    <a href="../../sitemap.xml">Sitemap</a>
     <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
     <a href="https://www.daryllswer.com/">Canonical site</a>
   </nav>
 </header>
-<main class="article-shell">
+<main class="article-shell" id="main-content" tabindex="-1">
   <article class="article">
     <header class="article-header">
       <p class="meta">01 July 2022 / Networking</p>
@@ -45,7 +47,7 @@
 
 
 
-<p class="wp-block-paragraph">First, I would like to give <a href="https://www.civo.com/" target="_blank" rel="noopener noreferrer">Civo</a> a shout out for <a href="https://twitter.com/DaryllSwer/status/1436345785973497857" target="_blank" rel="noopener noreferrer">sponsoring</a> the Autonomous System Number ASN allocation (<a href="https://web.archive.org/web/20220428071633/https://bgp.tools/as/210777" target="_blank" rel="noopener noreferrer">AS210777</a>), a <a href="https://web.archive.org/web/20220428071817/https://bgp.tools/prefix/2a10:6747::/32" target="_blank" rel="noopener noreferrer">/32 IPv6 prefix</a> and also a <a href="https://web.archive.org/web/20220428071659/https://bgp.tools/prefix/103.176.189.0/24" target="_blank" rel="noopener noreferrer">/24 IPv4 prefix</a> for me. I’d also like to thank APNIC, which allocated the /24 for experimental purposes, and later allocated an IPv6 prefix and an ASN.</p>
+<p class="wp-block-paragraph">First, I would like to give <a href="https://www.civo.com/" target="_blank" rel="noopener noreferrer">Civo</a> a shout out for <a href="https://twitter.com/DaryllSwer/status/1436345785973497857" target="_blank" rel="noopener noreferrer">sponsoring</a> the Autonomous System Number ASN allocation (<a href="https://web.archive.org/web/20220428071633/https://bgp.tools/as/210777" target="_blank" rel="noopener noreferrer">AS210777</a>), a <a href="https://web.archive.org/web/20220428071817/https://bgp.tools/prefix/2a10:6747::/32" target="_blank" rel="noopener noreferrer">/32 IPv6 prefix</a> and also a <a href="https://web.archive.org/web/20220428071659/https://bgp.tools/prefix/103.176.189.0/24" rel="noopener noreferrer" target="_blank">/24 IPv4 prefix</a> for me. I’d also like to thank APNIC, which allocated the /24 for experimental purposes, and later allocated an IPv6 prefix and an ASN.</p>
 
 
 
@@ -113,7 +115,7 @@
 
 
 
-<p class="wp-block-paragraph">Ensure you create a <a href="https://apps.db.ripe.net/docs/RPSL-Object-Types/Descriptions-of-Primary-Objects/#description-of-the-route-object" target="_blank" rel="noopener noreferrer">route and origin object</a> to so everyone else knows which AS is supposed to originate the prefix. Set up <a href="https://blog.apnic.net/2019/09/11/how-to-creating-rpki-roas-in-myapnic/" target="_blank" rel="noopener noreferrer">RPKI/ROAs</a> for your routes. Input up-to-date abuse contact info.<meta charset="utf-8"></p>
+<p class="wp-block-paragraph">Ensure you create a <a href="https://apps.db.ripe.net/docs/RPSL-Object-Types/Descriptions-of-Primary-Objects/#description-of-the-route-object" target="_blank" rel="noopener noreferrer">route and origin object</a> to so everyone else knows which AS is supposed to originate the prefix. Set up <a href="https://blog.apnic.net/2019/09/11/how-to-creating-rpki-roas-in-myapnic/" target="_blank" rel="noopener noreferrer">RPKI/ROAs</a> for your routes. Input up-to-date abuse contact info.</p>
 
 
 
@@ -426,7 +428,7 @@ add address-families=ipv6 as=210777 disabled=no local.role=ebgp-customer name=IP
 
 
 <figure class="wp-block-embed is-type-rich is-provider-twitter wp-block-embed-twitter"><div class="wp-block-embed__wrapper">
-<blockquote class="twitter-tweet" data-width="500" data-dnt="true"><p lang="en" dir="ltr">So as of today, I packet sniffed on my WAN interface to see what's up and oddly enough, I saw zero STUN traffic! Maybe the remote end-points store data of the source IPs that have been determined to not be behind a NAT or something?</p>— Daryll Swer (@DaryllSwer) <a href="https://twitter.com/DaryllSwer/status/1488608520748425223?ref_src=twsrc%5Etfw" target="_blank" rel="noopener noreferrer">February 1, 2022</a></blockquote>
+<blockquote class="twitter-tweet"><p>So as of today, I packet sniffed on my WAN interface to see what's up and oddly enough, I saw zero STUN traffic! Maybe the remote end-points store data of the source IPs that have been determined to not be behind a NAT or something?</p>— Daryll Swer (@DaryllSwer) <a href="https://twitter.com/DaryllSwer/status/1488608520748425223?ref_src=twsrc%5Etfw" rel="noopener noreferrer" target="_blank">February 1, 2022</a></blockquote>
 </div></figure>
 
 
@@ -451,7 +453,7 @@ add address-families=ipv6 as=210777 disabled=no local.role=ebgp-customer name=IP
 
 
 
-<ol style="list-style-type:1" class="wp-block-list">
+<ol class="wp-block-list">
 <li>From the network engineering perspective, CGNAT is ugly, can break a lot of things, and forces the requirement for Application Layer Gateway (ALG) for various protocols including these Layer 4 protocols. So, it is only natural for TCP/UDP to remain in popular use due to well-known NAT traversal mechanisms for both. However, if you did deploy your CGNAT boxes with best practices from A to Z shown in my guide, all these protocols should, in theory, work just fine as the ALG will handle it out of the box.</li>
 
 

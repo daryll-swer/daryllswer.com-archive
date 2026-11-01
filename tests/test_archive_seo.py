@@ -72,7 +72,7 @@ class ArchiveSeoTests(unittest.TestCase):
         status = DRIFT.default_status("2026-01-01T00:00:00Z")
         status["failure"]["first_failure_at"] = "2026-01-01T00:00:00Z"
         for count in range(8):
-            DRIFT.record_failure(status, f"2026-02-{count + 1:02d}T00:00:00Z", "URLError", "offline")
+            DRIFT.record_failure(status, f"2026-02-{count + 1:02d}T00:00:00Z", "server_error", "HTTP 503")
         self.assertEqual(status["state"], "frozen_archive")
         self.assertEqual(status["seo_state"], "archive_discovery")
         self.assertIsNotNone(status["seo_activated_at"])
@@ -238,12 +238,23 @@ class ArchiveSeoTests(unittest.TestCase):
         self.assertIn("http-equiv=\"Content-Security-Policy\"", snapshot_html)
         self.assertIn("script-src 'none'", snapshot_html)
 
-    def test_normal_sitemap_and_robots_are_parseable_and_feed_is_absent(self):
+    def test_normal_sitemap_is_parseable_and_robots_copy_is_cleaned_not_generated(self):
         sitemap = (ROOT / "docs" / "sitemap.xml").read_text(encoding="utf-8")
         self.assertEqual(sitemap.count("<loc>"), 1)
         self.assertIn("https://daryll-swer.github.io/daryllswer.com-archive/", sitemap)
-        robots = (ROOT / "docs" / "robots.txt").read_text(encoding="utf-8")
-        self.assertIn("Sitemap: https://daryll-swer.github.io/daryllswer.com-archive/sitemap.xml", robots)
+        self.assertFalse(hasattr(RENDER, "render_robots"))
+        with tempfile.TemporaryDirectory() as directory:
+            old_out = RENDER.OUT
+            try:
+                RENDER.OUT = Path(directory) / "docs"
+                RENDER.OUT.mkdir()
+                (RENDER.OUT / "robots.txt").write_text("stale", encoding="utf-8")
+                RENDER.clean_generated_site()
+                self.assertFalse((RENDER.OUT / "robots.txt").exists())
+                RENDER.render_sitemap([], {}, {"seo_state": "source_primary"})
+                self.assertFalse((RENDER.OUT / "robots.txt").exists())
+            finally:
+                RENDER.OUT = old_out
         self.assertFalse((ROOT / "docs" / "feed.xml").exists())
 
     def test_canonical_drift_report_uses_only_the_supported_recovery_path(self):
@@ -256,7 +267,7 @@ class ArchiveSeoTests(unittest.TestCase):
             root = Path(directory)
             bundle = root / "content" / "posts" / "2026-01-01-example"
             (bundle / "source").mkdir(parents=True)
-            (bundle / "source" / "rendered-article.html").write_text('<p>Body <a href="../other/">local</a><img src="assets/image.png"></p>', encoding="utf-8")
+            (bundle / "source" / "rendered-article.html").write_text('<p onclick="x">Body <a href="../other/">local</a><a href="javascript:alert(1)">unsafe</a><img src="assets/image.png" onerror="x"></p><script>top.location="https://evil.test"</script>', encoding="utf-8")
             (bundle / "index.md").write_text("# Example\n\nExcerpt text.", encoding="utf-8")
             metadata = {"categories": [{"name": "Networking"}], "excerpt": "Excerpt text."}
             (bundle / "metadata.json").write_text(json.dumps(metadata), encoding="utf-8")
@@ -275,6 +286,11 @@ class ArchiveSeoTests(unittest.TestCase):
                 self.assertEqual(item.find("guid").get("isPermaLink"), "false")
                 body = item.find("{http://purl.org/rss/1.0/modules/content/}encoded").text or ""
                 self.assertNotIn('href="../', body)
+                self.assertNotIn("javascript:", body)
+                self.assertNotIn("onerror", body)
+                self.assertNotIn("onclick", body)
+                self.assertNotIn("<script", body)
+                self.assertIn("Body", body)
                 self.assertIn("https://daryll-swer.github.io/daryllswer.com-archive/posts/", body)
                 self.assertIn("https://daryll-swer.github.io/daryllswer.com-archive/", item.findtext("link"))
             finally:

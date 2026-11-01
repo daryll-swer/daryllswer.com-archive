@@ -17,6 +17,7 @@
   <script src="../../assets/archive.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="../../" aria-label="daryllswer.com Archive home">
     <img class="brand-mark" src="../../assets/brand/01_DS_Favicon_Dark_Mode-512.png" alt="" width="36" height="36" decoding="async">
@@ -24,11 +25,12 @@
   </a>
   <nav class="site-nav" aria-label="Primary">
     <a href="../../">Index</a>
+    <a href="../../sitemap.xml">Sitemap</a>
     <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
     <a href="https://www.daryllswer.com/">Canonical site</a>
   </nav>
 </header>
-<main class="article-shell">
+<main class="article-shell" id="main-content" tabindex="-1">
   <article class="article">
     <header class="article-header">
       <p class="meta">04 June 2026 / Architecture, Networking</p>
@@ -38,7 +40,7 @@
     </header>
     <div class="article-body">
       <blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
-<p class="wp-block-paragraph">Originally published on <a href="https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/" target="_blank" rel="noopener noreferrer">Swer Networks</a>.</p>
+<p class="wp-block-paragraph">Originally published on <a href="https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/" rel="noopener noreferrer" target="_blank">Swer Networks</a>.</p>
 
 
 
@@ -50,7 +52,7 @@
 
 
 
-<p class="wp-block-paragraph">At <a href="https://www.swernetworks.com" data-type="link" data-id="https://www.swernetworks.com" target="_blank" rel="noopener noreferrer">Swer Networks</a>, we design and implement scalable, future-ready IPv6 architectures for our clients. This includes everything from tailoring <a type="link" href="../ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" id="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/">geographical addressing models</a> to the structuring of Border Gateway Protocol (BGP) Router IDs in modern networks. In this post, we focus specifically on the design and structuring of BGP Router IDs within IPv6-native environments.</p>
+<p class="wp-block-paragraph">At <a href="https://www.swernetworks.com" target="_blank" rel="noopener noreferrer">Swer Networks</a>, we design and implement scalable, future-ready IPv6 architectures for our clients. This includes everything from tailoring <a href="../ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/" id="https://www.daryllswer.com/ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/">geographical addressing models</a> to the structuring of Border Gateway Protocol (BGP) Router IDs in modern networks. In this post, we focus specifically on the design and structuring of BGP Router IDs within IPv6-native environments.</p>
 
 
 
@@ -67,7 +69,7 @@
 
 
 
-<p class="wp-block-paragraph">— <a href="https://datatracker.ietf.org/doc/html/rfc4271#section-1.1" type="link" id="https://datatracker.ietf.org/doc/html/rfc4271#section-1.1" target="_blank" rel="noopener noreferrer">RFC 4271, Section 1.1</a></p>
+<p class="wp-block-paragraph">— <a href="https://datatracker.ietf.org/doc/html/rfc4271#section-1.1" id="https://datatracker.ietf.org/doc/html/rfc4271#section-1.1" target="_blank" rel="noopener noreferrer">RFC 4271, Section 1.1</a></p>
 </blockquote>
 
 
@@ -101,7 +103,7 @@
 
 
 
-<p class="wp-block-paragraph">— <a href="https://datatracker.ietf.org/doc/html/rfc6286#section-2.1" type="link" id="https://datatracker.ietf.org/doc/html/rfc6286#section-2.1" target="_blank" rel="noopener noreferrer">RFC 6286, Section 2.1</a></p>
+<p class="wp-block-paragraph">— <a href="https://datatracker.ietf.org/doc/html/rfc6286#section-2.1" id="https://datatracker.ietf.org/doc/html/rfc6286#section-2.1" rel="noopener noreferrer" target="_blank">RFC 6286, Section 2.1</a></p>
 </blockquote>
 
 
@@ -136,7 +138,7 @@
 
 
 
-<p class="wp-block-paragraph">The Router ID ranges from 0.0.0.1 (zero integer is excluded) to 255.255.255.255. Using the same maths for calculating the number of IPv4 addresses (2<sup>32</sup>), there are 4,294,967,295 (1 is subtracted by excluding zero integer) possible unique BGP Router IDs in an organisation. Now, just like legacy IPv4 <a href="https://datatracker.ietf.org/doc/html/rfc1918" type="link" id="https://datatracker.ietf.org/doc/html/rfc1918" target="_blank" rel="noopener noreferrer">RFC1918</a> space, the risk of overlap (collision) across AS (organisation) boundaries is possible, which, fortunately, has already been addressed as follows:</p>
+<p class="wp-block-paragraph">The Router ID ranges from 0.0.0.1 (zero integer is excluded) to 255.255.255.255. Using the same maths for calculating the number of IPv4 addresses (2<sup>32</sup>), there are 4,294,967,295 (1 is subtracted by excluding zero integer) possible unique BGP Router IDs in an organisation. Now, just like legacy IPv4 <a href="https://datatracker.ietf.org/doc/html/rfc1918" id="https://datatracker.ietf.org/doc/html/rfc1918" target="_blank" rel="noopener noreferrer">RFC1918</a> space, the risk of overlap (collision) across AS (organisation) boundaries is possible, which, fortunately, has already been addressed as follows:</p>
 
 
 
@@ -180,7 +182,7 @@
 
 
 
-<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong><strong>Function code (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-amber-color">A</mark>)</strong></strong></td><td><strong>Function name</strong></td><td><strong><strong>Tenant/reserved (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-vivid-red-color">B</mark>)</strong></strong></td><td><strong><strong>Router ID range (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">C</mark>–<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">D</mark>)</strong></strong></td></tr><tr><td>0</td><td>Lab/test/R&amp;D</td><td>0</td><td>0.0.0.1 – 0.0.255.255</td></tr><tr><td>1</td><td>DFZ-Facing PE routers</td><td>0</td><td>1.0.0.0 – 1.0.255.255</td></tr><tr><td>2</td><td>P routers</td><td>0</td><td>2.0.0.0 – 2.0.255.255</td></tr><tr><td>3</td><td>DIA/IP Transit customer-facing PE Routers</td><td>0</td><td>3.0.0.0 – 3.0.255.255</td></tr><tr><td>4</td><td>NNI/UNI-facing PE Routers</td><td>0</td><td>4.0.0.0 – 4.0.255.255</td></tr></tbody></table><figcaption class="wp-element-caption">Table-1 Router ID Structure example</figcaption></figure>
+<figure class="wp-block-table"><div class="table-wrap" role="region" tabindex="0" aria-label="Scrollable table: Article data"><table class="has-fixed-layout"><tbody><tr><td><strong><strong>Function code (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-amber-color">A</mark>)</strong></strong></td><td><strong>Function name</strong></td><td><strong><strong>Tenant/reserved (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-vivid-red-color">B</mark>)</strong></strong></td><td><strong><strong>Router ID range (<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">C</mark>–<mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-luminous-vivid-orange-color">D</mark>)</strong></strong></td></tr><tr><td>0</td><td>Lab/test/R&amp;D</td><td>0</td><td>0.0.0.1 – 0.0.255.255</td></tr><tr><td>1</td><td>DFZ-Facing PE routers</td><td>0</td><td>1.0.0.0 – 1.0.255.255</td></tr><tr><td>2</td><td>P routers</td><td>0</td><td>2.0.0.0 – 2.0.255.255</td></tr><tr><td>3</td><td>DIA/IP Transit customer-facing PE Routers</td><td>0</td><td>3.0.0.0 – 3.0.255.255</td></tr><tr><td>4</td><td>NNI/UNI-facing PE Routers</td><td>0</td><td>4.0.0.0 – 4.0.255.255</td></tr></tbody></table></div><figcaption class="wp-element-caption">Table-1 Router ID Structure example</figcaption></figure>
 
 
 

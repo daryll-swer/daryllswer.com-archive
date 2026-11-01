@@ -43,7 +43,7 @@ def read_csv_rows(root: Path, path: str) -> list[list[str]]:
         return [row for row in csv.reader(fh)]
 
 
-def render_grid(rows: list[list[str]]) -> str:
+def render_grid(rows: list[list[str]], accessible_name: str = "Spreadsheet data") -> str:
     width = max((len(row) for row in rows), default=0)
     if width == 0:
         return '<p class="empty-sheet">This sheet is empty.</p>'
@@ -64,7 +64,7 @@ def render_grid(rows: list[list[str]]) -> str:
         body.append("".join(cells))
 
     return (
-        '<div class="sheet-viewport">'
+        f'<div class="sheet-viewport" role="region" tabindex="0" aria-label="{html_escape(accessible_name)}">'
         '<table class="sheet-grid">'
         f"<thead>{''.join(header)}</thead>"
         f"<tbody>{''.join(body)}</tbody>"
@@ -83,6 +83,10 @@ def workbook_css(tab_count: int, font_asset_prefix: str | None = None) -> str:
         dynamic.append(
             f"#sheet-tab-{index}:checked ~ .sheet-tabs label[for=\"sheet-tab-{index}\"] "
             "{ background: var(--tab-active); border-color: var(--accent); color: var(--text); }"
+        )
+        dynamic.append(
+            f"#sheet-tab-{index}:focus-visible ~ .sheet-tabs label[for=\"sheet-tab-{index}\"] "
+            "{ outline: 3px solid var(--accent); outline-offset: 3px; }"
         )
 
     fonts = font_face_css(font_asset_prefix) + "\n" if font_asset_prefix else ""
@@ -123,6 +127,12 @@ body {
   font-family: var(--font-body);
   line-height: 1.5;
 }
+.skip-link { position: absolute; z-index: 10; inset: .5rem auto auto .5rem; padding: .5rem .75rem; transform: translateY(-160%); background: var(--surface); color: var(--text); }
+.skip-link:focus { transform: translateY(0); }
+a:focus-visible, input:focus-visible, label:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
 a { color: var(--accent); text-underline-offset: .18em; }
 .workbook-header, .workbook-footer {
   max-width: 1180px;
@@ -131,11 +141,14 @@ a { color: var(--accent); text-underline-offset: .18em; }
 }
 .workbook-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
   align-items: flex-start;
   border-bottom: 1px solid var(--grid);
+  min-width: 0;
 }
+.workbook-header > div { flex: 1 1 25rem; min-width: 0; max-width: 100%; }
 .eyebrow, .meta {
   margin: 0 0 .45rem;
   color: var(--muted);
@@ -145,8 +158,9 @@ a { color: var(--accent); text-underline-offset: .18em; }
   text-transform: uppercase;
 }
 h1 { margin: 0; font-family: var(--font-heading); font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.12; letter-spacing: 0; }
+.workbook-header h1, .workbook-footer p { overflow-wrap: anywhere; }
 .summary { max-width: 760px; color: var(--muted); }
-.workbook-actions { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: flex-end; }
+.workbook-actions { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: flex-end; min-width: 0; max-width: 100%; }
 .workbook-actions a {
   display: inline-flex;
   min-height: 2.25rem;
@@ -158,37 +172,50 @@ h1 { margin: 0; font-family: var(--font-heading); font-size: clamp(1.6rem, 4vw, 
   background: var(--surface);
   text-decoration: none;
   font-weight: 700;
-  white-space: nowrap;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
 }
 .workbook {
   max-width: 1180px;
   margin: 1rem auto 2rem;
   padding: 0 1.25rem;
 }
+@media print {
+  body { background: #fff; color: #000; }
+  .workbook-actions, .sheet-tabs { display: none; }
+  .sheet-frame, .sheet-viewport { overflow: visible !important; max-height: none !important; }
+  .sheet-panel { display: block !important; break-before: page; }
+}
 .sheet-toggle { position: absolute; opacity: 0; pointer-events: none; }
 .sheet-frame {
   border: 1px solid var(--grid-strong);
   border-radius: 8px;
   background: var(--surface);
-  overflow: hidden;
 }
 .sheet-panels { min-height: 22rem; }
 .sheet-panel { display: none; }
 .sheet-title {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
   padding: .75rem .9rem;
   border-bottom: 1px solid var(--grid);
   background: var(--surface-alt);
+  min-width: 0;
 }
-.sheet-title h2 { margin: 0; font-family: var(--font-heading); font-size: 1rem; letter-spacing: 0; }
-.sheet-links { display: flex; gap: .7rem; flex-wrap: wrap; font-size: .9rem; }
+.sheet-title h2 { min-width: 0; max-width: 100%; margin: 0; font-family: var(--font-heading); font-size: 1rem; letter-spacing: 0; overflow-wrap: anywhere; }
+.sheet-links { display: flex; gap: .7rem; flex-wrap: wrap; min-width: 0; max-width: 100%; font-size: .9rem; }
+.sheet-links a { overflow-wrap: anywhere; }
 .sheet-viewport {
   max-height: 70vh;
   overflow: auto;
   background: var(--surface);
 }
+.sheet-viewport:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
 .sheet-grid {
   border-collapse: separate;
   border-spacing: 0;
@@ -286,7 +313,7 @@ def render_workbook_page(
             f'<a href="{html_escape(csvw_rel)}">CSVW metadata</a>'
             "</div>"
             "</div>"
-            f"{render_grid(rows)}"
+            f"{render_grid(rows, f'{name} data')}"
             "</section>"
         )
 
@@ -305,6 +332,7 @@ def render_workbook_page(
         )
     if home_href:
         actions.insert(0, f'<a href="{html_escape(home_href)}">Archive index</a>')
+        actions.insert(1, '<a href="' + html_escape(home_href.rstrip("/") + "/sitemap.xml") + '">Sitemap</a>')
     if repo_href:
         actions.append(f'<a href="{html_escape(repo_href)}">Repository</a>')
 
@@ -325,6 +353,7 @@ def render_workbook_page(
   <style>{workbook_css(len(tabs), font_asset_prefix)}</style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="workbook-header">
     <div>
       <p class="eyebrow">CSV-backed spreadsheet archive</p>
@@ -335,7 +364,7 @@ def render_workbook_page(
       {''.join(actions)}
     </nav>
   </header>
-  <main class="workbook">
+  <main class="workbook" id="main-content" tabindex="-1">
     <div class="sheet-frame">
       {''.join(inputs)}
       <div class="sheet-panels">

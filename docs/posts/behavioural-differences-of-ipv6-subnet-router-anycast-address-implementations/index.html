@@ -17,6 +17,7 @@
   <script src="../../assets/archive.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="../../" aria-label="daryllswer.com Archive home">
     <img class="brand-mark" src="../../assets/brand/01_DS_Favicon_Dark_Mode-512.png" alt="" width="36" height="36" decoding="async">
@@ -24,11 +25,12 @@
   </a>
   <nav class="site-nav" aria-label="Primary">
     <a href="../../">Index</a>
+    <a href="../../sitemap.xml">Sitemap</a>
     <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
     <a href="https://www.daryllswer.com/">Canonical site</a>
   </nav>
 </header>
-<main class="article-shell">
+<main class="article-shell" id="main-content" tabindex="-1">
   <article class="article">
     <header class="article-header">
       <p class="meta">28 August 2023 / Networking</p>
@@ -37,7 +39,7 @@
       <img class="featured-image" src="assets/Subnet-Router-Anycast.jpg" alt="">
     </header>
     <div class="article-body">
-      <p class="archive-rights-notice" data-archive-rights-notice="true"><strong>Copyright:</strong> © 2026 Daryll Swer. All rights reserved.</p><p class="wp-block-paragraph"><strong><strong>This article has been published on the <a href="https://blog.apnic.net/2023/08/28/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/" target="_blank" rel="noopener noreferrer">APNIC blog</a> as well.</strong></strong></p>
+      <p class="archive-rights-notice" data-archive-rights-notice="true"><strong>Copyright:</strong> © 2026 Daryll Swer. All rights reserved.</p><p class="wp-block-paragraph"><strong><strong>This article has been published on the <a href="https://blog.apnic.net/2023/08/28/behavioural-differences-of-ipv6-subnet-router-anycast-address-implementations/" rel="noopener noreferrer" target="_blank">APNIC blog</a> as well.</strong></strong></p>
 
 
 
@@ -131,11 +133,11 @@ anycast fe80:: dev veth7c6a363 proto kernel metric 0 pref medium</code></pre>
 
 
 
-<figure class="wp-block-table is-style-regular"><table class="has-fixed-layout"><thead><tr><th class="has-text-align-left" data-align="left">Vendor</th><th>ICMPv6</th><th>Listening on daemons</th></tr></thead><tbody><tr><td class="has-text-align-left" data-align="left">Arista</td><td>Yes</td><td>No</td></tr><tr><td class="has-text-align-left" data-align="left">Juniper (FreeBSD)</td><td>No</td><td>No</td></tr><tr><td class="has-text-align-left" data-align="left">Cisco</td><td>Yes</td><td>No</td></tr><tr><td class="has-text-align-left" data-align="left">Linux (Cumulus, MikroTik)</td><td>Yes</td><td>Yes</td></tr></tbody></table><figcaption class="wp-element-caption">Table-1 Vendor Behavioural Differences</figcaption></figure>
+<figure class="wp-block-table is-style-regular"><div class="table-wrap" role="region" tabindex="0" aria-label="Scrollable table: Vendor"><table class="has-fixed-layout"><thead><tr><th class="has-text-align-left">Vendor</th><th>ICMPv6</th><th>Listening on daemons</th></tr></thead><tbody><tr><td class="has-text-align-left">Arista</td><td>Yes</td><td>No</td></tr><tr><td class="has-text-align-left">Juniper (FreeBSD)</td><td>No</td><td>No</td></tr><tr><td class="has-text-align-left">Cisco</td><td>Yes</td><td>No</td></tr><tr><td class="has-text-align-left">Linux (Cumulus, MikroTik)</td><td>Yes</td><td>Yes</td></tr></tbody></table></div><figcaption class="wp-element-caption">Table-1 Vendor Behavioural Differences</figcaption></figure>
 
 
 
-<p class="wp-block-paragraph">Linux-driven OSes like Cumulus Linux (or RouterOS) listens on the anycast address, unless you either configured explicit ACLs, bind the daemon only to specific addresses, or made sure the daemons are <a href="https://docs.nvidia.com/networking-ethernet-software/cumulus-linux-55/System-Configuration/Authentication-Authorization-and-Accounting/SSH-for-Remote-Access/#ssh-and-vrfs" target="_blank" rel="noopener noreferrer">listening only on a MGMT VRF</a>. But even if they are listening only on an MGMT VRF, if there are anycast addresses within that VRF, they would be accessible over the anycast address. Although it is Linux-based, it appears that the default behaviour of listening on the anycast address is not applicable to Arista EOS, perhaps due to vendor abstraction and modifications.</p>
+<p class="wp-block-paragraph">Linux-driven OSes like Cumulus Linux (or RouterOS) listens on the anycast address, unless you either configured explicit ACLs, bind the daemon only to specific addresses, or made sure the daemons are <a href="https://docs.nvidia.com/networking-ethernet-software/cumulus-linux-55/System-Configuration/Authentication-Authorization-and-Accounting/SSH-for-Remote-Access/#ssh-and-vrfs" rel="noopener noreferrer" target="_blank">listening only on a MGMT VRF</a>. But even if they are listening only on an MGMT VRF, if there are anycast addresses within that VRF, they would be accessible over the anycast address. Although it is Linux-based, it appears that the default behaviour of listening on the anycast address is not applicable to Arista EOS, perhaps due to vendor abstraction and modifications.</p>
 
 
 

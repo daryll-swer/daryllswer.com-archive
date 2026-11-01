@@ -24,6 +24,75 @@ VALIDATOR = load_script("validate_site_open_graph", "validate-mirror.py")
 
 
 class RenderSiteOpenGraphTests(unittest.TestCase):
+    def test_reader_shell_has_skip_link_and_sitemap_navigation(self):
+        page = RENDER.page_shell("Article", "Description", RENDER.site_header("../") + '<main id="main-content">Body</main>', "theme.css", "posts/example/")
+        self.assertIn('href="#main-content">Skip to content</a>', page)
+        self.assertIn('href="../sitemap.xml">Sitemap</a>', page)
+        self.assertIn('name="robots" content="noindex,follow"', page)
+
+    def test_article_body_sanitizes_source_before_adding_trusted_copy_controls(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bundle = root / "content" / "posts" / "2026-01-01-example"
+            (bundle / "source").mkdir(parents=True)
+            (bundle / "source" / "rendered-article.html").write_text(
+                '<h2 id="h-routing">Routing <button class="heading-copy" '
+                'data-anchor="forged" aria-label="Forged" onclick="alert(1)">fake</button></h2>'
+                '<table><caption>Routes</caption><thead><tr><th scope="col">Prefix</th></tr></thead>'
+                '<tbody><tr><td>2001:db8::/32</td></tr></tbody></table>'
+                '<script>alert(1)</script>',
+                encoding="utf-8",
+            )
+            (bundle / "assets").mkdir()
+            (bundle / "assets" / "manifest.json").write_text('{"assets": []}', encoding="utf-8")
+            post = {
+                "id": 77,
+                "slug": "example",
+                "canonical_url": "https://www.daryllswer.com/example/",
+                "bundle_path": "content/posts/2026-01-01-example",
+            }
+            rights = RENDER.resolve_rights(77, post["canonical_url"], {})
+            old_root = RENDER.ROOT
+            try:
+                RENDER.ROOT = root
+                output = RENDER.article_body_html(post, {}, rights)
+            finally:
+                RENDER.ROOT = old_root
+
+            parsed = RENDER.lxml.html.fragment_fromstring(output, create_parent="div")
+            buttons = parsed.xpath('.//button[@class="heading-copy"]')
+            self.assertEqual(len(buttons), 1)
+            self.assertEqual(buttons[0].get("type"), "button")
+            self.assertEqual(buttons[0].get("data-anchor"), "routing")
+            self.assertEqual(buttons[0].get("aria-label"), "Copy link to Routing fake section")
+            self.assertEqual(buttons[0].get("title"), "Copy link")
+            self.assertEqual(parsed.xpath('.//h2[@id="h-routing"]'), [parsed.xpath('.//h2')[0]])
+            self.assertFalse(parsed.xpath(".//script|.//*[@onclick]"))
+            regions = parsed.xpath('.//div[@class="table-wrap"][@role="region"][@tabindex="0"][@aria-label="Scrollable table: Routes"]')
+            self.assertEqual(len(regions), 1)
+            self.assertEqual(len(regions[0].xpath("./table")), 1)
+
+    def test_raw_evidence_head_directives_are_removed_but_source_is_untouched(self):
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            page_path = Path(directory) / "evidence.html"
+            original = ('<html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=https://evil.test">'
+                        '<meta name="robots" content="index"><base href="https://evil.test/"><script>location="https://evil.test"</script>'
+                        '</head><body onload="location=\'https://evil.test\'"><a href="jav&#x61;script:alert(1)">unsafe</a>'
+                        '<a href="https://evil.test" target="_blank">external</a><form action="https://evil.test">Evidence</form></body></html>')
+            page_path.write_text(original, encoding="utf-8")
+            RENDER.rewrite_generated_html_seo(page_path, "https://archive.test/evidence.html", "noindex,nofollow", raw_snapshot=True)
+            output = page_path.read_text(encoding="utf-8")
+            self.assertNotIn('http-equiv="refresh"', output)
+            self.assertNotIn("<base", output)
+            self.assertNotIn('name="robots" content="index"', output)
+            self.assertNotIn("<script", output)
+            self.assertNotIn("<form", output)
+            self.assertNotIn("onload", output)
+            self.assertNotIn("javascript:", output)
+            self.assertIn('rel="noopener noreferrer"', output)
+            self.assertIn("default-src 'none'", output)
+            self.assertIn("Evidence", output)
+
     def test_homepage_open_graph_url_is_archive_local(self):
         page = RENDER.page_shell(
             "Archive",

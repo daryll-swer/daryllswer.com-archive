@@ -17,6 +17,7 @@
   <script src="../../assets/archive.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="../../" aria-label="daryllswer.com Archive home">
     <img class="brand-mark" src="../../assets/brand/01_DS_Favicon_Dark_Mode-512.png" alt="" width="36" height="36" decoding="async">
@@ -24,11 +25,12 @@
   </a>
   <nav class="site-nav" aria-label="Primary">
     <a href="../../">Index</a>
+    <a href="../../sitemap.xml">Sitemap</a>
     <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
     <a href="https://www.daryllswer.com/">Canonical site</a>
   </nav>
 </header>
-<main class="article-shell">
+<main class="article-shell" id="main-content" tabindex="-1">
   <article class="article">
     <header class="article-header">
       <p class="meta">29 March 2021 / Networking</p>
@@ -254,7 +256,7 @@ add check-gateway=ping comment="Load Balancing Route to ISP 2" distance=1 gatewa
 
 
 
-<p class="wp-block-paragraph" style="font-size:14px">In <a href="../multi-wan-setups-with-retail-isps-part-1-theory/">part one</a>, you may have noticed the <a href="assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png">upload speed</a> is lower than what I claimed, and below is the explanation for that.</p>
+<p class="wp-block-paragraph" style="">In <a href="../multi-wan-setups-with-retail-isps-part-1-theory/">part one</a>, you may have noticed the <a href="assets/inline/Figure-2-IP-Address-is-intentionally-left-visible-as-it-poses-no-security-risk-Dynamic-IP-Address.png">upload speed</a> is lower than what I claimed, and below is the explanation for that.</p>
 
 
 
@@ -268,11 +270,11 @@ add check-gateway=ping comment="Load Balancing Route to ISP 2" distance=1 gatewa
 
 
 
-<p class="wp-block-paragraph" style="font-size:14px">The upload bandwidth never reached 300Mbps due to ISP1’s MTU of 1460 which resulted in packet fragmentation and hence affected throughput performance and was able to reach only an average of 170Mbps for upload. ISP2’s MTU is a straight 1500 and was able to reach its advertised speed, which I verified by looking at the link rate on the router itself. Since MRU for both links were 1500, download bandwidth was able to reach its advertised speed on both links.</p>
+<p class="wp-block-paragraph" style="">The upload bandwidth never reached 300Mbps due to ISP1’s MTU of 1460 which resulted in packet fragmentation and hence affected throughput performance and was able to reach only an average of 170Mbps for upload. ISP2’s MTU is a straight 1500 and was able to reach its advertised speed, which I verified by looking at the link rate on the router itself. Since MRU for both links were 1500, download bandwidth was able to reach its advertised speed on both links.</p>
 
 
 
-<p class="wp-block-paragraph" style="font-size:14px">This is why MTU should be taken care of to prevent issues.</p>
+<p class="wp-block-paragraph" style="">This is why MTU should be taken care of to prevent issues.</p>
 
     </div>
     <footer class="article-footer">

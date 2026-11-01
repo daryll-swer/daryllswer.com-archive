@@ -15,8 +15,10 @@ import urllib.parse
 from pathlib import Path
 
 from font_assets import FONT_BODY_STACK, FONT_HEADING_STACK, copy_font_assets, font_face_css
+from html_sanitizer import sanitize_article_html
 from rights_policy import html_notice_count, resolve_rights, rights_notice_html
 from sheet_workbook import render_workbook_page
+from sheet_pages import refresh_sheet_pages
 from wordpress_palette import wordpress_palette_css
 
 try:
@@ -343,35 +345,6 @@ def replace_verse_blocks(root) -> None:
         pre.getparent().replace(pre, quote)
 
 
-def wrap_iframes(root) -> None:
-    for iframe in list(root.xpath(".//iframe")):
-        src = iframe.get("src") or ""
-        title = iframe.get("title") or "Embedded media"
-        iframe.attrib.pop("width", None)
-        iframe.attrib.pop("height", None)
-        iframe.attrib.pop("frameborder", None)
-        iframe.attrib.pop("scrolling", None)
-        iframe.set("loading", "lazy")
-        iframe.set("class", "media-frame")
-
-        wrapper = lxml.html.Element("div", {"class": "media-embed"})
-        label = lxml.html.Element("p", {"class": "embed-label"})
-        label.text = title
-        fallback = lxml.html.Element("p", {"class": "embed-fallback"})
-        link = lxml.html.Element("a", {"href": src, "target": "_blank", "rel": "noopener noreferrer"})
-        link.text = "Open audio player"
-        fallback.append(link)
-
-        tail = iframe.tail
-        iframe.tail = None
-        parent = iframe.getparent()
-        parent.replace(iframe, wrapper)
-        wrapper.append(label)
-        wrapper.append(iframe)
-        wrapper.append(fallback)
-        wrapper.tail = tail
-
-
 def rewrite_links(root, current_post: dict, canonical_to_slug: dict[str, str], exact_assets: dict[str, str], keyed_assets: dict[str, str]) -> None:
     current_base = current_post["canonical_url"]
     for anchor in root.xpath(".//a[@href]"):
@@ -427,32 +400,46 @@ def rewrite_images(root, current_post: dict, exact_assets: dict[str, str], keyed
         image.set("decoding", image.get("decoding") or "async")
 
 
-def remove_unsafe_attrs(root) -> None:
-    for element in root.iter():
-        for attr in list(element.attrib):
-            if attr.lower().startswith("on"):
-                del element.attrib[attr]
-    for bad in list(root.xpath(".//script|.//style|.//form")):
-        bad.drop_tree()
+def wrap_article_tables(root) -> None:
+    for table in list(root.xpath(".//table")):
+        caption = table.xpath("./caption")
+        headers = table.xpath("./thead//th") or table.xpath(".//th")
+        label = " ".join((caption[0] if caption else headers[0]).itertext()).strip() if caption or headers else "Article data"
+        wrapper = lxml.html.Element(
+            "div",
+            {
+                "class": "table-wrap",
+                "role": "region",
+                "tabindex": "0",
+                "aria-label": f"Scrollable table: {label[:120]}",
+            },
+        )
+        tail = table.tail
+        table.tail = None
+        table.getparent().replace(table, wrapper)
+        wrapper.append(table)
+        wrapper.tail = tail
 
 
 def article_body_html(post: dict, canonical_to_slug: dict[str, str], rights: dict | None = None) -> str:
     bundle = ROOT / post["bundle_path"]
     raw = (bundle / "source" / "rendered-article.html").read_text(encoding="utf-8", errors="replace")
-    root = lxml.html.fragment_fromstring(raw, create_parent="div")
+    safe_source = sanitize_article_html(raw)
+    root = lxml.html.fragment_fromstring(safe_source, create_parent="div")
     rights = rights or resolve_rights(post["id"], post["canonical_url"], {})
     exact_assets, keyed_assets = build_asset_maps(bundle)
-    remove_unsafe_attrs(root)
     replace_verse_blocks(root)
     rewrite_images(root, post, exact_assets, keyed_assets)
     rewrite_links(root, post, canonical_to_slug, exact_assets, keyed_assets)
-    wrap_iframes(root)
     ensure_heading_ids(root)
     add_heading_permalink_controls(root)
     if html_notice_count(root, rights) == 0:
         notice = lxml.html.fragment_fromstring(rights_notice_html(rights), create_parent="div")
         root.insert(0, notice[0])
-    return "".join(lxml.html.tostring(child, encoding="unicode") for child in root)
+    wrap_article_tables(root)
+    return html_lib.escape(root.text or "", quote=False) + "".join(
+        lxml.html.tostring(child, encoding="unicode") for child in root
+    )
 
 
 def page_shell(
@@ -491,6 +478,7 @@ def page_shell(
   <link rel="stylesheet" href="{html_escape(css_href)}">{feed_link}{verification}{script}
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 {body}
 </body>
 </html>
@@ -511,6 +499,7 @@ def site_header(prefix: str = "") -> str:
   </a>
   <nav class="site-nav" aria-label="Primary">
     <a href="{home_href}">Index</a>
+    <a href="{prefix}sitemap.xml">Sitemap</a>
     <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
     <a href="https://www.daryllswer.com/">Canonical site</a>
   </nav>
@@ -541,7 +530,7 @@ def post_card(post: dict, metadata: dict) -> str:
 def render_home(posts: list[dict], metadata_by_slug: dict[str, dict], status: dict) -> None:
     cards = "\n".join(post_card(post, metadata_by_slug[post["slug"]]) for post in posts)
     body = f"""{site_header()}
-<main class="home">
+<main class="home" id="main-content" tabindex="-1">
   <section class="home-hero">
     <p class="eyebrow">Public mirror and long-term archive</p>
     <h1>{html_escape(ARCHIVE_HOME_TITLE)}</h1>
@@ -586,7 +575,7 @@ def render_post(post: dict, metadata: dict, canonical_to_slug: dict[str, str], s
     category_text = ", ".join(c.get("name", "") for c in categories if c.get("name"))
     body_html = article_body_html(post, canonical_to_slug, metadata.get("rights"))
     body = f"""{site_header("../../")}
-<main class="article-shell">
+<main class="article-shell" id="main-content" tabindex="-1">
   <article class="article">
     <header class="article-header">
       <p class="meta">{html_escape(format_date(post.get("published")))}{html_escape(" / " + category_text) if category_text else ""}</p>
@@ -656,21 +645,47 @@ def rewrite_generated_html_seo(
     raw_snapshot: bool = False,
 ) -> None:
     text = page.read_text(encoding="utf-8", errors="replace")
+    if raw_snapshot:
+        document = lxml.html.document_fromstring(text)
+        for element in list(document.xpath("//script|//base|//iframe|//object|//embed")):
+            element.drop_tree()
+        for form in list(document.xpath("//form")):
+            form.drop_tag()
+        for control in list(document.xpath("//input|//button|//select|//textarea")):
+            control.drop_tree()
+        for element in document.iter():
+            for attribute in list(element.attrib):
+                if attribute.lower().startswith("on"):
+                    del element.attrib[attribute]
+                elif attribute.lower() in {"href", "src", "action", "formaction"}:
+                    value = element.get(attribute) or ""
+                    scheme = urllib.parse.urlsplit(value).scheme.lower()
+                    safe_data_image = attribute.lower() == "src" and value.lower().startswith(
+                        ("data:image/png;", "data:image/jpeg;", "data:image/gif;", "data:image/webp;")
+                    )
+                    if scheme and scheme not in {"http", "https", "mailto", "tel"} and not safe_data_image:
+                        del element.attrib[attribute]
+            if isinstance(element.tag, str) and element.tag.lower() == "a" and element.get("target", "").lower() == "_blank":
+                rel = set((element.get("rel") or "").split())
+                element.set("rel", " ".join(sorted(rel | {"noopener", "noreferrer"})))
+        for meta in list(document.xpath("//meta")):
+            name = (meta.get("name") or "").lower()
+            if meta.get("charset") or name == "viewport":
+                continue
+            meta.drop_tree()
+        head = document.find("head")
+        if head is None:
+            raise SystemExit(f"Cannot contain raw evidence; missing <head> in {page}")
+        text = lxml.html.tostring(document, encoding="unicode", doctype="<!doctype html>")
     patterns = [
         r"\s*<meta\s+name=[\"']robots[\"'][^>]*>",
         r"\s*<link\s+rel=[\"']canonical[\"'][^>]*>",
         r"\s*<meta\s+property=[\"']og:url[\"'][^>]*>",
     ]
     if raw_snapshot:
-        # Google-published HTML includes fallback JavaScript that redirects to
-        # Google when its application runtime is unavailable.  Archive copies
-        # are evidence artefacts, so keep the bytes as text but prevent scripts,
-        # refreshes, forms, and external subresource loads from executing.
-        patterns.extend([
-            r"\s*<meta\b(?=[^>]*\bhttp-equiv\s*=\s*[\"']?refresh\b)[^>]*>",
-            r"\s*<meta\b(?=[^>]*\bhttp-equiv\s*=\s*[\"']?content-security-policy\b)[^>]*>",
-            r"\s*<base\b[^>]*>",
-        ])
+        # This Pages derivative is parsed, inert, and stripped of redirects and
+        # active elements. The canonical source evidence remains untouched.
+        patterns.extend([r"\s*<meta\b(?=[^>]*\bname=[\"']robots[\"'])[^>]*>", r"\s*<base\b[^>]*>"])
     for pattern in patterns:
         text = re.sub(pattern, "", text, flags=re.I)
     tags = (
@@ -688,6 +703,7 @@ def rewrite_generated_html_seo(
 def render_sheet_page(status: dict) -> None:
     source_dir = ROOT / "data" / "sheets" / SHEET_SLUG
     manifest = load_json(source_dir / "manifest.json")
+    manifest = refresh_sheet_pages(ROOT, source_dir, manifest)
     out_dir = OUT / "sheets" / SHEET_SLUG
     write_text(
         out_dir / "index.html",
@@ -731,20 +747,6 @@ def render_sheet_page(status: dict) -> None:
             "noindex,nofollow",
             raw_snapshot=True,
         )
-
-
-def render_robots(status: dict) -> None:
-    state = seo_state(status)
-    write_text(
-        OUT / "robots.txt",
-        "\n".join([
-            "User-agent: *",
-            "Allow: /",
-            f"# Archive SEO state: {state}",
-            f"Sitemap: {PAGES_BASE_URL}sitemap.xml",
-            "",
-        ]),
-    )
 
 
 def sitemap_lastmod(value: str | None) -> str | None:
@@ -896,9 +898,6 @@ def render_css() -> None:
     --code-text: #f7fafc;
   }
 }
-html {
-  overflow-x: hidden;
-}
 body {
   margin: 0;
   background: var(--bg);
@@ -906,9 +905,14 @@ body {
   font-family: var(--font-body);
   font-weight: 400;
   line-height: 1.65;
-  overflow-x: hidden;
 }
-a { color: var(--accent); text-decoration-thickness: .08em; text-underline-offset: .18em; }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible {
+  outline: 3px solid var(--accent-2);
+  outline-offset: 3px;
+}
+.skip-link { position: absolute; z-index: 100; inset: .5rem auto auto .5rem; padding: .5rem .75rem; transform: translateY(-160%); background: var(--surface); color: var(--text); }
+.skip-link:focus { transform: translateY(0); }
+a { color: var(--accent); text-decoration-thickness: .08em; text-underline-offset: .18em; overflow-wrap: anywhere; }
 a:hover { color: var(--accent-2); }
 .site-header, .home, .post-card, .site-footer {
   font-family: var(--font-body);
@@ -927,12 +931,16 @@ a:hover { color: var(--accent-2); }
 }
 .brand {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: .65rem;
   color: var(--text);
   text-decoration: none;
   min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
+.brand > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
 .brand-mark {
   display: block;
   flex: 0 0 auto;
@@ -980,8 +988,8 @@ h1 { margin: 0 0 1rem; max-width: 900px; font-size: 3.4rem; }
   border-radius: 8px;
   min-width: 0;
 }
-.post-card-image { display: block; min-height: 160px; border-radius: 6px; overflow: hidden; background: var(--surface-alt); }
-.post-card-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.post-card-image { display: block; width: 100%; min-width: 0; max-width: 100%; min-height: 160px; border-radius: 6px; overflow: hidden; background: var(--surface-alt); }
+.post-card-image img { width: 100%; max-width: 100%; height: 100%; object-fit: cover; display: block; }
 .post-card-body { min-width: 0; }
 .post-card h2 { margin: .15rem 0 .55rem; font-size: 1.55rem; }
 .post-card h2 a { color: var(--text); text-decoration: none; }
@@ -1013,6 +1021,7 @@ h1 { margin: 0 0 1rem; max-width: 900px; font-size: 3.4rem; }
 .article-body h6 {
   scroll-margin-top: 1.25rem;
 }
+.article-body a { overflow-wrap: anywhere; }
 .article-body h2 { margin-top: 2.2rem; padding-top: .3rem; }
 .article-body h3 { margin-top: 1.8rem; }
 .heading-title-link {
@@ -1105,10 +1114,8 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface-alt);
-  overflow: hidden;
 }
 .embed-label { margin: 0 0 .5rem; font-weight: 700; }
-.media-frame { display: block; width: 100%; height: 52px; min-height: 52px; border: 0; background: var(--surface); }
 .embed-fallback { margin: .65rem 0 0; font-size: .92rem; }
 .article-footer, .site-footer {
   max-width: 1180px;
@@ -1132,13 +1139,22 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   font-weight: 700;
 }
 .button.secondary { background: var(--surface); color: var(--accent); border: 1px solid var(--border); }
-.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+.table-wrap { min-width: 0; max-width: 100%; overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+.table-wrap:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media print {
+  body { background: #fff; color: #000; }
+  .site-nav, .skip-link, .heading-permalink { display: none !important; }
+  .article-shell, .article { max-width: none; margin: 0; padding: 0; }
+  a { color: inherit; }
+  img, figure, table { break-inside: avoid; }
+  .table-wrap, .sheet-viewport { overflow: visible; max-height: none; }
+}
 table { width: 100%; border-collapse: collapse; }
 th, td { padding: .75rem; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
 th { color: var(--muted); font-size: .85rem; text-transform: uppercase; }
 @media (max-width: 760px) {
   .site-header { align-items: flex-start; flex-direction: column; }
-  .post-card { grid-template-columns: 1fr; }
+  .post-card { grid-template-columns: minmax(0, 1fr); }
   .post-card-image { aspect-ratio: 16 / 9; }
   h1 { font-size: 2.2rem; }
   .post-card h2 { font-size: 1.3rem; }
@@ -1216,7 +1232,6 @@ def main() -> int:
     render_sheet_page(status)
     for post in posts:
         render_post(post, metadata_by_slug[post["slug"]], canonical_to_slug, status)
-    render_robots(status)
     render_sitemap(posts, metadata_by_slug, status)
     render_feed(posts, metadata_by_slug, canonical_to_slug, status)
     write_text(OUT / ".nojekyll", "")

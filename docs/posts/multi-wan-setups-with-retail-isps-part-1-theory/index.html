@@ -17,6 +17,7 @@
   <script src="../../assets/archive.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="../../" aria-label="daryllswer.com Archive home">
     <img class="brand-mark" src="../../assets/brand/01_DS_Favicon_Dark_Mode-512.png" alt="" width="36" height="36" decoding="async">
@@ -24,11 +25,12 @@
   </a>
   <nav class="site-nav" aria-label="Primary">
     <a href="../../">Index</a>
+    <a href="../../sitemap.xml">Sitemap</a>
     <a href="https://github.com/daryll-swer/daryllswer.com-archive">Repository</a>
     <a href="https://www.daryllswer.com/">Canonical site</a>
   </nav>
 </header>
-<main class="article-shell">
+<main class="article-shell" id="main-content" tabindex="-1">
   <article class="article">
     <header class="article-header">
       <p class="meta">28 March 2021 / Networking</p>
@@ -78,7 +80,7 @@
 
 
 
-<li><span style="font-size: 1em;">Load Balancing</span>.
+<li><span style="">Load Balancing</span>.
 <ul class="wp-block-list">
 <li>Where traffic is split/balanced between the available uplinks.</li>
 
@@ -92,7 +94,7 @@
 
 <li>You can route specific destination IPv4/IPv6 addresses/prefixes via a specific WAN interface that happens to have better routing to the said subnets (example: ISP2 has lower latency to Cloudflare’s DNS resolvers when compared to ISP1).
 <ul class="wp-block-list">
-<li>I have done exactly just this <a href="https://twitter.com/DaryllSwer/status/1350443020949155840" target="_blank" rel="noopener noreferrer">here</a>.</li>
+<li>I have done exactly just this <a href="https://twitter.com/DaryllSwer/status/1350443020949155840" rel="noopener noreferrer" target="_blank">here</a>.</li>
 </ul>
 </li>
 </ul>
@@ -130,7 +132,7 @@
 
 
 
-<li>Also, likely that they will only give a single /64 IPv6 prefix, which makes subnetting impossible without breaking SLAAC (Read <a href="https://www.techrepublic.com/article/androids-lack-of-dhcpv6-support-frustrates-enterprise-network-admins/" target="_blank" rel="noopener noreferrer">Android</a>).</li>
+<li>Also, likely that they will only give a single /64 IPv6 prefix, which makes subnetting impossible without breaking SLAAC (Read <a href="https://www.techrepublic.com/article/androids-lack-of-dhcpv6-support-frustrates-enterprise-network-admins/" rel="noopener noreferrer" target="_blank">Android</a>).</li>
 </ul>
 </li>
 </ul>
@@ -150,11 +152,11 @@
 
 
 <ul class="wp-block-list">
-<li>ISP1 (<a href="https://bgp.tools/as/9829" target="_blank" rel="noopener noreferrer">AS9829</a>) has a 200Mbps symmetrical bandwidth (at the time of deployment/testing).</li>
+<li>ISP1 (<a href="https://bgp.tools/as/9829" rel="noopener noreferrer" target="_blank">AS9829</a>) has a 200Mbps symmetrical bandwidth (at the time of deployment/testing).</li>
 
 
 
-<li>ISP2 (<a href="https://bgp.tools/as/135756" target="_blank" rel="noopener noreferrer">AS135756</a>) has a 100Mbps symmetrical bandwidth (at the time of deployment/testing).</li>
+<li>ISP2 (<a href="https://bgp.tools/as/135756" rel="noopener noreferrer" target="_blank">AS135756</a>) has a 100Mbps symmetrical bandwidth (at the time of deployment/testing).</li>
 
 
 
