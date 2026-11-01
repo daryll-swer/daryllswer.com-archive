@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: archive reliability and preservation hardening
-- Status: reserved-label reflow fix verified locally; publication in progress
+- Status: reserved-label reflow fix published and verified
 - Last updated: 2026-11-01
 - Implementer role/model/thread: four delegated `implementer-luna` workers,
   pinned to `gpt-6-luna` with high reasoning, own health/reconciliation,
@@ -16,6 +16,14 @@
   workstream; this is not a continuous quota-monitoring claim
 
 ## Latest Delivery
+
+- Reserved-summary reflow correction: `eac4ebf` published with passing
+  read-only CI `41328369083` and Pages deployment `41328369091`. Live visual
+  bytes match the locally browser-tested output exactly. All 114 regressions,
+  compilation, repeat-render determinism, offline validation (zero errors and
+  warnings), safety scanning and whitespace checks pass. Owner requested
+  background-only work after native zoom QA; final live verification used HTTP,
+  not further foreground Chrome interaction. VoiceOver remains pending.
 
 - Archive reliability and preservation hardening:
   - Implemented from clean revision `2481786` in four reviewable commits:

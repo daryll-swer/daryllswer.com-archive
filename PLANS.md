@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: reserved-label reflow fix verified locally; publication in progress
+- Status: reserved-label reflow fix published and verified
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-11-01
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -21,7 +21,7 @@
 
 ## Current Status / Next Pickup
 
-### Active: Reserved-Summary Reflow Fix Publication
+### Completed: Reserved-Summary Reflow Fix
 
 - User requested correction of the native Chrome 400% zoom defect and a concise
   owner-facing list of remaining checks/decisions.
@@ -51,6 +51,12 @@
   deterministic repeated rendering, offline validation (zero errors/warnings),
   public-safety scan and whitespace checks. Changed generated material is
   limited to visual CSS and its manifest byte counts/checksums.
+- Published fix: `eac4ebf`; read-only CI `41328369083` and Pages deployment
+  `41328369091` passed. Background HTTP retrieval of the deployed visual is
+  byte-identical to the locally browser-tested output (SHA-256
+  `0dfcbfc5aa4ba721ecadeda844fb7419be683f30770a67f98e701fbaf9a0d61e`).
+  No further foreground browser interaction was performed after the request
+  to work in the background. Next action: owner reviews/decisions below.
 
 ### Owner Review / Deferred Decisions
 
@@ -126,8 +132,8 @@
   run `41326791847` and its Pages successor `41326833002` passed. The canonical
   clean path skipped content rendering and its deployment recorded the new
   bot revision `0a8192d`, not the older triggering revision.
-- Reflow follow-up: corrected and locally verified as recorded above;
-  publication is in progress. Screen-reader QA remains pending by owner
+- Reflow follow-up: corrected, published and verified as recorded above.
+  Screen-reader QA remains pending by owner
   decision; do not claim accessibility conformance. Dependency review, off-site
   storage and external scheduling remain separate outstanding work/decisions.
 
