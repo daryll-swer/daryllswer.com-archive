@@ -19,6 +19,7 @@ const routes = [
   '/sheets/as141253-ipv6-architecture-example/visual.html',
 ];
 const widths = [320, 360, 390, 768, 1024, 1440, 1920, 2560];
+const reservedSummaryWidths = [320, 390, 480, 481, 540, 640, 760, 761];
 const screenshots = path.join(require('node:os').tmpdir(), 'daryllswer-reader-safety-shots');
 
 async function settleImages(page) {
@@ -70,6 +71,23 @@ async function checkLayout(page, route, width, failures) {
   if (state.broken.length) failures.push(`${route} @ ${width}: broken images ${state.broken.join(', ')}`);
 }
 
+async function checkReservedLabelReadability(page, route, width, failures) {
+  const result = await page.locator('.reserved-group > summary .reserved-label').evaluateAll((labels) => labels.map((label) => {
+    const rect = label.getBoundingClientRect();
+    const style = getComputedStyle(label);
+    const lineHeight = Number.parseFloat(style.lineHeight) || Number.parseFloat(style.fontSize) * 1.2;
+    return {
+      text: label.textContent.trim(),
+      width: rect.width,
+      lines: rect.height / lineHeight,
+    };
+  }));
+  const unreadable = result.filter((label) => label.width < 64 || label.lines > 4.25);
+  if (result.length !== 13 || unreadable.length) {
+    failures.push(`${route} @ ${width}: reserved labels are missing or compressed ${JSON.stringify({ count: result.length, unreadable })}`);
+  }
+}
+
 async function main() {
   const browser = await chromium.launch({
     headless: true,
@@ -94,13 +112,25 @@ async function main() {
           const response = await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
           if (!response || response.status() !== 200) failures.push(`${route} @ ${width} ${colorScheme}: HTTP ${response && response.status()}`);
           await settleImages(page);
-          if (route.includes('/visual.html')) await page.evaluate(() => document.querySelectorAll('details').forEach((item) => { item.open = true; }));
+          if (route.includes('/visual.html')) {
+            await page.evaluate(() => document.querySelectorAll('details').forEach((item) => { item.open = true; }));
+            await checkReservedLabelReadability(page, route, width, failures);
+          }
           await checkLayout(page, `${route} ${colorScheme}`, width, failures);
           if (route === '/' && width === 320) await page.screenshot({ path: path.join(screenshots, `home-320-${colorScheme}.png`) });
           if (route.includes('/visual.html') && width <= 390 && colorScheme === 'light') {
             await page.locator('#full-hierarchy').scrollIntoViewIfNeeded();
             await page.screenshot({ path: path.join(screenshots, `visual-expanded-${width}.png`) });
           }
+        }
+      }
+      if (route.includes('/visual.html')) {
+        await page.emulateMedia({ colorScheme: 'light' });
+        for (const width of reservedSummaryWidths) {
+          await page.setViewportSize({ width, height: 900 });
+          await page.evaluate(() => document.querySelectorAll('details').forEach((item) => { item.open = true; }));
+          await checkReservedLabelReadability(page, `${route} breakpoint`, width, failures);
+          await checkLayout(page, `${route} breakpoint`, width, failures);
         }
       }
       await page.setViewportSize({ width: 320, height: 800 });

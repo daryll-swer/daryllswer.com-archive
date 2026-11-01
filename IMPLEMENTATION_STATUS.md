@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: archive reliability and preservation hardening
-- Status: implemented and hosted verified; manual accessibility limits recorded
+- Status: reserved-label reflow fix verified locally; publication in progress
 - Last updated: 2026-11-01
 - Implementer role/model/thread: four delegated `implementer-luna` workers,
   pinned to `gpt-6-luna` with high reasoning, own health/reconciliation,
@@ -48,8 +48,22 @@
     page-level overflow or console errors in the final isolated run. Checks
     include expanded hierarchy/static leaves, keyboard controls, image/font
     loading, no-JavaScript use, print visibility and 200% text enlargement.
-    The 400% check is a 1280-to-320 CSS-pixel viewport reflow approximation,
-    not a native browser-zoom or assistive-technology conformance audit.
+    That initial 400% check was a 1280-to-320 CSS-pixel viewport reflow
+    approximation, not native browser zoom. A subsequent live Chrome check
+    used the native menu-confirmed 400% setting (378 CSS-pixel viewport):
+    a nested reserved /64 summary compresses `Reserved` into a 2.37 CSS-pixel
+    column and wraps it vertically. No horizontal overflow is insufficient
+    evidence of readable layout. The generator now places count, label and
+    range on separate rows through 760 CSS px. All 13 labels pass 15 Chrome
+    widths from 320 through 2560 px, including both sides of the breakpoint.
+    Native 400% zoom now gives the first label about 198px of width and one
+    line; the previous 2.37px squeeze is resolved. Browser readability and
+    breakpoint checks plus a generated-CSS CI assertion cover the correction.
+    Generated visual HTML and manifest hashes are refreshed; data is unchanged.
+    Sampled homepage, DS/Swer prose, skip navigation, workbook arrow-key sheet
+    selection and podcast fallback presentation passed. All 21 expandable
+    hierarchy disclosures respond to bulk controls; 15 reserved singleton
+    cards remain static. Native zoom was restored to the original 100%.
   - Preservation fixtures verify checksum coverage, clean-commit selection,
     tamper/path rejection, extraction, and real-project offline validation
     without Git or source-network access. The actual export of
@@ -70,8 +84,9 @@
     Local canonical/Open Graph URLs, reader `noindex,follow`, homepage-only
     verification and sitemap, absent normal-state feed, removed `robots.txt`,
     and byte-identical controlled favicon were verified.
-  - Remaining intentional limits: VoiceOver was not enabled; native browser
-    zoom/screen-reader conformance is not claimed. Off-site storage and an
+  - Remaining intentional limits: VoiceOver was not enabled; native zoom was
+    exercised and the discovered defect was corrected, but accessibility
+    conformance is not claimed. Off-site storage and an
     independent scheduler remain deferred. Same-URL upstream media-byte
     replacement detection remains outside this implementation.
   - Ownership restoration: an absent Swer registry record for a reappearing

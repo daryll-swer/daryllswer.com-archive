@@ -1440,6 +1440,13 @@ def option_css() -> str:
   .branch-grid { grid-template-columns: 1fr; }
   .child-preview { grid-template-columns: 1fr; }
   .branch-stats { grid-template-columns: 1fr; }
+  .reserved-group > summary {
+    grid-template-columns: 1.3rem minmax(0, 1fr);
+  }
+  .reserved-count,
+  .reserved-label {
+    grid-column: 2;
+  }
 }
 @media (min-width: 1600px) {
   .branch-grid {

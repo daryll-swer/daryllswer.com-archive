@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: implemented and hosted verified - archive reliability and preservation hardening
+- Status: reserved-label reflow fix verified locally; publication in progress
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-11-01
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -20,6 +20,55 @@
 - Escalation rules: `ESCALATION.md`
 
 ## Current Status / Next Pickup
+
+### Active: Reserved-Summary Reflow Fix Publication
+
+- User requested correction of the native Chrome 400% zoom defect and a concise
+  owner-facing list of remaining checks/decisions.
+- Scope: reserved-summary grid sizing, a label-readability browser regression,
+  regenerated CSV-derived/Pages visual and manifest, and verification records.
+- Existing `implementer-luna` reader worker owns generator/test edits;
+  coordinator owns review, documentation, rendering and native Chrome QA.
+- Preserve exact prefix data, static singleton cards, native disclosure
+  behaviour, media bytes and all rights/SEO policy.
+- Verify focused/full regressions, render determinism, offline integrity,
+  safety scan, responsive expanded layouts and native 400% zoom. Leave
+  VoiceOver unchanged; restore Chrome zoom after the check.
+- Publication authorised by owner after local verification: normal commit/push
+  to main, then verify the explicit Pages deployment and live route.
+- Fix: at widths through 760 CSS px, count, label and exact range occupy
+  separate rows beside the disclosure marker. Wider presentation is unchanged.
+- Local Chrome verification: all 13 labels passed at 320, 360, 378, 390, 480,
+  481, 540, 640, 760, 761, 768, 1024, 1440, 1920 and 2560 CSS px, with no
+  page-level horizontal overflow. Native menu-confirmed 400% zoom passed:
+  the formerly 2.37px-wide label is about 198px wide and one line tall.
+  The original 100% zoom was restored. User then requested background-only
+  work; no further foreground Chrome actions are authorised in this task.
+- Added all-label browser checks, breakpoint-boundary cases and a generated
+  CSS assertion in the CI Python suite. Final publication verification uses
+  background HTTP/deployment checks rather than further foreground UI.
+- Final local gates passed: 114 regression tests, Python compilation,
+  deterministic repeated rendering, offline validation (zero errors/warnings),
+  public-safety scan and whitespace checks. Changed generated material is
+  limited to visual CSS and its manifest byte counts/checksums.
+
+### Owner Review / Deferred Decisions
+
+- Screen reader: VoiceOver remains unchanged by request. Arrange a later
+  manual check of headings, link names, table navigation and expanded/collapsed
+  announcements; automated keyboard tests are not a substitute.
+- Search accounts: confirm the submitted project sitemap reports Success in
+  Google Search Console and decide whether to complete Bing registration.
+  Current private-account status has not been inspected in this task.
+- Dependencies: four open Actions upgrade PRs (#1-#4) have successful CI.
+  They still require technical compatibility review before maintainer approval;
+  no expectation that the owner review unfamiliar source code personally.
+- Preservation: choose an off-site destination when ready. The verified local
+  export is not off-site redundancy; storage selection remains deferred.
+- Continuity: GitHub-only automation remains the selected scope. Decide later
+  whether to nominate a maintainer or add independent missed-run monitoring.
+- Optional future scope: same-URL upstream media-byte replacement detection is
+  not implemented and is not part of the reserved-label correction.
 
 ### Completed: Archive Reliability and Preservation Hardening
 
@@ -58,10 +107,17 @@
   validation both report zero errors/warnings, and a live dry-run found
   19/19 posts with no content drift. The four implementation commits were
   normally pushed and the Pages publishing mode changed to workflow.
-- Browser and generation gates are complete: 80 route/width/theme combinations
+- Previous automated browser and generation gates passed: 80 route/width/theme combinations
   plus keyboard, print, no-JavaScript, text enlargement and viewport-reflow
-  checks passed. Repeated rendering changes no bytes. Native 400% browser zoom
-  and screen-reader checks are not claimed.
+  checks passed. Repeated rendering changes no bytes. Subsequent native Chrome
+  400% zoom QA found a label-readability defect despite no page-level overflow:
+  the first nested reserved /64 summary gives its `Reserved` label only about
+  2.37 CSS px, wrapping the word vertically. The summary itself is about
+  244 CSS px wide at a 378 CSS-pixel viewport. Width-only checks missed this.
+  Homepage, DS/Swer article prose, workbook keyboard switching, skip navigation,
+  bulk hierarchy controls and podcast fallback links passed the sampled checks.
+  All 21 expandable disclosures open via Expand all and close via Collapse all;
+  15 singleton reserved cards remain static. Original 100% zoom was restored.
 - Export verification: 492 payload files from clean commit `134438e`, original
   and extracted checksum verification, network-blocked offline validation and
   the full restored-reader browser matrix passed. The local package is not an
@@ -70,10 +126,10 @@
   run `41326791847` and its Pages successor `41326833002` passed. The canonical
   clean path skipped content rendering and its deployment recorded the new
   bot revision `0a8192d`, not the older triggering revision.
-- Next action: normal reviewed maintenance and dependency-update PR review.
-  Do not claim screen-reader/native-zoom conformance; those manual checks
-  remain outside the completed browser evidence. Storage and external
-  scheduling decisions remain intentionally deferred.
+- Reflow follow-up: corrected and locally verified as recorded above;
+  publication is in progress. Screen-reader QA remains pending by owner
+  decision; do not claim accessibility conformance. Dependency review, off-site
+  storage and external scheduling remain separate outstanding work/decisions.
 
 - Current state:
   - Complete and hosted verified: owner-selected proprietary rights apply to

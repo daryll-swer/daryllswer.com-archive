@@ -54,6 +54,12 @@ class SheetPagesTests(unittest.TestCase):
             self.assertIn(b"Skip to content", visual)
             self.assertIn(b"../../sitemap.xml", visual)
             self.assertIn(b"@media print", visual)
+            visual_css = visual.decode("utf-8")
+            narrow_rules = visual_css.rsplit("@media (max-width: 760px)", 1)[1].split("@media", 1)[0]
+            self.assertIn(".reserved-group > summary", narrow_rules)
+            self.assertIn("grid-template-columns: 1.3rem minmax(0, 1fr)", narrow_rules)
+            self.assertIn(".reserved-label {", narrow_rules)
+            self.assertIn("grid-column: 2", narrow_rules)
             self.assertIn(b"Skip to content", workbook)
             self.assertIn(b'role="region" tabindex="0" aria-label="Prefixes data"', workbook)
             self.assertEqual(first["visual_model"]["sha256"], hashlib.sha256(visual).hexdigest())
