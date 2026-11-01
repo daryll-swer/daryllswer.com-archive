@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: in progress - archive reliability and preservation hardening
+- Status: implemented and hosted verified - archive reliability and preservation hardening
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-11-01
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -21,7 +21,7 @@
 
 ## Current Status / Next Pickup
 
-### Active: Archive Reliability and Preservation Hardening
+### Completed: Archive Reliability and Preservation Hardening
 
 - Approved scope: retain one repository/project Pages URL, GitHub-only
   automation, and add a local preservation export with restore verification.
@@ -56,15 +56,24 @@
   frozen probes. The owner-verified manager remains the recovery authority.
 - Current evidence: 114 regression tests passed, offline and separate live
   validation both report zero errors/warnings, and a live dry-run found
-  19/19 posts with no content drift. No remote write has occurred.
+  19/19 posts with no content drift. The four implementation commits were
+  normally pushed and the Pages publishing mode changed to workflow.
 - Browser and generation gates are complete: 80 route/width/theme combinations
   plus keyboard, print, no-JavaScript, text enlargement and viewport-reflow
   checks passed. Repeated rendering changes no bytes. Native 400% browser zoom
   and screen-reader checks are not claimed.
-- Next action: commit preservation tooling/documentation, export the clean
-  approved revision outside the repository, verify its restored reader,
-  push normally, switch Pages to workflow publication, and verify the exact
-  deployed revision plus a non-destructive canonical workflow run.
+- Export verification: 492 payload files from clean commit `134438e`, original
+  and extracted checksum verification, network-blocked offline validation and
+  the full restored-reader browser matrix passed. The local package is not an
+  off-site copy.
+- Hosted verification: CI `41326702821`, Pages `41326702763`, manual canonical
+  run `41326791847` and its Pages successor `41326833002` passed. The canonical
+  clean path skipped content rendering and its deployment recorded the new
+  bot revision `0a8192d`, not the older triggering revision.
+- Next action: normal reviewed maintenance and dependency-update PR review.
+  Do not claim screen-reader/native-zoom conformance; those manual checks
+  remain outside the completed browser evidence. Storage and external
+  scheduling decisions remain intentionally deferred.
 
 - Current state:
   - Complete and hosted verified: owner-selected proprietary rights apply to

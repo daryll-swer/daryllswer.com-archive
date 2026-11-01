@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: archive reliability and preservation hardening
-- Status: locally verified; export and hosted verification pending
+- Status: implemented and hosted verified; manual accessibility limits recorded
 - Last updated: 2026-11-01
 - Implementer role/model/thread: four delegated `implementer-luna` workers,
   pinned to `gpt-6-luna` with high reasoning, own health/reconciliation,
@@ -18,7 +18,11 @@
 ## Latest Delivery
 
 - Archive reliability and preservation hardening:
-  - Approved and in progress from clean revision `2481786`.
+  - Implemented from clean revision `2481786` in four reviewable commits:
+    `ff6e6ae` (health/recovery), `8dcb7d8` (reader safety/reflow),
+    `c9c6789` (offline validation/CI/deployment), and `134438e` (preservation
+    tooling and maintenance documentation). Published with normal pushes;
+    no history rewrite or unrelated source/media changes occurred.
   - Evidence: pending retirement fails live validation before persistence;
     retirement registry changes are missing from workflow allowlists;
     partial reader filtering retains executable URLs/iframe attributes;
@@ -48,8 +52,28 @@
     not a native browser-zoom or assistive-technology conformance audit.
   - Preservation fixtures verify checksum coverage, clean-commit selection,
     tamper/path rejection, extraction, and real-project offline validation
-    without Git or source-network access. Approved-commit export and hosted
-    verification remain pending.
+    without Git or source-network access. The actual export of
+    `134438ec2a13fa3b8f87931dc6ff6ed98bbca2b0` contains 492 payload files
+    (497 files and 128,438,325 bytes including BagIt tags). Its original and
+    independently extracted copies pass checksums; the restored real archive
+    passes offline validation with network calls blocked and the complete
+    browser matrix with external requests blocked. It is a local export,
+    not off-site redundancy.
+  - Hosted verification: read-only CI `41326702821` and explicit Pages run
+    `41326702763` passed for `134438e`. Pages publishing mode is now `workflow`
+    at the unchanged project URL. Manual canonical run `41326791847` passed,
+    skipped content rendering, and committed only monitoring state/reports as
+    `0a8192d`. Its completion triggered Pages run `41326833002`, which passed
+    and recorded that exact new revision (deployment `7475817482`).
+  - Live smoke: homepage, DS/Swer articles, workbook and IPv6 visual passed
+    at 390/1440 CSS px without overflow, broken images or console errors.
+    Local canonical/Open Graph URLs, reader `noindex,follow`, homepage-only
+    verification and sitemap, absent normal-state feed, removed `robots.txt`,
+    and byte-identical controlled favicon were verified.
+  - Remaining intentional limits: VoiceOver was not enabled; native browser
+    zoom/screen-reader conformance is not claimed. Off-site storage and an
+    independent scheduler remain deferred. Same-URL upstream media-byte
+    replacement detection remains outside this implementation.
   - Ownership restoration: an absent Swer registry record for a reappearing
     post 5324 is rejected by offline validation before workflow publication;
     a maintainer must restore the explicit approved rights record.
