@@ -6,8 +6,10 @@
 from __future__ import annotations
 
 import csv
+import argparse
 import datetime as dt
 import hashlib
+import importlib.util
 import json
 import re
 import sys
@@ -17,6 +19,8 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from PIL import Image
+from jsonschema import FormatChecker, validators
+from referencing import Registry, Resource
 
 try:
     import lxml.html
@@ -36,6 +40,9 @@ from rights_policy import (
 ROOT = Path(__file__).resolve().parents[1]
 UA = "daryllswer-com-archive-validator/1.0 (+https://www.daryllswer.com/)"
 POSTS_ENDPOINT = "https://www.daryllswer.com/wp-json/wp/v2/posts?per_page=100&_embed=1"
+MAX_REST_PAGES = 100
+REQUEST_TIMEOUT_SECONDS = 20
+DETECTOR_MODULE = None
 POST_SITEMAP = "https://www.daryllswer.com/post-sitemap.xml"
 PAGES_HOME_TITLE = "daryllswer.com – Archive"
 RIGHTS_REGISTRY_PATH = ROOT / "content" / "rights-registry.json"
@@ -138,7 +145,7 @@ def load_json(path: Path):
 
 def request(url: str) -> tuple[bytes, dict[str, str]]:
     req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "*/*"})
-    with urllib.request.urlopen(req, timeout=60) as resp:
+    with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT_SECONDS) as resp:
         return resp.read(), dict(resp.headers.items())
 
 
@@ -186,13 +193,37 @@ def validate_localisable_markdown_links(post_item: dict, markdown: str, archived
             errors.append(f"{post_item['slug']}: Markdown body still links archived canonical post externally: {href}")
 
 
-def check_required(data, schema, path: str, errors: list[str]) -> None:
-    if not isinstance(data, dict):
-        errors.append(f"{path}: expected object")
-        return
-    for key in schema.get("required", []):
-        if key not in data:
-            errors.append(f"{path}: missing required key `{key}`")
+def validate_json_schema(data: object, schema: object, path: str, errors: list[str]) -> bool:
+    if not isinstance(schema, dict):
+        errors.append(f"{path}: schema must be an object")
+        return False
+    try:
+        dialect = schema.get("$schema")
+        if not isinstance(dialect, str) or not dialect:
+            errors.append(f"{path}: schema must declare a non-empty $schema dialect")
+            return False
+        validator_class = validators.validator_for(schema, default=None)
+        if validator_class is None:
+            errors.append(f"{path}: unsupported JSON Schema dialect {dialect!r}")
+            return False
+        validator_class.check_schema(schema)
+        refs = {
+            "https://daryllswer.com/schemas/rights-registry.schema.json": load_json(RIGHTS_SCHEMA_PATH),
+            "https://www.daryllswer.com/schemas/rights-registry.schema.json": load_json(RIGHTS_SCHEMA_PATH),
+        }
+        registry = Registry().with_resources(
+            (uri, Resource.from_contents(contents)) for uri, contents in refs.items()
+        )
+        validator = validator_class(schema, registry=registry, format_checker=FormatChecker())
+        issues = sorted(validator.iter_errors(data), key=lambda error: (list(map(str, error.absolute_path)), error.message))
+        for issue in issues:
+            location = ".".join(map(str, issue.absolute_path)) or "$"
+            errors.append(f"{path}:{location}: {issue.message}")
+        return not issues
+    except Exception as exc:
+        detail = getattr(exc, "message", None) or str(exc)
+        errors.append(f"{path}: schema validation failed ({type(exc).__name__}): {detail}")
+        return False
 
 
 def validate_rights_record_shape(post_id: str, record: object, errors: list[str]) -> bool:
@@ -211,6 +242,7 @@ def validate_rights_registry(archive: dict, errors: list[str]) -> dict[str, dict
     else:
         try:
             schema = load_json(RIGHTS_SCHEMA_PATH)
+            validate_json_schema(load_json(RIGHTS_REGISTRY_PATH), schema, "content/rights-registry.json", errors) if RIGHTS_REGISTRY_PATH.exists() else None
             schema_record = (schema.get("$defs") or {}).get("rights")
             if not isinstance(schema_record, dict) or set(schema_record.get("required", [])) != set(RIGHTS_REQUIRED_FIELDS):
                 errors.append("rights registry schema does not define the approved rights record")
@@ -593,9 +625,18 @@ def validate_post(post_item: dict, errors: list[str], warnings: list[str], archi
         validate_excluded_operational_ctas(filtered_path, errors)
     if not metadata_path.exists():
         return
-    metadata = load_json(metadata_path)
-    schema = load_json(ROOT / "schemas" / "post-metadata.schema.json")
-    check_required(metadata, schema, rel(metadata_path), errors)
+    try:
+        metadata = load_json(metadata_path)
+        schema = load_json(ROOT / "schemas" / "post-metadata.schema.json")
+    except Exception as exc:
+        errors.append(f"{post_item['slug']}: metadata/schema parse failed: {type(exc).__name__}: {exc}")
+        return
+    if not validate_json_schema(metadata, schema, rel(metadata_path), errors):
+        return
+    if not isinstance(metadata, dict):
+        return
+    if not isinstance(metadata.get("source"), dict):
+        return
     canonical_fingerprint = (metadata.get("source") or {}).get("canonical_rendered_content_sha256")
     if not isinstance(canonical_fingerprint, str) or not re.fullmatch(r"[0-9a-f]{64}", canonical_fingerprint):
         errors.append(f"{post_item['slug']}: missing or malformed canonical rendered-content checksum")
@@ -619,9 +660,14 @@ def validate_post(post_item: dict, errors: list[str], warnings: list[str], archi
             if not target.exists():
                 errors.append(f"{post_item['slug']}: Markdown image missing: {img_path}")
     if asset_manifest_path.exists():
-        manifest = load_json(asset_manifest_path)
-        schema = load_json(ROOT / "schemas" / "asset-manifest.schema.json")
-        check_required(manifest, schema, rel(asset_manifest_path), errors)
+        try:
+            manifest = load_json(asset_manifest_path)
+            schema = load_json(ROOT / "schemas" / "asset-manifest.schema.json")
+        except Exception as exc:
+            errors.append(f"{post_item['slug']}: asset manifest/schema parse failed: {type(exc).__name__}: {exc}")
+            return
+        if not validate_json_schema(manifest, schema, rel(asset_manifest_path), errors):
+            return
         for asset in manifest.get("assets", []):
             local_path = asset.get("local_path")
             if not local_path:
@@ -653,6 +699,44 @@ def sitemap_urls() -> set[str]:
     return urls
 
 
+def rest_header(headers: dict[str, str], name: str) -> str:
+    matches = [value for key, value in headers.items() if isinstance(key, str) and key.lower() == name.lower()]
+    if not matches:
+        raise ValueError(f"WordPress REST pagination header {name} is missing")
+    if len(set(matches)) != 1:
+        raise ValueError(f"WordPress REST pagination header {name} is ambiguous")
+    return matches[0]
+
+
+def paginated_live_posts() -> tuple[list[dict], int | None]:
+    """Use the drift detector's bounded, classified fresh REST fetch."""
+    global DETECTOR_MODULE
+    if DETECTOR_MODULE is None:
+        path = ROOT / "scripts" / "check-canonical-drift.py"
+        spec = importlib.util.spec_from_file_location("validator_canonical_drift", path)
+        if spec is None or spec.loader is None:
+            raise RuntimeError("could not load canonical REST detector")
+        DETECTOR_MODULE = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(DETECTOR_MODULE)
+    posts, headers, not_modified = DETECTOR_MODULE.request_posts({}, fresh=True)
+    if not_modified or not isinstance(posts, list):
+        raise ValueError("WordPress REST did not return a complete fresh post list")
+    total = int(rest_header(headers, "X-WP-Total"))
+    pages = int(rest_header(headers, "X-WP-TotalPages"))
+    if not 1 <= pages <= MAX_REST_PAGES:
+        raise ValueError(f"WordPress REST page count {pages} is outside 1..{MAX_REST_PAGES}")
+    if total < 0 or len(posts) != total:
+        raise ValueError(f"WordPress REST pagination incomplete or out of bounds: fetched {len(posts)}, total {total}, pages {pages}")
+    if pages != max(1, (total + 99) // 100):
+        raise ValueError("WordPress REST total and advertised page count are inconsistent")
+    if any(not isinstance(item, dict) or not isinstance(item.get("id"), int) for item in posts):
+        raise ValueError("WordPress REST response contains a post without an integer ID")
+    ids = [item["id"] for item in posts]
+    if len(ids) != len(set(ids)):
+        raise ValueError("WordPress REST pagination returned duplicate post IDs")
+    return posts, total
+
+
 def classify_sitemap_difference(
     sitemap: set[str], archive: set[str]
 ) -> tuple[list[str], list[str], list[tuple[str, str]]]:
@@ -677,7 +761,8 @@ def validate_spreadsheet(errors: list[str], warnings: list[str]) -> dict | None:
         return None
     manifest = load_json(manifest_path)
     schema = load_json(ROOT / "schemas" / "spreadsheet-manifest.schema.json")
-    check_required(manifest, schema, rel(manifest_path), errors)
+    if not validate_json_schema(manifest, schema, rel(manifest_path), errors):
+        return None
     ods = manifest.get("ods", {})
     if not ods.get("path") or not (ROOT / ods["path"]).exists():
         errors.append("spreadsheet ODS export missing")
@@ -1517,17 +1602,8 @@ def validate_generated_seo_outputs(posts: list[dict], metadata_by_slug: dict[str
                 errors.append(f"docs/SEO_RECOVERY.md missing required recovery guidance: {marker}")
     if not (docs / "EXTERNAL_SOURCE_STATUS.md").exists():
         errors.append("docs/EXTERNAL_SOURCE_STATUS.md missing; run scripts/external_source_monitor.py")
-    robots = docs / "robots.txt"
     sitemap = docs / "sitemap.xml"
     feed = docs / "feed.xml"
-    if not robots.exists():
-        errors.append("docs/robots.txt missing; run make render-site")
-    else:
-        lines = robots.read_text(encoding="utf-8", errors="replace").splitlines()
-        if "User-agent: *" not in lines or "Allow: /" not in lines:
-            errors.append("docs/robots.txt must allow crawlers to observe page-level robots metadata")
-        if f"Sitemap: {PAGES_BASE_URL}sitemap.xml" not in lines:
-            errors.append("docs/robots.txt sitemap URL is incorrect")
     expected_urls = {PAGES_BASE_URL}
     if status_seo_state(status) == "archive_discovery":
         expected_urls.update(
@@ -1627,7 +1703,8 @@ def validate_archive_status(status: dict, registry: dict[str, dict], errors: lis
     else:
         try:
             schema = load_json(ARCHIVE_STATUS_SCHEMA_PATH)
-            check_required(status, schema, "archive-status.json", errors)
+            if not validate_json_schema(status, schema, "archive-status.json", errors):
+                return
         except Exception as exc:
             errors.append(f"archive-status.schema.json parse failed: {exc}")
     allowed = {"healthy", "degraded", "canonical_unavailable", "frozen_archive"}
@@ -1680,6 +1757,34 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
         errors.append("canonical drift GitHub Actions workflow missing")
     else:
         text = workflow.read_text(encoding="utf-8", errors="replace")
+        if "scripts/check-workflow-changes.py" in text:
+            checks = {
+                "offline validation regardless of render": r"python\s+scripts/validate-mirror\.py\s+--offline\s+--no-report",
+                "pre-stage action-plan allowlist": r"check-workflow-changes\.py\s+--action-plan",
+                "post-stage action-plan allowlist": r"check-workflow-changes\.py\s+--staged\s+--action-plan",
+                "hash-locked dependencies": r"pip\s+install\s+--require-hashes\s+-r\s+requirements-lock\.txt",
+                "eligibility-driven rendering": r"outputs\.eligibility_changed",
+            }
+            for label, pattern in checks.items():
+                if not re.search(pattern, text):
+                    errors.append(f"canonical drift workflow missing {label}")
+            if re.search(r"uses:\s*\.\/\.github\/workflows\/deploy-pages\.yml", text):
+                errors.append("canonical drift workflow must defer Pages deployment to workflow_run")
+            validate_pages_deployment_workflow(errors)
+            if re.search(r"docs/robots\.txt", text):
+                errors.append("canonical drift workflow must not allowlist generated robots.txt")
+            if not report_path.exists():
+                errors.append("canonical drift report missing")
+            if not status_path.exists():
+                errors.append("archive-status.json missing")
+                return None
+            try:
+                status = load_json(status_path)
+            except Exception as exc:
+                errors.append(f"archive-status.json parse failed: {exc}")
+                return None
+            validate_archive_status(status, registry, errors, warnings)
+            return status
         active_lines = []
         for lineno, raw_line in enumerate(text.splitlines(), start=1):
             line = raw_line.split("#", 1)[0].rstrip()
@@ -1811,7 +1916,7 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
         ):
             errors.append("canonical drift workflow required steps are missing or out of order")
 
-        requirements = ROOT / "requirements.txt"
+        requirements = ROOT / "requirements.in"
         if not requirements.exists():
             errors.append("requirements.txt missing; canonical drift workflow cannot install dependencies")
         else:
@@ -1822,7 +1927,7 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
                     has_lxml = True
                     break
             if not has_lxml:
-                errors.append("requirements.txt must declare lxml for the canonical drift validator")
+                errors.append("requirements.in must declare lxml for the canonical drift validator")
     if not report_path.exists():
         errors.append("canonical drift report missing")
     if not status_path.exists():
@@ -1837,21 +1942,75 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
     return status
 
 
-def main() -> int:
+def validate_pages_deployment_workflow(errors: list[str]) -> None:
+    path = ROOT / ".github" / "workflows" / "deploy-pages.yml"
+    if not path.exists():
+        errors.append("Pages deployment workflow missing")
+        return
+    text = path.read_text(encoding="utf-8", errors="replace")
+    required = {
+        "push to main": r"(?m)^\s*push:\s*$[\s\S]*?branches:\s*\[main\]",
+        "manual dispatch": r"(?m)^\s*workflow_dispatch:\s*$",
+        "canonical workflow completion trigger": r'workflows:\s*\["Canonical drift check"\]',
+        "completed workflow event": r"types:\s*\[completed\]",
+        "main branch workflow-run filter": r"(?m)^\s*branches:\s*\[main\]\s*$",
+        "successful canonical run guard": r"workflow_run\.conclusion == 'success'",
+        "canonical main branch guard": r"workflow_run\.head_branch == 'main'",
+        "canonical repository identity guard": r"workflow_run\.head_repository\.full_name == github\.repository",
+        "build checkout exact event SHA": r"ref:\s*\$\{\{\s*github\.sha\s*\}\}",
+        "deployment checkout exact event SHA": r"ref:\s*\$\{\{\s*github\.sha\s*\}\}",
+        "pre-deployment main revision guard": r"Recheck current main immediately before deployment",
+        "deployment retry gate": r"scripts/pages-deployment-gate\.py",
+        "Pages deployment action": r"actions/deploy-pages@[0-9a-f]{40}",
+        "Pages environment": r"name:\s*github-pages",
+        "non-cancelling Pages concurrency": r"cancel-in-progress:\s*false",
+    }
+    for label, pattern in required.items():
+        matches = re.findall(pattern, text)
+        if not matches:
+            errors.append(f"Pages deployment workflow missing {label}")
+    if text.count("ref: ${{ github.sha }}") != 2:
+        errors.append("Pages build and deploy must both check out the exact GITHUB_SHA")
+    if "workflow_call:" in text or "inputs.revision" in text:
+        errors.append("Pages deployment must not use reusable-workflow revision overrides")
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--offline", action="store_true", help="do not contact public source endpoints (default)")
+    mode.add_argument("--live", action="store_true", help="compare against public REST and sitemap endpoints")
+    parser.add_argument("--no-report", action="store_true", help="do not write timestamped docs/VALIDATION.md")
+    args = parser.parse_args(argv)
     errors: list[str] = []
     warnings: list[str] = []
     report: list[str] = ["# Validation", "", f"Generated: {now_iso()}", ""]
     status_path = ROOT / "archive-status.json"
-    status = load_json(status_path) if status_path.exists() else {}
+    if status_path.exists():
+        try:
+            status = load_json(status_path)
+        except Exception as exc:
+            errors.append(f"archive-status.json parse failed: {type(exc).__name__}: {exc}")
+            status = {}
+    else:
+        status = {}
+    if not isinstance(status, dict):
+        errors.append("archive-status.json: expected object")
+        status = {}
 
     archive_path = ROOT / "archive-manifest.json"
     if not archive_path.exists():
         errors.append("archive-manifest.json missing; run make sync first")
         archive = None
     else:
-        archive = load_json(archive_path)
-        schema = load_json(ROOT / "schemas" / "archive-manifest.schema.json")
-        check_required(archive, schema, "archive-manifest.json", errors)
+        try:
+            archive = load_json(archive_path)
+            schema = load_json(ROOT / "schemas" / "archive-manifest.schema.json")
+        except Exception as exc:
+            errors.append(f"archive manifest/schema parse failed: {type(exc).__name__}: {exc}")
+            archive = None
+        if archive is not None and not validate_json_schema(archive, schema, "archive-manifest.json", errors):
+            archive = None
 
     if archive:
         post_count = archive.get("post_count")
@@ -1868,13 +2027,13 @@ def main() -> int:
                 "- Registry keys are immutable WordPress post IDs.",
                 "",
             ])
-        if status.get("state") == "frozen_archive":
+        if not args.live:
+            report.extend(["## WordPress REST", "", "- Skipped: offline validation mode.", ""])
+        elif status.get("state") == "frozen_archive":
             report.extend(["## WordPress REST", "", "- Skipped: frozen archive state forbids DS source requests.", ""])
         else:
             try:
-                body, headers = request(POSTS_ENDPOINT)
-                live_posts = json.loads(body.decode("utf-8"))
-                live_total = int(headers.get("X-WP-Total", len(live_posts)))
+                live_posts, live_total = paginated_live_posts()
                 live_ids = {item.get("id") for item in live_posts if item.get("id") is not None}
                 archived_ids = {item.get("id") for item in posts if item.get("id") is not None}
                 missing_active_ids = sorted(archived_ids - live_ids)
@@ -1886,19 +2045,22 @@ def main() -> int:
             except Exception as exc:
                 warnings.append(f"could not verify WordPress REST count: {exc}")
 
-            try:
-                sm_urls = sitemap_urls()
-                manifest_urls = {url for post in posts if isinstance((url := post.get("canonical_url")), str)}
-                missing, extra, intentional_exclusions = classify_sitemap_difference(sm_urls, manifest_urls)
-                if missing:
-                    errors.append(f"sitemap URLs missing from archive: {missing}")
-                if extra:
-                    warnings.append(f"archive URLs not present in post sitemap: {extra}")
-                report.extend(["## Sitemap Cross-Check", "", f"- Sitemap post URLs: {len(sm_urls)}", f"- Archive URLs: {len(manifest_urls)}", f"- Documented source-sitemap exceptions: {len(intentional_exclusions)}"])
-                report.extend(f"  - `{url}`: {reason}" for url, reason in intentional_exclusions)
-                report.append("")
-            except Exception as exc:
-                warnings.append(f"could not verify sitemap: {exc}")
+            if args.live:
+                try:
+                    sm_urls = sitemap_urls()
+                    manifest_urls = {url for post in posts if isinstance((url := post.get("canonical_url")), str)}
+                    missing, extra, intentional_exclusions = classify_sitemap_difference(sm_urls, manifest_urls)
+                    if missing:
+                        errors.append(f"sitemap URLs missing from archive: {missing}")
+                    if extra:
+                        warnings.append(f"archive URLs not present in post sitemap: {extra}")
+                    report.extend(["## Sitemap Cross-Check", "", f"- Sitemap post URLs: {len(sm_urls)}", f"- Archive URLs: {len(manifest_urls)}", f"- Documented source-sitemap exceptions: {len(intentional_exclusions)}"])
+                    report.extend(f"  - `{url}`: {reason}" for url, reason in intentional_exclusions)
+                    report.append("")
+                except Exception as exc:
+                    warnings.append(f"could not verify sitemap: {exc}")
+            else:
+                report.extend(["## Sitemap Cross-Check", "", "- Skipped: offline validation mode.", ""])
 
         for post in posts:
             validate_post(post, errors, warnings, archived_keys)
@@ -1965,8 +2127,14 @@ def main() -> int:
         report.append("")
     if not errors:
         report.extend(["## Status", "", "Validation passed with no blocking errors.", ""])
-    (ROOT / "docs" / "VALIDATION.md").write_text("\n".join(report), encoding="utf-8")
+    if not args.no_report:
+        (ROOT / "docs" / "VALIDATION.md").write_text("\n".join(report), encoding="utf-8")
     print(f"validation errors={len(errors)} warnings={len(warnings)}")
+    if args.no_report:
+        for error in errors:
+            print(f"ERROR: {error}", file=sys.stderr)
+        for warning in warnings:
+            print(f"WARNING: {warning}", file=sys.stderr)
     return 1 if errors else 0
 
 

@@ -24,6 +24,14 @@ ORDINARY_POST = "https://www.daryllswer.com/example-post/"
 
 
 class SitemapExclusionTests(unittest.TestCase):
+    def test_pages_validation_does_not_claim_project_robots_output(self):
+        source = (ROOT / "scripts" / "validate-mirror.py").read_text(encoding="utf-8")
+        self.assertNotIn('errors.append("docs/robots.txt missing', source)
+
+    def test_pages_validation_does_not_claim_project_robots_output(self):
+        source = (ROOT / "scripts" / "validate-mirror.py").read_text(encoding="utf-8")
+        self.assertNotIn('errors.append("docs/robots.txt missing', source)
+
     def test_only_documented_source_sitemap_exception_is_excluded_from_warning(self):
         missing, unexpected, intentional = VALIDATOR.classify_sitemap_difference(
             {ORDINARY_POST}, {ORDINARY_POST, SOURCE_SITEMAP_EXCEPTION}

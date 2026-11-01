@@ -25,17 +25,17 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: requirements.txt
+          cache-dependency-path: requirements-lock.txt
 
       - name: Install Python dependencies
-        run: python -m pip install -r requirements.txt
+        run: python -m pip install --require-hashes -r requirements-lock.txt
 
       - name: Prepare controlled brand favicon
         id: brand-favicon
@@ -50,22 +50,21 @@ jobs:
       - name: Check canonical drift
         id: canonical
         run: |
-          before="$(sha256sum archive-status.json | cut -d' ' -f1)"
           args=""
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force }}" = "true" ]; then
             args="--force"
           fi
-          python3 scripts/check-canonical-drift.py $args --action-plan "${{ runner.temp }}/canonical-drift-action-plan.json"
-          after="$(sha256sum archive-status.json | cut -d' ' -f1)"
-          echo "status_changed=$([ "$before" != "$after" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          python3 scripts/check-canonical-drift.py $args --action-plan "${{ runner.temp }}/canonical-drift-action-plan.json" --result "${{ runner.temp }}/canonical-drift-result.json"
+          changed="$(python3 -c 'import json; print(str(json.load(open("${{ runner.temp }}/canonical-drift-result.json", encoding="utf-8")).get("eligibility_changed") is True).lower())')"
+          echo "eligibility_changed=$changed" >> "$GITHUB_OUTPUT"
 
       - name: Check external sources
         id: external
         run: |
           python3 scripts/external_source_monitor.py \
             --result "${{ runner.temp }}/external-source-result.json"
-          changed="$(python3 -c 'import json; print(str(json.load(open("${{ runner.temp }}/external-source-result.json", encoding="utf-8")).get("changed") is True).lower())')"
-          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          changed="$(python3 -c 'import json; print(str(json.load(open("${{ runner.temp }}/external-source-result.json", encoding="utf-8")).get("eligibility_changed") is True).lower())')"
+          echo "eligibility_changed=$changed" >> "$GITHUB_OUTPUT"
 
       - name: Reconcile canonical drift
         run: |
@@ -81,7 +80,7 @@ jobs:
 
       - name: Render generated Pages
         id: render-pages
-        if: steps.brand-favicon.outputs.changed == 'true' || steps.canonical.outputs.status_changed == 'true' || steps.external.outputs.changed == 'true' || steps.reconciliation.outputs.content_changed == 'true'
+        if: steps.brand-favicon.outputs.changed == 'true' || steps.canonical.outputs.eligibility_changed == 'true' || steps.external.outputs.eligibility_changed == 'true' || steps.reconciliation.outputs.content_changed == 'true'
         run: make render-site
 
       - name: Verify reconciled canonical state
@@ -89,39 +88,12 @@ jobs:
         run: python3 scripts/check-canonical-drift.py --fresh
 
       - name: Validate public archive
-        if: steps.render-pages.outcome == 'success'
         run: |
-          make validate
-          make scan-secrets
+          python scripts/validate-mirror.py --offline --no-report
+          python scripts/scan-public-safety.py --no-report
 
       - name: Check workflow changed paths
-        run: |
-          python3 - <<'PY'
-          import re
-          import subprocess
-          import sys
-
-          paths = set()
-          for command in [
-              ["git", "diff", "--name-only"],
-              ["git", "diff", "--cached", "--name-only"],
-              ["git", "ls-files", "--others", "--exclude-standard"],
-          ]:
-              paths.update(line for line in subprocess.check_output(command, text=True).splitlines() if line)
-          allowed = re.compile(
-              r"(?:archive-manifest\.json|archive-status\.json|docs/CANONICAL_DRIFT\.md|"
-              r"docs/EXTERNAL_SOURCE_STATUS\.md|docs/VALIDATION\.md|docs/PUBLIC_SAFETY\.md|"
-              r"docs/robots\.txt|docs/sitemap\.xml|docs/feed\.xml|docs/index\.html|docs/\.nojekyll|"
-              r"assets/brand/manifest\.json|assets/brand/derivatives/.+|"
-              r"docs/assets/.+|docs/posts/.+|docs/sheets/.+|content/posts/.+)"
-          )
-          unexpected = sorted(path for path in paths if not allowed.fullmatch(path))
-          if unexpected:
-              print("Unexpected workflow changes:", file=sys.stderr)
-              print("\n".join(unexpected), file=sys.stderr)
-              raise SystemExit(1)
-          print(f"Changed paths are within the canonical archive allowlist ({len(paths)} path(s)).")
-          PY
+        run: python scripts/check-workflow-changes.py --action-plan "${{ runner.temp }}/canonical-drift-action-plan.json"
 
       - name: Commit drift status changes
         run: |
@@ -130,25 +102,7 @@ jobs:
             echo "No archive or generated Pages changes to commit."
             exit 0
           fi
-          python3 - <<'PY'
-          import re
-          import subprocess
-          import sys
-
-          paths = subprocess.check_output(["git", "diff", "--cached", "--name-only"], text=True).splitlines()
-          allowed = re.compile(
-              r"(?:archive-manifest\.json|archive-status\.json|docs/CANONICAL_DRIFT\.md|"
-              r"docs/EXTERNAL_SOURCE_STATUS\.md|docs/VALIDATION\.md|docs/PUBLIC_SAFETY\.md|"
-              r"docs/robots\.txt|docs/sitemap\.xml|docs/feed\.xml|"
-              r"assets/brand/manifest\.json|assets/brand/derivatives/.+|"
-              r"docs/index\.html|docs/\.nojekyll|docs/assets/.+|docs/posts/.+|docs/sheets/.+|content/posts/.+)"
-          )
-          unexpected = sorted(path for path in paths if not allowed.fullmatch(path))
-          if unexpected:
-              print("Unexpected staged paths:", file=sys.stderr)
-              print("\n".join(unexpected), file=sys.stderr)
-              raise SystemExit(1)
-          PY
+          python scripts/check-workflow-changes.py --staged --action-plan "${{ runner.temp }}/canonical-drift-action-plan.json"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Record canonical drift check"

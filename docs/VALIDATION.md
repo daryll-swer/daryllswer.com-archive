@@ -1,6 +1,6 @@
 # Validation
 
-Generated: 2026-10-22T02:10:41+00:00
+Generated: 2026-11-01T16:24:07+00:00
 
 ## Per-Post Rights Registry
 
@@ -9,15 +9,7 @@ Generated: 2026-10-22T02:10:41+00:00
 
 ## WordPress REST
 
-- Live X-WP-Total: 19
-- Archived posts: 19
-
-## Sitemap Cross-Check
-
-- Sitemap post URLs: 18
-- Archive URLs: 19
-- Documented source-sitemap exceptions: 1
-  - `https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/`: documented source-sitemap exception
+- Skipped: offline validation mode.
 
 ## Typography
 

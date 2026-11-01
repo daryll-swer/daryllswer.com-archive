@@ -8,6 +8,7 @@ from __future__ import annotations
 import re
 import sys
 import datetime as dt
+import argparse
 from pathlib import Path
 
 
@@ -41,6 +42,9 @@ def iter_files():
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--no-report", action="store_true", help="do not write timestamped docs/PUBLIC_SAFETY.md")
+    args = parser.parse_args()
     findings: list[str] = []
     for path in iter_files():
         try:
@@ -54,7 +58,8 @@ def main() -> int:
     if findings:
         report = ["# Public Safety Scan", "", f"Generated: {dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()}", "", "## Result", "", "- Status: failed", f"- Findings: {len(findings)}", "", "## Findings", ""]
         report.extend(f"- {finding}" for finding in findings)
-        (ROOT / "docs" / "PUBLIC_SAFETY.md").write_text("\n".join(report) + "\n", encoding="utf-8")
+        if not args.no_report:
+            (ROOT / "docs" / "PUBLIC_SAFETY.md").write_text("\n".join(report) + "\n", encoding="utf-8")
         print("public-safety scan failed:")
         for finding in findings:
             print(f"- {finding}")
@@ -73,7 +78,8 @@ def main() -> int:
         "",
         "This is a heuristic scan, not a proof that no sensitive material exists.",
     ]
-    (ROOT / "docs" / "PUBLIC_SAFETY.md").write_text("\n".join(report) + "\n", encoding="utf-8")
+    if not args.no_report:
+        (ROOT / "docs" / "PUBLIC_SAFETY.md").write_text("\n".join(report) + "\n", encoding="utf-8")
     print("public-safety scan passed: no obvious secrets/local-only state found")
     return 0
 

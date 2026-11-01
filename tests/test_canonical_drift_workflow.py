@@ -31,6 +31,10 @@ class CanonicalDriftWorkflowTests(unittest.TestCase):
             workflow_path = root / ".github" / "workflows" / "canonical-drift.yml"
             workflow_path.parent.mkdir(parents=True)
             workflow_path.write_text(workflow, encoding="utf-8")
+            (root / ".github" / "workflows" / "deploy-pages.yml").write_text(
+                (ROOT / ".github" / "workflows" / "deploy-pages.yml").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
             (root / "docs").mkdir()
             (root / "docs" / "CANONICAL_DRIFT.md").write_text("# Drift\n", encoding="utf-8")
             (root / "requirements.txt").write_text("lxml\n", encoding="utf-8")
@@ -64,20 +68,25 @@ class CanonicalDriftWorkflowTests(unittest.TestCase):
         self.assertEqual(self.validate_workflow(WORKFLOW), [])
 
     def test_validator_rejects_literal_optional_feed_staging(self):
-        broken = WORKFLOW.replace("git add -A -- .", "git add -A -- . docs/feed.xml")
+        broken = WORKFLOW + "\n# docs/robots.txt\n"
 
         errors = self.validate_workflow(broken)
 
         self.assertTrue(
-            any("must not pass optional docs/feed.xml directly to git add" in error for error in errors)
+            any("must not allowlist generated robots.txt" in error for error in errors)
         )
 
     def test_validator_rejects_staging_without_root_scope(self):
-        broken = WORKFLOW.replace("git add -A -- .", "git add -A -- docs")
+        broken = WORKFLOW.replace("check-workflow-changes.py --staged --action-plan", "check-workflow-changes.py --action-plan")
 
         errors = self.validate_workflow(broken)
 
-        self.assertTrue(any("root-scoped all-state staging" in error for error in errors))
+        self.assertTrue(any("post-stage action-plan allowlist" in error for error in errors))
+
+    def test_render_trigger_uses_eligibility_not_monitor_timestamp(self):
+        self.assertIn("outputs.eligibility_changed", WORKFLOW)
+        self.assertNotIn("status_changed", WORKFLOW)
+        self.assertIn("--offline --no-report", WORKFLOW)
 
 
 if __name__ == "__main__":

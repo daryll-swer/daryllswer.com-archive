@@ -3,14 +3,17 @@
 
 PYTHON ?= python3
 
-.PHONY: sync validate scan-secrets render-preview prepare-brand-favicon render-site check-drift check-rights-sources clean
+.PHONY: sync validate validate-live scan-secrets render-preview prepare-brand-favicon render-site check-drift check-rights-sources clean
 
 sync:
 	$(PYTHON) scripts/sync-wordpress-posts.py
 	$(PYTHON) scripts/export-google-sheet.py
 
 validate:
-	$(PYTHON) scripts/validate-mirror.py
+	$(PYTHON) scripts/validate-mirror.py --offline
+
+validate-live:
+	$(PYTHON) scripts/validate-mirror.py --live
 
 scan-secrets:
 	$(PYTHON) scripts/scan-public-safety.py
