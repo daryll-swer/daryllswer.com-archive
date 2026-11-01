@@ -1,5 +1,42 @@
 # Decisions
 
+## 2026-11-01: Harden Integrity, Publication and Local Preservation
+
+- Decision: Separate offline integrity from live-source comparison. Persist
+  legitimate pending retirement evidence without weakening mutation gates.
+  Access restrictions, invalid responses, unexpected-host redirects and
+  internal defects do not count towards source freeze.
+- Decision: Treat source HTML as untrusted. Use a maintained allowlist
+  sanitiser for reader/RSS content and separately contain published evidence.
+  Preserve technical content, stable anchors, colour markup and exact media.
+- Decision: Use read-only push/PR CI and hash-locked dependencies with
+  SHA-pinned Actions. Publish validated revisions through an explicit Pages
+  artefact workflow shared by maintainer and automated changes. Deployment
+  failure is independently retryable; no history rewrite is involved.
+- Deployment hand-off: use a fresh, successful-main-only `workflow_run` after
+  reconciliation so the event SHA matches the bot's final commit. A reusable
+  workflow retains its caller's event SHA even after checkout changes; the
+  pinned deploy-pages action records `GITHUB_SHA` as its build version.
+- Decision: Keep this one repository and its project URL. Remove the
+  ineffective project-subdirectory robots file; retain reader robots
+  metadata, absolute sitemap, visible sitemap navigation and direct Search
+  Console submission.
+- Decision: Add an approved-commit local BagIt-compatible export and restore
+  test. Off-site storage, WARC capture and an external scheduler are deferred.
+  A local package is not geographically independent preservation.
+- Tradeoff: GitHub remains a shared failure domain for automation, hosting
+  and discovery promotion. Scheduled jobs may be delayed or disabled by
+  inactivity; no independent watchdog or empty keepalive commits are added.
+- Evidence:
+  [GitHub custom Pages workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages),
+  [scheduled workflow limitations](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows),
+  [pip hash-checked installs](https://pip.pypa.io/en/stable/topics/secure-installs/),
+  [nh3 sanitisation API](https://nh3.readthedocs.io/en/latest/),
+  [Google robots location](https://developers.google.com/crawling/docs/robots-txt/create-robots-txt),
+  [BagIt v1.0, RFC 8493](https://www.rfc-editor.org/rfc/rfc8493.html).
+- Verification and deployment status are recorded in `IMPLEMENTATION_STATUS.md`;
+  these decisions do not assert checks that have not yet run.
+
 ## 2026-10-22: Enforce Explicit Proprietary Content Rights
 
 - Decision: Daryll Swer-owned mirrored articles, original media and supporting
@@ -75,7 +112,8 @@
 ## 2026-07-06: Generate GitHub Pages Site Under docs/
 
 - Decision: Generate the human-readable HTML archive into `docs/` for GitHub
-  Pages publication from the `main` branch `/docs` folder.
+  Pages. The original branch-folder publication mechanism is superseded by
+  the explicit validated artefact workflow selected on 2026-11-01.
 - Rationale: GitHub repository Markdown remains useful for source inspection,
   but a static HTML site gives readers a proper article index, theme, article
   pages, responsive figures, and spreadsheet landing pages.
@@ -180,8 +218,9 @@
 - Decision: Keep DS-origin reader routes `noindex, follow` while the canonical
   DS site remains healthy, index the archive homepage as a distinct navigation
   surface, and promote eligible archive routes only after the existing bounded
-  DS freeze threshold. Generate the sitemap, robots file, and archive-owned
-  RSS feed from local data at that point.
+  DS freeze threshold. Generate sitemap and archive-owned RSS from local data.
+  The original project-subdirectory robots-file decision is superseded by the
+  host-root scope correction on 2026-11-01.
 - Rationale: This avoids competing with live canonical content while retaining
   a durable crawler-discoverable route when the source has failed for a long
   bounded period. A GitHub Pages archive cannot depend on a live WordPress RSS
@@ -197,7 +236,7 @@
   <https://www.sitemaps.org/protocol.html>.
 - Impact: generated Pages URLs remain self-canonical. `archive-status.json`
   records separate archive SEO and external-source states; the renderer emits
-  `robots.txt`, `sitemap.xml`, and a ten-item local RSS feed according to
+  `sitemap.xml` and a ten-item local RSS feed according to
   eligibility. The homepage carries a public Google verification tag once,
   and `docs/SEO_RECOVERY.md` is the only supported return path to source
   priority.

@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: complete and hosted verified - proprietary content policy
+- Status: in progress - archive reliability and preservation hardening
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-10-22
+- Last updated: 2026-11-01
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -20,6 +20,51 @@
 - Escalation rules: `ESCALATION.md`
 
 ## Current Status / Next Pickup
+
+### Active: Archive Reliability and Preservation Hardening
+
+- Approved scope: retain one repository/project Pages URL, GitHub-only
+  automation, and add a local preservation export with restore verification.
+  Off-site storage, external scheduling, history rewriting and new hosting
+  accounts are out of scope.
+- Starting revision: `2481786790e57fe967cbdec44fda52a17e057e68`; clean main.
+- Invariants: preserve proprietary rights and attribution, exact media bytes,
+  source-first SEO, atomic updates, seven-day retirement confirmation, and
+  owner-verified recovery. Monitoring observations never authorise mutation
+  by themselves; blocked or invalid observations never advance source freeze.
+- Delivery sequence:
+  1. Reconciliation/health: offline integrity versus live comparison,
+     classified bounded requests, pagination, exact retirement registry delta.
+  2. Reader safety: maintained allowlist sanitiser, contained evidence,
+     keyboard/focus/responsive/print verification.
+  3. CI/deployment/discovery: hashed dependencies, pinned Actions, read-only
+     CI, explicit validated Pages deployment/retry, sitemap navigation,
+     removal of ineffective project-subdirectory robots output.
+  4. Preservation: approved-commit BagIt-compatible export outside the repo,
+     full checksum verification and isolated offline restore test.
+- Coordinator owns integration, architecture, durable documentation, review
+  and publication. Delegated implementers have non-overlapping file ownership.
+- Verification gates: regression suite, schema and offline integrity,
+  deterministic generation, safety scan, browser width/keyboard tests, live
+  comparison separately, normal push and non-destructive workflow/deployment
+  verification. Record manual accessibility checks honestly; automated tests
+  alone do not establish conformance.
+- Owner decision: leave macOS VoiceOver unchanged. Manual screen-reader QA
+  remains pending; browser/keyboard checks must not be reported as a substitute.
+- Local checkpoint: `ff6e6ae` contains classified bounded source health,
+  strict pagination, case-insensitive response headers and diagnostic-only
+  frozen probes. The owner-verified manager remains the recovery authority.
+- Current evidence: 114 regression tests passed, offline and separate live
+  validation both report zero errors/warnings, and a live dry-run found
+  19/19 posts with no content drift. No remote write has occurred.
+- Browser and generation gates are complete: 80 route/width/theme combinations
+  plus keyboard, print, no-JavaScript, text enlargement and viewport-reflow
+  checks passed. Repeated rendering changes no bytes. Native 400% browser zoom
+  and screen-reader checks are not claimed.
+- Next action: commit preservation tooling/documentation, export the clean
+  approved revision outside the repository, verify its restored reader,
+  push normally, switch Pages to workflow publication, and verify the exact
+  deployed revision plus a non-destructive canonical workflow run.
 
 - Current state:
   - Complete and hosted verified: owner-selected proprietary rights apply to

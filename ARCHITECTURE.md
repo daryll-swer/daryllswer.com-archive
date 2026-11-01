@@ -100,20 +100,30 @@ flowchart LR
   Rights["content/rights-registry.json"] --> SourceHealth["external-original monitor"]
   SourceHealth --> Status
   Status --> Site
-  Site --> Discovery["robots.txt, sitemap.xml, feed.xml"]
+  Site --> Discovery["sitemap.xml, conditional feed.xml"]
 ```
 
 ## Rendered Site
 
 - `content/posts/...` and `data/sheets/...` remain the archive source of truth.
-- `scripts/render-site.py` generates the public HTML site into `docs/`, which
-  can be published by GitHub Pages from the `main` branch `/docs` folder.
+- `scripts/render-site.py` generates the public HTML site into `docs/`.
+  A validated revision is packaged and published through an explicit GitHub
+  Pages artefact workflow, not an implicit branch-push build.
 - `docs/index.html` is the public article index with title, excerpt, taxonomy,
   date, and featured image for each mirrored post.
 - `docs/posts/<slug>/index.html` is the human-readable article page generated
   from the preserved WordPress-rendered article HTML, with localised images,
   internal archive links, responsive figure styling, stable section anchors,
   and embed fallback links.
+- Canonical HTML is untrusted input. A maintained allowlist sanitiser defines
+  reader elements, attributes, URL schemes, colour styles and reviewed embed
+  providers. Reader HTML and RSS share that boundary; source evidence is not
+  silently replaced by sanitised reader output. Published source HTML receives
+  separate restrictive containment.
+- Reader routes provide keyboard-visible skip links and focus treatment.
+  Wide technical tables/code use bounded scroll regions rather than hiding
+  page overflow. Reflow, text resizing, keyboard access, print and no-script
+  use are verification targets, not a claim of complete WCAG conformance.
 - The generated Pages theme self-hosts `Poppins` for body/content text and
   `Raleway` for headings/titles from `assets/fonts/`, with generated copies
   under `docs/assets/fonts/`. The font files are third-party OFL artefacts with
@@ -196,14 +206,17 @@ flowchart LR
   feed, and provides the ten most recently published eligible posts with
   archive-local URLs and stable immutable-ID GUIDs. It deliberately excludes
   WordPress comments and source-domain SEO metadata.
-- `robots.txt` always permits crawling and advertises the local absolute
-  sitemap URL. The generated homepage carries the public Google Search Console
+- No project-subdirectory `robots.txt` is generated: crawlers use the host-root
+  file, which this project does not control. Reader-level robots metadata
+  remains effective. Navigation links to the absolute XML sitemap, submitted
+  directly through Search Console. The generated homepage carries the public
   verification token once; it is archive configuration, not a credential.
 - External originals recorded in the rights registry are monitored weekly only
   while active. Their state is `healthy`, `degraded`, `source_unavailable`, or
   `frozen_source`. DNS, TLS, network, `404`/`410`, and persistent server
   failures may advance failure state; `401`, `403`, `429`, and unexpected-host
-  redirects block promotion and require review. Once frozen, a source is not
+  redirects block promotion and require review. Malformed responses and
+  internal software errors also cannot advance the freeze sequence. Once frozen, a source is not
   requested again unless an owner explicitly invokes the documented recovery
   path.
 - A positive HTTP response does not automatically restore source priority or
@@ -236,18 +249,27 @@ flowchart LR
   modifications, and deletions are handled even when optional generated files
   such as `docs/feed.xml` are absent. Strict path allowlists run both before
   and after staging, and fail before commit for every unexpected path.
-  Timestamped validation reports and temporary action plans are never
-  committed by scheduled checks.
-- The workflow must use explicit `actions/checkout@v6` and
-  `actions/setup-python@v6` steps, select CPython 3.12, cache pip by
-  `requirements.txt`, and run `python -m pip install -r requirements.txt`
-  before every archive Python script. The pip cache only reuses downloaded
-  packages; it never replaces dependency installation on a clean runner.
-- `scripts/validate-mirror.py` treats that workflow bootstrap as an invariant:
-  it verifies active steps, their order, and the `lxml` declaration in
-  `requirements.txt`. Any intentional action-version, Python-version, or
-  bootstrap redesign must update the workflow and its guard in one commit, then
-  pass a manually dispatched clean-hosted-runner verification.
+  Registry edits require the exact removal of the verified retired post's
+  entry, checked against the workflow plan and base revision both before and
+  after staging. Temporary action plans remain outside the working tree.
+- CPython 3.12 dependencies are version-locked with hashes and installed with
+  hash verification on clean runners. Actions are pinned to full commit SHAs.
+  Dependency updates are reviewable PRs, not automatically merged changes.
+- Push/PR CI has read-only repository permissions and runs regression tests,
+  compilation, declared-dialect JSON Schema validation, offline integrity,
+  safety scanning and deterministic generation in an isolated checkout.
+- Repository-write, Pages build and deployment permissions are separated.
+  Maintainer pushes and reconciled bot revisions use the same validated Pages
+  path. Deployment checks the current main revision and is serialised; a stale
+  build must not replace a newer revision. Successful deployment evidence is
+  independent of reconciliation success, so a failed publication can retry
+  even when a later monitor run changes no content.
+  A successful canonical workflow triggers a fresh deployment workflow via
+  `workflow_run`, rather than passing a newer checkout to a reusable run with
+  an older event SHA. The new run validates its own `github.sha` against main,
+  so Pages deployment provenance identifies the actual published revision.
+  Only successful main-branch runs from this repository qualify; no upstream
+  workflow artefacts are trusted or downloaded.
 - Official GitHub Actions documentation supports scheduled and manual triggers,
   workflow concurrency, timeout controls, and workflow disabling. This repo
   still uses a sentinel/no-op pattern instead of self-disabling because it
@@ -260,12 +282,14 @@ flowchart LR
   archive content remains untouched.
 - `canonical_unavailable`: three or more consecutive canonical failures
   occurred.
-- `frozen_archive`: eight consecutive failures across at least 30 days occurred.
+- `frozen_archive`: eight qualifying failures across at least 30 days occurred.
   Future scheduled checks no-op before making any canonical network request.
 
 The frozen state is intended for owner-unavailable futures: DNS expiry, TLS
 failure, WordPress death, hosting loss, or a possibly hijacked canonical
-surface must not cause repeated workflow failures or archive deletion.
+surface must not cause archive deletion. Access restrictions, unexpected-host
+redirects, invalid payloads and software defects are blocked observations,
+not proof of source loss. They never advance automatic freeze.
 
 The archive SEO mode is separate: it begins at `source_primary`, transitions
 once to `archive_discovery` when DS freezes, and can return only through the
@@ -278,6 +302,11 @@ Networks repost while its registered original remains active.
 - Health state and content reconciliation are separate. A failed canonical
   request can update only the health state; it cannot create or execute a
   retirement plan.
+- Offline archive integrity and live comparison are separate checks. Offline
+  integrity is mandatory for every monitoring commit. Live differences are
+  reported honestly; a recognised pending retirement must not prevent its
+  first confirmation from being persisted. Unknown differences block content
+  mutation, not preservation of monitoring evidence.
 - A post is a retirement candidate only when its immutable WordPress ID is
   absent from a fresh healthy REST collection. A same-ID URL or slug change is
   relocation, not deletion.
@@ -301,10 +330,32 @@ Networks repost while its registered original remains active.
   filtering. A clean healthy comparison backfills the baseline for legacy
   bundles once, supporting content-fingerprint comparison without treating
   deliberate archive filtering as recurring drift.
+- Existing fingerprints detect rendered-content and media-reference changes,
+  not replacement bytes behind an unchanged upstream media URL. That remains
+  an explicit limitation, not a claim of complete media-change detection.
 - Historical Markdown links that prove a target was once mirrored retain a
   local Pages route after retirement. It is intentionally unavailable until a
   later restoration is mirrored; unrelated canonical pages are never
   localised.
+
+## Preservation and Continuity
+
+- A manually requested export packages a specified clean approved commit in a
+  BagIt-compatible layout outside this repository. SHA-256 payload/tag
+  manifests, source revision, format version, toolchain information and
+  offline serving/rebuild instructions accompany the committed archive.
+- Export excludes Git internals, credentials, caches and private operational
+  material. It includes only current-tree content at that commit, not retired
+  bundles recovered from history. Verification checks every packaged file and
+  a fresh extracted copy before reporting success.
+- External hyperlinks and third-party embeds are references, not preserved
+  media. A local export is not off-site redundancy. Storage selection and WARC
+  capture are deferred.
+- GitHub is the only scheduler and hosting provider selected for this phase.
+  Scheduled jobs can be delayed or disabled after repository inactivity;
+  no independent monitor exists. No empty keepalive commits are manufactured.
+  Maintainers must inspect workflow and deployment evidence separately and
+  follow missed-run guidance in `docs/MIRRORING.md`.
 
 ## Invariants
 

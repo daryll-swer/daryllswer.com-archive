@@ -5,17 +5,59 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: proprietary content policy and history maintenance
-- Status: complete and hosted verified
-- Last updated: 2026-10-22
-- Implementer role/model/thread: delegated `implementer-luna` completed the
-  bounded rights-registry, reconciliation, renderer, and validation changes;
-  current Codex Desktop completed integration and deployment verification
+- Current sprint / workstream: archive reliability and preservation hardening
+- Status: locally verified; export and hosted verification pending
+- Last updated: 2026-11-01
+- Implementer role/model/thread: four delegated `implementer-luna` workers,
+  pinned to `gpt-6-luna` with high reasoning, own health/reconciliation,
+  HTML safety, workflow/validation, and preservation-export file sets
 - Architect role/model/thread: current Codex Desktop thread plus user review
-- Current budget/rate-limit state: no active implementation-route limit
-  affected the completed workstream
+- Current budget/rate-limit state: no route limit has been observed in this
+  workstream; this is not a continuous quota-monitoring claim
 
 ## Latest Delivery
+
+- Archive reliability and preservation hardening:
+  - Approved and in progress from clean revision `2481786`.
+  - Evidence: pending retirement fails live validation before persistence;
+    retirement registry changes are missing from workflow allowlists;
+    partial reader filtering retains executable URLs/iframe attributes;
+    schema checks do not enforce nested types; validation is not paginated;
+    ordinary monitor timestamps trigger rendering; bot publication depends
+    on implicit branch Pages behaviour.
+  - Components: reconciliation/health, reader sanitisation/accessibility,
+    CI/deployment/discovery, and local preservation export/restore.
+  - Reader pipeline: source HTML is sanitised before trusted heading controls
+    and rights markup are added. CSV-derived visual/workbook HTML is refreshed
+    offline with manifest hashes before Pages copying. Article tables use
+    keyboard-accessible scroll regions; skip navigation, focus treatment and
+    narrow-screen card/header sizing are verified. Existing audio embeds are
+    descriptive outbound links, not active frames.
+  - Local verification: 114 regression tests pass; Python compilation,
+    whitespace checks, hash-lock installation/consistency, safety scanning,
+    offline validation and separate live validation pass. Both validators
+    report zero errors/warnings. Repeated rendering is byte-identical.
+    A live drift dry run found 19/19 posts with no additions, removals,
+    relocations or changes. No production destructive-source simulation ran.
+  - Browser verification: five representative routes at 320, 360, 390, 768,
+    1024, 1440, 1920 and 2560 CSS px, in light/dark themes, passed with no
+    page-level overflow or console errors in the final isolated run. Checks
+    include expanded hierarchy/static leaves, keyboard controls, image/font
+    loading, no-JavaScript use, print visibility and 200% text enlargement.
+    The 400% check is a 1280-to-320 CSS-pixel viewport reflow approximation,
+    not a native browser-zoom or assistive-technology conformance audit.
+  - Preservation fixtures verify checksum coverage, clean-commit selection,
+    tamper/path rejection, extraction, and real-project offline validation
+    without Git or source-network access. Approved-commit export and hosted
+    verification remain pending.
+  - Ownership restoration: an absent Swer registry record for a reappearing
+    post 5324 is rejected by offline validation before workflow publication;
+    a maintainer must restore the explicit approved rights record.
+  - Owner declined enabling VoiceOver for this run. Manual screen-reader
+    verification remains pending; keyboard/browser QA is separate.
+  - Constraints: no production destructive-source simulations, history
+    rewrite, off-site storage or external scheduler. Existing media and
+    rights boundaries remain unchanged.
 
 - Proprietary content policy and history maintenance:
   - Status: complete and hosted verified.

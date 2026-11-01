@@ -11,6 +11,11 @@ Do not edit `archive-status.json` manually. Use the commands below only after
 the owner has verified current control of the relevant public source and the
 expected article/service is present.
 
+Use the reviewed hash-locked Python environment. `make validate` checks local
+integrity only; run `make validate-live` separately after recovery to compare
+the restored source. A successful source observation is not proof of domain
+ownership and is not proof that a Pages deployment succeeded.
+
 ## DS Recovery
 
 Use this procedure when `archive-status.json` is `frozen_archive` and the DS
@@ -28,6 +33,7 @@ make PYTHON="$PYTHON" render-site
 "$PYTHON" -m py_compile scripts/*.py
 git diff --check
 make PYTHON="$PYTHON" validate
+make PYTHON="$PYTHON" validate-live
 make PYTHON="$PYTHON" scan-secrets
 git status --short
 ```
@@ -37,7 +43,8 @@ git status --short
    `noindex,follow`, and reduces the sitemap to the archive homepage.
 4. Commit and push only after that review. The command does not reconcile or
    overwrite article content; run the normal drift/reconciliation workflow
-   separately if source content also changed.
+   separately if source content also changed. Verify that the successful
+   Pages deployment revision equals the approved main revision.
 
 ## External-Original Recovery
 
@@ -80,3 +87,9 @@ recovery command refuses IDs not explicitly opted into external fallback.
   frozen source unless a maintainer invokes this recovery path.
 - No recovery command rewrites Git history, changes repository visibility, or
   mutates mirrored article content.
+- A blocked or failed forced probe must not clear the frozen no-request
+  sentinel. Access restrictions and invalid responses are not evidence of
+  recovery or qualifying outage observations.
+- If publication fails after an approved recovery commit, retry the explicit
+  Pages workflow for the current revision. Do not repeat state transitions or
+  create an empty commit to force a deployment.

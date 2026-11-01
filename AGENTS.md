@@ -70,6 +70,17 @@
   operational state.
 - Run `make validate` and `make scan-secrets` before final reporting or any
   proposed commit/push.
+- `make validate` is offline integrity, not a claim of live source equality.
+  Run `make validate-live` separately when live comparison is needed. Source
+  restrictions, invalid responses and internal errors must never count towards
+  automatic source freeze. Preserve monitoring evidence without weakening
+  reconciliation gates.
+- Treat archived source HTML as untrusted. Reader HTML/RSS must pass the
+  explicit sanitiser policy; source evidence and contained Pages copies are
+  separate artefacts. Do not bypass safety checks to preserve active markup.
+- Publish through the validated Pages artefact workflow and verify the deployed
+  revision separately from reconciliation. Keep Actions SHA-pinned and Python
+  dependencies hash-locked; dependency PRs require review.
 - Run `make render-site` after sync changes that affect public article
   rendering, site navigation, copied media, or spreadsheet artefact links.
 - Remote destructive GitHub actions require explicit owner confirmation:
@@ -82,6 +93,7 @@
 make sync
 make render-site
 make validate
+make validate-live
 make scan-secrets
 make check-drift
 make check-rights-sources

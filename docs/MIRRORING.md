@@ -82,13 +82,18 @@ derivative has refresh/base directives removed and a restrictive CSP injected,
 so upstream application fallback scripts cannot execute or redirect a reader.
 
 When the independent canonical-health sentinel reaches `frozen_archive`, the
-SEO state changes once to `archive_discovery`. The generated `robots.txt`
-allows crawling and points to the archive sitemap; the sitemap expands from
+SEO state changes once to `archive_discovery`. The sitemap expands from
 the homepage to eligible reader routes, and a local RSS feed is generated from
 the stored archive rather than copied from WordPress. The feed and sitemap use
 only archive-owned URLs. An external-original repost remains excluded until
 the source URL recorded in the rights registry independently reaches
 `frozen_source`.
+
+This project does not control the host-root `robots.txt`. A file beneath the
+project path is not a crawler policy, so none is generated. Page-level robots
+metadata remains in place. The navigation links to the absolute sitemap;
+submit `https://daryll-swer.github.io/daryllswer.com-archive/sitemap.xml`
+directly in the verified Search Console URL-prefix property.
 
 The generated homepage contains the public Google Search Console verification
 token once. It enables ownership verification for the project Pages URL but is
@@ -115,21 +120,37 @@ where portable visual colour is not guaranteed.
 
 ## Maintainer Workflow
 
-Use these commands when refreshing or validating the archive:
+Use CPython 3.12 and a dedicated virtual environment. Install the reviewed
+lockfile with `python -m pip install --require-hashes -r requirements-lock.txt`.
+`requirements.in` is the direct-dependency input, not an installation shortcut;
+review its changes together with the regenerated lockfile. Do not replace an
+existing environment without checking whether it is used by another task.
+
+Use these commands when refreshing or validating the archive, passing
+`PYTHON=<environment-python>` to Make when the environment is not activated:
 
 ```sh
 make sync
 make render-site
 make validate
+make validate-live
 make scan-secrets
 make check-drift
 make render-preview
 ```
 
+`make validate` checks offline integrity without contacting source services.
+`make validate-live` adds the separately reported, paginated live comparison.
+An offline pass does not mean the archive matches the live source. Pending
+retirement or other live differences remain visible without blocking a valid
+monitoring-state commit; reconciliation still rejects unsafe mutation plans.
+
 The scripts use public WordPress/API/sitemap/RSS/export surfaces only. If a
 future task needs authentication, private WordPress export, database access, SSH
 backend access, or destructive GitHub actions, stop for explicit owner approval
 first.
+
+For a portable local snapshot, follow [PRESERVATION.md](PRESERVATION.md).
 
 ## Canonical Drift Automation
 
@@ -163,22 +184,43 @@ The workflow is intentionally low-cost:
 - public unauthenticated WordPress REST only;
 - 25 minute job timeout;
 - concurrency group with `cancel-in-progress`;
-- explicit CPython 3.12 setup, pip cache keyed to `requirements.txt`, and
-  `python -m pip install -r requirements.txt` before archive Python scripts;
+- explicit CPython 3.12 setup and hash-verified locked dependencies before
+  archive Python scripts; Actions are pinned to full commit SHAs;
 - one new/restored post at most plus all verified existing-post updates in one
   atomic batch, or one confirmed retirement;
-- Pages rendering only after a verified content reconciliation or a changed
-  proprietary favicon master; clean health checks do not re-encode or rewrite
-  the favicon;
+- Pages rendering only after verified content, proprietary favicon master or
+  discovery eligibility changes; ordinary monitoring timestamps do not cause
+  rendering or favicon re-encoding;
 - commit only allowlisted drift, manifest, affected bundle, and generated
   Pages paths.
 
-The pip cache accelerates downloads but is not an installed-environment cache;
-dependency installation remains mandatory on every clean runner. The
-`make validate` workflow guard verifies the active Python bootstrap, its order,
-and the `lxml` requirement. Change the workflow and guard together for any
-intentional action/Python/bootstrap upgrade, then manually dispatch the
-workflow to verify the clean hosted-runner path.
+The pip cache accelerates downloads but does not replace installation on clean
+runners. Dependency-update PRs require passing CI and maintainer review; no
+automatic merging is configured. Push/PR CI is read-only. Offline validation
+and safety scanning remain mandatory even when rendering is skipped.
+
+Publication uses an explicit validated Pages artefact, with build,
+repository-write and deployment permissions separated. Both maintainer and bot
+changes use that path. A successful reconciliation is not proof of a successful
+deployment: compare the successful GitHub Pages deployment revision with main.
+A later no-content-change run can retry a failed deployment. Never force-push
+or manufacture an empty content commit just to request publication.
+The deployment workflow listens for successful main-branch canonical workflow
+completion as well as maintainer pushes and manual dispatch. This fresh event
+binds the deployment to the current main revision, including a bot commit;
+checking out a new SHA inside the older monitoring run would not update that
+run's Pages deployment identity. Deployment rebuilds and validates its own
+checkout, without trusting artefacts from the preceding monitoring run.
+
+Pre-staging and staged checks allow a rights-registry change only when it
+exactly removes the verified retired post's record. An unrelated rights or
+brand-manifest edit fails the automation boundary.
+If the Swer Networks repost (WordPress ID `5324`) is retired and later returns,
+its required explicit rights record must be restored by a maintainer before
+publication can pass validation. Review the previous record in Git history and
+the returning source, then restore the registry entry and bundle together.
+Automatic registry additions are not permitted by the monitoring allowlist;
+do not replace the ownership exception with the DS default to make a run pass.
 
 Design references:
 
@@ -216,15 +258,37 @@ complete batch outside the repository, revalidates each expected WordPress ID,
 and replaces bundles plus the manifest only after every target succeeds. Any
 target failure leaves the published archive unchanged.
 
-To unfreeze manually, a future maintainer must verify that the canonical site
-is healthy and owner-controlled, edit `archive-status.json` back to `healthy`,
-clear the failure counters, then run:
+Never edit health counters manually to unfreeze the archive. Use the
+owner-verified command sequence in [SEO_RECOVERY.md](SEO_RECOVERY.md), then
+review, validate, publish and verify the deployed revision.
 
-```sh
-python3 scripts/check-canonical-drift.py --force
-make validate
-make scan-secrets
-```
+### Missed Runs and Detection Limits
+
+GitHub is the only scheduler in this phase. Scheduled runs can be delayed, and
+public-repository schedules are automatically disabled after 60 days without
+repository activity. There is no independent notification path if GitHub or
+the schedule stops. Do not manufacture empty keepalive commits.
+
+If a weekly check is missing, inspect the Actions workflow's enabled state,
+latest scheduled/manual run, failed step and job summary. Resolve the cause,
+re-enable a disabled schedule where appropriate, and manually dispatch a
+non-forced check. Verify monitoring state and Pages deployment separately.
+Do not accelerate freeze by inventing observations or editing timestamps.
+
+Rendered-content fingerprints and changed media URLs are detected. Replaced
+media bytes at an unchanged upstream URL are not independently polled. The
+archive preserves the media bytes it actually fetched, not every future
+upstream variation.
+
+### Reader Safety
+
+Stored source captures are evidence, not trusted executable reader content.
+The reader/RSS renderer uses a maintained HTML allowlist sanitiser and a
+restricted embed policy; published source HTML receives separate containment.
+Keyboard skip links, visible focus, no-script reading, print and reflow checks
+are maintained alongside content fidelity. Automated checks alone are not a
+WCAG conformance assessment; representative human assistive-technology testing
+and any outstanding limitations must be reported separately.
 
 ## Archive Filters
 
