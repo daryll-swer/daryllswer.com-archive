@@ -22,6 +22,7 @@ import urllib.request
 from pathlib import Path
 
 from source_health import SourceObservationError, classify_exception, classify_http_status
+from media_audit import audit_media
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,7 +42,7 @@ MAX_RESPONSE_BYTES = 10 * 1024 * 1024
 MAX_REST_PAGES = 100
 REST_PER_PAGE = 100
 RETIREMENT_CONFIRMATION_MIN_DAYS = 7
-ACTION_PLAN_VERSION = 2
+ACTION_PLAN_VERSION = 3
 DEFAULT_ACTION_PLAN_NAME = "canonical-drift-action-plan.json"
 REST_POST_ITEM_TEMPLATE = f"{SITE}/wp-json/wp/v2/posts/{{post_id}}"
 WP_UPLOAD_RE = re.compile(
@@ -486,6 +487,7 @@ def compare_drift(live_posts: list[dict]) -> dict:
                     for key in [
                         "id",
                         "slug",
+                        "title",
                         "canonical_url",
                         "modified",
                         "featured_image_url",
@@ -698,6 +700,7 @@ def update_retirement_candidate(
     drift: dict,
     evidence: dict | None,
     generated_at: str,
+    media_clean: bool = True,
 ) -> dict | None:
     """Record only a currently provable, single-post retirement candidate."""
     exact_candidate = (
@@ -706,6 +709,7 @@ def update_retirement_candidate(
         and not drift.get("new_ids")
         and not drift.get("relocated_posts")
         and not drift.get("changed_posts")
+        and media_clean
     )
     existing = status.get("retirement_candidates") or []
     if not exact_candidate:
@@ -779,9 +783,13 @@ def build_action_plan(
     generated_at: str,
     evidence: dict | None = None,
     note: str = "",
+    media_updates: list[dict] | None = None,
+    media_audit: dict | None = None,
 ) -> dict:
     plan = {
         "version": ACTION_PLAN_VERSION,
+        "media_audit": media_audit or {"status": "not_requested", "distinct_urls": 0, "checked_urls": 0, "changed_assets": 0, "bytes_checked": 0, "failures": [], "elapsed_seconds": 0},
+        "media_updates": [],
         "generated_at": generated_at,
         "canonical_healthy": status.get("state") == "healthy" and status.get("frozen") is not True,
         "archive_state": status.get("state"),
@@ -797,7 +805,10 @@ def build_action_plan(
         "action": "none",
         "reason": note or "No automatic reconciliation action is safe.",
     }
-    if not drift or not plan["canonical_healthy"]:
+    audit_complete = plan["media_audit"].get("status") == "complete"
+    if not drift or not plan["canonical_healthy"] or not audit_complete:
+        if not audit_complete:
+            plan["reason"] = "Media audit was not completed; no reconciliation or retirement action is safe."
         return plan
 
     candidate = plan["retirement"]["candidate"]
@@ -817,12 +828,33 @@ def build_action_plan(
 
     new_posts = sorted(drift.get("new_posts", []), key=lambda item: int(item.get("id", 0)))
     changed_posts = sorted(drift.get("changed_posts", []), key=lambda item: int(item.get("id", 0)))
+    observed_media_updates = media_updates or []
+    media_only_ids = {item["post_id"] for item in observed_media_updates} - {item["id"] for item in changed_posts}
+    archived_by_id = {item.get("id"): item for item in load_json(ROOT / "archive-manifest.json").get("posts", [])}
+    summaries_by_id = {item.get("id"): item for item in status.get("last_live_post_summaries", [])}
+    for post_id in sorted(media_only_ids):
+        archived = archived_by_id.get(post_id) or {}
+        live = summaries_by_id.get(post_id) or {}
+        if archived and live:
+            changed_posts.append({
+                "id": post_id,
+                "slug": live.get("slug"),
+                "canonical_url": live.get("canonical_url"),
+                "expected": {key: live.get(key) for key in ["id", "slug", "title", "canonical_url", "modified", "featured_image_url", "canonical_rendered_content_sha256"]},
+                "fields": [],
+                "media_only": True,
+            })
+    plan["drift"]["changed_posts"] = changed_posts
     if (
         len(new_posts) <= 1
         and not drift.get("missing_ids")
         and not drift.get("relocated_posts")
-        and (new_posts or changed_posts)
+        and (new_posts or changed_posts or observed_media_updates)
     ):
+        plan["media_updates"] = [
+            {key: value for key, value in item.items() if key != "bytes"}
+            for item in observed_media_updates
+        ]
         plan["sync_posts"] = new_posts
         plan["update_posts"] = changed_posts
         plan["action"] = "sync"
@@ -833,7 +865,7 @@ def build_action_plan(
     return plan
 
 
-def render_report(status: dict, drift: dict | None, note: str) -> str:
+def render_report(status: dict, drift: dict | None, note: str, media_audit: dict | None = None) -> str:
     lines = [
         "# Canonical Drift Report",
         "",
@@ -898,7 +930,6 @@ def render_report(status: dict, drift: dict | None, note: str) -> str:
         if drift["missing_urls"]:
             lines.extend(["### Missing Or Unlisted Canonical URLs", ""])
             lines.extend(f"- {url}" for url in drift["missing_urls"])
-            lines.append("")
         if drift.get("relocated_posts"):
             lines.extend(["### Relocated Post IDs", ""])
             lines.extend(
@@ -906,6 +937,21 @@ def render_report(status: dict, drift: dict | None, note: str) -> str:
                 for item in drift["relocated_posts"]
             )
             lines.append("")
+
+    if media_audit and media_audit.get("status") != "not_requested":
+        lines.extend([
+            "## Media Audit",
+            "",
+            f"- Status: `{media_audit.get('status')}`",
+            f"- Distinct source URLs: {media_audit.get('distinct_urls', 0)}",
+            f"- Checked URLs: {media_audit.get('checked_urls', 0)}",
+            f"- Changed archived assets: {media_audit.get('changed_assets', 0)}",
+            f"- Bytes checked: {media_audit.get('bytes_checked', 0)}",
+        ])
+        for failure in media_audit.get("failures", []):
+            detail = str(failure.get("error", "unknown error")).replace("`", "'").replace("\n", " ")[:300]
+            lines.append(f"- Failure: `{detail}`")
+        lines.append("")
         if drift["changed_posts"]:
             lines.extend(["### Changed Posts", ""])
             for item in drift["changed_posts"]:
@@ -948,6 +994,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dry-run", action="store_true", help="Print status without writing state/report files.")
     parser.add_argument("--force", action="store_true", help="Run a fresh frozen-source diagnostic; state changes require owner-verified recovery.")
     parser.add_argument("--fresh", action="store_true", help="Bypass conditional REST validators for a fresh comparison.")
+    parser.add_argument("--audit-media", action="store_true", help="Revalidate bytes for every already archived WordPress image URL.")
     parser.add_argument(
         "--action-plan",
         help="Write the one-run reconciliation action plan outside the repository.",
@@ -965,6 +1012,8 @@ def main() -> int:
     persisted_status = load_json(STATUS_PATH) if status_existed else None
     persist = not status_existed or persisted_status != status
     action_plan = None
+    media_updates: list[dict] = []
+    media_result = {"status": "not_requested", "distinct_urls": 0, "checked_urls": 0, "changed_assets": 0, "bytes_checked": 0, "failures": [], "elapsed_seconds": 0}
 
     def write_result() -> None:
         if not args.result:
@@ -1045,9 +1094,23 @@ def main() -> int:
             if baseline_ids:
                 note += f" Recorded canonical content-fingerprint baselines for {len(baseline_ids)} post(s)."
         status["last_live_post_count"] = drift["live_post_count"]
-        evidence = retirement_endpoint_evidence(drift.get("missing_posts", []))
+        if args.audit_media:
+            try:
+                media_updates, media_result = audit_media(load_json(ROOT / "archive-manifest.json"))
+            except Exception as exc:
+                media_result = {
+                    "status": "incomplete",
+                    "distinct_urls": 0,
+                    "checked_urls": 0,
+                    "changed_assets": 0,
+                    "bytes_checked": 0,
+                    "failures": [{"source_url": "", "error": f"{type(exc).__name__}: {exc}"}],
+                    "elapsed_seconds": 0,
+                }
+        media_clean = media_result["status"] in {"complete", "not_requested"} and not media_updates
+        evidence = retirement_endpoint_evidence(drift.get("missing_posts", [])) if media_clean else None
         previous_candidates = json.loads(json.dumps(status.get("retirement_candidates") or []))
-        candidate = update_retirement_candidate(status, drift, evidence, generated_at)
+        candidate = update_retirement_candidate(status, drift, evidence, generated_at, media_clean=media_clean)
         current_hash = drift_hash(drift)
         changed = bool(
             drift["new_ids"]
@@ -1074,8 +1137,12 @@ def main() -> int:
             persist = persist or not previous_was_clean
         persist = persist or previous_candidates != (status.get("retirement_candidates") or [])
         persist = persist or previous_status.get("last_live_post_summaries") != status.get("last_live_post_summaries")
-        report = render_report(status, drift, note)
-        action_plan = build_action_plan(status, drift, generated_at, evidence, note)
+        report = render_report(status, drift, note, media_result)
+        action_plan = build_action_plan(
+            status, drift, generated_at, evidence, note,
+            media_updates=media_updates,
+            media_audit=media_result,
+        )
     except Exception as exc:
         failure_kind, failure_detail = classify_run_exception(exc)
         record_failure(status, generated_at, failure_kind, failure_detail)

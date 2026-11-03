@@ -76,10 +76,12 @@ class MonitoringIntegrityIntegrationTests(unittest.TestCase):
             status = 404 if "/wp-json/" in url else 410
             return {"url": url, "status": status, "passed": True}
 
-        argv = ["check-canonical-drift.py", "--action-plan", str(action_plan)]
+        argv = ["check-canonical-drift.py", "--audit-media", "--action-plan", str(action_plan)]
+        complete_audit = {"status": "complete", "distinct_urls": 0, "checked_urls": 0, "changed_assets": 0, "bytes_checked": 0, "failures": [], "elapsed_seconds": 0}
         with (
             mock.patch.object(DRIFT, "request_posts", return_value=(live_posts, {}, False)),
             mock.patch.object(DRIFT, "endpoint_status", side_effect=endpoint_result) as endpoint_check,
+            mock.patch.object(DRIFT, "audit_media", return_value=([], complete_audit)),
             mock.patch.object(sys, "argv", argv),
             contextlib.redirect_stdout(io.StringIO()),
         ):

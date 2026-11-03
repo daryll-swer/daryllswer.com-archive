@@ -11,10 +11,12 @@ import json
 import re
 import subprocess
 import sys
+from jsonschema import FormatChecker, validators
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = "content/rights-registry.json"
+ACTION_PLAN_SCHEMA = ROOT / "schemas" / "canonical-drift-action-plan.schema.json"
 MASTER_FAVICON = "assets/brand/01_DS_Favicon_Dark_Mode.png"
 ALLOWED = re.compile(
     r"(?:archive-manifest\.json|archive-status\.json|docs/CANONICAL_DRIFT\.md|"
@@ -47,13 +49,93 @@ def git_json(source: str) -> object:
     return json.loads(git("show", source).decode("utf-8"))
 
 
+def validate_action_plan(plan: object) -> dict:
+    if not isinstance(plan, dict):
+        raise ValueError("action plan must be an object")
+    schema = json.loads(ACTION_PLAN_SCHEMA.read_text(encoding="utf-8"))
+    validator_class = validators.validator_for(schema)
+    validator_class.check_schema(schema)
+    validator = validator_class(schema, format_checker=FormatChecker())
+    errors = sorted(validator.iter_errors(plan), key=lambda error: list(error.path))
+    if errors:
+        raise ValueError("action plan schema validation failed: " + "; ".join(error.message for error in errors))
+    return plan
+
+
+def validate_media_updates(plan: dict, staged: bool) -> None:
+    updates = plan.get("media_updates")
+    if not isinstance(updates, list):
+        raise ValueError("action plan media_updates must be an array")
+    seen: set[str] = set()
+    for update in updates:
+        if not isinstance(update, dict):
+            raise ValueError("media update must be an object")
+        asset_path = update["asset_path"]
+        path = Path(asset_path)
+        if path.is_absolute() or ".." in path.parts or path.as_posix() != asset_path:
+            raise ValueError(f"media asset_path must be a normal repository-relative path: {asset_path}")
+        if asset_path in seen:
+            raise ValueError(f"duplicate media update path: {asset_path}")
+        seen.add(asset_path)
+    if plan.get("action") != "sync":
+        return
+    if plan.get("canonical_healthy") is not True or (plan.get("media_audit") or {}).get("status") != "complete":
+        raise ValueError("media replacement requires a healthy canonical state and complete media audit")
+    manifest = git_json("HEAD:archive-manifest.json")
+    base_manifests: dict[str, dict] = {}
+    current_manifests: dict[str, dict] = {}
+    for update in updates:
+        asset_path = update["asset_path"]
+        post_id = update["post_id"]
+        matches = [post for post in manifest.get("posts", []) if post.get("id") == post_id]
+        if len(matches) != 1:
+            raise ValueError(f"media update post_id does not identify one archived post: {post_id}")
+        bundle = matches[0].get("bundle_path", "")
+        if not asset_path.startswith(bundle + "/assets/"):
+            raise ValueError(f"media asset_path is outside the planned post assets directory: {asset_path}")
+        manifest_path = f"{bundle}/assets/manifest.json"
+        if manifest_path not in base_manifests:
+            base_manifests[manifest_path] = json.loads(git("show", f"HEAD:{manifest_path}").decode("utf-8"))
+        base_manifest = base_manifests[manifest_path]
+        records = [
+            asset for asset in base_manifest.get("assets", [])
+            if asset.get("local_path") == asset_path
+            and asset.get("source_url") == update["source_url"]
+        ]
+        if len(records) != 1 or base_manifest.get("post_id") != post_id:
+            raise ValueError(f"media update does not match one exact source asset record: {asset_path}")
+        base = subprocess.run(["git", "show", f"HEAD:{asset_path}"], cwd=ROOT, stdout=subprocess.PIPE)
+        if base.returncode != 0:
+            raise ValueError(f"planned old media asset is missing from HEAD: {asset_path}")
+        if hashlib.sha256(base.stdout).hexdigest() != update["old_sha256"]:
+            raise ValueError(f"planned old media hash does not match HEAD: {asset_path}")
+        current = content(asset_path, staged)
+        if current is None or hashlib.sha256(current).hexdigest() != update["new_sha256"]:
+            raise ValueError(f"planned new media hash does not match changed asset: {asset_path}")
+        if manifest_path not in current_manifests:
+            current_manifest_bytes = content(manifest_path, staged)
+            if current_manifest_bytes is None:
+                raise ValueError(f"updated media asset manifest is missing: {manifest_path}")
+            current_manifests[manifest_path] = json.loads(current_manifest_bytes)
+        current_manifest = current_manifests[manifest_path]
+        current_records = [
+            asset for asset in current_manifest.get("assets", [])
+            if asset.get("local_path") == asset_path
+            and asset.get("source_url") == update["source_url"]
+        ]
+        if len(current_records) != 1 or current_records[0].get("sha256") != update["new_sha256"]:
+            raise ValueError(f"updated media manifest does not record the planned bytes: {asset_path}")
+        if update["old_sha256"] == update["new_sha256"]:
+            raise ValueError(f"media update does not change bytes: {asset_path}")
+
+
 def expected_registry(base: bytes, action_plan_path: Path | None, *, staged: bool = False) -> bytes:
     base_obj = json.loads(base)
     if not isinstance(base_obj, dict):
         raise ValueError("base rights registry must be a JSON object")
     if action_plan_path is None or not action_plan_path.exists():
         return base
-    plan = json.loads(action_plan_path.read_text(encoding="utf-8"))
+    plan = validate_action_plan(json.loads(action_plan_path.read_text(encoding="utf-8")))
     retirement = plan.get("retirement") or {}
     candidate = retirement.get("candidate") or {}
     drift = plan.get("drift") or {}
@@ -62,7 +144,7 @@ def expected_registry(base: bytes, action_plan_path: Path | None, *, staged: boo
         raise ValueError("action plan does not match the base archive manifest")
     missing = drift.get("missing_posts") or []
     if (
-        plan.get("version") != 2
+        plan.get("version") != 3
         or plan.get("action") != "retire"
         or retirement.get("eligible") is not True
         or plan.get("canonical_healthy") is not True
@@ -146,6 +228,13 @@ def main() -> int:
     args = parser.parse_args()
     errors: list[str] = []
     paths = paths_for(args.staged)
+    plan = None
+    if args.action_plan and args.action_plan.exists():
+        try:
+            plan = validate_action_plan(json.loads(args.action_plan.read_text(encoding="utf-8")))
+            validate_media_updates(plan, args.staged)
+        except Exception as exc:
+            errors.append(f"action-plan validation failed: {exc}")
     try:
         validate_regular_paths(paths, args.staged)
     except Exception as exc:

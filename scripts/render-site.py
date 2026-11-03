@@ -759,12 +759,29 @@ def sitemap_lastmod(value: str | None) -> str | None:
     return parsed.isoformat().replace("+00:00", "Z")
 
 
+def post_lastmod(post: dict, metadata: dict) -> str | None:
+    values = [post.get("modified"), metadata.get("archive_media_updated_at")]
+    parsed_values = []
+    for value in values:
+        if not value:
+            continue
+        try:
+            parsed = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except (AttributeError, ValueError):
+            continue
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=dt.timezone.utc)
+        parsed_values.append(parsed)
+    return sitemap_lastmod(max(parsed_values).isoformat()) if parsed_values else None
+
+
 def render_sitemap(posts: list[dict], metadata_by_slug: dict[str, dict], status: dict) -> None:
     urls = [(PAGES_BASE_URL, None)]
     if archive_discovery(status):
         for post in posts:
             if post_is_seo_eligible(post, metadata_by_slug[post["slug"]], status):
-                urls.append((PAGES_BASE_URL + f"posts/{post['slug']}/", sitemap_lastmod(post.get("modified"))))
+                metadata = metadata_by_slug[post["slug"]]
+                urls.append((PAGES_BASE_URL + f"posts/{post['slug']}/", post_lastmod(post, metadata)))
         urls.extend([
             (PAGES_BASE_URL + f"sheets/{SHEET_SLUG}/", None),
             (PAGES_BASE_URL + f"sheets/{SHEET_SLUG}/visual.html", None),
@@ -810,8 +827,14 @@ def feed_pub_date(value: str | None) -> str:
     return email.utils.format_datetime(parsed, usegmt=True)
 
 
-def feed_last_build_date(posts: list[dict], status: dict) -> str:
-    values = [post.get("modified") or post.get("published") for post in posts]
+def feed_last_build_date(posts: list[dict], metadata_by_slug: dict[str, dict], status: dict) -> str:
+    values = []
+    for post in posts:
+        metadata = metadata_by_slug.get(post["slug"], {})
+        values.extend([
+            post.get("modified") or post.get("published"),
+            metadata.get("archive_media_updated_at"),
+        ])
     values.append(status.get("seo_activated_at"))
     parsed_values = []
     for value in values:
@@ -821,7 +844,7 @@ def feed_last_build_date(posts: list[dict], status: dict) -> str:
             continue
         parsed_values.append(parsed if parsed.tzinfo else parsed.replace(tzinfo=dt.timezone.utc))
     latest = max(parsed_values, default=dt.datetime(1970, 1, 1, tzinfo=dt.timezone.utc))
-    return email.utils.format_datetime(latest, usegmt=True)
+    return email.utils.format_datetime(latest.astimezone(dt.timezone.utc), usegmt=True)
 
 
 def render_feed(posts: list[dict], metadata_by_slug: dict[str, dict], canonical_to_slug: dict[str, str], status: dict) -> None:
@@ -837,7 +860,7 @@ def render_feed(posts: list[dict], metadata_by_slug: dict[str, dict], canonical_
         f"    <link>{html_escape(PAGES_BASE_URL)}</link>",
         "    <description>Public archive of daryllswer.com network engineering writing.</description>",
         "    <language>en-IN</language>",
-        f"    <lastBuildDate>{html_escape(feed_last_build_date(eligible[:10], status))}</lastBuildDate>",
+        f"    <lastBuildDate>{html_escape(feed_last_build_date(eligible[:10], metadata_by_slug, status))}</lastBuildDate>",
         f'    <atom:link href="{html_escape(PAGES_BASE_URL + "feed.xml")}" rel="self" type="application/rss+xml" />',
         "    <image>",
         f"      <url>{html_escape(PAGES_BASE_URL + 'assets/brand/' + BRAND_FAVICON_OUTPUT_NAME)}</url>",

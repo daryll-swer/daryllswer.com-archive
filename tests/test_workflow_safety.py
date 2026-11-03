@@ -67,7 +67,10 @@ class WorkflowSafetyTests(unittest.TestCase):
                 {"observed_at": "2026-01-09T00:00:00+00:00"},
             ],
         }]}
-        plan = DETECTOR.build_action_plan(status, drift, "2026-01-10T00:00:00+00:00", evidence)
+        plan = DETECTOR.build_action_plan(
+            status, drift, "2026-01-10T00:00:00+00:00", evidence,
+            media_audit={"status": "complete", "distinct_urls": 0, "checked_urls": 0, "changed_assets": 0, "bytes_checked": 0, "failures": [], "elapsed_seconds": 0},
+        )
         self.assertTrue(plan["retirement"]["eligible"])
         path.write_text(json.dumps(plan), encoding="utf-8")
         return plan

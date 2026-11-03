@@ -49,12 +49,25 @@ jobs:
 
       - name: Check canonical drift
         id: canonical
+        env:
+          ACTION_PLAN_PATH: ${{ runner.temp }}/canonical-drift-action-plan.json
         run: |
           args=""
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force }}" = "true" ]; then
             args="--force"
           fi
-          python3 scripts/check-canonical-drift.py $args --action-plan "${{ runner.temp }}/canonical-drift-action-plan.json" --result "${{ runner.temp }}/canonical-drift-result.json"
+          python3 scripts/check-canonical-drift.py $args --audit-media --action-plan "${{ runner.temp }}/canonical-drift-action-plan.json" --result "${{ runner.temp }}/canonical-drift-result.json"
+          python3 - <<'PY'
+          import json
+          import os
+
+          with open(os.environ["ACTION_PLAN_PATH"], encoding="utf-8") as plan_file:
+              audit = json.load(plan_file).get("media_audit", {})
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+              summary.write("### Same-URL media audit\n\n```json\n")
+              json.dump(audit, summary, ensure_ascii=False, indent=2, sort_keys=True)
+              summary.write("\n```\n")
+          PY
           changed="$(python3 -c 'import json; print(str(json.load(open("${{ runner.temp }}/canonical-drift-result.json", encoding="utf-8")).get("eligibility_changed") is True).lower())')"
           echo "eligibility_changed=$changed" >> "$GITHUB_OUTPUT"
 

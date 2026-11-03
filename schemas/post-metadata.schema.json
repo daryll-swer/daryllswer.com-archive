@@ -34,6 +34,10 @@
     "modified": {
       "type": "string"
     },
+    "archive_media_updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
     "author": {
       "type": "object"
     },

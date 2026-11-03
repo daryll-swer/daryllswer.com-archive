@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://daryllswer.com/schemas/canonical-drift-action-plan.schema.json",
+  "type": "object",
+  "required": ["version", "action", "media_updates", "media_audit"],
+  "properties": {
+    "version": {"const": 3},
+    "action": {"enum": ["none", "retire", "sync"]},
+    "media_updates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_url", "post_id", "asset_path", "old_sha256", "new_sha256"],
+        "properties": {
+          "source_url": {"type": "string", "format": "uri"},
+          "post_id": {"type": "integer", "minimum": 1},
+          "asset_path": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?($|/)).+$"
+          },
+          "old_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "new_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "media_audit": {
+      "type": "object",
+      "required": [
+        "status",
+        "distinct_urls",
+        "checked_urls",
+        "changed_assets",
+        "bytes_checked",
+        "failures"
+      ],
+      "properties": {
+        "status": {"enum": ["complete", "incomplete", "not_requested"]},
+        "distinct_urls": {"type": "integer", "minimum": 0},
+        "checked_urls": {"type": "integer", "minimum": 0},
+        "changed_assets": {"type": "integer", "minimum": 0},
+        "bytes_checked": {"type": "integer", "minimum": 0},
+        "failures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["source_url", "error"],
+            "properties": {
+              "source_url": {"type": "string"},
+              "error": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          }
+        },
+        "elapsed_seconds": {"type": "number", "minimum": 0}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "not_requested"}}, "required": ["status"]},
+          "then": {},
+          "else": {"required": ["elapsed_seconds"]}
+        }
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

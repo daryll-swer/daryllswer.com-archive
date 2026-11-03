@@ -15,12 +15,15 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from jsonschema import FormatChecker, validators
 
 from rights_policy import resolve_rights
+from media_audit import is_approved_media_url, safe_asset_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ACTION_PLAN_VERSION = 2
+SCRIPT_ROOT = Path(__file__).resolve().parents[1]
+ACTION_PLAN_VERSION = 3
 ALLOWED_ENDPOINT_STATUSES = {404, 410}
 RETIREMENT_CONFIRMATION_MIN_DAYS = 7
 
@@ -31,6 +34,19 @@ def load_json(path: Path):
 
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def bundle_sha256(bundle: Path) -> str:
+    digest = hashlib.sha256()
+    for path in sorted(bundle.rglob("*")):
+        if path.is_symlink():
+            raise ValueError(f"bundle contains a symlink: {path}")
+        if path.is_file():
+            relative = path.relative_to(bundle).as_posix().encode("utf-8")
+            digest.update(len(relative).to_bytes(8, "big"))
+            digest.update(relative)
+            digest.update(bytes.fromhex(sha256_file(path)))
+    return digest.hexdigest()
 
 
 def now_iso() -> str:
@@ -113,6 +129,7 @@ def confirmation_window_is_valid(candidate: dict) -> bool:
 def validate_common(plan: dict, manifest: dict, status: dict) -> None:
     if plan.get("version") != ACTION_PLAN_VERSION:
         raise ValueError("unsupported canonical drift action-plan version")
+    validate_action_plan(plan)
     if plan.get("canonical_healthy") is not True or status.get("state") != "healthy" or status.get("frozen") is True:
         raise ValueError("canonical state is not healthy; no reconciliation action is permitted")
     manifest_path = ROOT / "archive-manifest.json"
@@ -120,7 +137,67 @@ def validate_common(plan: dict, manifest: dict, status: dict) -> None:
         raise ValueError("archive-manifest.json changed after the action plan was produced")
 
 
+def validate_action_plan(plan: dict) -> None:
+    schema_path = SCRIPT_ROOT / "schemas" / "canonical-drift-action-plan.schema.json"
+    schema = load_json(schema_path)
+    validator_type = validators.validator_for(schema)
+    validator_type.check_schema(schema)
+    validator = validator_type(schema, format_checker=FormatChecker())
+    errors = sorted(validator.iter_errors(plan), key=lambda error: list(error.path))
+    if errors:
+        raise ValueError("action plan schema validation failed: " + "; ".join(error.message for error in errors))
+    audit = plan["media_audit"]
+    for key in ("distinct_urls", "checked_urls", "changed_assets", "bytes_checked"):
+        value = audit[key]
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            raise ValueError(f"media audit {key} must be a non-negative integer")
+    if audit["checked_urls"] > audit["distinct_urls"]:
+        raise ValueError("media audit checked URL count exceeds distinct URL count")
+    if audit["status"] == "incomplete" and plan["media_updates"]:
+        raise ValueError("incomplete media audit cannot include actionable media updates")
+    if plan["action"] != "sync" and plan["media_updates"]:
+        raise ValueError("media updates are permitted only for an eligible sync action")
+    if plan["action"] == "retire" and audit["status"] != "complete":
+        raise ValueError("retirement requires a complete media audit")
+    if plan["action"] == "sync":
+        for key in ("sync_posts", "update_posts"):
+            if not isinstance(plan.get(key), list):
+                raise ValueError(f"sync action {key} must be an array")
+        for item in plan["update_posts"]:
+            expected = item.get("expected") if isinstance(item, dict) else None
+            required = {"id", "slug", "title", "canonical_url", "modified", "canonical_rendered_content_sha256"}
+            if not isinstance(expected, dict) or not required.issubset(expected):
+                raise ValueError("sync update lacks fresh canonical identity/content fingerprints")
+            digest = expected.get("canonical_rendered_content_sha256")
+            if not isinstance(digest, str) or len(digest) != 64:
+                raise ValueError("sync update has no canonical rendered-content SHA-256")
+            try:
+                bytes.fromhex(digest)
+            except ValueError as exc:
+                raise ValueError("sync update has an invalid canonical rendered-content SHA-256") from exc
+    if plan["media_updates"] and (audit["status"] != "complete" or plan.get("canonical_healthy") is not True):
+        raise ValueError("media updates require a healthy source and complete media audit")
+    seen: set[tuple[int, str]] = set()
+    for update in plan["media_updates"]:
+        if not is_approved_media_url(update["source_url"]):
+            raise ValueError("media update source URL is not approved unauthenticated HTTPS")
+        if update["old_sha256"] == update["new_sha256"]:
+            raise ValueError("media update must change the SHA-256")
+        try:
+            bytes.fromhex(update["old_sha256"])
+            bytes.fromhex(update["new_sha256"])
+        except ValueError as exc:
+            raise ValueError("media update contains an invalid SHA-256") from exc
+        key = (update["post_id"], update["asset_path"])
+        if key in seen:
+            raise ValueError("action plan contains a duplicate media update target")
+        seen.add(key)
+
+
 def retire_one(plan: dict, manifest: dict, status: dict) -> None:
+    audit = plan.get("media_audit") or {}
+    if plan.get("version") != ACTION_PLAN_VERSION or audit.get("status") != "complete" or plan.get("media_updates"):
+        raise ValueError("retirement refuses incomplete or changed-media audit results")
     drift = plan.get("drift") or {}
     missing = drift.get("missing_posts") or []
     if (
@@ -222,6 +299,10 @@ def sync_targets(plan: dict, manifest: dict) -> tuple[list[dict], list[dict]]:
     drift = plan.get("drift") or {}
     new_posts = list(plan.get("sync_posts") or [])
     updates = list(plan.get("update_posts") or [])
+    media_audit = plan.get("media_audit") or {"status": "not_requested"}
+    media_updates = plan.get("media_updates") or []
+    if media_audit.get("status") not in {"complete", "not_requested"}:
+        raise ValueError("incomplete media audit cannot be reconciled")
     if len(new_posts) > 1:
         raise ValueError("automatic sync action contains more than one newly detected post")
     if drift.get("missing_ids") or drift.get("relocated_posts"):
@@ -239,6 +320,7 @@ def sync_targets(plan: dict, manifest: dict) -> tuple[list[dict], list[dict]]:
             raise ValueError("automatic sync new post conflicts with the archive manifest")
         target_ids.add(post_id)
 
+    planned_media_ids = {item.get("post_id") for item in media_updates}
     if set(item.get("id") for item in updates) != set(changed_by_id):
         raise ValueError("automatic sync must include every and only checker-reported existing-post update")
     for item in updates:
@@ -246,6 +328,7 @@ def sync_targets(plan: dict, manifest: dict) -> tuple[list[dict], list[dict]]:
         expected = item.get("expected") or {}
         archived = archived_by_id.get(post_id)
         detected = changed_by_id.get(post_id)
+        detected = detected or (item if post_id in planned_media_ids and item.get("media_only") else None)
         if (
             not isinstance(post_id, int)
             or post_id in target_ids
@@ -260,6 +343,34 @@ def sync_targets(plan: dict, manifest: dict) -> tuple[list[dict], list[dict]]:
             raise ValueError("automatic sync refuses a relocated existing post")
         target_ids.add(post_id)
 
+    seen_media: set[tuple[int, str]] = set()
+    for item in media_updates:
+        post_id = item.get("post_id")
+        asset_path = item.get("asset_path")
+        if (post_id, asset_path) in seen_media:
+            raise ValueError("media update plan contains a duplicate target")
+        seen_media.add((post_id, asset_path))
+        if post_id not in target_ids or not isinstance(asset_path, str):
+            raise ValueError("media update target is not included in the sync batch")
+        post = archived_by_id.get(post_id) or {}
+        bundle = post.get("bundle_path", "")
+        path = Path(asset_path)
+        if not asset_path.startswith(bundle + "/") or path.as_posix() != asset_path or ".." in path.parts:
+            raise ValueError("media asset path does not belong to its planned post bundle")
+        local = safe_asset_path(bundle, asset_path.removeprefix(bundle + "/"), root=ROOT)
+        if not local.is_file() or local.is_symlink() or sha256_file(local) != item.get("old_sha256"):
+            raise ValueError("archived media changed after the action plan was produced")
+        assets_manifest_path = ROOT / bundle / "assets" / "manifest.json"
+        assets_manifest = load_json(assets_manifest_path)
+        matches = [
+            asset for asset in assets_manifest.get("assets", [])
+            if asset.get("local_path") == asset_path and asset.get("source_url") == item.get("source_url")
+        ]
+        if assets_manifest.get("post_id") != post_id or len(matches) != 1 or matches[0].get("sha256") != item.get("old_sha256"):
+            raise ValueError("media update does not match the exact archived source asset and hash")
+        if not all(isinstance(item.get(key), str) and len(item[key]) == 64 for key in ("old_sha256", "new_sha256")):
+            raise ValueError("media update plan contains an invalid SHA-256")
+
     if not target_ids:
         raise ValueError("automatic sync action contains no target posts")
     return new_posts, updates
@@ -269,8 +380,21 @@ def stage_sync(plan: dict, manifest: dict) -> tuple[Path, list[dict], list[dict]
     """Run the public synchroniser in an isolated root before any live mutation."""
     new_posts, updates = sync_targets(plan, manifest)
     targets = [*new_posts, *updates]
+    current_manifest_path = ROOT / "archive-manifest.json"
+    baseline = {
+        "archive_manifest_sha256": sha256_file(current_manifest_path),
+        "bundles": {},
+    }
+    for item in updates:
+        post = next(post for post in manifest.get("posts", []) if post.get("id") == item["id"])
+        bundle = safe_bundle_path(post["bundle_path"])
+        baseline["bundles"][str(item["id"])] = {
+            "bundle_path": post["bundle_path"],
+            "sha256": bundle_sha256(bundle),
+        }
     stage_root = Path(tempfile.mkdtemp(prefix="daryllswer-sync-stage-"))
     try:
+        atomic_write_json(stage_root / ".reconcile-baseline.json", baseline)
         (stage_root / "archive-manifest.json").write_bytes((ROOT / "archive-manifest.json").read_bytes())
         registry_source = ROOT / "content" / "rights-registry.json"
         if not registry_source.is_file() or registry_source.is_symlink():
@@ -307,9 +431,97 @@ def stage_sync(plan: dict, manifest: dict) -> tuple[Path, list[dict], list[dict]
             if not staged_bundle.is_dir() or staged_bundle.is_symlink() or not (staged_bundle / "metadata.json").is_file():
                 raise RuntimeError(f"staged automatic sync did not produce a safe bundle for ID {post_id}")
             staged_metadata = load_json(staged_bundle / "metadata.json")
+            expected = item.get("expected") or {}
+            for key in ["id", "slug", "title", "canonical_url", "modified"]:
+                expected_value = expected.get(key)
+                actual_value = staged_metadata.get(key)
+                if key == "canonical_url" and isinstance(expected_value, str) and isinstance(actual_value, str):
+                    matches = expected_value.rstrip("/") == actual_value.rstrip("/")
+                elif key == "title" and isinstance(expected_value, str) and isinstance(actual_value, str):
+                    matches = " ".join(actual_value.split()).lower() == expected_value
+                else:
+                    matches = actual_value == expected_value
+                if expected_value is not None and not matches:
+                    raise RuntimeError(f"fresh canonical {key} differs from action plan for ID {post_id}")
+            expected_featured_url = expected.get("featured_image_url")
+            actual_featured_url = (staged_metadata.get("featured_image") or {}).get("source_url")
+            if "featured_image_url" in expected and actual_featured_url != expected_featured_url:
+                raise RuntimeError(f"fresh canonical featured image differs from action plan for ID {post_id}")
+            expected_content_hash = expected.get("canonical_rendered_content_sha256")
+            actual_content_hash = (staged_metadata.get("source") or {}).get("canonical_rendered_content_sha256")
+            if expected_content_hash and actual_content_hash != expected_content_hash:
+                raise RuntimeError(f"fresh canonical content changed after the action plan for ID {post_id}")
             expected_rights = resolve_rights(post_id, item["canonical_url"], rights_registry)
             if staged_metadata.get("rights") != expected_rights:
                 raise RuntimeError(f"staged automatic sync did not apply resolved rights for ID {post_id}")
+            if post_id in prior_by_id:
+                prior_metadata_path = ROOT / prior_by_id[post_id]["bundle_path"] / "metadata.json"
+                staged_metadata_path = staged_bundle / "metadata.json"
+                prior_metadata = load_json(prior_metadata_path)
+                if "archive_media_updated_at" not in staged_metadata and prior_metadata.get("archive_media_updated_at"):
+                    staged_metadata["archive_media_updated_at"] = prior_metadata["archive_media_updated_at"]
+                    atomic_write_json(staged_metadata_path, staged_metadata)
+        planned_media = {(item["post_id"], item["asset_path"]): item for item in plan.get("media_updates", [])}
+        planned_media_ids = {item["post_id"] for item in plan.get("media_updates", [])}
+        planned_urls_by_id: dict[int, set[str]] = {}
+        media_by_id = {post_id: [] for post_id in planned_media_ids}
+        for key, item in planned_media.items():
+            media_by_id.setdefault(key[0], []).append(item)
+            planned_urls_by_id.setdefault(key[0], set()).add(item["source_url"])
+            bundle_path = prior_by_id[key[0]]["bundle_path"]
+            relative = Path(item["asset_path"]).relative_to(bundle_path)
+            target = safe_asset_path(bundle_path, relative.as_posix(), root=ROOT)
+            staged_target = stage_root / bundle_path / relative
+            if not staged_target.is_file() or sha256_file(staged_target) != item["new_sha256"]:
+                raise RuntimeError(f"staged media bytes do not match planned hash for ID {key[0]}")
+            staged_assets = load_json(stage_root / bundle_path / "assets" / "manifest.json")
+            exact_records = [
+                asset for asset in staged_assets.get("assets", [])
+                if asset.get("local_path") == item["asset_path"] and asset.get("source_url") == item["source_url"]
+            ]
+            if len(exact_records) != 1 or exact_records[0].get("sha256") != item["new_sha256"]:
+                raise RuntimeError(f"staged asset manifest does not match planned media for ID {key[0]}")
+            metadata_path = stage_root / bundle_path / "metadata.json"
+            metadata = load_json(metadata_path)
+            metadata["archive_media_updated_at"] = now_iso()
+            atomic_write_json(metadata_path, metadata)
+        for item in updates:
+            post_id = item["id"]
+            bundle_path = prior_by_id[post_id]["bundle_path"]
+            old_assets_path = ROOT / bundle_path / "assets" / "manifest.json"
+            new_assets_path = stage_root / bundle_path / "assets" / "manifest.json"
+            old_assets = load_json(old_assets_path).get("assets", [])
+            new_assets = load_json(new_assets_path).get("assets", [])
+            new_by_path = {asset.get("local_path"): asset for asset in new_assets}
+            media_only = bool(item.get("media_only"))
+            for asset in old_assets:
+                if asset.get("source_url") in planned_urls_by_id.get(post_id, set()):
+                    continue
+                old_local = asset.get("local_path")
+                if not isinstance(old_local, str):
+                    raise RuntimeError(f"existing asset path is malformed for ID {post_id}")
+                new_asset = new_by_path.get(old_local)
+                if not new_asset:
+                    if media_only:
+                        raise RuntimeError(f"unplanned staged media removal for ID {post_id}: {old_local}")
+                    continue
+                old_file = safe_asset_path(bundle_path, Path(old_local).relative_to(bundle_path).as_posix(), root=ROOT)
+                new_file = stage_root / bundle_path / Path(old_local).relative_to(bundle_path)
+                if not new_file.is_file() or sha256_file(old_file) != sha256_file(new_file):
+                    raise RuntimeError(f"unplanned staged media byte change for ID {post_id}: {old_local}")
+        for post_id, entries in media_by_id.items():
+            update = next((item for item in updates if item["id"] == post_id), {})
+            if update.get("media_only"):
+                bundle_path = prior_by_id[post_id]["bundle_path"]
+                old_bundle = ROOT / bundle_path
+                new_bundle = stage_root / bundle_path
+                allowed = {Path(item["asset_path"]).relative_to(bundle_path).as_posix() for item in entries}
+                for old_file in (old_bundle / "assets").rglob("*"):
+                    if old_file.is_file() and old_file.name != "manifest.json":
+                        relative = old_file.relative_to(old_bundle).as_posix()
+                        new_file = new_bundle / relative
+                        if relative not in allowed and (not new_file.is_file() or sha256_file(old_file) != sha256_file(new_file)):
+                            raise RuntimeError(f"unplanned staged media change for ID {post_id}: {relative}")
         return stage_root, new_posts, updates
     except Exception:
         shutil.rmtree(stage_root, ignore_errors=True)
@@ -325,6 +537,25 @@ def apply_staged_sync(stage_root: Path, manifest: dict, new_posts: list[dict], u
     targets = [*new_posts, *updates]
     manifest_path = ROOT / "archive-manifest.json"
     original_manifest = manifest_path.read_bytes()
+    baseline_path = stage_root / ".reconcile-baseline.json"
+    if not baseline_path.is_file() or baseline_path.is_symlink():
+        raise ValueError("staged sync baseline is missing or unsafe")
+    baseline = load_json(baseline_path)
+    if hashlib.sha256(original_manifest).hexdigest() != baseline.get("archive_manifest_sha256"):
+        raise ValueError("archive manifest changed while synchronization was staged")
+    for item in updates:
+        expected = baseline.get("bundles", {}).get(str(item["id"])) or {}
+        prior = prior_by_id.get(item["id"]) or {}
+        if prior.get("bundle_path") != expected.get("bundle_path"):
+            raise ValueError(f"target bundle identity changed while synchronization was staged for ID {item['id']}")
+        current = safe_bundle_path(prior["bundle_path"])
+        if bundle_sha256(current) != expected.get("sha256"):
+            raise ValueError(f"target bundle changed while synchronization was staged for ID {item['id']}")
+    for item in new_posts:
+        staged = staged_by_id.get(item["id"]) or {}
+        destination = ROOT / safe_bundle_relative_path(staged.get("bundle_path") or "")
+        if destination.exists():
+            raise ValueError(f"new post destination appeared while synchronization was staged: {destination}")
     temporary_root = Path(tempfile.mkdtemp(prefix="daryllswer-sync-rollback-", dir=ROOT / "content"))
     moved_old: list[tuple[Path, Path]] = []
     moved_new: list[Path] = []

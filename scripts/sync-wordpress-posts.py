@@ -870,6 +870,8 @@ def sync_post(
 ) -> dict:
     rights_registry = rights_registry if rights_registry is not None else load_rights_registry()
     bundle = ROOT / "content" / "posts" / date_slug(post)
+    previous_metadata_path = bundle / "metadata.json"
+    previous_metadata = load_json(previous_metadata_path) if previous_metadata_path.is_file() and not previous_metadata_path.is_symlink() else {}
     source_dir = bundle / "source"
     assets_dir = bundle / "assets"
     inline_dir = assets_dir / "inline"
@@ -1032,6 +1034,8 @@ def sync_post(
         "validation": {"status": "pending"},
         "rights": rights,
     }
+    if previous_metadata.get("archive_media_updated_at"):
+        metadata["archive_media_updated_at"] = previous_metadata["archive_media_updated_at"]
     if featured_media:
         metadata["featured_media_sizes"] = featured_media.get("media_details", {}).get("sizes", {})
     write_json(bundle / "metadata.json", metadata)

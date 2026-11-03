@@ -151,7 +151,7 @@ class CanonicalRetirementTests(unittest.TestCase):
         self.assertEqual(candidate["confirmation_count"], 1)
         candidate = DRIFT.update_retirement_candidate(status, drift, evidence, iso("2026-01-08"))
         self.assertEqual(candidate["confirmation_count"], 2)
-        plan = DRIFT.build_action_plan(status, drift, iso("2026-01-08"), evidence)
+        plan = DRIFT.build_action_plan(status, drift, iso("2026-01-08"), evidence, media_audit={"status": "complete", "distinct_urls": 0, "checked_urls": 0, "changed_assets": 0, "bytes_checked": 0, "failures": [], "elapsed_seconds": 0})
         self.assertEqual(plan["action"], "retire")
 
         new_drift = {
@@ -191,11 +191,80 @@ class CanonicalRetirementTests(unittest.TestCase):
         ]
         drift = DRIFT.compare_drift(live)
         self.assertEqual([item["id"] for item in drift["changed_posts"]], [1, 2])
-        plan = DRIFT.build_action_plan(DRIFT.default_status(iso("2026-01-08")), drift, iso("2026-01-08"))
-        self.assertEqual(plan["version"], 2)
+        plan = DRIFT.build_action_plan(DRIFT.default_status(iso("2026-01-08")), drift, iso("2026-01-08"), media_audit={"status": "complete", "distinct_urls": 0, "checked_urls": 0, "changed_assets": 0, "bytes_checked": 0, "failures": [], "elapsed_seconds": 0})
+        self.assertEqual(plan["version"], 3)
         self.assertEqual(plan["action"], "sync")
         self.assertEqual([item["id"] for item in plan["update_posts"]], [1, 2])
         self.assertEqual(plan["sync_posts"], [])
+
+    def test_checker_audits_media_after_rest_304(self):
+        self.write_archive([])
+        status = DRIFT.default_status(iso("2026-01-01"))
+        status["last_live_post_summaries"] = [summary(1, "https://www.daryllswer.com/one/", "one")]
+        DRIFT.STATUS_PATH.write_text(json.dumps(status), encoding="utf-8")
+        drift = {
+            "live_post_count": 0, "archived_post_count": 0, "new_ids": [], "missing_ids": [],
+            "new_posts": [], "missing_posts": [], "relocated_posts": [], "new_urls": [],
+            "missing_urls": [], "changed_posts": [],
+        }
+        args = type("Args", (), {"dry_run": True, "force": False, "fresh": False, "action_plan": None, "result": None, "audit_media": True})()
+        with mock.patch.object(DRIFT, "parse_args", return_value=args), \
+             mock.patch.object(DRIFT, "request_posts", return_value=(None, {}, True)), \
+             mock.patch.object(DRIFT, "compare_drift", return_value=drift), \
+             mock.patch.object(DRIFT, "audit_media", return_value=([], {"status": "complete", "distinct_urls": 2, "checked_urls": 2, "changed_assets": 0, "bytes_checked": 10, "failures": [], "elapsed_seconds": 1.0})) as audit:
+            self.assertEqual(DRIFT.main(), 0)
+        audit.assert_called_once()
+
+    def test_forced_frozen_diagnostic_never_audits_media(self):
+        self.write_archive([])
+        status = DRIFT.default_status(iso("2026-01-01"))
+        status["state"] = "frozen_archive"
+        status["frozen"] = True
+        DRIFT.STATUS_PATH.write_text(json.dumps(status), encoding="utf-8")
+        args = type("Args", (), {"dry_run": False, "force": True, "fresh": False, "action_plan": None, "result": None, "audit_media": True})()
+        with mock.patch.object(DRIFT, "parse_args", return_value=args), \
+             mock.patch.object(DRIFT, "request_posts", return_value=([], {}, False)), \
+             mock.patch.object(DRIFT, "audit_media") as audit:
+            self.assertEqual(DRIFT.main(), 0)
+        audit.assert_not_called()
+
+    def test_reconciler_rejects_malformed_or_incomplete_v3_plans(self):
+        valid = {
+            "version": 3, "action": "none", "media_updates": [],
+            "media_audit": {"status": "complete", "distinct_urls": 0, "checked_urls": 0, "changed_assets": 0, "bytes_checked": 0, "failures": [], "elapsed_seconds": 0},
+        }
+        RECONCILE.validate_action_plan(valid)
+        with self.assertRaisesRegex(ValueError, "schema validation"):
+            RECONCILE.validate_action_plan({**valid, "media_updates": None})
+        with self.assertRaisesRegex(ValueError, "schema validation"):
+            RECONCILE.validate_action_plan({"version": 3, "action": "none", "media_updates": []})
+        incomplete = {**valid, "action": "sync", "media_audit": {**valid["media_audit"], "status": "incomplete"}}
+        incomplete["media_updates"] = [{
+            "source_url": "https://www.daryllswer.com/wp-content/uploads/a.png", "post_id": 1,
+            "asset_path": "content/posts/x/assets/a.png", "old_sha256": "a" * 64, "new_sha256": "b" * 64,
+        }]
+        with self.assertRaisesRegex(ValueError, "incomplete media audit"):
+            RECONCILE.validate_action_plan(incomplete)
+
+    def test_ineligible_drift_keeps_media_observation_but_clears_actionable_updates(self):
+        self.write_archive([])
+        update = {
+            "source_url": "https://www.daryllswer.com/wp-content/uploads/a.png",
+            "post_id": 7,
+            "asset_path": "content/posts/2026-01-01-post/assets/a.png",
+            "old_sha256": "a" * 64,
+            "new_sha256": "b" * 64,
+        }
+        drift = {
+            "live_post_count": 0, "archived_post_count": 1,
+            "new_ids": [], "missing_ids": [7], "new_posts": [],
+            "missing_posts": [], "relocated_posts": [], "changed_posts": [],
+        }
+        audit = {"status": "complete", "distinct_urls": 1, "checked_urls": 1, "changed_assets": 1, "bytes_checked": 10, "failures": [], "elapsed_seconds": 1}
+        plan = DRIFT.build_action_plan(DRIFT.default_status(iso("2026-01-01")), drift, iso("2026-01-01"), media_updates=[update], media_audit=audit)
+        self.assertEqual(plan["action"], "none")
+        self.assertEqual(plan["media_updates"], [])
+        self.assertEqual(plan["media_audit"]["changed_assets"], 1)
 
     def test_clean_comparison_backfills_legacy_content_fingerprints_only(self):
         post = {
@@ -274,6 +343,13 @@ class CanonicalRetirementTests(unittest.TestCase):
                 )
                 (bundle / "source" / "rendered-article.html").write_text(f"updated-{staged['slug']}", encoding="utf-8")
             (stage / "archive-manifest.json").write_text(json.dumps({"post_count": 2, "posts": staged_posts}), encoding="utf-8")
+            (stage / ".reconcile-baseline.json").write_text(json.dumps({
+                "archive_manifest_sha256": hashlib.sha256(original_manifest).hexdigest(),
+                "bundles": {
+                    str(post["id"]): {"bundle_path": post["bundle_path"], "sha256": RECONCILE.bundle_sha256(bundle)}
+                    for post, bundle in zip(posts, originals)
+                },
+            }), encoding="utf-8")
 
             with mock.patch.object(RECONCILE, "atomic_write_json", side_effect=OSError("simulated manifest failure")):
                 with self.assertRaises(OSError):
@@ -316,8 +392,99 @@ class CanonicalRetirementTests(unittest.TestCase):
         self.assertEqual((bundle / "source" / "rendered-article.html").read_bytes(), original_article)
         self.assertEqual(marker.read_bytes(), b"existing media")
 
+    def test_media_only_staged_sync_commits_only_planned_bytes_and_sets_freshness(self):
+        url = "https://www.daryllswer.com/wp-content/uploads/image.png"
+        post = {**summary(1, "https://www.daryllswer.com/example/", "example"), "title": "Example", "bundle_path": "content/posts/2026-01-01-example"}
+        bundle = self.write_bundle(post)
+        old_bytes, new_bytes = b"old-image-bytes", b"new-image-bytes"
+        other_url = "https://www.daryllswer.com/wp-content/uploads/other.png"
+        other_old, other_new = b"other-old", b"other-new"
+        asset_path = f"{post['bundle_path']}/assets/image.png"
+        other_path = f"{post['bundle_path']}/assets/other.png"
+        local_asset = self.root / asset_path
+        local_asset.write_bytes(old_bytes)
+        (self.root / other_path).write_bytes(other_old)
+        old_hash = hashlib.sha256(old_bytes).hexdigest()
+        new_hash = hashlib.sha256(new_bytes).hexdigest()
+        other_hash = hashlib.sha256(other_old).hexdigest()
+        (bundle / "assets" / "manifest.json").write_text(json.dumps({"post_id": 1, "assets": [
+            {"source_url": url, "local_path": asset_path, "role": "inline", "sha256": old_hash},
+            {"source_url": other_url, "local_path": other_path, "role": "inline", "sha256": other_hash},
+        ]}), encoding="utf-8")
+        prior_metadata = json.loads((bundle / "metadata.json").read_text())
+        prior_metadata["published"] = "2026-01-01T00:00:00"
+        prior_metadata["archive_media_updated_at"] = "2026-01-10T00:00:00+00:00"
+        (bundle / "metadata.json").write_text(json.dumps(prior_metadata), encoding="utf-8")
+        self.write_archive([post])
+        original_manifest = (self.root / "archive-manifest.json").read_bytes()
+        self.write_rights_registry(9999)
+        changed = {
+            "id": 1, "slug": "example", "canonical_url": post["canonical_url"], "media_only": True,
+            "expected": {"id": 1, "slug": "example", "title": "example", "canonical_url": post["canonical_url"], "modified": post["modified"]},
+            "fields": [],
+        }
+        plan = {
+            "media_audit": {"status": "complete"},
+            "media_updates": [{"source_url": url, "post_id": 1, "asset_path": asset_path, "old_sha256": old_hash, "new_sha256": new_hash}],
+            "drift": {"new_ids": [], "missing_ids": [], "relocated_posts": [], "changed_posts": [changed]},
+            "sync_posts": [], "update_posts": [changed],
+        }
+        self.write_rights_registry(1)
+
+        unplanned_change = False
+        def fake_sync(command, cwd, env, check):
+            stage_root = Path(env["ARCHIVE_ROOT"])
+            staged_bundle = stage_root / post["bundle_path"]
+            staged_bundle.mkdir(parents=True, exist_ok=True)
+            (staged_bundle / "assets").mkdir(exist_ok=True)
+            (staged_bundle / "assets" / "image.png").write_bytes(new_bytes)
+            other_bytes = other_new if unplanned_change else other_old
+            (staged_bundle / "assets" / "other.png").write_bytes(other_bytes)
+            staged_other_hash = hashlib.sha256(other_bytes).hexdigest()
+            (staged_bundle / "assets" / "manifest.json").write_text(json.dumps({"post_id": 1, "assets": [
+                {"source_url": url, "local_path": asset_path, "role": "inline", "sha256": new_hash},
+                {"source_url": other_url, "local_path": other_path, "role": "inline", "sha256": staged_other_hash},
+            ]}), encoding="utf-8")
+            metadata = {**prior_metadata, "rights": RECONCILE.resolve_rights(1, post["canonical_url"], {"1": json.loads((self.root / "content/rights-registry.json").read_text())["1"]})}
+            metadata["source"] = {"canonical_rendered_content_sha256": summary(1, post["canonical_url"], "example").get("canonical_rendered_content_sha256")}
+            (staged_bundle / "metadata.json").write_text(json.dumps(metadata), encoding="utf-8")
+            (stage_root / "archive-manifest.json").write_text(json.dumps({"post_count": 1, "posts": [post]}), encoding="utf-8")
+            return mock.Mock(returncode=0)
+
+        with mock.patch.object(RECONCILE.subprocess, "run", side_effect=fake_sync):
+            stage, _, updates = RECONCILE.stage_sync(plan, {"posts": [post]})
+        try:
+            self.assertEqual(updates, [changed])
+            staged_bundle = stage / post["bundle_path"]
+            self.assertEqual((staged_bundle / "assets/image.png").read_bytes(), new_bytes)
+            staged_metadata = json.loads((staged_bundle / "metadata.json").read_text())
+            self.assertEqual(staged_metadata["published"], "2026-01-01T00:00:00")
+            self.assertNotEqual(staged_metadata["archive_media_updated_at"], "2026-01-10T00:00:00+00:00")
+            self.assertEqual(local_asset.read_bytes(), old_bytes)
+            self.assertEqual((self.root / other_path).read_bytes(), other_old)
+            (self.root / other_path).write_bytes(other_new)
+            try:
+                with self.assertRaisesRegex(ValueError, "target bundle changed while synchronization was staged"):
+                    RECONCILE.apply_staged_sync(stage, {"posts": [post]}, [], [changed])
+                self.assertEqual(local_asset.read_bytes(), old_bytes)
+                self.assertEqual((self.root / "archive-manifest.json").read_bytes(), original_manifest)
+            finally:
+                (self.root / other_path).write_bytes(other_old)
+            unplanned_change = True
+            with mock.patch.object(RECONCILE.subprocess, "run", side_effect=fake_sync):
+                with self.assertRaisesRegex(RuntimeError, "unplanned staged media byte change"):
+                    RECONCILE.stage_sync(plan, {"posts": [post]})
+            unplanned_change = False
+            bad_hash_plan = {**plan, "media_updates": [{**plan["media_updates"][0], "new_sha256": "c" * 64}]}
+            with mock.patch.object(RECONCILE.subprocess, "run", side_effect=fake_sync):
+                with self.assertRaisesRegex(RuntimeError, "staged media bytes do not match planned hash"):
+                    RECONCILE.stage_sync(bad_hash_plan, {"posts": [post]})
+        finally:
+            shutil.rmtree(stage, ignore_errors=True)
+
     def test_staged_sync_copies_rights_registry_before_public_sync(self):
         post = {**summary(5324, "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks/", "bgp"), "bundle_path": "content/posts/2026-06-04-bgp"}
+        self.write_bundle(post)
         self.write_archive([post])
         self.write_rights_registry(5324)
         changed = {
@@ -341,8 +508,10 @@ class CanonicalRetirementTests(unittest.TestCase):
             rights = json.loads(staged_registry.read_text(encoding="utf-8"))["5324"]
             bundle = stage / post["bundle_path"]
             (bundle / "source").mkdir(parents=True)
+            (bundle / "assets").mkdir(parents=True)
+            (bundle / "assets" / "manifest.json").write_text(json.dumps({"post_id": 5324, "assets": []}), encoding="utf-8")
             (bundle / "metadata.json").write_text(
-                json.dumps({"id": 5324, "canonical_url": post["canonical_url"], "rights": rights}),
+                json.dumps({"id": 5324, "slug": "bgp", "canonical_url": post["canonical_url"], "rights": rights}),
                 encoding="utf-8",
             )
             (stage / "archive-manifest.json").write_text(
@@ -361,6 +530,11 @@ class CanonicalRetirementTests(unittest.TestCase):
 
     def test_staged_sync_applies_default_rights_when_registry_has_no_exception(self):
         post = {**summary(1, "https://archive.example/one/", "one"), "bundle_path": "content/posts/2026-01-01-one"}
+        prior_bundle = self.write_bundle(post)
+        prior_metadata_path = prior_bundle / "metadata.json"
+        prior_metadata = json.loads(prior_metadata_path.read_text())
+        prior_metadata["archive_media_updated_at"] = "2026-02-03T04:05:06+00:00"
+        prior_metadata_path.write_text(json.dumps(prior_metadata), encoding="utf-8")
         self.write_archive([post])
         registry_path = self.root / "content" / "rights-registry.json"
         registry_path.parent.mkdir(parents=True, exist_ok=True)
@@ -383,9 +557,11 @@ class CanonicalRetirementTests(unittest.TestCase):
             stage = Path(env["ARCHIVE_ROOT"])
             bundle = stage / post["bundle_path"]
             bundle.mkdir(parents=True, exist_ok=True)
+            (bundle / "assets").mkdir(exist_ok=True)
+            (bundle / "assets" / "manifest.json").write_text(json.dumps({"post_id": 1, "assets": []}), encoding="utf-8")
             rights = RECONCILE.resolve_rights(1, post["canonical_url"], {})
             (bundle / "metadata.json").write_text(
-                json.dumps({"id": 1, "canonical_url": post["canonical_url"], "rights": rights}),
+                json.dumps({"id": 1, "slug": "one", "canonical_url": post["canonical_url"], "rights": rights}),
                 encoding="utf-8",
             )
             (stage / "archive-manifest.json").write_text(
@@ -400,6 +576,8 @@ class CanonicalRetirementTests(unittest.TestCase):
             self.assertEqual(staged_rights["rights_holder"], "Daryll Swer")
             self.assertEqual(staged_rights["copyright_year"], 2026)
             self.assertEqual(staged_rights["notice_path"], "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt")
+            staged_metadata = json.loads((stage / post["bundle_path"] / "metadata.json").read_text())
+            self.assertEqual(staged_metadata["archive_media_updated_at"], "2026-02-03T04:05:06+00:00")
             self.assertEqual(new_posts, [])
             self.assertEqual([item["id"] for item in updates], [1])
         finally:
@@ -422,7 +600,9 @@ class CanonicalRetirementTests(unittest.TestCase):
         status["retirement_candidates"] = [candidate]
         (self.root / "archive-status.json").write_text(json.dumps(status), encoding="utf-8")
         plan = {
-            "version": 1,
+            "version": 3,
+            "media_audit": {"status": "complete"},
+            "media_updates": [],
             "canonical_healthy": True,
             "archive_manifest_sha256": hashlib.sha256((self.root / "archive-manifest.json").read_bytes()).hexdigest(),
             "drift": {"live_post_count": 0, "archived_post_count": 1, "missing_posts": [post], "missing_ids": [2], "new_ids": [], "relocated_posts": [], "changed_posts": []},
@@ -470,7 +650,9 @@ class CanonicalRetirementTests(unittest.TestCase):
         (self.root / "archive-status.json").write_text(json.dumps(status), encoding="utf-8")
         original_manifest = (self.root / "archive-manifest.json").read_bytes()
         plan = {
-            "version": 1,
+            "version": 3,
+            "media_audit": {"status": "complete"},
+            "media_updates": [],
             "canonical_healthy": True,
             "archive_manifest_sha256": hashlib.sha256(original_manifest).hexdigest(),
             "drift": {"live_post_count": 0, "archived_post_count": 1, "missing_posts": [post], "missing_ids": [5324], "new_ids": [], "relocated_posts": [], "changed_posts": []},
@@ -513,7 +695,9 @@ class CanonicalRetirementTests(unittest.TestCase):
         original_status = status_path.read_bytes()
         original_registry = registry_path.read_bytes()
         plan = {
-            "version": 1,
+            "version": 3,
+            "media_audit": {"status": "complete"},
+            "media_updates": [],
             "canonical_healthy": True,
             "archive_manifest_sha256": hashlib.sha256(original_manifest).hexdigest(),
             "drift": {"live_post_count": 0, "archived_post_count": 1, "missing_posts": [post], "missing_ids": [5324], "new_ids": [], "relocated_posts": [], "changed_posts": []},
@@ -558,7 +742,9 @@ class CanonicalRetirementTests(unittest.TestCase):
         original_manifest = (self.root / "archive-manifest.json").read_bytes()
         original_status = (self.root / "archive-status.json").read_bytes()
         plan = {
-            "version": 1,
+            "version": 3,
+            "media_audit": {"status": "complete"},
+            "media_updates": [],
             "canonical_healthy": True,
             "archive_manifest_sha256": hashlib.sha256(original_manifest).hexdigest(),
             "drift": {"live_post_count": 0, "archived_post_count": 1, "missing_posts": [post], "missing_ids": [2], "new_ids": [], "relocated_posts": [], "changed_posts": []},

@@ -8,6 +8,7 @@ from __future__ import annotations
 import csv
 import argparse
 import datetime as dt
+import email.utils
 import hashlib
 import importlib.util
 import json
@@ -224,6 +225,27 @@ def validate_json_schema(data: object, schema: object, path: str, errors: list[s
         detail = getattr(exc, "message", None) or str(exc)
         errors.append(f"{path}: schema validation failed ({type(exc).__name__}): {detail}")
         return False
+
+
+def validate_archive_media_timestamp(metadata: dict, path: str, errors: list[str]) -> bool:
+    if "archive_media_updated_at" not in metadata:
+        return True
+    value = metadata["archive_media_updated_at"]
+    if not isinstance(value, str) or not re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})",
+        value,
+    ):
+        errors.append(f"{path}: archive_media_updated_at must be a timezone-qualified ISO date-time")
+        return False
+    try:
+        parsed = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        errors.append(f"{path}: archive_media_updated_at must be a timezone-qualified ISO date-time")
+        return False
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        errors.append(f"{path}: archive_media_updated_at must include a UTC offset")
+        return False
+    return True
 
 
 def validate_rights_record_shape(post_id: str, record: object, errors: list[str]) -> bool:
@@ -635,6 +657,7 @@ def validate_post(post_item: dict, errors: list[str], warnings: list[str], archi
         return
     if not isinstance(metadata, dict):
         return
+    validate_archive_media_timestamp(metadata, rel(metadata_path), errors)
     if not isinstance(metadata.get("source"), dict):
         return
     canonical_fingerprint = (metadata.get("source") or {}).get("canonical_rendered_content_sha256")
@@ -1633,8 +1656,9 @@ def validate_generated_seo_outputs(posts: list[dict], metadata_by_slug: dict[str
                 if matching is None and lastmod is not None:
                     errors.append(f"docs/sitemap.xml has lastmod on a non-post route: {loc}")
                 if matching is not None:
-                    expected_lastmod = matching.get("modified")
-                    if lastmod != expected_lastmod and lastmod != (expected_lastmod or "").replace("+00:00", "Z"):
+                    metadata = metadata_by_slug.get(matching["slug"], {})
+                    expected_lastmod = generated_post_lastmod(matching, metadata)
+                    if lastmod != expected_lastmod:
                         errors.append(f"docs/sitemap.xml lastmod is not sourced from post metadata for {loc}")
         except Exception as exc:
             errors.append(f"docs/sitemap.xml parse failed: {exc}")
@@ -1656,7 +1680,8 @@ def validate_generated_seo_outputs(posts: list[dict], metadata_by_slug: dict[str
             errors.append("docs/feed.xml atom self link is incorrect")
         items = root.findall("channel/item")
         eligible = [post for post in posts if status_post_is_eligible(post, registry, status)]
-        expected_ids = {int(post["id"]) for post in sorted(eligible, key=lambda item: (item.get("published") or "", int(item.get("id") or 0)), reverse=True)[:10]}
+        feed_posts = latest_feed_posts(eligible)
+        expected_ids = {int(post["id"]) for post in feed_posts}
         actual_ids = set()
         posts_by_id = {int(post["id"]): post for post in posts}
         for item in items:
@@ -1688,6 +1713,15 @@ def validate_generated_seo_outputs(posts: list[dict], metadata_by_slug: dict[str
             last_build = channel.findtext("lastBuildDate", default="")
             if not last_build:
                 errors.append("docs/feed.xml must include deterministic lastBuildDate")
+            else:
+                expected_build = generated_feed_last_build_date(feed_posts, metadata_by_slug, status)
+                try:
+                    actual_build = email.utils.parsedate_to_datetime(last_build)
+                    expected_datetime = email.utils.parsedate_to_datetime(expected_build)
+                    if actual_build != expected_datetime:
+                        errors.append("docs/feed.xml lastBuildDate does not include the latest source or archive media timestamp")
+                except (TypeError, ValueError, OverflowError):
+                    errors.append("docs/feed.xml has an invalid lastBuildDate")
             image_url = channel.findtext("image/url", default="")
             if image_url != PAGES_BASE_URL + "assets/brand/01_DS_Favicon_Dark_Mode-512.png":
                 errors.append("docs/feed.xml must use the archive favicon derivative")
@@ -1695,6 +1729,46 @@ def validate_generated_seo_outputs(posts: list[dict], metadata_by_slug: dict[str
             errors.append("docs/feed.xml items do not match the ten most recent eligible posts")
     except Exception as exc:
         errors.append(f"docs/feed.xml parse failed: {exc}")
+
+
+def _parse_archive_datetime(value: str | None) -> dt.datetime | None:
+    if not value:
+        return None
+    try:
+        parsed = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except (AttributeError, ValueError):
+        return None
+    return parsed if parsed.tzinfo else parsed.replace(tzinfo=dt.timezone.utc)
+
+
+def generated_post_lastmod(post: dict, metadata: dict) -> str | None:
+    candidates = [
+        _parse_archive_datetime(post.get("modified")),
+        _parse_archive_datetime(metadata.get("archive_media_updated_at")),
+    ]
+    latest = max((value for value in candidates if value is not None), default=None)
+    return latest.astimezone(dt.timezone.utc).isoformat().replace("+00:00", "Z") if latest else None
+
+
+def latest_feed_posts(posts: list[dict]) -> list[dict]:
+    return sorted(
+        posts,
+        key=lambda item: (item.get("published") or "", int(item.get("id") or 0)),
+        reverse=True,
+    )[:10]
+
+
+def generated_feed_last_build_date(posts: list[dict], metadata_by_slug: dict[str, dict], status: dict) -> str:
+    values = []
+    for post in posts:
+        metadata = metadata_by_slug.get(post["slug"], {})
+        values.extend([
+            _parse_archive_datetime(post.get("modified") or post.get("published")),
+            _parse_archive_datetime(metadata.get("archive_media_updated_at")),
+        ])
+    values.append(_parse_archive_datetime(status.get("seo_activated_at")))
+    latest = max((value for value in values if value is not None), default=dt.datetime(1970, 1, 1, tzinfo=dt.timezone.utc))
+    return email.utils.format_datetime(latest.astimezone(dt.timezone.utc), usegmt=True)
 
 
 def validate_archive_status(status: dict, registry: dict[str, dict], errors: list[str], warnings: list[str]) -> None:
@@ -1768,6 +1842,8 @@ def validate_drift_automation(errors: list[str], warnings: list[str], registry: 
             for label, pattern in checks.items():
                 if not re.search(pattern, text):
                     errors.append(f"canonical drift workflow missing {label}")
+            if "--audit-media" not in text:
+                errors.append("canonical drift workflow must run the bounded same-URL media audit")
             if re.search(r"uses:\s*\.\/\.github\/workflows\/deploy-pages\.yml", text):
                 errors.append("canonical drift workflow must defer Pages deployment to workflow_run")
             validate_pages_deployment_workflow(errors)
