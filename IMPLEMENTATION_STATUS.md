@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: weekly private backup and same-URL media audit
-- Status: media audit published; initial private backup verified; scheduled backup blocked on spending guard
+- Status: media audit published; weekly private backup active and manually verified
 - Last updated: 2026-11-03
 - Implementer role/model/thread: three actual `implementer-luna` workers,
   pinned to `gpt-6-luna` with high reasoning: Feynman owns media/reconciliation,
@@ -34,12 +34,17 @@
 - Initial snapshot diff checking identifies existing whitespace in copied
   source/font records; these bytes are intentionally preserved rather than
   normalised. New implementation/documentation diffs pass whitespace checks.
-- Activation remains unverified: private Actions is disabled, Pages absent,
-  and no active root workflow is installed. The owner's personal Free tier
-  alone is not evidence of a zero-paid-overage compute/storage guard. Billing
-  evidence is required before activation; next-week retries may remain blocked
-  until a monthly allowance resets. Search discovery remains pending;
-  VoiceOver is cancelled and GitHub-only continuity is the accepted limitation.
+- Activation verified: owner confirmation and current official billing
+  guidance resolved the spending gate; account-specific evidence is retained
+  only in the private repository. The unchanged reviewed workflow is active
+  at `.github/workflows/backup.yml`, separately pinned tooling is `13949b4`,
+  and guard variables are configured. Manual run `41665426694` passed both
+  jobs, verified 506 packaged files and made no duplicate commit for unchanged
+  source `d32450f`. Schedule: Tuesday 04:17 UTC/09:47 IST. Pages remains absent
+  from the private repository. Recheck spending safeguards before changing
+  relevant billing arrangements; monthly exhaustion can block several retries.
+  Search discovery remains pending; VoiceOver is cancelled and GitHub-only
+  continuity is the accepted limitation.
 
 - Implemented locally: explicit separate source checkout support in the
   BagIt exporter; stdlib-only prepare/publish backup tool; inactive
@@ -64,10 +69,10 @@
   exact worktree/index paths and bytes after force-staging.
 - Guard: both jobs require main ref, `BACKUP_ZERO_PAID_OVERAGE_VERIFIED=true`
   and a full `BACKUP_TOOLING_SHA`. Scheduled retries remain weekly after a
-  failed/allowance-exhausted run; no Free-plan cap or reset is assumed. No
-  private scheduled run is enabled. Coordinator created the approved private
-  repository and verified `private=true`, `has_pages=false`, and Actions
-  `enabled=false`; initial snapshot verification is complete above.
+  failed/allowance-exhausted run; no Free-plan cap or weekly reset is assumed.
+  Coordinator verified `private=true`, `has_pages=false`, Actions enabled,
+  active workflow state and successful manual execution after the gate was
+  resolved. Initial snapshot verification is complete above.
 - Validation checkpoint: 24 focused backup/export tests pass; the integrated
   regression suite passes 157 tests. Independent review confirms source-commit
   binding and exact staged-index checks close both identified gaps.
@@ -80,10 +85,9 @@
   32.712 seconds, zero byte changes and zero failures. All 19 canonical posts
   match; v3 action is `none`, and reconciliation dry-run makes no changes.
   No content, source, image, allocation or generated reader bytes changed.
-- Next action: obtain account-specific compute/Actions-storage hard-stop
-  evidence, then install/configure the reviewed private workflow and verify a
-  manual private run. Until then, retain the verified initial private snapshot
-  with Actions disabled; do not claim automatic weekly backup is active.
+- Next action: normal weekly operation; investigate a failed/blocked refresh
+  without removing the last good snapshot. Recheck spending safeguards before
+  relevant billing changes. No billing reminder is outstanding.
 
 ## Latest Delivery
 
@@ -122,7 +126,7 @@
 - Current owner decisions: VoiceOver cancelled, not deferred; GitHub-only
   continuity accepted with same-provider/account limits; search discovery
   remains pending. Same-URL detection and initial backup verification are
-  complete above; scheduled private execution is not active. Older review
+  complete above; scheduled private execution is active. Older review
   lists are historical.
 
 - Approved dependency rollout (2026-11-01): owner approved all four reviewed

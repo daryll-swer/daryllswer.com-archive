@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: media audit deployed; private snapshot verified; scheduled backup awaits spending guard
+- Status: media audit deployed; weekly private backup active and manually verified
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-11-03
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -35,13 +35,15 @@
   headless Chrome passed homepage, DS/Swer articles, workbook, images, fonts
   and IPv6 disclosure checks; all seven widths from 320 to 2560 CSS px passed
   without overflow. No external browser requests or failed requests occurred.
-- Private Actions remains disabled; no active root workflow is installed.
-  The owner's Free personal account does not by itself verify zero paid
-  overage. Next owner action: show Billing > Budgets and alerts evidence for
-  compute and Actions storage. Once verified, install the reviewed workflow,
-  configure its pinned tooling/guard variables and test a manual run before
-  enabling weekly operation. An exhausted monthly allowance may block more
-  than one Tuesday retry; the last good snapshot remains intact.
+- Owner confirmation and current official billing guidance resolve the
+  spending gate; account-specific evidence is recorded only in the private
+  backup repository. Reviewed workflow is active with tooling pinned to
+  `13949b41f0830553b3e99e80581d45c770e7fba2`. Manual run `41665426694`
+  passed preparation/publication and all 506 packaged files; unchanged source
+  correctly produced no duplicate commit. Schedule: Tuesday 04:17 UTC/09:47 IST.
+  Recheck the guard before any relevant billing configuration change. An
+  exhausted monthly allowance may block more than one Tuesday retry; the last
+  good snapshot remains intact. Billing-reminder follow-up is resolved.
 - VoiceOver cancelled; GitHub-only continuity accepted; search discovery
   remains pending. No further source-media investigation is pending.
 
@@ -69,8 +71,8 @@
   in 32.712 seconds, with zero failures or changes; reconciliation dry-run had
   no action. The approved private repository
   was created and verified private, with Pages absent and Actions disabled.
-  Initial snapshot/restore verification is complete above. Spending-guard
-  verification remains pending; no private scheduled run is enabled.
+  Initial snapshot/restore verification and subsequent guarded weekly
+  activation are complete above.
 - Coordinator owns integration, review, durable records and connected actions;
   bounded implementers own disjoint media and backup code/tests. No force push,
   original-history copy, backup pruning or source-data destruction.
@@ -99,7 +101,7 @@
   repository gates pass; no further live audit is needed for handoff.
 - Owner decisions supersede older pending lists below: VoiceOver cancelled;
   GitHub-only continuity accepted; search discovery remains pending. Backup and
-  media detection are verified above; scheduled private execution remains gated.
+  media detection and guarded weekly execution are verified above.
 
 ### Completed: Approved Dependency Rollout
 
@@ -204,14 +206,13 @@
   upload) and #1 (Pages deployment) are merged, with main CI and live deployment
   verification after each, plus successful manual canonical/no-op deployment
   checks. Evidence is in `IMPLEMENTATION_STATUS.md`.
-- Preservation: private GitHub snapshot repository approved; implementation
-  and initial restore verification in progress. Scheduled operation remains
-  conditional on a verified zero-paid-overage guard.
+- Preservation: private GitHub snapshot, offline restore and first manual
+  workflow verified. Weekly Tuesday backups are active with the accepted
+  spending guard; recheck it before relevant billing changes.
 - Continuity: GitHub-only automation accepted. No independent scheduler or
   maintainer nomination is required by this task; same-account/provider risks
   remain explicit limitations.
-- Same-URL image replacements: approved for implementation in the active work
-  above, no longer deferred for future review.
+- Same-URL image replacements: deployed and verified above; no owner action.
 
 ### Completed: Archive Reliability and Preservation Hardening
 
