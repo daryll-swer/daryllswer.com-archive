@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: implementing approved weekly private backup and same-URL media audit
+- Status: media audit deployed; private snapshot verified; scheduled backup awaits spending guard
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-11-03
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -21,7 +21,31 @@
 
 ## Current Status / Next Pickup
 
-### Active: Weekly Private Backup and Same-URL Media Updates
+### Delivered: Media Audit and Initial Private Backup
+
+- Published implementation commits `32f2626` and `13949b4`. CI
+  `41649097936` and Pages `41649097743` passed. Normal manual canonical run
+  `41649290992` passed with 69 checked URLs, 59,449,688 bytes and no changes;
+  rendering was skipped. Its report-only commit `f74ea0a` deployed successfully
+  in Pages run `41649416406`.
+- Initial private snapshot of deployed `f74ea0a`, using separately pinned
+  tooling `13949b4`, passed source-blob binding, BagIt and staged-index checks:
+  500 payload files, 506 packaged files. A fresh extracted copy passed offline
+  validation with network access blocked (zero errors/warnings). Background
+  headless Chrome passed homepage, DS/Swer articles, workbook, images, fonts
+  and IPv6 disclosure checks; all seven widths from 320 to 2560 CSS px passed
+  without overflow. No external browser requests or failed requests occurred.
+- Private Actions remains disabled; no active root workflow is installed.
+  The owner's Free personal account does not by itself verify zero paid
+  overage. Next owner action: show Billing > Budgets and alerts evidence for
+  compute and Actions storage. Once verified, install the reviewed workflow,
+  configure its pinned tooling/guard variables and test a manual run before
+  enabling weekly operation. An exhausted monthly allowance may block more
+  than one Tuesday retry; the last good snapshot remains intact.
+- VoiceOver cancelled; GitHub-only continuity accepted; search discovery
+  remains pending. No further source-media investigation is pending.
+
+### Implementation Evidence
 
 - Implement bounded full-byte media audits even after REST 304, version-3
   reconciliation plans, atomic staged hash verification, and archive-only
@@ -45,8 +69,8 @@
   in 32.712 seconds, with zero failures or changes; reconciliation dry-run had
   no action. The approved private repository
   was created and verified private, with Pages absent and Actions disabled.
-  Initial snapshot/restore verification and spending-guard verification remain
-  pending; no private scheduled run is enabled.
+  Initial snapshot/restore verification is complete above. Spending-guard
+  verification remains pending; no private scheduled run is enabled.
 - Coordinator owns integration, review, durable records and connected actions;
   bounded implementers own disjoint media and backup code/tests. No force push,
   original-history copy, backup pruning or source-data destruction.
@@ -75,7 +99,7 @@
   repository gates pass; no further live audit is needed for handoff.
 - Owner decisions supersede older pending lists below: VoiceOver cancelled;
   GitHub-only continuity accepted; search discovery remains pending. Backup and
-  media detection remain in progress until their own verification succeeds.
+  media detection are verified above; scheduled private execution remains gated.
 
 ### Completed: Approved Dependency Rollout
 

@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: weekly private backup and same-URL media audit
-- Status: implementation in progress; publication and backup verification pending
+- Status: media audit published; initial private backup verified; scheduled backup blocked on spending guard
 - Last updated: 2026-11-03
 - Implementer role/model/thread: three actual `implementer-luna` workers,
   pinned to `gpt-6-luna` with high reasoning: Feynman owns media/reconciliation,
@@ -17,6 +17,29 @@
   workstream; this is not a continuous quota-monitoring claim
 
 ## Backup Tooling Checkpoint (2026-11-03)
+
+- Delivery: implementation commits `32f2626` and `13949b4` published normally.
+  CI `41649097936` and Pages `41649097743` passed. Manual canonical run
+  `41649290992` passed: 69 URLs / 59,449,688 bytes, zero media changes, no
+  reconciliation or rendering. Report-only successor `f74ea0a` passed Pages
+  deployment `41649416406`.
+- Private initial snapshot: source `f74ea0a`, independent tooling `13949b4`,
+  500 source payload files / 506 packaged files. BagIt, exact source-commit
+  binding and staged-index verification passed. Fresh extracted validation
+  with source networking blocked passed with zero errors/warnings. Headless
+  Chrome verified 33 local paths, images, fonts, representative DS/Swer posts,
+  workbook and all 21 IPv6 disclosures; no external/failed requests and no
+  horizontal overflow at 320, 390, 768, 1024, 1440, 1920 or 2560 CSS px.
+  Desktop/mobile screenshots were inspected without foregrounding Chrome.
+- Initial snapshot diff checking identifies existing whitespace in copied
+  source/font records; these bytes are intentionally preserved rather than
+  normalised. New implementation/documentation diffs pass whitespace checks.
+- Activation remains unverified: private Actions is disabled, Pages absent,
+  and no active root workflow is installed. The owner's personal Free tier
+  alone is not evidence of a zero-paid-overage compute/storage guard. Billing
+  evidence is required before activation; next-week retries may remain blocked
+  until a monthly allowance resets. Search discovery remains pending;
+  VoiceOver is cancelled and GitHub-only continuity is the accepted limitation.
 
 - Implemented locally: explicit separate source checkout support in the
   BagIt exporter; stdlib-only prepare/publish backup tool; inactive
@@ -44,7 +67,7 @@
   failed/allowance-exhausted run; no Free-plan cap or reset is assumed. No
   private scheduled run is enabled. Coordinator created the approved private
   repository and verified `private=true`, `has_pages=false`, and Actions
-  `enabled=false`; initial snapshot verification is still pending.
+  `enabled=false`; initial snapshot verification is complete above.
 - Validation checkpoint: 24 focused backup/export tests pass; the integrated
   regression suite passes 157 tests. Independent review confirms source-commit
   binding and exact staged-index checks close both identified gaps.
@@ -57,10 +80,10 @@
   32.712 seconds, zero byte changes and zero failures. All 19 canonical posts
   match; v3 action is `none`, and reconciliation dry-run makes no changes.
   No content, source, image, allocation or generated reader bytes changed.
-- Next action: coordinator reviews the implementation and confirms the live
-  compute/Actions-storage budget hard stop, then separately handles private
-  repository setup, trusted tooling SHA insertion, local initial backup and
-  disabled-by-default Actions configuration.
+- Next action: obtain account-specific compute/Actions-storage hard-stop
+  evidence, then install/configure the reviewed private workflow and verify a
+  manual private run. Until then, retain the verified initial private snapshot
+  with Actions disabled; do not claim automatic weekly backup is active.
 
 ## Latest Delivery
 
@@ -98,8 +121,9 @@
   inspection awaits a suitable background tab, not an assumption about quota.
 - Current owner decisions: VoiceOver cancelled, not deferred; GitHub-only
   continuity accepted with same-provider/account limits; search discovery
-  remains pending. Backup and same-URL detection are approved implementation
-  work, not completed capabilities yet. Older review lists are historical.
+  remains pending. Same-URL detection and initial backup verification are
+  complete above; scheduled private execution is not active. Older review
+  lists are historical.
 
 - Approved dependency rollout (2026-11-01): owner approved all four reviewed
   PRs, with sequential CI/deployment gates. No unrelated pending item is being
