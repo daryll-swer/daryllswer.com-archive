@@ -1,5 +1,29 @@
 # Decisions
 
+## 2026-11-03: Private Snapshots and Bounded Media Audits
+
+- Decision: use a separate private repository for verified current-tree BagIt
+  snapshots, retaining snapshot history but not copying development history.
+  GitHub-only continuity is an accepted limitation, not independent redundancy.
+- Schedule: Tuesday 04:17 UTC, conditional on a verified zero-paid-overage
+  control for compute and Actions storage. A blocked or failed run preserves
+  the last good snapshot; the next weekly event retries. Monthly allowance
+  exhaustion may block multiple weeks. No paid upgrade or retry loop is implied.
+- Trust boundary: pinned backup tooling reads an explicitly selected public
+  checkout only after exact-revision validated deployment evidence. Snapshot
+  scripts/workflows are data, never execution authority for the backup job.
+- Media policy: full-byte weekly audits of approved, already archived URLs;
+  two concurrent downloads, 20-second requests, 32 MiB/file, 256 MiB/audit,
+  15-minute deadline. Hash changes join atomic post reconciliation, never
+  retirement or source-health failure accounting. Unchanged bytes are a no-op.
+- Freshness claims cover bytes actually served by upstream caches, not unseen
+  origin state. Separate archive-media timestamps preserve source dates.
+- Owner decisions: VoiceOver cancelled; search discovery follow-up remains
+  pending. Implementation and deployment evidence belongs in the status ledger.
+- Primary references: [GitHub token scope](https://docs.github.com/en/actions/concepts/security/github_token),
+  [budget controls](https://docs.github.com/en/billing/how-tos/set-up-budgets),
+  [Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
+
 ## 2026-11-01: Harden Integrity, Publication and Local Preservation
 
 - Decision: Separate offline integrity from live-source comparison. Persist

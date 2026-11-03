@@ -275,10 +275,32 @@ re-enable a disabled schedule where appropriate, and manually dispatch a
 non-forced check. Verify monitoring state and Pages deployment separately.
 Do not accelerate freeze by inventing observations or editing timestamps.
 
-Rendered-content fingerprints and changed media URLs are detected. Replaced
-media bytes at an unchanged upstream URL are not independently polled. The
-archive preserves the media bytes it actually fetched, not every future
-upstream variation.
+Rendered-content fingerprints, changed media URLs and replacement bytes at
+already archived approved image URLs are checked weekly. The explicit
+`--audit-media` mode fetches full bytes even after a REST `304`, deduplicates
+shared URLs, and compares SHA-256 rather than trusting cache validators.
+Limits are two concurrent requests, 20 seconds/request, 32 MiB/file,
+256 MiB/audit and 15 minutes/audit. Raster decoding is limited to 128 million
+cumulative frame pixels, 16,384 pixels per axis and 1,000 frames. These bounds
+retain the existing 113.94-megapixel OOB diagram without re-encoding it. The
+already archived RIPE IPv6 chart is an exact-URL external exception; other
+unapproved hosts remain rejected. Audit and synchronisation use matching
+representation headers, with cache revalidation requested during auditing.
+An incomplete audit blocks content mutation
+and is reported separately from canonical health; it never permits retirement
+or advances freeze. Frozen sources receive no media requests.
+
+Version-3 external action plans carry affected post IDs, exact asset paths and
+old/new hashes. A staging race or hash mismatch aborts the whole update batch.
+Source dates stay unchanged; `archive_media_updated_at` supplies separate
+archive sitemap/RSS freshness. Upstream caches can still serve old bytes:
+the audit proves only what was actually fetched, not unseen origin state.
+
+The approved weekly private snapshot backup and zero-paid-overage activation
+gate are documented in [PRESERVATION.md](PRESERVATION.md). Allowance exhaustion
+preserves the last good snapshot; the next scheduled week retries, possibly
+remaining blocked until the monthly allowance resets. GitHub-only continuity
+is the owner's accepted limitation, not an outstanding service-selection task.
 
 ### Reader Safety
 

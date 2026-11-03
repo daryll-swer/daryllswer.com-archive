@@ -411,4 +411,3 @@ def audit_media(manifest: dict[str, Any], *, root: Path | None = None) -> tuple[
             "failures": [{"source_url": "", "error": str(exc)}],
             "elapsed_seconds": DEADLINE_SECONDS,
         }
-

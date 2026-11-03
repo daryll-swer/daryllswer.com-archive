@@ -53,6 +53,7 @@ class PreservationExportTests(unittest.TestCase):
         self.write("data/sheets/as141253-ipv6-architecture-example/visual.html", b"ipv6 visual\n")
         self.write("data/sheets/as141253-ipv6-architecture-example/cidr-hierarchy.json", b"{}\n")
         self.write("scripts/rebuild.py", b"print('offline')\n")
+        self.write("maintenance/backup/README.md", b"backup template\n")
         self.write("content/private/notes.txt", b"not for package")
         self.write("assets/credentials/token.txt", b"not for package")
         self.write("content/posts/example/.env.production", b"not for package")
@@ -81,6 +82,12 @@ class PreservationExportTests(unittest.TestCase):
             EXPORT.export(commit, destination)
         return destination
 
+    def test_backup_template_allowlist_is_exact_not_general_maintenance(self) -> None:
+        self.assertTrue(EXPORT.safe_repo_path("maintenance/backup/README.md"))
+        self.assertTrue(EXPORT.safe_repo_path("maintenance/backup/backup.yml"))
+        self.assertFalse(EXPORT.safe_repo_path("maintenance/other/file.txt"))
+        self.assertFalse(EXPORT.safe_repo_path("maintenance/backup/future-secret.txt"))
+
     def test_exports_committed_reader_assets_metadata_rights_and_ipv6(self) -> None:
         bag = self.export()
         payload = bag / "data"
@@ -107,6 +114,7 @@ class PreservationExportTests(unittest.TestCase):
             ".gitattributes", ".github/workflows/ci.yml", ".github/dependabot.yml",
             "tests/test_validation_guard.py", "docs/.nojekyll",
             "IMPLEMENTATION_STATUS.md",
+            "maintenance/backup/README.md",
         ]:
             self.assertTrue((payload / required_root).is_file(), required_root)
         with patch.object(EXPORT, "ROOT", self.repo):
@@ -121,6 +129,7 @@ class PreservationExportTests(unittest.TestCase):
         instructions = (bag / "README-PRESERVATION.md").read_text()
         for command in [
             "data/scripts/export-preservation.py --verify .",
+            "data/scripts/backup-preservation.py verify --snapshot .",
             "--directory data/docs", "make -C data PYTHON=\"$(pwd)/.venv/bin/python\" render-site",
             "data/scripts/validate-mirror.py --offline --no-report", "data/tests/",
             "Git-history-dependent", "--require-hashes",
@@ -128,6 +137,30 @@ class PreservationExportTests(unittest.TestCase):
         ]:
             self.assertIn(command, instructions)
         EXPORT.verify_bag(bag)
+
+    def test_explicit_source_checkout_uses_separate_trusted_exporter(self) -> None:
+        tooling = self.base / "trusted-tooling"
+        tooling.mkdir()
+        subprocess.run(["git", "-C", str(tooling), "init", "-q"], check=True)
+        subprocess.run(["git", "-C", str(tooling), "config", "user.name", "Trusted tooling"], check=True)
+        subprocess.run(["git", "-C", str(tooling), "config", "user.email", "tools@example.invalid"], check=True)
+        (tooling / "tool.txt").write_text("trusted\n")
+        subprocess.run(["git", "-C", str(tooling), "add", "tool.txt"], check=True)
+        subprocess.run(["git", "-C", str(tooling), "commit", "-qm", "tooling"], check=True)
+        destination = self.base / "explicit-source-package"
+        with patch.object(EXPORT, "ROOT", tooling):
+            result = EXPORT.main([
+                "--commit", self.commit, "--source-repository", str(self.repo),
+                "--output", str(destination),
+            ])
+        self.assertEqual(result, 0)
+        self.assertTrue((destination / "data/maintenance/backup/README.md").is_file())
+        info = (destination / "bag-info.txt").read_text(encoding="utf-8")
+        tooling_sha = subprocess.run(
+            ["git", "-C", str(tooling), "rev-parse", "HEAD"],
+            check=True, text=True, capture_output=True,
+        ).stdout.strip()
+        self.assertIn(f"Tooling-Commit: {tooling_sha}", info)
 
     def test_restore_copy_verifies_without_network_calls(self) -> None:
         bag = self.export()

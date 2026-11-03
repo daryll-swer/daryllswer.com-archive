@@ -1,4 +1,4 @@
-# Local Preservation Export
+# Preservation Export and Private Backup
 
 ## Scope
 
@@ -57,8 +57,65 @@ wheelhouse for every future operating system.
 
 ## Limits
 
-Creating a local export does not establish off-site or geographically
-independent redundancy. Storage selection, retention/refresh policy and an
-independent scheduler are deferred. Keep package verification and restore-test
-results separate from any future off-site preservation claim. WARC capture is
-not included in this phase.
+Creating a local export alone does not establish off-site or geographically
+independent redundancy. The private GitHub copy below is separate-repository
+protection, not protection against a GitHub-wide outage or loss of the same
+account. GitHub-only continuity is accepted; an independent scheduler is not
+part of this task. WARC capture is not included.
+
+## Private Weekly Snapshots
+
+The approved target is `daryll-swer/daryllswer.com-archive-backup`, private with
+Pages disabled. Its `snapshot/` directory contains the latest verified package;
+previous packages remain recoverable through that repository's own Git history.
+Original development history is not copied. No automatic pruning, force push,
+or history rewriting is part of refresh.
+
+The intended schedule is Tuesday **04:17 UTC / 09:47 IST**. A refresh selects
+current public `main` only with successful validated Pages evidence for that
+exact revision. An unavailable source, failed deployment, failed package
+verification or publication check leaves the previous snapshot intact.
+Unchanged source produces no backup commit.
+
+Trusted backup tooling is pinned separately from the source checkout. It reads
+committed source files through the exporter's explicit `--source-repository`
+argument; it never runs scripts from that fetched source. Copied source
+workflows live under `snapshot/data/.github/`, where they are inert. The
+read-only preparation job and write-scoped publication job exchange a verified
+package with one-day artifact retention and no persistent dependency cache.
+Publication is restricted to `snapshot/` and the backup record. The record
+identifies source revision, trusted tooling revision and manifest digest.
+The publisher independently fetches the approved public commit into a
+temporary bare Git repository and compares the complete payload file set and
+bytes against it. Before commit, staged-index verification checks every
+snapshot file and byte, including ignored/hidden files; a path-prefix check
+alone is insufficient. Private snapshots use the dedicated offline verifier:
+
+```sh
+python3 snapshot/data/scripts/backup-preservation.py verify --snapshot snapshot
+```
+
+Exact bootstrap commands and the inactive workflow template are in
+[maintenance/backup/README.md](../maintenance/backup/README.md). The template
+is not an active workflow in the public repository.
+
+### Spending Gate and Failed Runs
+
+Private Actions must remain disabled until a zero-paid-overage control covering
+both Actions compute and storage is verified. Prefer a repository-scoped
+hard-stop budget; do not change unrelated account budgets. A free-tier account
+or low weekly frequency alone is not evidence that overage is disabled.
+If the control cannot be verified, create and verify the initial snapshot
+locally and leave scheduled execution disabled. Deployment/status evidence in
+`IMPLEMENTATION_STATUS.md` records actual activation, not this intended policy.
+
+When allowance exhaustion blocks execution, preserve the last good snapshot
+and let the next weekly event retry. Included allowances reset monthly, so
+more than one weekly attempt may be blocked. Do not buy extra capacity, run a
+tight retry loop, or manufacture keepalive commits. Inspect Actions and the
+recorded source revision to distinguish a healthy no-change run from an older
+backup left by a failed/blocked run.
+
+Primary guidance: [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions),
+[hard-stop budget controls](https://docs.github.com/en/billing/how-tos/set-up-budgets),
+and [workflow token scope](https://docs.github.com/en/actions/concepts/security/github_token).

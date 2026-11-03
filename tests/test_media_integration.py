@@ -93,6 +93,13 @@ class MediaIntegrationTests(unittest.TestCase):
         self.assertEqual(VALIDATOR.generated_post_lastmod(post, metadata), expected)
         self.assertEqual(post["modified"], "2026-01-02T00:00:00+00:00")
 
+    def test_post_lastmod_normalises_offset_media_timestamp_like_validator(self):
+        post = {"slug": "example", "modified": "2026-01-02T00:00:00+00:00"}
+        metadata = {"archive_media_updated_at": "2026-02-03T09:35:06+05:30"}
+        expected = "2026-02-03T04:05:06Z"
+        self.assertEqual(RENDER.post_lastmod(post, metadata), expected)
+        self.assertEqual(VALIDATOR.generated_post_lastmod(post, metadata), expected)
+
     def test_feed_build_date_includes_archive_media_freshness(self):
         posts = [{"slug": "example", "modified": "2026-01-02T00:00:00+00:00"}]
         metadata = {"example": {"archive_media_updated_at": "2026-02-03T04:05:06+00:00"}}

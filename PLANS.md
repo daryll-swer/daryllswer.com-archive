@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: reserved-label reflow fix published and verified
+- Status: implementing approved weekly private backup and same-URL media audit
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-11-01
+- Last updated: 2026-11-03
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -20,6 +20,116 @@
 - Escalation rules: `ESCALATION.md`
 
 ## Current Status / Next Pickup
+
+### Active: Weekly Private Backup and Same-URL Media Updates
+
+- Implement bounded full-byte media audits even after REST 304, version-3
+  reconciliation plans, atomic staged hash verification, and archive-only
+  freshness timestamps. Preserve source dates, rights and freeze safeguards.
+- Add trusted-tooling export from an explicit source checkout, exact-revision
+  validated deployment gates and a private snapshot workflow with restricted
+  publication. Target: `daryll-swer/daryllswer.com-archive-backup`.
+- Weekly private schedule: Tuesday 04:17 UTC (09:47 IST), enabled only after
+  verifying zero paid overage for both compute and Actions storage. Otherwise
+  verify the initial backup locally and leave private Actions disabled.
+- Backup tooling implementation checkpoint: exporter now reads an explicit
+  source checkout while remaining separate trusted code; backup prepare/publish
+  require current public `main`, successful `deploy-pages.yml` build and deploy
+  jobs, and the latest successful Pages deployment for the same SHA. The
+  inactive `maintenance/backup/` template is main-only, opt-in guarded by
+  `BACKUP_ZERO_PAID_OVERAGE_VERIFIED=true` and a full `BACKUP_TOOLING_SHA`, and
+  keeps payload/tooling in `RUNNER_TEMP`. Focused backup/export tests pass.
+  Media implementation has passed 54 focused audit/reconciliation/integration
+  tests and the final 157-test full suite. Rendering, offline validation, and the
+  public-safety scan pass. Live audit checked 69/69 URLs and 59,449,688 bytes
+  in 32.712 seconds, with zero failures or changes; reconciliation dry-run had
+  no action. The approved private repository
+  was created and verified private, with Pages absent and Actions disabled.
+  Initial snapshot/restore verification and spending-guard verification remain
+  pending; no private scheduled run is enabled.
+- Coordinator owns integration, review, durable records and connected actions;
+  bounded implementers own disjoint media and backup code/tests. No force push,
+  original-history copy, backup pruning or source-data destruction.
+- Verification: adversarial media/batch and backup tests, full regressions,
+  deterministic rendering, offline validation, safety scan, exact deployment
+  verification, initial snapshot checksums and network-isolated restore.
+- Local checkpoint: 157 regression tests pass, offline validation has zero
+  errors/warnings, compilation and safety/whitespace checks pass, and two
+  renders preserve all 213 generated files. The live read-only audit checks
+  69 URLs / 59,449,688 bytes in 32.712 seconds without failures or changes;
+  all 19 posts match and the reconciliation dry-run is a no-op.
+- Media integration contract: action plans are v3 and contain
+  `media_updates` entries with `source_url`, `post_id`, repository-relative
+  `asset_path`, and old/new SHA-256 values. `media_audit` remains an extensible
+  object with `status`, distinct/checked URL counts, changed-asset count,
+  `bytes_checked`, `failures`, and `elapsed_seconds`. Replacement hashes are
+  enforced only for healthy, complete `sync` plans; incomplete audit evidence
+  remains reportable without authorising mutation. Per-post
+  `archive_media_updated_at` is archive-only freshness; canonical `modified`
+  dates remain unchanged.
+- Media implementation audits all mapped archived image URLs with full GETs,
+  two concurrent workers, 20-second per-request child-process limits, a
+  15-minute parent deadline, and aggregate/file byte bounds. Incomplete audits
+  cannot authorise mutation. Changed-media audits block retirement and may
+  authorise only the verified atomic synchronisation batch. Full-suite and
+  repository gates pass; no further live audit is needed for handoff.
+- Owner decisions supersede older pending lists below: VoiceOver cancelled;
+  GitHub-only continuity accepted; search discovery remains pending. Backup and
+  media detection remain in progress until their own verification succeeds.
+
+### Completed: Approved Dependency Rollout
+
+- Owner approved PRs #1-#4 for sequential merging on 2026-11-01. Merge order:
+  #2 Python setup, #3 checkout, #4 Pages upload, #1 Pages deployment.
+- Exact reviewed heads, CI and mergeability were rechecked; all four were
+  merged normally without branch deletion. Main CI and exact-revision Pages
+  deployment passed after each merge before the next PR was merged.
+- Normal manual reconciliation and its Pages successor passed after the
+  sequence. Existing local documentation/report changes were preserved.
+- Other items remain pending: Google/Bing discovery follow-up, off-site backup,
+  and selected preservation/continuity follow-up.
+- Background-only work; no Chrome foregrounding or screen-reader changes.
+- PR #2 merged as `4a81d9a`; CI `41331674605` and Pages `41331674608`
+  passed, with successful deployment `7476486456` for that exact revision.
+- PR #3 briefly conflicted with adjacent Python pin edits. Dependabot refreshed
+  its head to `28fdca8` before the implementer made any change; no manual clone,
+  edit or push occurred. The refreshed diff is exactly the four checkout pins,
+  preserving Python v7.1.0. Refreshed CI passed before merge.
+- Merge revisions: #2 `4a81d9a`, #3 `cf4d7ac`, #4 `d990fa5`, #1 `c222ce6`.
+  Final CI `41332155052`, Pages `41332155069` and exact-revision deployment
+  `7476552097` passed. Manual canonical run `41332235190` reported healthy,
+  no reconciliation changes, unchanged favicon and zero changed paths; it
+  skipped rendering and made no commit. Successor `41332270871` correctly
+  skipped duplicate publication using the existing successful deployment.
+- Live HTTP checks passed with no redirects and byte-identical local output
+  for homepage, sitemap, favicon, representative DS/Swer articles, workbook
+  and IPv6 visual. No source content, media or SEO-policy changes occurred.
+
+### Review Complete: Search Discovery and Dependencies
+
+- Owner authorised troubleshooting the open Google Search Console property
+  in Chrome and technical review of dependency updates for subsequent approval.
+- Background-only interaction remains required: no native app foregrounding,
+  browser zoom changes or screen-reader activation.
+- Coordinator owns Search Console diagnosis and durable records; a read-only
+  `explorer-luna` worker reviews Actions PRs #1-#4 and primary upstream evidence.
+- Dependency merges were initially deferred, then explicitly approved as
+  recorded above. Do not change unrelated Search Console properties.
+- Owner decisions: VoiceOver deferred; off-site backup pending; continuity
+  pending; same-URL upstream image replacement detection marked future review.
+- Search checks: the exact submitted project sitemap returns HTTP 200 XML
+  over IPv4/IPv6 without redirects; both copies parse and match. Google live
+  inspection successfully fetches both sitemap and homepage. The homepage
+  permits indexing and declares its correct archive-local canonical URL.
+  No manual actions or security issues are reported. Sitemap processing still
+  reports failure, and the homepage has no recorded index crawl. Root cause
+  is not established; live inspection success is not sitemap acceptance.
+- Homepage indexing was attempted once, but the UI did not acknowledge the
+  request. Owner follow-up: complete Request indexing on the homepage and
+  verify the confirmation, then revisit sitemap/index status after processing.
+  Do not request indexing of the XML or remove intentional article noindex.
+- Dependency review, owner approval, rollout and verification are complete
+  above. All non-dependency review items remain pending.
 
 ### Completed: Reserved-Summary Reflow Fix
 
@@ -60,21 +170,24 @@
 
 ### Owner Review / Deferred Decisions
 
-- Screen reader: VoiceOver remains unchanged by request. Arrange a later
-  manual check of headings, link names, table navigation and expanded/collapsed
-  announcements; automated keyboard tests are not a substitute.
-- Search accounts: confirm the submitted project sitemap reports Success in
-  Google Search Console and decide whether to complete Bing registration.
-  Current private-account status has not been inspected in this task.
-- Dependencies: four open Actions upgrade PRs (#1-#4) have successful CI.
-  They still require technical compatibility review before maintainer approval;
-  no expectation that the owner review unfamiliar source code personally.
-- Preservation: choose an off-site destination when ready. The verified local
-  export is not off-site redundancy; storage selection remains deferred.
-- Continuity: GitHub-only automation remains the selected scope. Decide later
-  whether to nominate a maintainer or add independent missed-run monitoring.
-- Optional future scope: same-URL upstream media-byte replacement detection is
-  not implemented and is not part of the reserved-label correction.
+- Screen reader: cancelled by owner. VoiceOver remains unchanged; do not list
+  it as an outstanding owner action or claim screen-reader verification.
+- Search accounts: Google diagnosis above is complete; sitemap Success and
+  homepage indexing remain unverified. Finish the unacknowledged homepage
+  indexing request when convenient. Bing registration remains a separate
+  owner decision and was not accessed.
+- Dependencies: completed. PRs #2 (Python setup), #3 (checkout), #4 (Pages
+  upload) and #1 (Pages deployment) are merged, with main CI and live deployment
+  verification after each, plus successful manual canonical/no-op deployment
+  checks. Evidence is in `IMPLEMENTATION_STATUS.md`.
+- Preservation: private GitHub snapshot repository approved; implementation
+  and initial restore verification in progress. Scheduled operation remains
+  conditional on a verified zero-paid-overage guard.
+- Continuity: GitHub-only automation accepted. No independent scheduler or
+  maintainer nomination is required by this task; same-account/provider risks
+  remain explicit limitations.
+- Same-URL image replacements: approved for implementation in the active work
+  above, no longer deferred for future review.
 
 ### Completed: Archive Reliability and Preservation Hardening
 
@@ -134,8 +247,8 @@
   bot revision `0a8192d`, not the older triggering revision.
 - Reflow follow-up: corrected, published and verified as recorded above.
   Screen-reader QA remains pending by owner
-  decision; do not claim accessibility conformance. Dependency review, off-site
-  storage and external scheduling remain separate outstanding work/decisions.
+  decision; do not claim accessibility conformance. Off-site storage and
+  continuity remain separate outstanding decisions; dependency rollout is complete.
 
 - Current state:
   - Complete and hosted verified: owner-selected proprietary rights apply to

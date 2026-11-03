@@ -75,6 +75,16 @@
   restrictions, invalid responses and internal errors must never count towards
   automatic source freeze. Preserve monitoring evidence without weakening
   reconciliation gates.
+- Same-URL media audits compare served bytes with archived SHA-256 hashes;
+  cache validators alone are insufficient. Keep approved-host, redirect,
+  image, byte, concurrency and deadline limits. Incomplete media audits never
+  authorise mutation/retirement or advance source freeze. Preserve original
+  dates and exact accepted bytes; record archive media freshness separately.
+- Private backups execute separately pinned trusted tooling, never scripts
+  from a newly fetched snapshot. Require exact-revision validated Pages
+  evidence, full package verification and a verified zero-paid-overage guard
+  before private scheduling. Failed runs retain the last good snapshot; no
+  automatic pruning, original-history copying or force publication.
 - Treat archived source HTML as untrusted. Reader HTML/RSS must pass the
   explicit sanitiser policy; source evidence and contained Pages copies are
   separate artefacts. Do not bypass safety checks to preserve active markup.

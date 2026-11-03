@@ -44,9 +44,10 @@ class ExportError(Exception):
     """Raised when an export cannot be completed safely."""
 
 
-def git(args: list[str], *, binary: bool = False) -> bytes | str:
+def git(args: list[str], *, repository: Path | None = None, binary: bool = False) -> bytes | str:
+    repository = repository or ROOT
     result = subprocess.run(
-        ["git", "-C", str(ROOT), *args],
+        ["git", "-C", str(repository), *args],
         check=False,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -57,14 +58,15 @@ def git(args: list[str], *, binary: bool = False) -> bytes | str:
     return result.stdout if binary else result.stdout.decode("utf-8").strip()
 
 
-def validate_commit(revision: str, allow_dirty: bool) -> str:
+def validate_commit(revision: str, allow_dirty: bool, source_repository: Path | None = None) -> str:
+    source_repository = source_repository or ROOT
     if not re.fullmatch(r"[0-9a-fA-F]{40,64}", revision):
         raise ExportError("--commit must be an explicit full commit hash")
-    commit = str(git(["rev-parse", "--verify", f"{revision}^{{commit}}"]))
+    commit = str(git(["rev-parse", "--verify", f"{revision}^{{commit}}"], repository=source_repository))
     if not re.fullmatch(r"[0-9a-f]{40,64}", commit):
         raise ExportError("Git returned an invalid commit identifier")
     if not allow_dirty:
-        status = str(git(["status", "--porcelain=v1", "--untracked-files=all"]))
+        status = str(git(["status", "--porcelain=v1", "--untracked-files=all"], repository=source_repository))
         if status:
             raise ExportError("working tree is dirty; use a clean checkout or explicitly pass --allow-dirty")
     return commit
@@ -85,6 +87,8 @@ def safe_repo_path(name: str) -> bool:
         return True
     if name == "docs/.nojekyll":
         return True
+    if name in {"maintenance/backup/README.md", "maintenance/backup/backup.yml"}:
+        return True
     if name.startswith(".github/workflows/") or name == ".github/dependabot.yml":
         return True
     if any(part in EXCLUDED_PARTS for part in path.parts):
@@ -94,8 +98,9 @@ def safe_repo_path(name: str) -> bool:
     return bool(path.parts and path.parts[0] in ALLOWED_ROOTS | {"tests"})
 
 
-def committed_files(commit: str) -> list[tuple[str, str]]:
-    raw = git(["ls-tree", "-r", "-z", "--full-tree", commit], binary=True)
+def committed_files(commit: str, source_repository: Path | None = None) -> list[tuple[str, str]]:
+    source_repository = source_repository or ROOT
+    raw = git(["ls-tree", "-r", "-z", "--full-tree", commit], repository=source_repository, binary=True)
     entries: list[tuple[str, str]] = []
     for record in raw.split(b"\0"):
         if not record:
@@ -129,7 +134,7 @@ def decode_manifest_path(path: str) -> str:
     return unquote(path, errors="strict")
 
 
-def verify_bag(bag: Path) -> None:
+def verify_bag(bag: Path, *, allow_backup_record: bool = False) -> None:
     if bag.is_symlink() or not bag.is_dir():
         raise ExportError("bag path must be a real directory")
     data_dir = bag / "data"
@@ -185,7 +190,10 @@ def verify_bag(bag: Path) -> None:
         if path.is_symlink():
             raise ExportError(f"symlink in bag: {path}")
         if path.is_file() and path != tag_manifest and not path.is_relative_to(data_dir):
-            tag_files.add(path.relative_to(bag).as_posix())
+            relative = path.relative_to(bag).as_posix()
+            if allow_backup_record and relative == "backup-record.json":
+                continue
+            tag_files.add(relative)
     if tag_files != set(expected_tags):
         raise ExportError("tag manifest does not exactly cover tag files")
     for name, expected in expected_tags.items():
@@ -193,14 +201,16 @@ def verify_bag(bag: Path) -> None:
             raise ExportError(f"tag checksum mismatch: {name}")
 
 
-def ensure_external_output(output: Path) -> Path:
+def ensure_external_output(output: Path, source_repository: Path | None = None) -> Path:
+    source_repository = source_repository or ROOT
     candidate = output.expanduser()
     parent = candidate.parent.resolve(strict=True)
     destination = parent / candidate.name
     if destination.exists() or destination.is_symlink():
         raise ExportError("output destination already exists")
-    repository = ROOT.resolve(strict=True)
-    if destination == repository or repository in destination.parents:
+    source = source_repository.resolve(strict=True)
+    tooling = ROOT.resolve(strict=True)
+    if destination == source or source in destination.parents or destination == tooling or tooling in destination.parents:
         raise ExportError("output must be outside the repository")
     if not candidate.name or candidate.name in {".", ".."}:
         raise ExportError("invalid output path")
@@ -213,23 +223,26 @@ def write_file(path: Path, data: bytes) -> None:
         stream.write(data)
 
 
-def export(commit: str, output: Path) -> None:
-    target = ensure_external_output(output)
-    files = committed_files(commit)
+def export(commit: str, output: Path, source_repository: Path | None = None) -> None:
+    source_repository = source_repository or ROOT
+    target = ensure_external_output(output, source_repository)
+    files = committed_files(commit, source_repository)
     parent = target.parent
     staging = Path(tempfile.mkdtemp(prefix=f".{target.name}.staging-", dir=parent))
     try:
         (staging / "data").mkdir()
         payload_entries: list[str] = []
         for name, object_id in files:
-            content = git(["cat-file", "blob", object_id], binary=True)
+            content = git(["cat-file", "blob", object_id], repository=source_repository, binary=True)
             destination = staging / "data" / name
             write_file(destination, content)
             payload_entries.append(f"{hashlib.sha256(content).hexdigest()} data/{manifest_path(name)}")
-        toolchain = str(git(["--version"]))
+        toolchain = str(git(["--version"], repository=source_repository))
+        tooling_commit = str(git(["rev-parse", "HEAD"]))
         info = (
             "Source-Commit: " + commit + "\n"
             "Source-Repository: https://github.com/daryll-swer/daryllswer.com-archive\n"
+            "Tooling-Commit: " + tooling_commit + "\n"
             "Exporter-Format: daryllswer-preservation-1\n"
             "Exporter-Python: " + sys.version.split()[0] + "\n"
             "Exporter-Git: " + toolchain.removeprefix("git version ") + "\n"
@@ -240,8 +253,10 @@ def export(commit: str, output: Path) -> None:
             "rights records, generated GitHub Pages output, and selected rebuild tooling and instructions.\n\n"
             "## Restore, verify, serve, and rebuild\n\n"
             "To transport the directory, create an archive with `tar -cf preservation.tar -C /path/to/parent BAG_NAME`; "
-            "restore with `tar -xf preservation.tar`. After extracting the package directory, verify it from that directory with "
-            "`python3 data/scripts/export-preservation.py --verify .`. The checksum verifier is offline. "
+            "restore with `tar -xf preservation.tar`. After extracting a regular package, verify it from that directory with "
+            "`python3 data/scripts/export-preservation.py --verify .`. For a private backup snapshot, run "
+            "`python3 data/scripts/backup-preservation.py verify --snapshot .`; it verifies the BagIt files and "
+            "the additional `backup-record.json` provenance. Both checks are offline. "
             "Serve the preserved Pages tree locally with `python3 -m http.server 8000 --directory data/docs`. "
             "To rebuild Pages, use Python 3.12 and install the pinned, hashed dependencies with "
             "`python3 -m venv .venv` then `./.venv/bin/python -m pip install --require-hashes -r data/requirements-lock.txt`; "
@@ -276,20 +291,22 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--commit", help="explicit approved source commit")
     parser.add_argument("--output", type=Path, help="new output directory outside the repository")
+    parser.add_argument("--source-repository", type=Path, help="explicit source checkout; exporter remains trusted tooling")
     parser.add_argument("--allow-dirty", action="store_true", help="allow local changes; only the named commit is exported")
     parser.add_argument("--verify", type=Path, help="verify an extracted BagIt directory")
     args = parser.parse_args(argv)
     try:
         if args.verify is not None:
-            if args.commit or args.output or args.allow_dirty:
+            if args.commit or args.output or args.allow_dirty or args.source_repository:
                 raise ExportError("--verify cannot be combined with export options")
             verify_bag(Path(os.path.abspath(args.verify.expanduser())))
             print("BagIt verification passed")
             return 0
         if not args.commit or args.output is None:
             parser.error("--commit and --output are required for export")
-        commit = validate_commit(args.commit, args.allow_dirty)
-        export(commit, args.output)
+        source_repository = (args.source_repository or ROOT).expanduser().resolve(strict=True)
+        commit = validate_commit(args.commit, args.allow_dirty, source_repository)
+        export(commit, args.output, source_repository)
         print(f"verified preservation package: {args.output}")
         return 0
     except (ExportError, OSError, UnicodeError, ValueError) as exc:

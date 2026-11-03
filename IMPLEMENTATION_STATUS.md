@@ -5,17 +5,202 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: archive reliability and preservation hardening
-- Status: reserved-label reflow fix published and verified
-- Last updated: 2026-11-01
-- Implementer role/model/thread: four delegated `implementer-luna` workers,
-  pinned to `gpt-6-luna` with high reasoning, own health/reconciliation,
-  HTML safety, workflow/validation, and preservation-export file sets
+- Current sprint / workstream: weekly private backup and same-URL media audit
+- Status: implementation in progress; publication and backup verification pending
+- Last updated: 2026-11-03
+- Implementer role/model/thread: three actual `implementer-luna` workers,
+  pinned to `gpt-6-luna` with high reasoning: Feynman owns media/reconciliation,
+  Bernoulli owns export/backup tooling, McClintock owns schema/workflow/reader
+  integration. Coordinator owns docs, security review and connected actions.
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: no route limit has been observed in this
   workstream; this is not a continuous quota-monitoring claim
 
+## Backup Tooling Checkpoint (2026-11-03)
+
+- Implemented locally: explicit separate source checkout support in the
+  BagIt exporter; stdlib-only prepare/publish backup tool; inactive
+  `maintenance/backup/` workflow template and concise bootstrap instructions.
+- Gates: current public `main` SHA, a successful `deploy-pages.yml` run with
+  successful build and deploy jobs, and latest successful `github-pages`
+  deployment must all identify the same SHA. The trusted tooling checkout must
+  be clean at the pinned SHA in both phases. The private record binds source
+  SHA, tooling SHA and payload-manifest digest.
+- Safety: source workflows remain inert under `snapshot/data/.github/`; no
+  source scripts or dependencies are executed/installed; `.git` history is not
+  copied. Artifact and tooling use `RUNNER_TEMP`, artifact retention is one
+  day including hidden files, and publication is limited to `snapshot/` with
+  rollback-preserving atomic replacement. Same-source publication verifies
+  the prior BagIt snapshot and is a no-op. Private restore instructions use
+  `data/scripts/backup-preservation.py verify --snapshot .` to validate both
+  BagIt manifests and `backup-record.json`; the generic exporter verifier
+  remains strict by default. Publication anonymously fetches the selected
+  source SHA into an isolated temporary bare Git repository and matches the
+  exact payload path set and SHA-256 bytes to committed source blobs, including
+  same-source no-op checks. `verify-staged` rechecks BagIt/record integrity and
+  exact worktree/index paths and bytes after force-staging.
+- Guard: both jobs require main ref, `BACKUP_ZERO_PAID_OVERAGE_VERIFIED=true`
+  and a full `BACKUP_TOOLING_SHA`. Scheduled retries remain weekly after a
+  failed/allowance-exhausted run; no Free-plan cap or reset is assumed. No
+  private scheduled run is enabled. Coordinator created the approved private
+  repository and verified `private=true`, `has_pages=false`, and Actions
+  `enabled=false`; initial snapshot verification is still pending.
+- Validation checkpoint: 24 focused backup/export tests pass; the integrated
+  regression suite passes 157 tests. Independent review confirms source-commit
+  binding and exact staged-index checks close both identified gaps.
+  `make validate` reports zero errors and
+  warnings; `make scan-secrets` and Python compilation pass. Repeated rendering
+  preserves all 213 generated files byte-for-byte. Dedicated private-snapshot
+  verification checks both BagIt and the additional backup record; the generic
+  BagIt verifier remains strict about unexpected files.
+- Live read-only media audit: 69 distinct URLs checked, 59,449,688 bytes,
+  32.712 seconds, zero byte changes and zero failures. All 19 canonical posts
+  match; v3 action is `none`, and reconciliation dry-run makes no changes.
+  No content, source, image, allocation or generated reader bytes changed.
+- Next action: coordinator reviews the implementation and confirms the live
+  compute/Actions-storage budget hard stop, then separately handles private
+  repository setup, trusted tooling SHA insertion, local initial backup and
+  disabled-by-default Actions configuration.
+
 ## Latest Delivery
+
+- Same-URL media audit integration slice (2026-11-03): action-plan schema v3
+  requires `media_updates` records containing `source_url`, `post_id`,
+  repository-relative `asset_path`, `old_sha256`, and `new_sha256`; the
+  `media_audit` object requires `status`, `distinct_urls`, `checked_urls`,
+  `changed_assets`, `bytes_checked`, `failures`, and `elapsed_seconds`.
+  Workflow checker verifies each planned asset against its base manifest,
+  source URL, old bytes, replacement bytes, and updated per-post asset manifest
+  only for healthy complete `sync` plans; incomplete audit evidence remains
+  reportable and cannot authorise replacement. Retirement still requires the
+  exact eligible plan. Weekly canonical
+  workflow passes `--audit-media` and includes the audit object in its Actions
+  summary. Per-post `archive_media_updated_at` validates as date-time and drives
+  sitemap `lastmod`/RSS `lastBuildDate` without changing canonical dates.
+  - Focused media/reconciliation/integration tests pass (54); the full suite
+    passes (153). `make render-site`, offline validation, safety scanning and
+    whitespace checks pass. The 69-URL live audit completed in 32.712 seconds
+    (59,449,688 bytes; zero failures/changes); action is `none` and dry-run
+    made no changes.
+  - The auditor uses synchroniser-identical `Accept`/`User-Agent`, an exact
+    RIPE media URL exception, same-host redirects, 20-second request child
+    deadlines, process-group termination at the 15-minute audit deadline, and
+    measured 128M-pixel/16,384-axis image bounds. The coordinator should rerun
+    the live audit only for future monitoring, not as a handoff prerequisite.
+
+- Approved backup/media work (2026-11-03): remote main is unchanged at
+  `c222ce631986fa7f41a7d2f145290333f01ae117`; prior documentation/report edits
+  are preserved. Authenticated GitHub identity is `daryll-swer`; the proposed
+  private backup repository was absent before setup and has now been created
+  without replacing an existing repository.
+  Private Actions must remain disabled unless the compute/storage zero-paid-
+  overage guard is verified. Browser foregrounding is prohibited; billing
+  inspection awaits a suitable background tab, not an assumption about quota.
+- Current owner decisions: VoiceOver cancelled, not deferred; GitHub-only
+  continuity accepted with same-provider/account limits; search discovery
+  remains pending. Backup and same-URL detection are approved implementation
+  work, not completed capabilities yet. Older review lists are historical.
+
+- Approved dependency rollout (2026-11-01): owner approved all four reviewed
+  PRs, with sequential CI/deployment gates. No unrelated pending item is being
+  completed or activated. Normal merges only; no force-push or branch deletion.
+  - PR #2 merged as `4a81d9ae28b2185d819c8bbd14367138e7593183`;
+    CI `41331674605` and Pages `41331674608` passed. Deployment `7476486456`
+    records success for that exact revision at the unchanged project URL.
+  - PR #3 briefly conflicted after #2. Dependabot refreshed its head to
+    `28fdca8b20633eed0fd9804f4818cec20b3af42e` before the workflow implementer
+    made any changes. No manual clone, merge, edit or push occurred. Refreshed
+    diff review confirms only four checkout pin changes, preserving Python
+    v7.1.0; refreshed CI was required before merge.
+    Refreshed CI `41331837391` passed; PR #3 merged as
+    `cf4d7acca63cd03d57cc9d415de952feecad20c0`. Main CI `41331890007`
+    and Pages `41331890033` passed, with successful exact-revision deployment
+    `7476515666`.
+  - PR #4 merged as `d990fa594da3a1d1140abb9c03e5b04537591082`;
+    CI `41332049679` and Pages `41332049725` passed. Deployment `7476537710`
+    records success for that revision, exercising the new uploader with the
+    previous deployer. The uploader's Node 20 warning is no longer present.
+  - PR #1 merged as `c222ce631986fa7f41a7d2f145290333f01ae117`;
+    CI `41332155052` and Pages `41332155069` passed. Exact-revision deployment
+    `7476552097` succeeded; the Pages run has no Node 20 deprecation annotation.
+  - Normal manual canonical workflow `41332235190` was dispatched with
+    `force=false` and passed: healthy canonical state, no reconciliation
+    changes, unchanged favicon and zero changed paths. Rendering was skipped
+    and no commit was created. Successor Pages run `41332270871` passed and
+    correctly skipped duplicate build/publication because `c222ce6` already
+    had a successful deployment. This exercises the no-change workflow path.
+  - Seven live routes returned HTTP 200 without redirects and match local
+    generated bytes: homepage, sitemap, favicon, Docker IPv6 DS post, BGP
+    Swer repost, workbook landing page and primary IPv6 visual. Main is
+    `c222ce631986fa7f41a7d2f145290333f01ae117`; the local branch is aligned.
+    The rollout changes nine action-pin lines across three workflow files,
+    with no content, asset, rights or SEO-policy changes.
+  - Offline validation reports zero errors/warnings; safety and whitespace
+    checks pass. Plan/status and generated check reports remain local updates;
+    no separate documentation commit was included in the approved PR merges.
+
+- Search discovery diagnosis (2026-11-01), using background Chrome DOM
+  interaction only:
+  - Submitted sitemap is the correct project URL, not the account-root URL.
+    Public IPv4 and IPv6 responses are HTTP 200 `application/xml`, 196 bytes,
+    no redirects; both bodies match and pass XML parsing. The homepage-only
+    URL set is intentional in source-primary mode.
+  - Search Console still reports that the sitemap could not be read, without
+    a more specific visible error. Google live inspection reports successful
+    sitemap fetch and crawl permission. No manual actions or security issues
+    are reported for the property.
+  - Homepage index inspection reports an unknown URL and no recorded crawl.
+    Its live test passes fetch/crawl/index eligibility and reports the correct
+    project Pages canonical URL. Eligibility does not establish indexing.
+  - One homepage Request indexing action was attempted; no confirmation was
+    displayed. Submission is not verified. The owner tab remains on the live
+    result for follow-up. No XML indexing request, repeated sitemap submission,
+    article indexing-policy change or unrelated account access was performed.
+  - Root cause of the sitemap pipeline failure is not established. Google
+    documents multiple possible causes, including crawl demand; this does not
+    prove a particular cause here. The root robots response is 404, which is
+    not a crawl block under Google's documented handling. Do not restore an
+    ineffective project-subdirectory robots file as a speculative fix.
+  - Next check: obtain the homepage indexing-request confirmation, then
+    revisit homepage index and sitemap processing status after Google retries.
+    Escalate with the exact URL and live-fetch evidence if failure persists;
+    do not report resolution until the relevant report confirms it.
+  - Primary guidance: [Sitemaps report troubleshooting](https://support.google.com/webmasters/answer/7451001)
+    and [Google robots handling](https://developers.google.com/crawling/docs/robots-txt/robots-txt-spec).
+    Private screenshots/session details remain outside the repository.
+
+- Dependency review before approval (2026-11-01): a read-only `explorer-luna`
+  worker inspected the four then-open Dependabot Actions PRs, pinned upstream metadata/releases and
+  repository inputs, permissions and workflow triggers. No code was changed,
+  dependency installed or PR merged. Each PR has a passing `verify` check;
+  this is not proof of the deployment or scheduled reconciliation paths.
+
+  | Review order | PR / version change | Recommendation and remaining check |
+  | --- | --- | --- |
+  | 1 | [#2 setup-python 6.3.0 to 7.1.0](https://github.com/daryll-swer/daryllswer.com-archive/pull/2) | Approve after owner review. Three pin changes; configured Python/cache inputs remain supported. The removed `pip-install` input is unused. |
+  | 2 | [#3 checkout 6.1.0 to 7.0.1](https://github.com/daryll-swer/daryllswer.com-archive/pull/3) | Approve after owner review. Four pin changes; ordinary PR CI and same-repository main-only deployment need no unsafe-checkout opt-in. Verify workflow-run reconciliation deployment too. |
+  | 3 | [#4 upload-pages-artifact 4.0.0 to 5.0.0](https://github.com/daryll-swer/daryllswer.com-archive/pull/4) | Approve after owner review. One pin change; `path: docs` remains supported. Exercise upload with the existing deployer before upgrading that action. |
+  | 4 | [#1 deploy-pages 4.0.5 to 5.0.1](https://github.com/daryll-swer/daryllswer.com-archive/pull/1) | Approve after owner review. One pin change; verify successful Pages publication and exact main revision after merge. |
+
+  Primary evidence: [setup-python release](https://github.com/actions/setup-python/releases/tag/v7.1.0),
+  [checkout release](https://github.com/actions/checkout/releases/tag/v7.0.1),
+  [uploader metadata](https://github.com/actions/upload-pages-artifact/blob/fc324d3547104276b827a68afc52ff2a11cc49c9/action.yml),
+  and [deployer release](https://github.com/actions/deploy-pages/releases/tag/v5.0.1).
+  The new JavaScript actions and the uploader's pinned nested upload-artifact
+  action use Node 24. This project uses hosted `ubuntu-latest`, not self-hosted
+  runners. Recheck CI and mergeability against current main before each merge;
+  stop on a failed deployment rather than advancing the sequence. After the
+  approved sequence, run non-destructive manual reconciliation and verify its
+  successor deployment. No blanket approval or automatic merging is enabled.
+
+- Owner review states: VoiceOver deferred and unchanged; off-site backup
+  pending; continuity arrangements pending; same-URL upstream image-byte
+  replacement detection marked for future review. These are not completed
+  checks, and no storage account, scheduler or screen reader was configured.
+- Pre-approval review-record verification: offline validation reported zero
+  errors/warnings; safety and whitespace checks passed. That review changed
+  only local documentation/reports. Approved merges and publication were
+  subsequently completed as recorded above.
 
 - Reserved-summary reflow correction: `eac4ebf` published with passing
   read-only CI `41328369083` and Pages deployment `41328369091`. Live visual

@@ -228,8 +228,8 @@ flowchart LR
 
 - `.github/workflows/canonical-drift.yml` runs a low-frequency weekly check and
   supports manual `workflow_dispatch`.
-- `scripts/check-canonical-drift.py` uses only the public WordPress REST index
-  and local archive manifests. It checks for new, missing/unlisted, relocated,
+- `scripts/check-canonical-drift.py` uses the public WordPress REST index,
+  approved public image URLs and local archive manifests. It checks for new, missing/unlisted, relocated,
   modified, featured-image, and WordPress-uploaded image-media drift by
   immutable WordPress post ID where possible.
 - Third-party documents, PDFs, downloads, and external artefacts are not
@@ -330,9 +330,26 @@ Networks repost while its registered original remains active.
   filtering. A clean healthy comparison backfills the baseline for legacy
   bundles once, supporting content-fingerprint comparison without treating
   deliberate archive filtering as recurring drift.
-- Existing fingerprints detect rendered-content and media-reference changes,
-  not replacement bytes behind an unchanged upstream media URL. That remains
-  an explicit limitation, not a claim of complete media-change detection.
+- Weekly media auditing also compares full response SHA-256 hashes for every
+  distinct already archived approved HTTPS image URL, including after REST
+  `304`. Shared URLs map to all affected posts. Bounds are two downloads,
+  20-second requests, 32 MiB/file, 256 MiB/audit and a 15-minute deadline.
+  Reviewed raster limits are 128 million cumulative frame pixels, 16,384 pixels
+  per axis and 1,000 frames; the existing largest diagram is 113.94 megapixels.
+  The sole external-image exception is the already archived RIPE IPv6 chart
+  URL, not arbitrary third-party downloads. Request representation headers
+  match the synchroniser to avoid format-negotiation-induced false drift.
+  Redirects stay on the approved host; invalid/unsafe images, restrictions
+  and incomplete downloads fail closed without advancing source freeze.
+- Version-3 action plans carry asset paths and old/new hashes. Media-only
+  changes join the atomic staging batch; identity/content and downloaded
+  hashes must still match before replacement. Media drift cannot authorise
+  retirement. Frozen sources are never polled for media.
+- `archive_media_updated_at` records successful media changes separately from
+  canonical publication/modification dates. Discovery sitemap/RSS freshness
+  includes it; unchanged audits do not rewrite post content or timestamps.
+  Cache revalidation requests cannot prove unseen origin freshness: only the
+  bytes actually served are compared.
 - Historical Markdown links that prove a target was once mirrored retain a
   local Pages route after retirement. It is intentionally unavailable until a
   later restoration is mirrored; unrelated canonical pages are never
@@ -349,8 +366,26 @@ Networks repost while its registered original remains active.
   bundles recovered from history. Verification checks every packaged file and
   a fresh extracted copy before reporting success.
 - External hyperlinks and third-party embeds are references, not preserved
-  media. A local export is not off-site redundancy. Storage selection and WARC
-  capture are deferred.
+  media. WARC capture remains deferred.
+- The approved private backup target is
+  `daryll-swer/daryllswer.com-archive-backup`. It stores a verified BagIt
+  package under `snapshot/`, without original development history. Earlier
+  snapshots remain in its own Git history, with no automatic pruning.
+- Pinned trusted tooling reads a separate public source checkout. The current
+  main SHA must have successful validated Pages deployment evidence before
+  becoming a snapshot. Fetched source scripts/workflows are never executed;
+  copied workflows remain inert beneath `snapshot/data/`.
+- Publication independently compares payload files/bytes to the verified source
+  commit using anonymous temporary bare Git objects. The complete staged index
+  must then match the verified snapshot, not merely use an allowed path prefix.
+- Private preparation is read-only; publication is a separate narrowly
+  write-scoped job with path and package validation. Tuesday 04:17 UTC refresh
+  is enabled only after verifying zero paid overage for compute and Actions
+  storage. Otherwise initial local backup verification proceeds with private
+  Actions disabled. Failed/blocked/no-change runs preserve the last snapshot;
+  the next weekly schedule retries without a paid escalation or tight loop.
+- This is separate-repository protection, not provider/account independence.
+  A GitHub-wide outage or loss of the same account can affect both copies.
 - GitHub is the only scheduler and hosting provider selected for this phase.
   Scheduled jobs can be delayed or disabled after repository inactivity;
   no independent monitor exists. No empty keepalive commits are manufactured.

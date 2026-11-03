@@ -772,7 +772,8 @@ def post_lastmod(post: dict, metadata: dict) -> str | None:
         if parsed.tzinfo is None:
             parsed = parsed.replace(tzinfo=dt.timezone.utc)
         parsed_values.append(parsed)
-    return sitemap_lastmod(max(parsed_values).isoformat()) if parsed_values else None
+    latest = max(parsed_values).astimezone(dt.timezone.utc) if parsed_values else None
+    return sitemap_lastmod(latest.isoformat()) if latest else None
 
 
 def render_sitemap(posts: list[dict], metadata_by_slug: dict[str, dict], status: dict) -> None:
