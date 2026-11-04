@@ -85,6 +85,15 @@
   evidence, full package verification and a verified zero-paid-overage guard
   before private scheduling. Failed runs retain the last good snapshot; no
   automatic pruning, original-history copying or force publication.
+- No payment method may be added for this archive or its backup operation.
+  Operation must remain within GitHub's free tier. Do not purchase capacity,
+  enable paid overage, upgrade to a paid plan, or request payment-method setup
+  as a recovery step. These are permanent unattended-preservation constraints.
+  Allowance exhaustion retains the last verified snapshot and permits only
+  the next normal weekly attempt, even if several attempts remain blocked.
+  No accelerated retries, paid fallback or manufactured keepalive commits.
+  The existing backup guard records the approved operating basis; it does not
+  continuously inspect billing configuration or guarantee perpetual service.
 - Treat archived source HTML as untrusted. Reader HTML/RSS must pass the
   explicit sanitiser policy; source evidence and contained Pages copies are
   separate artefacts. Do not bypass safety checks to preserve active markup.

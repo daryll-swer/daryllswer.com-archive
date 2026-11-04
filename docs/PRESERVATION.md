@@ -99,23 +99,31 @@ Exact bootstrap commands and the inactive workflow template are in
 [maintenance/backup/README.md](../maintenance/backup/README.md). The template
 is not an active workflow in the public repository.
 
-### Spending Gate and Failed Runs
+### Permanent Free-Tier Operation
 
-Private Actions must remain disabled until a zero-paid-overage control covering
-both Actions compute and storage is verified. Prefer a repository-scoped
-hard-stop budget; do not change unrelated account budgets. A free-tier account
-or low weekly frequency alone is not evidence that overage is disabled.
-If the control cannot be verified, create and verify the initial snapshot
-locally and leave scheduled execution disabled. Deployment/status evidence in
-`IMPLEMENTATION_STATUS.md` records actual activation, not this intended policy.
+No payment method may be added for this archive or its backup operation.
+Operation must remain within GitHub's free tier. Do not purchase capacity,
+enable paid overage, upgrade to a paid plan, or request payment-method setup
+as a recovery step. This is a permanent constraint for unattended preservation,
+not a billing decision awaiting the owner.
+
+The existing `BACKUP_ZERO_PAID_OVERAGE_VERIFIED` variable records the approved
+operating basis; it does not continuously inspect billing configuration.
+Retain that guard and the trusted-tooling pin unchanged. If free-tier-only
+execution becomes unavailable, retain the last verified snapshot rather than
+activating paid services. Actual workflow evidence is in the status ledger.
 
 When allowance exhaustion blocks execution, preserve the last good snapshot
 and let the next weekly event retry. Included allowances reset monthly, so
-more than one weekly attempt may be blocked. Do not buy extra capacity, run a
-tight retry loop, or manufacture keepalive commits. Inspect Actions and the
+more than one weekly attempt may be blocked. Do not accelerate retries, use a
+paid fallback, or manufacture keepalive commits. Inspect Actions and the
 recorded source revision to distinguish a healthy no-change run from an older
 backup left by a failed/blocked run.
 
+GitHub-only continuity is accepted. This policy cannot guarantee perpetual
+GitHub availability, free allowances, scheduling or account continuity; no
+new owner decision about alternative hosting is required.
+
 Primary guidance: [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions),
-[hard-stop budget controls](https://docs.github.com/en/billing/how-tos/set-up-budgets),
+[shared storage billing](https://docs.github.com/en/billing/concepts/product-billing/github-packages),
 and [workflow token scope](https://docs.github.com/en/actions/concepts/security/github_token).

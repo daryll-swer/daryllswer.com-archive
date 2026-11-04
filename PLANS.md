@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: media audit deployed; weekly private backup active and manually verified
+- Status: permanent free-tier policy documented and locally verified; weekly backup remains active
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-11-03
+- Last updated: 2026-11-04
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -20,6 +20,26 @@
 - Escalation rules: `ESCALATION.md`
 
 ## Current Status / Next Pickup
+
+### Permanent Free-Tier Preservation Policy
+
+- No payment method may be added for this archive or its backup operation.
+  Operation must remain within GitHub's free tier. Do not purchase capacity,
+  enable paid overage, upgrade to a paid plan, or request payment-method setup
+  as a recovery step. This is a permanent constraint, not a pending decision.
+- Current directives and maintenance guidance in both repositories are aligned;
+  conditional payment reminders are removed and older review lists superseded.
+  Preserve workflow files, schedules, permissions, variables, tooling pins,
+  rights and asset bytes. Do not hand-edit snapshot payloads or rewrite history.
+- Local checks pass: 24 backup/export tests, offline integrity with zero
+  errors/warnings, safety and whitespace. Delivery uses normal pushes,
+  exact-revision CI/Pages and the existing verified private snapshot workflow;
+  Actions and the backup record retain delivery evidence. No timed billing
+  reminder needs cancelling.
+- Only current owner follow-ups: Google homepage indexing/sitemap acceptance
+  verification, and the optional Bing registration decision. VoiceOver is
+  cancelled; GitHub-only continuity is accepted; backups, dependencies and
+  same-URL media detection are complete.
 
 ### Delivered: Media Audit and Initial Private Backup
 
@@ -41,9 +61,9 @@
   `13949b41f0830553b3e99e80581d45c770e7fba2`. Manual run `41665426694`
   passed preparation/publication and all 506 packaged files; unchanged source
   correctly produced no duplicate commit. Schedule: Tuesday 04:17 UTC/09:47 IST.
-  Recheck the guard before any relevant billing configuration change. An
-  exhausted monthly allowance may block more than one Tuesday retry; the last
-  good snapshot remains intact. Billing-reminder follow-up is resolved.
+  The guard records the approved free-tier basis, not continuous billing
+  inspection. An exhausted monthly allowance may block more than one Tuesday
+  retry; the last good snapshot remains intact. Billing follow-up is resolved.
 - VoiceOver cancelled; GitHub-only continuity accepted; search discovery
   remains pending. No further source-media investigation is pending.
 
@@ -55,9 +75,9 @@
 - Add trusted-tooling export from an explicit source checkout, exact-revision
   validated deployment gates and a private snapshot workflow with restricted
   publication. Target: `daryll-swer/daryllswer.com-archive-backup`.
-- Weekly private schedule: Tuesday 04:17 UTC (09:47 IST), enabled only after
-  verifying zero paid overage for both compute and Actions storage. Otherwise
-  verify the initial backup locally and leave private Actions disabled.
+- Weekly private schedule: Tuesday 04:17 UTC (09:47 IST), free-tier only with
+  no payment method. Retain the approved guard and preserve the last verified
+  snapshot when execution is blocked; never recover through paid capacity.
 - Backup tooling implementation checkpoint: exporter now reads an explicit
   source checkout while remaining separate trusted code; backup prepare/publish
   require current public `main`, successful `deploy-pages.yml` build and deploy
@@ -105,6 +125,9 @@
 
 ### Completed: Approved Dependency Rollout
 
+Historical checkpoint: pending items below are superseded by the current
+Owner Review / Deferred Decisions list; they are not renewed owner requests.
+
 - Owner approved PRs #1-#4 for sequential merging on 2026-11-01. Merge order:
   #2 Python setup, #3 checkout, #4 Pages upload, #1 Pages deployment.
 - Exact reviewed heads, CI and mergeability were rechecked; all four were
@@ -112,8 +135,8 @@
   deployment passed after each merge before the next PR was merged.
 - Normal manual reconciliation and its Pages successor passed after the
   sequence. Existing local documentation/report changes were preserved.
-- Other items remain pending: Google/Bing discovery follow-up, off-site backup,
-  and selected preservation/continuity follow-up.
+- At this checkpoint, discovery, backup and continuity follow-ups remained;
+  backup and continuity were subsequently resolved as recorded above.
 - Background-only work; no Chrome foregrounding or screen-reader changes.
 - PR #2 merged as `4a81d9a`; CI `41331674605` and Pages `41331674608`
   passed, with successful deployment `7476486456` for that exact revision.
@@ -141,8 +164,9 @@
   `explorer-luna` worker reviews Actions PRs #1-#4 and primary upstream evidence.
 - Dependency merges were initially deferred, then explicitly approved as
   recorded above. Do not change unrelated Search Console properties.
-- Owner decisions: VoiceOver deferred; off-site backup pending; continuity
-  pending; same-URL upstream image replacement detection marked future review.
+- Historical owner decisions (superseded): VoiceOver was deferred, backup and
+  continuity were pending, and same-URL image detection was future review.
+  Current decisions above cancel VoiceOver and resolve the other three items.
 - Search checks: the exact submitted project sitemap returns HTTP 200 XML
   over IPv4/IPv6 without redirects; both copies parse and match. Google live
   inspection successfully fetches both sitemap and homepage. The homepage
@@ -155,7 +179,7 @@
   verify the confirmation, then revisit sitemap/index status after processing.
   Do not request indexing of the XML or remove intentional article noindex.
 - Dependency review, owner approval, rollout and verification are complete
-  above. All non-dependency review items remain pending.
+  above. Only the current owner follow-up list remains actionable.
 
 ### Completed: Reserved-Summary Reflow Fix
 
@@ -208,7 +232,7 @@
   checks. Evidence is in `IMPLEMENTATION_STATUS.md`.
 - Preservation: private GitHub snapshot, offline restore and first manual
   workflow verified. Weekly Tuesday backups are active with the accepted
-  spending guard; recheck it before relevant billing changes.
+  permanent no-payment-method/free-tier-only policy. No billing action remains.
 - Continuity: GitHub-only automation accepted. No independent scheduler or
   maintainer nomination is required by this task; same-account/provider risks
   remain explicit limitations.
@@ -242,8 +266,9 @@
   comparison separately, normal push and non-destructive workflow/deployment
   verification. Record manual accessibility checks honestly; automated tests
   alone do not establish conformance.
-- Owner decision: leave macOS VoiceOver unchanged. Manual screen-reader QA
-  remains pending; browser/keyboard checks must not be reported as a substitute.
+- Historical owner decision (superseded): leave VoiceOver unchanged and defer
+  screen-reader QA. It is now cancelled, not pending; browser/keyboard checks
+  must not be reported as screen-reader verification.
 - Local checkpoint: `ff6e6ae` contains classified bounded source health,
   strict pagination, case-insensitive response headers and diagnostic-only
   frozen probes. The owner-verified manager remains the recovery authority.
@@ -271,9 +296,9 @@
   clean path skipped content rendering and its deployment recorded the new
   bot revision `0a8192d`, not the older triggering revision.
 - Reflow follow-up: corrected, published and verified as recorded above.
-  Screen-reader QA remains pending by owner
-  decision; do not claim accessibility conformance. Off-site storage and
-  continuity remain separate outstanding decisions; dependency rollout is complete.
+  The then-pending screen-reader, backup and continuity decisions are
+  superseded by the current owner list. Do not claim accessibility conformance;
+  dependency rollout is complete.
 
 - Current state:
   - Complete and hosted verified: owner-selected proprietary rights apply to

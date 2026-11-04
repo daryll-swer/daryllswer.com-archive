@@ -380,10 +380,14 @@ Networks repost while its registered original remains active.
   must then match the verified snapshot, not merely use an allowed path prefix.
 - Private preparation is read-only; publication is a separate narrowly
   write-scoped job with path and package validation. Tuesday 04:17 UTC refresh
-  is enabled only after verifying zero paid overage for compute and Actions
-  storage. Otherwise initial local backup verification proceeds with private
-  Actions disabled. Failed/blocked/no-change runs preserve the last snapshot;
-  the next weekly schedule retries without a paid escalation or tight loop.
+  operates permanently within GitHub's free tier, with no payment method.
+  Paid upgrades, purchased capacity, overage and payment-method recovery steps
+  are prohibited. Failed/blocked/no-change runs preserve the last snapshot;
+  only the next normal weekly schedule retries, even across multiple blocked
+  weeks. No paid fallback or accelerated retry loop is allowed.
+- The existing `BACKUP_ZERO_PAID_OVERAGE_VERIFIED` guard records the approved
+  operating basis; it is not continuous billing inspection. Its name/value
+  and the separately pinned trusted tooling remain unchanged by this policy.
 - This is separate-repository protection, not provider/account independence.
   A GitHub-wide outage or loss of the same account can affect both copies.
 - GitHub is the only scheduler and hosting provider selected for this phase.
@@ -391,6 +395,9 @@ Networks repost while its registered original remains active.
   no independent monitor exists. No empty keepalive commits are manufactured.
   Maintainers must inspect workflow and deployment evidence separately and
   follow missed-run guidance in `docs/MIRRORING.md`.
+- Free-tier-only operation supports unattended preservation but cannot
+  guarantee perpetual GitHub availability, free allowances, scheduling or
+  account continuity. These limitations do not authorise paid recovery.
 
 ## Invariants
 

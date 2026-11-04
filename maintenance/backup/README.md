@@ -1,14 +1,16 @@
 # Private Backup Bootstrap
 
-Copy `backup.yml` into the private backup repository's `.github/workflows/` only
-after the coordinator verifies the compute and Actions-storage budget hard stop.
-Do not create or enable a repository as part of this template change.
+No payment method may be added for this archive or its backup operation.
+Operation must remain within GitHub's free tier. Do not purchase capacity,
+enable paid overage, upgrade to a paid plan, or request payment-method setup
+as a recovery step. This permanent policy supports unattended preservation.
 
-Set repository Actions variable `BACKUP_ZERO_PAID_OVERAGE_VERIFIED=true` only
-after that check. Set `BACKUP_TOOLING_SHA` to the full commit SHA published for
-the trusted backup tooling. Both jobs remain skipped if either variable is
-absent; no placeholder SHA is provided. Keep repository Actions disabled until
-the guard and budget decision are reviewed.
+The reviewed template is already installed in the private repository. Retain
+`BACKUP_ZERO_PAID_OVERAGE_VERIFIED=true` and the full approved
+`BACKUP_TOOLING_SHA` unchanged. The guard records the approved operating basis,
+not continuous billing inspection. Both jobs remain skipped if either variable
+is absent. Future bootstrap must establish the same free-tier-only basis;
+never replace it with a paid budget or a payment-method request.
 
 The Tuesday 04:17 UTC run fetches the public archive anonymously, prepares a
 BagIt snapshot with the pinned public tooling, validates the successful
@@ -22,7 +24,10 @@ verified snapshot, including ignored files.
 It does not copy `.git`, run scripts from the snapshot, install dependencies,
 prune history, or delete a previous good snapshot on failure. A failed run leaves
 the existing backup intact; the next Tuesday retries, including when a monthly
-allowance remains exhausted. Do not assume a free-plan cap or allowance reset.
+allowance remains exhausted. No accelerated retries, paid fallback or empty
+keepalive commits are permitted. Do not assume a weekly allowance reset.
+Free-tier-only operation cannot guarantee perpetual service, scheduling or
+account continuity; GitHub-only continuity remains the accepted limitation.
 
 ## Local Commands
 

@@ -5,16 +5,43 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: weekly private backup and same-URL media audit
-- Status: media audit published; weekly private backup active and manually verified
-- Last updated: 2026-11-03
-- Implementer role/model/thread: three actual `implementer-luna` workers,
+- Current sprint / workstream: permanent free-tier documentation policy
+- Status: permanent free-tier policy documented and locally verified
+- Last updated: 2026-11-04
+- Previous implementation role/model/thread: three actual `implementer-luna` workers,
   pinned to `gpt-6-luna` with high reasoning: Feynman owns media/reconciliation,
   Bernoulli owns export/backup tooling, McClintock owns schema/workflow/reader
   integration. Coordinator owns docs, security review and connected actions.
+- Current documentation-only work is coordinator-owned; no new worker or model
+  routing is claimed for this policy update.
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: no route limit has been observed in this
   workstream; this is not a continuous quota-monitoring claim
+
+## Permanent Free-Tier Policy (2026-11-04)
+
+- No payment method may be added for this archive or its backup operation.
+  Operation must remain within GitHub's free tier. Do not purchase capacity,
+  enable paid overage, upgrade to a paid plan, or request payment-method setup
+  as a recovery step. Billing is not a pending owner decision.
+- Current directives, architecture, maintenance guidance, decisions and the
+  private README now share this policy. Old conditional reminders are removed;
+  historical review lists below are superseded by the current owner list.
+- Failed/blocked runs preserve the last verified snapshot and permit only the
+  next normal weekly attempt, potentially across several blocked weeks. No
+  accelerated retries, paid fallback or manufactured keepalive commits.
+- Existing guard, tooling pin, schedule, permissions, rights and asset bytes
+  are unchanged. The guard records the approved operating basis, not ongoing
+  billing inspection. No historical snapshot payload is hand-edited.
+- Local verification: all 24 focused backup/export tests pass; offline
+  validation reports zero errors/warnings, and safety/whitespace checks pass.
+  Diff inspection confirms documentation/report-only changes. Deployment
+  evidence belongs to the exact-revision CI/Pages runs; the private backup
+  record and workflow run identify the subsequent verified snapshot refresh.
+- Only owner follow-ups: Google homepage indexing/sitemap acceptance evidence
+  and optional Bing registration. VoiceOver is cancelled; GitHub-only
+  continuity is accepted; backup setup, dependencies and media detection are
+  complete. No timed billing reminder was created or needs cancelling.
 
 ## Backup Tooling Checkpoint (2026-11-03)
 
@@ -41,8 +68,8 @@
   and guard variables are configured. Manual run `41665426694` passed both
   jobs, verified 506 packaged files and made no duplicate commit for unchanged
   source `d32450f`. Schedule: Tuesday 04:17 UTC/09:47 IST. Pages remains absent
-  from the private repository. Recheck spending safeguards before changing
-  relevant billing arrangements; monthly exhaustion can block several retries.
+  from the private repository. The permanent free-tier policy above supersedes
+  conditional billing guidance; monthly exhaustion can block several retries.
   Search discovery remains pending; VoiceOver is cancelled and GitHub-only
   continuity is the accepted limitation.
 
@@ -86,10 +113,14 @@
   match; v3 action is `none`, and reconciliation dry-run makes no changes.
   No content, source, image, allocation or generated reader bytes changed.
 - Next action: normal weekly operation; investigate a failed/blocked refresh
-  without removing the last good snapshot. Recheck spending safeguards before
-  relevant billing changes. No billing reminder is outstanding.
+  without removing the last good snapshot or using paid recovery. No billing
+  reminder or payment-method action is outstanding.
 
 ## Latest Delivery
+
+Historical entries below describe their recorded checkpoints. Old pending
+VoiceOver, backup, continuity and media-audit items are superseded by the
+current owner list above; they are not renewed requests or unfinished work.
 
 - Same-URL media audit integration slice (2026-11-03): action-plan schema v3
   requires `media_updates` records containing `source_url`, `post_id`,
@@ -120,9 +151,9 @@
   are preserved. Authenticated GitHub identity is `daryll-swer`; the proposed
   private backup repository was absent before setup and has now been created
   without replacing an existing repository.
-  Private Actions must remain disabled unless the compute/storage zero-paid-
-  overage guard is verified. Browser foregrounding is prohibited; billing
-  inspection awaits a suitable background tab, not an assumption about quota.
+  Private Actions was initially disabled pending the spending guard; that
+  checkpoint was resolved by the verified activation above. No billing-tab
+  inspection or payment-method reminder remains. Work stays background-only.
 - Current owner decisions: VoiceOver cancelled, not deferred; GitHub-only
   continuity accepted with same-provider/account limits; search discovery
   remains pending. Same-URL detection and initial backup verification are
@@ -221,7 +252,8 @@
   approved sequence, run non-destructive manual reconciliation and verify its
   successor deployment. No blanket approval or automatic merging is enabled.
 
-- Owner review states: VoiceOver deferred and unchanged; off-site backup
+- Historical owner review states (superseded): VoiceOver was deferred;
+  off-site backup was
   pending; continuity arrangements pending; same-URL upstream image-byte
   replacement detection marked for future review. These are not completed
   checks, and no storage account, scheduler or screen reader was configured.
@@ -236,7 +268,8 @@
   compilation, repeat-render determinism, offline validation (zero errors and
   warnings), safety scanning and whitespace checks pass. Owner requested
   background-only work after native zoom QA; final live verification used HTTP,
-  not further foreground Chrome interaction. VoiceOver remains pending.
+  not further foreground Chrome interaction. VoiceOver was pending at that
+  checkpoint and was subsequently cancelled, not verified.
 
 - Archive reliability and preservation hardening:
   - Implemented from clean revision `2481786` in four reviewable commits:
@@ -305,7 +338,8 @@
     Local canonical/Open Graph URLs, reader `noindex,follow`, homepage-only
     verification and sitemap, absent normal-state feed, removed `robots.txt`,
     and byte-identical controlled favicon were verified.
-  - Remaining intentional limits: VoiceOver was not enabled; native zoom was
+  - Historical limits (superseded where noted above): VoiceOver was not enabled;
+    native zoom was
     exercised and the discovered defect was corrected, but accessibility
     conformance is not claimed. Off-site storage and an
     independent scheduler remain deferred. Same-URL upstream media-byte
@@ -313,8 +347,8 @@
   - Ownership restoration: an absent Swer registry record for a reappearing
     post 5324 is rejected by offline validation before workflow publication;
     a maintainer must restore the explicit approved rights record.
-  - Owner declined enabling VoiceOver for this run. Manual screen-reader
-    verification remains pending; keyboard/browser QA is separate.
+  - Owner declined enabling VoiceOver for this run. Screen-reader verification
+    was then pending and is now cancelled; keyboard/browser QA is separate.
   - Constraints: no production destructive-source simulations, history
     rewrite, off-site storage or external scheduler. Existing media and
     rights boundaries remain unchanged.

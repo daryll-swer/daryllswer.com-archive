@@ -296,11 +296,15 @@ Source dates stay unchanged; `archive_media_updated_at` supplies separate
 archive sitemap/RSS freshness. Upstream caches can still serve old bytes:
 the audit proves only what was actually fetched, not unseen origin state.
 
-The approved weekly private snapshot backup and zero-paid-overage activation
-gate are documented in [PRESERVATION.md](PRESERVATION.md). Allowance exhaustion
+The approved weekly private snapshot backup operates permanently on the free
+tier with no payment method, paid upgrade or purchased capacity. Its retained
+guard and failure policy are documented in [PRESERVATION.md](PRESERVATION.md).
+Allowance exhaustion
 preserves the last good snapshot; the next scheduled week retries, possibly
 remaining blocked until the monthly allowance resets. GitHub-only continuity
 is the owner's accepted limitation, not an outstanding service-selection task.
+Never request payment-method setup as recovery, accelerate retries or create
+keepalive commits. This policy is not a guarantee of perpetual GitHub operation.
 
 ### Reader Safety
 

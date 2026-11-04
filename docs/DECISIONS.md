@@ -1,6 +1,27 @@
 # Decisions
 
+## 2026-11-04: Permanent Free-Tier Preservation
+
+- No payment method may be added for this archive or its backup operation.
+  Operation must remain within GitHub's free tier. Do not purchase capacity,
+  enable paid overage, upgrade to a paid plan, or request payment-method setup
+  as a recovery step. This supports unattended preservation after the owner
+  is unavailable; it is not a pending billing choice.
+- Preserve the last verified snapshot on failure or allowance exhaustion;
+  permit the next normal weekly attempt even if multiple weeks remain blocked.
+  No accelerated retries, paid fallback or manufactured keepalive commits.
+- Retain the existing workflow guard, tooling pin, schedule and permissions.
+  The guard records the approved basis, not continuous billing inspection.
+- This supersedes earlier conditional budget/payment guidance and associated
+  reminders. GitHub-only continuity remains accepted, without a guarantee of
+  perpetual availability, free allowances, scheduling or account continuity.
+- Documentation changes do not rewrite history or mutate old backup payloads;
+  new snapshots carry updated guidance through the normal verified workflow.
+
 ## 2026-11-03: Private Snapshots and Bounded Media Audits
+
+The spending-policy wording in this historical decision is superseded by the
+permanent free-tier decision above; it is not a new budget-setup instruction.
 
 - Decision: use a separate private repository for verified current-tree BagIt
   snapshots, retaining snapshot history but not copying development history.
