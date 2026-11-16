@@ -2,7 +2,7 @@
 title: "Out-of-Band Network Design for Service Provider Networks"
 slug: "out-of-band-network-design-for-service-provider-networks"
 date: "2024-11-12T08:00:00"
-last_modified: "2026-06-06T17:45:13"
+last_modified: "2026-11-14T01:02:35"
 canonical_url: "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/"
 wordpress_id: 2931
 featured_image: "assets/OOB_FT.png"
@@ -24,7 +24,7 @@ tags:
 
 > **For professional Out-of-Band (OOB) network design services, [click here](https://www.swernetworks.com/).**
 
-**This article has been published on the [APNIC blog](https://blog.apnic.net/2024/11/12/out-of-band-network-design-for-service-provider-networks/) as well as discussed on [The Hedge Podcast](https://rule11.tech/hedge-265/). It was also selected for APNIC’s 2024 “[Three of the best: How to](https://blog.apnic.net/2025/01/03/three-of-the-best-how-to-7/)”.**
+**This article has been published on the [APNIC blog](https://blog.apnic.net/2024/11/12/out-of-band-network-design-for-service-provider-networks/) as well as discussed on The Hedge Podcast [here](https://rule11.tech/hedge-265/) and [here](https://rule11.tech/hedge-313/). It was also selected for APNIC’s 2024 “[Three of the best: How to](https://blog.apnic.net/2025/01/03/three-of-the-best-how-to-7/)”.**
 
 Firstly, I recommend you read my [IPv6 Architecture and Subnetting Guide](../2023-04-04-ipv6-architecture-and-subnetting-guide-for-network-engineers-and-operators/index.md) before proceeding with this article, as the implementations described here, are heavily dependent on global routing with IPv6.
 
@@ -348,5 +348,4 @@ The end result is that at a large scale, the OOB L2 switches will have their MDB
 In summary, if I am the owner of the network, I should be able to power cycle devices remotely, and globally. Even if my production network is offline, I should be able to access most devices via console over LTE for example, as a backup, in case the IP fabric of the OOB network itself fails. My reliance on on-site field personnel should be greatly reduced unless there is a physical issue.
 
 I hope this article has broadened your understanding of the many ways to implement a dedicated OOB infrastructure. As the network architect, it’s your role to adapt, modify, and refine these concepts to suit your specific, localised use cases. My aim is for this content to be practical for everyone — from newcomers to experienced professionals and business owners.
-
 > **Copyright:** © 2026 Daryll Swer. All rights reserved.

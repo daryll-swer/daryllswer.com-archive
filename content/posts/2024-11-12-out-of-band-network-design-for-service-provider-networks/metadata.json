@@ -10,19 +10,14 @@
         "tag": "li"
       }
     ],
+    "source_rights_filtered": true,
     "source_rights_transforms": [
-      {
-        "category": "source_rights_declaration",
-        "count": 1,
-        "sha256": "35fbb5bb0f201e9af950f44d097ad2e030794fa6bd393f3289dadb90b81448bc"
-      },
       {
         "category": "source_site_copyright_container",
         "count": 2,
-        "sha256": "3a42a673e25d906492ba23ba6a865eca7b405539fa7a6f5e9a0d523f101f1fb7"
+        "sha256": "b0498e76e4411c35c666dfd633d6eaefe3473b6c0e6e3bb0df8772107ae5dfcf"
       }
-    ],
-    "source_rights_filtered": true
+    ]
   },
   "assets_manifest": "assets/manifest.json",
   "author": {
@@ -124,20 +119,32 @@
     }
   },
   "hashes": {
-    "canonical_page_html_sha256": "e601539ab76afa35151a094d40c7ada211f0ba7acea15dcc36020fbe935690b0",
-    "index_md_sha256": "914bf2fd0c4a2e0b2c6add3d79cfac022a5162fcb3b80c0da1c491fff4cc4274",
-    "rendered_article_html_sha256": "16ef9d9b459784cc9368bf0a371ea80f58bab87fadb3babd9353823e2fa02583",
-    "wordpress_post_json_sha256": "ff764ae03a82818393a7e0cdd3fddc6503b3146583640d72e26bdedc14fe9b22"
+    "canonical_page_html_sha256": "801db17d5e9c3b35d9e189289eb397749daf6f7997b818d51026fa730e9a7135",
+    "index_md_sha256": "e2b1dcbae1f200106d9151f4abc76773aec94ff3f5005b1f596bd80bef39908c",
+    "rendered_article_html_sha256": "fcf11b2a51b9dc5a7d621175b80d3f0598390d7a2979174212ec74358866dabb",
+    "wordpress_post_json_sha256": "d79accbe56d3ab02550d2cc01e7bc7d5f02947d40b4d41856dd6d9db75b4535b"
   },
   "id": 2931,
-  "modified": "2026-06-06T17:45:13",
+  "modified": "2026-11-14T01:02:35",
   "published": "2024-11-12T08:00:00",
+  "rights": {
+    "copyright_year": 2026,
+    "external_fallback": false,
+    "media_rights": "separate attribution/right notices",
+    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
+    "original_article_url": "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/",
+    "publisher": "Daryll Swer",
+    "rights_holder": "Daryll Swer",
+    "rights_status": "proprietary/all-rights-reserved",
+    "scope": "article-text"
+  },
   "slug": "out-of-band-network-design-for-service-provider-networks",
   "source": {
     "api_url": "https://www.daryllswer.com/wp-json/wp/v2/posts/2931",
     "canonical_html_path": "source/canonical-page.html",
-    "canonical_rendered_content_sha256": "3e27dc3bfe445a67fe6081e6c1e8cb473734b0493d53fd2e6fae890502f9c7c6",
-    "fetched_at": "2026-07-11T09:17:44+00:00",
+    "canonical_page_html_raw_sha256": "2fe17e465f50376b9c0ee116c179e1523050697f28652005edd9fa0f075efa50",
+    "canonical_rendered_content_sha256": "2473683003ea2007cec86adbeb32568e1e2f2b8da83d824dc09284121b96b11a",
+    "fetched_at": "2026-11-16T11:53:31+00:00",
     "rendered_article_path": "source/rendered-article.html",
     "wordpress_post_path": "source/wordpress-post.json"
   },
@@ -176,16 +183,5 @@
   "title": "Out-of-Band Network Design for Service Provider Networks",
   "validation": {
     "status": "pending"
-  },
-  "rights": {
-    "rights_holder": "Daryll Swer",
-    "copyright_year": 2026,
-    "rights_status": "proprietary/all-rights-reserved",
-    "notice_path": "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
-    "publisher": "Daryll Swer",
-    "scope": "article-text",
-    "media_rights": "separate attribution/right notices",
-    "external_fallback": false,
-    "original_article_url": "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/"
   }
 }

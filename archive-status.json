@@ -6,7 +6,7 @@
       "consecutive_failures": 0,
       "first_failure_at": null,
       "frozen": false,
-      "last_checked_at": "2026-11-09T11:40:10Z",
+      "last_checked_at": "2026-11-16T11:53:27Z",
       "last_failure_at": null,
       "last_observation": {
         "countable_failure": false,
@@ -14,14 +14,14 @@
         "status": 200,
         "url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/"
       },
-      "last_success_at": "2026-11-09T11:40:10Z",
+      "last_success_at": "2026-11-16T11:53:27Z",
       "post_id": 5324,
       "promotion_blocked": false,
       "state": "healthy",
       "url": "https://www.swernetworks.com/blog/bgp-router-id-structuring-in-ipv6-native-networks/"
     }
   },
-  "external_sources_updated_at": "2026-11-09T11:40:10Z",
+  "external_sources_updated_at": "2026-11-16T11:53:27Z",
   "failure": {
     "consecutive_failures": 0,
     "first_failure_at": null,
@@ -87,7 +87,7 @@
       "title": "let’s talk about cgnat and ipv6, yet again."
     },
     {
-      "canonical_rendered_content_sha256": "3e27dc3bfe445a67fe6081e6c1e8cb473734b0493d53fd2e6fae890502f9c7c6",
+      "canonical_rendered_content_sha256": "2473683003ea2007cec86adbeb32568e1e2f2b8da83d824dc09284121b96b11a",
       "canonical_url": "https://www.daryllswer.com/out-of-band-network-design-for-service-provider-networks/",
       "content_media_urls": [
         "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-1_OOB_Edge_in_the_DC.png",
@@ -104,10 +104,10 @@
         "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear-7680x2449.png",
         "https://www.daryllswer.com/wp-content/uploads/2024/10/Figure-9_OOB_Access_for_Transport_Gear.png"
       ],
-      "content_text_sha256": "b298be4191759e6193b11b0628bca6dbfd9ac4463ea8d9fa10371a1d6c866cdd",
+      "content_text_sha256": "e3be821f726bf4139ed67ec08dfdf147af9989dcc517958258527d70a8a5ea48",
       "featured_image_url": "https://www.daryllswer.com/wp-content/uploads/2024/11/OOB_FT.png",
       "id": 2931,
-      "modified": "2026-06-06T17:45:13",
+      "modified": "2026-11-14T01:02:35",
       "slug": "out-of-band-network-design-for-service-provider-networks",
       "title": "out-of-band network design for service provider networks"
     },
@@ -311,7 +311,7 @@
       "title": "shortcomings of cgnat and potential workarounds"
     }
   ],
-  "last_success_at": "2026-09-21T08:59:44Z",
+  "last_success_at": "2026-11-16T11:53:36Z",
   "manual_recovery": {
     "unfreeze_steps": [
       "Confirm the canonical site is again under the owner's control.",
@@ -335,6 +335,6 @@
   "seo_activated_at": null,
   "seo_state": "source_primary",
   "state": "healthy",
-  "updated_at": "2026-11-09T11:40:10Z",
+  "updated_at": "2026-11-16T11:53:36Z",
   "version": 2
 }
