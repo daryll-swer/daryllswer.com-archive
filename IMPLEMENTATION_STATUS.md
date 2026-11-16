@@ -6,7 +6,7 @@
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
 - Current sprint / workstream: canonical URL reconciliation fix
-- Status: code reviewed and locally verified; publication and recovery run pending
+- Status: fix published; fresh reconciliation and live Pages verified
 - Last updated: 2026-11-16
 - Previous implementation role/model/thread: three actual `implementer-luna` workers,
   pinned to `gpt-6-luna` with high reasoning: Feynman owns media/reconciliation,
@@ -43,10 +43,24 @@
 - Compilation, offline validation (zero errors/warnings), safety/whitespace
   and repeated rendering pass. All 166 reader files retain combined SHA-256
   `62a6086ee22f242b83014c3b0e4e937785558f33b5086a8decc86b0a2d8df8dd`.
-  No rights records, source/media bytes, workflow settings or pins changed.
-- Delivery pending: exact-revision CI/Pages, fresh canonical dispatch and
-  successor deployment. No old-run rerun, rights-policy change, backup
-  reschedule or image-limit relaxation is allowed.
+  The manual fix changed no rights records, source/media bytes, workflow
+  settings or pins; the subsequent verified source refresh is recorded below.
+- Delivery: code commit `ccd62b7` passed CI `43861405062` and Pages
+  `43861405102`. A new canonical dispatch `43861579956` used fresh fetching,
+  passed every reconciliation/validation/allowlist gate and published `fa574f4`.
+  It updated exactly one existing post (2931), with no new posts or image-byte
+  changes. The final fresh comparison reports 19 posts and zero new, missing,
+  relocated or changed entries; health remains healthy/unfrozen.
+- Successor Pages `43861732119` deployed `fa574f4`. The live OOB article returns
+  HTTP 200 and exactly matches generated SHA-256
+  `d1dbcd54978c617e5744a2861b0b1ad9da8d9460a7cb92eb73d8d64fbb70ba41`.
+  Its new Hedge 313 link, source modification `2026-11-14T01:02:35`, exact
+  canonical source URL, one Daryll Swer notice in Markdown/Pages and local
+  Pages canonical with `noindex,follow` are verified.
+- Remaining limits: large-image warnings were non-fatal and unchanged; no
+  image guard was relaxed. No old-run rerun, rights-policy change or backup
+  reschedule occurred. The next ordinary weekly backup will capture the
+  deployed fix through its existing validated-revision gate.
 - Baseline evidence: 157 tests pass in the isolated hash-locked Python 3.12
   environment. Offline validation has zero errors/warnings, safety passes,
   and rendering preserves all existing reader and media bytes. This baseline

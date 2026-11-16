@@ -6,7 +6,7 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: canonical URL fix locally verified; publication and fresh recovery run pending
+- Status: canonical URL fix published; fresh reconciliation and live Pages verified
 - Created: 2026-07-06 09:07 UTC
 - Last updated: 2026-11-16
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
@@ -21,7 +21,7 @@
 
 ## Current Status / Next Pickup
 
-### Active: Canonical URL Reconciliation Fix
+### Completed: Canonical URL Reconciliation Fix
 
 - Baseline: clean remote main `61cc537`; failed canonical run `43858290249`
   rejected post 2931 because the checker stripped a trailing slash before
@@ -50,9 +50,15 @@
   slash assertion. Compilation, offline validation (zero errors/warnings),
   safety/whitespace and repeated rendering pass; 166 reader files retain their
   exact combined digest. An older mock fixture now includes its real slug.
-- Next: normal commit/push, exact-revision CI/Pages, then a new healthy
-  canonical dispatch with fresh fetching and verification of its successor
-  commit/deployment. Private backup stays on its normal weekly schedule.
+- Delivery: fix `ccd62b7` passed CI `43861405062` and Pages `43861405102`.
+  Fresh canonical run `43861579956` passed all gates and updated only post 2931
+  in bot commit `fa574f4`; its Pages run `43861732119` also passed. Final live
+  comparison: 19 posts, no new/missing/relocated/changed posts, healthy/unfrozen.
+- Live article bytes match generated output, including the new Hedge 313 link,
+  exact source URL, one Daryll Swer rights notice and source-first SEO. The
+  source modification date is `2026-11-14T01:02:35`. Large-image warnings remain
+  non-fatal and were not suppressed. Private backup stays on its normal weekly
+  schedule; no new owner decision or recovery action is required for this fix.
 
 ### Permanent Free-Tier Preservation Policy
 
