@@ -23,6 +23,7 @@ from pathlib import Path
 
 from source_health import SourceObservationError, classify_exception, classify_http_status
 from media_audit import audit_media
+from canonical_urls import canonical_urls_match
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -447,13 +448,13 @@ def compare_drift(live_posts: list[dict]) -> dict:
     for post_id in sorted(live_ids & archive_ids):
         live = live_by_id[post_id]
         archived = archive_by_id[post_id]
-        live_url = (live.get("canonical_url") or "").rstrip("/")
-        archived_url = (archived.get("canonical_url") or "").rstrip("/")
-        if live_url != archived_url:
+        live_url = live.get("canonical_url") or ""
+        archived_url = archived.get("canonical_url") or ""
+        if not canonical_urls_match(live_url, archived_url):
             relocated_posts.append({
                 "id": post_id,
-                "from": archived_url,
-                "to": live_url,
+                "from": archived_url.rstrip("/"),
+                "to": live_url.rstrip("/"),
                 "slug": live.get("slug") or archived.get("slug"),
             })
         fields = []

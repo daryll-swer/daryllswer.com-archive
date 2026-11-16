@@ -6,9 +6,9 @@
 - Thread/workspace id: current Codex Desktop thread
 - Source of truth: repository root
 - Execution surface: macOS Codex Desktop
-- Status: permanent free-tier policy documented and locally verified; weekly backup remains active
+- Status: canonical URL fix locally verified; publication and fresh recovery run pending
 - Created: 2026-07-06 09:07 UTC
-- Last updated: 2026-11-04
+- Last updated: 2026-11-16
 - Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
 - `forked_from`: N/A
 
@@ -20,6 +20,39 @@
 - Escalation rules: `ESCALATION.md`
 
 ## Current Status / Next Pickup
+
+### Active: Canonical URL Reconciliation Fix
+
+- Baseline: clean remote main `61cc537`; failed canonical run `43858290249`
+  rejected post 2931 because the checker stripped a trailing slash before
+  resolving expected rights, while synchronisation preserved the source URL.
+- Preserve exact source URLs in update plans and rights provenance. Resolve
+  staged rights only after canonical identity verification; compare all rights
+  fields exactly against independent policy/registry data. Keep v3 plans and
+  existing trailing-slash identity tolerance without broader URL equivalence.
+- Add producer-to-staging regression coverage, current-format stripped-URL
+  compatibility, DS/Swer rights, mixed/new/media updates, identity tampering
+  and atomic rejection. Report differing rights field names only.
+- Verify with hash-locked isolated Python, full tests, compilation, rendering
+  determinism, offline validation, safety scanning and whitespace checks.
+- Publish normally, verify exact-revision CI/Pages, dispatch a fresh canonical
+  run and verify the eligible post update and successor Pages deployment.
+  Do not rerun the old revision or change backup schedules/pins, image limits,
+  rights records, workflow permissions or paid-service constraints.
+- Coordinator owns durable docs, review and publication; one implementation
+  worker owns the checker/reconciler scripts, their shared URL comparator and
+  scoped regression tests. Baseline: 157 tests pass, offline validation has
+  zero errors/warnings, safety passes, and rendering changes no reader bytes.
+- Completed locally: shared path-slash comparator, exact update-plan URLs,
+  identity-first rights resolution and field-only diagnostics. All 163 tests
+  pass, including real v3 producer-to-staging and two-target atomic rejection.
+  The new regression fails against baseline `61cc537` at the lost trailing
+  slash assertion. Compilation, offline validation (zero errors/warnings),
+  safety/whitespace and repeated rendering pass; 166 reader files retain their
+  exact combined digest. An older mock fixture now includes its real slug.
+- Next: normal commit/push, exact-revision CI/Pages, then a new healthy
+  canonical dispatch with fresh fetching and verification of its successor
+  commit/deployment. Private backup stays on its normal weekly schedule.
 
 ### Permanent Free-Tier Preservation Policy
 

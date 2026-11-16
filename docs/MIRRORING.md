@@ -258,6 +258,16 @@ complete batch outside the repository, revalidates each expected WordPress ID,
 and replaces bundles plus the manifest only after every target succeeds. Any
 target failure leaves the published archive unchanged.
 
+Canonical source URLs are preserved exactly in action plans, stored metadata
+and rights provenance. Identity comparisons may ignore trailing path slashes,
+but not scheme, host, other path, query or fragment differences. Never use an
+identity-comparison key as the stored original-publication URL. Staged metadata
+must first match the planned source identity; only then is its canonical URL
+used to resolve expected rights from the independent policy/registry. Every
+rights field must match exactly. A mismatch reports field names, not metadata
+values. Current v3 plans with a slash-stripped outer URL remain valid only when
+all existing identity, content-fingerprint and consistency gates pass.
+
 Never edit health counters manually to unfreeze the archive. Use the
 owner-verified command sequence in [SEO_RECOVERY.md](SEO_RECOVERY.md), then
 review, validate, publish and verify the deployed revision.

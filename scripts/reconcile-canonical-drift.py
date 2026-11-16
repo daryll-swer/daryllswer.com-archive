@@ -17,6 +17,7 @@ import tempfile
 from pathlib import Path
 from jsonschema import FormatChecker, validators
 
+from canonical_urls import canonical_urls_match
 from rights_policy import resolve_rights
 from media_audit import is_approved_media_url, safe_asset_path
 
@@ -34,6 +35,19 @@ def load_json(path: Path):
 
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _differing_rights_fields(expected: dict, actual: object) -> list[str]:
+    if not isinstance(actual, dict):
+        return ["rights"]
+    return sorted(
+        key
+        for key in set(expected) | set(actual)
+        if key not in expected
+        or key not in actual
+        or type(expected[key]) is not type(actual[key])
+        or expected[key] != actual[key]
+    )
 
 
 def bundle_sha256(bundle: Path) -> str:
@@ -314,7 +328,7 @@ def sync_targets(plan: dict, manifest: dict) -> tuple[list[dict], list[dict]]:
 
     for item in new_posts:
         post_id = item.get("id")
-        if not isinstance(post_id, int) or post_id not in new_ids or not item.get("slug") or not item.get("canonical_url"):
+        if type(post_id) is not int or post_id not in new_ids or not item.get("slug") or not item.get("canonical_url"):
             raise ValueError("automatic sync new post is not a planned immutable ID")
         if post_id in archived_by_id or post_id in target_ids:
             raise ValueError("automatic sync new post conflicts with the archive manifest")
@@ -330,7 +344,7 @@ def sync_targets(plan: dict, manifest: dict) -> tuple[list[dict], list[dict]]:
         detected = changed_by_id.get(post_id)
         detected = detected or (item if post_id in planned_media_ids and item.get("media_only") else None)
         if (
-            not isinstance(post_id, int)
+            type(post_id) is not int
             or post_id in target_ids
             or not archived
             or not detected
@@ -339,7 +353,7 @@ def sync_targets(plan: dict, manifest: dict) -> tuple[list[dict], list[dict]]:
             or expected != detected.get("expected")
         ):
             raise ValueError("automatic sync existing-post update does not match the checker action plan")
-        if archived.get("slug") != item.get("slug") or archived.get("canonical_url", "").rstrip("/") != item.get("canonical_url", "").rstrip("/"):
+        if archived.get("slug") != item.get("slug") or not canonical_urls_match(archived.get("canonical_url"), item.get("canonical_url")):
             raise ValueError("automatic sync refuses a relocated existing post")
         target_ids.add(post_id)
 
@@ -422,7 +436,13 @@ def stage_sync(plan: dict, manifest: dict) -> tuple[Path, list[dict], list[dict]
         for item in targets:
             post_id = item["id"]
             staged = staged_by_id.get(post_id)
-            if not staged or staged.get("slug") != item["slug"] or staged.get("canonical_url", "").rstrip("/") != item["canonical_url"].rstrip("/"):
+            if (
+                not staged
+                or type(staged.get("id")) is not int
+                or staged.get("id") != post_id
+                or staged.get("slug") != item["slug"]
+                or not canonical_urls_match(staged.get("canonical_url"), item.get("canonical_url"))
+            ):
                 raise RuntimeError(f"staged automatic sync did not preserve planned ID {post_id}")
             if post_id in prior_by_id and staged.get("bundle_path") != prior_by_id[post_id].get("bundle_path"):
                 raise RuntimeError(f"staged automatic sync attempted to relocate existing post ID {post_id}")
@@ -431,12 +451,23 @@ def stage_sync(plan: dict, manifest: dict) -> tuple[Path, list[dict], list[dict]
             if not staged_bundle.is_dir() or staged_bundle.is_symlink() or not (staged_bundle / "metadata.json").is_file():
                 raise RuntimeError(f"staged automatic sync did not produce a safe bundle for ID {post_id}")
             staged_metadata = load_json(staged_bundle / "metadata.json")
+            staged_canonical_url = staged_metadata.get("canonical_url")
+            if (
+                type(staged_metadata.get("id")) is not int
+                or staged_metadata.get("id") != post_id
+                or staged_metadata.get("slug") != item["slug"]
+                or not canonical_urls_match(staged_canonical_url, item.get("canonical_url"))
+                or not canonical_urls_match(staged_canonical_url, staged.get("canonical_url"))
+            ):
+                raise RuntimeError(f"staged automatic sync metadata identity differs from plan or manifest for ID {post_id}")
             expected = item.get("expected") or {}
             for key in ["id", "slug", "title", "canonical_url", "modified"]:
                 expected_value = expected.get(key)
                 actual_value = staged_metadata.get(key)
                 if key == "canonical_url" and isinstance(expected_value, str) and isinstance(actual_value, str):
-                    matches = expected_value.rstrip("/") == actual_value.rstrip("/")
+                    matches = canonical_urls_match(expected_value, actual_value)
+                elif key == "id":
+                    matches = type(expected_value) is int and type(actual_value) is int and actual_value == expected_value
                 elif key == "title" and isinstance(expected_value, str) and isinstance(actual_value, str):
                     matches = " ".join(actual_value.split()).lower() == expected_value
                 else:
@@ -451,9 +482,12 @@ def stage_sync(plan: dict, manifest: dict) -> tuple[Path, list[dict], list[dict]
             actual_content_hash = (staged_metadata.get("source") or {}).get("canonical_rendered_content_sha256")
             if expected_content_hash and actual_content_hash != expected_content_hash:
                 raise RuntimeError(f"fresh canonical content changed after the action plan for ID {post_id}")
-            expected_rights = resolve_rights(post_id, item["canonical_url"], rights_registry)
-            if staged_metadata.get("rights") != expected_rights:
-                raise RuntimeError(f"staged automatic sync did not apply resolved rights for ID {post_id}")
+            expected_rights = resolve_rights(post_id, staged_canonical_url, rights_registry)
+            differing_rights_fields = _differing_rights_fields(expected_rights, staged_metadata.get("rights"))
+            if differing_rights_fields:
+                raise RuntimeError(
+                    f"staged automatic sync rights differ for ID {post_id}; fields: {', '.join(differing_rights_fields)}"
+                )
             if post_id in prior_by_id:
                 prior_metadata_path = ROOT / prior_by_id[post_id]["bundle_path"] / "metadata.json"
                 staged_metadata_path = staged_bundle / "metadata.json"

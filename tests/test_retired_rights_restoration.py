@@ -76,6 +76,7 @@ class RetiredRightsRestorationTests(unittest.TestCase):
                     bundle.mkdir(parents=True)
                     (bundle / "metadata.json").write_text(json.dumps({
                         "id": 5324,
+                        "slug": post["slug"],
                         "canonical_url": post["canonical_url"],
                         "rights": POLICY.resolve_rights(5324, post["canonical_url"], {}),
                     }), encoding="utf-8")

@@ -86,6 +86,149 @@ class CanonicalRetirementTests(unittest.TestCase):
             encoding="utf-8",
         )
 
+    def write_empty_rights_registry(self):
+        registry_path = self.root / "content" / "rights-registry.json"
+        registry_path.parent.mkdir(parents=True, exist_ok=True)
+        registry_path.write_text("{}", encoding="utf-8")
+
+    def write_swer_rights_registry(self):
+        registry = json.loads((ROOT / "content" / "rights-registry.json").read_text(encoding="utf-8"))
+        registry_path = self.root / "content" / "rights-registry.json"
+        registry_path.parent.mkdir(parents=True, exist_ok=True)
+        registry_path.write_text(json.dumps(registry), encoding="utf-8")
+        return registry
+
+    def produce_sync_plan(self, live_posts, media_updates=None, media_audit=None):
+        drift = DRIFT.compare_drift(live_posts)
+        status = DRIFT.default_status(iso("2026-11-16"))
+        status["last_live_post_summaries"] = live_posts
+        audit = media_audit or {
+            "status": "complete",
+            "distinct_urls": 0,
+            "checked_urls": 0,
+            "changed_assets": 0,
+            "bytes_checked": 0,
+            "failures": [],
+            "elapsed_seconds": 0,
+        }
+        plan = DRIFT.build_action_plan(
+            status,
+            drift,
+            iso("2026-11-16"),
+            media_updates=media_updates,
+            media_audit=audit,
+        )
+        RECONCILE.validate_action_plan(plan)
+        return drift, plan
+
+    def staged_sync_runner(self, plan, media_payloads=None, mutate_staged=None):
+        media_payloads = media_payloads or {}
+
+        def fake_sync(command, cwd, env, check):
+            stage_root = Path(env["ARCHIVE_ROOT"])
+            original_manifest = json.loads((self.root / "archive-manifest.json").read_text(encoding="utf-8"))
+            original_by_id = {item["id"]: item for item in original_manifest.get("posts", [])}
+            staged_by_id = dict(original_by_id)
+            targets = [*plan.get("sync_posts", []), *plan.get("update_posts", [])]
+            staged_registry = json.loads(
+                (stage_root / "content" / "rights-registry.json").read_text(encoding="utf-8")
+            )
+
+            for item in targets:
+                post_id = item["id"]
+                prior = original_by_id.get(post_id)
+                if prior:
+                    staged_post = dict(prior)
+                    bundle_path = prior["bundle_path"]
+                    shutil.copytree(self.root / bundle_path, stage_root / bundle_path)
+                else:
+                    bundle_path = f"content/posts/2026-01-01-{item['slug']}"
+                    staged_post = {}
+                    bundle = stage_root / bundle_path
+                    (bundle / "assets").mkdir(parents=True)
+                    (bundle / "source").mkdir()
+                    (bundle / "assets" / "manifest.json").write_text(
+                        json.dumps({"post_id": post_id, "assets": []}), encoding="utf-8"
+                    )
+
+                expected = item.get("expected") or {}
+                canonical_url = expected.get("canonical_url") or item.get("canonical_url")
+                title = expected.get("title") or item.get("title") or item["slug"]
+                modified = expected.get("modified") or item.get("modified")
+                featured_url = expected.get("featured_image_url", item.get("featured_image_url"))
+                content_hash = expected.get("canonical_rendered_content_sha256") or item.get(
+                    "canonical_rendered_content_sha256"
+                )
+                metadata = {
+                    "id": post_id,
+                    "slug": item["slug"],
+                    "canonical_url": canonical_url,
+                    "title": title,
+                    "modified": modified,
+                    "featured_image": {"source_url": featured_url} if featured_url else None,
+                    "rights": RECONCILE.resolve_rights(post_id, canonical_url, staged_registry),
+                    "source": {"canonical_rendered_content_sha256": content_hash},
+                }
+
+                for media in plan.get("media_updates", []):
+                    if media["post_id"] != post_id:
+                        continue
+                    relative_asset = Path(media["asset_path"]).relative_to(bundle_path)
+                    target_asset = stage_root / bundle_path / relative_asset
+                    target_asset.parent.mkdir(parents=True, exist_ok=True)
+                    target_asset.write_bytes(media_payloads[media["asset_path"]])
+                    asset_manifest_path = stage_root / bundle_path / "assets" / "manifest.json"
+                    asset_manifest = json.loads(asset_manifest_path.read_text(encoding="utf-8"))
+                    for asset in asset_manifest.get("assets", []):
+                        if asset.get("local_path") == media["asset_path"] and asset.get("source_url") == media["source_url"]:
+                            asset["sha256"] = media["new_sha256"]
+                    asset_manifest_path.write_text(json.dumps(asset_manifest), encoding="utf-8")
+
+                staged_post.update({
+                    "id": post_id,
+                    "slug": item["slug"],
+                    "canonical_url": canonical_url,
+                    "title": title,
+                    "modified": modified,
+                    "bundle_path": bundle_path,
+                })
+                if mutate_staged:
+                    mutate_staged(item, staged_post, metadata)
+                (stage_root / bundle_path / "metadata.json").write_text(
+                    json.dumps(metadata), encoding="utf-8"
+                )
+                staged_by_id[post_id] = staged_post
+
+            staged_manifest = dict(original_manifest)
+            staged_manifest["posts"] = list(staged_by_id.values())
+            staged_manifest["post_count"] = len(staged_manifest["posts"])
+            (stage_root / "archive-manifest.json").write_text(
+                json.dumps(staged_manifest), encoding="utf-8"
+            )
+            return mock.Mock(returncode=0)
+
+        return fake_sync
+
+    def live_record(self, post_id, url, slug, title=None, content_hash=None):
+        item = summary(post_id, url, slug)
+        item["title"] = title or slug
+        item["canonical_rendered_content_sha256"] = content_hash or hashlib.sha256(
+            f"canonical-{post_id}-{item['title']}".encode()
+        ).hexdigest()
+        return item
+
+    def live_tree_snapshot(self, manifest_path, bundles):
+        return (
+            manifest_path.read_bytes(),
+            {bundle: RECONCILE.bundle_sha256(self.root / bundle) for bundle in bundles},
+        )
+
+    def assert_live_tree_snapshot(self, snapshot, manifest_path):
+        manifest_bytes, bundle_hashes = snapshot
+        self.assertEqual(manifest_path.read_bytes(), manifest_bytes)
+        for bundle, digest in bundle_hashes.items():
+            self.assertEqual(RECONCILE.bundle_sha256(self.root / bundle), digest)
+
     def write_bundle(self, post):
         bundle = self.root / post["bundle_path"]
         (bundle / "source").mkdir(parents=True)
@@ -124,6 +267,49 @@ class CanonicalRetirementTests(unittest.TestCase):
         self.assertEqual(drift["missing_ids"], [2])
         self.assertEqual(drift["relocated_posts"][0]["id"], 1)
         self.assertEqual(drift["relocated_posts"][0]["from"], "https://www.daryllswer.com/old")
+
+    def test_canonical_url_identity_only_ignores_trailing_path_slashes(self):
+        self.assertTrue(DRIFT.canonical_urls_match(
+            "https://archive.example/one////?query/path/#fragment/",
+            "https://archive.example/one?query/path/#fragment/",
+        ))
+        for left, right in [
+            ("https://archive.example/one", "http://archive.example/one"),
+            ("https://archive.example/one", "https://other.example/one"),
+            ("https://archive.example/one", "https://archive.example/two"),
+            ("https://archive.example/one?", "https://archive.example/one"),
+            ("https://archive.example/one?query/", "https://archive.example/one?query"),
+            ("https://archive.example/one#fragment/", "https://archive.example/one#fragment"),
+            ("https://archive.example/one#first", "https://archive.example/one#second"),
+            ("https://archive.example/%6Fne", "https://archive.example/one"),
+        ]:
+            with self.subTest(left=left, right=right):
+                self.assertFalse(DRIFT.canonical_urls_match(left, right))
+
+    def test_query_and_fragment_trailing_slashes_remain_relocations(self):
+        fingerprint = hashlib.sha256(b"unchanged article").hexdigest()
+        posts = [
+            {
+                **summary(1, "https://archive.example/query?value/", "query"),
+                "canonical_rendered_content_sha256": fingerprint,
+                "bundle_path": "content/posts/2026-01-01-query",
+            },
+            {
+                **summary(2, "https://archive.example/fragment#section/", "fragment"),
+                "canonical_rendered_content_sha256": fingerprint,
+                "bundle_path": "content/posts/2026-01-02-fragment",
+            },
+        ]
+        for post in posts:
+            self.write_bundle(post)
+        self.write_archive(posts)
+        live = [
+            self.live_record(1, "https://archive.example/query?value", "query", content_hash=fingerprint),
+            self.live_record(2, "https://archive.example/fragment#section", "fragment", content_hash=fingerprint),
+        ]
+
+        drift = DRIFT.compare_drift(live)
+        self.assertEqual([item["id"] for item in drift["relocated_posts"]], [1, 2])
 
     def test_two_confirmations_require_seven_days_and_select_no_more_than_one_new_post(self):
         missing = {**summary(2, "https://www.daryllswer.com/missing/", "missing"), "bundle_path": "content/posts/2020-01-02-missing"}
@@ -528,60 +714,338 @@ class CanonicalRetirementTests(unittest.TestCase):
         finally:
             shutil.rmtree(stage, ignore_errors=True)
 
-    def test_staged_sync_applies_default_rights_when_registry_has_no_exception(self):
-        post = {**summary(1, "https://archive.example/one/", "one"), "bundle_path": "content/posts/2026-01-01-one"}
-        prior_bundle = self.write_bundle(post)
-        prior_metadata_path = prior_bundle / "metadata.json"
-        prior_metadata = json.loads(prior_metadata_path.read_text())
-        prior_metadata["archive_media_updated_at"] = "2026-02-03T04:05:06+00:00"
-        prior_metadata_path.write_text(json.dumps(prior_metadata), encoding="utf-8")
+    def test_real_v3_plan_preserves_live_url_and_legacy_outer_url_stages_exact_default_rights(self):
+        archived_hash = hashlib.sha256(b"archived body").hexdigest()
+        post = {
+            **summary(1, "https://archive.example/one", "one"),
+            "canonical_rendered_content_sha256": archived_hash,
+            "bundle_path": "content/posts/2026-01-01-one",
+        }
+        no_slash_post = {
+            **summary(3, "https://archive.example/no-slash", "no-slash"),
+            "canonical_rendered_content_sha256": hashlib.sha256(b"archived no-slash body").hexdigest(),
+            "bundle_path": "content/posts/2026-01-03-no-slash",
+        }
+        bundle = self.write_bundle(post)
+        self.write_bundle(no_slash_post)
+        metadata_path = bundle / "metadata.json"
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        metadata["archive_media_updated_at"] = "2026-02-03T04:05:06+00:00"
+        metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
+        self.write_archive([post, no_slash_post])
+        self.write_empty_rights_registry()
+
+        live = self.live_record(
+            1,
+            "https://archive.example/one/",
+            "one",
+            title="fresh title",
+            content_hash=hashlib.sha256(b"fresh body").hexdigest(),
+        )
+        no_slash_live = self.live_record(
+            3,
+            no_slash_post["canonical_url"],
+            "no-slash",
+            title="fresh no-slash title",
+            content_hash=hashlib.sha256(b"fresh no-slash body").hexdigest(),
+        )
+        drift, plan = self.produce_sync_plan([live, no_slash_live])
+        self.assertEqual(drift["relocated_posts"], [])
+        self.assertEqual(plan["version"], 3)
+        self.assertEqual(plan["action"], "sync")
+        update = next(item for item in plan["update_posts"] if item["id"] == 1)
+        self.assertEqual(update["canonical_url"], live["canonical_url"])
+        self.assertEqual(update["expected"]["canonical_url"], live["canonical_url"])
+        self.assertEqual(
+            next(item for item in plan["update_posts"] if item["id"] == 3)["canonical_url"],
+            no_slash_live["canonical_url"],
+        )
+
+        for staged_plan in (plan, json.loads(json.dumps(plan))):
+            if staged_plan is not plan:
+                legacy_update = next(item for item in staged_plan["update_posts"] if item["id"] == 1)
+                legacy_changed = next(item for item in staged_plan["drift"]["changed_posts"] if item["id"] == 1)
+                legacy_url = live["canonical_url"].rstrip("/")
+                legacy_update["canonical_url"] = legacy_url
+                legacy_changed["canonical_url"] = legacy_url
+            RECONCILE.validate_action_plan(staged_plan)
+            with mock.patch.object(
+                RECONCILE.subprocess,
+                "run",
+                side_effect=self.staged_sync_runner(staged_plan),
+            ):
+                stage, new_posts, updates = RECONCILE.stage_sync(staged_plan, {"posts": [post, no_slash_post]})
+            try:
+                staged_metadata = json.loads(
+                    (stage / post["bundle_path"] / "metadata.json").read_text(encoding="utf-8")
+                )
+                self.assertEqual(staged_metadata["rights"]["original_article_url"], live["canonical_url"])
+                self.assertEqual(staged_metadata["rights"]["rights_holder"], "Daryll Swer")
+                self.assertEqual(staged_metadata["archive_media_updated_at"], "2026-02-03T04:05:06+00:00")
+                no_slash_metadata = json.loads(
+                    (stage / no_slash_post["bundle_path"] / "metadata.json").read_text(encoding="utf-8")
+                )
+                self.assertEqual(no_slash_metadata["rights"]["original_article_url"], no_slash_live["canonical_url"])
+                self.assertEqual(new_posts, [])
+                self.assertEqual([item["id"] for item in updates], [1, 3])
+            finally:
+                shutil.rmtree(stage, ignore_errors=True)
+
+    def test_real_v3_mixed_plan_preserves_registered_swer_rights_and_new_post(self):
+        registry = self.write_swer_rights_registry()
+        post = {
+            **summary(5324, "https://www.daryllswer.com/bgp-router-id-structuring-in-ipv6-native-networks", "bgp"),
+            "canonical_rendered_content_sha256": hashlib.sha256(b"old Swer post").hexdigest(),
+            "bundle_path": "content/posts/2026-06-04-bgp",
+        }
+        self.write_bundle(post)
         self.write_archive([post])
-        registry_path = self.root / "content" / "rights-registry.json"
-        registry_path.parent.mkdir(parents=True, exist_ok=True)
-        registry_path.write_text("{}", encoding="utf-8")
-        changed = {
-            "id": 1,
-            "slug": "one",
-            "canonical_url": post["canonical_url"],
-            "expected": {"id": 1, "slug": "one"},
-            "fields": [{"field": "modified"}],
-        }
-        plan = {
-            "version": 2,
-            "drift": {"new_ids": [], "missing_ids": [], "relocated_posts": [], "changed_posts": [changed]},
-            "sync_posts": [],
-            "update_posts": [changed],
-        }
+        live_update = self.live_record(
+            5324,
+            post["canonical_url"],
+            "bgp",
+            title="updated bgp post",
+            content_hash=hashlib.sha256(b"updated Swer post").hexdigest(),
+        )
+        live_new = self.live_record(9000, "https://www.daryllswer.com/new-post/", "new-post")
+        _, plan = self.produce_sync_plan([live_update, live_new])
+        self.assertEqual(plan["action"], "sync")
+        self.assertEqual([item["id"] for item in plan["sync_posts"]], [9000])
+        self.assertEqual([item["id"] for item in plan["update_posts"]], [5324])
 
-        def fake_sync(command, cwd, env, check):
-            stage = Path(env["ARCHIVE_ROOT"])
-            bundle = stage / post["bundle_path"]
-            bundle.mkdir(parents=True, exist_ok=True)
-            (bundle / "assets").mkdir(exist_ok=True)
-            (bundle / "assets" / "manifest.json").write_text(json.dumps({"post_id": 1, "assets": []}), encoding="utf-8")
-            rights = RECONCILE.resolve_rights(1, post["canonical_url"], {})
-            (bundle / "metadata.json").write_text(
-                json.dumps({"id": 1, "slug": "one", "canonical_url": post["canonical_url"], "rights": rights}),
-                encoding="utf-8",
-            )
-            (stage / "archive-manifest.json").write_text(
-                json.dumps({"post_count": 1, "posts": [post]}), encoding="utf-8"
-            )
-            return mock.Mock(returncode=0)
-
-        with mock.patch.object(RECONCILE.subprocess, "run", side_effect=fake_sync):
+        with mock.patch.object(
+            RECONCILE.subprocess,
+            "run",
+            side_effect=self.staged_sync_runner(plan),
+        ):
             stage, new_posts, updates = RECONCILE.stage_sync(plan, {"posts": [post]})
         try:
-            staged_rights = json.loads((stage / post["bundle_path"] / "metadata.json").read_text())["rights"]
-            self.assertEqual(staged_rights["rights_holder"], "Daryll Swer")
-            self.assertEqual(staged_rights["copyright_year"], 2026)
-            self.assertEqual(staged_rights["notice_path"], "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt")
-            staged_metadata = json.loads((stage / post["bundle_path"] / "metadata.json").read_text())
-            self.assertEqual(staged_metadata["archive_media_updated_at"], "2026-02-03T04:05:06+00:00")
-            self.assertEqual(new_posts, [])
-            self.assertEqual([item["id"] for item in updates], [1])
+            staged_swer = json.loads(
+                (stage / post["bundle_path"] / "metadata.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(staged_swer["rights"], registry["5324"])
+            self.assertEqual(new_posts[0]["id"], 9000)
+            self.assertEqual([item["id"] for item in updates], [5324])
+            new_bundle = stage / "content/posts/2026-01-01-new-post"
+            new_metadata = json.loads((new_bundle / "metadata.json").read_text(encoding="utf-8"))
+            self.assertEqual(new_metadata["rights"]["original_article_url"], live_new["canonical_url"])
         finally:
             shutil.rmtree(stage, ignore_errors=True)
+
+    def test_real_v3_media_only_plan_stages_only_planned_replacement(self):
+        source_url = "https://www.daryllswer.com/wp-content/uploads/image.png"
+        old_bytes, new_bytes = b"old-image", b"new-image"
+        bundle_path = "content/posts/2026-01-01-media"
+        post = {
+            **summary(7, "https://archive.example/media", "media"),
+            "canonical_rendered_content_sha256": hashlib.sha256(b"same body").hexdigest(),
+            "bundle_path": bundle_path,
+        }
+        bundle = self.write_bundle(post)
+        asset_path = f"{bundle_path}/assets/image.png"
+        (bundle / "assets" / "image.png").write_bytes(old_bytes)
+        old_hash = hashlib.sha256(old_bytes).hexdigest()
+        new_hash = hashlib.sha256(new_bytes).hexdigest()
+        (bundle / "assets" / "manifest.json").write_text(json.dumps({
+            "post_id": 7,
+            "assets": [{"source_url": source_url, "local_path": asset_path, "role": "inline", "sha256": old_hash}],
+        }), encoding="utf-8")
+        self.write_archive([post])
+        self.write_empty_rights_registry()
+        live = self.live_record(
+            7,
+            post["canonical_url"],
+            "media",
+            content_hash=post["canonical_rendered_content_sha256"],
+        )
+        live["content_media_urls"] = [source_url]
+        media_update = {
+            "source_url": source_url,
+            "post_id": 7,
+            "asset_path": asset_path,
+            "old_sha256": old_hash,
+            "new_sha256": new_hash,
+            "bytes": new_bytes,
+        }
+        audit = {
+            "status": "complete",
+            "distinct_urls": 1,
+            "checked_urls": 1,
+            "changed_assets": 1,
+            "bytes_checked": len(old_bytes),
+            "failures": [],
+            "elapsed_seconds": 0,
+        }
+        _, plan = self.produce_sync_plan([live], [media_update], audit)
+        self.assertEqual(plan["action"], "sync")
+        self.assertTrue(plan["update_posts"][0]["media_only"])
+        with mock.patch.object(
+            RECONCILE.subprocess,
+            "run",
+            side_effect=self.staged_sync_runner(plan, {asset_path: new_bytes}),
+        ):
+            stage, new_posts, updates = RECONCILE.stage_sync(plan, {"posts": [post]})
+        try:
+            self.assertEqual(new_posts, [])
+            self.assertEqual([item["id"] for item in updates], [7])
+            self.assertEqual((stage / asset_path).read_bytes(), new_bytes)
+            staged_assets = json.loads((stage / bundle_path / "assets/manifest.json").read_text())
+            self.assertEqual(staged_assets["assets"][0]["sha256"], new_hash)
+            self.assertEqual((self.root / asset_path).read_bytes(), old_bytes)
+        finally:
+            shutil.rmtree(stage, ignore_errors=True)
+
+    def test_real_v3_plan_rejects_url_and_identity_tampering_atomically(self):
+        post = {
+            **summary(1, "https://archive.example/one/", "one"),
+            "canonical_rendered_content_sha256": hashlib.sha256(b"old body").hexdigest(),
+            "bundle_path": "content/posts/2026-01-01-one",
+        }
+        self.write_bundle(post)
+        self.write_archive([post])
+        self.write_empty_rights_registry()
+        live = self.live_record(
+            1,
+            post["canonical_url"],
+            "one",
+            title="fresh title",
+            content_hash=hashlib.sha256(b"fresh body").hexdigest(),
+        )
+        _, plan = self.produce_sync_plan([live])
+        manifest_path = self.root / "archive-manifest.json"
+        snapshot = self.live_tree_snapshot(manifest_path, [post["bundle_path"]])
+
+        altered_urls = [
+            "https://other.example/one/",
+            "https://archive.example/other/",
+            "http://archive.example/one/",
+            "https://archive.example/one/?changed=1",
+            "https://archive.example/one/#changed",
+            "https://archive.example/one/?query/",
+            "https://archive.example/one/#fragment/",
+        ]
+        for altered_url in altered_urls:
+            with self.subTest(canonical_url=altered_url):
+                tampered = json.loads(json.dumps(plan))
+                tampered["update_posts"][0]["canonical_url"] = altered_url
+                tampered["drift"]["changed_posts"][0]["canonical_url"] = altered_url
+                RECONCILE.validate_action_plan(tampered)
+                fake_sync = self.staged_sync_runner(tampered)
+                with mock.patch.object(RECONCILE.subprocess, "run", side_effect=fake_sync) as run:
+                    with self.assertRaises(ValueError):
+                        RECONCILE.stage_sync(tampered, {"posts": [post]})
+                    run.assert_not_called()
+                self.assert_live_tree_snapshot(snapshot, manifest_path)
+
+        for tampered_value in (2, True):
+            with self.subTest(plan_id=tampered_value):
+                tampered_id = json.loads(json.dumps(plan))
+                tampered_id["update_posts"][0]["id"] = tampered_value
+                RECONCILE.validate_action_plan(tampered_id)
+                with self.assertRaises(ValueError):
+                    RECONCILE.stage_sync(tampered_id, {"posts": [post]})
+                self.assert_live_tree_snapshot(snapshot, manifest_path)
+
+        staged_id_mutation = lambda item, staged, metadata: metadata.update(id=True)
+        with mock.patch.object(
+            RECONCILE.subprocess,
+            "run",
+            side_effect=self.staged_sync_runner(plan, mutate_staged=staged_id_mutation),
+        ):
+            with self.assertRaisesRegex(RuntimeError, "metadata identity"):
+                RECONCILE.stage_sync(plan, {"posts": [post]})
+        self.assert_live_tree_snapshot(snapshot, manifest_path)
+
+        staged_manifest_id_mutation = lambda item, staged, metadata: staged.update(id=True)
+        with mock.patch.object(
+            RECONCILE.subprocess,
+            "run",
+            side_effect=self.staged_sync_runner(plan, mutate_staged=staged_manifest_id_mutation),
+        ):
+            with self.assertRaisesRegex(RuntimeError, "preserve planned ID"):
+                RECONCILE.stage_sync(plan, {"posts": [post]})
+        self.assert_live_tree_snapshot(snapshot, manifest_path)
+
+        expected_id_tamper = json.loads(json.dumps(plan))
+        expected_id_tamper["update_posts"][0]["expected"]["id"] = True
+        expected_id_tamper["drift"]["changed_posts"][0]["expected"]["id"] = True
+        RECONCILE.validate_action_plan(expected_id_tamper)
+        with mock.patch.object(
+            RECONCILE.subprocess,
+            "run",
+            side_effect=self.staged_sync_runner(expected_id_tamper),
+        ):
+            with self.assertRaisesRegex(RuntimeError, "fresh canonical id"):
+                RECONCILE.stage_sync(expected_id_tamper, {"posts": [post]})
+        self.assert_live_tree_snapshot(snapshot, manifest_path)
+
+    def test_real_v3_staged_rights_mismatches_are_atomic_and_report_field_names_only(self):
+        posts = [
+            {
+                **summary(1, "https://archive.example/one", "one"),
+                "canonical_rendered_content_sha256": hashlib.sha256(b"old body one").hexdigest(),
+                "bundle_path": "content/posts/2026-01-01-one",
+            },
+            {
+                **summary(2, "https://archive.example/two", "two"),
+                "canonical_rendered_content_sha256": hashlib.sha256(b"old body two").hexdigest(),
+                "bundle_path": "content/posts/2026-01-02-two",
+            },
+        ]
+        for post in posts:
+            self.write_bundle(post)
+        self.write_archive(posts)
+        self.write_empty_rights_registry()
+        live = [
+            self.live_record(
+                1,
+                "https://archive.example/one/",
+                "one",
+                title="fresh title one",
+                content_hash=hashlib.sha256(b"fresh body one").hexdigest(),
+            ),
+            self.live_record(
+                2,
+                "https://archive.example/two/",
+                "two",
+                title="fresh title two",
+                content_hash=hashlib.sha256(b"fresh body two").hexdigest(),
+            ),
+        ]
+        _, plan = self.produce_sync_plan(live)
+        self.assertEqual([item["id"] for item in plan["update_posts"]], [1, 2])
+        manifest_path = self.root / "archive-manifest.json"
+        snapshot = self.live_tree_snapshot(manifest_path, [post["bundle_path"] for post in posts])
+
+        mutations = [
+            (
+                lambda item, staged, metadata: metadata["rights"].update(rights_holder="tampered value")
+                if item["id"] == 2 else None,
+                "rights_holder",
+            ),
+            (
+                lambda item, staged, metadata: metadata["rights"].update(copyright_year=True)
+                if item["id"] == 2 else None,
+                "copyright_year",
+            ),
+            (
+                lambda item, staged, metadata: metadata.update(rights=["malformed"])
+                if item["id"] == 2 else None,
+                "rights",
+            ),
+        ]
+        for mutation, field in mutations:
+            with self.subTest(rights_field=field):
+                with mock.patch.object(
+                    RECONCILE.subprocess,
+                    "run",
+                    side_effect=self.staged_sync_runner(plan, mutate_staged=mutation),
+                ), mock.patch.object(RECONCILE, "apply_staged_sync") as apply_staged:
+                    with self.assertRaisesRegex(RuntimeError, rf"fields: {field}") as raised:
+                        RECONCILE.sync_batch(plan, {"posts": posts})
+                    apply_staged.assert_not_called()
+                self.assertNotIn("tampered value", str(raised.exception))
+                self.assert_live_tree_snapshot(snapshot, manifest_path)
 
     def test_reconcile_retirement_removes_one_bundle_and_clears_candidate(self):
         post = {**summary(2, "https://www.daryllswer.com/missing/", "missing"), "bundle_path": "content/posts/2020-01-02-missing"}

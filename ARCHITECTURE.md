@@ -326,6 +326,11 @@ Networks repost while its registered original remains active.
   whole batch back and nothing is published.
 - Same-ID URL/slug changes remain relocation reports, not automatic updates or
   deletions. Missing/relocated anomalies block a synchronisation batch.
+- Source URL spelling is preserved in plans, metadata and rights provenance;
+  only identity comparison ignores trailing path slashes. Scheme, host, other
+  path, query and fragment differences remain significant. Expected staged
+  rights use the identity-verified staged canonical URL and independent
+  policy/registry data, with exact comparison of the full rights object.
 - All bundles store a canonical rendered-content checksum before archive CTA
   filtering. A clean healthy comparison backfills the baseline for legacy
   bundles once, supporting content-fingerprint comparison without treating

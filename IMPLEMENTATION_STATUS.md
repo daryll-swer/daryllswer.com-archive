@@ -5,18 +5,52 @@
 - Project / repo: `daryllswer.com-archive`
 - Active plan: `PLANS.md`
 - Architecture reference: `ARCHITECTURE.md`
-- Current sprint / workstream: permanent free-tier documentation policy
-- Status: permanent free-tier policy documented and locally verified
-- Last updated: 2026-11-04
+- Current sprint / workstream: canonical URL reconciliation fix
+- Status: code reviewed and locally verified; publication and recovery run pending
+- Last updated: 2026-11-16
 - Previous implementation role/model/thread: three actual `implementer-luna` workers,
   pinned to `gpt-6-luna` with high reasoning: Feynman owns media/reconciliation,
   Bernoulli owns export/backup tooling, McClintock owns schema/workflow/reader
   integration. Coordinator owns docs, security review and connected actions.
-- Current documentation-only work is coordinator-owned; no new worker or model
-  routing is claimed for this policy update.
+- Current implementation worker: Kepler, actual `implementer-luna` agent
+  `01a1e424-0127-7c81-a10d-3c079124bced`, configured `gpt-6-luna` xhigh,
+  owns scoped checker/reconciler code, shared URL comparison and regression
+  tests. Coordinator owns
+  docs, isolated dependencies, integration review and publication.
 - Architect role/model/thread: current Codex Desktop thread plus user review
 - Current budget/rate-limit state: no route limit has been observed in this
   workstream; this is not a continuous quota-monitoring claim
+
+## Canonical URL Reconciliation (2026-11-16)
+
+- Baseline `61cc537` includes the newer monitoring commit; working tree was
+  clean before this task. Run `43858290249` failed for post 2931 at staged
+  rights validation before any commit or deployment.
+- Cause: checker update records stripped a source URL's final slash, while
+  synchronisation preserved it in `rights.original_article_url`. Existing
+  hand-built staging fixtures did not exercise this producer/consumer mismatch.
+- Fix contract: retain exact source URLs in action plans and provenance;
+  resolve rights from independently identity-checked staged canonical metadata,
+  then require exact equality of every rights field against policy/registry.
+  URL comparison may ignore trailing path slashes only, never scheme, host,
+  other path, query or fragment differences. Action plans remain version 3.
+- Local verification: all 163 tests pass, including real producer-to-v3-plan
+  staging, exact DS/Swer rights, legacy outer URLs, media/new/mixed batches,
+  URL/ID tampering and two-target atomic rights rejection. The new preservation
+  regression fails against isolated baseline `61cc537` because it omits the
+  source URL's final slash. The restored-Swer fixture now includes its slug;
+  its missing-registry publication rejection remains intact.
+- Compilation, offline validation (zero errors/warnings), safety/whitespace
+  and repeated rendering pass. All 166 reader files retain combined SHA-256
+  `62a6086ee22f242b83014c3b0e4e937785558f33b5086a8decc86b0a2d8df8dd`.
+  No rights records, source/media bytes, workflow settings or pins changed.
+- Delivery pending: exact-revision CI/Pages, fresh canonical dispatch and
+  successor deployment. No old-run rerun, rights-policy change, backup
+  reschedule or image-limit relaxation is allowed.
+- Baseline evidence: 157 tests pass in the isolated hash-locked Python 3.12
+  environment. Offline validation has zero errors/warnings, safety passes,
+  and rendering preserves all existing reader and media bytes. This baseline
+  does not test the missing producer-to-staging URL case.
 
 ## Permanent Free-Tier Policy (2026-11-04)
 
