@@ -35,6 +35,9 @@ class PreservationExportTests(unittest.TestCase):
         self.git("config", "user.name", "Preservation test")
         self.write("README.md", b"archive instructions\n")
         self.write("IMPLEMENTATION_STATUS.md", b"durable delivery ledger\n")
+        self.write("PLANS.md", b"active archive plan\n")
+        self.write("PLANS-private.md", b"not for package\n")
+        self.write("docs/history/PLANS-through-2026-11-16.md", b"historical checkpoint\n")
         self.write(".gitattributes", b"*.png binary\n")
         self.write(".github/workflows/ci.yml", b"name: CI\n")
         self.write(".github/dependabot.yml", b"version: 2\n")
@@ -107,6 +110,7 @@ class PreservationExportTests(unittest.TestCase):
         for excluded in [
             "content/private/notes.txt", "assets/credentials/token.txt",
             "content/posts/example/.env.production", "assets/private-key.pem",
+            "PLANS-private.md",
         ]:
             self.assertFalse((payload / excluded).exists(), excluded)
         for required_root in [
@@ -114,6 +118,7 @@ class PreservationExportTests(unittest.TestCase):
             ".gitattributes", ".github/workflows/ci.yml", ".github/dependabot.yml",
             "tests/test_validation_guard.py", "docs/.nojekyll",
             "IMPLEMENTATION_STATUS.md",
+            "PLANS.md", "docs/history/PLANS-through-2026-11-16.md",
             "maintenance/backup/README.md",
         ]:
             self.assertTrue((payload / required_root).is_file(), required_root)
@@ -122,20 +127,30 @@ class PreservationExportTests(unittest.TestCase):
         actual_snapshot = {path.relative_to(payload).as_posix() for path in payload.rglob("*") if path.is_file()}
         self.assertEqual(actual_snapshot, expected_snapshot)
         info = (bag / "bag-info.txt").read_text(encoding="utf-8")
+        self.assertEqual((payload / "PLANS.md").read_bytes(), b"active archive plan\n")
+        self.assertEqual((payload / "docs/history/PLANS-through-2026-11-16.md").read_bytes(), b"historical checkpoint\n")
         self.assertIn(f"Source-Commit: {self.commit}", info)
         self.assertIn("Exporter-Python:", info)
         self.assertIn("Exporter-Git:", info)
         self.assertIn("https://github.com/daryll-swer/daryllswer.com-archive", info)
         instructions = (bag / "README-PRESERVATION.md").read_text()
         for command in [
-            "data/scripts/export-preservation.py --verify .",
-            "data/scripts/backup-preservation.py verify --snapshot .",
+            'TRUSTED_TOOLING=/path/to/reviewed/tooling',
+            'python3 "$TRUSTED_TOOLING/scripts/export-preservation.py" --verify .',
+            'python3 "$TRUSTED_TOOLING/scripts/backup-preservation.py" verify --snapshot .',
+            "do not authenticate the source or tooling",
+            "Before serving the payload or running any of its code",
+            "match the SHA-256 digest of `manifest-sha256.txt` to an independently trusted digest",
+            "the expected source commit, or compare the exact payload file set and bytes against an independently "
+            "trusted source Git commit using the reviewed export policy",
+            "A recorded source SHA alone is not enough.",
             "--directory data/docs", "make -C data PYTHON=\"$(pwd)/.venv/bin/python\" render-site",
             "data/scripts/validate-mirror.py --offline --no-report", "data/tests/",
             "Git-history-dependent", "--require-hashes",
             "External hyperlinks, embedded media",
         ]:
             self.assertIn(command, instructions)
+        self.assertNotIn("python3 data/scripts/", instructions)
         EXPORT.verify_bag(bag)
 
     def test_explicit_source_checkout_uses_separate_trusted_exporter(self) -> None:
@@ -209,7 +224,8 @@ class PreservationExportTests(unittest.TestCase):
         restored_root = package / "data"
         self.assertFalse((restored_root / ".git").exists())
         self.assertTrue((restored_root / "IMPLEMENTATION_STATUS.md").is_file())
-        self.assertFalse((restored_root / "PLANS.md").exists())
+        for relative in ("PLANS.md", "docs/history/PLANS-through-2026-11-16.md"):
+            self.assertEqual((restored_root / relative).read_bytes(), (source / relative).read_bytes())
         self.assertTrue((restored_root / "docs/.nojekyll").is_file())
         validator = restored_root / "scripts" / "validate-mirror.py"
         bootstrap = (

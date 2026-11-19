@@ -125,7 +125,9 @@ gh api repos/daryll-swer/daryllswer.com-archive/deployments/DEPLOYMENT_ID/status
   --jq '.[] | {state,environment_url,log_url,created_at}'
 ```
 
-Use an observed deployment ID and verify its SHA. If main advances,
+For current deployment, select the newest `github-pages` deployment, require
+its SHA to match the target and its latest status to be `success`. An older
+successful record establishes only historical deployment. If main advances,
 distinguish the reviewed commit from the deployed successor. A failed Pages
 deployment can be retried through that workflow when authorised; do not repeat
 content mutation or manufacture an empty commit.

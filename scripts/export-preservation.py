@@ -29,7 +29,7 @@ EXCLUDED_NAMES = {
 EXCLUDED_SUFFIXES = {".pem", ".key", ".p12", ".pfx", ".kdbx", ".token", ".secret"}
 ROOT_FILES = {
     ".gitattributes", "AGENTS.md", "ARCHITECTURE.md", "ESCALATION.md",
-    "IMPLEMENTATION_STATUS.md",
+    "IMPLEMENTATION_STATUS.md", "PLANS.md",
     "LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt",
     "LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt",
     "LICENSES/MIT.txt", "LICENSES/SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt",
@@ -253,10 +253,16 @@ def export(commit: str, output: Path, source_repository: Path | None = None) -> 
             "rights records, generated GitHub Pages output, and selected rebuild tooling and instructions.\n\n"
             "## Restore, verify, serve, and rebuild\n\n"
             "To transport the directory, create an archive with `tar -cf preservation.tar -C /path/to/parent BAG_NAME`; "
-            "restore with `tar -xf preservation.tar`. After extracting a regular package, verify it from that directory with "
-            "`python3 data/scripts/export-preservation.py --verify .`. For a private backup snapshot, run "
-            "`python3 data/scripts/backup-preservation.py verify --snapshot .`; it verifies the BagIt files and "
-            "the additional `backup-record.json` provenance. Both checks are offline. "
+            "restore with `tar -xf preservation.tar`. Set `TRUSTED_TOOLING=/path/to/reviewed/tooling` to a separately "
+            "reviewed checkout, outside the package. Never execute scripts from the package to establish trust. "
+            "From the extracted package directory, verify a regular package with "
+            "`python3 \"$TRUSTED_TOOLING/scripts/export-preservation.py\" --verify .`. For a private backup snapshot, use "
+            "`python3 \"$TRUSTED_TOOLING/scripts/backup-preservation.py\" verify --snapshot .`. "
+            "These offline checks verify internal checksums and, for private snapshots, recorded provenance consistency; "
+            "they do not authenticate the source or tooling. Before serving the payload or running any of its code, "
+            "match the SHA-256 digest of `manifest-sha256.txt` to an independently trusted digest associated with "
+            "the expected source commit, or compare the exact payload file set and bytes against an independently "
+            "trusted source Git commit using the reviewed export policy. A recorded source SHA alone is not enough. "
             "Serve the preserved Pages tree locally with `python3 -m http.server 8000 --directory data/docs`. "
             "To rebuild Pages, use Python 3.12 and install the pinned, hashed dependencies with "
             "`python3 -m venv .venv` then `./.venv/bin/python -m pip install --require-hashes -r data/requirements-lock.txt`; "

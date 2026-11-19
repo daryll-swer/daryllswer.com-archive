@@ -29,6 +29,7 @@ MAX_API_BYTES = 2_000_000
 SHA_PATTERN = re.compile(r"[0-9a-f]{40}|[0-9a-f]{64}")
 REPOSITORY_PATTERN = re.compile(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+")
 RECORD_NAME = "backup-record.json"
+LEGACY_TOOLING_SHA = "13949b41f0830553b3e99e80581d45c770e7fba2"
 
 
 class BackupError(Exception):
@@ -141,9 +142,15 @@ def fetch_additional_source_commit(repository: str, revision: str, git_dir: Path
         raise BackupError("anonymous source fetch did not resolve to the recorded prior SHA")
 
 
-def verify_payload_matches_source(snapshot: Path, source_sha: str, source_git_dir: Path, exporter) -> None:
-    expected_files = exporter.committed_files(source_sha, source_git_dir)
-    expected = dict(expected_files)
+def verify_payload_matches_source(
+    snapshot: Path, source_sha: str, source_git_dir: Path, exporter, *, legacy_existing: bool = False,
+) -> None:
+    expected = dict(exporter.committed_files(source_sha, source_git_dir))
+    if legacy_existing:
+        # The reviewed prior pin used the same policy except for this exact root file.
+        expected.pop("PLANS.md", None)
+        if not expected:
+            raise BackupError("legacy source commit contains no eligible archive files")
     payload = snapshot / "data"
     actual: dict[str, Path] = {}
     for path in payload.rglob("*"):
@@ -169,7 +176,7 @@ def verify_staged(repository: Path, snapshot_relative: str = "snapshot", exporte
     snapshot = repo / snapshot_relative
     if snapshot.is_symlink() or not snapshot.is_dir():
         raise BackupError("staged snapshot must be a real directory")
-    validate_snapshot(snapshot, exporter)
+    validate_snapshot(snapshot, exporter, expected_tooling_sha=git(ROOT, "rev-parse", "HEAD"))
     for path in snapshot.rglob("*"):
         if path.is_symlink():
             raise BackupError(f"symlink in staged snapshot: {path.relative_to(repo)}")
@@ -312,7 +319,26 @@ def record_for(snapshot: Path, source_sha: str, tooling_sha: str) -> dict[str, s
     }
 
 
-def validate_snapshot(snapshot: Path, exporter, *, check_record: bool = True) -> dict[str, Any] | None:
+def bag_provenance(snapshot: Path) -> tuple[str, str]:
+    lines = (snapshot / "bag-info.txt").read_text(encoding="utf-8").splitlines()
+    source = [line.removeprefix("Source-Commit: ") for line in lines if line.startswith("Source-Commit: ")]
+    tooling = [line.removeprefix("Tooling-Commit: ") for line in lines if line.startswith("Tooling-Commit: ")]
+    if len(source) != 1 or len(tooling) != 1:
+        raise BackupError("bag must contain exactly one source and one tooling commit in its provenance")
+    return validate_revision(source[0], "bag source SHA"), validate_revision(tooling[0], "bag tooling SHA")
+
+
+def unique_record_fields(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    fields = dict(pairs)
+    if len(fields) != len(pairs):
+        raise BackupError("snapshot backup record contains duplicate JSON fields")
+    return fields
+
+
+def validate_snapshot(
+    snapshot: Path, exporter, *, check_record: bool = True, expected_tooling_sha: str | None = None,
+    allow_legacy_tooling: bool = False,
+) -> dict[str, Any] | None:
     if snapshot.is_symlink() or not snapshot.is_dir():
         raise BackupError("snapshot payload must be a real directory")
     for path in snapshot.rglob("*"):
@@ -338,18 +364,20 @@ def validate_snapshot(snapshot: Path, exporter, *, check_record: bool = True) ->
     if record_path.is_symlink() or not record_path.is_file():
         raise BackupError("snapshot backup record must be a regular file")
     try:
-        record = json.loads(record_path.read_text(encoding="utf-8"))
+        record = json.loads(record_path.read_text(encoding="utf-8"), object_pairs_hook=unique_record_fields)
     except (OSError, UnicodeError, json.JSONDecodeError) as exc:
         raise BackupError("snapshot backup record is invalid JSON") from exc
     if not isinstance(record, dict) or record.get("format") != "daryllswer-private-backup-1":
         raise BackupError("snapshot backup record has an unsupported format")
     record_source = validate_revision(record.get("sourceSHA", ""), "record source SHA")
     record_tooling = validate_revision(record.get("toolingSHA", ""), "record tooling SHA")
-    info_lines = (snapshot / "bag-info.txt").read_text(encoding="utf-8").splitlines()
-    bag_source = [line.removeprefix("Source-Commit: ") for line in info_lines if line.startswith("Source-Commit: ")]
-    bag_tooling = [line.removeprefix("Tooling-Commit: ") for line in info_lines if line.startswith("Tooling-Commit: ")]
-    if bag_source != [record_source] or bag_tooling != [record_tooling]:
+    if bag_provenance(snapshot) != (record_source, record_tooling):
         raise BackupError("snapshot backup record does not match BagIt commit provenance")
+    if expected_tooling_sha is not None and record_tooling != expected_tooling_sha:
+        if not (allow_legacy_tooling and record_tooling == LEGACY_TOOLING_SHA):
+            raise BackupError("snapshot record does not match an expected trusted tooling SHA")
+    if record_tooling == LEGACY_TOOLING_SHA and (snapshot / "data/PLANS.md").is_file():
+        raise BackupError("snapshot claiming legacy tooling cannot contain root PLANS.md")
     expected_manifest = hashlib.sha256((snapshot / "manifest-sha256.txt").read_bytes()).hexdigest()
     if record.get("manifestSHA256") != expected_manifest:
         raise BackupError("snapshot backup record manifest digest mismatch")
@@ -398,7 +426,7 @@ def changed_paths(repository: Path) -> set[str]:
 
 def _publish_verified_snapshot(
     source: Path, repo: Path, source_sha: str, tooling_sha: str,
-    source_git_dir: Path, exporter,
+    source_git_dir: Path, exporter, *, fetch_prior_from: str | None = None,
 ) -> bool:
     verify_payload_matches_source(source, source_sha, source_git_dir, exporter)
     destination = repo / "snapshot"
@@ -408,11 +436,16 @@ def _publish_verified_snapshot(
         existing_record_path = destination / RECORD_NAME
         if existing_record_path.is_symlink() or not existing_record_path.is_file():
             raise BackupError("existing snapshot has no valid backup record")
-        existing = validate_snapshot(destination, exporter)
+        existing = validate_snapshot(
+            destination, exporter, expected_tooling_sha=tooling_sha, allow_legacy_tooling=True,
+        )
         assert existing is not None
         existing_sha = existing["sourceSHA"]
-        verify_payload_matches_source(destination, existing_sha, source_git_dir, exporter)
-        if existing_sha == source_sha:
+        legacy = existing["toolingSHA"] == LEGACY_TOOLING_SHA
+        if fetch_prior_from is not None and existing_sha != source_sha:
+            fetch_additional_source_commit(fetch_prior_from, existing_sha, source_git_dir)
+        verify_payload_matches_source(destination, existing_sha, source_git_dir, exporter, legacy_existing=legacy)
+        if existing_sha == source_sha and not legacy:
             print(f"snapshot already verified for source SHA {source_sha}; no changes")
             return False
     stage = Path(tempfile.mkdtemp(prefix=f".{repo.name}-snapshot-stage-", dir=repo.parent))
@@ -429,7 +462,7 @@ def _publish_verified_snapshot(
         shutil.copytree(source, stage, symlinks=True)
         record = record_for(stage, source_sha, tooling_sha)
         (stage / RECORD_NAME).write_text(json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        validate_snapshot(stage, exporter)
+        validate_snapshot(stage, exporter, expected_tooling_sha=tooling_sha)
         verify_payload_matches_source(stage, source_sha, source_git_dir, exporter)
         if destination.exists():
             os.replace(destination, backup_old)
@@ -476,27 +509,17 @@ def publish(
     if source == repo or repo in source.parents:
         raise BackupError("transferred snapshot must be outside the backup checkout")
     validate_snapshot(source, exporter, check_record=False)
-    source_info = (source / "bag-info.txt").read_text(encoding="utf-8").splitlines()
-    source_line = next((line for line in source_info if line.startswith("Source-Commit: ")), "")
-    tooling_line = next((line for line in source_info if line.startswith("Tooling-Commit: ")), "")
-    if not source_line or not tooling_line:
-        raise BackupError("transferred bag lacks source or tooling commit provenance")
-    source_sha = validate_revision(source_line.removeprefix("Source-Commit: "), "bag source SHA")
-    if validate_revision(tooling_line.removeprefix("Tooling-Commit: "), "bag tooling SHA") != tooling_sha:
+    source_sha, bag_tooling_sha = bag_provenance(source)
+    if bag_tooling_sha != tooling_sha:
         raise BackupError("transferred bag does not match the expected trusted tooling SHA")
     verify_public_source(source_repository, source_sha, fetch)
     if source_git_dir is None:
         with tempfile.TemporaryDirectory(prefix="archive-source-git-") as temporary:
             git_dir = Path(temporary) / "source.git"
             fetch_source_commit(source_repository, source_sha, git_dir)
-            destination = repo / "snapshot"
-            if destination.exists() and not destination.is_symlink():
-                previous_record = validate_snapshot(destination, exporter)
-                assert previous_record is not None
-                previous_sha = previous_record["sourceSHA"]
-                if previous_sha != source_sha:
-                    fetch_additional_source_commit(source_repository, previous_sha, git_dir)
-            return _publish_verified_snapshot(source, repo, source_sha, tooling_sha, git_dir, exporter)
+            return _publish_verified_snapshot(
+                source, repo, source_sha, tooling_sha, git_dir, exporter, fetch_prior_from=source_repository,
+            )
     fetched = str(git(source_git_dir, "rev-parse", source_sha))
     if fetched != source_sha:
         raise BackupError("provided source Git repository does not contain the exact source SHA")
@@ -529,6 +552,7 @@ def main(argv: list[str] | None = None) -> int:
             publish(args.payload, args.repository, args.source_repository, args.tooling_sha)
         elif args.command == "verify":
             snapshot = Path(os.path.abspath(args.snapshot.expanduser()))
+            # Offline recovery checks internal consistency, not Git source or tooling authority.
             record = validate_snapshot(snapshot, load_exporter())
             assert record is not None
             print(f"backup snapshot verification passed: source SHA {record['sourceSHA']}")

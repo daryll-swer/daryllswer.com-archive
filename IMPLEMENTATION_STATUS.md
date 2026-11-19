@@ -12,8 +12,15 @@
 - Documentation is implemented locally. Read-only offline validation reports
   zero errors/warnings; safety and whitespace checks pass. Two renders leave
   reader pages, source/media, workbook output and favicon bytes unchanged.
-- Full regression, independent repository-only recovery, package transition
-  verification and publication are not yet completed.
+- All 176 regressions pass, including 32 preservation/backup tests and five
+  handoff checks. The repository-only recovery review identified the current
+  task, owner actions and operating procedures without chat context. Follow-up
+  fixes clarify trusted verification tooling, current deployment evidence,
+  future pin transitions and the external Python environment.
+- Legacy/current transition tests pass, including same-source migration,
+  no-op repeats, exact file/byte binding, provenance rejection and rollback.
+  A real package from the clean implementation commit and publication remain
+  pending. Existing private snapshot offline verification passes.
 - Production backup inclusion: pending a successful normal weekly run after
   reviewed tooling-pin adoption; do not claim local tests prove publication.
 
@@ -26,6 +33,11 @@ service-health claims. Full evidence is in the
 [historical ledger](docs/history/IMPLEMENTATION_STATUS-through-2026-11-16.md).
 
 ## Pending Actions and Authority
+
+Known engineering limitation outside this change: the canonical checker's
+`--dry-run` can backfill missing raw-content fingerprints before its dry-run
+exit. The handoff guide requires a disposable checkout for that diagnostic;
+reconciliation behaviour was not changed. This is not a new owner decision.
 
 [PLANS.md](PLANS.md#owner-follow-ups) is the single current owner-action list.
 No billing, VoiceOver, backup-setup or continuity decision is outstanding.

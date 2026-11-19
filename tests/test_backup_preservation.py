@@ -43,6 +43,11 @@ class BackupPreservationTests(unittest.TestCase):
         (self.tooling / "tool.txt").write_text("trusted tooling\n")
         self.commit(self.tooling)
         (self.source / "README.md").write_text("archive\n")
+        (self.source / "PLANS.md").write_text("active archive plan\n")
+        (self.source / "docs/history").mkdir(parents=True)
+        (self.source / "docs/history/PLANS.md").write_text("historical checkpoint\n")
+        (self.source / "scripts").mkdir()
+        (self.source / "scripts/export-preservation.py").write_text("raise RuntimeError('snapshot script executed')\n")
         (self.source / ".github/workflows/deploy-pages.yml").parent.mkdir(parents=True)
         (self.source / ".github/workflows/deploy-pages.yml").write_text("inert source workflow\n")
         (self.source / ".github/workflows/ci.yml").write_text("inert source workflow\n")
@@ -92,12 +97,47 @@ class BackupPreservationTests(unittest.TestCase):
             EXPORT.export(self.source_sha, output, source or self.source)
         return output
 
-    def publish(self, bag: Path, **kwargs):
+    def publish(self, bag: Path, *, use_bare_fetch: bool = False) -> bool:
         with patch.object(BACKUP, "ROOT", self.tooling):
             return BACKUP.publish(
                 bag, self.private, "owner/archive", self.tooling_sha,
-                exporter=EXPORT, fetch=self.fake_fetch, source_git_dir=self.source, **kwargs,
+                exporter=EXPORT, fetch=self.fake_fetch, source_git_dir=None if use_bare_fetch else self.source,
             )
+
+    def verify_staged(self) -> None:
+        with patch.object(BACKUP, "ROOT", self.tooling):
+            BACKUP.verify_staged(self.private, exporter=EXPORT)
+
+    def verify_offline(self, snapshot: Path) -> int:
+        with patch.object(BACKUP, "git", side_effect=AssertionError("Git access attempted")), patch(
+            "urllib.request.urlopen", side_effect=AssertionError("network access attempted"),
+        ):
+            return BACKUP.main(["verify", "--snapshot", str(snapshot)])
+
+    def seed_legacy_snapshot(self) -> Path:
+        snapshot = self.private / "snapshot"
+        # An old-pin export could run against a source that already contained PLANS.md.
+        with patch.object(EXPORT, "ROOT_FILES", EXPORT.ROOT_FILES - {"PLANS.md"}):
+            self.make_bag(snapshot)
+        record = BACKUP.record_for(snapshot, self.source_sha, self.tooling_sha)
+        (snapshot / "backup-record.json").write_text(json.dumps(record))
+        self.relabel_tooling(snapshot, BACKUP.LEGACY_TOOLING_SHA)
+        self.commit_private_snapshot()
+        return snapshot
+
+    def relabel_tooling(self, snapshot: Path, tooling_sha: str) -> None:
+        info = snapshot / "bag-info.txt"
+        lines = info.read_text().splitlines()
+        info.write_text("\n".join(
+            f"Tooling-Commit: {tooling_sha}" if line.startswith("Tooling-Commit: ") else line
+            for line in lines
+        ) + "\n")
+        record_path = snapshot / "backup-record.json"
+        if record_path.is_file():
+            record = json.loads(record_path.read_text())
+            record["toolingSHA"] = tooling_sha
+            record_path.write_text(json.dumps(record))
+        self.rehash_tampered_bag(snapshot)
 
     def test_exact_main_successful_validated_workflow_and_pages_deployment_required(self) -> None:
         workflow, deployment = BACKUP.verify_public_source("owner/archive", self.source_sha, self.fake_fetch)
@@ -163,6 +203,7 @@ class BackupPreservationTests(unittest.TestCase):
         self.commit_private_snapshot()
         snapshot = self.private / "snapshot"
         self.assertTrue((snapshot / "data/.github/workflows/deploy-pages.yml").is_file())
+        self.assertEqual((snapshot / "data/PLANS.md").read_bytes(), (self.source / "PLANS.md").read_bytes())
         self.assertFalse((snapshot / "data/.git").exists())
         record = json.loads((snapshot / "backup-record.json").read_text())
         self.assertEqual(record["sourceSHA"], self.source_sha)
@@ -170,10 +211,49 @@ class BackupPreservationTests(unittest.TestCase):
         self.assertEqual(record["manifestSHA256"], BACKUP.hashlib.sha256((snapshot / "manifest-sha256.txt").read_bytes()).hexdigest())
         with self.assertRaisesRegex(EXPORT.ExportError, "exactly cover"):
             EXPORT.verify_bag(snapshot)
-        with patch.object(BACKUP, "ROOT", self.tooling):
-            self.assertEqual(BACKUP.main(["verify", "--snapshot", str(snapshot)]), 0)
+        self.assertEqual(self.verify_offline(snapshot), 0)
         self.assertFalse(self.publish(bag))
         self.assertEqual(BACKUP.changed_paths(self.private), set())
+
+    def test_same_source_legacy_snapshot_migrates_to_current_then_noops(self) -> None:
+        snapshot = self.seed_legacy_snapshot()
+        self.assertFalse((snapshot / "data/PLANS.md").exists())
+        self.assertTrue((snapshot / "data/docs/history/PLANS.md").is_file())
+        self.assertEqual(self.verify_offline(snapshot), 0)
+        with self.assertRaisesRegex(BACKUP.BackupError, "expected trusted tooling SHA"):
+            self.verify_staged()
+
+        bag = self.make_bag(self.base / "current-bag")
+        self.assertTrue(self.publish(bag))
+        self.assertEqual((snapshot / "data/PLANS.md").read_bytes(), (self.source / "PLANS.md").read_bytes())
+        self.git(self.private, "add", "snapshot")
+        self.verify_staged()
+        self.commit_private_snapshot()
+        self.assertFalse(self.publish(bag))
+        self.assertEqual(BACKUP.changed_paths(self.private), set())
+
+    def test_legacy_prior_source_and_current_source_are_verified_from_bare_fetches(self) -> None:
+        snapshot = self.seed_legacy_snapshot()
+        old_sha = self.source_sha
+        self.advance_source()
+        bag = self.make_bag(self.base / "new-source-bag")
+        remote = self.base / "public-source.git"
+        subprocess.run(["git", "clone", "--bare", "--quiet", str(self.source), str(remote)], check=True)
+        real_bare_git = BACKUP.bare_git
+        requested_revisions: list[str] = []
+
+        def local_bare_git(repository: Path, *args: str, binary: bool = False) -> bytes | str:
+            if "fetch" in args:
+                self.assertEqual(args[-2], "https://github.com/owner/archive.git")
+                requested_revisions.append(args[-1])
+                args = (*args[:-2], str(remote), args[-1])
+            return real_bare_git(repository, *args, binary=binary)
+
+        with patch.object(BACKUP, "bare_git", side_effect=local_bare_git):
+            self.assertTrue(self.publish(bag, use_bare_fetch=True))
+        self.assertEqual(requested_revisions, [self.source_sha, old_sha])
+        self.assertEqual((snapshot / "data/README.md").read_bytes(), b"new archive revision\n")
+        self.assertEqual((snapshot / "data/PLANS.md").read_bytes(), (self.source / "PLANS.md").read_bytes())
 
     def test_backup_verifier_rejects_record_digest_mismatch(self) -> None:
         bag = self.make_bag(self.base / "record-check")
@@ -208,12 +288,10 @@ class BackupPreservationTests(unittest.TestCase):
 
     def rehash_tampered_bag(self, bag: Path) -> None:
         payload_manifest = bag / "manifest-sha256.txt"
-        rows = payload_manifest.read_text(encoding="utf-8").splitlines()
+        payload_files = sorted(path for path in (bag / "data").rglob("*") if path.is_file())
         payload_manifest.write_text("\n".join(
-            f"{EXPORT.hashlib.sha256((bag / name).read_bytes()).hexdigest()} {name}"
-            if name == "data/README.md" else row
-            for row in rows
-            for _, name in [row.split(" ", 1)]
+            f"{EXPORT.sha256_file(path)} {EXPORT.manifest_path(path.relative_to(bag).as_posix())}"
+            for path in payload_files
         ) + "\n", encoding="utf-8")
         tag_manifest = bag / "tagmanifest-sha256.txt"
         tag_files = sorted(
@@ -225,6 +303,11 @@ class BackupPreservationTests(unittest.TestCase):
             f"{EXPORT.sha256_file(bag / name)} {name}"
             for name in tag_files
         ) + "\n", encoding="utf-8")
+        record_path = bag / "backup-record.json"
+        if record_path.is_file():
+            record = json.loads(record_path.read_text())
+            record["manifestSHA256"] = EXPORT.sha256_file(payload_manifest)
+            record_path.write_text(json.dumps(record))
 
     def test_rehashed_payload_cannot_masquerade_as_source_commit(self) -> None:
         bag = self.make_bag(self.base / "rehash-attack")
@@ -239,14 +322,100 @@ class BackupPreservationTests(unittest.TestCase):
         snapshot = self.private / "snapshot"
         (snapshot / "data/README.md").write_text("rewritten existing snapshot\n")
         self.rehash_tampered_bag(snapshot)
-        # Restore the record's manifest digest so only source-tree comparison fails.
+        self.commit_private_snapshot()
+        with self.assertRaisesRegex(BACKUP.BackupError, "do not match source commit"):
+            self.publish(valid)
+
+    def test_current_policy_requires_committed_root_plan_for_transfer_and_existing_snapshot(self) -> None:
+        transfer = self.make_bag(self.base / "incomplete-transfer")
+        (transfer / "data/PLANS.md").unlink()
+        self.rehash_tampered_bag(transfer)
+        with self.assertRaisesRegex(BACKUP.BackupError, "file set does not exactly match"):
+            self.publish(transfer)
+        self.relabel_tooling(transfer, BACKUP.LEGACY_TOOLING_SHA)
+        with self.assertRaisesRegex(BACKUP.BackupError, "expected trusted tooling SHA"):
+            self.publish(transfer)
+
+        valid = self.make_bag(self.base / "valid")
+        self.publish(valid)
+        snapshot = self.private / "snapshot"
+        (snapshot / "data/PLANS.md").unlink()
+        self.rehash_tampered_bag(snapshot)
+        self.commit_private_snapshot()
+        with self.assertRaisesRegex(BACKUP.BackupError, "file set does not exactly match"):
+            self.publish(valid)
+
+    def test_current_policy_does_not_require_plan_absent_from_source_commit(self) -> None:
+        (self.source / "PLANS.md").unlink()
+        self.source_sha = self.commit(self.source)
+        bag = self.make_bag(self.base / "pre-plan-source")
+        self.assertTrue(self.publish(bag))
+        self.assertFalse((self.private / "snapshot/data/PLANS.md").exists())
+        self.commit_private_snapshot()
+        self.verify_staged()
+        self.assertFalse(self.publish(bag))
+
+    def test_legacy_tooling_association_requires_matching_record_and_bag_provenance(self) -> None:
+        snapshot = self.seed_legacy_snapshot()
+        valid = self.make_bag(self.base / "replacement")
         record_path = snapshot / "backup-record.json"
         record = json.loads(record_path.read_text())
-        record["manifestSHA256"] = EXPORT.sha256_file(snapshot / "manifest-sha256.txt")
+        record["toolingSHA"] = self.tooling_sha
         record_path.write_text(json.dumps(record))
-        self.git(self.private, "add", "snapshot")
-        self.git(self.private, "commit", "-qm", "rewritten snapshot with recomputed checksums")
-        with self.assertRaisesRegex(BACKUP.BackupError, "do not match source commit"):
+        self.commit_private_snapshot()
+        with self.assertRaisesRegex(BACKUP.BackupError, "does not match BagIt commit provenance"):
+            self.publish(valid)
+        with redirect_stderr(io.StringIO()):
+            self.assertEqual(self.verify_offline(snapshot), 1)
+
+        self.relabel_tooling(snapshot, "f" * 40)
+        self.commit_private_snapshot()
+        with self.assertRaisesRegex(BACKUP.BackupError, "expected trusted tooling SHA"):
+            self.publish(valid)
+        with self.assertRaisesRegex(BACKUP.BackupError, "expected trusted tooling SHA"):
+            self.verify_staged()
+        self.assertEqual(self.verify_offline(snapshot), 0)
+
+    def test_rehashed_legacy_payload_requires_exact_old_file_set_and_source_bytes(self) -> None:
+        snapshot = self.seed_legacy_snapshot()
+        valid = self.make_bag(self.base / "replacement")
+        history = snapshot / "data/docs/history/PLANS.md"
+        history_bytes = history.read_bytes()
+        history.unlink()
+        self.rehash_tampered_bag(snapshot)
+        self.commit_private_snapshot()
+        with self.assertRaisesRegex(BACKUP.BackupError, "file set does not exactly match"):
+            self.publish(valid)
+
+        history.write_bytes(b"rewritten history\n")
+        self.rehash_tampered_bag(snapshot)
+        self.commit_private_snapshot()
+        with self.assertRaisesRegex(BACKUP.BackupError, "do not match source commit: docs/history/PLANS.md"):
+            self.publish(valid)
+
+        history.write_bytes(history_bytes)
+        (snapshot / "data/PLANS.md").write_bytes((self.source / "PLANS.md").read_bytes())
+        self.rehash_tampered_bag(snapshot)
+        self.commit_private_snapshot()
+        with self.assertRaisesRegex(BACKUP.BackupError, "claiming legacy tooling cannot contain root PLANS.md"):
+            self.publish(valid)
+
+    def test_ambiguous_transfer_provenance_rejected_even_with_valid_tag_checksums(self) -> None:
+        bag = self.make_bag(self.base / "duplicate-provenance")
+        with (bag / "bag-info.txt").open("a") as info:
+            info.write(f"Tooling-Commit: {BACKUP.LEGACY_TOOLING_SHA}\n")
+        self.rehash_tampered_bag(bag)
+        with self.assertRaisesRegex(BACKUP.BackupError, "exactly one source and one tooling commit"):
+            self.publish(bag)
+
+    def test_duplicate_record_tooling_fields_cannot_select_legacy_policy(self) -> None:
+        snapshot = self.seed_legacy_snapshot()
+        record_path = snapshot / "backup-record.json"
+        previous = record_path.read_text()
+        record_path.write_text('{"toolingSHA": "' + self.tooling_sha + '", ' + previous[1:])
+        self.commit_private_snapshot()
+        valid = self.make_bag(self.base / "replacement")
+        with self.assertRaisesRegex(BACKUP.BackupError, "duplicate JSON fields"):
             self.publish(valid)
 
     def test_verify_staged_detects_ignored_missing_and_tampered_index_entries(self) -> None:
@@ -257,9 +426,9 @@ class BackupPreservationTests(unittest.TestCase):
         self.publish(bag)
         self.git(self.private, "add", "snapshot")
         with self.assertRaisesRegex(BACKUP.BackupError, "file set does not exactly match"):
-            BACKUP.verify_staged(self.private, exporter=EXPORT)
+            self.verify_staged()
         self.git(self.private, "add", "-f", "snapshot")
-        BACKUP.verify_staged(self.private, exporter=EXPORT)
+        self.verify_staged()
 
         changed_blob = subprocess.run(
             ["git", "-C", str(self.private), "hash-object", "-w", "--stdin"],
@@ -267,11 +436,11 @@ class BackupPreservationTests(unittest.TestCase):
         ).stdout.decode().strip()
         self.git(self.private, "update-index", "--cacheinfo", f"100644,{changed_blob},snapshot/data/README.md")
         with self.assertRaisesRegex(BACKUP.BackupError, "staged bytes differ"):
-            BACKUP.verify_staged(self.private, exporter=EXPORT)
+            self.verify_staged()
         self.git(self.private, "add", "-f", "snapshot")
         self.git(self.private, "rm", "--cached", "--quiet", "snapshot/data/README.md")
         with self.assertRaisesRegex(BACKUP.BackupError, "file set does not exactly match"):
-            BACKUP.verify_staged(self.private, exporter=EXPORT)
+            self.verify_staged()
 
     def test_preinstall_copy_or_verification_failure_preserves_previous_snapshot(self) -> None:
         initial = self.make_bag(self.base / "initial")
@@ -291,17 +460,14 @@ class BackupPreservationTests(unittest.TestCase):
         self.assertEqual((self.private / "snapshot/data/README.md").read_bytes(), preserved)
 
     def test_postinstall_failure_restores_previous_snapshot(self) -> None:
-        initial = self.make_bag(self.base / "initial")
-        self.publish(initial)
-        self.commit_private_snapshot()
-        preserved = (self.private / "snapshot/data/README.md").read_bytes()
-        self.advance_source()
+        snapshot = self.seed_legacy_snapshot()
+        preserved = {path: path.read_bytes() for path in snapshot.rglob("*") if path.is_file()}
         replacement = self.make_bag(self.base / "replacement")
         with patch.object(BACKUP, "changed_paths", side_effect=BACKUP.BackupError("injected post-install failure")):
             with self.assertRaisesRegex(BACKUP.BackupError, "injected post-install failure"):
                 self.publish(replacement)
-        self.assertEqual((self.private / "snapshot/data/README.md").read_bytes(), preserved)
-        self.assertFalse(list(self.base.glob(".private-backup-snapshot-previous-*")))
+        self.assertEqual({path: path.read_bytes() for path in snapshot.rglob("*") if path.is_file()}, preserved)
+        self.assertFalse(list(self.base.glob(".private-backup-snapshot-*")))
 
     def test_parent_and_destination_symlinks_are_rejected(self) -> None:
         bag = self.make_bag(self.base / "safe-bag")

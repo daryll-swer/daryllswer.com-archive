@@ -44,6 +44,11 @@ Read the package's `README-PRESERVATION.md` for its serving, rebuild and
 verification commands. The recorded source revision and toolchain information
 identify what was exported. Hash verification must succeed before treating a
 copied or extracted package as intact.
+Before executing payload tooling, independently establish its trust: compare
+the payload manifest digest with a trusted record, or compare the exact payload
+file set and bytes with the independently trusted source Git commit. Merely
+finding that the claimed commit exists is not sufficient. Until then use only
+separately reviewed verifier code; do not run the package's Makefile/scripts.
 
 ## Restore Test
 

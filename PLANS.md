@@ -12,10 +12,11 @@ Implementation is in progress; repository history before this task is at
    order and reproducible maintenance instructions.
 2. Complete locally: retain historical checkpoints under `docs/history/`; keep
    current state and owner actions in the root documents.
-3. In progress: export `PLANS.md`, narrowly verify legacy backup snapshots and test
+3. Complete locally: export `PLANS.md`, narrowly verify legacy backup snapshots and test
    legacy-to-new publication without executing snapshot code.
-4. Pending: regression suite, compilation, offline integrity, safety scan,
-   deterministic rendering, temporary package and repository-only recovery.
+4. Checks pass: 176 regressions, compilation, offline integrity, safety scan,
+   deterministic rendering and repository-only recovery. Temporary package
+   verification from the clean implementation commit is next.
 5. Pending: normal publication, exact-revision CI/Pages verification, reviewed
    private backup tooling-pin adoption. Do not dispatch an extra backup run.
 
