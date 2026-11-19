@@ -7,6 +7,18 @@ not the publishing source of truth; WordPress remains canonical.
 
 ## Boundaries
 
+### Durable Handoff
+
+The human-first README links to the reader site before the logo and keeps
+agent instructions to a short final pointer. `AGENTS.md` defines the recovery
+reading order; `PLANS.md` owns current work/owner follow-ups and
+`IMPLEMENTATION_STATUS.md` owns observed delivery evidence. Past checkpoints
+live under `docs/history/` and are not current authorisation. See
+[fresh-checkout procedures](docs/HANDOFF.md). Recovery must not require a
+previous chat, worker identity or temporary environment.
+
+### Archive Boundaries
+
 - Public inputs only: WordPress REST API, sitemap/RSS, canonical HTML, media
   URLs, and public Google Sheet exports.
 - WordPress REST is authoritative for the archived published-post set; sitemap

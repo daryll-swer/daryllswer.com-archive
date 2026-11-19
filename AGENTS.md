@@ -1,5 +1,33 @@
 # Repository Instructions for Codex
 
+## Start Here
+
+This repository, not a previous chat or worker session, is the recovery source.
+
+1. Read this file, then [PLANS.md](PLANS.md) for the active objective and single
+   current owner-action list, and [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)
+   for implementation and verification evidence.
+2. Read relevant [architecture](ARCHITECTURE.md), [decisions](docs/DECISIONS.md)
+   and [escalation rules](ESCALATION.md). Use [maintenance](docs/MIRRORING.md),
+   [preservation](docs/PRESERVATION.md) and [source recovery](docs/SEO_RECOVERY.md)
+   for operational procedures. `docs/history/` contains superseded checkpoints,
+   not current work instructions or renewed permission.
+3. Follow [fresh-checkout verification](docs/HANDOFF.md). Inspect the branch,
+   working-tree changes, local/remote revisions and workflow evidence before
+   editing. Preserve unrelated work. A previous test pass is not a current
+   verification; successful reconciliation is not proof of Pages deployment.
+4. Record material progress, checks, unresolved risks and the exact next action
+   in the root plan/ledger before handing off. Do not store credentials,
+   session identifiers, temporary runtime paths or private account evidence.
+
+The active plan owns what comes next; the ledger owns observed results;
+architecture/decisions own enduring design. Keep these documents concise and
+linked. Do not require a particular previous agent, model or chat to resume.
+Verify available tools and authorisation afresh; never infer ongoing authority
+for consequential actions from historical approvals. Human-first README copy
+must remain brief, with the labelled archive URL before the logo and only a
+short agent pointer at the bottom.
+
 ## Source of Truth
 
 - daryllswer.com is canonical. This repository is a public mirror/archive.

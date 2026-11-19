@@ -1,5 +1,23 @@
 # Decisions
 
+## 2026-11-20: Human-First Entry Point and Durable Handoff
+
+- Keep the README concise for human visitors: title and labelled archive link
+  before the logo, compact guides/rights information and a short AI footer.
+- Direct fresh agents through repository instructions, current plan/ledger and
+  relevant architecture/runbooks. Historical checkpoints move to `docs/history/`
+  with explicit supersession labels. Past approvals and worker sessions are
+  not present authority or dependencies.
+- Preserve `PLANS.md` in exports alongside the existing ledger. A narrowly
+  recognised legacy tooling policy may verify older snapshots without that
+  file; new packages must match the current complete file-selection policy.
+  Never run old snapshot code to select its policy or relax byte verification.
+- Adopt a new separately reviewed tooling pin only after transition tests and
+  exact-revision CI/Pages succeed. Leave schedule, guard and permissions
+  unchanged; production inclusion awaits the next normal weekly backup.
+- No history rewrite, paid operation or guarantee of perpetual service is
+  introduced. Account access remains separate from documentary recovery.
+
 ## 2026-11-04: Permanent Free-Tier Preservation
 
 - No payment method may be added for this archive or its backup operation.

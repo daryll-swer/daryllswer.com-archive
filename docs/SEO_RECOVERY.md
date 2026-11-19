@@ -11,7 +11,10 @@ Do not edit `archive-status.json` manually. Use the commands below only after
 the owner has verified current control of the relevant public source and the
 expected article/service is present.
 
-Use the reviewed hash-locked Python environment. `make validate` checks local
+Use the reviewed hash-locked Python environment from
+[the fresh-checkout guide](HANDOFF.md#reproducible-python-setup), retaining its
+`PYTHON` variable for the commands below. Do not assume a repository-local
+`.venv` exists. `make validate` checks local
 integrity only; run `make validate-live` separately after recovery to compare
 the restored source. A successful source observation is not proof of domain
 ownership and is not proof that a Pages deployment succeeded.
@@ -27,7 +30,7 @@ site is again demonstrably owner-controlled.
    observation and explicitly restore `source_primary`:
 
 ```sh
-PYTHON=.venv/bin/python3
+: "${PYTHON:?Set PYTHON to the reviewed environment interpreter}"
 "$PYTHON" scripts/manage-archive-seo.py resume-ds --owner-verified
 make PYTHON="$PYTHON" render-site
 "$PYTHON" -m py_compile scripts/*.py
@@ -58,7 +61,7 @@ it remains visible in the archive index.
    post ID `5324` and restore its source health:
 
 ```sh
-PYTHON=.venv/bin/python3
+: "${PYTHON:?Set PYTHON to the reviewed environment interpreter}"
 "$PYTHON" scripts/manage-archive-seo.py resume-external --post-id 5324 --owner-verified
 make PYTHON="$PYTHON" render-site
 "$PYTHON" -m py_compile scripts/*.py

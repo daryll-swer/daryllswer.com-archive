@@ -8,7 +8,9 @@ as a recovery step. This permanent policy supports unattended preservation.
 The reviewed template is already installed in the private repository. Retain
 `BACKUP_ZERO_PAID_OVERAGE_VERIFIED=true` and the full approved
 `BACKUP_TOOLING_SHA` unchanged. The guard records the approved operating basis,
-not continuous billing inspection. Both jobs remain skipped if either variable
+not continuous billing inspection. A reviewed tooling upgrade may change only
+the tooling pin after local transition tests and exact-revision public CI/Pages
+verification; do not treat the pin as automatically tracking main. Both jobs remain skipped if either variable
 is absent. Future bootstrap must establish the same free-tier-only basis;
 never replace it with a paid budget or a payment-method request.
 
@@ -30,6 +32,13 @@ Free-tier-only operation cannot guarantee perpetual service, scheduling or
 account continuity; GitHub-only continuity remains the accepted limitation.
 
 ## Local Commands
+
+For fresh-agent recovery, start with [the handoff guide](../../docs/HANDOFF.md).
+Current exports include the root active plan. Existing snapshots from approved
+legacy tooling `13949b41f0830553b3e99e80581d45c770e7fba2` predate that inclusion;
+verify them with the explicitly recognised legacy file policy, never by running
+their scripts. New packages require the current file set. See
+[transition guidance](../../docs/PRESERVATION.md#tooling-policy-transition).
 
 From a trusted tooling checkout, with a separate clean public-source checkout
 and no private credentials:
@@ -53,9 +62,16 @@ python3 scripts/backup-preservation.py publish \
 tooling SHA identifies the code used for both stages; the record binds it to
 the exact source SHA and BagIt payload-manifest digest.
 
-Verify an extracted private snapshot, including its backup record, from the
-snapshot root with:
+Verify an extracted private snapshot, including its backup record, using a
+separately reviewed tooling checkout, not scripts from the snapshot:
 
 ```sh
-python3 data/scripts/backup-preservation.py verify --snapshot .
+python3 /path/to/reviewed-tooling/scripts/backup-preservation.py verify --snapshot /path/to/snapshot
 ```
+
+Offline verification checks checksums and internal provenance consistency, not
+independent source authenticity. Publication additionally binds the complete
+payload to the selected Git commit. Future tooling upgrades/rollback require
+an explicit tested predecessor policy; changing the pin alone is not enough.
+The one-time legacy migration may update a same-source snapshot to add the
+plan, after which unchanged runs produce no duplicate commit.

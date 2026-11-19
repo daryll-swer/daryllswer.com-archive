@@ -1,32 +1,28 @@
+# daryllswer.com – Archive
+
+**Read the archive:** [daryllswer.com – Archive](https://daryll-swer.github.io/daryllswer.com-archive/)
+
 <p align="center">
   <a href="#copyright-and-licences">
     <img src="assets/readme/13_DS_Logo_Dark_Mode_SEO.png" alt="Daryll Swer" width="1000">
   </a>
 </p>
 
-# daryllswer.com Archive
-
 This repository is a public mirror/archive of published content from
 [daryllswer.com](https://www.daryllswer.com/). The WordPress site remains the
-canonical source.
+canonical source. Each article includes Markdown, source evidence, metadata
+and original media for long-term reading and inspection.
 
-GitHub repository name: `daryllswer.com-archive`.
+## Repository Overview
 
-HTML archive homepage: <https://daryll-swer.github.io/daryllswer.com-archive/>
+- [Articles](content/posts/) and [spreadsheet artefacts](data/sheets/).
+- [Generated website](docs/), [tooling](scripts/) and [data schemas](schemas/).
+- [Archive inventory](archive-manifest.json) and [source status](docs/CANONICAL_DRIFT.md).
 
-The archive is designed for long-term reading and inspection. Each post is
-stored as a self-contained content bundle with Markdown, source snapshots,
-metadata, original media files, and an asset manifest.
+## Project Guides
 
-## Layout
-
-- `content/posts/YYYY-MM-DD-slug/` - one page bundle per published post.
-- `data/sheets/` - public spreadsheet artefacts linked from posts.
-- `docs/` - GitHub Pages HTML site plus mirroring and validation notes.
-- `schemas/` - JSON Schemas for generated metadata and manifests.
-- `scripts/` - public sync, export, validation, preview, and safety-scan tools.
-- `archive-manifest.json` - generated root index of mirrored posts and checks.
-- `archive-status.json` - public canonical drift/frozen-archive state.
+[Architecture](ARCHITECTURE.md) | [Maintenance](docs/MIRRORING.md) |
+[Preservation and backup](docs/PRESERVATION.md) | [Source recovery](docs/SEO_RECOVERY.md)
 
 ## Copyright and Licences
 
@@ -40,23 +36,22 @@ The [README header logo](assets/readme/13_DS_Logo_Dark_Mode_SEO.png),
 [GitHub Pages favicon source](assets/brand/01_DS_Favicon_Dark_Mode.png), and
 [generated derivative](assets/brand/derivatives/01_DS_Favicon_Dark_Mode-512.png),
 published as the [byte-for-byte GitHub Pages favicon](docs/assets/brand/01_DS_Favicon_Dark_Mode-512.png),
-are proprietary brand assets:
-`© 2026 Daryll Swer. All rights reserved.` They
-are excluded from the MIT tooling licence and any other repository content
-permissions.
+are proprietary brand assets: © 2026 Daryll Swer. All rights reserved.
+They are excluded from the MIT tooling licence and any other repository content
+permissions. No brand-asset licence is granted beyond applicable law and
+GitHub's limited public-repository service operation.
 
-`assets/readme/ASSET_PROVENANCE.md` is provenance
-and byte-preservation evidence only; it is not a licence. No licence is granted
-beyond applicable law and GitHub's limited public-repository service
-operation.
+[Logo provenance](assets/readme/ASSET_PROVENANCE.md) is provenance and
+byte-preservation evidence only; it is not a licence.
 
 Third-party media and external artefacts are not covered by the repository's
 tooling licence or proprietary ownership claims.
 
-See [`LICENSING.md`](LICENSING.md), the per-post
-[`content/rights-registry.json`](content/rights-registry.json),
-[`assets/readme/ASSET_PROVENANCE.md`](assets/readme/ASSET_PROVENANCE.md), and
-the controlling legal notices:
-[`LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt`](LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt),
-[`LICENSES/SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt`](LICENSES/SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt) and
-[`LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt`](LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt).
+See the [licence map](LICENSING.md), [ownership exceptions](content/rights-registry.json)
+and controlling legal notices for [Daryll Swer content](LICENSES/DARYLL-SWER-PROPRIETARY-CONTENT-NOTICE.txt),
+[Swer Networks content](LICENSES/SWER-NETWORKS-PROPRIETARY-CONTENT-NOTICE.txt) and
+[Daryll Swer brand assets](LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt).
+
+## For AI Agents
+
+Start with [AGENTS.md](AGENTS.md), then read [PLANS.md](PLANS.md) and [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md). Verify the current repository state before acting; historical records are not current authorisation.

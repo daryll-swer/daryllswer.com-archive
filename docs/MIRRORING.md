@@ -120,6 +120,11 @@ where portable visual colour is not guaranteed.
 
 ## Maintainer Workflow
 
+For a fresh checkout or new agent, begin with
+[Fresh Checkout and Safe Handoff](HANDOFF.md). It separates inspection from
+report-writing checks, source mutation and publication, and explains how to
+verify exact-revision CI/Pages and backup evidence without a previous chat.
+
 Use CPython 3.12 and a dedicated virtual environment. Install the reviewed
 lockfile with `python -m pip install --require-hashes -r requirements-lock.txt`.
 `requirements.in` is the direct-dependency input, not an installation shortcut;

@@ -7,6 +7,11 @@ backup of Git history. It includes committed archive bundles, media, source
 evidence, metadata, rights records, generated Pages, and rebuild tooling.
 Retired content absent from the selected commit is not recovered from history.
 
+Current exports also include the root active plan and implementation ledger,
+plus the handoff guide and historical checkpoints under `docs/`. Start recovery
+at [HANDOFF.md](HANDOFF.md); package integrity alone does not establish current
+authorisation or source/deployment health.
+
 The package follows the BagIt v1.0 layout described in
 [RFC 8493](https://www.rfc-editor.org/rfc/rfc8493.html): `bagit.txt`, a `data/`
 payload, SHA-256 payload and tag manifests, and descriptive bag metadata.
@@ -75,7 +80,9 @@ The intended schedule is Tuesday **04:17 UTC / 09:47 IST**. A refresh selects
 current public `main` only with successful validated Pages evidence for that
 exact revision. An unavailable source, failed deployment, failed package
 verification or publication check leaves the previous snapshot intact.
-Unchanged source produces no backup commit.
+Unchanged source produces no backup commit after tooling-policy migration.
+The explicitly reviewed legacy transition may replace a same-source snapshot
+once to add the newly preserved plan; subsequent identical runs are no-ops.
 
 Trusted backup tooling is pinned separately from the source checkout. It reads
 committed source files through the exporter's explicit `--source-repository`
@@ -92,12 +99,39 @@ snapshot file and byte, including ignored/hidden files; a path-prefix check
 alone is insufficient. Private snapshots use the dedicated offline verifier:
 
 ```sh
-python3 snapshot/data/scripts/backup-preservation.py verify --snapshot snapshot
+python3 /path/to/reviewed-tooling/scripts/backup-preservation.py verify --snapshot /path/to/snapshot
 ```
+
+Use a separately reviewed tooling checkout, not scripts inside the package
+being verified. This offline command checks integrity and internal provenance
+consistency; source identity is independently checked against Git blobs by the
+publication pipeline. Do not treat a self-consistent package as authenticated.
 
 Exact bootstrap commands and the inactive workflow template are in
 [maintenance/backup/README.md](../maintenance/backup/README.md). The template
 is not an active workflow in the public repository.
+
+### Tooling-Policy Transition
+
+The legacy approved tooling revision
+`13949b41f0830553b3e99e80581d45c770e7fba2` omitted `PLANS.md`. Its existing
+snapshots are verified against that exact legacy selection policy before
+replacement, including full source-byte and package-checksum checks. This is
+not permission for new packages to omit the plan or for arbitrary omissions.
+Unknown tooling/policy associations must fail closed during publication and
+staged verification. Offline package verification checks checksum/provenance
+consistency, not independent source or tooling authenticity. Verification never
+executes code from a snapshot to establish trust. Historical packages are not
+hand-edited.
+
+Review the executable-tooling diff and transition tests before updating the
+private repository's `BACKUP_TOOLING_SHA` to a full approved commit. Update no
+schedule, permission or operating-basis guard. Record local transition results
+separately from production: plan inclusion in the private snapshot is pending
+until its next normal scheduled run succeeds and its package is verified.
+Future upgrades or rollback must explicitly recognise and test the installed
+predecessor's file policy before changing the pin. An arbitrary new pin is not
+automatically compatible; rejection must retain the existing snapshot.
 
 ### Permanent Free-Tier Operation
 

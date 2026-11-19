@@ -1,0 +1,1333 @@
+# Historical Archive Plan Through 2026-11-16
+
+> Superseded historical evidence, preserved from the root plan. All statuses,
+> worker references, pending lists and approvals below describe past checkpoints.
+> They are not current instructions or continuing authorisation. Paths in code
+> spans are relative to the repository root. Resume from the current
+> [active plan](../../PLANS.md) and [ledger](../../IMPLEMENTATION_STATUS.md).
+
+## Context and Orientation
+
+- Workspace / project: `daryllswer.com-related-work`
+- Thread/workspace id: current Codex Desktop thread
+- Source of truth: repository root
+- Execution surface: macOS Codex Desktop
+- Status: canonical URL fix published; fresh reconciliation and live Pages verified
+- Created: 2026-07-06 09:07 UTC
+- Last updated: 2026-11-16
+- Working assumptions: the WordPress site is canonical; this repo is a public mirror/archive of only published public content.
+- `forked_from`: N/A
+
+## Durable Project Documents
+
+- Architecture: `ARCHITECTURE.md`
+- ADR directory: N/A for now
+- Implementation status: `IMPLEMENTATION_STATUS.md`
+- Escalation rules: `ESCALATION.md`
+
+## Current Status / Next Pickup
+
+### Completed: Canonical URL Reconciliation Fix
+
+- Baseline: clean remote main `61cc537`; failed canonical run `43858290249`
+  rejected post 2931 because the checker stripped a trailing slash before
+  resolving expected rights, while synchronisation preserved the source URL.
+- Preserve exact source URLs in update plans and rights provenance. Resolve
+  staged rights only after canonical identity verification; compare all rights
+  fields exactly against independent policy/registry data. Keep v3 plans and
+  existing trailing-slash identity tolerance without broader URL equivalence.
+- Add producer-to-staging regression coverage, current-format stripped-URL
+  compatibility, DS/Swer rights, mixed/new/media updates, identity tampering
+  and atomic rejection. Report differing rights field names only.
+- Verify with hash-locked isolated Python, full tests, compilation, rendering
+  determinism, offline validation, safety scanning and whitespace checks.
+- Publish normally, verify exact-revision CI/Pages, dispatch a fresh canonical
+  run and verify the eligible post update and successor Pages deployment.
+  Do not rerun the old revision or change backup schedules/pins, image limits,
+  rights records, workflow permissions or paid-service constraints.
+- Coordinator owns durable docs, review and publication; one implementation
+  worker owns the checker/reconciler scripts, their shared URL comparator and
+  scoped regression tests. Baseline: 157 tests pass, offline validation has
+  zero errors/warnings, safety passes, and rendering changes no reader bytes.
+- Completed locally: shared path-slash comparator, exact update-plan URLs,
+  identity-first rights resolution and field-only diagnostics. All 163 tests
+  pass, including real v3 producer-to-staging and two-target atomic rejection.
+  The new regression fails against baseline `61cc537` at the lost trailing
+  slash assertion. Compilation, offline validation (zero errors/warnings),
+  safety/whitespace and repeated rendering pass; 166 reader files retain their
+  exact combined digest. An older mock fixture now includes its real slug.
+- Delivery: fix `ccd62b7` passed CI `43861405062` and Pages `43861405102`.
+  Fresh canonical run `43861579956` passed all gates and updated only post 2931
+  in bot commit `fa574f4`; its Pages run `43861732119` also passed. Final live
+  comparison: 19 posts, no new/missing/relocated/changed posts, healthy/unfrozen.
+- Live article bytes match generated output, including the new Hedge 313 link,
+  exact source URL, one Daryll Swer rights notice and source-first SEO. The
+  source modification date is `2026-11-14T01:02:35`. Large-image warnings remain
+  non-fatal and were not suppressed. Private backup stays on its normal weekly
+  schedule; no new owner decision or recovery action is required for this fix.
+
+### Permanent Free-Tier Preservation Policy
+
+- No payment method may be added for this archive or its backup operation.
+  Operation must remain within GitHub's free tier. Do not purchase capacity,
+  enable paid overage, upgrade to a paid plan, or request payment-method setup
+  as a recovery step. This is a permanent constraint, not a pending decision.
+- Current directives and maintenance guidance in both repositories are aligned;
+  conditional payment reminders are removed and older review lists superseded.
+  Preserve workflow files, schedules, permissions, variables, tooling pins,
+  rights and asset bytes. Do not hand-edit snapshot payloads or rewrite history.
+- Local checks pass: 24 backup/export tests, offline integrity with zero
+  errors/warnings, safety and whitespace. Delivery uses normal pushes,
+  exact-revision CI/Pages and the existing verified private snapshot workflow;
+  Actions and the backup record retain delivery evidence. No timed billing
+  reminder needs cancelling.
+- Only current owner follow-ups: Google homepage indexing/sitemap acceptance
+  verification, and the optional Bing registration decision. VoiceOver is
+  cancelled; GitHub-only continuity is accepted; backups, dependencies and
+  same-URL media detection are complete.
+
+### Delivered: Media Audit and Initial Private Backup
+
+- Published implementation commits `32f2626` and `13949b4`. CI
+  `41649097936` and Pages `41649097743` passed. Normal manual canonical run
+  `41649290992` passed with 69 checked URLs, 59,449,688 bytes and no changes;
+  rendering was skipped. Its report-only commit `f74ea0a` deployed successfully
+  in Pages run `41649416406`.
+- Initial private snapshot of deployed `f74ea0a`, using separately pinned
+  tooling `13949b4`, passed source-blob binding, BagIt and staged-index checks:
+  500 payload files, 506 packaged files. A fresh extracted copy passed offline
+  validation with network access blocked (zero errors/warnings). Background
+  headless Chrome passed homepage, DS/Swer articles, workbook, images, fonts
+  and IPv6 disclosure checks; all seven widths from 320 to 2560 CSS px passed
+  without overflow. No external browser requests or failed requests occurred.
+- Owner confirmation and current official billing guidance resolve the
+  spending gate; account-specific evidence is recorded only in the private
+  backup repository. Reviewed workflow is active with tooling pinned to
+  `13949b41f0830553b3e99e80581d45c770e7fba2`. Manual run `41665426694`
+  passed preparation/publication and all 506 packaged files; unchanged source
+  correctly produced no duplicate commit. Schedule: Tuesday 04:17 UTC/09:47 IST.
+  The guard records the approved free-tier basis, not continuous billing
+  inspection. An exhausted monthly allowance may block more than one Tuesday
+  retry; the last good snapshot remains intact. Billing follow-up is resolved.
+- VoiceOver cancelled; GitHub-only continuity accepted; search discovery
+  remains pending. No further source-media investigation is pending.
+
+### Implementation Evidence
+
+- Implement bounded full-byte media audits even after REST 304, version-3
+  reconciliation plans, atomic staged hash verification, and archive-only
+  freshness timestamps. Preserve source dates, rights and freeze safeguards.
+- Add trusted-tooling export from an explicit source checkout, exact-revision
+  validated deployment gates and a private snapshot workflow with restricted
+  publication. Target: `daryll-swer/daryllswer.com-archive-backup`.
+- Weekly private schedule: Tuesday 04:17 UTC (09:47 IST), free-tier only with
+  no payment method. Retain the approved guard and preserve the last verified
+  snapshot when execution is blocked; never recover through paid capacity.
+- Backup tooling implementation checkpoint: exporter now reads an explicit
+  source checkout while remaining separate trusted code; backup prepare/publish
+  require current public `main`, successful `deploy-pages.yml` build and deploy
+  jobs, and the latest successful Pages deployment for the same SHA. The
+  inactive `maintenance/backup/` template is main-only, opt-in guarded by
+  `BACKUP_ZERO_PAID_OVERAGE_VERIFIED=true` and a full `BACKUP_TOOLING_SHA`, and
+  keeps payload/tooling in `RUNNER_TEMP`. Focused backup/export tests pass.
+  Media implementation has passed 54 focused audit/reconciliation/integration
+  tests and the final 157-test full suite. Rendering, offline validation, and the
+  public-safety scan pass. Live audit checked 69/69 URLs and 59,449,688 bytes
+  in 32.712 seconds, with zero failures or changes; reconciliation dry-run had
+  no action. The approved private repository
+  was created and verified private, with Pages absent and Actions disabled.
+  Initial snapshot/restore verification and subsequent guarded weekly
+  activation are complete above.
+- Coordinator owns integration, review, durable records and connected actions;
+  bounded implementers own disjoint media and backup code/tests. No force push,
+  original-history copy, backup pruning or source-data destruction.
+- Verification: adversarial media/batch and backup tests, full regressions,
+  deterministic rendering, offline validation, safety scan, exact deployment
+  verification, initial snapshot checksums and network-isolated restore.
+- Local checkpoint: 157 regression tests pass, offline validation has zero
+  errors/warnings, compilation and safety/whitespace checks pass, and two
+  renders preserve all 213 generated files. The live read-only audit checks
+  69 URLs / 59,449,688 bytes in 32.712 seconds without failures or changes;
+  all 19 posts match and the reconciliation dry-run is a no-op.
+- Media integration contract: action plans are v3 and contain
+  `media_updates` entries with `source_url`, `post_id`, repository-relative
+  `asset_path`, and old/new SHA-256 values. `media_audit` remains an extensible
+  object with `status`, distinct/checked URL counts, changed-asset count,
+  `bytes_checked`, `failures`, and `elapsed_seconds`. Replacement hashes are
+  enforced only for healthy, complete `sync` plans; incomplete audit evidence
+  remains reportable without authorising mutation. Per-post
+  `archive_media_updated_at` is archive-only freshness; canonical `modified`
+  dates remain unchanged.
+- Media implementation audits all mapped archived image URLs with full GETs,
+  two concurrent workers, 20-second per-request child-process limits, a
+  15-minute parent deadline, and aggregate/file byte bounds. Incomplete audits
+  cannot authorise mutation. Changed-media audits block retirement and may
+  authorise only the verified atomic synchronisation batch. Full-suite and
+  repository gates pass; no further live audit is needed for handoff.
+- Owner decisions supersede older pending lists below: VoiceOver cancelled;
+  GitHub-only continuity accepted; search discovery remains pending. Backup and
+  media detection and guarded weekly execution are verified above.
+
+### Completed: Approved Dependency Rollout
+
+Historical checkpoint: pending items below are superseded by the current
+Owner Review / Deferred Decisions list; they are not renewed owner requests.
+
+- Owner approved PRs #1-#4 for sequential merging on 2026-11-01. Merge order:
+  #2 Python setup, #3 checkout, #4 Pages upload, #1 Pages deployment.
+- Exact reviewed heads, CI and mergeability were rechecked; all four were
+  merged normally without branch deletion. Main CI and exact-revision Pages
+  deployment passed after each merge before the next PR was merged.
+- Normal manual reconciliation and its Pages successor passed after the
+  sequence. Existing local documentation/report changes were preserved.
+- At this checkpoint, discovery, backup and continuity follow-ups remained;
+  backup and continuity were subsequently resolved as recorded above.
+- Background-only work; no Chrome foregrounding or screen-reader changes.
+- PR #2 merged as `4a81d9a`; CI `41331674605` and Pages `41331674608`
+  passed, with successful deployment `7476486456` for that exact revision.
+- PR #3 briefly conflicted with adjacent Python pin edits. Dependabot refreshed
+  its head to `28fdca8` before the implementer made any change; no manual clone,
+  edit or push occurred. The refreshed diff is exactly the four checkout pins,
+  preserving Python v7.1.0. Refreshed CI passed before merge.
+- Merge revisions: #2 `4a81d9a`, #3 `cf4d7ac`, #4 `d990fa5`, #1 `c222ce6`.
+  Final CI `41332155052`, Pages `41332155069` and exact-revision deployment
+  `7476552097` passed. Manual canonical run `41332235190` reported healthy,
+  no reconciliation changes, unchanged favicon and zero changed paths; it
+  skipped rendering and made no commit. Successor `41332270871` correctly
+  skipped duplicate publication using the existing successful deployment.
+- Live HTTP checks passed with no redirects and byte-identical local output
+  for homepage, sitemap, favicon, representative DS/Swer articles, workbook
+  and IPv6 visual. No source content, media or SEO-policy changes occurred.
+
+### Review Complete: Search Discovery and Dependencies
+
+- Owner authorised troubleshooting the open Google Search Console property
+  in Chrome and technical review of dependency updates for subsequent approval.
+- Background-only interaction remains required: no native app foregrounding,
+  browser zoom changes or screen-reader activation.
+- Coordinator owns Search Console diagnosis and durable records; a read-only
+  `explorer-luna` worker reviews Actions PRs #1-#4 and primary upstream evidence.
+- Dependency merges were initially deferred, then explicitly approved as
+  recorded above. Do not change unrelated Search Console properties.
+- Historical owner decisions (superseded): VoiceOver was deferred, backup and
+  continuity were pending, and same-URL image detection was future review.
+  Current decisions above cancel VoiceOver and resolve the other three items.
+- Search checks: the exact submitted project sitemap returns HTTP 200 XML
+  over IPv4/IPv6 without redirects; both copies parse and match. Google live
+  inspection successfully fetches both sitemap and homepage. The homepage
+  permits indexing and declares its correct archive-local canonical URL.
+  No manual actions or security issues are reported. Sitemap processing still
+  reports failure, and the homepage has no recorded index crawl. Root cause
+  is not established; live inspection success is not sitemap acceptance.
+- Homepage indexing was attempted once, but the UI did not acknowledge the
+  request. Owner follow-up: complete Request indexing on the homepage and
+  verify the confirmation, then revisit sitemap/index status after processing.
+  Do not request indexing of the XML or remove intentional article noindex.
+- Dependency review, owner approval, rollout and verification are complete
+  above. Only the current owner follow-up list remains actionable.
+
+### Completed: Reserved-Summary Reflow Fix
+
+- User requested correction of the native Chrome 400% zoom defect and a concise
+  owner-facing list of remaining checks/decisions.
+- Scope: reserved-summary grid sizing, a label-readability browser regression,
+  regenerated CSV-derived/Pages visual and manifest, and verification records.
+- Existing `implementer-luna` reader worker owns generator/test edits;
+  coordinator owns review, documentation, rendering and native Chrome QA.
+- Preserve exact prefix data, static singleton cards, native disclosure
+  behaviour, media bytes and all rights/SEO policy.
+- Verify focused/full regressions, render determinism, offline integrity,
+  safety scan, responsive expanded layouts and native 400% zoom. Leave
+  VoiceOver unchanged; restore Chrome zoom after the check.
+- Publication authorised by owner after local verification: normal commit/push
+  to main, then verify the explicit Pages deployment and live route.
+- Fix: at widths through 760 CSS px, count, label and exact range occupy
+  separate rows beside the disclosure marker. Wider presentation is unchanged.
+- Local Chrome verification: all 13 labels passed at 320, 360, 378, 390, 480,
+  481, 540, 640, 760, 761, 768, 1024, 1440, 1920 and 2560 CSS px, with no
+  page-level horizontal overflow. Native menu-confirmed 400% zoom passed:
+  the formerly 2.37px-wide label is about 198px wide and one line tall.
+  The original 100% zoom was restored. User then requested background-only
+  work; no further foreground Chrome actions are authorised in this task.
+- Added all-label browser checks, breakpoint-boundary cases and a generated
+  CSS assertion in the CI Python suite. Final publication verification uses
+  background HTTP/deployment checks rather than further foreground UI.
+- Final local gates passed: 114 regression tests, Python compilation,
+  deterministic repeated rendering, offline validation (zero errors/warnings),
+  public-safety scan and whitespace checks. Changed generated material is
+  limited to visual CSS and its manifest byte counts/checksums.
+- Published fix: `eac4ebf`; read-only CI `41328369083` and Pages deployment
+  `41328369091` passed. Background HTTP retrieval of the deployed visual is
+  byte-identical to the locally browser-tested output (SHA-256
+  `0dfcbfc5aa4ba721ecadeda844fb7419be683f30770a67f98e701fbaf9a0d61e`).
+  No further foreground browser interaction was performed after the request
+  to work in the background. Next action: owner reviews/decisions below.
+
+### Owner Review / Deferred Decisions
+
+- Screen reader: cancelled by owner. VoiceOver remains unchanged; do not list
+  it as an outstanding owner action or claim screen-reader verification.
+- Search accounts: Google diagnosis above is complete; sitemap Success and
+  homepage indexing remain unverified. Finish the unacknowledged homepage
+  indexing request when convenient. Bing registration remains a separate
+  owner decision and was not accessed.
+- Dependencies: completed. PRs #2 (Python setup), #3 (checkout), #4 (Pages
+  upload) and #1 (Pages deployment) are merged, with main CI and live deployment
+  verification after each, plus successful manual canonical/no-op deployment
+  checks. Evidence is in `IMPLEMENTATION_STATUS.md`.
+- Preservation: private GitHub snapshot, offline restore and first manual
+  workflow verified. Weekly Tuesday backups are active with the accepted
+  permanent no-payment-method/free-tier-only policy. No billing action remains.
+- Continuity: GitHub-only automation accepted. No independent scheduler or
+  maintainer nomination is required by this task; same-account/provider risks
+  remain explicit limitations.
+- Same-URL image replacements: deployed and verified above; no owner action.
+
+### Completed: Archive Reliability and Preservation Hardening
+
+- Approved scope: retain one repository/project Pages URL, GitHub-only
+  automation, and add a local preservation export with restore verification.
+  Off-site storage, external scheduling, history rewriting and new hosting
+  accounts are out of scope.
+- Starting revision: `2481786790e57fe967cbdec44fda52a17e057e68`; clean main.
+- Invariants: preserve proprietary rights and attribution, exact media bytes,
+  source-first SEO, atomic updates, seven-day retirement confirmation, and
+  owner-verified recovery. Monitoring observations never authorise mutation
+  by themselves; blocked or invalid observations never advance source freeze.
+- Delivery sequence:
+  1. Reconciliation/health: offline integrity versus live comparison,
+     classified bounded requests, pagination, exact retirement registry delta.
+  2. Reader safety: maintained allowlist sanitiser, contained evidence,
+     keyboard/focus/responsive/print verification.
+  3. CI/deployment/discovery: hashed dependencies, pinned Actions, read-only
+     CI, explicit validated Pages deployment/retry, sitemap navigation,
+     removal of ineffective project-subdirectory robots output.
+  4. Preservation: approved-commit BagIt-compatible export outside the repo,
+     full checksum verification and isolated offline restore test.
+- Coordinator owns integration, architecture, durable documentation, review
+  and publication. Delegated implementers have non-overlapping file ownership.
+- Verification gates: regression suite, schema and offline integrity,
+  deterministic generation, safety scan, browser width/keyboard tests, live
+  comparison separately, normal push and non-destructive workflow/deployment
+  verification. Record manual accessibility checks honestly; automated tests
+  alone do not establish conformance.
+- Historical owner decision (superseded): leave VoiceOver unchanged and defer
+  screen-reader QA. It is now cancelled, not pending; browser/keyboard checks
+  must not be reported as screen-reader verification.
+- Local checkpoint: `ff6e6ae` contains classified bounded source health,
+  strict pagination, case-insensitive response headers and diagnostic-only
+  frozen probes. The owner-verified manager remains the recovery authority.
+- Current evidence: 114 regression tests passed, offline and separate live
+  validation both report zero errors/warnings, and a live dry-run found
+  19/19 posts with no content drift. The four implementation commits were
+  normally pushed and the Pages publishing mode changed to workflow.
+- Previous automated browser and generation gates passed: 80 route/width/theme combinations
+  plus keyboard, print, no-JavaScript, text enlargement and viewport-reflow
+  checks passed. Repeated rendering changes no bytes. Subsequent native Chrome
+  400% zoom QA found a label-readability defect despite no page-level overflow:
+  the first nested reserved /64 summary gives its `Reserved` label only about
+  2.37 CSS px, wrapping the word vertically. The summary itself is about
+  244 CSS px wide at a 378 CSS-pixel viewport. Width-only checks missed this.
+  Homepage, DS/Swer article prose, workbook keyboard switching, skip navigation,
+  bulk hierarchy controls and podcast fallback links passed the sampled checks.
+  All 21 expandable disclosures open via Expand all and close via Collapse all;
+  15 singleton reserved cards remain static. Original 100% zoom was restored.
+- Export verification: 492 payload files from clean commit `134438e`, original
+  and extracted checksum verification, network-blocked offline validation and
+  the full restored-reader browser matrix passed. The local package is not an
+  off-site copy.
+- Hosted verification: CI `41326702821`, Pages `41326702763`, manual canonical
+  run `41326791847` and its Pages successor `41326833002` passed. The canonical
+  clean path skipped content rendering and its deployment recorded the new
+  bot revision `0a8192d`, not the older triggering revision.
+- Reflow follow-up: corrected, published and verified as recorded above.
+  The then-pending screen-reader, backup and continuity decisions are
+  superseded by the current owner list. Do not claim accessibility conformance;
+  dependency rollout is complete.
+
+- Current state:
+  - Complete and hosted verified: owner-selected proprietary rights apply to
+    Daryll Swer-owned content, with Swer Networks ownership and third-party
+    terms retained. Resolved rights are enforced consistently through
+    synchronisation and publishing. Development-history maintenance, Pages
+    publication, obsolete hosted-record removal, and restoration of scheduled
+    automation are complete. Current-tree verification passes:
+    60 tests, zero mirror errors/warnings, public-safety and whitespace checks,
+    a repeat-migration no-op, unchanged binary assets and preserved source
+    fingerprints/fetch times. Isolated history verification is complete:
+    90 commits preserve topology/authorship/dates, all targeted object/path/
+    message/archive scans are clear, binary snapshots are unchanged, and
+    positive stored-file/provenance comparisons introduce no new mismatches.
+    Published with an explicit remote lease. Fresh-clone and live-route checks
+    pass; 61 obsolete Actions runs and 44 obsolete deployment records were
+    removed. Scheduled reconciliation is active, and manual run 39706985755
+    passed with normal rendering/validation and a status-only bot commit.
+    Pages deployments 39706509967, 39707035073, and 39707155884 succeeded.
+    The final delivery record is commit `8dc0825`; local branch/index alignment
+    is verified and the temporary workspace recovery note is removed. The
+    owner declined continued retention of the verified private rollback
+    bundle, which has been deleted; other private migration evidence remains
+    outside the repository. Next: normal weekly maintenance; routine
+    automation never rewrites Git history.
+  - Complete and hosted verified: scheduled GitHub Actions run `31993154684` completed its
+    canonical and external-source checks, then failed in the final commit step
+    because normal `source_primary` intentionally omits `docs/feed.xml` while
+    the workflow passed that absent optional path to `git add`. The repair now
+    uses root-scoped all-state staging followed by the existing strict
+    post-staging allowlist, so permitted additions, modifications, and
+    deletions are staged without literal optional-path dependence. Static
+    validation and focused regression tests reject a return to the unsafe
+    pattern. Commit `27a151c` was pushed to `main`; clean manual run
+    `32002363426` passed all executed steps in 17 seconds, with normal
+    no-change gating and no staging pathspec failure.
+  - Locally complete: source-first archive SEO keeps only the archive homepage
+    indexable while DS is healthy. The new non-reverting `archive_discovery`
+    state activates only after the existing DS frozen threshold, generates the
+    archive sitemap and feed, and permits a registry-marked Swer Networks
+    repost only after its independent source is `frozen_source`. Recovery is
+    owner-verified and manual through `docs/SEO_RECOVERY.md`. Google
+    verification, workflow gating, external source monitoring, raw-snapshot
+    redirect containment, schemas, validation, and tests are implemented.
+    Commit `0f028d4` is on `main`; GitHub Pages deployment `31978596471`
+    completed successfully. Live verification confirmed the requested normal
+    state: one homepage Google verification tag, homepage-only sitemap,
+    absent feed, local canonical/Open Graph URLs, BGP `noindex,follow`, and
+    zero browser console errors.
+  - Complete and GitHub-rendered verified: the README Copyright and Licences
+    section uses readable semantic asset links and separate licence, brand,
+    provenance, and third-party paragraphs. All four direct asset destinations
+    and proprietary-rights language remain intact. The validator requires the
+    semantic links and rejects the legacy raw-path form. Commit `52d0aad`
+    renders all four links to their expected public repository files.
+  - Complete and hosted-verified: the archive landing page title and Open Graph title are
+    `daryllswer.com – Archive`. The archive remains at its dedicated project
+    Pages URL; the account-level `daryll-swer.github.io` namespace is reserved
+    for a future landing page. Commit `9f03874` deployed through GitHub Pages
+    run `31970160414`; live homepage and article checks passed without console
+    errors.
+  - Complete locally: replaced the ambiguous default-content licence wording
+    with a registry-backed per-post rights model. The BGP Router ID republication is
+    proprietary Swer Networks content, all rights reserved; its source-sitemap
+    exception is neutral and has no GitHub Pages SEO effect.
+  - Complete locally: `content/rights-registry.json` now maps WordPress ID
+    `5324` to Swer Networks proprietary article-text rights. Safe targeted
+    reconciliation refreshed the post's Markdown, source evidence, media
+    manifest, archive manifest, generated route, and exact metadata projection.
+    The registry allows an empty state only when no archived protected post
+    remains; a retirement removes its entry transactionally. All Pages
+    canonical and `og:url` values are verified to use the GitHub Pages route.
+    Commit `217fb91` deployed through GitHub Pages run `31974261872`; the live
+    BGP route retained the rights notice and original link exactly once, had no
+    browser console errors or horizontal overflow, and exposed no DS/SN source
+    canonical, robots, or Open Graph URL directive.
+  - Complete and hosted-verified: encoder-dependent favicon churn is removed
+    and every verified existing-post edit is eligible for an all-or-nothing
+    reconciliation batch. The controlled 512 px derivative is copied
+    byte-for-byte during rendering. Commit `d303643` passed the manually
+    dispatched canonical workflow `31966939174`; its clean path skipped both
+    Pages rendering and post-reconciliation work. The permitted status-report
+    commit `0c3a429` deployed through GitHub Pages run `31966955910`.
+  - Complete locally: the reconciliation workflow now separates health from
+    content state, confirms only one missing WordPress ID across two healthy
+    weekly observations at least seven days apart, and requires direct REST
+    and canonical `404`/`410` evidence before removing its current-tree
+    bundle and regenerated Pages route. No history rewrite occurs. Candidate
+    state is cleared after retirement; intentional dead local routes are
+    inferred from existing Markdown links rather than retained in a public
+    retirement registry. Five temporary-repository tests and all standard
+    rendering, validation, compile, and public-safety checks pass locally.
+  - Complete locally: singleton reserved allocations now group into one
+    responsive static-card grid per immediate hierarchy parent. The Delhi
+    `/40` grid contains all 15 reserved `/44` allocations (`Delhi-02` through
+    `Delhi-16`) after active children and before multi-prefix reserve ranges.
+    All 13 multi-prefix reserved summaries remain collapsed native disclosures
+    whose expanded content retains responsive cards. Generator and validation
+    bind every singleton grid to its exact CIDR parent. Commit `314a949` is
+    deployed by GitHub Pages build `30092569178`; live route verification
+    passed.
+  - Complete and deployed: 15 one-prefix reserved allocations render as static leaf
+    cards, not empty native disclosures. Only the 13 reserved summaries that
+    represent multiple exact prefixes remain expandable. Generator,
+    validation, generated Pages output, documentation, and responsive browser
+    QA are complete. Commit `25f693b` is deployed by GitHub Pages build
+    `1112361417`; live 320 px verification passed.
+  - Complete locally: the sole public AS141253 hierarchy visual has one
+    header divider only, no avoidable content-to-footer spacing, correct
+    reserved-prefix `+`/`-` disclosure markers, and progressive-enhancement
+    `Expand all` / `Collapse all` controls. The script neither opens
+    disclosures at load nor loads an external dependency, and native per-node
+    controls remain the fallback. The root README links each named proprietary
+    asset path directly to its repository file.
+  - Complete: renamed the logo and favicon provenance records to
+    `assets/readme/ASSET_PROVENANCE.md` and
+    `assets/brand/ASSET_PROVENANCE.md`. Documentation now identifies
+    `LICENSES/DARYLL-SWER-PROPRIETARY-ASSET-NOTICE.txt` as the controlling
+    legal notice and both provenance files as non-licence preservation records.
+    Validation requires the new paths and rejects either legacy asset
+    `README.md` path or textual reference. Logo/favicon bytes, sizes,
+    manifests, checksums, and licence boundaries are unchanged. Commit
+    `9a1fefa` is deployed by GitHub Pages run `30081615905`; the rendered
+    public README has one correct link each to the logo provenance record and
+    controlling notice, and both target pages load successfully.
+  - Complete: every AS141253 full-hierarchy disclosure is closed on a fresh
+    `visual.html` load. The generator emits no `open` attributes for hierarchy
+    disclosures and validation rejects their reintroduction in either source
+    or generated Pages output. Native per-node and reserved-range expansion
+    remains available.
+  - Complete: cleanup inventory found no obsolete tracked repository files or
+    dead active scripts. Local ignored caches, preview output, Python bytecode,
+    and Finder metadata were moved to the macOS Trash; the active source,
+    Pages output, provenance, licences, JSON/DOT audit artefacts, and
+    developer/AI legacy reference remain intentionally retained.
+  - Complete: scheduled canonical drift run `29229277522` reached a
+    healthy drift state but failed at `make validate` because the clean
+    GitHub-hosted runner did not install the declared `lxml` dependency. The
+    workflow now has explicit Python setup, requirements installation, and a
+    static local regression guard. Manual hosted-runner run `29231087908`
+    passed every step.
+  - Complete: added the owner-provided proprietary Daryll Swer logo as the
+    README header, with a separate all-rights-reserved notice, checksum
+    provenance, explicit exclusion from the repository's tooling licence,
+    and a validation guard. The logo links to the
+    local `#copyright-and-licences` section rather than the canonical site.
+  - Complete: the generated Pages text-only `DS` badge is replaced by
+    the owner-provided official favicon. The source remains byte-exact under
+    `assets/brand/`; a generated 512 px proprietary derivative serves the
+    header and browser favicon without publishing the full-resolution source.
+  - Complete: `cidr-hierarchy.html` is retired as a redundant public
+    proof-of-concept page. Generation, source/Page output, and public
+    navigation now use `visual.html` only; CSV-derived JSON and DOT hierarchy
+    artefacts remain developer-facing source material.
+  - Complete: owner selected the existing Full hierarchy disclosure
+    model as the sole public AS141253 visual. Historical visual-design logic is
+    documented outside `docs/`, while the generated Pages tree contains only
+    `visual.html`; all four retired Pages routes return 404.
+  - Complete: archive published to `daryll-swer/daryllswer.com-archive`; old `daryll-swer/daryllswer.com-neteng-blog` repo deleted.
+  - Complete locally: sponsor/trial lead CTAs are filtered from generated article bodies, and same-post numbered reference markers are rewritten to source URLs where extractable.
+  - Complete locally: static GitHub Pages site generated under `docs/` with a home index, article pages, responsive figures, podcast embed fallbacks, and AS141253 sheet landing page.
+  - Complete locally: desktop and 390x844 mobile browser QA passed for homepage, IPv6 article, responsive figures, media embeds, and sheet landing page.
+  - Complete locally: the AS141253 sheet README has clickable artefact links and generated text artefacts are normalised for stable diffs.
+  - Complete: GitHub Pages publishes `main` `/docs` at `https://daryll-swer.github.io/daryllswer.com-archive/`.
+  - Complete locally: README is reader-focused; maintainer commands moved to `AGENTS.md` and `docs/MIRRORING.md`.
+  - Complete locally: WordPress media downloads preserve URL basenames and direct response bytes wherever possible, with filename-preservation fields in asset manifests.
+  - Complete locally: AS141253 sheet is rendered as a CSV-backed tabbed `workbook.html` and generated Pages workbook.
+  - Complete locally: generated root navigation/canonical handling now uses clean GitHub Pages directory URLs instead of human-facing `index.html` links.
+  - Complete locally: three requested articles were targeted-refreshed from canonical WordPress and now use the updated featured images:
+    `Shortcomings_CGNAT_FT-scaled.jpg` and `Multi_WAN_FT-scaled.jpg`.
+  - Complete locally: targeted sync support was added to `scripts/sync-wordpress-posts.py` so future refreshes can avoid rewriting every post bundle.
+  - Complete locally: canonical drift automation was added with a weekly/manual GitHub Actions workflow, `archive-status.json`, and `docs/CANONICAL_DRIFT.md`.
+  - Complete locally: drift automation uses a `healthy` -> `degraded` -> `canonical_unavailable` -> `frozen_archive` state model; `frozen_archive` no-ops before canonical network requests.
+  - Complete locally: AS141253 has CSV-derived IPv6 prefix-containment JSON and Graphviz DOT artefacts for developer/AI use.
+  - Complete: validation and browser QA passed for refreshed article featured images, workbook link, and CIDR hierarchy page.
+  - Complete: implementation and follow-up commits pushed to `main`; GitHub Pages deployed successfully and live routes were verified.
+  - Complete: the manual `Canonical drift check` workflow passed on final commit `0cc7437` after switching the drift checker to a browser-compatible archive User-Agent.
+  - Complete locally: canonical CSS was verified from public HTML/CSS; the
+    generated archive now self-hosts `Poppins` for body/content text and
+    `Raleway` for headings/titles from `assets/fonts/`.
+  - Complete locally: internal article-body links to mirrored daryllswer.com
+    posts are rewritten to archive-local targets in both repository Markdown
+    and generated Pages output, while non-archived canonical pages remain
+    external.
+  - Complete locally: generated Pages preserves WordPress `h-...` heading IDs
+    and emits non-`h-` alias anchors where needed, including the BGP Router ID
+    link to the OOB `#dns-and-loopback-addressing` section.
+  - Complete locally: validation now checks self-hosted font assets, generated
+    CSS font markers, localisable canonical post links, and generated local
+    fragment targets.
+  - Complete: responsive generator CSS was tightened after mobile QA
+    exposed a misleading cropped Chrome screenshot; CDP mobile emulation
+    verified a 390 px viewport with no page-level overflow.
+  - Complete: commit `b5fba11` was pushed to `main`; GitHub Pages deployment
+    run `28862244073` completed successfully; live routes/assets were verified
+    with HTTP 200 responses.
+  - Complete locally: generated article headings now expose human-shareable
+    section controls. Plain headings have clickable title text, all headings
+    get visible `#` permalinks, and all headings get `Copy` buttons backed by
+    generated `docs/assets/archive.js`.
+  - Complete locally: archive home typography is explicitly bound to the
+    self-hosted `Poppins` body font and `Raleway` heading/card-title font.
+  - Complete locally: canonical drift now treats third-party documents, PDFs,
+    downloads, and external artefacts as outbound links rather than
+    mirror-required media. The A10 PDF drift item is cleared.
+  - Complete: commit `471cff3` was pushed to `main`; GitHub Pages deployment
+    run `28878086332` completed successfully; live static and browser checks
+    verified home fonts, BGP heading controls, copy-link behaviour, and clean
+    drift output.
+  - Complete locally: WordPress inline colour classes from canonical source
+    HTML are preserved into generated Pages article HTML and styled through
+    generated WordPress preset palette CSS.
+  - Complete locally: canonical/public REST audit found only one current
+    coloured article, `bgp-router-id-structuring-in-ipv6-native-networks`,
+    using `has-inline-color`, `has-luminous-vivid-amber-color`,
+    `has-vivid-red-color`, and `has-luminous-vivid-orange-color`.
+  - Complete: commit `d33e889` was pushed to `main`; GitHub Pages deployment
+    run `28879142430` completed successfully; live static and browser checks
+    verified the WordPress palette CSS and BGP Router ID colour rendering.
+  - Complete: AS141253 IPv6 visual representation alternatives are
+    rendered as generated static HTML/CSS examples from the existing CSV
+    prefix model. The gallery includes spatial blocks, prefix-length lanes,
+    nibble ladder, branch cards, and purpose swimlanes.
+  - Complete: commit `4af073b` was pushed to `main`; GitHub Pages deployment
+    run `28883547390` completed successfully; live static and browser checks
+    passed for the visual-options gallery and five standalone pages.
+  - Complete locally: AS141253 visual options have been pruned from eleven
+    exploratory generated models down to three owner-selected foundations:
+    branch cards, collapsible dendrogram, and purpose cluster graph. The
+    discarded standalone source and Pages HTML files were deleted.
+  - Complete locally: `scripts/ipv6_visual_options.py` now only generates the
+    selected foundations, and `scripts/validate-mirror.py` rejects stale
+    discarded option titles/files if they reappear.
+  - Complete locally: source artefacts and generated Pages output were
+    regenerated from existing CSV data after the public Google Sheet HTML fetch
+    timed out. No canonical sheet content update was required for this visual
+    pruning step.
+  - Complete: commit `54248e2` was pushed to `main`; GitHub Pages deployment
+    run `28922937285` completed successfully; live static and browser checks
+    passed for the pruned three-foundation gallery.
+  - Complete locally: branch-card visual foundations now render CSV `Notes`
+    values for parent and child prefixes, use bounded child cards, and wrap
+    prefix chips so mobile/narrow views do not bleed text to the card edge.
+  - Complete locally: collapsible dendrogram summaries now render CSV `Notes`
+    values beside the matching prefix node.
+  - Complete locally: purpose cluster graph data now carries CSV `notes` into
+    the detail panel, while per-node SVG labels are suppressed in favour of
+    persistent purpose labels plus click-to-inspect detail. This removes the
+    observed label-overlap failure mode.
+  - Complete: commit `445e5a5` was pushed to `main`; GitHub Pages deployment
+    run `28925442002` completed successfully; live static and browser checks
+    verified branch notes, dendrogram notes, no page overflow, and
+    overlap-safe purpose graph selection.
+  - Complete locally: branch-card `+N more` affordances are native
+    `details`/`summary` disclosures, not inert count labels. The first twelve
+    children remain visible, and remaining children expand/collapse without
+    custom JavaScript.
+  - Complete locally: selected visual foundations use a responsive contract
+    based on viewport metadata, CSS Grid/Flex wrapping, media queries,
+    `min-width: 0` containment, and bounded `.visual-frame` panning for dense
+    graph/tree content. Local browser QA passed at 320, 390, 768, 1024, 1440,
+    1920, and 2560 px viewport widths with no page-level horizontal overflow.
+  - Complete: commit `a913272` was pushed to `main`; GitHub Pages deployment
+    run `28926454066` completed successfully; live static and browser checks
+    verified branch disclosures and responsive behaviour.
+  - Complete: expanded responsive QA initially found a `360px`
+    page-level overflow caused by the shared metrics grid, not by the visual
+    sections. `scripts/ipv6_visual_options.py` now lets metrics cards and
+    metric values shrink/wrap with `min-width: 0`, `minmax(min(100%, 10rem),
+    1fr)`, and `overflow-wrap: anywhere`.
+  - Complete: the expanded matrix now passes for 40 CSS-pixel widths
+    across all four visual pages: 320, 360, 390, 430, 479/480, 575/576,
+    599/600, 639/640, 759/760, 767/768, 899/900, 979/980, 991/992,
+    1023/1024, 1199/1200, 1279/1280, 1366, 1399/1400, 1439/1440, 1535/1536,
+    1599/1600, 1919/1920, and 2560.
+  - Complete: commit `09c1cd0` was pushed to `main`; GitHub Pages deployment
+    run `28962375073` completed successfully; live static checks and
+    Chrome/Playwright browser checks passed for the four selected visual pages.
+  - Complete locally: `scripts/ipv6_visual_options.py` now generates
+    `visual.html` as the primary AS141253 IPv6 visual model, combining
+    branch-card readability, native disclosures, collapsed reserved-prefix
+    summaries, a static purpose minimap, and a full disclosure hierarchy.
+  - Complete locally: workbook navigation, sheet README, repository Markdown,
+    and generated article Pages output now prefer `visual.html` for the
+    AS141253 Google Sheet replacement path.
+  - Complete: commits `b14c2f3` and `1c56c33` were pushed to `main`.
+    GitHub Pages deployment run `28965936383` completed successfully for
+    final commit `1c56c33`.
+  - Complete: live GitHub Pages checks passed for `visual.html`, the
+    AS141253 workbook route, and the IPv6 article route. Chrome DevTools
+    Protocol live QA passed for `visual.html` at 320, 390, 768, 1440, and
+    2560 px widths with no page-level horizontal overflow, working reserved
+    disclosures, and working SVG minimap anchors.
+- Last material update:
+  - 2026-08-17: implemented deterministic favicon preparation and full
+    canonical update reconciliation locally. The controlled 512 px derivative
+    is byte-copied into Pages and remained SHA-256 stable across repeated
+    renders. A clean healthy REST comparison backfilled raw canonical-body
+    fingerprint baselines for all 19 bundles. Unit/integration tests now cover
+    master-change/no-op/tamper behaviour, all-existing update plans, staged
+    failure, and rollback. Commit `d303643` was pushed, canonical workflow
+    `31966939174` passed with its clean render path skipped, and GitHub Pages
+    run `31966955910` deployed the permitted status-report follow-up.
+  - 2026-07-24: completed local generation, structural validation, and browser
+    QA for responsive reserved-prefix card grids. The singleton grid has 15
+    direct static leaves and no disclosure controls; all 13 multi-prefix
+    ranges retain their native disclosures. The local visual passed at 320,
+    390, 768, 1024, 1440, 1920, and 2560 CSS px with no page-level horizontal
+    overflow or console errors. Commit `314a949` is deployed by GitHub Pages
+    build `30092569178`; the live visual returned HTTP 200 and passed the
+    singleton-grid structural smoke check.
+  - 2026-07-24: began the AS141253 reserved-prefix disclosure refinement after
+    confirming that 15 singleton reserved groups are redundant disclosures and
+    13 multi-prefix groups remain useful expandable range summaries.
+  - 2026-07-24: completed local generation, validation, and browser QA for the
+    refinement. `Delhi-12` (`2400:d960:8b0::/44`) is a static leaf; all 13
+    multi-prefix reserved ranges retain exact expandable children. The page
+    remains closed on load with no overflow at 320, 390, 768, 1024, 1440,
+    1920, and 2560 px. Commit `25f693b` is deployed by GitHub Pages build
+    `1112361417`; live 320 px checks passed for singleton/static and bulk
+    disclosure behaviour with no console entries.
+  - 2026-07-24: completed local regeneration, validation, and browser QA for
+    the bounded AS141253 hierarchy UI refinement and README proprietary-asset
+    link improvement. All 78 disclosures load closed; normal and reserved
+    controls, bulk expansion/collapse, and no-overflow checks passed at 320,
+    390, 768, 1024, 1440, 1920, and 2560 px viewports. Commit `970ac19` is
+    deployed by GitHub Pages build `1112336857`; live 320 px verification
+    confirmed the bulk controls and no console entries.
+  - 2026-07-24: replaced ambiguous proprietary brand-asset README records with
+    consistently named provenance records. The root README, licence map,
+    controlling notice, architecture, validator, and generated validation
+    report now distinguish provenance from the rights instrument. Local checks
+    passed: no legacy references, `py_compile`, whitespace validation, archive
+    validation with 0 errors/1 known warning, and public-safety scan. Commit
+    `9a1fefa` is deployed by GitHub Pages run `30081615905`; public GitHub
+    README provenance and controlling-notice links both resolved to their
+    expected rendered headings.
+  - 2026-07-24: made the AS141253 hierarchy closed by default with native HTML
+    disclosures, regenerated source and Pages output, and added validation for
+    the no-`open` invariant. Local browser QA passed at 320, 390, 768, 1024,
+    1440, 1920, and 2560 CSS px with no page-level overflow or console errors.
+    The cleanup audit removed no tracked files; only proven ignored local
+    transients were moved to the macOS Trash. Commit `a93ef72` is deployed by
+    GitHub Pages run `30080507753`; the live `visual.html` returned HTTP 200
+    and exposed zero hierarchy `details[open]` elements.
+- Next pickup action:
+  - No implementation pickup is pending for this workstream. The remaining
+    owner action is to verify the Google URL-prefix property and submit the
+    public sitemap as recorded in the delivery report.
+- Open blockers or risks:
+  - None.
+- Verification gap:
+  - None.
+
+## Purpose / Big Picture
+
+- Problem statement:
+  - Build a public, reproducible GitHub archive for daryllswer.com published posts and supporting artefacts.
+- Desired behavior:
+  - A human, Codex thread, or other tooling can inspect Markdown, source HTML, metadata, images, and spreadsheet data without needing WordPress access.
+- Acceptance target:
+  - Local repo contains scripts, schemas, manifests, mirrored content, featured images, spreadsheet artefacts, validation output, and public-safety checks.
+
+## Plan of Work
+
+### Milestone 1: Scaffold
+
+- Scope:
+  - Create repo docs, schema layout, task runner, public-safety defaults, and implementation scripts.
+- Done:
+  - The repo has a parseable structure matching the prompt and can run `make sync`, `make validate`, and `make scan-secrets`.
+
+### Milestone 2: Public Sync
+
+- Scope:
+  - Fetch published WordPress posts, canonical pages, images/media, featured images, and the Google Sheet artefact from public endpoints.
+- Done:
+  - Content directories and data artefacts exist with manifests and checksums.
+
+### Milestone 3: Validate
+
+- Scope:
+  - Validate metadata schemas, local links/assets, spreadsheet tabs/checksums, and secret-scan coverage.
+- Done:
+  - `docs/VALIDATION.md` records commands run, pass/fail status, gaps, and next approvals.
+
+### Milestone 4: GitHub Pages Site
+
+- Scope:
+  - Generate a static HTML site from mirrored content and spreadsheet artefacts.
+- Done:
+  - `docs/index.html`, `docs/posts/`, `docs/assets/theme.css`,
+    `docs/sheets/`, and `docs/.nojekyll` are generated by
+    `scripts/render-site.py`.
+
+## Progress
+
+- [x] 2026-07-06 09:07 UTC Read attached implementation prompt.
+- [x] 2026-07-06 09:07 UTC Confirmed workspace is an empty Git repo with no commits and no configured remote.
+- [x] 2026-07-06 09:07 UTC Scaffold archive repo.
+- [x] 2026-07-06 09:17 UTC Run first public sync.
+- [x] 2026-07-06 09:19 UTC Run validation: 0 errors, 1 warning.
+- [x] 2026-07-06 09:20 UTC Run public-safety scan: passed, 0 findings.
+- [x] 2026-07-06 09:20 UTC Generate local preview under `.preview/index.html`.
+- [x] 2026-07-06 09:30 UTC Added donation/support CTA archive filter, regenerated, and validated.
+- [x] 2026-07-06 09:32 UTC Applied MIT to scripts/tooling and updated licensing docs.
+- [x] 2026-07-06 09:35 UTC Owner selected repo name `daryllswer.com-archive`.
+- [x] 2026-07-06 09:37 UTC Created and pushed `daryll-swer/daryllswer.com-archive`.
+- [x] 2026-07-06 09:37 UTC Deleted old repo `daryll-swer/daryllswer.com-neteng-blog`.
+- [x] 2026-07-06 09:50 UTC Added sponsor/trial CTA filtering and direct source URL rewrites for numbered reference markers; regenerated archive and validated.
+- [x] 2026-07-06 11:40 UTC Added generated GitHub Pages site under `docs/`, local linked-media archiving, Markdown embed fallback links, and AS141253 sheet link rewrites.
+- [x] 2026-07-06 11:54 UTC Browser-checked generated Pages output on desktop and 390x844 mobile.
+- [x] 2026-07-06 12:03 UTC Added clickable AS141253 sheet README artefact links and generated text artefact normalisation.
+- [x] 2026-07-06 12:06 UTC Pushed generated Pages site, enabled Pages from `main` `/docs`, and verified live homepage HTTP 200.
+- [x] 2026-07-06 12:45 UTC Moved maintainer commands out of README and into directive/process docs.
+- [x] 2026-07-06 12:45 UTC Added WordPress media filename preservation and manifest validation.
+- [x] 2026-07-06 12:45 UTC Added CSV-backed tabbed AS141253 workbook generation.
+- [x] 2026-07-06 12:51 UTC Regenerated and browser-checked the updated Pages output.
+- [x] 2026-07-06 12:54 UTC Validated, committed `07bd31c`, pushed to `main`, and verified GitHub Pages rebuild.
+- [x] 2026-07-06 13:34 UTC Implemented clean GitHub Pages root URL navigation/canonical rule.
+- [x] 2026-07-06 13:39 UTC Regenerated, validated, and browser-checked clean root links locally.
+- [x] 2026-07-06 13:48 UTC Committed `f20fc90`, pushed, retried transient Pages deploy failure with empty commit `b4cd2fc`, and verified live clean root links.
+- [x] 2026-07-06 17:49 UTC Target-refreshed the three requested posts from canonical WordPress.
+- [x] 2026-07-06 17:53 UTC Added canonical drift checker, status/report files, and weekly/manual GitHub Actions workflow.
+- [x] 2026-07-06 17:59 UTC Added CSV-derived AS141253 IPv6 CIDR hierarchy JSON/DOT proof of concept.
+- [x] 2026-07-06 18:01 UTC Regenerated sheet artefacts and GitHub Pages output.
+- [x] 2026-07-06 18:04 UTC Validation, public-safety scan, script compile, whitespace check, and local browser QA passed.
+- [x] 2026-07-06 18:09 UTC Committed `76a5d2b`, pushed to `main`, verified Pages deployment success, and live-checked updated routes/assets.
+- [x] 2026-07-06 18:15 UTC Hardened the drift checker User-Agent after GitHub Actions saw HTTP 403, reset drift state to healthy, pushed `0cc7437`, and verified the manual workflow passed.
+- [x] 2026-07-07 10:57 UTC Verified canonical typography from public CSS and added self-hosted `Poppins`/`Raleway` WOFF2 assets with OFL provenance.
+- [x] 2026-07-07 10:57 UTC Added Markdown and Pages internal post-link rewrites that preserve fragments and keep non-archived canonical pages external.
+- [x] 2026-07-07 10:57 UTC Added WordPress heading alias anchors and validation for generated local fragment targets.
+- [x] 2026-07-07 10:57 UTC Regenerated 19 posts, 9 sheet tabs, and generated Pages output; validation/public-safety passed locally.
+- [x] 2026-07-07 11:15 UTC Browser/static QA passed for typography, BGP/OOB anchor navigation, AS141253 workbook/hierarchy pages, and 390 px mobile viewport.
+- [x] 2026-07-07 11:18 UTC Final local gates passed after regeneration.
+- [x] 2026-07-07 11:21 UTC Pushed `b5fba11`, Pages deployment `28862244073` succeeded, and live URLs/assets verified.
+- [x] 2026-07-07 15:25 UTC Implemented generated heading permalink/copy controls, explicit home font selectors, and third-party document drift exclusion.
+- [x] 2026-07-07 15:25 UTC Regenerated Pages and drift report; local validation/public-safety and CDP browser QA passed.
+- [x] 2026-07-07 15:28 UTC Pushed `471cff3`, Pages deployment `28878086332` succeeded, and live static/CDP browser checks passed.
+- [x] 2026-07-07 15:40 UTC Added WordPress preset colour CSS/validation, regenerated Pages output, and locally verified BGP Router ID computed colours.
+- [x] 2026-07-07 15:43 UTC Pushed `d33e889`, Pages deployment `28879142430` succeeded, and live colour output was verified.
+- [x] 2026-07-07 15:55 UTC Started AS141253 visual-options workstream and inspected CSV/hierarchy generator inputs.
+- [x] 2026-07-07 16:49 UTC Generated visual-options HTML/CSS prototypes from CSV hierarchy data and locally browser-checked desktop plus 390 px mobile layouts.
+- [x] 2026-07-07 16:53 UTC Pushed `4af073b`, Pages deployment `28883547390` succeeded, and live visual-option routes were verified.
+- [x] 2026-07-07 21:39 UTC Added six interactive AS141253 visual candidates and locally browser-checked the expanded eleven-option gallery.
+- [x] 2026-07-07 21:43 UTC Pushed `3c606f6`, Pages deployment `28900695345` succeeded, and live expanded-gallery routes were verified.
+- [x] 2026-07-08 06:32 UTC Pruned AS141253 visual-options source and Pages artefacts to the three selected foundations: branch cards, collapsible dendrogram, and purpose cluster graph.
+- [x] 2026-07-08 06:37 UTC Local validation, public-safety scan, browser QA, and removed-page 404 checks passed for the pruned three-foundation gallery.
+- [x] 2026-07-08 06:41 UTC Pushed `54248e2`, Pages deployment `28922937285` succeeded, and live static/browser checks passed for selected and discarded visual-option routes.
+- [x] 2026-07-08 07:23 UTC Added CSV note rendering to branch cards and collapsible dendrogram, tightened branch-card chip/card wrapping, and removed per-node SVG labels from the purpose cluster graph in favour of notes-aware detail-panel inspection.
+- [x] 2026-07-08 07:30 UTC Pushed `445e5a5`, Pages deployment `28925442002` succeeded, and live static/browser checks passed for the branch-card notes/wrapping, dendrogram notes, and purpose-cluster graph overlap fix.
+- [x] 2026-07-08 07:44 UTC Replaced inert branch-card `+N more` labels with native `details`/`summary` disclosures and locally verified all selected visual foundations across phone, tablet, desktop, and wide-display viewport classes.
+- [x] 2026-07-08 07:49 UTC Pushed `a913272`, Pages deployment `28926454066` succeeded, and live static/browser checks passed for branch-card disclosures plus responsive behaviour.
+- [x] 2026-07-08 17:21 UTC Ran the expanded responsive matrix, found and fixed the 360 px metrics-grid overflow, and verified 160 local page/viewport combinations with zero failures.
+- [x] 2026-07-08 17:29 UTC Pushed `09c1cd0`, Pages deployment `28962375073` succeeded, and live static/browser checks passed for the expanded responsive-matrix fix.
+- [x] 2026-07-08 18:03 UTC Implemented and generated primary AS141253 `visual.html` from the three selected foundations.
+- [x] 2026-07-08 18:13 UTC Local validation, public-safety scan, and Chrome/Playwright QA passed for `visual.html`, the workbook, and visual-foundation navigation.
+- [x] 2026-07-10 Implemented the hierarchy-only AS141253 public visual,
+  archived historical model references outside `docs/`, and locally verified
+  responsive reflow, native disclosures, public links, and retired-route 404s.
+- [x] 2026-07-15 Added the owner-provided proprietary Daryll Swer README logo,
+  dedicated rights notice, checksum manifest, and validation guard; local
+  validation passed with 0 errors and the safety scan found 0 findings.
+- [x] 2026-07-15 Changed the README logo link to the local
+  `#copyright-and-licences` section and added a regression assertion.
+- [x] 2026-07-15 Replaced the generated Pages `DS` text badge with the
+  owner-provided favicon; generated and validated the proprietary 512 px
+  header/browser derivative across the home, article, workbook, and visual
+  Pages routes.
+
+## Decision Log
+
+- Decision: Use `YYYY-MM-DD-slug` post bundle directories.
+  - Rationale: Lexical sorting and compatibility with common static-site tooling.
+  - Date/Author: 2026-07-06, Codex
+  - Status: final for local scaffold
+  - Impact: Post content lives under `content/posts/YYYY-MM-DD-slug/`.
+- Decision: Do not perform destructive GitHub remote actions in this run.
+  - Rationale: The prompt requires explicit confirmation first.
+  - Date/Author: 2026-07-06, Codex
+  - Status: final
+  - Impact: Work remains local unless the user later approves remote actions.
+- Decision: Exclude donation/support CTAs and `/donation/` article links from archived article bodies.
+  - Rationale: These are live-site operational content and would become stale or broken in the durable repo archive.
+  - Date/Author: 2026-07-06, Codex
+  - Status: final
+  - Impact: `make sync` filters these blocks; `make validate` fails if they reappear in generated article files.
+- Decision: Exclude sponsor/trial lead CTAs from archived article bodies.
+  - Rationale: Sponsor trial promotions are live-site operational content and can become stale or broken in a durable archive.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final
+  - Impact: `make sync` filters these blocks; `make validate` fails if they reappear in generated article files.
+- Decision: Rewrite same-article numbered reference anchors to source URLs.
+  - Rationale: GitHub readers should not be redirected back to WordPress `#h-references` anchors for citation numbers.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final
+  - Impact: `make sync` maps marker `1`, `2`, etc. to matching URLs in the References list, falling back to local `#references` if needed.
+- Decision: License scripts and tooling under MIT.
+  - Rationale: Owner explicitly selected MIT in side-thread decision.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final; article rights are governed separately
+  - Impact: MIT applies to scripts/tooling only. Owner-held article content is
+    proprietary; registry-marked reposts retain their explicit rights holder
+    and recorded rights classification.
+- Decision: Use GitHub repository name `daryllswer.com-archive`.
+  - Rationale: Owner selected the shorter archive name.
+  - Date/Author: 2026-07-06, user
+  - Status: final
+  - Impact: Local docs and remote publishing target use `daryll-swer/daryllswer.com-archive`.
+- Decision: Delete old GitHub repo `daryllswer.com-neteng-blog`.
+  - Rationale: Owner explicitly requested complete deletion after creating/pushing the new archive repo.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final
+  - Impact: Old repo no longer resolves via GitHub API.
+- Decision: Generate GitHub Pages from `docs/`.
+  - Rationale: GitHub Pages can publish a static HTML/CSS site from the repository while keeping source bundles in `content/` and `data/`.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final
+  - Impact: `scripts/render-site.py` generates homepage, article pages, sheet landing page, copied assets, and theme CSS under `docs/`.
+- Decision: Treat GitHub Pages as generated static output, not runtime dynamic content.
+  - Rationale: GitHub Pages is static hosting; deterministic regeneration is simpler and more durable than client-side fetching.
+  - Date/Author: 2026-07-06, Codex
+  - Status: final
+  - Impact: `make render-site` must be rerun after sync/rendering changes.
+- Decision: Normalise generated text artefacts for stable Git diffs.
+  - Rationale: The repository declares `*.csv text eol=lf`; writing Google CSV responses with source CRLF and generated HTML with trailing line whitespace creates avoidable Git churn.
+  - Date/Author: 2026-07-06, Codex
+  - Status: final locally
+  - Impact: `scripts/export-google-sheet.py` normalises CSV response bodies and Google Sheet HTML snapshots; `scripts/render-site.py` strips trailing line whitespace from generated Pages text output.
+- Decision: Keep `README.md` concise and reader-facing.
+  - Rationale: Maintainer commands are primarily for AI agents and future repository maintainers, not casual archive readers.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final locally
+  - Impact: README lists purpose/layout/licence only; `AGENTS.md` and `docs/MIRRORING.md` contain commands and approval boundaries.
+- Decision: Preserve WordPress media basenames and bytes.
+  - Rationale: Featured and inline images should remain 1:1 with public WordPress media responses, including embedded metadata/EXIF.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final locally
+  - Impact: Sync stores media under WordPress URL basenames, records filename preservation, and validation fails on unexpected filename drift.
+- Decision: Render AS141253 as a CSV-backed tabbed HTML workbook.
+  - Rationale: A standalone HTML workbook mirrors the Google Sheet experience while keeping CSV files editable and diffable.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final locally
+  - Impact: `workbook.html` is generated under `data/sheets/...`; Pages serves the same workbook as `docs/sheets/as141253-ipv6-architecture-example/index.html`.
+- Decision: Prefer clean GitHub Pages directory URLs for human-facing root links.
+  - Rationale: GitHub Pages still needs `docs/index.html` as the static entry file, but reader-facing links should use `./`, `../../`, or the clean project root URL.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final locally
+  - Impact: `scripts/render-site.py` no longer generates visible root navigation links to `index.html`; `scripts/validate-mirror.py` guards against regression.
+- Decision: Use detection-first canonical drift automation with a frozen-archive sentinel.
+  - Rationale: Future canonical changes should be reviewable, and a permanently dead canonical site should not cause endless failing automation or deletion of archived content.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: final locally
+  - Impact: `.github/workflows/canonical-drift.yml`, `scripts/check-canonical-drift.py`, `archive-status.json`, and `docs/CANONICAL_DRIFT.md` implement the state/report path.
+- Decision: Treat the canonical-drift workflow's Python environment as an explicit dependency contract.
+  - Rationale: GitHub-hosted runners are clean and their default Python may change; validation imports `lxml`, which is declared in `requirements.txt` but was not installed by the scheduled workflow.
+  - Date/Author: 2026-07-13, user/Codex
+  - Status: implemented and hosted-runner verified
+  - Impact: The workflow selects Python 3.12, caches pip by `requirements.txt`, installs requirements before any archive script, and local validation detects loss or reordering of that bootstrap. The cache accelerates package downloads but never replaces installation; intentional action/Python/bootstrap changes must update this guard atomically and pass manual hosted-runner verification.
+- Decision: Generate an AS141253 IPv6 prefix containment tree from CSV.
+  - Rationale: CIDR hierarchy is naturally represented as a rooted containment tree; CSV remains editable while JSON/DOT preserve an auditable graph for developer and AI tooling.
+  - Date/Author: 2026-07-06, user/Codex
+  - Status: retained developer/AI artefact
+  - Impact: `scripts/ipv6_hierarchy.py` generates `cidr-hierarchy.json` and `cidr-hierarchy.dot`.
+- Decision: Retire the redundant public AS141253 CIDR hierarchy page.
+  - Rationale: The owner selected the full hierarchy view in `visual.html` as the ideal human reader experience; two public routes for the same data add confusion without capability.
+  - Date/Author: 2026-07-11, user/Codex
+  - Status: implemented and deployed
+  - Impact: `cidr-hierarchy.html` is not generated or published, public navigation targets `visual.html`, and the old Pages route must return 404 after deployment.
+- Decision: Self-host canonical typography for the archive.
+  - Rationale: Public canonical CSS uses `Poppins` for body/form text and
+    `Raleway` for headings; self-hosting keeps GitHub Pages readable without
+    depending on WordPress or runtime Google Fonts requests.
+  - Date/Author: 2026-07-07, user/Codex
+  - Status: implemented locally
+  - Impact: `assets/fonts/` stores WOFF2 files, OFL files, and checksums;
+    generated Pages copies live under `docs/assets/fonts/`.
+- Decision: Rewrite mirrored internal post links locally while preserving
+  section fragments.
+  - Rationale: Archive readers should not leave the archive for content already
+    mirrored in the repository, and canonical section links should still land
+    on the intended local heading.
+  - Date/Author: 2026-07-07, user/Codex
+  - Status: implemented locally
+  - Impact: Markdown links target local `content/posts/.../index.md`; Pages
+    links target local `../<slug>/` routes; generated Pages emits alias anchors
+    for WordPress `h-...` heading IDs where needed.
+- Decision: Treat AS141253 visual-option pages as generated selection
+  prototypes.
+  - Rationale: The original tree model is structurally correct but not
+    readable enough for human selection; multiple generated static views let
+    the owner choose the representation before making one the canonical
+    artefact.
+  - Date/Author: 2026-07-07, user/Codex
+  - Status: implemented locally
+  - Impact: `scripts/ipv6_visual_options.py` generates a comparison gallery
+    and eleven standalone static/interactive HTML/CSS/JS option pages from the
+    CSV-derived prefix hierarchy.
+- Decision: Render CSV notes in selected AS141253 visual foundations.
+  - Rationale: The `Notes` column contains operational intent such as slicing
+    rules, so a visual model that hides it is less readable than the source
+    workbook.
+  - Date/Author: 2026-07-08, user/Codex
+  - Status: implemented locally
+  - Impact: Branch cards render parent and child notes; collapsible dendrogram
+    summaries render node notes; purpose cluster graph shows notes in the
+    selected-node detail panel.
+- Decision: Keep purpose-cluster graph node text out of the SVG plot area.
+  - Rationale: Per-node labels overlap when selected paths are highlighted in
+    a dense graph; persistent purpose labels plus click-to-inspect details keep
+    the artwork readable without losing node metadata.
+  - Date/Author: 2026-07-08, user/Codex
+  - Status: implemented locally
+  - Impact: `scripts/ipv6_visual_options.py` emits category labels in the graph
+    and moves selected node prefix/label/notes into the side detail panel.
+- Decision: Use native disclosures for branch-card hidden children.
+  - Rationale: `+N more` represents hidden additional content, which matches
+    the HTML disclosure-widget model. A styled count-only span communicates
+    existence but cannot expand/collapse or expose state to the browser.
+  - Date/Author: 2026-07-08, user/Codex
+  - Status: implemented locally
+  - Impact: Branch cards keep twelve children visible and render remaining
+    children inside `details.branch-more > summary`, without requiring custom
+    JavaScript.
+- Decision: Define visual-foundation responsiveness as page-bounded layout plus
+  frame-bounded diagram panning.
+  - Rationale: Branch cards can fully reflow, but dense tree/graph models lose
+    readability if compressed indefinitely. Standard responsive CSS should
+    prevent page-level overflow while allowing wide diagram content to pan
+    inside its explicit visual frame.
+  - Date/Author: 2026-07-08, user/Codex
+  - Status: implemented locally
+  - Impact: Visual pages use viewport metadata, CSS Grid/Flex wrapping, media
+    queries, `min-width: 0` containment, and `.visual-frame` overflow handling.
+- Decision: Make Full hierarchy the sole public AS141253 visual model.
+  - Rationale: Owner review found native disclosure of the complete hierarchy
+    more readable and useful than the hybrid dashboard or its visual
+    foundations.
+  - Date/Author: 2026-07-10, user/Codex
+  - Status: implemented and deployed
+  - Impact: `visual.html` will render only the full hierarchy. Historical model
+    logic will be documented outside `docs/`; no legacy route, navigation, or
+    generated Pages copy may remain.
+- Decision: Treat the README logo as a proprietary repository asset rather
+  than mirrored content or open-source material.
+  - Rationale: The owner supplied the original Daryll Swer logo and explicitly
+    reserved all rights.
+  - Date/Author: 2026-07-15, user/Codex
+  - Status: implemented and verified
+  - Impact: The logo is covered by a dedicated rights notice and asset manifest;
+    it is excluded from the MIT tooling licence, and validation rejects a
+    missing, altered, or improperly documented header asset.
+- Decision: Serve a bounded GitHub Pages favicon derivative while retaining
+  the supplied official favicon as the byte-exact source of record.
+  - Rationale: The owner-provided square PNG is 11,811 px per side; serving a
+    generated 512 px derivative avoids a disproportionate browser decode while
+    preserving the original asset and its provenance in the repository.
+  - Date/Author: 2026-07-15, user/Codex
+  - Status: superseded by controlled derivative decision below
+  - Impact: The original bounded derivative requirement remains, but ordinary
+    Pages renders must no longer invoke a PNG encoder.
+- Decision: Track a controlled favicon derivative and reconcile all verified
+  existing-post updates atomically.
+  - Rationale: Re-encoding the same visual favicon on different render hosts
+    produced different PNG bytes, causing needless Pages commits. Existing
+    post changes are canonical drift, not merely report material, but a
+    partial batch would produce an internally inconsistent archive.
+  - Date/Author: 2026-08-17, user/Codex
+  - Status: implemented and hosted verified
+  - Impact: `scripts/prepare-brand-favicon.py` regenerates the checked 512 px
+    derivative only after a master-checksum change. `render-site.py` copies it
+    byte-for-byte. A healthy reconciliation stages every changed existing post
+    and at most one new/restored post outside the checkout, then replaces all
+    affected bundles and the manifest together. A clean comparison establishes
+    a raw canonical-body baseline for legacy bundles before strict validation
+    requires it. Relocations, missing-post anomalies, outages, and frozen state
+    block updates; retirement remains independently bounded and history remains
+    intact.
+
+## Validation and Acceptance
+
+- Reproducible checks:
+  - `make sync`: passed; fetched public posts, media, and spreadsheet artefacts.
+  - `make validate`: passed at 2026-07-06 09:29 UTC; validation recorded 0 errors and 1 warning.
+  - `make scan-secrets`: passed at 2026-07-06 09:29 UTC; public-safety scan recorded 0 findings.
+  - `make render-preview`: passed; generated `.preview/index.html`.
+  - `rg -n "It would be appreciated|Click here to donate|https://www\\.daryllswer\\.com/donation/?" content/posts -g 'index.md' -g 'source/rendered-article.html' -g 'source/wordpress-post.json' -g 'source/canonical-page.html'`: no matches.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 09:49 UTC; validation recorded 0 errors and 1 warning, public-safety scan recorded 0 findings.
+  - `rg -n "https://www\\.daryllswer\\.com/[^)\\s]+/#(?:h-)?references|#h-references|This article was sponsored|FastNetMon|free 30-day" content/posts -g 'index.md'`: no matches.
+  - `make sync render-site validate PYTHON=<bundled-python>`: passed at 2026-07-06 11:35 UTC; validation recorded 0 errors and 1 warning.
+  - `python3 -m py_compile scripts/sync-wordpress-posts.py scripts/validate-mirror.py scripts/render-site.py`: passed at 2026-07-06 11:52 UTC.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-06 12:00 UTC.
+  - `make sync render-site validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 12:03 UTC; validation recorded 0 errors and 1 warning, public-safety scan recorded 0 findings.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 12:00 UTC; validation recorded 0 errors and 1 warning, public-safety scan recorded 0 findings.
+  - `git diff --check`: passed at 2026-07-06 12:04 UTC.
+  - Local browser QA against `http://127.0.0.1:4173/`: passed at 2026-07-06 11:54 UTC for desktop and 390x844 mobile.
+  - `make sync render-site validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 12:51 UTC; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 12:55 UTC after recording live Pages verification; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
+  - Media filename preservation check: passed at 2026-07-06 12:52 UTC; 68 WordPress media assets, 19 featured images, 0 preservation failures.
+  - Workbook structure check: passed at 2026-07-06 12:52 UTC; 9 manifest tabs, 9 radio inputs, 9 visible tab labels, and 9 panels in both `data/.../workbook.html` and `docs/.../index.html`.
+  - Local browser QA against `http://127.0.0.1:4173/`: passed at 2026-07-06 12:51 UTC for desktop and mobile-sized viewport; index had 19 cards, no broken images, no page overflow, IPv6 article linked local sheet page, workbook tabs switched correctly.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-06 12:51 UTC.
+  - `git diff --check`: passed at 2026-07-06 12:51 UTC.
+  - GitHub Pages API: passed at 2026-07-06 12:54 UTC; status `built`, source `main` `/docs`.
+  - Live route check: passed at 2026-07-06 12:54 UTC; homepage, IPv6 article, AS141253 workbook, ODS artefact, and `Scaffold_FT.png` returned HTTP 200. Live workbook had 9 tabs/9 panels; live homepage had 19 post cards; live article had 2 embed wrappers and the local sheet link.
+  - `make render-site validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 13:35 UTC; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
+  - Local browser click QA against `http://127.0.0.1:4173/`: passed at 2026-07-06 13:39 UTC; homepage canonical used the clean project root, homepage Index used `./`, article Index used `../../`, workbook Archive index used `../../`, and click targets resolved to `/` without `index.html`.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-06 13:39 UTC.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 13:39 UTC; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
+  - `git diff --check`: passed at 2026-07-06 13:39 UTC.
+  - `rg` check for generated `index.html` root navigation/canonical regressions under `docs/*.html`: no matches at 2026-07-06 13:39 UTC.
+  - GitHub Pages deployment: first run for `f20fc90` failed during `actions/deploy-pages@v5` with `Deployment failed, try again later`; empty commit `b4cd2fc` retriggered Pages successfully at 2026-07-06 13:47 UTC.
+  - Live Pages check: passed at 2026-07-06 13:48 UTC; root returned HTTP 200 with clean canonical and `href="./"` Index link, IPv6 article returned HTTP 200 with `href="../../"` Index link, AS141253 workbook returned HTTP 200 with `href="../../"` Archive index and 9 sheet tabs.
+  - Targeted article refresh: passed at 2026-07-06 17:49 UTC; live WordPress REST showed the three requested posts modified on 2026-07-06 and using `Shortcomings_CGNAT_FT-scaled.jpg` / `Multi_WAN_FT-scaled.jpg`.
+  - `scripts/check-canonical-drift.py`: passed at 2026-07-06 17:53 UTC; state `healthy`, frozen `false`, with one non-target drift item reported for the CGNAT article's A10 PDF.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-06 18:01 UTC.
+  - `git diff --check`: passed at 2026-07-06 18:01 UTC.
+  - `make validate scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-06 18:01 UTC; validation recorded 0 errors and 1 known sitemap warning, public-safety scan recorded 0 findings.
+  - Local browser QA against `http://127.0.0.1:4173/`: passed at 2026-07-06 18:04 UTC; homepage had 19 cards, refreshed target articles had updated featured images, lazy inline images loaded after scroll, workbook linked the CIDR hierarchy, hierarchy page had 153 nodes, and desktop/mobile checks had no page overflow.
+  - GitHub Pages deployment for `76a5d2b`: passed at 2026-07-06 18:08 UTC; pages-build-deployment completed successfully.
+  - Live Pages check: passed at 2026-07-06 18:09 UTC; root showed `Shortcomings_CGNAT_FT-scaled.jpg` and `Multi_WAN_FT-scaled.jpg`, target article/image URLs returned HTTP 200, AS141253 workbook/hierarchy/JSON/DOT routes returned HTTP 200, and hierarchy HTML included the clean `./` workbook link.
+  - GitHub Pages deployment for `0cc7437`: passed at 2026-07-06 18:14 UTC.
+  - Manual `Canonical drift check` workflow for `0cc7437`: passed at 2026-07-06 18:15 UTC and did not advance `origin/main`.
+  - Final live route check: passed at 2026-07-06 18:15 UTC for the refreshed featured-image assets and AS141253 hierarchy page.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-07 16:48 UTC.
+  - `git diff --check`: passed at 2026-07-07 16:48 UTC.
+  - `make render-site PYTHON=<bundled-python>`: passed at
+    2026-07-07 16:47 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-07
+    16:48 UTC with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-07
+    16:48 UTC with 0 public-safety findings.
+  - Local browser QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-07 16:48 UTC for the visual-options gallery and five standalone
+    pages at desktop/default and 390 px mobile widths. Page-level
+    `scrollWidth` equalled viewport width; wide diagrams scroll inside
+    `.visual-frame` containers.
+  - Live route checks: passed at 2026-07-07 16:53 UTC for
+    `visual-options.html` and all five `visual-option-*.html` pages; all
+    returned HTTP 200, included expected markers, and had no unrewritten source
+    font paths.
+  - Live browser QA: passed at 2026-07-07 16:53 UTC for the visual-options
+    gallery at desktop/default and 390 px mobile widths; page-level
+    `scrollWidth` equalled viewport width and all five option sections
+    rendered.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-07 21:39 UTC.
+  - `git diff --check`: passed at 2026-07-07 21:39 UTC.
+  - `make render-site PYTHON=<bundled-python>`: passed at
+    2026-07-07 21:39 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-07
+    21:39 UTC with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at
+    2026-07-07 21:39 UTC with 0 public-safety findings.
+  - Local browser QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-07 21:39 UTC for the expanded visual-options gallery and eleven
+    standalone pages at desktop/default and 390 px mobile widths. Page-level
+    `scrollWidth` equalled viewport width, no console errors were reported,
+    and representative interactions passed for graph node clicks, sunburst
+    arc clicks, purpose-cluster node clicks, dendrogram expand/collapse,
+    walkthrough next-step, and searchable focus.
+  - Live route checks: passed at 2026-07-07 21:43 UTC for
+    `visual-options.html` and the six new `visual-option-*.html` pages; all
+    returned HTTP 200, included expected markers, and had no unrewritten source
+    font paths.
+  - Live browser QA: passed at 2026-07-07 21:43 UTC for the expanded gallery
+    at desktop/default and 390 px mobile widths; page-level `scrollWidth`
+    equalled viewport width, eleven option cards/sections rendered, and
+    searchable focus returned loopback matches on the deployed page.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 06:37 UTC.
+  - `git diff --check`: passed at 2026-07-08 06:37 UTC.
+  - `make render-site PYTHON=<bundled-python>`: passed at
+    2026-07-08 06:32 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08
+    06:37 UTC with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at
+    2026-07-08 06:37 UTC with 0 public-safety findings.
+  - Local browser QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-08 06:37 UTC for the pruned visual-foundations gallery and three
+    standalone pages at desktop/default and 390 px mobile widths. The gallery
+    rendered three cards/sections, discarded model titles were absent, page
+    `scrollWidth` equalled viewport width, browser console errors were empty,
+    dendrogram expand/collapse worked, and purpose-cluster node selection
+    updated the detail panel.
+  - Local removed-page check: passed at 2026-07-08 06:37 UTC; all eight
+    discarded standalone visual-option routes returned HTTP 404 from the local
+    `docs/` server.
+  - GitHub Pages deployment for `54248e2`: passed at 2026-07-08 06:40 UTC;
+    pages-build-deployment run `28922937285` completed successfully.
+  - Live route checks: passed at 2026-07-08 06:41 UTC for
+    `visual-options.html`, the three selected standalone option pages, and the
+    eight discarded standalone option routes. The selected routes returned HTTP
+    200 with expected markers; discarded routes returned HTTP 404.
+  - Live browser QA: passed at 2026-07-08 06:41 UTC for the visual-foundations
+    gallery at desktop/default width; three option cards/sections rendered,
+    discarded model titles were absent, page-level `scrollWidth` equalled
+    viewport width, and browser console errors were empty.
+  - Local Chrome/Playwright DOM QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-08 07:22 UTC for the three selected visual foundations and gallery.
+    Branch cards at 390 px had `scrollWidth=390`, 53 rendered child notes, and
+    no page overflow. Collapsible dendrogram at 390 px had `scrollWidth=390`,
+    90 rendered tree notes, and no page overflow. Purpose cluster graph at
+    1280 px had 0 graph node labels, 9 purpose labels, no detected graph text
+    overlaps, and notes appeared in the detail panel after clicking
+    `2400:d960:804::/56`.
+  - `make render-site PYTHON=<bundled-python>`: passed at 2026-07-08 07:26 UTC;
+    generated 19 posts and refreshed sheet/Pages output.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 07:24 UTC.
+  - `git diff --check`: passed at 2026-07-08 07:26 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08 07:26 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
+    07:26 UTC with 0 public-safety findings.
+  - GitHub Pages deployment for `445e5a5`: passed at 2026-07-08 07:29 UTC;
+    pages-build-deployment run `28925442002` completed successfully.
+  - Live static checks: passed at 2026-07-08 07:30 UTC for
+    `visual-option-branch-cards.html`,
+    `visual-option-collapsible-dendrogram.html`,
+    `visual-option-purpose-cluster-graph.html`, and `visual-options.html`.
+    All returned HTTP 200 with required note markers and 0
+    `graph-node-label` occurrences.
+  - Live Chrome/Playwright DOM QA against GitHub Pages: passed at
+    2026-07-08 07:30 UTC. Branch cards at 390 px had `scrollWidth=390` and 53
+    child notes; collapsible dendrogram at 390 px had `scrollWidth=390` and
+    90 tree notes; purpose cluster graph at 1280 px had 0 graph node labels, 9
+    purpose labels, no detected graph text overlaps, and notes appeared in the
+    detail panel after selecting `2400:d960:804::/56`.
+  - Local Chrome/Playwright responsive QA against `http://127.0.0.1:4173/`:
+    passed at 2026-07-08 07:42 UTC across 28 page/viewport combinations:
+    standalone branch cards, collapsible dendrogram, purpose cluster graph,
+    and gallery pages at 320, 390, 768, 1024, 1440, 1920, and 2560 px widths.
+    Failures: 0. All combinations had no page-level horizontal overflow,
+    graph node labels remained 0, graph text overlaps were 0, and branch-card
+    disclosures toggled open/closed in every viewport.
+  - `make render-site PYTHON=<bundled-python>`: passed at 2026-07-08 07:46 UTC;
+    generated 19 posts and refreshed generated Pages output.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 07:46 UTC.
+  - `git diff --check`: passed at 2026-07-08 07:46 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08 07:47 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
+    07:46 UTC with 0 public-safety findings.
+  - GitHub Pages deployment for `a913272`: passed at 2026-07-08 07:48 UTC;
+    pages-build-deployment run `28926454066` completed successfully.
+  - Live static checks: passed at 2026-07-08 07:48 UTC for
+    `visual-option-branch-cards.html`,
+    `visual-option-collapsible-dendrogram.html`,
+    `visual-option-purpose-cluster-graph.html`, and `visual-options.html`.
+    Required branch disclosure/responsive markers were present, branch-card
+    pages had 3 `details.branch-more` controls, and graph node labels remained
+    0.
+  - Live Chrome/Playwright DOM QA against GitHub Pages: passed at
+    2026-07-08 07:49 UTC at 390 px and 1440 px widths. All four visual pages
+    had no page-level horizontal overflow, graph text overlaps were 0, and the
+    branch-card disclosure opened with the `Show fewer` state.
+  - Local expanded Chrome/Playwright responsive QA against
+    `http://127.0.0.1:4173/`: first run at 2026-07-08 17:16 UTC failed only
+    at 360 px with page overflow `364/360` on all four visual pages. Root
+    cause was the shared metrics grid root-prefix card. After the metrics CSS
+    fix, the rerun passed at 2026-07-08 17:20 UTC across 160 combinations:
+    four visual pages by 40 CSS-pixel widths. Failures: 0.
+  - GitHub Pages deployment for `09c1cd0`: passed at 2026-07-08 17:26 UTC;
+    pages-build-deployment run `28962375073` completed successfully.
+  - Live static checks: passed at 2026-07-08 17:27 UTC for
+    `visual-option-branch-cards.html`,
+    `visual-option-collapsible-dendrogram.html`,
+    `visual-option-purpose-cluster-graph.html`, and `visual-options.html`.
+    The deployed CSS included the metrics grid/wrapping fix, branch-card pages
+    had `details.branch-more` controls, and graph node labels remained 0.
+  - Live Chrome/Playwright DOM QA against GitHub Pages: passed at
+    2026-07-08 17:28 UTC at 360, 390, 768, 1440, and 1920 px widths. All four
+    visual pages had no page-level horizontal overflow, branch-card disclosure
+    controls opened/closed, graph node labels stayed absent after click
+    interactions, and SVG text overlaps were 0.
+  - `make render-site PYTHON=<bundled-python>`: passed at 2026-07-08 17:22 UTC;
+    generated 19 posts and refreshed generated Pages output.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 17:22 UTC.
+  - `git diff --check`: passed at 2026-07-08 17:22 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08 17:23 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
+    17:22 UTC with 0 public-safety findings.
+  - `make sync PYTHON=<bundled-python>`: passed at 2026-07-08 18:01 UTC;
+    synced 19 posts and exported 9 sheet tabs.
+  - `make render-site PYTHON=<bundled-python>`: passed at 2026-07-08
+    18:02 UTC; generated 19 posts and refreshed generated Pages output.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 18:05 UTC.
+  - `git diff --check`: passed at 2026-07-08 18:05 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08 18:05 UTC
+    with 0 validation errors and 1 known sitemap warning.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
+    18:05 UTC with 0 public-safety findings.
+  - Local Chrome/Playwright QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-08 18:13 UTC for `visual.html` at 320, 360, 390, 430, 768, 1024,
+    1440, 1920, and 2560 px widths. Failures: 0. Checks covered page-level
+    overflow, expected sections, absence of JS on `visual.html`, reserved
+    disclosure open/close, SVG minimap anchor targets/clicks, and 390 px smoke
+    checks for `visual-options.html` and the workbook.
+  - Anchor-fix local Chrome QA against `http://127.0.0.1:4173/`: passed at
+    2026-07-08 18:23 UTC for `visual.html` at 320, 360, 390, 430, 768, 1024,
+    1440, 1920, and 2560 px widths. Failures: 0. This rerun verified stable
+    `#at-a-glance-allocation`, `#operational-branches`, `#purpose-map`, and
+    `#full-hierarchy` section anchors plus reserved disclosure and SVG minimap
+    behaviour.
+  - `python3 -m py_compile scripts/*.py`: passed at 2026-07-08 18:23 UTC.
+  - `git diff --check`: passed at 2026-07-08 18:23 UTC.
+  - `make validate PYTHON=<bundled-python>`: passed at 2026-07-08 18:23 UTC
+    with 0 validation errors and 1 known sitemap warning. Validation now
+    requires the final `visual.html` section anchors.
+  - `make scan-secrets PYTHON=<bundled-python>`: passed at 2026-07-08
+    18:23 UTC with 0 public-safety findings.
+  - `make render-site`, `python3 -m py_compile scripts/*.py`, `git diff --check`,
+    `make validate`, and `make scan-secrets`: passed on 2026-07-15. Validation
+    recorded 0 errors and 1 known sitemap warning; public-safety recorded 0
+    findings.
+  - Local browser QA at 2026-07-15: home, BGP Router ID article, AS141253
+    workbook, and `visual.html` each had the proprietary 512 px favicon link;
+    home/article headers used the image instead of the text-only `DS` badge,
+    with no page-level horizontal overflow or console errors.
+  - GitHub Pages deployment for `69d8730`: passed on 2026-07-15; run
+    `29407999695` completed successfully. Live home, BGP article, and
+    AS141253 `visual.html` each reference the 512 px proprietary favicon;
+    the public asset returned `200 image/png` and matched the generated
+    derivative SHA-256 `c8ae2e50b88dc5252561a74821a7ba35261ae1ebdcfca86995e312ac73e18b35`.
+  - GitHub Pages deployment for `1c56c33`: passed at 2026-07-08 18:24 UTC;
+    pages-build-deployment run `28965936383` completed successfully.
+  - Live static checks: passed at 2026-07-08 18:25 UTC for `visual.html`, the
+    AS141253 workbook route, and the IPv6 article route. All returned HTTP
+    200; `visual.html` had required final-section markers and no script tag or
+    source font path leakage; the article route linked to
+    `../../sheets/as141253-ipv6-architecture-example/visual.html`.
+  - Live Chrome DevTools Protocol QA against GitHub Pages: passed at
+    2026-07-08 18:25 UTC for `visual.html` at 320, 390, 768, 1440, and 2560
+    px widths. Failures: 0. Checks covered page-level overflow, final section
+    anchors, 57 reserved disclosure groups, reserved disclosure opening, and
+    SVG minimap anchor targets/clicks.
+  - `make sync PYTHON=<bundled-python>`: passed on 2026-07-10; synced 19 posts
+    and exported 9 sheet tabs. `make render-site` regenerated 19 post pages.
+  - `python3 -m py_compile scripts/*.py` and `git diff --check`: passed on
+    2026-07-10.
+  - `make validate PYTHON=<bundled-python>`: passed on 2026-07-10 with 0
+    errors and 1 known sitemap warning. `make scan-secrets` passed with 0
+    findings.
+  - Local Chrome QA: passed on 2026-07-10 at 320, 360, 390, 430, 768, 1024,
+    1440, 1920, and 2560 CSS px. No page-level overflow; the hierarchy had 28
+    reserved groups; pointer and Enter-key disclosure controls exposed and hid
+    exact reserved-prefix details.
+  - GitHub Pages deployment for `6f52359`: passed on 2026-07-10; run
+    `29081542020` completed successfully. Live `visual.html`, workbook, and
+    IPv6 article routes returned 200; the retired gallery and all three
+    foundation routes returned 404.
+- Evidence paths:
+  - `docs/VALIDATION.md`
+  - `docs/index.html`
+  - `docs/PUBLIC_SAFETY.md`
+  - `archive-manifest.json`
+
+## Idempotence and Recovery
+
+- Safe re-run policy:
+  - Sync scripts must be idempotent: rerunning may update generated files but must not require private state.
+- Risky step rollback:
+  - Remote GitHub actions are blocked until user confirmation.
+- Backup and state-preservation policy:
+  - Public source snapshots are stored under each post's `source/` directory for auditability.
+
+## Risks and Assumptions
+
+- Risks:
+  - WordPress rendered HTML may contain theme wrappers. Mitigation: use REST content for article body and canonical HTML only for metadata/source snapshot.
+  - Markdown conversion may not represent every HTML detail. Mitigation: preserve rendered/source HTML alongside Markdown.
+  - Third-party media licensing may be ambiguous. Mitigation: record provenance and flag unclear assets.
+- Assumptions:
+  - Public WordPress REST, sitemap/RSS, and Google Sheet export endpoints remain accessible.
+
+## Outcomes & Retrospective
+
+- Achieved:
+  - Local repo scaffold, public sync, donation/support CTA filtering, spreadsheet export, validation, public-safety scan, preview generation, and generated GitHub Pages site completed.
+  - Owner-provided proprietary README header logo added with a separate rights
+    notice, checksum provenance, and explicit mixed-licence boundary.
+  - Owner-provided proprietary favicon integrated into GitHub Pages headers and
+    browser metadata through a bounded generated derivative, with source
+    preservation and validation coverage.
+- Remaining:
+  - None for the hierarchy-only AS141253 visual-model revision.
+- Retrospective timestamp:
+  - 2026-07-06 09:20 UTC
